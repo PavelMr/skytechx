@@ -1,0 +1,3232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1147</width>
+    <height>730</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <weight>75</weight>
+    <bold>true</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/res/ico_skytech.png</normaloff>:/res/ico_skytech.png</iconset>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextBesideIcon</enum>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Triangular</enum>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="CMapView" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>20</y>
+      <width>421</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>256</width>
+      <height>256</height>
+     </size>
+    </property>
+    <property name="cursor">
+     <cursorShape>CrossCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <widget class="QDockWidget" name="dockTime">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>331</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="floating">
+      <bool>false</bool>
+     </property>
+     <property name="features">
+      <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
+     </property>
+     <property name="allowedAreas">
+      <set>Qt::NoDockWidgetArea</set>
+     </property>
+     <property name="windowTitle">
+      <string>Time window</string>
+     </property>
+     <widget class="QWidget" name="dockWidgetContents_3"/>
+    </widget>
+    <widget class="QDockWidget" name="dockTele">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>320</y>
+       <width>231</width>
+       <height>112</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="floating">
+      <bool>false</bool>
+     </property>
+     <property name="features">
+      <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
+     </property>
+     <property name="allowedAreas">
+      <set>Qt::NoDockWidgetArea</set>
+     </property>
+     <property name="windowTitle">
+      <string>Telescope</string>
+     </property>
+     <widget class="QWidget" name="dockWidgetContents_7">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_21">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>R.A.</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_tele1">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_22">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Declination</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_tele2">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_23">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Azimuth</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_tele3">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_24">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Altitude</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="label_tele4">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QDockWidget" name="dockTimeDialog">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>190</y>
+       <width>211</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="floating">
+      <bool>false</bool>
+     </property>
+     <property name="features">
+      <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
+     </property>
+     <property name="allowedAreas">
+      <set>Qt::NoDockWidgetArea</set>
+     </property>
+     <property name="windowTitle">
+      <string>Time dialog</string>
+     </property>
+     <widget class="QWidget" name="dockWidgetContents_5"/>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1147</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionNight_mode"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport_map_to_image"/>
+    <addaction name="actionCopy_map_to_clipboard"/>
+    <addaction name="actionPrint"/>
+    <addaction name="separator"/>
+    <addaction name="actionChange_language"/>
+    <addaction name="actionChnage_style"/>
+    <addaction name="actionSetting"/>
+    <addaction name="separator"/>
+    <addaction name="action_Exit_2"/>
+   </widget>
+   <widget class="QMenu" name="menu_About">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionShow_help"/>
+    <addaction name="actionKeyboard_reference"/>
+    <addaction name="separator"/>
+    <addaction name="action_About"/>
+   </widget>
+   <widget class="QMenu" name="menu_Chart">
+    <property name="title">
+     <string>&amp;Chart</string>
+    </property>
+    <addaction name="actionAtlas_mode_Pole_Up"/>
+    <addaction name="actionHorizon_mode_Zenith_up"/>
+    <addaction name="actionEcliptic"/>
+    <addaction name="separator"/>
+    <addaction name="actionSet_horizon"/>
+   </widget>
+   <widget class="QMenu" name="menu_Time_Location">
+    <property name="title">
+     <string>&amp;Time &amp;&amp; Location</string>
+    </property>
+    <addaction name="actionSelect_world_location"/>
+    <addaction name="separator"/>
+    <addaction name="actionSet_current_time"/>
+    <addaction name="separator"/>
+    <addaction name="actionSet_local_time"/>
+    <addaction name="actionSet_UTC_time"/>
+    <addaction name="actionSet_JD"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave_time_mark"/>
+    <addaction name="actionRestore_time_mark"/>
+    <addaction name="separator"/>
+    <addaction name="actionDeltaT"/>
+   </widget>
+   <widget class="QMenu" name="menu_Window">
+    <property name="title">
+     <string>&amp;Window</string>
+    </property>
+    <addaction name="actionShow_sidebar"/>
+    <addaction name="actionShow_full_screen"/>
+    <addaction name="separator"/>
+    <addaction name="actionTime_window"/>
+    <addaction name="actionTelescope_window"/>
+   </widget>
+   <widget class="QMenu" name="menu_Search">
+    <property name="title">
+     <string>&amp;Search</string>
+    </property>
+    <addaction name="action_Last_search_object"/>
+    <addaction name="separator"/>
+    <addaction name="action_Constellation"/>
+    <addaction name="actionStar_in_Tycho_catalogue"/>
+    <addaction name="actionStar_by_proper_name"/>
+    <addaction name="actionDoube_star"/>
+    <addaction name="actionDOS_by_common_name"/>
+    <addaction name="separator"/>
+    <addaction name="actionPlanets_Sun_Moon"/>
+    <addaction name="actionAsteroid"/>
+    <addaction name="actionComet"/>
+    <addaction name="separator"/>
+    <addaction name="actionPosition"/>
+    <addaction name="actionTelescope"/>
+    <addaction name="actionMeasure_point"/>
+   </widget>
+   <widget class="QMenu" name="menu_Observe">
+    <property name="title">
+     <string>&amp;Observing</string>
+    </property>
+    <addaction name="actionSearch_events"/>
+    <addaction name="actionDay_Night"/>
+    <addaction name="actionDay_event"/>
+    <addaction name="actionSOHO_Sun_images"/>
+    <addaction name="actionPlanet_visibility"/>
+    <addaction name="actionPlanet_altitude"/>
+    <addaction name="actionMoon_calendary"/>
+    <addaction name="actionSatelitte_daily_events"/>
+    <addaction name="actionEphemeride_list"/>
+    <addaction name="actionPolaris_Hour_Angle"/>
+    <addaction name="actionSolar_system_2"/>
+    <addaction name="actionActual_weather"/>
+   </widget>
+   <widget class="QMenu" name="menu_Telescope">
+    <property name="title">
+     <string>&amp;Telescope</string>
+    </property>
+    <widget class="QMenu" name="menuSelect_telescope_shape">
+     <property name="title">
+      <string>Select telescope shape</string>
+     </property>
+     <addaction name="actionStandard_cross"/>
+     <addaction name="actionSelect"/>
+    </widget>
+    <widget class="QMenu" name="menuRefresh_rate">
+     <property name="title">
+      <string>Refresh rate</string>
+     </property>
+     <addaction name="actionVery_fast_100ms"/>
+     <addaction name="actionFast_250ms"/>
+     <addaction name="actionSlow_500ms"/>
+     <addaction name="actionVery_slow_1000ms"/>
+    </widget>
+    <addaction name="actionConnect_device"/>
+    <addaction name="actionDisconnect"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind_telescope"/>
+    <addaction name="separator"/>
+    <addaction name="menuSelect_telescope_shape"/>
+    <addaction name="menuRefresh_rate"/>
+   </widget>
+   <widget class="QMenu" name="menuCatalogue">
+    <property name="title">
+     <string>Catalogue</string>
+    </property>
+    <addaction name="actionAsteroids"/>
+    <addaction name="actionComets"/>
+    <addaction name="actionDeep_Sky_Objects"/>
+    <addaction name="separator"/>
+    <addaction name="actionDeep_sky_galery"/>
+   </widget>
+   <widget class="QMenu" name="menuSho_w">
+    <property name="title">
+     <string>Sho&amp;w</string>
+    </property>
+    <addaction name="actionStars"/>
+    <addaction name="separator"/>
+    <addaction name="actionDSO"/>
+    <addaction name="actionDSO_Shapes"/>
+    <addaction name="separator"/>
+    <addaction name="actionConstellation_lines"/>
+    <addaction name="actionConstellation_boundaries"/>
+    <addaction name="separator"/>
+    <addaction name="actionSolar_system"/>
+    <addaction name="action_Asteroids1"/>
+    <addaction name="actionComets_2"/>
+    <addaction name="separator"/>
+    <addaction name="actionMilkyway"/>
+    <addaction name="separator"/>
+    <addaction name="actionGrids"/>
+    <addaction name="separator"/>
+    <addaction name="actionLabels"/>
+    <addaction name="actionLegends"/>
+    <addaction name="separator"/>
+    <addaction name="actionShow_all"/>
+    <addaction name="actionHide_all"/>
+   </widget>
+   <widget class="QMenu" name="menuDrawing">
+    <property name="title">
+     <string>Drawing</string>
+    </property>
+    <addaction name="actionTelescope_FOV"/>
+    <addaction name="actionTelrad"/>
+    <addaction name="actionFrame_field"/>
+    <addaction name="actionCircle"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind_edited_object"/>
+    <addaction name="actionCenter_edited_object"/>
+    <addaction name="separator"/>
+    <addaction name="actionList_of_drawings"/>
+    <addaction name="actionObject_tracking"/>
+    <addaction name="separator"/>
+    <addaction name="actionClear_map"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Chart"/>
+   <addaction name="menu_Search"/>
+   <addaction name="menu_Time_Location"/>
+   <addaction name="menu_Observe"/>
+   <addaction name="menuCatalogue"/>
+   <addaction name="menuDrawing"/>
+   <addaction name="menu_Telescope"/>
+   <addaction name="menuSho_w"/>
+   <addaction name="menu_Window"/>
+   <addaction name="menu_About"/>
+  </widget>
+  <widget class="QToolBar" name="tb_mag">
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="windowTitle">
+    <string>Magnitude control</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="inc_star_mag"/>
+   <addaction name="dec_star_mag"/>
+   <addaction name="actionInc_dso_mag"/>
+   <addaction name="actionDec_dso_mag"/>
+   <addaction name="actionStar_mag_lock"/>
+   <addaction name="actionReset_magnitude"/>
+  </widget>
+  <widget class="QToolBar" name="tb_view">
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+     <underline>false</underline>
+     <strikeout>false</strikeout>
+     <kerning>true</kerning>
+    </font>
+   </property>
+   <property name="windowTitle">
+    <string>View</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionFlipY"/>
+   <addaction name="actionFlipX"/>
+   <addaction name="separator"/>
+   <addaction name="actionLock_FOV"/>
+   <addaction name="action_zoom_1"/>
+   <addaction name="action_zoom_5"/>
+   <addaction name="action_zoom_10"/>
+   <addaction name="action_zoom_20"/>
+   <addaction name="action_zoom_45"/>
+   <addaction name="action_zoom_90"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>268</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QToolBox" name="toolBox">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
+        <number>2</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <property name="tabSpacing">
+        <number>4</number>
+       </property>
+       <widget class="QWidget" name="page1">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>256</width>
+          <height>422</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Object information</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="3" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>4</number>
+           </property>
+           <property name="rightMargin">
+            <number>4</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Go to information dialog...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Go to object</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="8" column="0">
+          <widget class="CLvQInfo" name="lv_quickInfo">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="rootIsDecorated">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>4</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="0">
+          <spacer name="verticalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>4</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="6" column="0">
+          <layout class="QGridLayout" name="gridLayout_4">
+           <property name="leftMargin">
+            <number>4</number>
+           </property>
+           <property name="rightMargin">
+            <number>4</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="checkBox_5">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Update with actual map time.</string>
+             </property>
+             <property name="text">
+              <string>Autoupdate</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>331</width>
+          <height>509</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>DSS Images</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QPushButton" name="pushButton_2">
+             <property name="text">
+              <string>Open DSS file...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_3">
+             <property name="text">
+              <string>Load all images on screen</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Download progress</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CMultiProgress" name="dss_prog" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>12</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>18</height>
+            </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>4</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="pushButton_dssC">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_dssCZ">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Center &amp;&amp; Zoom</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_dssDA">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Clear list</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeView" name="treeView">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="rootIsDecorated">
+            <bool>false</bool>
+           </property>
+           <property name="itemsExpandable">
+            <bool>false</bool>
+           </property>
+           <property name="allColumnsShowFocus">
+            <bool>true</bool>
+           </property>
+           <property name="expandsOnDoubleClick">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <item>
+            <widget class="QPushButton" name="pushButton_13">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Hide all</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_14">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Show all</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_15">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Delete permanently</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QCheckBox" name="checkBox">
+             <property name="text">
+              <string>Hide DSO shapes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="cb_showDSS_FN">
+             <property name="text">
+              <string>Show Frame &amp;&amp; Name</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="pushButton_dss_all">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Process all images</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_dss_reset">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Reset</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_dss_reset_all">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Reset all</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Brightness</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_br">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>-100</number>
+           </property>
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="tracking">
+            <bool>false</bool>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Contrast</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_con">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <number>200</number>
+           </property>
+           <property name="value">
+            <number>100</number>
+           </property>
+           <property name="tracking">
+            <bool>false</bool>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+           <property name="tickInterval">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Gamma</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_gm">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>300</number>
+           </property>
+           <property name="value">
+            <number>150</number>
+           </property>
+           <property name="tracking">
+            <bool>false</bool>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QCheckBox" name="checkBox_inv">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Invert image</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_aa">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Auto adjust</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="formLayout"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>257</width>
+          <height>524</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Event information</string>
+        </attribute>
+        <layout class="QFormLayout" name="formLayout_2">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
+         <item row="2" column="0" colspan="2">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QComboBox" name="comboBox"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_2"/>
+           </item>
+          </layout>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>58</width>
+             <height>6</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="0" colspan="2">
+          <widget class="QTreeView" name="treeView_2">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="dragEnabled">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::NoDragDrop</enum>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="rootIsDecorated">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Time</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0" colspan="2">
+          <widget class="QLineEdit" name="lineEdit">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0" colspan="2">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Description</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0" colspan="2">
+          <widget class="QLineEdit" name="lineEdit_3">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="0" colspan="2">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Visibility</string>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="0" colspan="2">
+          <widget class="QLineEdit" name="lineEdit_2">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="0">
+          <spacer name="verticalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>6</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="13" column="0" colspan="2">
+          <widget class="Line" name="line_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="14" column="0" colspan="2">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Current event : </string>
+           </property>
+          </widget>
+         </item>
+         <item row="15" column="0" colspan="2">
+          <widget class="QTreeView" name="treeView_3">
+           <property name="toolTip">
+            <string>Click change time to event</string>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DropOnly</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::IgnoreAction</enum>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="17" column="0" colspan="2">
+          <widget class="QTextEdit" name="textEdit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="18" column="0" colspan="2">
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QCheckBox" name="checkBox_2">
+             <property name="text">
+              <string>Zoom to event</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_3">
+             <property name="text">
+              <string>Move to event</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label_10">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color : rgb(170, 0, 0)</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <spacer name="verticalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>4</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="5" column="0">
+          <widget class="QPushButton" name="pushButton_10">
+           <property name="text">
+            <string>Clear all</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_moon">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>279</width>
+          <height>422</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Lunar features</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="text">
+            <string>Go to the Moon</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_10">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_12">
+           <item>
+            <widget class="QCheckBox" name="checkBox_4">
+             <property name="text">
+              <string>Show lunar features</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_lfDiam">
+             <property name="text">
+              <string>Show feature diameter</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Level of detail</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="hr_lf_detail">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>50</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="invertedAppearance">
+            <bool>true</bool>
+           </property>
+           <property name="invertedControls">
+            <bool>false</bool>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+           <property name="tickInterval">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>abc</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="hr_lf_detail_2">
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <number>200</number>
+           </property>
+           <property name="value">
+            <number>10</number>
+           </property>
+           <property name="tracking">
+            <bool>true</bool>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="invertedAppearance">
+            <bool>true</bool>
+           </property>
+           <property name="invertedControls">
+            <bool>false</bool>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+           <property name="tickInterval">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_13">
+           <property name="text">
+            <string>Filter</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTreeView" name="treeView_4"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <item>
+            <widget class="QPushButton" name="pushButton_12">
+             <property name="text">
+              <string>Select all</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_11">
+             <property name="text">
+              <string>Deselect all</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>157</width>
+          <height>431</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Shape editor</string>
+        </attribute>
+        <layout class="QFormLayout" name="formLayout_3">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
+         <item row="0" column="0" colspan="2">
+          <widget class="QCheckBox" name="checkBox_shape">
+           <property name="text">
+            <string>Enable editor</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0" colspan="2">
+          <widget class="Line" name="line_8">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_20">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add new shape: &lt;span style=&quot; font-weight:600;&quot;&gt;N&lt;/span&gt;&lt;br/&gt;Add new vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;V&lt;br/&gt;&lt;/span&gt;Delete vertex:&lt;span style=&quot; font-weight:600;&quot;&gt; Backspace&lt;br/&gt;&lt;/span&gt;Delete shape:&lt;span style=&quot; font-weight:600;&quot;&gt; Delete&lt;br/&gt;&lt;/span&gt;Delete all:&lt;span style=&quot; font-weight:600;&quot;&gt; CTRL + Delete&lt;br/&gt;&lt;/span&gt;Next shape: &lt;span style=&quot; font-weight:600;&quot;&gt;W&lt;/span&gt;&lt;br/&gt;Prev. shape: &lt;span style=&quot; font-weight:600;&quot;&gt;Q&lt;br/&gt;&lt;/span&gt;Next vertex:&lt;span style=&quot; font-weight:600;&quot;&gt; 2&lt;/span&gt;&lt;br/&gt;Prev. vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;1&lt;br/&gt;&lt;/span&gt;Next ID: &lt;span style=&quot; font-weight:600;&quot;&gt;[&lt;br/&gt;&lt;/span&gt;Prev ID: &lt;span style=&quot; font-weight:600;&quot;&gt;]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Nebula brightness ID:&lt;span style=&quot; font-weight:600;&quot;&gt; 0..2&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Load shapes...</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Save shapes...</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_shp_info">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <widget class="Line" name="line_11">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>101</width>
+          <height>422</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Constellation editor</string>
+        </attribute>
+        <widget class="QPushButton" name="pushButton_8">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>64</y>
+           <width>238</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Save shapes...</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_25">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>130</y>
+           <width>133</width>
+           <height>295</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Add new vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;V&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_9">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>35</y>
+           <width>238</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Load shapes...</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line_12">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>121</y>
+           <width>238</width>
+           <height>3</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>30</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_shape_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>12</y>
+           <width>238</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Enable editor</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_shp_info_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>102</y>
+           <width>46</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line_13">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>93</y>
+           <width>238</width>
+           <height>3</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>30</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>468</width>
+          <height>422</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Help</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item row="1" column="0">
+          <widget class="Line" name="line_14">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_10"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QWebView" name="webView">
+           <property name="url">
+            <url>
+             <string>about:blank</string>
+            </url>
+           </property>
+           <property name="renderHints">
+            <set>QPainter::Antialiasing|QPainter::SmoothPixmapTransform|QPainter::TextAntialiasing</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QToolBar" name="tb_time">
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="windowTitle">
+    <string>Time</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionTime_dialog"/>
+   <addaction name="separator"/>
+   <addaction name="actionYPlus"/>
+   <addaction name="actionYMinus"/>
+   <addaction name="actionMPlus"/>
+   <addaction name="actionMMinus"/>
+   <addaction name="actionDPlus"/>
+   <addaction name="actionDMinus"/>
+   <addaction name="separator"/>
+   <addaction name="actionSDPlus"/>
+   <addaction name="actionSDMinus"/>
+   <addaction name="separator"/>
+   <addaction name="actionHPlus"/>
+   <addaction name="actionHMinus"/>
+   <addaction name="actionMinPlus"/>
+   <addaction name="actionMinMinus"/>
+   <addaction name="actionSPlus"/>
+   <addaction name="actionSMinus"/>
+   <addaction name="separator"/>
+   <addaction name="actionCurLocTime"/>
+   <addaction name="separator"/>
+   <addaction name="actionRealtime"/>
+   <addaction name="separator"/>
+   <addaction name="actionTime_lapse"/>
+   <addaction name="actionTime_Lapse_prefs"/>
+   <addaction name="separator"/>
+  </widget>
+  <widget class="QToolBar" name="tb_search">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>Search</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSearch"/>
+  </widget>
+  <widget class="QToolBar" name="tb_alt_azm">
+   <property name="windowTitle">
+    <string>Azm/Alt View</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="actionNorth"/>
+   <addaction name="actionSouth"/>
+   <addaction name="actionEast"/>
+   <addaction name="actionWest"/>
+   <addaction name="actionZenith"/>
+  </widget>
+  <widget class="QToolBar" name="tb_grid">
+   <property name="windowTitle">
+    <string>Grids</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAutomatic_grid"/>
+   <addaction name="separator"/>
+  </widget>
+  <widget class="QToolBar" name="tb_render">
+   <property name="windowTitle">
+    <string>Rendering</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAntialiasing"/>
+   <addaction name="actionBilinear_interpolation"/>
+   <addaction name="actionSymbol_Real_planet_rendering"/>
+  </widget>
+  <widget class="QToolBar" name="tb_tele">
+   <property name="windowTitle">
+    <string>Telescope control</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionConnect_device"/>
+   <addaction name="actionDisconnect"/>
+   <addaction name="separator"/>
+   <addaction name="actionTPStop"/>
+   <addaction name="actionFind_telescope"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="tb_drawing">
+   <property name="windowTitle">
+    <string>Drawing</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionTelescope_FOV"/>
+   <addaction name="actionTelrad"/>
+   <addaction name="actionFrame_field"/>
+   <addaction name="actionCircle"/>
+  </widget>
+  <action name="action_Exit_2">
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/app_icon48.ico</normaloff>:/res/app_icon48.ico</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About...</string>
+   </property>
+  </action>
+  <action name="inc_star_mag">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_star_plus.png</normaloff>:/res/ico_star_plus.png</iconset>
+   </property>
+   <property name="text">
+    <string>inc_star_mag</string>
+   </property>
+   <property name="toolTip">
+    <string>Increase star magnitude</string>
+   </property>
+  </action>
+  <action name="dec_star_mag">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_star_minus.png</normaloff>:/res/ico_star_minus.png</iconset>
+   </property>
+   <property name="text">
+    <string>dec_star_mag</string>
+   </property>
+   <property name="toolTip">
+    <string>Decrease star magnitude</string>
+   </property>
+  </action>
+  <action name="actionStar_mag_lock">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_lock_mag.png</normaloff>:/res/ico_lock_mag.png</iconset>
+   </property>
+   <property name="text">
+    <string>star_mag_lock</string>
+   </property>
+   <property name="toolTip">
+    <string>Lock magnitude</string>
+   </property>
+  </action>
+  <action name="actionFlipX">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_flipx.png</normaloff>:/res/ico_flipx.png</iconset>
+   </property>
+   <property name="text">
+    <string>flipX</string>
+   </property>
+   <property name="toolTip">
+    <string>Flip X axis</string>
+   </property>
+  </action>
+  <action name="actionFlipY">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_flipy.png</normaloff>:/res/ico_flipy.png</iconset>
+   </property>
+   <property name="text">
+    <string>flipY</string>
+   </property>
+   <property name="toolTip">
+    <string>Flip Y axis</string>
+   </property>
+  </action>
+  <action name="actionInc_dso_mag">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_dso_plus.png</normaloff>:/res/ico_dso_plus.png</iconset>
+   </property>
+   <property name="text">
+    <string>inc_dso_mag</string>
+   </property>
+   <property name="toolTip">
+    <string>Increase DSO magnitude</string>
+   </property>
+  </action>
+  <action name="actionDec_dso_mag">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_dso_minus.png</normaloff>:/res/ico_dso_minus.png</iconset>
+   </property>
+   <property name="text">
+    <string>dec_dso_mag</string>
+   </property>
+   <property name="toolTip">
+    <string>Decrease DSO magnitude</string>
+   </property>
+  </action>
+  <action name="action_zoom_1">
+   <property name="text">
+    <string>1°</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to 1°</string>
+   </property>
+  </action>
+  <action name="action_zoom_5">
+   <property name="text">
+    <string>5°</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to 5°</string>
+   </property>
+  </action>
+  <action name="action_zoom_10">
+   <property name="text">
+    <string>10°</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to 10°</string>
+   </property>
+  </action>
+  <action name="action_zoom_20">
+   <property name="text">
+    <string>20°</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to 20°</string>
+   </property>
+  </action>
+  <action name="action_zoom_45">
+   <property name="text">
+    <string>45°</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to 45°</string>
+   </property>
+  </action>
+  <action name="action_zoom_90">
+   <property name="text">
+    <string>90°</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to 90°</string>
+   </property>
+  </action>
+  <action name="actionExport_map_to_image">
+   <property name="text">
+    <string>Export map to image...</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print...</string>
+   </property>
+  </action>
+  <action name="actionCopy_map_to_clipboard">
+   <property name="text">
+    <string>Copy map to clipboard</string>
+   </property>
+  </action>
+  <action name="actionAtlas_mode_Pole_Up">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Atlas mode (Pole up)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionHorizon_mode_Zenith_up">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Horizon mode (Zenith up)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionSet_JD">
+   <property name="text">
+    <string>Set JD...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+J</string>
+   </property>
+  </action>
+  <action name="actionSet_local_time">
+   <property name="text">
+    <string>Set local time...</string>
+   </property>
+  </action>
+  <action name="actionSet_UTC_time">
+   <property name="text">
+    <string>Set UTC time...</string>
+   </property>
+  </action>
+  <action name="actionSet_current_time">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_clock_now.png</normaloff>:/res/ico_clock_now.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set current time</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionDeltaT">
+   <property name="text">
+    <string>DeltaT...</string>
+   </property>
+   <property name="toolTip">
+    <string>Set DeltaT</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+  </action>
+  <action name="actionShow_sidebar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show sidebar</string>
+   </property>
+  </action>
+  <action name="action_Last_search_object">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Selected object</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to selected object</string>
+   </property>
+  </action>
+  <action name="actionYPlus">
+   <property name="text">
+    <string>Y+</string>
+   </property>
+   <property name="toolTip">
+    <string>Year+</string>
+   </property>
+  </action>
+  <action name="actionYMinus">
+   <property name="text">
+    <string>Y-</string>
+   </property>
+   <property name="toolTip">
+    <string>Year-</string>
+   </property>
+  </action>
+  <action name="actionMPlus">
+   <property name="text">
+    <string>M+</string>
+   </property>
+   <property name="toolTip">
+    <string>Month+</string>
+   </property>
+  </action>
+  <action name="actionMMinus">
+   <property name="text">
+    <string>M-</string>
+   </property>
+   <property name="toolTip">
+    <string>Month-</string>
+   </property>
+  </action>
+  <action name="actionDPlus">
+   <property name="text">
+    <string>D+</string>
+   </property>
+   <property name="toolTip">
+    <string>Day+</string>
+   </property>
+  </action>
+  <action name="actionDMinus">
+   <property name="text">
+    <string>D-</string>
+   </property>
+   <property name="toolTip">
+    <string>Day-</string>
+   </property>
+  </action>
+  <action name="actionCurLocTime">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_clock_now.png</normaloff>:/res/ico_clock_now.png</iconset>
+   </property>
+   <property name="text">
+    <string>CT</string>
+   </property>
+   <property name="toolTip">
+    <string>Set current local time</string>
+   </property>
+  </action>
+  <action name="actionSDPlus">
+   <property name="text">
+    <string>SD+</string>
+   </property>
+   <property name="toolTip">
+    <string>Siderical day+</string>
+   </property>
+  </action>
+  <action name="actionSDMinus">
+   <property name="text">
+    <string>SD-</string>
+   </property>
+   <property name="toolTip">
+    <string>Siderical day-</string>
+   </property>
+  </action>
+  <action name="actionHPlus">
+   <property name="text">
+    <string>H+</string>
+   </property>
+   <property name="toolTip">
+    <string>Hour+</string>
+   </property>
+  </action>
+  <action name="actionHMinus">
+   <property name="text">
+    <string>H-</string>
+   </property>
+   <property name="toolTip">
+    <string>Hour-</string>
+   </property>
+  </action>
+  <action name="actionMinPlus">
+   <property name="text">
+    <string>M+</string>
+   </property>
+   <property name="toolTip">
+    <string>Minute+</string>
+   </property>
+  </action>
+  <action name="actionMinMinus">
+   <property name="text">
+    <string>M-</string>
+   </property>
+   <property name="toolTip">
+    <string>Minute-</string>
+   </property>
+  </action>
+  <action name="actionSPlus">
+   <property name="text">
+    <string>S+</string>
+   </property>
+   <property name="toolTip">
+    <string>Second+</string>
+   </property>
+  </action>
+  <action name="actionSMinus">
+   <property name="text">
+    <string>S-</string>
+   </property>
+   <property name="toolTip">
+    <string>Second-</string>
+   </property>
+  </action>
+  <action name="actionStar_by_proper_name">
+   <property name="text">
+    <string>Star by &amp;proper name...</string>
+   </property>
+   <property name="toolTip">
+    <string>Search star by proper name</string>
+   </property>
+  </action>
+  <action name="actionDOS_by_common_name">
+   <property name="text">
+    <string>&amp;DSO by common name...</string>
+   </property>
+   <property name="toolTip">
+    <string>Search DSO by common name</string>
+   </property>
+  </action>
+  <action name="actionSearch">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_search.png</normaloff>:/res/ico_search.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search</string>
+   </property>
+   <property name="toolTip">
+    <string>Search object</string>
+   </property>
+  </action>
+  <action name="actionNorth">
+   <property name="text">
+    <string>N</string>
+   </property>
+   <property name="toolTip">
+    <string>Look at north</string>
+   </property>
+  </action>
+  <action name="actionSouth">
+   <property name="text">
+    <string>S</string>
+   </property>
+   <property name="toolTip">
+    <string>Look at south</string>
+   </property>
+  </action>
+  <action name="actionEast">
+   <property name="text">
+    <string>E</string>
+   </property>
+   <property name="toolTip">
+    <string>Look at east</string>
+   </property>
+  </action>
+  <action name="actionWest">
+   <property name="text">
+    <string>W</string>
+   </property>
+   <property name="toolTip">
+    <string>Look at west</string>
+   </property>
+  </action>
+  <action name="actionZenith">
+   <property name="text">
+    <string>Z</string>
+   </property>
+   <property name="toolTip">
+    <string>Look at zenith</string>
+   </property>
+  </action>
+  <action name="actionEcliptic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Ecliptic coordinates</string>
+   </property>
+  </action>
+  <action name="actionGalactic_coordinates">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Galactic coordinates</string>
+   </property>
+  </action>
+  <action name="actionPosition">
+   <property name="text">
+    <string>Position...</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to Position</string>
+   </property>
+  </action>
+  <action name="actionAutomatic_grid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_auto_grid.png</normaloff>:/res/ico_auto_grid.png</iconset>
+   </property>
+   <property name="text">
+    <string>Automatic grid</string>
+   </property>
+   <property name="toolTip">
+    <string>Automatic grid</string>
+   </property>
+  </action>
+  <action name="actionRealtime">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_realtime.png</normaloff>:/res/ico_realtime.png</iconset>
+   </property>
+   <property name="text">
+    <string>Realtime</string>
+   </property>
+   <property name="toolTip">
+    <string>Realtime On/Off</string>
+   </property>
+  </action>
+  <action name="actionDay_Night">
+   <property name="text">
+    <string>Day &amp;&amp; Night...</string>
+   </property>
+  </action>
+  <action name="actionSOHO_Sun_images">
+   <property name="text">
+    <string>Sun images...</string>
+   </property>
+  </action>
+  <action name="actionPlanet_visibility">
+   <property name="text">
+    <string>Planet visibility...</string>
+   </property>
+  </action>
+  <action name="actionMoon_calendary">
+   <property name="text">
+    <string>Moon &amp;&amp; Sun almanac...</string>
+   </property>
+  </action>
+  <action name="actionSetting">
+   <property name="text">
+    <string>Setting...</string>
+   </property>
+  </action>
+  <action name="actionOpen_DSS_file">
+   <property name="text">
+    <string>Open DSS file...</string>
+   </property>
+  </action>
+  <action name="actionConnect_device">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_sel_tele.png</normaloff>:/res/ico_sel_tele.png</iconset>
+   </property>
+   <property name="text">
+    <string>Connect device...</string>
+   </property>
+  </action>
+  <action name="actionStandard_cross">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Standard cross</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Select...</string>
+   </property>
+  </action>
+  <action name="actionSelect_world_location">
+   <property name="text">
+    <string>Select world location...</string>
+   </property>
+  </action>
+  <action name="actionDisconnect">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_dis_tele.png</normaloff>:/res/ico_dis_tele.png</iconset>
+   </property>
+   <property name="text">
+    <string>Disconnect</string>
+   </property>
+  </action>
+  <action name="actionFind_telescope">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_find_tele.png</normaloff>:/res/ico_find_tele.png</iconset>
+   </property>
+   <property name="text">
+    <string>Find telescope</string>
+   </property>
+  </action>
+  <action name="actionVery_fast_100ms">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Very fast (100ms)</string>
+   </property>
+  </action>
+  <action name="actionFast_250ms">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Fast (250ms)</string>
+   </property>
+  </action>
+  <action name="actionSlow_500ms">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Slow (500ms)</string>
+   </property>
+  </action>
+  <action name="actionVery_slow_1000ms">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Very slow (1000ms)</string>
+   </property>
+  </action>
+  <action name="actionTelescope">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Telescope</string>
+   </property>
+  </action>
+  <action name="actionAsteroids">
+   <property name="text">
+    <string>Asteroids...</string>
+   </property>
+  </action>
+  <action name="actionAsteroid">
+   <property name="text">
+    <string>Asteroid...</string>
+   </property>
+  </action>
+  <action name="actionSave_time_mark">
+   <property name="text">
+    <string>Save time mark...</string>
+   </property>
+  </action>
+  <action name="actionRestore_time_mark">
+   <property name="text">
+    <string>Restore time mark...</string>
+   </property>
+  </action>
+  <action name="actionDay_event">
+   <property name="text">
+    <string>Daily events...</string>
+   </property>
+  </action>
+  <action name="actionStars">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Stars</string>
+   </property>
+  </action>
+  <action name="actionDSO_Shapes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>DSO Shapes</string>
+   </property>
+  </action>
+  <action name="actionConstellation_lines">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Constellation lines</string>
+   </property>
+  </action>
+  <action name="actionConstellation_boundaries">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Constellation boundaries</string>
+   </property>
+  </action>
+  <action name="actionDSO">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>DSO</string>
+   </property>
+  </action>
+  <action name="actionMilkyway">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Milkyway</string>
+   </property>
+  </action>
+  <action name="actionSolar_system">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Planets, Sun &amp;&amp; Moon</string>
+   </property>
+  </action>
+  <action name="actionSatelitte_daily_events">
+   <property name="text">
+    <string>Satellite daily events...</string>
+   </property>
+  </action>
+  <action name="actionGrids">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Grids</string>
+   </property>
+  </action>
+  <action name="actionShow_all">
+   <property name="text">
+    <string>Show all</string>
+   </property>
+  </action>
+  <action name="actionStar_in_Tycho_catalogue">
+   <property name="text">
+    <string>Star in &amp;Tycho catalogue...</string>
+   </property>
+  </action>
+  <action name="actionSearch_events">
+   <property name="text">
+    <string>Search events...</string>
+   </property>
+  </action>
+  <action name="action_Asteroids1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Asteroids</string>
+   </property>
+  </action>
+  <action name="actionAntialiasing">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_antialias.png</normaloff>:/res/ico_antialias.png</iconset>
+   </property>
+   <property name="text">
+    <string>Antialiasing</string>
+   </property>
+   <property name="toolTip">
+    <string>Enable/Disable map antialiasing</string>
+   </property>
+  </action>
+  <action name="actionSymbol_Real_planet_rendering">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_pln_type.png</normaloff>:/res/ico_pln_type.png</iconset>
+   </property>
+   <property name="text">
+    <string>Real / Symbol planet rendering</string>
+   </property>
+   <property name="toolTip">
+    <string>Real/ Symbol planet rendering</string>
+   </property>
+  </action>
+  <action name="actionComets">
+   <property name="text">
+    <string>Comets...</string>
+   </property>
+  </action>
+  <action name="actionComet">
+   <property name="text">
+    <string>Comet...</string>
+   </property>
+  </action>
+  <action name="actionObject_tracking">
+   <property name="text">
+    <string>Object tracking...</string>
+   </property>
+  </action>
+  <action name="actionTelescope_FOV">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_find_tele.png</normaloff>:/res/ico_find_tele.png</iconset>
+   </property>
+   <property name="text">
+    <string>Telescope FOV...</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert telescope FOV</string>
+   </property>
+  </action>
+  <action name="actionLegends">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Legends</string>
+   </property>
+  </action>
+  <action name="actionComets_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Comets</string>
+   </property>
+  </action>
+  <action name="actionDoube_star">
+   <property name="text">
+    <string>Double stars...</string>
+   </property>
+  </action>
+  <action name="actionPlanets_Sun_Moon">
+   <property name="text">
+    <string>Planets, Sun &amp; Moon...</string>
+   </property>
+  </action>
+  <action name="actionLabels">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Labels</string>
+   </property>
+  </action>
+  <action name="actionTelrad">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_telrad.png</normaloff>:/res/ico_telrad.png</iconset>
+   </property>
+   <property name="text">
+    <string>Telrad</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert Telrad</string>
+   </property>
+  </action>
+  <action name="actionText">
+   <property name="text">
+    <string>Text...</string>
+   </property>
+  </action>
+  <action name="actionClear_map">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Clear map...</string>
+   </property>
+  </action>
+  <action name="actionHide_all">
+   <property name="text">
+    <string>Hide all</string>
+   </property>
+  </action>
+  <action name="actionFrame_field">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_frame_field.png</normaloff>:/res/ico_frame_field.png</iconset>
+   </property>
+   <property name="text">
+    <string>Frame field...</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert frame field</string>
+   </property>
+  </action>
+  <action name="actionFind_edited_object">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Find edited object</string>
+   </property>
+  </action>
+  <action name="actionCenter_edited_object">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Center edited object</string>
+   </property>
+  </action>
+  <action name="actionTime_window">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Time window</string>
+   </property>
+  </action>
+  <action name="actionShow_full_screen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show full screen</string>
+   </property>
+  </action>
+  <action name="actionTPStop">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_stop_tele.png</normaloff>:/res/ico_stop_tele.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stop</string>
+   </property>
+   <property name="toolTip">
+    <string>Stop current operation</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionChnage_style">
+   <property name="text">
+    <string>Change style...</string>
+   </property>
+  </action>
+  <action name="actionMeasure_point">
+   <property name="text">
+    <string>Measure point</string>
+   </property>
+  </action>
+  <action name="actionTelescope_window">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Telescope window</string>
+   </property>
+  </action>
+  <action name="actionCircle">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_circle.png</normaloff>:/res/ico_circle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Circle...</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert circle</string>
+   </property>
+  </action>
+  <action name="actionEphemeride_list">
+   <property name="text">
+    <string>Ephemerid list...</string>
+   </property>
+  </action>
+  <action name="actionBilinear_interpolation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_bi.png</normaloff>:/res/ico_bi.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bilinear interpolation</string>
+   </property>
+   <property name="toolTip">
+    <string>Enable/Disable bilinear interpolation</string>
+   </property>
+  </action>
+  <action name="actionPolaris_Hour_Angle">
+   <property name="text">
+    <string>Polaris Hour Angle...</string>
+   </property>
+  </action>
+  <action name="actionDeep_Sky_Objects">
+   <property name="text">
+    <string>Deep Sky Objects...</string>
+   </property>
+  </action>
+  <action name="actionTime_lapse">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_timelapse.png</normaloff>:/res/ico_timelapse.png</iconset>
+   </property>
+   <property name="text">
+    <string>Time-lapse</string>
+   </property>
+   <property name="toolTip">
+    <string>Time-lapse</string>
+   </property>
+  </action>
+  <action name="actionDeep_sky_galery">
+   <property name="text">
+    <string>Image gallery...</string>
+   </property>
+  </action>
+  <action name="actionSet_horizon">
+   <property name="text">
+    <string>Set horizon...</string>
+   </property>
+  </action>
+  <action name="actionKeyboard_reference">
+   <property name="text">
+    <string>Keyboard reference...</string>
+   </property>
+  </action>
+  <action name="actionChange_language">
+   <property name="text">
+    <string>Change language...</string>
+   </property>
+  </action>
+  <action name="actionReset_magnitude">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_mag_reset.png</normaloff>:/res/ico_mag_reset.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset magnitude</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset magniture to current FOV.</string>
+   </property>
+  </action>
+  <action name="actionTime_Lapse_prefs">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_tool.png</normaloff>:/res/ico_tool.png</iconset>
+   </property>
+   <property name="text">
+    <string>Time-Lapse Preferences</string>
+   </property>
+   <property name="toolTip">
+    <string>Set time-lapse preferences</string>
+   </property>
+  </action>
+  <action name="actionShow_help">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/blue-home-icon.png</normaloff>:/res/blue-home-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show help...</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionNight_mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Night mode</string>
+   </property>
+  </action>
+  <action name="actionSolar_system_2">
+   <property name="text">
+    <string>Solar system...</string>
+   </property>
+  </action>
+  <action name="action_Constellation">
+   <property name="text">
+    <string>&amp;Constellation...</string>
+   </property>
+  </action>
+  <action name="actionTime_dialog">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_clock.png</normaloff>:/res/ico_clock.png</iconset>
+   </property>
+   <property name="text">
+    <string>Time dialog</string>
+   </property>
+   <property name="toolTip">
+    <string>Open/Close time dialog</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionList_of_drawings">
+   <property name="text">
+    <string>List of drawings...</string>
+   </property>
+  </action>
+  <action name="actionLock_FOV">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/res/ico_lock_mag.png</normaloff>:/res/ico_lock_mag.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock FOV</string>
+   </property>
+   <property name="toolTip">
+    <string>Locking automatic changes of field of view.</string>
+   </property>
+  </action>
+  <action name="actionPlanet_altitude">
+   <property name="text">
+    <string>Planet altitude...</string>
+   </property>
+  </action>
+  <action name="actionActual_weather">
+   <property name="text">
+    <string>Actual weather...</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+  <customwidget>
+   <class>CMapView</class>
+   <extends>QWidget</extends>
+   <header location="global">cmapview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CLvQInfo</class>
+   <extends>QTreeView</extends>
+   <header>clvqinfo.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CMultiProgress</class>
+   <extends>QWidget</extends>
+   <header>cmultiprogress.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
