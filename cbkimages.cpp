@@ -196,6 +196,18 @@ void CBkImages::renderDSSFits(QImage *pDst, CSkPainter *p, CFits *fit)
     p->drawLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy);
 
     // TODO: doplnit nazev
+    QPoint ptText = QPoint(0, 0);
+
+    for (int i = 0; i < 4; i++)
+    {
+      ptText += QPoint(pt[i].sx, pt[i].sy);
+    }
+    ptText /= 4;
+
+    setSetFontColor(FONT_DRAWING, p);
+    setSetFont(FONT_DRAWING, p);
+
+    p->drawCText(ptText.x(), ptText.y(), fit->m_name);
   }
 }
 

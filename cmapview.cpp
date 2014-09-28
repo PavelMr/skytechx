@@ -558,9 +558,7 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
   }
 
   if (m_bZoomByMouse)
-  { // zoom map
-    m_bZoomByMouse = false;
-
+  { // zoom map    
     QRect  rc(m_zoomPoint, m_lastMousePos);
     double x, y;
 
@@ -569,6 +567,7 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
     {
       centerMap(x, y, fov);
     }
+    m_bZoomByMouse = false;
   }
 
   repaintMap(true);
@@ -978,7 +977,7 @@ void CMapView::centerMap(double ra, double dec, double fov)
   if (dec != CM_UNDEF)
     m_mapView.y = dec;
 
-  if (fov != CM_UNDEF && !g_lockFOV)
+  if ((fov != CM_UNDEF && !g_lockFOV) || (m_bZoomByMouse && fov != CM_UNDEF))
     m_mapView.fov = fov;
 
   m_mapView.fov = CLAMP(m_mapView.fov, MIN_MAP_FOV, MAX_MAP_FOV);

@@ -446,20 +446,24 @@ static bool comSolve2(comet_t *a, double jdt)
 bool comSolve(comet_t *a, double jdt)
 /////////////////////////////////////
 {
-  static double lastJD = -1;
+  static double lastJD = -1;  
 
-  if (lastJD != jdt)
+  #pragma omp critical
   {
-    cAstro.calcPlanet(PT_SUN, &sunOrbit);
+    if (lastJD != jdt)
+    {
+      cAstro.calcPlanet(PT_SUN, &sunOrbit);
 
-    xs = sunOrbit.r * cos(sunOrbit.hLon) * cos(sunOrbit.hLat);
-    ys = sunOrbit.r * sin(sunOrbit.hLon) * cos(sunOrbit.hLat);
-    zs = sunOrbit.r                      * sin(sunOrbit.hLat);
+      xs = sunOrbit.r * cos(sunOrbit.hLon) * cos(sunOrbit.hLat);
+      ys = sunOrbit.r * sin(sunOrbit.hLon) * cos(sunOrbit.hLat);
+      zs = sunOrbit.r                      * sin(sunOrbit.hLat);
 
-    lastJD = jdt;
+      lastJD = jdt;
+    }
   }
 
-  a->lastJD = jdt;
+  a->lastJD = jdt;  
+
   return(comSolve2(a, jdt));
 }
 

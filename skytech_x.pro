@@ -10,16 +10,14 @@ CONFIG   += axcontainer
 CONFIG   += plugin
 CONFIG   += c++11
 
-#Release:DEFINES  += QT_NO_DEBUG_OUTPUT
-
-DEFINES  += _CRT_SECURE_NO_WARNINGS
+DEFINES  += QT_NO_DEBUG_OUTPUT
 
 Release:win32-g++ : QMAKE_CXXFLAGS += -Wall -Wextra -O3 -ffast-math -fopenmp -shared
 Debug:win32-g++ : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
 win32-g++ : LIBS += -lgomp
 
-win32-msvc2010 :  QMAKE_CXXFLAGS += /openmp /arch:SSE /arch:SSE2 /O2 /GL /GS- /GA
-win32-msvc2010 :  QMAKE_LFLAGS += /LTCG
+#win32-msvc2010 :  QMAKE_CXXFLAGS += /openmp /arch:SSE /arch:SSE2 /O2 /GL /GS- /GA
+#win32-msvc2010 :  QMAKE_LFLAGS += /LTCG
 
 TARGET = skytech_x
 TEMPLATE = app
@@ -318,7 +316,8 @@ HEADERS  += mainwindow.h \
     csignspinbox.h \
     cplanetaltitude.h \
     cweather.h \
-    ceditsearch.h
+    ceditsearch.h \
+    build.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -384,12 +383,6 @@ FORMS    += mainwindow.ui \
     cplanetaltitude.ui \
     cweather.ui
 
-OTHER_FILES += \
-    data/styles/night.qss \
-    data/moon/moon.dat \
-    help/keyboard.html \
-    readme_release.txt \
-    data/double_stars/double_stars.dat
 
 RESOURCES += \
     resource.qrc
