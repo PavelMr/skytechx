@@ -28,6 +28,7 @@
 #include "cgetprofile.h"
 
 extern bool g_developMode;
+extern bool g_showFps;
 extern bool g_lockFOV;
 
 QCursor cur_rotate;
@@ -588,9 +589,7 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
 ////////////////////////////////////////////////////
 void CMapView::mouseDoubleClickEvent(QMouseEvent *e)
 ////////////////////////////////////////////////////
-{
-  double x, y;
-
+{  
   //qDebug("dbl");
 
   m_bClick = false;
@@ -599,6 +598,8 @@ void CMapView::mouseDoubleClickEvent(QMouseEvent *e)
 
   if ((e->buttons() & Qt::LeftButton) == Qt::LeftButton && (e->modifiers() & Qt::ControlModifier))
   {
+    double x, y;
+
     trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), x, y);
     centerMap(x, y, m_mapView.fov * 0.5);
   }
@@ -1493,7 +1494,7 @@ void CMapView::repaintMap(bool bRepaint)
     m_mapView.dsoMag = m_mapView.dsoMagAdd + getDsoMagnitudeLevel();
     smRenderSkyMap(&m_mapView, &p, pBmp);
 
-    if (g_developMode)
+    if (g_showFps)
     {
       p.setPen(QColor(255, 255, 255));
       p.setFont(QFont("arial", 12, 250));

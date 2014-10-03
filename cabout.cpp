@@ -21,17 +21,17 @@ CAbout::CAbout(QWidget *parent) :
                                       "Copyright (C) 2013-14, Pavel Mráz<br>"
                                       "Homepage : <a href=\"http://www.skytech.4fan.cz\">www.skytech.4fan.cz</a><br>"
                                       "eMail : <a href=\"mailto:skytechx@seznam.cz\">skytechx@seznam.cz</a><br>"
+                                      "Source code : <a href=\"https://github.com/PavelMr/skytechx.git\">https://github.com/PavelMr/skytechx.git</a><br>"
                                       "<br>"
                                       "This program is free software; you can redistribute it and/or modify it "
-                                      "under the term of the GNU General Public License."
-                                      "<br>"
-                                      "<br>"
+                                      "under the term of the GNU General Public License."                                      
+                                      "<br><br>"
                                       "Release date : %2 %3<br>"
                                       "Based on Qt v%4<br>"
                                       "Release build no : %5<br></body><html>")
                                       .arg(SK_VERSION)
                                       .arg(__DATE__).arg(__TIME__)
-                                      .arg(QT_VERSION_STR)
+                                      .arg(QT_VERSION_STR)                                      
                                       .arg(_BUILD_NO_));
 
 
@@ -51,6 +51,8 @@ CAbout::CAbout(QWidget *parent) :
     ui->textEdit_source->append(text);
     i++;
   }
+  QString count = QLocale(QLocale::English).toString((qlonglong)cDSO.dsoHead.numDso);
+  ui->textEdit_source->append(QString(tr("<br>DSO object count : %1")).arg(count));
 
   ui->textEdit_source->append(tr("<br><br><b>Star catalogues</b>"));
 

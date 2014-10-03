@@ -5535,7 +5535,7 @@ které mají definovanou jasnost.</translation>
     <message>
         <location filename="cweather.cpp" line="101"/>
         <source>Humidity : </source>
-        <translation>Vlchkost : </translation>
+        <translation>Vlhkost : </translation>
     </message>
     <message>
         <location filename="cweather.cpp" line="102"/>
@@ -6563,7 +6563,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="2664"/>
         <source>Asteroids...</source>
-        <translation>Asteroid...</translation>
+        <translation>Asteroidy...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2669"/>

@@ -20,6 +20,7 @@
 
 int g_ocTreeDepth = 4;
 bool g_developMode = false;
+bool g_showFps = false;
 
 QApplication *g_pApp = NULL;
 
@@ -120,6 +121,11 @@ int main(int argc, char *argv[])
     if (getCommandParamValue(argv[i], "develop_mode=", "=", value))
     {
       g_developMode = value.toInt();
+    }
+    else
+    if (getCommandParamValue(argv[i], "show_fps", "=", value))
+    {
+      g_showFps = value.toInt();
     }
   }
 

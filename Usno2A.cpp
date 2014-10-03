@@ -6,7 +6,7 @@
 #include "Usno2A.h"
 #include "cgscreg.h"
 
-#include <stdio.h>
+#include <QtCore>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -50,7 +50,6 @@ __inline static long swap (long val)
 
   return((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | (b[3]));
 }
-
 
 /////////////////////////////////////
 void CUsno2A::setUsnoDir(QString dir)

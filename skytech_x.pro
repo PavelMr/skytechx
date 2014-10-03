@@ -12,7 +12,7 @@ CONFIG   += c++11
 
 DEFINES  += QT_NO_DEBUG_OUTPUT
 
-Release:win32-g++ : QMAKE_CXXFLAGS += -Wall -Wextra -O3 -ffast-math -fopenmp -shared
+Release:win32-g++ : QMAKE_CXXFLAGS += -march=native -O3 -ffast-math -fopenmp -fomit-frame-pointer -momit-leaf-frame-pointer -flto -fwhole-program -ftree-loop-distribution
 Debug:win32-g++ : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
 win32-g++ : LIBS += -lgomp
 
