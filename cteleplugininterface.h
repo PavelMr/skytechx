@@ -5,6 +5,10 @@
 #include <QString>
 #include <QtPlugin>
 
+#define TPI_CAN_SLEW             (1 << 0)
+#define TPI_CAN_SYNC             (1 << 1)
+#define TPI_CAN_ALT_AZM_ONLY     (1 << 2)
+
 class CTelePluginInterface : public QObject
 {
   Q_OBJECT
@@ -18,6 +22,7 @@ public:
   virtual bool disconnectDev() = 0;
   virtual bool slewTo(double ra, double dec) = 0;
   virtual bool syncTo(double ra, double dec) = 0;
+  virtual int  getAttributes() = 0;
 
   virtual QString getTelescope() = 0;
 

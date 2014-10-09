@@ -2541,8 +2541,7 @@ void MainWindow::on_actionConnect_device_triggered()
       connect(g_pTelePlugin, SIGNAL(sigUpdate(double,double)), ui->widget, SLOT(slotTelePlugChange(double,double)));
 
       if (!g_pTelePlugin->connectDev(this))
-      {
-        //g_pTelePlugin->disconnectDev();
+      {        
         tpUnloadDriver();
         ui->widget->repaintMap();
         return;
@@ -2550,6 +2549,8 @@ void MainWindow::on_actionConnect_device_triggered()
 
       ui->actionFast_250ms->setChecked(true);
       g_pTelePlugin->setRefresh(250);
+
+      qDebug() << g_pTelePlugin->getAttributes();
 
       ui->widget->m_lastTeleRaDec.Ra = CM_UNDEF;
       ui->widget->m_lastTeleRaDec.Dec = CM_UNDEF;

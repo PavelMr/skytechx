@@ -246,13 +246,24 @@ void mapObjContextMenu(CMapView *map)
   }
 
   if (g_pTelePlugin)
-  {
-    myMenu.addSeparator();
-    a = myMenu.addAction(QIcon(":res/ico_find_tele.png"), QObject::tr("Slew telescope"));
-    a->setData(-3);
-    a = myMenu.addAction(QObject::tr("Sync telescope"));
-    a->setData(-7);
-    myMenu.addSeparator();
+  {    
+    if (g_pTelePlugin->getAttributes() & TPI_CAN_SLEW)
+    {
+      myMenu.addSeparator();
+      a = myMenu.addAction(QIcon(":res/ico_find_tele.png"), QObject::tr("Slew telescope"));
+      a->setData(-3);
+    }
+
+    if (g_pTelePlugin->getAttributes() & TPI_CAN_SYNC)
+    {
+      a = myMenu.addAction(QObject::tr("Sync telescope"));
+      a->setData(-7);
+      myMenu.addSeparator();
+    }
+    else
+    {
+      myMenu.addSeparator();
+    }
   }
 
   // TODO: udelat vice (hold objectu) najednou
