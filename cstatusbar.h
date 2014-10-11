@@ -23,7 +23,7 @@ typedef struct
   int      id;
 } sbItem_t;
 
-class CStatusBar
+class CStatusBar : public QObject
 {
 public:
     CStatusBar(QStatusBar *pBar);
@@ -32,7 +32,7 @@ public:
 
 protected:
    void deleteStatusBar(void);
-   void createItem(int id, int width = 0, Qt::Alignment align = Qt::AlignHCenter);
+   void createItem(int id, const QString &tooltip, int width = 0, Qt::Alignment align = Qt::AlignHCenter);
 
    QStatusBar *pStatusBar;
    QList <sbItem_t> tItems;

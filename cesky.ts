@@ -5749,7 +5749,7 @@ které mají definovanou jasnost.</translation>
     <message>
         <location filename="mainwindow.ui" line="848"/>
         <source>Clear list</source>
-        <translation>Zmaž seznam</translation>
+        <translation type="unfinished">Smazat seznam</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="887"/>
@@ -5766,7 +5766,7 @@ které mají definovanou jasnost.</translation>
     <message>
         <location filename="mainwindow.ui" line="926"/>
         <source>Delete permanently</source>
-        <translation>Smaž permanentne...</translation>
+        <translation type="unfinished">Smazat permanentně...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="944"/>
@@ -6160,7 +6160,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="2200"/>
         <source>Atlas mode (Pole up)</source>
-        <translation>Reřim atlasu (Pól je nahoře)</translation>
+        <translation type="unfinished">Režim atlasu (Pól je nahoře)</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2203"/>

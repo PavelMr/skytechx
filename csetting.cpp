@@ -1287,7 +1287,7 @@ void CSetting::onTreeWidgetCustomContextMenuRequested(const QPoint &pos)
 
   if (widget)
   {
-    QAction *add = new QAction("Add New", this);
+    QAction *add = new QAction(tr("Add New"), this);
     add->setData(0);
     actions.append(add);
 
@@ -1295,7 +1295,7 @@ void CSetting::onTreeWidgetCustomContextMenuRequested(const QPoint &pos)
 
     if (index.isValid())
     {
-      QAction *del = new QAction("Delete " + index.model()->index(index.row(), 0).data().toString(), this);
+      QAction *del = new QAction(tr("Delete ") + index.model()->index(index.row(), 0).data().toString(), this);
       del->setData(1);
       actions.append(del);
     }

@@ -1227,14 +1227,14 @@ void CMapView::updateStatusBar(void)
     pcMainWnd->statusBar->setItem(SB_SM_CONST,QString("%1").arg(constGetName(constWhatConstel(ra, dec, m_mapView.jd), 1)));
     pcMainWnd->statusBar->setItem(SB_SM_RA,   QString(tr("R.A. : %1")).arg(getStrRA(ra)));
     pcMainWnd->statusBar->setItem(SB_SM_DEC,  QString(tr("Dec. : %1")).arg(getStrDeg(dec)));
-    pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString("FOV : %1").arg(getStrDeg(m_mapView.fov)));
-    pcMainWnd->statusBar->setItem(SB_SM_MAGS, QString("Star : %1 mag. / DSO %2 mag.").arg(m_mapView.starMag, 0, 'f', 1).arg(m_mapView.dsoMag, 0, 'f', 1));
+    pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : %1")).arg(getStrDeg(m_mapView.fov)));
+    pcMainWnd->statusBar->setItem(SB_SM_MAGS, QString(tr("Star : %1 mag. / DSO %2 mag.")).arg(m_mapView.starMag, 0, 'f', 1).arg(m_mapView.dsoMag, 0, 'f', 1));
 
     pcMainWnd->statusBar->setItem(SB_SM_ALT,   QString(tr("Alt. : %1")).arg(getStrDeg(alt)));
     pcMainWnd->statusBar->setItem(SB_SM_AZM,  QString(tr("Azm. : %1")).arg(getStrDeg(azm)));
 
-    pcMainWnd->statusBar->setItem(SB_SM_DATE,  QString("Date : %1").arg(getStrDate(m_mapView.jd, m_mapView.geo.tz)));
-    pcMainWnd->statusBar->setItem(SB_SM_TIME,  QString("Time : %1").arg(getStrTime(m_mapView.jd, m_mapView.geo.tz)));
+    pcMainWnd->statusBar->setItem(SB_SM_DATE,  QString(tr("Date : %1")).arg(getStrDate(m_mapView.jd, m_mapView.geo.tz)));
+    pcMainWnd->statusBar->setItem(SB_SM_TIME,  QString(tr("Time : %1")).arg(getStrTime(m_mapView.jd, m_mapView.geo.tz)));
 
     double sep = anSep(m_measurePoint.Ra, m_measurePoint.Dec, ra, dec);
     double ang = RAD2DEG(trfGetPosAngle(ra, dec, m_measurePoint.Ra, m_measurePoint.Dec));
