@@ -522,6 +522,7 @@ void CEventSearch::on_pushButton_2_clicked()
 
   qDebug("end = %d ms", tt.elapsed());
 
+  /*
   // save list
   SkFile f("events/default.dat");
 
@@ -535,6 +536,7 @@ void CEventSearch::on_pushButton_2_clicked()
     }
     f.close();
   }
+  */
 
   // show info
   QString str;

@@ -461,18 +461,6 @@ MainWindow::MainWindow(QWidget *parent) :
   statusBar = new CStatusBar(ui->statusBar);
   statusBar->createSkyMapBar();
 
-  /*
-  setStatusBar(0);
-  SkStatusBar *bt = new SkStatusBar(this);
-  //addToolBar(Qt::BottomToolBarArea, bt);
-  //bt->addAction("xxx");
-  bt->resize(800, 32);
-
-  bt->addItem(0, true, 300, "xxx", "R.AD");
-  bt->addItem(1, false, 135, "11");
-
-  ///////////////
-  */
   ui->widget->setFocus();
 
 #if DEBUG

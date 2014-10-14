@@ -64,8 +64,8 @@ void CStatusBar::createSkyMapBar(void)
 //////////////////////////////////////
 {
   createItem(SB_SM_CONST, tr("Constellation under cursor"), 110, Qt::AlignLeft);
-  createItem(SB_SM_DATE, tr("Current date"), 100);
-  createItem(SB_SM_TIME, tr("Current time"), 150);
+  createItem(SB_SM_DATE, tr("Map date"), 100);
+  createItem(SB_SM_TIME, tr("Map time"), 150);
   createItem(SB_SM_FOV, tr("Field of view"), 100);
   createItem(SB_SM_RA, tr("Right Ascension"), 120);
   createItem(SB_SM_DEC, tr("Declination"), 110);

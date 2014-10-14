@@ -25,6 +25,7 @@ typedef struct
 
 class CStatusBar : public QObject
 {
+  Q_OBJECT
 public:
     CStatusBar(QStatusBar *pBar);
     void setItem(int id, QString str);
