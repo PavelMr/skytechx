@@ -488,7 +488,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));
 
-  setTitle();
+  setTitle();  
 }
 
 void MainWindow::setTitle()

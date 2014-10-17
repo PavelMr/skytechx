@@ -701,7 +701,7 @@ void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
-  int  s = qMax(sx, MIN_DSO_SIZE);
+  int  s = qMax(sx, MIN_DSO_SIZE);  
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
   pPainter->drawHalfCross(pt->sx, pt->sy, s, s / 2);

@@ -50,6 +50,11 @@ void drawingSave(void)
     {
       drawing_t t = m_tList.at(i);
 
+      if (t.type == DT_NONE)
+      {
+        qDebug() << "!!!!!!!!!!!!!!!!!!! DT_NONE !!!!!!!!!!!";
+      }
+
       s << t.type;
       s << t.onScr;
       s << t.angle;

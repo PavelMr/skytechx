@@ -105,13 +105,11 @@ CMapView::CMapView(QWidget *parent) :
   setAttribute(Qt::WA_NoSystemBackground, true);
 
   m_mapView.coordType = SMCT_RA_DEC;
-  m_mapView.jd = jdGetCurrentJD();
-  m_mapView.deltaT = CM_UNDEF;
-  m_mapView.deltaTAlg = DELTA_T_ESPENAK_MEEUS_06;
+  m_mapView.jd = jdGetCurrentJD();  
   m_mapView.x = 0;
   m_mapView.y = 0;
   m_mapView.roll = 0;
-  m_mapView.fov = D2R(90);
+  m_mapView.fov = D2R(90);  
 
   m_mapView.starMag = 0;
   m_mapView.starMagAdd = 0;
@@ -120,7 +118,7 @@ CMapView::CMapView(QWidget *parent) :
   m_mapView.dsoMagAdd = 0;
 
   m_mapView.flipX = false;
-  m_mapView.flipY = false;
+  m_mapView.flipY = false;    
 
   m_mapView.deltaT = settings.value("delta_t/delta_t", CM_UNDEF).toDouble();
   m_mapView.deltaTAlg = settings.value("delta_t/delta_t_alg", DELTA_T_ESPENAK_MEEUS_06).toInt();
