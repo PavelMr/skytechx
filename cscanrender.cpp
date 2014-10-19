@@ -318,6 +318,7 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
   const quint32 *bitsSrc = (quint32 *)src->constBits();
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
+  bool bw = src->format() == QImage::Format_Indexed8;
 
   // TODO: asi dat pryc je to pomalejsi !!!!!!!
   #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
@@ -365,14 +366,30 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
     duv[1] *= tsy;
 
     quint32 *pDst = bitsDst + (y * w) + px1;
-    for (int x = px1; x <= px2; x++)
-    {
-      const quint32 *pSrc = bitsSrc + ((int)(uv[0]) + (int)(uv[1]) * sw);
-      *pDst = *pSrc;
-      pDst++;
 
-      uv[0] += duv[0];
-      uv[1] += duv[1];
+    if (bw)
+    {
+      for (int x = px1; x <= px2; x++)
+      {
+        const uchar *pSrc = (uchar *)bitsSrc + ((int)(uv[0]) + (int)(uv[1]) * sw);
+        *pDst = qRgb(*pSrc, *pSrc, *pSrc);
+        pDst++;
+
+        uv[0] += duv[0];
+        uv[1] += duv[1];
+      }
+    }
+    else
+    {
+      for (int x = px1; x <= px2; x++)
+      {
+        const quint32 *pSrc = bitsSrc + ((int)(uv[0]) + (int)(uv[1]) * sw);
+        *pDst = *pSrc;
+        pDst++;
+
+        uv[0] += duv[0];
+        uv[1] += duv[1];
+      }
     }
   }
 }
@@ -388,8 +405,10 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
   float tsx = src->width() - 1;
   float tsy = src->height() - 1;
   const quint32 *bitsSrc = (quint32 *)src->constBits();
+  const uchar *bitsSrc8 = (uchar *)src->constBits();
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
+  bool bw = src->format() == QImage::Format_Indexed8;
 
   #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
   for (int y = plMinY; y <= plMaxY; y++)
@@ -438,41 +457,74 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
     int size = sw * sh;
 
     quint32 *pDst = bitsDst + (y * w) + px1;
-    for (int x = px1; x <= px2; x++)
+    if (bw)
     {
-      float x_diff = uv[0] - static_cast<int>(uv[0]);
-      float y_diff = uv[1] - static_cast<int>(uv[1]);
-      float x_1diff = 1 - x_diff;
-      float y_1diff = 1 - y_diff;
+      for (int x = px1; x <= px2; x++)
+      {
+        float x_diff = uv[0] - static_cast<int>(uv[0]);
+        float y_diff = uv[1] - static_cast<int>(uv[1]);
+        float x_1diff = 1 - x_diff;
+        float y_1diff = 1 - y_diff;
 
-      int index = ((int)uv[0] + ((int)uv[1] * sw));
+        int index = ((int)uv[0] + ((int)uv[1] * sw));
 
-      quint32 a = bitsSrc[index];
-      quint32 b = bitsSrc[(index + 1) % size];
-      quint32 c = bitsSrc[(index + sw) % size];
-      quint32 d = bitsSrc[(index + sw + 1) % size];
+        uchar a = bitsSrc8[index];
+        uchar b = bitsSrc8[(index + 1) % size];
+        uchar c = bitsSrc8[(index + sw) % size];
+        uchar d = bitsSrc8[(index + sw + 1) % size];
 
-      // blue element
-      int blue = (a&0xff)*(x_1diff)*(y_1diff) + (b&0xff)*(x_diff)*(y_1diff) +
-                 (c&0xff)*(y_diff)*(x_1diff)   + (d&0xff)*(x_diff*y_diff);
+        int val = (a&0xff)*(x_1diff)*(y_1diff) + (b&0xff)*(x_diff)*(y_1diff) +
+                  (c&0xff)*(y_diff)*(x_1diff)   + (d&0xff)*(x_diff*y_diff);
 
-      // green element
-      int green = ((a>>8)&0xff)*(x_1diff)*(y_1diff) + ((b>>8)&0xff)*(x_diff)*(y_1diff) +
-                  ((c>>8)&0xff)*(y_diff)*(x_1diff)   + ((d>>8)&0xff)*(x_diff*y_diff);
+        // ????: pretypovani to zrychly
+        *pDst = 0xff000000 |
+                ((((int)val)<<16)&0xff0000) |
+                ((((int)val)<<8)&0xff00) |
+                ((int)val) ;
+        pDst++;
 
-      // red element
-      int red = ((a>>16)&0xff)*(x_1diff)*(y_1diff) + ((b>>16)&0xff)*(x_diff)*(y_1diff) +
-                ((c>>16)&0xff)*(y_diff)*(x_1diff)   + ((d>>16)&0xff)*(x_diff*y_diff);
+        uv[0] += duv[0];
+        uv[1] += duv[1];
+      }
+    }
+    else
+    {
+      for (int x = px1; x <= px2; x++)
+      {
+        float x_diff = uv[0] - static_cast<int>(uv[0]);
+        float y_diff = uv[1] - static_cast<int>(uv[1]);
+        float x_1diff = 1 - x_diff;
+        float y_1diff = 1 - y_diff;
 
-      // ????: pretypovani to zrychly
-      *pDst = 0xff000000 |
-              ((((int)red)<<16)&0xff0000) |
-              ((((int)green)<<8)&0xff00) |
-              ((int)blue) ;
-      pDst++;
+        int index = ((int)uv[0] + ((int)uv[1] * sw));
 
-      uv[0] += duv[0];
-      uv[1] += duv[1];
+        quint32 a = bitsSrc[index];
+        quint32 b = bitsSrc[(index + 1) % size];
+        quint32 c = bitsSrc[(index + sw) % size];
+        quint32 d = bitsSrc[(index + sw + 1) % size];
+
+        // blue element
+        int blue = (a&0xff)*(x_1diff)*(y_1diff) + (b&0xff)*(x_diff)*(y_1diff) +
+                   (c&0xff)*(y_diff)*(x_1diff)   + (d&0xff)*(x_diff*y_diff);
+
+        // green element
+        int green = ((a>>8)&0xff)*(x_1diff)*(y_1diff) + ((b>>8)&0xff)*(x_diff)*(y_1diff) +
+                    ((c>>8)&0xff)*(y_diff)*(x_1diff)   + ((d>>8)&0xff)*(x_diff*y_diff);
+
+        // red element
+        int red = ((a>>16)&0xff)*(x_1diff)*(y_1diff) + ((b>>16)&0xff)*(x_diff)*(y_1diff) +
+                  ((c>>16)&0xff)*(y_diff)*(x_1diff)   + ((d>>16)&0xff)*(x_diff*y_diff);
+
+        // ????: pretypovani to zrychly
+        *pDst = 0xff000000 |
+                ((((int)red)<<16)&0xff0000) |
+                ((((int)green)<<8)&0xff00) |
+                ((int)blue) ;
+        pDst++;
+
+        uv[0] += duv[0];
+        uv[1] += duv[1];
+      }
     }
   }
 }

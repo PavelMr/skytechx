@@ -196,7 +196,7 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
   // TODO:kontrola velikosti
   // FIXME: padato - markab / centrovat / nahrat vse dss na obr. padne (limit pameti)
   static int aa = 0;
-  m_pix = new QImage(sx, sy, QImage::Format_RGB32);
+  m_pix = new QImage(sx, sy, QImage::Format_Indexed8);
   if (m_pix == NULL || m_pix->isNull())
   {
     memOk = false;
@@ -219,7 +219,7 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
 
   for (int y = sy - 1; y >= 0; y--)
   {
-    QRgb *dst = (QRgb *)m_pix->bits() + (y * m_pix->width());
+    uchar *dst = (uchar *)m_pix->bits() + (y * m_pix->width());
     for (int x = 0; x < sx; x++)
     {
       uchar c1, c2;
@@ -235,7 +235,7 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
       if (val > 255)
         val = 255;
 
-      *dst = qRgb(val, val, val);
+      *dst = val;
       dst++;
     }
   }
