@@ -684,7 +684,7 @@ static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o
 ///////////////////////////////////////////////////////////////////////////////////
 static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////////////
-{
+{  
   orbit_t o[PT_PLANET_COUNT];
   int     order[PT_PLANET_COUNT];
   orbit_t *sun;
@@ -701,6 +701,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   bool ok;
   do
   {
+    ok = true;
     for (int i = PT_SUN; i <= PT_MOON - 1; i++)
     {
       double R0 = o[order[i]].R;
@@ -716,7 +717,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
         R1 /= 23455.0; // to AU
       }
 
-      ok = true;
+      //ok = true;
       if (R0 < R1)
       {
         qSwap(order[i], order[i + 1]);
@@ -725,8 +726,12 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     }
   } while (!ok);
 
+  //qDebug() << "";
+
   for (int i = PT_SUN; i <= PT_MOON; i++)
   {
+    //qDebug() << i << cAstro.getName(order[i]) << o[order[i]].R;
+
     SKPOINT pt;
     satxyz_t sat;
 
@@ -807,6 +812,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 
     addMapObj(pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
   }
+
 }
 
 /////////////////////////////////////////////////////////////////////

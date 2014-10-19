@@ -32,17 +32,18 @@ bool CBkImages::load(const QString name, int resizeTo)
 {
   QFileInfo fi(name);
   bkImgItem_t i;
+  bool memOk;
 
   if (!fi.suffix().compare("fits", Qt::CaseInsensitive))
   {
     CFits *f = new CFits;
 
     //qDebug() << resizeTo;
-    if (!f->load(name, true, resizeTo))
+    if (!f->load(name, memOk, true, resizeTo))
     {
       delete f;
       return(false);
-    }
+    }        
 
     i.bShow = true;
     i.filePath = name;
@@ -85,6 +86,7 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
 
   for (int i = 0; i < list.count(); i++)
   {
+    bool memOk;
     bool found = false;
     dlg.setValue(i);
     QApplication::processEvents();
@@ -110,7 +112,7 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
       continue;
 
     CFits *f = new CFits;
-    if (!f->load(fi.filePath(), false))
+    if (!f->load(fi.filePath(), memOk, false))
     {
       delete f;
     }
@@ -120,30 +122,32 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
       {
         bkImgItem_t i;
         delete f;
+        bool memOk;
 
         CFits *f = new CFits;
-        f->load(fi.filePath());
+        if (f->load(fi.filePath(), memOk))
+        {
+          i.bShow = true;
+          i.filePath = fi.filePath();
+          //qDebug("%s", qPrintable(i.filePath));
+          i.byteSize = (int)fi.size();
+          i.ptr = (void *)f;
+          i.fileName = fi.fileName();
+          i.type = BKT_DSSFITS;
+          i.rd.Ra = f->m_ra;
+          i.rd.Dec = f->m_dec;
+          i.size = anSep(f->m_cor[0].Ra, f->m_cor[0].Dec, f->m_cor[2].Ra, f->m_cor[2].Dec);
+          i.param.brightness = 0;
+          i.param.contrast = 100;
+          i.param.gamma = 150;
+          i.param.invert = false;
+          i.param.autoAdjust = false;
 
-        i.bShow = true;
-        i.filePath = fi.filePath();
-        //qDebug("%s", qPrintable(i.filePath));
-        i.byteSize = (int)fi.size();
-        i.ptr = (void *)f;
-        i.fileName = fi.fileName();
-        i.type = BKT_DSSFITS;
-        i.rd.Ra = f->m_ra;
-        i.rd.Dec = f->m_dec;
-        i.size = anSep(f->m_cor[0].Ra, f->m_cor[0].Dec, f->m_cor[2].Ra, f->m_cor[2].Dec);
-        i.param.brightness = 0;
-        i.param.contrast = 100;
-        i.param.gamma = 150;
-        i.param.invert = false;
-        i.param.autoAdjust = false;
+          m_totalSize += i.byteSize;
 
-        m_totalSize += i.byteSize;
-
-        m_tImgList.append(i);
-        //pcMainWnd->updateDSS();
+          m_tImgList.append(i);
+          //pcMainWnd->updateDSS();
+        }
       }
       else
       {

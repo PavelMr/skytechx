@@ -75,12 +75,11 @@ void CDso::load()
 
   pf.read((char *)dsoNames, dsoHead.textSegSize);
   pf.read((char *)dsoClass, dsoHead.galClassSize);
-  pf.read((char *)dsoCats, dsoHead.catNamesSize);
+  pf.read((char *)dsoCats, dsoHead.catNamesSize);  
 
   for (unsigned int i = 0; i < dsoHead.numDso; i++)
   {
     pf.read((char *)&dso[i], sizeof(dso_t));
-
 
     rangeDbl(&dso[i].rd.Ra, MPI2);
     if (dso[i].sx > 0 && dso[i].sy == 0)
@@ -88,7 +87,7 @@ void CDso::load()
       dso[i].sy = dso[i].sx;
     }
   }
-  pf.close();
+  pf.close();  
 
   //qDebug("dsoHead.numDso = %ld\n", dsoHead.numDso);
 
@@ -99,7 +98,7 @@ void CDso::load()
   qsort(dso, dsoHead.numDso, sizeof(dso_t), dsoSort1);
   //qSort(dso.begin(), dso.end(), dsoSort);
 
-  createSectors();
+  createSectors();  
 
   // assign to sectors
   for (unsigned long i = 0; i < dsoHead.numDso; i++)
@@ -107,7 +106,7 @@ void CDso::load()
     int ra  = (int)((RAD2DEG(dso[i].rd.Ra)) / DSO_SEG_SIZE);
     int dec = (int)((RAD2DEG(dso[i].rd.Dec) + 90.) / DSO_SEG_SIZE);
     tDsoSectors[(int)dec][(int)ra].append(i);
-  }
+  }  
 
   // create name map list
   for (unsigned int i = 0; i < dsoHead.numDso; i++)
@@ -369,7 +368,7 @@ int CDso::findDSO(char *pszName, dso_t **pDso)
 ///////////////////////
 void CDso::loadShapes()
 ///////////////////////
-{
+{  
   int idx = 0;
   QDir dir("data/dso/shapes/", "*.dat");
   dir.setFilter(QDir::Files);

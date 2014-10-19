@@ -15,6 +15,14 @@ CFits::CFits()
 {
   m_pix = NULL;
   m_ori = NULL;
+
+  m_inverted = false;
+  m_brightness = 100;
+  m_contrast = 100;
+  m_gamma = 1;
+  m_bAuto = false;
+  m_datamin = 0;
+  m_datamax = 0;
 }
 
 
@@ -57,12 +65,13 @@ QImage *CFits::getOriginalImage(void)
   return(m_ori);
 }
 
-///////////////////////////////////////////////////////
-bool CFits::load(QString file, bool bAll, int resizeTo)
-///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
+///////////////////////////////////////////////////////////////////
 {
   SkFile f(file);
   char chTmp[512];
+  memOk = true;
 
   QFileInfo fi(file);
 
@@ -156,7 +165,7 @@ bool CFits::load(QString file, bool bAll, int resizeTo)
   if (sig.startsWith("'-"))
     cen_rd.Dec = -cen_rd.Dec;
 
-  for (int a = 0; a <20 ;a++)
+  for (int a = 0; a < 20; a++)
   {
     QString s;
 
@@ -182,12 +191,22 @@ bool CFits::load(QString file, bool bAll, int resizeTo)
   rangeDbl(&m_cor[3].Ra, R360);
 
   if (!bAll)
-    return(true);
+    return(true);  
 
-  // kontrola velikosti
+  // TODO:kontrola velikosti
+  // FIXME: padato - markab / centrovat / nahrat vse dss na obr. padne (limit pameti)
+  static int aa = 0;
   m_pix = new QImage(sx, sy, QImage::Format_RGB32);
+  if (m_pix == NULL || m_pix->isNull())
+  {
+    memOk = false;
+    return false;
+  }
 
-  // posun se na nasledujici nasobek 2880
+  qDebug() << aa << m_pix << m_pix->bits() << m_pix->isNull() << sx << sy;
+  aa++;
+
+  // posun se na nasledujici nasobek 2880  
   long prv = f.pos();
   long al = 2880 - (prv % 2880);
   if (al != 2880)
@@ -221,7 +240,6 @@ bool CFits::load(QString file, bool bAll, int resizeTo)
     }
   }
 
-  //qDebug() << resizeTo;
   if (resizeTo != 0)
   {
     QImage tmp = m_pix->scaledToWidth(resizeTo, Qt::SmoothTransformation);
@@ -231,6 +249,13 @@ bool CFits::load(QString file, bool bAll, int resizeTo)
   }
 
   m_ori = new QImage(*m_pix);
+  if ((m_ori == NULL || m_ori->isNull()) ||
+      (m_pix == NULL || m_pix->isNull()))
+  {
+    delete m_pix;
+    memOk = false;
+    return false;
+  }
 
   return(true);
 }

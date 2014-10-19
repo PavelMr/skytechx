@@ -13,7 +13,7 @@ class CFits
 public:
     CFits();
    ~CFits();
-    bool    load(QString name, bool bAll = true, int resizeTo = 0);
+    bool    load(QString name, bool &memOk, bool bAll = true, int resizeTo = 0);
     QString getValue(QString name, QString defVal = "");
     QImage *getImage(void);
     QImage *getOriginalImage();

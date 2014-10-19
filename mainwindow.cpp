@@ -3840,7 +3840,7 @@ void MainWindow::on_treeView_2_clicked(const QModelIndex &/*index*/)
 
 void MainWindow::on_actionDeep_Sky_Objects_triggered()
 {
-  CDSOCatalogue dlg(this);
+  CDSOCatalogue dlg(this);  
 
   if (dlg.exec() == DL_OK)
   {

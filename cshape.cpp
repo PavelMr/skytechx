@@ -43,7 +43,7 @@ bool CShape::load(QString name)
         header.id[2] == 'P' &&
         header.id[3] == '1')
     {
-      shape = (shp_shape_t *)malloc(header.count * sizeof(shp_shape_t));
+      shape = (shp_shape_t *)malloc(header.count * sizeof(shp_shape_t));      
       for (int i = 0; i < header.count; i++)
       {
         count++;
@@ -58,7 +58,8 @@ bool CShape::load(QString name)
 
         shape[i].pt3d = (SKPOINT *)malloc(shape[i].numPts * sizeof(SKPOINT));
         shape[i].points = (radec_t *)malloc(shape[i].numPts * sizeof(radec_t));
-        shape[i].faces  = (int *)malloc(shape[i].numFaces * sizeof(int) * 3);
+        shape[i].faces  = (int *)malloc(shape[i].numFaces * sizeof(int) * 3);        
+
         for (int v = 0; v < shape[i].numPts; v++)
         {
           fs.readRawData((char *)&shape[i].points[v], sizeof(radec_t));
@@ -67,13 +68,12 @@ bool CShape::load(QString name)
         {
           fs.readRawData((char *)&shape[i].faces[f], sizeof(int));
         }
-      }
+      }     
     }
     else
     {
       return(false);
-    }
-
+    }    
     bReady = true;
     return(true);
   }

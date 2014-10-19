@@ -117,38 +117,38 @@ void CLoading::run()
 {
   qDebug() << "L1";
   constLoad();
-  emit sigProgress(1);
+  emit sigProgress(1);  
 
   qDebug() << "L2";
   cDSO.load();
-  emit sigProgress(2);
+  emit sigProgress(2); 
 
   qDebug() << "L3";
   cGSCReg.loadRegions();
-  emit sigProgress(3);
+  emit sigProgress(3);  
 
   qDebug() << "L4";
   cTYC.load();
-  emit sigProgress(4);
+  emit sigProgress(4);  
 
   qDebug() << "L5";
   cMilkyWay.load();
-  emit sigProgress(5);
+  emit sigProgress(5);  
 
   qDebug() << "L6";
   cSatXYZ.init();
-  emit sigProgress(6);
+  emit sigProgress(6);  
 
   qDebug() << "L7";
   QSettings set;
   curAsteroidCatName = set.value("asteroid_file", "").toString();
   astLoad(curAsteroidCatName);
-  emit sigProgress(7);
+  emit sigProgress(7);  
 
   qDebug() << "L8";
   curCometCatName = set.value("comet_file", "").toString();
   comLoad(curCometCatName);
-  emit sigProgress(8);
+  emit sigProgress(8);  
 
   qDebug() << "L9";
   g_pSunTexture = new QImage("data/sun/sun_tex.png");
@@ -157,7 +157,7 @@ void CLoading::run()
     delete g_pSunTexture;
     g_pSunTexture = NULL;
   }
-  emit sigProgress(9);
+  emit sigProgress(9);  
 
   qDebug() << "L10";
   g_pDb = new CDB(QSqlDatabase::addDatabase("QSQLITE", "sql_skytech"));
@@ -167,26 +167,26 @@ void CLoading::run()
     g_pDb->init();
   }
 
-  emit sigProgress(10);
+  emit sigProgress(10);  
 
   qDebug() << "L11";
   g_horizonName = set.value("horizon_file", "none").toString();
-  loadBackground(g_horizonName);
+  loadBackground(g_horizonName);  
 
   emit sigProgress(11);
-  cLunarFeatures.load("data/moon/moon.dat");
+  cLunarFeatures.load("data/moon/moon.dat");  
 
   emit sigProgress(12);
-  loadTracking();
+  loadTracking();  
 
   emit sigProgress(13);
-  drawingLoad();
+  drawingLoad();  
 
   emit sigProgress(14);
-  loadDSOPlugins();
+  loadDSOPlugins();  
 
   usno.setUsnoDir(set.value("usno2_path", "").toString());
-  cPPMXL.setDir(set.value("ppmxl_path", "").toString());
+  cPPMXL.setDir(set.value("ppmxl_path", "").toString());  
 
   //usno.setUsnoDir(g_skSet.map.usno2.folder);
   //cPPMXL.setDir(g_skSet.map.ppmxl.folder);
