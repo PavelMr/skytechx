@@ -596,7 +596,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>4</number>
@@ -742,7 +742,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-72</y>
           <width>331</width>
           <height>509</height>
          </rect>
@@ -1034,7 +1034,7 @@
             <number>100</number>
            </property>
            <property name="tracking">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1066,7 +1066,7 @@
             <number>100</number>
            </property>
            <property name="tracking">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1101,7 +1101,7 @@
             <number>150</number>
            </property>
            <property name="tracking">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1152,7 +1152,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>212</width>
+          <width>257</width>
           <height>524</height>
          </rect>
         </property>
@@ -1392,7 +1392,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>327</height>
+          <height>416</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1682,8 +1682,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>101</width>
+          <height>416</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1830,8 +1830,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>468</width>
+          <height>416</height>
          </rect>
         </property>
         <attribute name="label">

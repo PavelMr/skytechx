@@ -60,7 +60,7 @@ void CMultiProgress::setProgressValue(int id, int value)
   if (tMap[id] == value)
     return;
 
-  tMap[id] = value;
+  tMap[id] = value;  
 
   update();
 }

@@ -474,7 +474,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
         uchar d = bitsSrc8[(index + sw + 1) % size];
 
         int val = (a&0xff)*(x_1diff)*(y_1diff) + (b&0xff)*(x_diff)*(y_1diff) +
-                  (c&0xff)*(y_diff)*(x_1diff)   + (d&0xff)*(x_diff*y_diff);
+                  (c&0xff)*(y_diff)*(x_1diff)  + (d&0xff)*(x_diff*y_diff);
 
         // ????: pretypovani to zrychly
         *pDst = 0xff000000 |

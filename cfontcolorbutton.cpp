@@ -3,7 +3,7 @@
 CFontColorButton::CFontColorButton(QWidget *parent) :
   QPushButton  (parent)
 {
-  setText("");
+  setText("");  
 }
 
 

@@ -62,7 +62,6 @@ static bool getCommandParamValue(const QString command, const QString& param, co
   return true;
 }
 
-
 ////////////////////////////////
 int main(int argc, char *argv[])
 ////////////////////////////////
@@ -95,7 +94,7 @@ int main(int argc, char *argv[])
     a.installTranslator(&translator);
   }
 
-  g_pApp = &a;
+  g_pApp = &a; 
 
   QLocale::setDefault(QLocale::c());
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
