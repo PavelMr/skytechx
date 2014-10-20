@@ -3,6 +3,7 @@
 
 #include <QtGui>
 #include <QtWidgets>
+#include <QMouseEvent>
 
 #define SB_SEP          0
 
@@ -17,10 +18,26 @@
 #define SB_SM_ALT       9
 #define SB_SM_AZM      10
 
+class CSBLabel : public QLabel
+{
+  Q_OBJECT
+public:
+  CSBLabel(int id);
+
+protected:
+  void mouseDoubleClickEvent(QMouseEvent *);
+
+signals:
+  void sigDoubleClicked(int id);
+
+private:
+  int m_id;
+};
+
 typedef struct
 {
-  QLabel  *pLabel;
-  int      id;
+  CSBLabel  *pLabel;
+  int        id;
 } sbItem_t;
 
 class CStatusBar : public QObject
@@ -31,9 +48,15 @@ public:
     void setItem(int id, QString str);
     void createSkyMapBar(void);
 
+signals:
+  void sigDoubleClicked(int id);
+
+public slots:
+  void slotDoubleClicked(int id);
+
 protected:
    void deleteStatusBar(void);
-   void createItem(int id, const QString &tooltip, int width = 0, Qt::Alignment align = Qt::AlignHCenter);
+   QWidget *createItem(int id, const QString &tooltip, int width = 0, Qt::Alignment align = Qt::AlignHCenter);
 
    QStatusBar *pStatusBar;
    QList <sbItem_t> tItems;

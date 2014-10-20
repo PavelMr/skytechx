@@ -60,6 +60,7 @@ public:
 
   void saveAndExit();
   void timeDialogUpdate();
+
 protected:
 
   void changeEvent(QEvent *e);
@@ -458,6 +459,7 @@ private:
 
   void setTitle();
 public slots:
+  void slotStatusBarDoubleClick(int id);
   void onTreeViewDSSContextMenuRequested(QPoint pt);
   void slotDownloadError(QString str);
   void slotDockBarVis(bool vis);

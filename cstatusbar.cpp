@@ -20,14 +20,15 @@ void CStatusBar::deleteStatusBar(void)
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////
-void CStatusBar::createItem(int id,  const QString & tooltip, int width, Qt::Alignment align)
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+QWidget *CStatusBar::createItem(int id, const QString & tooltip, int width, Qt::Alignment align)
+////////////////////////////////////////////////////////////////////////////////////////////////
 {
   sbItem_t i;
 
   i.id = id;
-  i.pLabel = new QLabel();
+  i.pLabel = new CSBLabel(id);
+  connect(i.pLabel, SIGNAL(sigDoubleClicked(int)), this, SLOT(slotDoubleClicked(int)));
   i.pLabel->setAlignment(align | Qt::AlignVCenter);
   if (id == SB_SEP)
   {
@@ -42,6 +43,8 @@ void CStatusBar::createItem(int id,  const QString & tooltip, int width, Qt::Ali
   i.pLabel->setToolTip(tooltip);
 
   tItems.append(i);
+
+  return i.pLabel;
 }
 
 
@@ -76,4 +79,21 @@ void CStatusBar::createSkyMapBar(void)
 
   //QLineEdit *edit = new QLineEdit;
   //pStatusBar->addPermanentWidget(edit, 200);
+}
+
+void CStatusBar::slotDoubleClicked(int id)
+{
+  emit sigDoubleClicked(id);
+}
+
+//////////////////////////
+CSBLabel::CSBLabel(int id)
+//////////////////////////
+{
+  m_id = id;
+}
+
+void CSBLabel::mouseDoubleClickEvent(QMouseEvent *)
+{
+  emit sigDoubleClicked(m_id);
 }

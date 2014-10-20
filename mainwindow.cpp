@@ -460,6 +460,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   statusBar = new CStatusBar(ui->statusBar);
   statusBar->createSkyMapBar();
+  connect(statusBar, SIGNAL(sigDoubleClicked(int)), this, SLOT(slotStatusBarDoubleClick(int)));
 
   ui->widget->setFocus();
 
@@ -494,6 +495,28 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::setTitle()
 {
   setWindowTitle(QString("Skytech X ") + SK_VERSION + QString(tr("   Location : ")) + ui->widget->m_mapView.geo.name);
+}
+
+void MainWindow::slotStatusBarDoubleClick(int id)
+{
+  switch (id)
+  {
+    case SB_SM_CONST:
+      on_action_Constellation_triggered();
+      break;
+
+    case SB_SM_DATE:
+    case SB_SM_TIME:
+      on_actionSet_local_time_triggered();
+      break;
+
+    case SB_SM_RA:
+    case SB_SM_DEC:
+    case SB_SM_ALT:
+    case SB_SM_AZM:
+      on_actionPosition_triggered();
+      break;
+  }
 }
 
 void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
