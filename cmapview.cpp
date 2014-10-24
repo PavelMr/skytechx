@@ -311,16 +311,7 @@ void CMapView::mousePressEvent(QMouseEvent *e)
 /////////////////////////////////////////////
 void CMapView::mouseMoveEvent(QMouseEvent *e)
 /////////////////////////////////////////////
-{
-  /*
-  double mul = 1;
-
-  if (e->modifiers() & Qt::ShiftModifier)
-    mul = 0.1;
-  */
-
-  //QPoint delta = m_lastMousePos - e->pos();
-
+{ 
   if (bConstEdit && (e->buttons() & Qt::LeftButton) == Qt::LeftButton)
   {
     if (dev_move_index != -1)
@@ -416,24 +407,6 @@ void CMapView::mouseMoveEvent(QMouseEvent *e)
     repaintMap(true);
   }
 
-  /*
-  if (m_bMouseMoveMap)
-  {
-    double mulX = mul;
-    double mulY = mul;
-
-    if (m_mapView.flipX)
-      mulX *= -mulX;
-
-    if (m_mapView.flipY)
-      mulY *= -mulY;
-
-    addX(-0.002 * m_mapView.fov * delta.x() * mulX);
-    addY(-0.002 * m_mapView.fov * delta.y() * mulY);
-    repaintMap(true);
-  }
-  */
-
   if (((e->buttons() & Qt::LeftButton) == Qt::LeftButton) && m_drawing)
   {
     if (g_cDrawing.editObject(e->pos(), QPoint(m_lastMousePos - e->pos()), m_dto))
@@ -462,11 +435,49 @@ void CMapView::mouseMoveEvent(QMouseEvent *e)
     {
       setCursor(Qt::CrossCursor);
     }
+  }        
 
-  }
+  tryShowToolTip(e->pos(), QApplication::keyboardModifiers() == Qt::CTRL);
 
   m_lastMousePos = e->pos();
   repaintMap(false);
+}
+
+
+void CMapView::tryShowToolTip(const QPoint &pos, bool isPressed)
+{
+  static QWidget *widget = NULL;
+  static QLabel *label;
+
+  if (widget == NULL)
+  {
+    widget = new QWidget(this);
+    widget->resize(180, 32);
+    widget->setAttribute(Qt::WA_NoMousePropagation);
+    widget->setAttribute(Qt::WA_TransparentForMouseEvents);
+    widget->setWindowFlags(Qt::ToolTip | Qt::CustomizeWindowHint | Qt::WindowTransparentForInput | widget->windowFlags());
+    widget->show();
+
+    label = new QLabel(widget);
+    label->setContentsMargins(5, 5, 5, 5);
+    label->show();
+  }
+
+  QString toolTip = checkObjOnMap(pos);
+
+  if (!toolTip.isEmpty() && isPressed)
+  {
+    QPoint widgetPos = mapToGlobal(pos);
+    widget->show();
+    widget->move(widgetPos.x() + 10, widgetPos.y() + 10);
+    label->setText(toolTip);
+    label->adjustSize();
+    widget->adjustSize();
+  }
+  else
+  {
+    widget->hide();
+  }
 }
 
 
@@ -901,7 +912,14 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
   {
     g_cDrawing.cancel();
     repaintMap(true);
-  }
+  }  
+
+  tryShowToolTip(m_lastMousePos, key == Qt::Key_Control);
+}
+
+void CMapView::keyReleaseEvent(int key, Qt::KeyboardModifiers modf)
+{
+  tryShowToolTip(m_lastMousePos, false);
 }
 
 

@@ -621,6 +621,16 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
   ui->widget->keyEvent(e->key(), e->modifiers());
 }
 
+///////////////////////////////////////////////
+void MainWindow::keyReleaseEvent(QKeyEvent *e)
+///////////////////////////////////////////////
+{
+  if (!ui->widget->hasFocus())
+    return;
+
+  ui->widget->keyReleaseEvent(e->key(), e->modifiers());
+}
+
 ///////////////////////////////
 bool MainWindow::exitQuestion()
 ///////////////////////////////

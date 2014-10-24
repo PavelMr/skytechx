@@ -570,3 +570,41 @@ void mapObjContextMenu(CMapView *map)
   }
 }
 
+
+
+QString checkObjOnMap(const QPoint &pos)
+{
+  mapObj_t obj;
+  QString nameStr;
+  QString magStr;
+
+  if (mapObjSearch(pos.x(), pos.y(), &obj))
+  {
+    switch (obj.type)
+    {
+      case MO_TYCSTAR:
+        {
+          tychoStar_t *t;
+
+          cTYC.getStar(&t, obj.par1, obj.par2);
+
+          nameStr = QString("TYC %1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
+          magStr = getStrMag(cTYC.getVisMag(t));
+        }
+        break;
+
+    case MO_DSO:
+      {
+        dso_t *dso = (dso_t *)obj.par1;
+
+        nameStr = cDSO.getName(dso);
+        magStr = ((dso->mag != NO_DSO_MAG) ? (QString(QObject::tr("%1%2 mag.")).arg(dso->mag < 0 ? "-" : "+").arg(fabs(dso->DSO_MAG), 0, 'f', 2)) : QString(""));
+      }
+      break;
+    }
+
+    return (nameStr + "\n" + magStr).simplified();
+  }
+
+  return QString("");
+}

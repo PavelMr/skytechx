@@ -45,5 +45,6 @@ bool mapObjSnap(int x, int y, radec_t *rd);
 bool mapObjSearch(int x, int y, mapObj_t *obj);
 void recenterHoldObject(CMapView *p, bool bRepaint = true);
 void releaseHoldObject(int type);
+QString checkObjOnMap(const QPoint &pos);
 
 #endif // MAPOBJ_H

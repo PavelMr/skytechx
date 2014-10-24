@@ -66,6 +66,7 @@ public:
 
   void repaintMap(bool bRepaint = true);
   void keyEvent(int key, Qt::KeyboardModifiers modf);
+  void keyReleaseEvent(int key, Qt::KeyboardModifiers modf);
   void saveSetting(void);
   void gotoMeasurePoint(void);
 
@@ -109,6 +110,7 @@ public:
 
 protected:
   void updateStatusBar();
+  void tryShowToolTip(const QPoint &pos, bool isPressed);
 
   void paintEvent(QPaintEvent *);
   void resizeEvent(QResizeEvent *e);
