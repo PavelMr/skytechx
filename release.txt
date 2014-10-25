@@ -1,0 +1,32 @@
+=============
+SKYTECH X 0.8
+=============
+
+Opravena max. jasnost u asteroidù.
+
+
+==================
+SKYTECH X Beta 0.7
+==================
+
+Pøidána èestina.
+Opraveno vkladaní zorného pole CCD/Fotoaparátu.
+Pøidán dialog pro mazaní jednotlivých nakreslených objektù v mapì.
+Pøidan toolbar pro kreslení do mapy.
+Opraven dialog nastavení èasu.
+Pøidano nastavení maximalní magnitudy pro zobrazení asteroidù a komet.
+Opraveno øazení v katalogu Deep Sky objektù v dialogu.
+Pøidána možnost zoomování u výbìru polohy pozorovatele z mapy.
+U sítì se zobrazují souøadnice.
+Možnost zadání long. GRS na Jupiteru.
+Vylepšení ÈB tisku mapy.
+U zobrazení èasu pøidáno èasové pásmo.
+Pøidán dialog pro hledání souhvìzdí.
+Pøidán dialog pro zobrazení sluneèní soustavy.
+Pøidán plovoucí dialog pro zadání èasu.
+Pøidáno zobrazení polohy pozorovatele v hlavním oknì.
+Automatické pojmenovávání obrazkù DSS.
+Pøidán dialog aktuálního poèasí.
+Pøidan katalog LBN (do jasnosti 2)
+Plus nìjaké další drobnosti.
+

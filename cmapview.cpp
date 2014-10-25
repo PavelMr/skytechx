@@ -446,20 +446,21 @@ void CMapView::mouseMoveEvent(QMouseEvent *e)
 
 void CMapView::tryShowToolTip(const QPoint &pos, bool isPressed)
 {
-  static QWidget *widget = NULL;
+  static QFrame *widget = NULL;
   static QLabel *label;
 
   if (widget == NULL)
   {
-    widget = new QWidget(this);
+    widget = new QFrame(this);
     widget->resize(180, 32);
     widget->setAttribute(Qt::WA_NoMousePropagation);
     widget->setAttribute(Qt::WA_TransparentForMouseEvents);
-    widget->setWindowFlags(Qt::ToolTip | Qt::CustomizeWindowHint | Qt::WindowTransparentForInput | widget->windowFlags());
+    widget->setWindowFlags(Qt::ToolTip | Qt::CustomizeWindowHint | Qt::WindowTransparentForInput | widget->windowFlags());    
+    widget->setFrameStyle(QFrame::Box | QFrame::Raised);
     widget->show();
 
-    label = new QLabel(widget);
-    label->setContentsMargins(5, 5, 5, 5);
+    label = new QLabel(widget);    
+    label->setContentsMargins(8, 8, 8, 8);
     label->show();
   }
 

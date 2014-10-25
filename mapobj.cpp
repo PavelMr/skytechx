@@ -570,8 +570,6 @@ void mapObjContextMenu(CMapView *map)
   }
 }
 
-
-
 QString checkObjOnMap(const QPoint &pos)
 {
   mapObj_t obj;
@@ -583,27 +581,86 @@ QString checkObjOnMap(const QPoint &pos)
     switch (obj.type)
     {
       case MO_TYCSTAR:
-        {
-          tychoStar_t *t;
+      {
+        tychoStar_t *t;
 
-          cTYC.getStar(&t, obj.par1, obj.par2);
+        cTYC.getStar(&t, obj.par1, obj.par2);
 
-          nameStr = QString("TYC %1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
-          magStr = getStrMag(cTYC.getVisMag(t));
-        }
+        nameStr = QString("TYC %1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
+        magStr = getStrMag(cTYC.getVisMag(t));
+      }
+      break;
+
+      case MO_GSCSTAR:
+      {
+        gsc_t g;
+
+        cGSC.getStar(&g, obj.par1, obj.par2);
+        nameStr = nameStr.sprintf("GSC %d-%d", g.reg, g.id);
+        magStr = getStrMag(g.pMag);
         break;
+      }
 
-    case MO_DSO:
+      case MO_USNOSTAR:
+      {
+        usnoStar_t s;
+        usnoZone_t *z;
+
+        z = usno.getStar(&s, obj.par1, obj.par2);
+
+        nameStr = QString("USNO2 %1-%2").arg(z->zone).arg(s.id);
+        magStr = getStrMag(s.rMag);
+        break;
+      }
+
+      case MO_PPMXLSTAR:
+      {
+        ppmxlCache_t *data;
+
+        data = cPPMXL.getRegion(obj.par1);
+        ppmxl_t *star = &data->data[obj.par2];
+
+        nameStr = QString("PPMXL %1").arg(star->id);
+        magStr = getStrMag(star->mag / 1000.0);
+        break;
+      }
+
+      case MO_PLANET:
+      {
+        nameStr = cAstro.getName(obj.par1);
+        magStr = getStrMag(obj.mag);
+        break;
+      }
+
+      case MO_ASTER:
+      {
+        asteroid_t *a = (asteroid_t *)obj.par2;
+
+        nameStr = QString(a->name);
+        magStr = getStrMag(a->orbit.mag);
+        break;
+      }
+
+      case MO_COMET:
+      {
+        comet_t *c = (comet_t *)obj.par2;
+
+        nameStr = QString(c->name);
+        magStr = getStrMag(c->orbit.mag);
+        break;
+      }
+
+      case MO_DSO:
       {
         dso_t *dso = (dso_t *)obj.par1;
 
         nameStr = cDSO.getName(dso);
-        magStr = ((dso->mag != NO_DSO_MAG) ? (QString(QObject::tr("%1%2 mag.")).arg(dso->mag < 0 ? "-" : "+").arg(fabs(dso->DSO_MAG), 0, 'f', 2)) : QString(""));
+        magStr = ((dso->mag != NO_DSO_MAG) ? (getStrMag(dso->DSO_MAG)) : QString(""));
       }
       break;
     }
 
-    return (nameStr + "\n" + magStr).simplified();
+    return (nameStr + "\n" + magStr).trimmed();
   }
 
   return QString("");
