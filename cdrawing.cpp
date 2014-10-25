@@ -42,18 +42,13 @@ void drawingSave(void)
 
   if (f.open(SkFile::WriteOnly))
   {
-    int count = m_tList.count();
+    int count = m_tList.count();    
 
     s << count;
 
     for (int i = 0; i < count; i++)
     {
-      drawing_t t = m_tList.at(i);
-
-      if (t.type == DT_NONE)
-      {
-        qDebug() << "!!!!!!!!!!!!!!!!!!! DT_NONE !!!!!!!!!!!";
-      }
+      drawing_t t = m_tList.at(i);      
 
       s << t.type;
       s << t.onScr;
@@ -114,12 +109,7 @@ void drawingLoad(void)
       s >> t.text_t.text;
       s >> t.text_t.align;
       s >> t.text_t.bRect;
-      s >> t.text_t.font;
-
-      if (t.type == DT_NONE)
-      {
-        qDebug() << "load !!!!!!!!!!!!!!!!!!! DT_NONE !!!!!!!!!!!";
-      }
+      s >> t.text_t.font;      
 
       m_tList.append(t);
     }
@@ -335,6 +325,11 @@ int CDrawing::editObject(QPoint pos, QPoint delta, int op)
 void CDrawing::done()
 /////////////////////
 {
+  if (m_drawing.type == DT_NONE)
+  {
+    return;
+  }
+
   m_tList.append(m_drawing);
   m_drawing.type = DT_NONE;
   setHelpText("");
