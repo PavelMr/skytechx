@@ -116,6 +116,11 @@ void drawingLoad(void)
       s >> t.text_t.bRect;
       s >> t.text_t.font;
 
+      if (t.type == DT_NONE)
+      {
+        qDebug() << "load !!!!!!!!!!!!!!!!!!! DT_NONE !!!!!!!!!!!";
+      }
+
       m_tList.append(t);
     }
   }

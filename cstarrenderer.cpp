@@ -170,7 +170,12 @@ QPixmap CStarRenderer::getExampleStar(void)
   pt.sx = 19;
   pt.sy = 19;
 
+  double bak = g_skSet.map.star.starSizeFactor;
+  g_skSet.map.star.starSizeFactor = 0;
+
   renderStar(&pt, 0, 0, &p);
+
+  g_skSet.map.star.starSizeFactor = bak;
 
   return(pix);
 }

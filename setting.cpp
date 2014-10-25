@@ -36,7 +36,7 @@ QVariant static readVal(const QString &key, const QVariant &defaultValue, QMap <
     return map[key];
   }
 
-  qDebug() << "Not found" << key << defaultValue;
+  //qDebug() << "Not found" << key << defaultValue;
 
   return defaultValue;
 }

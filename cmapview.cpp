@@ -454,14 +454,14 @@ void CMapView::tryShowToolTip(const QPoint &pos, bool isPressed)
     widget = new QFrame(this);
     widget->resize(180, 32);
     widget->setAttribute(Qt::WA_NoMousePropagation);
-    widget->setAttribute(Qt::WA_TransparentForMouseEvents);
-    widget->setWindowFlags(Qt::ToolTip | Qt::CustomizeWindowHint | Qt::WindowTransparentForInput | widget->windowFlags());    
+    widget->setAttribute(Qt::WA_TransparentForMouseEvents);    
+    widget->setWindowFlags(Qt::FramelessWindowHint | Qt::ToolTip | Qt::CustomizeWindowHint | Qt::WindowTransparentForInput | widget->windowFlags());
     widget->setFrameStyle(QFrame::Box | QFrame::Raised);
-    widget->show();
+    widget->show();        
 
     label = new QLabel(widget);    
     label->setContentsMargins(8, 8, 8, 8);
-    label->show();
+    label->show();    
   }
 
   QString toolTip = checkObjOnMap(pos);
