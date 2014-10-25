@@ -550,6 +550,7 @@ void msgBoxError(QWidget *w, QString str)
 /////////////////////////////////////////
 {
   QMessageBox msg(QObject::tr("Error"), str, QMessageBox::Critical, QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton, w);
+  msg.setButtonText(QMessageBox::Ok, QObject::tr("Ok"));
   msg.exec();
 }
 
@@ -559,6 +560,8 @@ int msgBoxQuest(QWidget *w, QString str)
 ////////////////////////////////////////
 {
   QMessageBox msg(QObject::tr("Question"), str, QMessageBox::Question, QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton, w);
+  msg.setButtonText(QMessageBox::Yes, QObject::tr("Yes"));
+  msg.setButtonText(QMessageBox::No, QObject::tr("No"));
   return(msg.exec());
 }
 
@@ -568,6 +571,7 @@ void msgBoxInfo(QWidget *w, QString str)
 ////////////////////////////////////////
 {
   QMessageBox msg(QObject::tr("Information"), str, QMessageBox::Information, QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton, w);
+  msg.setButtonText(QMessageBox::Ok, QObject::tr("Ok"));
   msg.exec();
 }
 
