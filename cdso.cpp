@@ -762,7 +762,7 @@ void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view)
 /////////////////////////////////////////////////////////////////
 void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView)
 /////////////////////////////////////////////////////////////////
-{
+{  
   if (pDso->shape != NO_DSO_SHAPE)
   {
     if (g_showDSOShapes)

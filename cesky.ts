@@ -6853,7 +6853,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="2998"/>
         <source>Stop current operation</source>
-        <translation>Zastavý dalekohled pokud se přesouvá</translation>
+        <translation>Zastaví dalekohled pokud se přesouvá</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3006"/>

@@ -174,7 +174,8 @@ SOURCES += main.cpp\
     csignspinbox.cpp \
     cplanetaltitude.cpp \
     cweather.cpp \
-    ceditsearch.cpp
+    ceditsearch.cpp \
+    csaveimage.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -317,7 +318,8 @@ HEADERS  += mainwindow.h \
     cplanetaltitude.h \
     cweather.h \
     ceditsearch.h \
-    build.h
+    build.h \
+    csaveimage.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -381,7 +383,8 @@ FORMS    += mainwindow.ui \
     ctimedialog.ui \
     cdrawinglist.ui \
     cplanetaltitude.ui \
-    cweather.ui
+    cweather.ui \
+    csaveimage.ui
 
 
 RESOURCES += \

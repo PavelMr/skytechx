@@ -61,6 +61,7 @@
 #include "ctextsel.h"
 #include "cplanetaltitude.h"
 #include "cweather.h"
+#include "csaveimage.h"
 
 //#include "skstatusbar.h"
 
@@ -1566,11 +1567,23 @@ void MainWindow::on_actionExport_map_to_image_triggered()
 /////////////////////////////////////////////////////////
 {
   QImage *img = ui->widget->getImage();
+  int w, h, q;
+
+  CSaveImage save(this);
+
+  save.setSize(img->width(), img->height());
+  if (save.exec() != DL_OK)
+  {
+    return;
+  }
 
   QString name = QFileDialog::getSaveFileName(this, tr("Save map to image"), "untitled", "JPEG (*.jpg);;BMP (*.bmp);;PNG (*.png)");
   QFileInfo fi(name);
 
-  img->save(name, qPrintable(fi.suffix()));
+  save.getSize(w, h, q);
+
+  img->scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).save(name, qPrintable(fi.suffix()), q);
+
 }
 
 ///////////////////////////////////////////
