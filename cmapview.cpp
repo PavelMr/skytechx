@@ -101,24 +101,41 @@ CMapView::CMapView(QWidget *parent) :
   setMouseTracking(true);
   //grabKeyboard();
 
+  g_autoSave.drawing = settings.value("saving/drawing", true).toBool();
+  g_autoSave.events = settings.value("saving/events", true).toBool();
+  g_autoSave.tracking = settings.value("saving/tracking", true).toBool();
+  g_autoSave.mapPosition = settings.value("saving/mapPosition", true).toBool();
+
   setAttribute(Qt::WA_OpaquePaintEvent, true);
   setAttribute(Qt::WA_NoSystemBackground, true);
 
   m_mapView.coordType = SMCT_RA_DEC;
-  m_mapView.jd = jdGetCurrentJD();  
-  m_mapView.x = 0;
-  m_mapView.y = 0;
-  m_mapView.roll = 0;
-  m_mapView.fov = D2R(90);  
 
   m_mapView.starMag = 0;
-  m_mapView.starMagAdd = 0;
-
   m_mapView.dsoMag = 0;
+
+  m_mapView.starMagAdd = 0;
   m_mapView.dsoMagAdd = 0;
 
   m_mapView.flipX = false;
-  m_mapView.flipY = false;    
+  m_mapView.flipY = false;
+
+  if (!g_autoSave.mapPosition)
+  {
+    m_mapView.jd = jdGetCurrentJD();
+    m_mapView.x = 0;
+    m_mapView.y = 0;
+    m_mapView.roll = 0;
+    m_mapView.fov = D2R(90);
+  }
+  else
+  {
+    m_mapView.jd = settings.value("map/jd", jdGetCurrentJD()).toDouble();
+    m_mapView.x = settings.value("map/x", 0).toDouble();
+    m_mapView.y = settings.value("map/y", 0).toDouble();
+    m_mapView.roll = settings.value("map/roll", 0).toDouble();
+    m_mapView.fov = settings.value("map/fov", D2R(90)).toDouble();
+  }
 
   m_mapView.deltaT = settings.value("delta_t/delta_t", CM_UNDEF).toDouble();
   m_mapView.deltaTAlg = settings.value("delta_t/delta_t_alg", DELTA_T_ESPENAK_MEEUS_06).toInt();
@@ -133,11 +150,7 @@ CMapView::CMapView(QWidget *parent) :
   m_mapView.geo.name = settings.value("geo/name", "Unnamed").toString();
 
   m_mapView.geo.tz = m_mapView.geo.tzo + m_mapView.geo.sdlt;
-  m_mapView.geo.hash = CGeoHash::calculate(&m_mapView.geo);
-
-  g_autoSave.drawing = settings.value("saving/drawing", true).toBool();
-  g_autoSave.events = settings.value("saving/events", true).toBool();
-  g_autoSave.tracking = settings.value("saving/tracking", true).toBool();
+  m_mapView.geo.hash = CGeoHash::calculate(&m_mapView.geo);  
 
   m_lastStarMag = 0;
   m_lastDsoMag = 0;
@@ -155,7 +168,7 @@ CMapView::CMapView(QWidget *parent) :
 
   m_bCustomTele = false;
 
-  m_bInit = false;
+  m_bInit = false;    
 }
 
 
@@ -945,6 +958,16 @@ void CMapView::saveSetting()
   settings.setValue("saving/drawing", g_autoSave.drawing);
   settings.setValue("saving/events", g_autoSave.events);
   settings.setValue("saving/tracking", g_autoSave.tracking);
+  settings.setValue("saving/mapPosition", g_autoSave.mapPosition);
+
+  if (g_autoSave.mapPosition)
+  {
+    settings.setValue("map/jd", m_mapView.jd);
+    settings.setValue("map/x", m_mapView.x);
+    settings.setValue("map/y", m_mapView.y);
+    settings.setValue("map/roll", m_mapView.roll);
+    settings.setValue("map/fov", m_mapView.fov);
+  }
 }
 
 /////////////////////////////////
@@ -1028,7 +1051,7 @@ double CMapView::getStarMagnitudeLevel(void)
 ////////////////////////////////////////////
 {
   int i;
-  double mag = 1;
+  double mag = g_skSet.map.starRange[0].mag;
 
   if (m_magLock)
     return(m_lastStarMag);
@@ -1056,7 +1079,7 @@ double CMapView::getDsoMagnitudeLevel(void)
 ///////////////////////////////////////////
 {
   int i;
-  double mag = 1;
+  double mag = g_skSet.map.dsoRange[0].mag;
 
   if (m_magLock)
     return(m_lastDsoMag);
@@ -1089,7 +1112,7 @@ void CMapView::slotCheckedMagLevLock(bool checked)
 /////////////////////////////////////////////
 void CMapView::slotCheckedFlipX(bool checked)
 /////////////////////////////////////////////
-{
+{  
   m_mapView.flipX = checked;
   repaintMap();
 }

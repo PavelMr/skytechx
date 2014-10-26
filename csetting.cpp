@@ -31,6 +31,7 @@ CSetting::CSetting(QWidget *parent) :
   ui->checkBox_7->setChecked(g_autoSave.tracking);
   ui->checkBox_8->setChecked(g_autoSave.events);
   ui->checkBox_9->setChecked(g_autoSave.drawing);
+  ui->checkBox_12->setChecked(g_autoSave.mapPosition);
   ui->checkBox_10->setChecked(g_showZoomBar);
 
   connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
@@ -674,6 +675,7 @@ void CSetting::on_pushButton_clicked()
   g_autoSave.tracking = ui->checkBox_7->isChecked();
   g_autoSave.events = ui->checkBox_8->isChecked();
   g_autoSave.drawing = ui->checkBox_9->isChecked();
+  g_autoSave.mapPosition = ui->checkBox_12->isChecked();
   g_showZoomBar = ui->checkBox_10->isChecked();
 
   apply();

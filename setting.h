@@ -213,6 +213,7 @@ typedef struct
   bool tracking;
   bool drawing;
   bool events;
+  bool mapPosition;
 } setAutosave_t;
 
 typedef struct
