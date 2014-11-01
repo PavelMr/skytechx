@@ -5,6 +5,7 @@ SKYTECH X 0.8
 Opravena max. jasnost u asteroidù.
 Pøidán tool tip v mapì pøi stisku CTRL.
 Pøidán dialog pro nastavení exportu obrázkù.
+Pøidáno ukládání polohy mapy a èasu pøi ukonèení programu. (Lze vypnout v nastavní)
 
 
 ==================

@@ -490,6 +490,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));
 
+  if (g_autoSave.mapPosition)
+  {
+    int mode = settings.value("map/mode", 0).toInt();
+
+    switch (mode)
+    {
+      case SMCT_RA_DEC:
+        ui->actionAtlas_mode_Pole_Up->trigger();
+        break;
+
+      case SMCT_ALT_AZM:
+        ui->actionHorizon_mode_Zenith_up->trigger();
+        break;
+
+      case SMCT_ECL:
+        ui->actionEcliptic->trigger();
+        break;
+    }
+  }
+
   setTitle();   
 }
 
@@ -665,7 +685,7 @@ void MainWindow::saveAndExit()
   if (ui->actionNight_mode->isChecked())
   {
     restoreFromNightConfig();
-  }
+  }    
 
   if (ui->actionShow_full_screen->isChecked())
   {
@@ -690,6 +710,11 @@ void MainWindow::saveAndExit()
   settings.setValue("use_bi", scanRender.isBillinearInt());
   settings.setValue("set_profile", g_setName);
   settings.setValue("horizon_file", g_horizonName);
+
+  if (g_autoSave.mapPosition)
+  {
+    settings.setValue("map/mode", ui->widget->m_mapView.coordType);
+  }
 
   ui->widget->saveSetting();
 
