@@ -564,22 +564,15 @@ void CSetting::apply()
 
   QSettings rset;
 
-  //PPMXL
-  //QString str = ui->lineEdit_2->text();
-  //strcpy(g_skSet.map.ppmxl.folder, qPrintable(str));
-  cPPMXL.setDir(ui->lineEdit_2->text());
-
-  //PPMXL
-  ui->showPPXMLCheckBox->setChecked(set.map.ppmxl.show);
+  //PPMXL  
+  cPPMXL.setDir(ui->lineEdit_2->text());  
   rset.setValue("ppmxl_path", ui->lineEdit_2->text());
 
   g_skSet.map.ppmxl.show = ui->showPPXMLCheckBox->isChecked();
   g_skSet.map.ppmxl.fromFOV = D2R(ui->doubleSpinBox_26->value());
   g_skSet.map.ppmxl.fromMag = ui->doubleSpinBox_27->value();
 
-  //USNO2
-  //str = ui->lineEdit_3->text();
-  //strcpy(g_skSet.map.usno2.folder, qPrintable(str));
+  //USNO2  
   usno.setUsnoDir(ui->lineEdit_3->text());
   rset.setValue("usno2_path", ui->lineEdit_3->text());
 
