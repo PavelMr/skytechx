@@ -355,7 +355,7 @@ void CSelTeleField::on_pushButton_4_clicked()
   double  fov = t->par2;
   QString name = t->name;
 
-  CTeleEditDlg dlg(this, true, &focl, &fov, &name);
+  CTeleEditDlg dlg(this, false, &focl, &fov, &name);
 
   if (dlg.exec() == DL_OK)
   {
