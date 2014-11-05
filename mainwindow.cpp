@@ -251,6 +251,24 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_tele->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_drawing->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
+  QGraphicsDropShadowEffect *tbEffect[8];
+
+  for (int i = 0; i < 8; i++)
+  {
+    tbEffect[i] = new QGraphicsDropShadowEffect();
+    tbEffect[i]->setOffset(1);
+    tbEffect[i]->setBlurRadius(12);
+  }
+
+  ui->tb_alt_azm->setGraphicsEffect(tbEffect[0]);
+  ui->tb_grid->setGraphicsEffect(tbEffect[1]);
+  ui->tb_mag->setGraphicsEffect(tbEffect[2]);
+  ui->tb_search->setGraphicsEffect(tbEffect[3]);
+  ui->tb_time->setGraphicsEffect(tbEffect[4]);
+  ui->tb_view->setGraphicsEffect(tbEffect[5]);
+  ui->tb_tele->setGraphicsEffect(tbEffect[6]);
+  ui->tb_drawing->setGraphicsEffect(tbEffect[7]);
+
   /*
   ui->tb_alt_azm->setStyleSheet("font-size: 10pt;");
   ui->tb_grid->setStyleSheet("font-size: 10pt;");

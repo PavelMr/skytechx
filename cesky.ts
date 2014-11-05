@@ -4844,7 +4844,7 @@ které mají definovanou jasnost.</translation>
     <message>
         <location filename="csetting.cpp" line="1300"/>
         <source>Delete </source>
-        <translation>Smazat</translation>
+        <translation>Smazat </translation>
     </message>
     <message>
         <location filename="csetting.cpp" line="1338"/>
@@ -6159,7 +6159,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="2036"/>
         <source>&amp;About...</source>
-        <translation>&amp;O programu</translation>
+        <translation>&amp;O programu...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2045"/>
@@ -6349,7 +6349,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="2241"/>
         <source>Set current time</source>
-        <translation>Nastav aktuální čas...</translation>
+        <translation>Nastav aktuální čas</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2244"/>
@@ -6461,7 +6461,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="2342"/>
         <source>Siderical day+</source>
-        <translation>Siderický čas+</translation>
+        <translation>Siderický den+</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2347"/>
@@ -6471,7 +6471,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="2350"/>
         <source>Siderical day-</source>
-        <translation>Siderický čas-</translation>
+        <translation>Siderický den-</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2355"/>
@@ -6526,7 +6526,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="2403"/>
         <source>Star by &amp;proper name...</source>
-        <translation>&amp;Hvězdu podle vlastního jména</translation>
+        <translation>&amp;Hvězdu podle vlastního jména...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2406"/>
@@ -7259,7 +7259,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="552"/>
         <source>Rename </source>
-        <translation>Přejmenovat</translation>
+        <translation>Přejmenovat </translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="567"/>
