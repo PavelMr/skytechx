@@ -536,7 +536,7 @@
    <property name="minimumSize">
     <size>
      <width>100</width>
-     <height>276</height>
+     <height>315</height>
     </size>
    </property>
    <property name="font">
@@ -599,7 +599,7 @@
         <number>0</number>
        </property>
        <property name="tabSpacing">
-        <number>4</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="page1">
         <property name="geometry">
@@ -607,7 +607,7 @@
           <x>0</x>
           <y>0</y>
           <width>256</width>
-          <height>416</height>
+          <height>402</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1392,7 +1392,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>414</height>
+          <height>402</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1683,7 +1683,7 @@
           <x>0</x>
           <y>0</y>
           <width>101</width>
-          <height>414</height>
+          <height>402</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1831,7 +1831,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>414</height>
+          <height>402</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1967,6 +1967,8 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionGrid_label"/>
+   <addaction name="separator"/>
    <addaction name="actionAutomatic_grid"/>
    <addaction name="separator"/>
   </widget>
@@ -3199,6 +3201,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionActual_weather">
    <property name="text">
     <string>Actual weather...</string>
+   </property>
+  </action>
+  <action name="actionGrid_label">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_grid_label.png</normaloff>:/res/ico_grid_label.png</iconset>
+   </property>
+   <property name="text">
+    <string>grid label</string>
+   </property>
+   <property name="toolTip">
+    <string>Show / Hide grid labels</string>
    </property>
   </action>
  </widget>

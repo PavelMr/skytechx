@@ -455,6 +455,8 @@ private slots:
 
   void on_actionActual_weather_triggered();
 
+  void on_actionGrid_label_triggered();
+
 private:
   Ui::MainWindow *ui;
 

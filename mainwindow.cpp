@@ -63,9 +63,8 @@
 #include "cweather.h"
 #include "csaveimage.h"
 
-//#include "skstatusbar.h"
-
 // TODO: do registru???????
+
 // show/hide drawing
 bool g_showDSOShapes = true;
 bool g_showDSO = true;
@@ -214,6 +213,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionAutomatic_grid->setChecked(g_skSet.map.autoGrid);
   on_actionAutomatic_grid_triggered();
 
+  ui->actionGrid_label->setChecked(g_skSet.map.showGridLabels);
+  on_actionGrid_label_triggered();
 
   QActionGroup* group = new QActionGroup( this );
 
@@ -4266,4 +4267,11 @@ void MainWindow::on_actionActual_weather_triggered()
   CWeather dlg(this, &ui->widget->m_mapView);
 
   dlg.exec();
+}
+
+void MainWindow::on_actionGrid_label_triggered()
+{
+  g_skSet.map.showGridLabels = ui->actionGrid_label->isChecked();
+
+  ui->widget->repaintMap();
 }

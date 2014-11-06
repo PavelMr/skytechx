@@ -111,9 +111,7 @@ void CDownloadMPC::readData(bool last)
     {
       str += m_data[i];
     }
-  }
-
-  //qDebug("##################");
+  }  
 }
 
 ///////////////////////////////////////////
@@ -147,9 +145,7 @@ void CDownloadMPC::readMPCLine(QString str)
 void CDownloadMPC::readMPCLineComet(QString str)
 ////////////////////////////////////////////////
 {
-  comet_t a;
-
-  //qDebug("%s", qPrintable(str));
+  comet_t a; 
 
   if (str.length() < 102)
     return;
@@ -218,15 +214,13 @@ void CDownloadMPC::slotDownloadFinished(QNetworkReply *reply)
 {
   if (reply->error() == QNetworkReply::NoError)
   {
-    readData(true);
-    //qDebug("done");
+    readData(true);   
     done(DL_OK);
   }
   else
   { // error
     if (reply->error() != QNetworkReply::OperationCanceledError)
     {
-      //qDebug("done Error %s", qPrintable(reply->errorString()));
       msgBoxError(this, reply->errorString());
     }
   }

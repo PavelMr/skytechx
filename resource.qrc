@@ -44,5 +44,6 @@
         <file>res/ico_frame_field.png</file>
         <file>res/ico_circle.png</file>
         <file>res/ico_clock_now.png</file>
+        <file>res/ico_grid_label.png</file>
     </qresource>
 </RCC>
