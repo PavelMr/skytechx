@@ -17,10 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QComboBox" name="comboBox"/>
-     </item>
-     <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="CNameMagView" name="treeView"/>
      </item>
     </layout>
    </item>
@@ -57,6 +54,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CNameMagView</class>
+   <extends>QTreeView</extends>
+   <header>cnamemagview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -175,7 +175,8 @@ SOURCES += main.cpp\
     cplanetaltitude.cpp \
     cweather.cpp \
     ceditsearch.cpp \
-    csaveimage.cpp
+    csaveimage.cpp \
+    cnamemagview.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -319,7 +320,8 @@ HEADERS  += mainwindow.h \
     cweather.h \
     ceditsearch.h \
     build.h \
-    csaveimage.h
+    csaveimage.h \
+    cnamemagview.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \

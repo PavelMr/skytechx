@@ -1476,7 +1476,7 @@ void CMapView::printMap()
 
   m_mapView.starMag = m_mapView.starMagAdd + getStarMagnitudeLevel();
   m_mapView.dsoMag = m_mapView.dsoMagAdd + getDsoMagnitudeLevel();
-  smRenderSkyMap(&m_mapView, &p1, img);
+  smRenderSkyMap(&m_mapView, &p1, img);      
 
   p1.end();
 

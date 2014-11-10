@@ -8,12 +8,6 @@ namespace Ui {
 class CAstComSearch;
 }
 
-class CLWI_SAstCom: public QListWidgetItem
-{
-public:
-  bool operator< ( const QListWidgetItem & other ) const;
-};
-
 class CAstComSearch : public QDialog
 {
   Q_OBJECT
@@ -32,11 +26,9 @@ protected:
 private slots:
   void on_pushButton_2_clicked();
 
-  void on_pushButton_clicked();
+  void on_pushButton_clicked();  
 
-  void on_listWidget_doubleClicked(const QModelIndex &index);
-
-  void on_comboBox_currentIndexChanged(int index);
+  void on_treeView_doubleClicked(const QModelIndex &);
 
 private:
   Ui::CAstComSearch *ui;

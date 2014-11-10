@@ -1,53 +1,23 @@
 #include "cdlgsrchstarname.h"
 #include "ui_cdlgsrchstarname.h"
-
-static int g_sortIndex = 0;
-
-
-bool CLWI_SStars::operator< ( const QListWidgetItem & other ) const
-{
-  if (g_sortIndex == 0)
-    return(text() < other.text());
-  else
-  {
-    tychoStar_t *t1 = (tychoStar_t *)(data(Qt::UserRole).toInt());
-    tychoStar_t *t2 = (tychoStar_t *)(other.data(Qt::UserRole).toInt());
-
-    double m1 = cTYC.getVisMag(t1);
-    double m2 = cTYC.getVisMag(t2);
-
-    return(m1 < m2);
-  }
-}
-
+#include "cnamemagview.h"
 
 CDlgSrchStarName::CDlgSrchStarName(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::CDlgSrchStarName)
 {
   ui->setupUi(this);
-  //setFixedSize(size());
 
   for (int i = 0; i < cTYC.tNames.count(); i++)
   {
     int offs = cTYC.tNames[i]->supIndex;
-    QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);
+    QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);    
+    tychoStar_t *tycho = (tychoStar_t *)cTYC.tNames[i];
 
-    CLWI_SStars *item = new CLWI_SStars;
+    ui->treeView->addRow(name, cTYC.getVisMag(tycho), (int)cTYC.tNames[i]);
+  }    
 
-    item->setText(name);
-    item->setData(Qt::UserRole, (int)cTYC.tNames[i]);
-
-    ui->listWidget->addItem(item);
-  }
-
-  ui->comboBox->addItem(tr("Sort in Alphabetical order"));
-  ui->comboBox->addItem(tr("Sort by magnitude"));
-  ui->comboBox->setCurrentIndex(g_sortIndex);
-
-  connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(sort()));
-
-  sort();
+  ui->treeView->setHeaderSize(180, 60);
 }
 
 CDlgSrchStarName::~CDlgSrchStarName()
@@ -67,24 +37,18 @@ void CDlgSrchStarName::changeEvent(QEvent *e)
   }
 }
 
-/////////////////////////////
-void CDlgSrchStarName::sort()
-/////////////////////////////
-{
-  g_sortIndex = ui->comboBox->currentIndex();
-  ui->listWidget->sortItems();
-}
-
 //////////////////////////////////////////////
 void CDlgSrchStarName::on_pushButton_clicked()
 //////////////////////////////////////////////
 {
-  QList <QListWidgetItem *> item = ui->listWidget->selectedItems();
+  QVariant data = ui->treeView->getSelectedData();
 
-  if (item.count() == 0)
+  if (!data.isValid())
+  {
     return;
+  }
 
-  m_tycho = (tychoStar_t *)(item[0]->data(Qt::UserRole).toInt());
+  m_tycho = (tychoStar_t *)data.toInt();
 
   done(DL_OK);
 }
@@ -96,9 +60,7 @@ void CDlgSrchStarName::on_pushButton_2_clicked()
   done(DL_CANCEL);
 }
 
-////////////////////////////////////////////////////////////////////////////
-void CDlgSrchStarName::on_listWidget_doubleClicked(const QModelIndex &/*index*/)
-////////////////////////////////////////////////////////////////////////////
+void CDlgSrchStarName::on_treeView_doubleClicked(const QModelIndex &)
 {
   on_pushButton_clicked();
 }

@@ -26,16 +26,13 @@ public:
   
 protected:
   void changeEvent(QEvent *e);
-
-public slots:
-  void sort(void);
   
 private slots:
   void on_pushButton_clicked();
 
-  void on_pushButton_2_clicked();
+  void on_pushButton_2_clicked();  
 
-  void on_listWidget_doubleClicked(const QModelIndex &index);
+  void on_treeView_doubleClicked(const QModelIndex &);
 
 private:
   Ui::CDlgSrchStarName *ui;
