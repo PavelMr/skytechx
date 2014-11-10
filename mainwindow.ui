@@ -2188,6 +2188,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Print...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
   </action>
   <action name="actionCopy_map_to_clipboard">
    <property name="text">
@@ -2474,6 +2477,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Ecliptic coordinates</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
   <action name="actionGalactic_coordinates">
@@ -3012,6 +3018,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Measure point</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
   </action>
   <action name="actionTelescope_window">
    <property name="checkable">
@@ -3143,6 +3152,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Night mode</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="actionSolar_system_2">

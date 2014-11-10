@@ -845,7 +845,7 @@ void setPrintConfig(void)
 
   g_skSet.map.measurePoint.color = lred;
 
-  // planets
+  // planets  
   g_skSet.map.planet.penColor = lred;
   g_skSet.map.planet.brColor = lred2;
   g_skSet.map.planet.satColor = lred;
