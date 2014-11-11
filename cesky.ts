@@ -1667,7 +1667,7 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     <message>
         <location filename="ceventsearch.ui" line="99"/>
         <source>Maximum elongation</source>
-        <translation>Nejvetší elongace</translation>
+        <translation>Největší elongace</translation>
     </message>
     <message>
         <location filename="ceventsearch.ui" line="106"/>
@@ -7139,7 +7139,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="337"/>
         <source>Max. elongation of </source>
-        <translation>Nejvetší elongace </translation>
+        <translation>Největší elongace </translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="338"/>
@@ -7381,7 +7381,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="1074"/>
         <source>Greatest transit</source>
-        <translation>Nejvetší přechod</translation>
+        <translation>Největší přechod</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="1088"/>

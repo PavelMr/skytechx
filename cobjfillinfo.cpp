@@ -423,6 +423,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, txRA, getStrRA(ra));
   addTextItem(item, txDec, getStrDeg(dec));
   addTextItem(item, tr("R"), QString::number(a->orbit.R) + tr("AU"));
+  addTextItem(item, tr("Light time"), QString::number(a->orbit.light * 24.) + tr(" hours"));
   addSeparator(item);
 
   addLabelItem(item, tr("Heliocentric information"));
@@ -451,15 +452,16 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   else
   {
     addTextItem(item, label, tr("Non periodic"));
-  }
-
-  qDebug() << (1 / a->orbit.r) << (1 / (2 * a->q));
+  }  
 
   double v;
   if (a->e < 1)
-    v = 42.1219 * sqrt((1 / a->orbit.r) - (1 / (2 * a->q)));
+  {
+    double ap = a->q / (1 - a->e);
+    v = 42.1219 * sqrt((1 / a->orbit.r) - (1 / (2 * ap)));
+  }
   else
-    v = 42.1219 * sqrt(1 / a->orbit.r);
+    v = 42.1219 * sqrt(1 / a->orbit.r);  
 
   addTextItem(item, tr("Current speed"), QString("%1").arg(v, 0, 'f', 3) + tr(" km/s"));
   addSeparator(item);

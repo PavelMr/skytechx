@@ -46,7 +46,7 @@ void CEarthMapView::paintEvent(QPaintEvent *)
 
   p.save();
 
-  p.translate(width() / 2, height() / 2);
+  p.translate(width() / 2.0, height() / 2.0);
   p.scale(m_scale, m_scale);
   p.drawPixmap(-m_cx, -m_cy, *m_pixmap);
 
@@ -76,10 +76,11 @@ void CEarthMapView::paintEvent(QPaintEvent *)
   }
 
   p.setPen(QColor(200, 200, 0));
+  p.setOpacity(0.5);
   for (int i = 0; i < m_list.count(); i++)
   {
-    coord2Screen(m_list[i].x(), m_list[i].y(), ox, oy);
-    p.drawPoint(ox, oy);
+    coord2Screen(m_list[i].x(), m_list[i].y(), ox, oy);    
+    p.drawCross(ox, oy, 1);
   }
 }
 
