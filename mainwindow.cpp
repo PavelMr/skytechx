@@ -63,23 +63,22 @@
 #include "cweather.h"
 #include "csaveimage.h"
 
-// TODO: do registru???????
-
 // show/hide drawing
-bool g_showDSOShapes = true;
-bool g_showDSO = true;
-bool g_showStars = true;
-bool g_showConstLines = true;
-bool g_showConstBnd = true;
-bool g_showSS = true;
-bool g_showMW = true;
-bool g_showGrids = true;
-bool g_showAsteroids = true;
-bool g_showComets = true;
-bool g_showLegends = true;
-bool g_showLabels = true;
+bool g_showDSOShapes = false;
+bool g_showDSO = false;
+bool g_showStars = false;
+bool g_showConstLines = false;
+bool g_showConstBnd = false;
+bool g_showSS = false;
+bool g_showMW = false;
+bool g_showGrids = false;
+bool g_showAsteroids = false;
+bool g_showComets = false;
+bool g_showLegends = false;
+bool g_showLabels = false;
+
 bool g_bilinearInt = false;
-bool g_showZoomBar = false;
+bool g_showZoomBar = true;
 bool g_showDSSFrameName = true;
 
 bool g_lockFOV = false;
@@ -529,6 +528,36 @@ MainWindow::MainWindow(QWidget *parent) :
     }
   }
 
+  g_showDSOShapes = settings.value("show_dso_shapes", true).toBool();
+  g_showDSO = settings.value("show_dso", true).toBool();
+  g_showStars = settings.value("show_stars", true).toBool();
+  g_showConstLines = settings.value("show_const_lines", true).toBool();
+  g_showConstBnd = settings.value("show_const_bnd", true).toBool();
+  g_showSS = settings.value("show_ss", true).toBool();
+  g_showMW = settings.value("show_mw", true).toBool();
+  g_showGrids = settings.value("show_grids", true).toBool();
+  g_showAsteroids = settings.value("show_asteroids", true).toBool();
+  g_showComets = settings.value("show_comets", true).toBool();
+  g_showLegends = settings.value("show_legends", true).toBool();
+  g_showLabels = settings.value("show_labels", true).toBool();
+
+  ui->actionStars->setChecked(g_showStars);
+  ui->actionConstellation_lines->setChecked(g_showConstLines);
+  ui->actionConstellation_boundaries->setChecked(g_showConstBnd);
+  ui->actionDSO->setChecked(g_showDSO);
+  ui->checkBox->setEnabled(g_showDSO);
+  ui->actionDSO_Shapes->setEnabled(g_showDSO);
+  ui->actionMilkyway->setChecked(g_showMW);
+  ui->actionSolar_system->setChecked(g_showSS);
+  ui->action_Asteroids1->setChecked(g_showAsteroids);
+  ui->actionComets_2->setChecked(g_showComets);
+  ui->actionLegends->setChecked(g_showLegends);
+  ui->actionLabels->setChecked(g_showLabels);
+  ui->actionGrids->setChecked(g_showGrids);
+  ui->tb_grid->setEnabled(g_showGrids);
+  ui->actionDSO_Shapes->setChecked(g_showDSOShapes);
+  ui->checkBox->setChecked(g_showDSOShapes);
+
   setTitle();   
 }
 
@@ -719,6 +748,19 @@ void MainWindow::saveAndExit()
   }
 
   QSettings settings;
+
+  settings.setValue("show_dso_shapes", g_showDSOShapes);
+  settings.setValue("show_dso", g_showDSO);
+  settings.setValue("show_stars", g_showStars);
+  settings.setValue("show_const_lines", g_showConstLines);
+  settings.setValue("show_const_bnd", g_showConstBnd);
+  settings.setValue("show_ss", g_showSS);
+  settings.setValue("show_mw", g_showMW);
+  settings.setValue("show_grids", g_showGrids);
+  settings.setValue("show_asteroids", g_showAsteroids);
+  settings.setValue("show_comets", g_showComets);
+  settings.setValue("show_legends", g_showLegends);
+  settings.setValue("show_labels", g_showLabels);
 
   settings.setValue("mainWindowGeometry", saveGeometry());
   settings.setValue("mainWindowState", saveState());

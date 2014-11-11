@@ -238,15 +238,15 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
       }
 
       int r = 3 + cStarRenderer.renderStar(&pt, sp, mag, pPainter);
-      addMapObj(pt.sx, pt.sy, MO_TYCSTAR, MO_CIRCLE, r + 4, region, j, mag);
-
-      //if (mapView->fov > D2R(50))
-        //continue;
+      addMapObj(pt.sx, pt.sy, MO_TYCSTAR, MO_CIRCLE, r + 4, region, j, mag);      
 
       if (!g_showLabels)
+      {
         continue;
+      }
 
-      if (propName.count() > 0 && mapView->fov <= g_skSet.map.star.propNamesFromFov)
+      // TODO: better compare
+      if (propName.count() > 0 && mapView->fov <= g_skSet.map.star.propNamesFromFov + 0.0001)
       {
         if (propNamePriority)
         {
@@ -904,14 +904,19 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
   trackRender(mapView, pPainter);
 
+  // TODO: sort by distance
+  if (g_showAsteroids)
+  {
+    astRender(pPainter, mapView, mapView->starMag);
+  }
+
+  if (g_showComets)
+  {
+    comRender(pPainter, mapView, mapView->starMag);
+  }
+
   if (g_showSS)
-  { // render solar system
-    if (g_showAsteroids)
-      astRender(pPainter, mapView, mapView->starMag);
-
-    if (g_showComets)
-      comRender(pPainter, mapView, mapView->starMag);
-
+  {
     smRenderPlanets(mapView, pPainter, pImg);
   }
 
