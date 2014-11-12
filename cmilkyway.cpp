@@ -26,10 +26,17 @@ void CMilkyWay::render(mapView_t *view, CSkPainter *pPainter, QImage *pImg)
   QColor cols[2];
 
   if (!g_skSet.map.milkyWay.bShow)
+  {
     return;
+  }
 
-  cols[0] = col.lighter(100 + g_skSet.map.milkyWay.light);
-  cols[1] = col.lighter(100 + g_skSet.map.milkyWay.dark);
+  cols[0] = QColor(CLAMP(col.red() + g_skSet.map.milkyWay.light, 0, 255),
+                   CLAMP(col.green() + g_skSet.map.milkyWay.light, 0, 255),
+                   CLAMP(col.blue() + g_skSet.map.milkyWay.light, 0, 255));
+
+  cols[1] = QColor(CLAMP(col.red() + g_skSet.map.milkyWay.dark, 0, 255),
+                   CLAMP(col.green() + g_skSet.map.milkyWay.dark, 0, 255),
+                   CLAMP(col.blue() + g_skSet.map.milkyWay.dark, 0, 255));
 
   shape.render(pPainter, pImg, view, cols, rc);
 }

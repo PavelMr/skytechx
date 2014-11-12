@@ -65,7 +65,7 @@
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="documentMode">
     <bool>false</bool>
@@ -198,7 +198,7 @@
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="currentIndex">
-      <number>9</number>
+      <number>11</number>
      </property>
      <widget class="QWidget" name="stackedWidget_2Page1">
       <widget class="QDoubleSpinBox" name="doubleSpinBox">
@@ -1930,6 +1930,9 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksAbove</enum>
+       </property>
       </widget>
       <widget class="QLabel" name="label_13">
        <property name="geometry">
@@ -2091,7 +2094,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -2124,6 +2127,9 @@
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksAbove</enum>
          </property>
         </widget>
         <widget class="CPushColorButton" name="pushButton_22">
@@ -2463,6 +2469,9 @@
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksAbove</enum>
          </property>
         </widget>
         <widget class="QLabel" name="label_54">
@@ -2909,13 +2918,16 @@
         </rect>
        </property>
        <property name="minimum">
-        <number>-100</number>
+        <number>-50</number>
        </property>
        <property name="maximum">
-        <number>100</number>
+        <number>50</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksAbove</enum>
        </property>
       </widget>
       <widget class="QSlider" name="horizontalSlider_14">
@@ -2928,16 +2940,16 @@
         </rect>
        </property>
        <property name="minimum">
-        <number>-100</number>
+        <number>-50</number>
        </property>
        <property name="maximum">
-        <number>100</number>
+        <number>50</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="tickPosition">
-        <enum>QSlider::NoTicks</enum>
+        <enum>QSlider::TicksAbove</enum>
        </property>
       </widget>
       <widget class="QLabel" name="label_34">
