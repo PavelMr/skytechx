@@ -134,7 +134,7 @@ CMapView::CMapView(QWidget *parent) :
     m_mapView.x = settings.value("map/x", 0).toDouble();
     m_mapView.y = settings.value("map/y", 0).toDouble();
     m_mapView.roll = settings.value("map/roll", 0).toDouble();
-    m_mapView.fov = settings.value("map/fov", D2R(90)).toDouble();
+    m_mapView.fov = settings.value("map/fov", D2R(90)).toDouble();   
   }
 
   m_mapView.deltaT = settings.value("delta_t/delta_t", CM_UNDEF).toDouble();

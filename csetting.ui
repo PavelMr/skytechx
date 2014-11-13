@@ -198,7 +198,7 @@
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="currentIndex">
-      <number>11</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="stackedWidget_2Page1">
       <widget class="QDoubleSpinBox" name="doubleSpinBox">
@@ -1984,6 +1984,19 @@
        </property>
        <property name="text">
         <string>Horizon font &amp; color</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="cb_hor_show_alt_azm">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>180</y>
+         <width>301</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Show horizon only in Alt/Azm mode</string>
        </property>
       </widget>
      </widget>

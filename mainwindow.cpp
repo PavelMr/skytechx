@@ -506,16 +506,19 @@ MainWindow::MainWindow(QWidget *parent) :
   tb->addAction(ui->webView->pageAction(QWebPage::Stop));
   tb->addAction(ui->actionShow_help);
 
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));
+  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));  
 
   if (g_autoSave.mapPosition)
   {
     int mode = settings.value("map/mode", 0).toInt();
+    ui->widget->m_mapView.coordType = mode;
+
+    m_noRecalculateView = true;
 
     switch (mode)
     {
       case SMCT_RA_DEC:
-        ui->actionAtlas_mode_Pole_Up->trigger();
+        ui->actionAtlas_mode_Pole_Up->trigger();        
         break;
 
       case SMCT_ALT_AZM:
@@ -526,6 +529,8 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->actionEcliptic->trigger();
         break;
     }
+
+    m_noRecalculateView = false;
   }
 
   g_showDSOShapes = settings.value("show_dso_shapes", true).toBool();
@@ -1691,7 +1696,10 @@ void MainWindow::on_actionCopy_map_to_clipboard_triggered()
 void MainWindow::on_actionAtlas_mode_Pole_Up_triggered()
 ////////////////////////////////////////////////////////
 {
-  ui->widget->changeMapView(SMCT_RA_DEC);
+  if (!m_noRecalculateView)
+  {
+    ui->widget->changeMapView(SMCT_RA_DEC);
+  }
 
   ui->actionAtlas_mode_Pole_Up->setChecked(true);
   ui->actionHorizon_mode_Zenith_up->setChecked(false);
@@ -1704,7 +1712,10 @@ void MainWindow::on_actionAtlas_mode_Pole_Up_triggered()
 void MainWindow::on_actionHorizon_mode_Zenith_up_triggered()
 ////////////////////////////////////////////////////////////
 {
-  ui->widget->changeMapView(SMCT_ALT_AZM);
+  if (!m_noRecalculateView)
+  {
+    ui->widget->changeMapView(SMCT_ALT_AZM);
+  }
 
   ui->actionAtlas_mode_Pole_Up->setChecked(false);
   ui->actionHorizon_mode_Zenith_up->setChecked(true);
@@ -1718,7 +1729,10 @@ void MainWindow::on_actionHorizon_mode_Zenith_up_triggered()
 void MainWindow::on_actionEcliptic_triggered()
 //////////////////////////////////////////////
 {
-  ui->widget->changeMapView(SMCT_ECL);
+  if (!m_noRecalculateView)
+  {
+    ui->widget->changeMapView(SMCT_ECL);
+  }
 
   ui->actionAtlas_mode_Pole_Up->setChecked(false);
   ui->actionHorizon_mode_Zenith_up->setChecked(false);
@@ -1731,7 +1745,10 @@ void MainWindow::on_actionEcliptic_triggered()
 void MainWindow::on_actionGalactic_coordinates_triggered()
 //////////////////////////////////////////////////////////
 {
-  ui->widget->changeMapView(SMCT_GAL);
+  if (!m_noRecalculateView)
+  {
+    ui->widget->changeMapView(SMCT_GAL);
+  }
 
   ui->actionAtlas_mode_Pole_Up->setChecked(false);
   ui->actionHorizon_mode_Zenith_up->setChecked(false);

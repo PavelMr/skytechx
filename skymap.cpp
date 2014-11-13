@@ -920,7 +920,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     smRenderPlanets(mapView, pPainter, pImg);
   }
 
-  if (mapView->coordType == SMCT_ALT_AZM)
+  if (!g_skSet.map.hor.cb_hor_show_alt_azm || (g_skSet.map.hor.cb_hor_show_alt_azm && mapView->coordType == SMCT_ALT_AZM))
   {
     renderHorizonBk(mapView, pPainter, pImg);
   }

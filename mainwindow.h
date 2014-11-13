@@ -97,6 +97,7 @@ protected:
   CTimeWidget    *m_timeWidget;
   CTimeDialog    *m_timeDialog;
   bool            m_isNormal;
+  bool            m_noRecalculateView;
 
 private slots:
   void on_action_Exit_2_triggered();

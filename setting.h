@@ -124,6 +124,7 @@ typedef struct
 {
   QRgb  color;
   int   alpha;
+  bool  cb_hor_show_alt_azm;
 } horizon_t;
 
 typedef struct

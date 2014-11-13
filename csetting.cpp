@@ -282,6 +282,7 @@ void CSetting::setValues()
   ui->pushButton_10->setColor(set.map.hor.color);
   ui->horizontalSlider_11->setValue(g_skSet.map.hor.alpha);
   ui->pushButton_12->setFontColor(setFonts[FONT_HORIZON], set.fonst[FONT_HORIZON].color);
+  ui->cb_hor_show_alt_azm->setChecked(g_skSet.map.hor.cb_hor_show_alt_azm);
 
   // constellation
   ui->pushButton_13->setFontColor(setFonts[FONT_CONST], set.fonst[FONT_CONST].color);
@@ -528,6 +529,7 @@ void CSetting::apply()
 
   // horizon
   g_skSet.map.hor.alpha = ui->horizontalSlider_11->value();
+  g_skSet.map.hor.cb_hor_show_alt_azm = ui->cb_hor_show_alt_azm->isChecked();
 
   // background
   g_skSet.map.background.bStatic = ui->checkBox_4->isChecked();
