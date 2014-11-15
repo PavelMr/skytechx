@@ -550,7 +550,9 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionConstellation_lines->setChecked(g_showConstLines);
   ui->actionConstellation_boundaries->setChecked(g_showConstBnd);
   ui->actionDSO->setChecked(g_showDSO);
-  ui->checkBox->setEnabled(g_showDSO);
+  ui->actionDSO_Shapes->setChecked(g_showDSOShapes);
+  ui->checkBox->setChecked(!g_showDSOShapes);
+  ui->checkBox->setEnabled(g_showDSOShapes);
   ui->actionDSO_Shapes->setEnabled(g_showDSO);
   ui->actionMilkyway->setChecked(g_showMW);
   ui->actionSolar_system->setChecked(g_showSS);
@@ -560,8 +562,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionLabels->setChecked(g_showLabels);
   ui->actionGrids->setChecked(g_showGrids);
   ui->tb_grid->setEnabled(g_showGrids);
-  ui->actionDSO_Shapes->setChecked(g_showDSOShapes);
-  ui->checkBox->setChecked(g_showDSOShapes);
+
 
   setTitle();   
 }

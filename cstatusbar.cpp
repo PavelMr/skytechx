@@ -32,7 +32,7 @@ QWidget *CStatusBar::createItem(int id, const QString & tooltip, int width, Qt::
   i.pLabel->setAlignment(align | Qt::AlignVCenter);
   if (id == SB_SEP)
   {
-    i.pLabel->setText("   ");
+    i.pLabel->setText("  ");
   }    
 
   if (width > 0)
@@ -66,7 +66,7 @@ void CStatusBar::setItem(int id, QString str)
 void CStatusBar::createSkyMapBar(void)
 //////////////////////////////////////
 {
-  createItem(SB_SM_CONST, tr("Constellation under cursor"), 110, Qt::AlignLeft);
+  createItem(SB_SM_CONST, tr("Constellation under cursor"), 110, Qt::AlignLeft);  
   createItem(SB_SM_DATE, tr("Map date"), 100);
   createItem(SB_SM_TIME, tr("Map time"), 150);
   createItem(SB_SM_FOV, tr("Field of view"), 100);
@@ -77,8 +77,7 @@ void CStatusBar::createSkyMapBar(void)
   createItem(SB_SM_MAGS, tr("Star and DSO magnitude"), 170);
   createItem(SB_SM_MEASURE, tr("Measure (Distance/Angle)"), 160);
 
-  //QLineEdit *edit = new QLineEdit;
-  //pStatusBar->addPermanentWidget(edit, 200);
+  
 }
 
 void CStatusBar::slotDoubleClicked(int id)
