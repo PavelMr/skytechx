@@ -458,6 +458,8 @@ private slots:
 
   void on_actionGrid_label_triggered();
 
+  void on_actionDrawings_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
 

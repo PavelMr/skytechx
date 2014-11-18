@@ -76,6 +76,7 @@ bool g_showAsteroids = false;
 bool g_showComets = false;
 bool g_showLegends = false;
 bool g_showLabels = false;
+bool g_showDrawings = false;
 
 bool g_bilinearInt = false;
 bool g_showZoomBar = true;
@@ -545,6 +546,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showComets = settings.value("show_comets", true).toBool();
   g_showLegends = settings.value("show_legends", true).toBool();
   g_showLabels = settings.value("show_labels", true).toBool();
+  g_showDrawings = settings.value("show_drawings", true).toBool();
 
   ui->actionStars->setChecked(g_showStars);
   ui->actionConstellation_lines->setChecked(g_showConstLines);
@@ -562,6 +564,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionLabels->setChecked(g_showLabels);
   ui->actionGrids->setChecked(g_showGrids);
   ui->tb_grid->setEnabled(g_showGrids);
+  ui->actionDrawings->setChecked(g_showDrawings);
 
 
   setTitle();   
@@ -767,6 +770,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_comets", g_showComets);
   settings.setValue("show_legends", g_showLegends);
   settings.setValue("show_labels", g_showLabels);
+  settings.setValue("show_drawings", g_showDrawings);
 
   settings.setValue("mainWindowGeometry", saveGeometry());
   settings.setValue("mainWindowState", saveState());
@@ -3417,6 +3421,9 @@ void MainWindow::on_actionShow_all_triggered()
   ui->actionLabels->setChecked(true);
   g_showLabels = true;
 
+  ui->actionDrawings->setChecked(true);
+  g_showDrawings = true;
+
   ui->actionGrids->setChecked(true);
   ui->tb_grid->setEnabled(true);
   g_showGrids = true;
@@ -3778,6 +3785,9 @@ void MainWindow::on_actionHide_all_triggered()
 
   ui->actionLabels->setChecked(false);
   g_showLabels = false;
+
+  ui->actionDrawings->setChecked(false);
+  g_showDrawings = false;
 
   ui->actionGrids->setChecked(false);
   ui->tb_grid->setEnabled(false);
@@ -4333,5 +4343,11 @@ void MainWindow::on_actionGrid_label_triggered()
 {
   g_skSet.map.showGridLabels = ui->actionGrid_label->isChecked();
 
+  ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionDrawings_triggered(bool checked)
+{
+  g_showDrawings = checked;
   ui->widget->repaintMap();
 }

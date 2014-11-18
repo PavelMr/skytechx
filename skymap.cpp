@@ -38,6 +38,7 @@ extern bool g_showMW;
 extern bool g_showGrids;
 extern bool g_showLegends;
 extern bool g_showLabels;
+extern bool g_showDrawings;
 
 extern bool g_showAsteroids;
 extern bool g_showComets;
@@ -925,7 +926,10 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     renderHorizonBk(mapView, pPainter, pImg);
   }
 
-  g_cDrawing.drawObjects(pPainter);
+  if (g_showDrawings)
+  {
+    g_cDrawing.drawObjects(pPainter);
+  }
 
   renderTelescope(mapView, pPainter);
 

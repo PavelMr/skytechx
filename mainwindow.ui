@@ -443,6 +443,7 @@
     <addaction name="separator"/>
     <addaction name="actionGrids"/>
     <addaction name="separator"/>
+    <addaction name="actionDrawings"/>
     <addaction name="actionLabels"/>
     <addaction name="actionLegends"/>
     <addaction name="separator"/>
@@ -3228,6 +3229,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Show / Hide grid labels</string>
+   </property>
+  </action>
+  <action name="actionDrawings">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drawings</string>
    </property>
   </action>
  </widget>
