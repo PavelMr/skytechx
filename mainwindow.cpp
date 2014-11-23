@@ -694,12 +694,12 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 ////////////////////////////////////////////
 {
   if (!ui->widget->hasFocus())
-    return;
+    return;  
 
   ui->widget->keyEvent(e->key(), e->modifiers());
 }
 
-///////////////////////////////////////////////
+//////////////////////////////////////////////
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
 ///////////////////////////////////////////////
 {
@@ -1875,7 +1875,7 @@ void MainWindow::slotTimeDialogVis(bool vis)
 /////////////////////////////////
 void MainWindow::slotSearchDone()
 /////////////////////////////////
-{
+{  
   bool noZoom = (QApplication::keyboardModifiers() & Qt::ShiftModifier) ? true : false;
 
   QString str = m_search->text();
@@ -2446,10 +2446,7 @@ void MainWindow::slotRealTime()
 ////////////////////////////////////
 void MainWindow::slotRealTimeLapse()
 ////////////////////////////////////
-{
-  //double sec = m_realElapsedTimerLapse.elapsed();
-  //qDebug() << (double)m_realElapsedTimerLapse.elapsed() / 1000.;// << m_realElapsedTimerLapse.elapsed();
-
+{  
   ui->widget->m_mapView.jd += JD1SEC * (m_realElapsedTimerLapse.elapsed() / 1000.0) * (double)m_timeLapseMul->value();
   recenterHoldObject(ui->widget, false);
   ui->widget->repaintMap();

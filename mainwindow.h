@@ -486,7 +486,7 @@ public slots:
   void slotDSSChange(const QModelIndex &i, const QModelIndex &i2);
   void slotDrawingChange(bool bEdited, bool isEmpty);
   void slotTimeUpdate(void);
-  void slotCheckFirstTime();
+  void slotCheckFirstTime();  
 
 signals:
   void sigMagLock(bool checked);

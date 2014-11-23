@@ -25,17 +25,17 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="41"/>
+        <location filename="cabout.cpp" line="49"/>
         <source>&lt;b&gt;Main DSO catalogue&lt;/b&gt;&lt;br&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="55"/>
+        <location filename="cabout.cpp" line="63"/>
         <source>&lt;br&gt;DSO object count : %1</source>
         <translation>Počet DSO objektů : %1</translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="57"/>
+        <location filename="cabout.cpp" line="65"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Star catalogues&lt;/b&gt;</source>
         <translation></translation>
     </message>
@@ -994,9 +994,14 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <translation>Storno</translation>
     </message>
     <message>
-        <location filename="cdbstarsdlg.cpp" line="19"/>
+        <location filename="cdbstarsdlg.cpp" line="18"/>
         <source>Name</source>
         <translation>Název</translation>
+    </message>
+    <message>
+        <location filename="cdbstarsdlg.cpp" line="19"/>
+        <source>Cons.</source>
+        <translation>Souhv.</translation>
     </message>
     <message>
         <location filename="cdbstarsdlg.cpp" line="20"/>
@@ -2214,8 +2219,8 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1558"/>
-        <location filename="cmapview.cpp" line="1577"/>
+        <location filename="cmapview.cpp" line="1564"/>
+        <location filename="cmapview.cpp" line="1583"/>
         <source>Setting time to epoch J2000.0</source>
         <translation>Nastavuji datum a čas na epochu J2000.0</translation>
     </message>

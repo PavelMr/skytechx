@@ -1429,6 +1429,8 @@ bool CMapView::isRaDecOnScreen(double ra, double dec)
 void CMapView::printMap()
 /////////////////////////
 {
+  // TODO: defaul profil neexistuje pri prvni spusteni!!!!
+
   setting_t currentSetting = g_skSet;
   bool bw;
 
@@ -1492,9 +1494,13 @@ void CMapView::printMap()
   if (bw)
   {
     restoreFromPrintConfig();
+  } 
+  else
+  {
+    g_skSet = currentSetting;
+    setCreateFonts();
+    cStarRenderer.open(g_skSet.map.starBitmapName);
   }
-  //g_skSet = currentSetting;
-  //setCreateFonts();
 }
 
 

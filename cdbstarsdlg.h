@@ -23,7 +23,7 @@ class MyProxyDblModel: public QSortFilterProxyModel
 protected:
    bool lessThan(const QModelIndex& left, const QModelIndex& right) const
    {
-     if (sortColumn() == 1 || sortColumn() == 2 || sortColumn() == 3 || sortColumn() == 4)
+     if (sortColumn() == 2 || sortColumn() == 3 || sortColumn() == 4 || sortColumn() == 5)
      {
        return (left.data(Qt::UserRole + 1).toFloat() < right.data(Qt::UserRole + 1).toFloat());
      }

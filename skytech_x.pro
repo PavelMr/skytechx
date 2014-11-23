@@ -6,6 +6,7 @@
 
 QT       += core gui network webkit webkitwidgets xml sql widgets printsupport
 
+CONFIG   += qxt
 CONFIG   += axcontainer
 CONFIG   += plugin
 CONFIG   += c++11

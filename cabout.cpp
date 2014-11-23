@@ -15,6 +15,14 @@ CAbout::CAbout(QWidget *parent) :
   ui->setupUi(this);
   setFixedWidth(width());
 
+  QString winVer;
+
+#ifdef _WIN64
+  winVer = " (64 bits)";
+#else
+  winVer = " (32 bits)";
+#endif
+
   ui->textBrowser_about->setOpenExternalLinks(true);
   ui->textBrowser_about->setHtml(QString("<html><body><b>Skytech X</b><br>"
                                       "Version %1<br><br>"
@@ -31,7 +39,7 @@ CAbout::CAbout(QWidget *parent) :
                                       "Release build no : %5<br></body><html>")
                                       .arg(SK_VERSION)
                                       .arg(__DATE__).arg(__TIME__)
-                                      .arg(QT_VERSION_STR)                                      
+                                      .arg(QT_VERSION_STR + winVer)
                                       .arg(_BUILD_NO_));
 
 

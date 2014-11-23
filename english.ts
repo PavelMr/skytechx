@@ -25,17 +25,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="41"/>
+        <location filename="cabout.cpp" line="49"/>
         <source>&lt;b&gt;Main DSO catalogue&lt;/b&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="55"/>
+        <location filename="cabout.cpp" line="63"/>
         <source>&lt;br&gt;DSO object count : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="57"/>
+        <location filename="cabout.cpp" line="65"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Star catalogues&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -980,8 +980,13 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdbstarsdlg.cpp" line="19"/>
+        <location filename="cdbstarsdlg.cpp" line="18"/>
         <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdbstarsdlg.cpp" line="19"/>
+        <source>Cons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2192,8 +2197,8 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1558"/>
-        <location filename="cmapview.cpp" line="1577"/>
+        <location filename="cmapview.cpp" line="1564"/>
+        <location filename="cmapview.cpp" line="1583"/>
         <source>Setting time to epoch J2000.0</source>
         <translation type="unfinished"></translation>
     </message>
