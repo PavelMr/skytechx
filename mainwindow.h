@@ -460,6 +460,8 @@ private slots:
 
   void on_actionDrawings_triggered(bool checked);
 
+  void on_actionTip_of_the_day_triggered();
+
 private:
   Ui::MainWindow *ui;
 

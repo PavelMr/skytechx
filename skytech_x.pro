@@ -177,7 +177,8 @@ SOURCES += main.cpp\
     cweather.cpp \
     ceditsearch.cpp \
     csaveimage.cpp \
-    cnamemagview.cpp
+    cnamemagview.cpp \
+    ctipofday.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -322,7 +323,8 @@ HEADERS  += mainwindow.h \
     ceditsearch.h \
     build.h \
     csaveimage.h \
-    cnamemagview.h
+    cnamemagview.h \
+    ctipofday.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -387,7 +389,8 @@ FORMS    += mainwindow.ui \
     cdrawinglist.ui \
     cplanetaltitude.ui \
     cweather.ui \
-    csaveimage.ui
+    csaveimage.ui \
+    ctipofday.ui
 
 
 RESOURCES += \

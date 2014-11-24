@@ -45,5 +45,6 @@
         <file>res/ico_circle.png</file>
         <file>res/ico_clock_now.png</file>
         <file>res/ico_grid_label.png</file>
+        <file>res/tip_of_the_day.png</file>
     </qresource>
 </RCC>

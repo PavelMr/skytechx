@@ -62,6 +62,7 @@
 #include "cplanetaltitude.h"
 #include "cweather.h"
 #include "csaveimage.h"
+#include "ctipofday.h"
 
 // show/hide drawing
 bool g_showDSOShapes = false;
@@ -566,7 +567,6 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_grid->setEnabled(g_showGrids);
   ui->actionDrawings->setChecked(g_showDrawings);
 
-
   setTitle();   
 }
 
@@ -655,6 +655,12 @@ void MainWindow::slotPluginError()
 void MainWindow::slotCheckFirstTime()
 {
   QSettings set;
+
+  CTipOfDay dlg(this);
+  if (dlg.m_show)
+  {
+    dlg.exec();
+  }
 
   if (set.value("geo/name").toString().isEmpty())
   {
@@ -4348,3 +4354,11 @@ void MainWindow::on_actionDrawings_triggered(bool checked)
   g_showDrawings = checked;
   ui->widget->repaintMap();
 }
+
+void MainWindow::on_actionTip_of_the_day_triggered()
+{
+  CTipOfDay dlg(this);
+
+  dlg.exec();
+}
+

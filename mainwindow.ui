@@ -309,6 +309,8 @@
     <addaction name="actionShow_help"/>
     <addaction name="actionKeyboard_reference"/>
     <addaction name="separator"/>
+    <addaction name="actionTip_of_the_day"/>
+    <addaction name="separator"/>
     <addaction name="action_About"/>
    </widget>
    <widget class="QMenu" name="menu_Chart">
@@ -3105,6 +3107,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Keyboard reference...</string>
    </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
   </action>
   <action name="actionChange_language">
    <property name="text">
@@ -3237,6 +3242,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Drawings</string>
+   </property>
+  </action>
+  <action name="actionTip_of_the_day">
+   <property name="text">
+    <string>Tip of the day...</string>
    </property>
   </action>
  </widget>
