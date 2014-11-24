@@ -776,9 +776,9 @@ void setNightConfig(void)
   g_skSet.map.aster.color = lred;
 
   // milky way
-  g_skSet.map.milkyWay.bShow = true;
-  g_skSet.map.milkyWay.light = 80;
-  g_skSet.map.milkyWay.dark = 50;
+  //g_skSet.map.milkyWay.bShow = true;
+  g_skSet.map.milkyWay.light = 30;
+  g_skSet.map.milkyWay.dark = 15;
 
   // drawing
   g_skSet.map.drawing.color = lred;

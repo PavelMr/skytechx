@@ -2557,6 +2557,12 @@ void MainWindow::on_actionMoon_calendary_triggered()
 void MainWindow::on_actionSetting_triggered()
 /////////////////////////////////////////////
 {
+  if (ui->actionNight_mode->isChecked())
+  {
+    msgBoxError(this, tr("You cannot change map setting in night mode!"));
+    return;
+  }
+
   CSetting dlg(this);
 
   dlg.exec();

@@ -128,7 +128,15 @@ void CPlanetVis::paintEvent(QPaintEvent *)
           col = QColor(32, 200, 32);
       }
 
-      p.fillRect(rc, col);
+      if (orbit.lAlt > 0)
+      {
+        p.fillRect(rc, QColor(32, 32, 32));
+        p.fillRect(rc.adjusted(0, 10, 0, -10), col);
+      }
+      else
+      {
+        p.fillRect(rc, col);
+      }
       p.drawLine(rc.right(), rc.top() + 1, rc.right(), rc.bottom() - 1);
 
       jd += 1 / 24.0;

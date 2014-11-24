@@ -46,6 +46,7 @@ void CWeather::updateInfo()
   double windSpeed = 0;
   double windDeg = 0;
   double cloudiness = 0;    
+  QString icon;
   QString cityName;
   QString country = "N/A";
   QDateTime dateTime;
@@ -55,8 +56,20 @@ void CWeather::updateInfo()
     val = obj.value(QStringLiteral("main"));
     tempObject = val.toObject();
     temp = tempObject.value(QStringLiteral("temp")).toDouble();
-    humidity = tempObject.value(QStringLiteral("humidity")).toDouble();
-    pressure = tempObject.value(QStringLiteral("pressure")).toDouble();    
+    humidity = tempObject.value(QStringLiteral("humidity")).toDouble();    
+    pressure = tempObject.value(QStringLiteral("pressure")).toDouble();
+  }
+
+
+  if (obj.contains(QStringLiteral("weather")))
+  {
+    val = obj.value(QStringLiteral("weather"));
+
+    QJsonArray weatherArray = val.toArray();
+
+    val = weatherArray.at(0);
+    tempObject = val.toObject();
+    icon = tempObject.value("icon").toString() + ".png";
   }
 
   if (obj.contains(QStringLiteral("sys")))
@@ -118,14 +131,16 @@ void CWeather::updateInfo()
     ui->label_8->setText("");
   }
 
-  /*
   qDebug() << (temp - M_KELVIN) << C_TO_F(temp - M_KELVIN);
   qDebug() << humidity;
   qDebug() << pressure;
   qDebug() << windSpeed << MS_TO_MPH(windSpeed);
   qDebug() << windDeg;
   qDebug() << cloudiness;
-  */
+  qDebug() << icon;
+
+  ui->label_icon->setPixmap(":/res/weather/" + icon);
+
 }
 
 void CWeather::getData()

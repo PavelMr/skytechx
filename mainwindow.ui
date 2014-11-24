@@ -2797,10 +2797,16 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Star in &amp;Tycho catalogue...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="actionSearch_events">
    <property name="text">
     <string>Search events...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
   <action name="action_Asteroids1">

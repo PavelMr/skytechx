@@ -532,7 +532,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   {
     if (maxSize >= minSize)
     { // render textured planet
-      renderPlanet(pt, o, sun, mapView, pPainter, pImg);
+      renderPlanet(pt, o, sun, mapView, pPainter, pImg);            
       return(maxSize);
     }
   }

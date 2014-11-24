@@ -188,8 +188,7 @@ void CLoading::run()
   usno.setUsnoDir(set.value("usno2_path", "").toString());
   cPPMXL.setDir(set.value("ppmxl_path", "").toString());  
 
-  //usno.setUsnoDir(g_skSet.map.usno2.folder);
-  //cPPMXL.setDir(g_skSet.map.ppmxl.folder);
+  msleep(1000);
 
   emit sigEnd();
 }

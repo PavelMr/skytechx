@@ -26,7 +26,7 @@ BEGIN
             VALUE   "LegalCopyright",   "Copyright 2014, Pavel Mraz\0"
             VALUE   "OriginalFilename", "skytech_x.exe\0"
             VALUE   "ProductName",      "SkytechX\0"
-            VALUE   "ProductVersion",   "Beta-0.6\0"
+            VALUE   "ProductVersion",   "1.0\0"
         END
     END
 END

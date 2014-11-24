@@ -44,7 +44,7 @@ CAbout::CAbout(QWidget *parent) :
 
 
 
-  ui->textEdit_license->setText(readAllFile("data/gnu/gnu2.txt"));
+  ui->textEdit_license->setText(readAllFile("data/gnu/gnu2.txt"));  
 
   ui->textEdit_source->append(tr("<b>Main DSO catalogue</b><br>"));
   int i = 0;
@@ -71,6 +71,8 @@ CAbout::CAbout(QWidget *parent) :
 
   ui->textEdit_source->append("The PPMXL Catalogue (Roeser+ 2010) (Optional)");
   ui->textEdit_source->append("The USNO A2.0 Catalogue (Monet+ 1998) (Optional)");
+  ui->textEdit_source->moveCursor(QTextCursor::Start) ;
+  ui->textEdit_source->ensureCursorVisible();
 }
 
 CAbout::~CAbout()
