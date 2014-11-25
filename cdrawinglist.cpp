@@ -30,6 +30,12 @@ CDrawingList::CDrawingList(QWidget *parent) :
     QStandardItem *item = new QStandardItem;
     QStandardItem *item1 = new QStandardItem;
 
+    item->setCheckable(true);
+    if (draw->show)
+    {
+      item->setCheckState(Qt::Checked);
+    }
+
     switch (draw->type)
     {
       case DT_TELESCOPE:
@@ -118,5 +124,16 @@ void CDrawingList::on_treeView_doubleClicked(const QModelIndex &)
 
 void CDrawingList::on_pushButton_clicked()
 {
+  QStandardItemModel *model = (QStandardItemModel *)ui->treeView->model();
+
+  for (int i = 0; i < model->rowCount(); i++)
+  {
+    QStandardItem *item = model->item(i);
+
+    drawing_t *draw = (drawing_t *)item->data(Qt::UserRole + 1).toInt();
+
+    draw->show = item->checkState() ==  Qt::Checked ? true : false;
+  }
+
   done(DL_CANCEL);
 }

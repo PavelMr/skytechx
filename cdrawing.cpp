@@ -51,6 +51,7 @@ void drawingSave(void)
       drawing_t t = m_tList.at(i);      
 
       s << t.type;
+      s << t.show;
       s << t.onScr;
       s << t.angle;
       s << t.rect;
@@ -93,6 +94,7 @@ void drawingLoad(void)
       drawing_t t;
 
       s >> t.type;
+      s >> t.show;
       s >> t.onScr;
       s >> t.angle;
       s >> t.rect;
@@ -245,6 +247,11 @@ void CDrawing::drawObjects(CSkPainter *p)
   {
     QPoint out;
 
+    if (!m_tList[i].show)
+    {
+      continue;
+    }
+
     switch (m_tList[i].type)
     {
       case DT_NONE:
@@ -330,6 +337,7 @@ void CDrawing::done()
     return;
   }
 
+  m_drawing.show = true;
   m_tList.append(m_drawing);
   m_drawing.type = DT_NONE;
   setHelpText("");

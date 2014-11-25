@@ -22,6 +22,7 @@
 typedef struct
 {
   int     type;
+  bool    show;
   bool    onScr;
   double  angle;
   QRect   rect;
