@@ -576,7 +576,7 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
       ofiItem_t    item;
 
       info.fillInfo(&m_mapView, &obj, &item);
-      pcMainWnd->fillQuickInfo(&item);
+      pcMainWnd->fillQuickInfo(&item);      
     }
     m_bClick = false;
   }

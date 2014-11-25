@@ -21,7 +21,7 @@ BEGIN
         BEGIN
             VALUE   "CompanyName",      "PMR\0"
             VALUE   "FileDescription",  "SkytechX\0"
-            VALUE   "FileVersion",      "Beta-0.6\0"
+            VALUE   "FileVersion",      "1.0\0"
             VALUE   "InternalName",     "skytechx\0"
             VALUE   "LegalCopyright",   "Copyright 2014, Pavel Mraz\0"
             VALUE   "OriginalFilename", "skytech_x.exe\0"

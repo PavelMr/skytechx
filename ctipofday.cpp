@@ -5,7 +5,7 @@
 #include <QDateTime>
 #include <QSettings>
 
-#define TIPS_COUNT    9
+#define TIPS_COUNT    10
 
 CTipOfDay::CTipOfDay(QWidget *parent) :
     QDialog(parent),
@@ -64,6 +64,8 @@ void CTipOfDay::setTip(int &index)
 
                              "Nápovědu pro klávesnicové zkratky a ovládání mapy zobrazíte klávesou F2.",
                              //  (klávesnicové zkratky) keyboard shortcut
+
+                             "Při stisku klávesy CTRL a najetí kurzorem na objekt se zobrazí název a jasnost objektu.",
 
                              "Kliknutím levého tlačítka myši na object se zobrazí v postraním panelu informace o objektu.",
                              // (postraním panelu) side bar

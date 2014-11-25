@@ -2270,6 +2270,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Show sidebar</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
   </action>
   <action name="action_Last_search_object">
    <property name="enabled">
@@ -2998,6 +3001,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Show full screen</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+F12</string>
    </property>
   </action>
   <action name="actionTPStop">

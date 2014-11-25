@@ -79,6 +79,8 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 
+  // TODO: pridat dialog pro rescale obrazku
+
   QProgressDialog dlg(tr("Please wait..."), tr("Cancel"), 0, list.count() - 1, parent);
   dlg.setWindowModality(Qt::WindowModal);
   dlg.setMinimumDuration(0);

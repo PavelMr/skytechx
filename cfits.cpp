@@ -191,20 +191,16 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
   rangeDbl(&m_cor[3].Ra, R360);
 
   if (!bAll)
+  {
     return(true);  
+  }
 
-  // TODO:kontrola velikosti
-  // FIXME: padato - markab / centrovat / nahrat vse dss na obr. padne (limit pameti)
-  static int aa = 0;
   m_pix = new QImage(sx, sy, QImage::Format_Indexed8);
   if (m_pix == NULL || m_pix->isNull())
   {
     memOk = false;
     return false;
-  }
-
-  qDebug() << aa << m_pix << m_pix->bits() << m_pix->isNull() << sx << sy;
-  aa++;
+  }  
 
   // posun se na nasledujici nasobek 2880  
   long prv = f.pos();

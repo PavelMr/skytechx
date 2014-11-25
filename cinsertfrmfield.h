@@ -46,6 +46,8 @@ private slots:
 
   void on_pushButton_5_clicked();
 
+  void on_barlow_valueChanged(double arg1);
+
 private:
   Ui::CInsertFrmField *ui;
 };

@@ -6,6 +6,7 @@
 static double val1 = 25;
 static double val2 = 15;
 static double val3 = 800;
+static double val4 = 1;
 
 static int    lastIndex = 0;
 
@@ -18,6 +19,7 @@ CInsertFrmField::CInsertFrmField(QWidget *parent) :
   ui->doubleSpinBox->setValue(val1);
   ui->doubleSpinBox_2->setValue(val2);
   ui->doubleSpinBox_3->setValue(val3);
+  ui->barlow->setValue(val4);
 
   ui->comboBox->addItem(tr("Custom"), 0);
 
@@ -80,7 +82,7 @@ void CInsertFrmField::updateData()
 {
   double x = ui->doubleSpinBox->value();
   double y = ui->doubleSpinBox_2->value();
-  double f = ui->doubleSpinBox_3->value();
+  double f = ui->doubleSpinBox_3->value() * ui->barlow->value();
 
   double cx =  (x * 3438) / f;
   double cy =  (y * 3438) / f;
@@ -168,6 +170,8 @@ void CInsertFrmField::on_pushButton_4_clicked()
   val1 = ui->doubleSpinBox->value();
   val2 = ui->doubleSpinBox_2->value();
   val3 = ui->doubleSpinBox_3->value();
+  val4 = ui->barlow->value();
+
   lastIndex = ui->comboBox->currentIndex();
 
   done(DL_OK);
@@ -231,4 +235,15 @@ void CInsertFrmField::on_pushButton_5_clicked()
     ui->doubleSpinBox->blockSignals(false);
     ui->doubleSpinBox_2->blockSignals(false);
   }
+}
+
+void CInsertFrmField::on_barlow_valueChanged(double /*arg1*/)
+{
+  ui->comboBox->blockSignals(true);
+  updateData();
+  ui->comboBox->setCurrentIndex(0);
+  ui->comboBox->blockSignals(false);
+
+  ui->pushButton_3->setEnabled(false);
+  ui->pushButton_5->setEnabled(false);
 }

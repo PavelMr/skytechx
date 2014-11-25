@@ -153,6 +153,7 @@ MainWindow::MainWindow(QWidget *parent) :
   m_timeMul->setRange(1, 1000);
   m_timeMul->setSuffix("x");
   m_timeMul->setToolTip(tr("Time multiplicator"));
+  m_timeMul->setMaximumWidth(60);
 
   ui->tb_time->insertWidget(ui->actionCurLocTime, m_timeMul);
   ui->tb_time->insertSeparator(ui->actionCurLocTime);
@@ -165,6 +166,7 @@ MainWindow::MainWindow(QWidget *parent) :
   m_timeLapseMul->setSuffix("x");
   m_timeLapseMul->setToolTip(tr("Time-lapse multiplicator"));
   m_timeLapseMul->setEnabled(false);
+  m_timeLapseMul->setMaximumWidth(60);
   m_timeLapseUpdate = DEFAULT_TIME_LAPSE_UPDATE;
 
   ui->tb_time->addWidget(m_timeLapseMul);
@@ -283,7 +285,6 @@ MainWindow::MainWindow(QWidget *parent) :
   // DSS widget
   CLFModel *model2 = new CLFModel(0, 3);
 
-  //TODO: zkusit dodelat poradi dss
   model2->setHeaderData(0, Qt::Horizontal, tr("Name"));
   model2->setHeaderData(1, Qt::Horizontal, tr("Size"));
   model2->setHeaderData(2, Qt::Horizontal, tr("File Size"));
@@ -619,7 +620,8 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
     {
       QModelIndex index = selected->data().toModelIndex();
 
-      QStandardItem *item = m->itemFromIndex(index);
+      QModelIndex index1 = index.model()->index(index.row(), 0);
+      QStandardItem *item = m->itemFromIndex(index1);
 
       CTextSel dlg(this, tr("Rename"), 64, item->text());
 
@@ -634,6 +636,9 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
         if (f.rename("data/dssfits/" + dlg.m_text))
         {
           item->setText(dlg.m_text);
+          int index = getCurDSS();
+          CFits *fit = (CFits *)bkImg.m_tImgList[index].ptr;
+          fit->m_name = dlg.m_text;
         }
         else
         {
@@ -642,6 +647,7 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
       }
     }
   }
+  ui->widget->repaintMap();
 }
 
 void MainWindow::slotPluginError()
@@ -4071,6 +4077,8 @@ void MainWindow::on_actionSet_horizon_triggered()
 
 void MainWindow::on_actionKeyboard_reference_triggered()
 {
+  on_actionShow_sidebar_toggled(true);
+
   ui->toolBox->setCurrentWidget(ui->page_4);
   ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/keyboard.htm"));
 }
@@ -4123,6 +4131,8 @@ void MainWindow::on_actionTime_Lapse_prefs_triggered()
 
 void MainWindow::on_actionShow_help_triggered()
 {
+  on_actionShow_sidebar_toggled(true);
+
   ui->toolBox->setCurrentWidget(ui->page_4);
   ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));
 }

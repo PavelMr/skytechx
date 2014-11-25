@@ -7,8 +7,6 @@
 
 CDrawing g_cDrawing; // TODO: nepouzivat globalne promene s QObject kvuli tr();
 
-// FIXME: obcas se v dialogu objevuji prazdne radky!!!!!
-
 void setHelpText(QString text);
 
 static QList <drawing_t> m_tList;

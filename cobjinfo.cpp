@@ -123,7 +123,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
     addPhysicalInfo(&parser, "Escape_velocity", tr("Escape velocity"));
   }
   else
-  {
+  {    
     ui->tabWidget->blockSignals(true);
     ui->tabWidget->removeTab(1);
     ui->tabWidget->removeTab(1);
