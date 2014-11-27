@@ -37,14 +37,11 @@ CGetProfile::CGetProfile(QWidget *parent) :
     item->setText(fi.baseName());
     item->setData(fi.baseName());
 
-    m->appendRow(item);
-
-    if (!g_setName.compare(fi.baseName(), Qt::CaseInsensitive))
-    {
-      QModelIndex idx = m->index(i, 0);
-      ui->listView->selectionModel()->select(idx, QItemSelectionModel::Select);
-    }
+    m->appendRow(item);              
   }
+
+  QModelIndex idx = m->index(0, 0);
+  ui->listView->selectionModel()->select(idx, QItemSelectionModel::Select);
 }
 
 CGetProfile::~CGetProfile()

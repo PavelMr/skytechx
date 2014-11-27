@@ -294,7 +294,10 @@ static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
   pt[1].w.z = reg->p[1][2];
 
   if (trfProjectLine(&pt[0], &pt[1]))
+  {
     pPainter->drawLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy);
+    pPainter->drawText(pt[0].sx, pt[0].sy, QString::number(region));
+  }
 
   pt[0].w.x = reg->p[1][0];
   pt[0].w.y = reg->p[1][1];

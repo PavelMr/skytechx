@@ -19,9 +19,7 @@ CLunarFeatures::CLunarFeatures()
 ///////////////////////////////////////
 void CLunarFeatures::load(QString name)
 ///////////////////////////////////////
-{
-  // FIXME:: kodovani nefunguje
-
+{  
   SkFile f(name);
 
   if (!f.open(SkFile::ReadOnly | SkFile::Text))

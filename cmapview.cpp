@@ -1434,7 +1434,7 @@ void CMapView::printMap()
   setting_t currentSetting = g_skSet;
   bool bw;
 
-  CGetProfile dlgProfile;
+  CGetProfile dlgProfile(this);
 
   if (dlgProfile.exec() == DL_CANCEL)
     return;
@@ -1442,7 +1442,8 @@ void CMapView::printMap()
   QPrinter prn(QPrinter::ScreenResolution);
   QPrintDialog dlg(&prn, this);
 
-  prn.setPageMargins(15, 15, 15, 15, QPrinter::Millimeter);
+  prn.setOrientation(QPrinter::Landscape);
+  prn.setPageMargins(10, 10, 10, 10, QPrinter::Millimeter);
 
   if (dlg.exec() == DL_CANCEL)
   {
@@ -1461,8 +1462,10 @@ void CMapView::printMap()
 
   CSkPainter p;
   p.begin(&prn);
+  int height = 10 / (double)p.device()->heightMM() * p.device()->height();
+  QRect rc = QRect(0, 0, p.device()->width() - 1, p.device()->height() - 1 - height);
 
-  QImage *img = new QImage(p.device()->width(), p.device()->height(), QImage::Format_ARGB32_Premultiplied);
+  QImage *img = new QImage(p.device()->width(), p.device()->height() - height, QImage::Format_ARGB32_Premultiplied);
 
   CSkPainter p1;
 
@@ -1484,9 +1487,23 @@ void CMapView::printMap()
 
   p.drawImage(0, 0, *img);
 
+  double ra, dec;
+  double azm, alt;
+
+  trfConvScrPtToXY(rc.center().x(), rc.center().y(), ra, dec);
+  cAstro.convRD2AARef(ra, dec, &azm, &alt);
+
+  QString space = " / ";
+  QString text = QString(tr("R.A. : %1")).arg(getStrRA(ra)) + space + QString(tr("Dec. : %1")).arg(getStrDeg(dec)) + space +
+                 QString(tr("Date : %1")).arg(getStrDate(m_mapView.jd, m_mapView.geo.tz)) + space +
+                 QString(tr("Time : %1")).arg(getStrTime(m_mapView.jd, m_mapView.geo.tz));
+
   p.setPen(Qt::black);
+  p.setFont(QFont("arial", 12));
   p.setBrush(Qt::NoBrush);
+  p.drawRect(0, 0, p.device()->width() - 1, p.device()->height() - 1 - height);
   p.drawRect(0, 0, p.device()->width() - 1, p.device()->height() - 1);
+  p.drawText(QRect(0, p.device()->height() - 1 - height, p.device()->width() - 1, height),  Qt::AlignCenter, text);
   p.end();
 
   delete img;

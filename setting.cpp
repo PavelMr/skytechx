@@ -798,6 +798,7 @@ void setPrintConfig(void)
   QRgb lred = MRGB(128,128,128);
   QRgb cred = MRGB(64, 64, 64);
   QRgb lred2 = MRGB(100,100,100);
+  QRgb vred = MRGB(200, 200, 200);
 
   skPrintTmp = g_skSet;
 
@@ -810,6 +811,7 @@ void setPrintConfig(void)
   g_skSet.map.es.color = dred;
 
   g_skSet.map.starBitmapName = "data/stars/bitmaps/print.png";
+  g_skSet.map.star.starSizeFactor = 0;
   cStarRenderer.open(g_skSet.map.starBitmapName);
 
   // horizon
@@ -831,10 +833,10 @@ void setPrintConfig(void)
   g_skSet.map.dsoShapeColor[2] = cred;
 
   // grids
-  g_skSet.map.grid[SMCT_RA_DEC].color = dred;
-  g_skSet.map.grid[SMCT_ALT_AZM].color = dred;
-  g_skSet.map.grid[SMCT_ECL].color = dred;
-  g_skSet.map.grid[SMCT_GAL].color = dred;
+  g_skSet.map.grid[SMCT_RA_DEC].color = vred;
+  g_skSet.map.grid[SMCT_ALT_AZM].color = vred;
+  g_skSet.map.grid[SMCT_ECL].color = vred;
+  g_skSet.map.grid[SMCT_GAL].color = vred;
 
   // background
   g_skSet.map.background.bStatic = true;

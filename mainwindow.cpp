@@ -573,7 +573,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::setTitle()
 {
-  setWindowTitle(QString("Skytech X ") + SK_VERSION + QString(tr("   Location : ")) + ui->widget->m_mapView.geo.name);
+  QString tzName;
+
+  if (ui->widget->m_mapView.geo.tz == 0)
+  {
+    tzName = " UTC";
+  }
+  else
+  {
+    tzName = " UTC+" + QString::number(24 * ui->widget->m_mapView.geo.tz, 'f', 1);
+  }
+
+  setWindowTitle(QString("Skytech X ") + SK_VERSION + QString(tr("   Location : ")) + ui->widget->m_mapView.geo.name + " " + tzName);
 }
 
 void MainWindow::slotStatusBarDoubleClick(int id)
