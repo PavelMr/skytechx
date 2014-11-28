@@ -61,6 +61,7 @@ typedef struct
 
 bool bConstEdit = false;
 bool bDevelopMode = false;
+bool bAlternativeMouse = false;
 
 int                 dev_move_index = -1;
 int                 dev_shape_index = -1;
@@ -105,6 +106,7 @@ CMapView::CMapView(QWidget *parent) :
   g_autoSave.events = settings.value("saving/events", true).toBool();
   g_autoSave.tracking = settings.value("saving/tracking", true).toBool();
   g_autoSave.mapPosition = settings.value("saving/mapPosition", true).toBool();
+  bAlternativeMouse = settings.value("altMouse", false).toBool();
 
   setAttribute(Qt::WA_OpaquePaintEvent, true);
   setAttribute(Qt::WA_NoSystemBackground, true);
@@ -134,7 +136,7 @@ CMapView::CMapView(QWidget *parent) :
     m_mapView.x = settings.value("map/x", 0).toDouble();
     m_mapView.y = settings.value("map/y", 0).toDouble();
     m_mapView.roll = settings.value("map/roll", 0).toDouble();
-    m_mapView.fov = settings.value("map/fov", D2R(90)).toDouble();   
+    m_mapView.fov = settings.value("map/fov", D2R(90)).toDouble();
   }
 
   m_mapView.deltaT = settings.value("delta_t/delta_t", CM_UNDEF).toDouble();
@@ -150,7 +152,7 @@ CMapView::CMapView(QWidget *parent) :
   m_mapView.geo.name = settings.value("geo/name", "Unnamed").toString();
 
   m_mapView.geo.tz = m_mapView.geo.tzo + m_mapView.geo.sdlt;
-  m_mapView.geo.hash = CGeoHash::calculate(&m_mapView.geo);  
+  m_mapView.geo.hash = CGeoHash::calculate(&m_mapView.geo);
 
   m_lastStarMag = 0;
   m_lastDsoMag = 0;
@@ -163,12 +165,11 @@ CMapView::CMapView(QWidget *parent) :
   m_bClick = false;
   m_bMouseMoveMap = false;
   m_bZoomByMouse = false;
-  m_zoomCenter = false;
   m_drawing = false;
 
   m_bCustomTele = false;
 
-  m_bInit = false;    
+  m_bInit = false;
 }
 
 
@@ -301,22 +302,35 @@ void CMapView::mousePressEvent(QMouseEvent *e)
     repaintMap();
   }
 
-  if ((e->buttons() & Qt::LeftButton) == Qt::LeftButton)
+  if (bAlternativeMouse)
   {
-    m_bClick = true;
-    m_bZoomByMouse = true;
-    m_zoomPoint = e->pos();
-
-    if ((e->modifiers() & Qt::ShiftModifier))
-      m_zoomCenter = true;
+    if ((e->modifiers() & Qt::ShiftModifier) && (e->buttons() & Qt::LeftButton) == Qt::LeftButton)
+    {
+      m_bZoomByMouse = true;
+      m_zoomPoint = e->pos();
+    }
     else
-      m_zoomCenter = false;
+    if ( e->button() == Qt::LeftButton)
+    {
+      m_bClick = true;
+      m_bMouseMoveMap = true;
+      m_bZoomByMouse = false;
+    }
   }
-
-  if ((e->modifiers() & Qt::ControlModifier) || e->button() == Qt::MidButton)
+  else
   {
-    m_bMouseMoveMap = true;
-    m_bZoomByMouse = false;
+    if ((e->buttons() & Qt::LeftButton) == Qt::LeftButton)
+    {
+      m_bClick = true;
+      m_bZoomByMouse = true;
+      m_zoomPoint = e->pos();
+    }
+
+    if ((e->modifiers() & Qt::ControlModifier) || e->button() == Qt::MidButton)
+    {
+      m_bMouseMoveMap = true;
+      m_bZoomByMouse = false;
+    }
   }
 }
 
@@ -324,7 +338,7 @@ void CMapView::mousePressEvent(QMouseEvent *e)
 /////////////////////////////////////////////
 void CMapView::mouseMoveEvent(QMouseEvent *e)
 /////////////////////////////////////////////
-{ 
+{
   if (bConstEdit && (e->buttons() & Qt::LeftButton) == Qt::LeftButton)
   {
     if (dev_move_index != -1)
@@ -448,7 +462,7 @@ void CMapView::mouseMoveEvent(QMouseEvent *e)
     {
       setCursor(Qt::CrossCursor);
     }
-  }        
+  }
 
   tryShowToolTip(e->pos(), QApplication::keyboardModifiers() == Qt::CTRL);
 
@@ -467,14 +481,14 @@ void CMapView::tryShowToolTip(const QPoint &pos, bool isPressed)
     widget = new QFrame(this);
     widget->resize(180, 32);
     widget->setAttribute(Qt::WA_NoMousePropagation);
-    widget->setAttribute(Qt::WA_TransparentForMouseEvents);    
+    widget->setAttribute(Qt::WA_TransparentForMouseEvents);
     widget->setWindowFlags(Qt::FramelessWindowHint | Qt::ToolTip | Qt::CustomizeWindowHint | Qt::WindowTransparentForInput | widget->windowFlags());
     widget->setFrameStyle(QFrame::Box | QFrame::Raised);
-    widget->show();        
+    widget->show();
 
-    label = new QLabel(widget);    
+    label = new QLabel(widget);
     label->setContentsMargins(8, 8, 8, 8);
-    label->show();    
+    label->show();
   }
 
   QString toolTip = checkObjOnMap(pos);
@@ -576,13 +590,13 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
       ofiItem_t    item;
 
       info.fillInfo(&m_mapView, &obj, &item);
-      pcMainWnd->fillQuickInfo(&item);      
+      pcMainWnd->fillQuickInfo(&item);
     }
     m_bClick = false;
   }
 
   if (m_bZoomByMouse)
-  { // zoom map    
+  { // zoom map
     QRect  rc(m_zoomPoint, m_lastMousePos);
     double x, y;
 
@@ -612,7 +626,7 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
 ////////////////////////////////////////////////////
 void CMapView::mouseDoubleClickEvent(QMouseEvent *e)
 ////////////////////////////////////////////////////
-{  
+{
   //qDebug("dbl");
 
   m_bClick = false;
@@ -926,7 +940,7 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
   {
     g_cDrawing.cancel();
     repaintMap(true);
-  }  
+  }
 
   tryShowToolTip(m_lastMousePos, key == Qt::Key_Control);
 }
@@ -935,7 +949,6 @@ void CMapView::keyReleaseEvent(int key, Qt::KeyboardModifiers modf)
 {
   tryShowToolTip(m_lastMousePos, false);
 }
-
 
 ////////////////////////////
 void CMapView::saveSetting()
@@ -959,6 +972,7 @@ void CMapView::saveSetting()
   settings.setValue("saving/events", g_autoSave.events);
   settings.setValue("saving/tracking", g_autoSave.tracking);
   settings.setValue("saving/mapPosition", g_autoSave.mapPosition);
+  settings.setValue("altMouse", bAlternativeMouse);
 
   if (g_autoSave.mapPosition)
   {
@@ -1112,7 +1126,7 @@ void CMapView::slotCheckedMagLevLock(bool checked)
 /////////////////////////////////////////////
 void CMapView::slotCheckedFlipX(bool checked)
 /////////////////////////////////////////////
-{  
+{
   m_mapView.flipX = checked;
   repaintMap();
 }
@@ -1481,7 +1495,7 @@ void CMapView::printMap()
 
   m_mapView.starMag = getStarMagnitudeLevel() + m_mapView.starMagAdd;
   m_mapView.dsoMag = getDsoMagnitudeLevel() + m_mapView.dsoMagAdd;
-  smRenderSkyMap(&m_mapView, &p1, img);      
+  smRenderSkyMap(&m_mapView, &p1, img);
 
   p1.end();
 
@@ -1511,7 +1525,7 @@ void CMapView::printMap()
   if (bw)
   {
     restoreFromPrintConfig();
-  } 
+  }
   else
   {
     g_skSet = currentSetting;

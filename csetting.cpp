@@ -17,6 +17,7 @@
 static int currentRow = 0;
 
 extern bool g_showZoomBar;
+extern bool bAlternativeMouse;
 
 CSetting::CSetting(QWidget *parent) :
   QDialog(parent),
@@ -33,6 +34,8 @@ CSetting::CSetting(QWidget *parent) :
   ui->checkBox_9->setChecked(g_autoSave.drawing);
   ui->checkBox_12->setChecked(g_autoSave.mapPosition);
   ui->checkBox_10->setChecked(g_showZoomBar);
+
+  ui->checkBox_13->setChecked(bAlternativeMouse);
 
   connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
   connect(ui->horizontalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
@@ -566,15 +569,15 @@ void CSetting::apply()
 
   QSettings rset;
 
-  //PPMXL  
-  cPPMXL.setDir(ui->lineEdit_2->text());  
+  //PPMXL
+  cPPMXL.setDir(ui->lineEdit_2->text());
   rset.setValue("ppmxl_path", ui->lineEdit_2->text());
 
   g_skSet.map.ppmxl.show = ui->showPPXMLCheckBox->isChecked();
   g_skSet.map.ppmxl.fromFOV = D2R(ui->doubleSpinBox_26->value());
   g_skSet.map.ppmxl.fromMag = ui->doubleSpinBox_27->value();
 
-  //USNO2  
+  //USNO2
   usno.setUsnoDir(ui->lineEdit_3->text());
   rset.setValue("usno2_path", ui->lineEdit_3->text());
 
@@ -672,6 +675,8 @@ void CSetting::on_pushButton_clicked()
   g_autoSave.drawing = ui->checkBox_9->isChecked();
   g_autoSave.mapPosition = ui->checkBox_12->isChecked();
   g_showZoomBar = ui->checkBox_10->isChecked();
+
+  bAlternativeMouse = ui->checkBox_13->isChecked();
 
   apply();
 
