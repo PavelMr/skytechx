@@ -69,7 +69,6 @@ CDSOCatalogue::CDSOCatalogue(QWidget *parent) :
 
 CDSOCatalogue::~CDSOCatalogue()
 {
-  // TODO: mozna dat do nastaveni aby se to nacetlo jenom jednou pri spousteni programu. (+300MB)
   delete ui;
   delete m_model;
   delete m_proxy;
@@ -213,6 +212,7 @@ void CDSOCatalogue::on_pushButton_2_clicked()
   m_proxy->setFiltering();
   m_proxy->setNameFilter(ui->nameFilterEdit->text());
   m_proxy->setConstFilter(ui->constFilterEdit->text());
+  m_proxy->setOnScreenFilter(ui->cb_onScreen->isChecked());
 
   m_proxy->setObjectType(ui->typeComboBox->currentData().toInt());
   m_proxy->setMagLimit(ui->checkBox->isChecked(), ui->magLimitSpin->value());
@@ -244,15 +244,31 @@ void CDSOCatalogue::on_pushButton_3_clicked()
   }
 
   m_selectedIndex = sel.at(0).data(Qt::UserRole + 2).toInt();
-  done(DL_OK);
+
+  emit sigCenterObject();
 }
 
 void CDSOCatalogue::on_pushButton_clicked()
 {
-  done(DL_CANCEL);
+  close();
 }
 
 void CDSOCatalogue::on_tableView_doubleClicked(const QModelIndex &)
 {
   on_pushButton_3_clicked();
 }
+
+void CDSOCatalogue::on_cb_top_toggled(bool checked)
+{
+  if (checked)
+  {
+    setWindowFlags(Qt::Window | Qt::WindowStaysOnTopHint);
+  }
+  else
+  {
+    setWindowFlags(Qt::Window | Qt::WindowStaysOnBottomHint);
+  }
+
+  show();
+}
+

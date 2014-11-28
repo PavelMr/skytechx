@@ -3086,6 +3086,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionDeep_Sky_Objects">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Deep Sky Objects...</string>
    </property>

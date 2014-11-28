@@ -5,7 +5,10 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 
+#include "cmapview.h"
 #include "dso_def.h"
+
+extern CMapView   *pcMapView;
 
 class MyProxyDSOModel: public QSortFilterProxyModel
 {
@@ -46,6 +49,11 @@ public:
     m_constFilter = name;
   }
 
+  void setOnScreenFilter(bool enable)
+  {
+    m_onScreenOnly = enable;
+  }
+
   void setFiltering()
   {
     m_empty = false;
@@ -55,6 +63,7 @@ public:
   void endReset() { endResetModel(); }
 
 private:
+  bool m_onScreenOnly;
   int m_objectType;
   bool m_empty;
   bool m_magLimitEnabled;
@@ -97,7 +106,18 @@ protected:
       QModelIndex index9 = sourceModel()->index(sourceRow, 9, sourceParent);
       QModelIndex index4 = sourceModel()->index(sourceRow, 4, sourceParent);
 
+      QModelIndex index5 = sourceModel()->index(sourceRow, 5, sourceParent); // ra
+      QModelIndex index6 = sourceModel()->index(sourceRow, 6, sourceParent); // dec
+
       int type = index0.data(Qt::UserRole + 1).toInt();
+
+      double ra = index5.data(Qt::UserRole + 1).toDouble();
+      double dec = index6.data(Qt::UserRole + 1).toDouble();
+
+      if (m_onScreenOnly && !pcMapView->isRaDecOnScreen(ra, dec))
+      {
+        return false;
+      }
 
       if (type == DSOT_NGC_DUPP)
       {
@@ -171,6 +191,11 @@ private slots:
   void on_pushButton_clicked();
 
   void on_tableView_doubleClicked(const QModelIndex &index);
+
+  void on_cb_top_toggled(bool checked);
+
+signals:
+  void sigCenterObject();
 
 private:
   Ui::CDSOCatalogue *ui;

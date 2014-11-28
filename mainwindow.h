@@ -11,6 +11,7 @@
 #include "clunarfeatures.h"
 #include "ctimewidget.h"
 #include "ctimedialog.h"
+#include "cdsocatalogue.h"
 
 namespace Ui {
 class MainWindow;
@@ -400,8 +401,6 @@ private slots:
 
   void on_treeView_2_clicked(const QModelIndex &index);
 
-  void on_actionDeep_Sky_Objects_triggered();
-
   void on_pushButton_10_clicked();
 
   void on_actionTime_lapse_toggled(bool arg1);
@@ -462,11 +461,15 @@ private slots:
 
   void on_actionTip_of_the_day_triggered();
 
+  void on_actionDeep_Sky_Objects_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
+  CDSOCatalogue *m_DSOCatalogueDlg;
 
   void setTitle();
 public slots:
+  void slotDsoCenter();
   void slotStatusBarDoubleClick(int id);
   void onTreeViewDSSContextMenuRequested(QPoint pt);
   void slotDownloadError(QString str);
@@ -488,7 +491,7 @@ public slots:
   void slotDSSChange(const QModelIndex &i, const QModelIndex &i2);
   void slotDrawingChange(bool bEdited, bool isEmpty);
   void slotTimeUpdate(void);
-  void slotCheckFirstTime();  
+  void slotCheckFirstTime();
 
 signals:
   void sigMagLock(bool checked);

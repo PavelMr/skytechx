@@ -1479,8 +1479,8 @@ void CMapView::printMap()
     setPrintConfig();
   }
 
-  m_mapView.starMag = m_mapView.starMagAdd + getStarMagnitudeLevel();
-  m_mapView.dsoMag = m_mapView.dsoMagAdd + getDsoMagnitudeLevel();
+  m_mapView.starMag = getStarMagnitudeLevel() + m_mapView.starMagAdd;
+  m_mapView.dsoMag = getDsoMagnitudeLevel() + m_mapView.dsoMagAdd;
   smRenderSkyMap(&m_mapView, &p1, img);      
 
   p1.end();
@@ -1501,8 +1501,8 @@ void CMapView::printMap()
   p.setPen(Qt::black);
   p.setFont(QFont("arial", 12));
   p.setBrush(Qt::NoBrush);
-  p.drawRect(0, 0, p.device()->width() - 1, p.device()->height() - 1 - height);
-  p.drawRect(0, 0, p.device()->width() - 1, p.device()->height() - 1);
+  p.drawRect(0, 0, p.device()->width() - 1, p.device()->height() - height);
+  p.drawRect(0, 0, p.device()->width() - 1, p.device()->height());
   p.drawText(QRect(0, p.device()->height() - 1 - height, p.device()->width() - 1, height),  Qt::AlignCenter, text);
   p.end();
 
@@ -1553,8 +1553,8 @@ void CMapView::repaintMap(bool bRepaint)
     timer.start();
 
     g_cDrawing.setView(&m_mapView);
-    m_mapView.starMag = m_mapView.starMagAdd + getStarMagnitudeLevel();
-    m_mapView.dsoMag = m_mapView.dsoMagAdd + getDsoMagnitudeLevel();
+    m_mapView.starMag = getStarMagnitudeLevel() + m_mapView.starMagAdd;
+    m_mapView.dsoMag = getDsoMagnitudeLevel() + m_mapView.dsoMagAdd;
     smRenderSkyMap(&m_mapView, &p, pBmp);
 
     if (g_showFps)

@@ -102,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   setWindowIcon(QIcon(":/res/ico_app.ico"));
 
+  m_DSOCatalogueDlg = NULL;
   ui->dockTime->hide();
   ui->dockTele->hide();
   ui->dockTimeDialog->hide();
@@ -509,7 +510,7 @@ MainWindow::MainWindow(QWidget *parent) :
   tb->addAction(ui->webView->pageAction(QWebPage::Stop));
   tb->addAction(ui->actionShow_help);
 
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));  
+  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));
 
   if (g_autoSave.mapPosition)
   {
@@ -521,7 +522,7 @@ MainWindow::MainWindow(QWidget *parent) :
     switch (mode)
     {
       case SMCT_RA_DEC:
-        ui->actionAtlas_mode_Pole_Up->trigger();        
+        ui->actionAtlas_mode_Pole_Up->trigger();
         break;
 
       case SMCT_ALT_AZM:
@@ -568,7 +569,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_grid->setEnabled(g_showGrids);
   ui->actionDrawings->setChecked(g_showDrawings);
 
-  setTitle();   
+  setTitle();
 }
 
 void MainWindow::setTitle()
@@ -717,7 +718,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 ////////////////////////////////////////////
 {
   if (!ui->widget->hasFocus())
-    return;  
+    return;
 
   ui->widget->keyEvent(e->key(), e->modifiers());
 }
@@ -765,7 +766,7 @@ void MainWindow::saveAndExit()
   if (ui->actionNight_mode->isChecked())
   {
     restoreFromNightConfig();
-  }    
+  }
 
   if (ui->actionShow_full_screen->isChecked())
   {
@@ -1898,7 +1899,7 @@ void MainWindow::slotTimeDialogVis(bool vis)
 /////////////////////////////////
 void MainWindow::slotSearchDone()
 /////////////////////////////////
-{  
+{
   bool noZoom = (QApplication::keyboardModifiers() & Qt::ShiftModifier) ? true : false;
 
   QString str = m_search->text();
@@ -2469,7 +2470,7 @@ void MainWindow::slotRealTime()
 ////////////////////////////////////
 void MainWindow::slotRealTimeLapse()
 ////////////////////////////////////
-{  
+{
   ui->widget->m_mapView.jd += JD1SEC * (m_realElapsedTimerLapse.elapsed() / 1000.0) * (double)m_timeLapseMul->value();
   recenterHoldObject(ui->widget, false);
   ui->widget->repaintMap();
@@ -2709,7 +2710,7 @@ void MainWindow::on_actionConnect_device_triggered()
       connect(g_pTelePlugin, SIGNAL(sigUpdate(double,double)), ui->widget, SLOT(slotTelePlugChange(double,double)));
 
       if (!g_pTelePlugin->connectDev(this))
-      {        
+      {
         tpUnloadDriver();
         ui->widget->repaintMap();
         return;
@@ -4024,23 +4025,6 @@ void MainWindow::on_treeView_2_clicked(const QModelIndex &/*index*/)
 
 }
 
-void MainWindow::on_actionDeep_Sky_Objects_triggered()
-{
-  CDSOCatalogue dlg(this);  
-
-  if (dlg.exec() == DL_OK)
-  {
-    dso_t* dso = &cDSO.dso[dlg.m_selectedIndex];
-
-    double ra = dso->rd.Ra;
-    double dec = dso->rd.Dec;
-
-    precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
-    double fov = getOptObjFov(dso->sx / 3600., dso->sy / 3600.);
-
-    ui->widget->centerMap(ra, dec, fov);
-  }
-}
 
 // delete all events
 void MainWindow::on_pushButton_10_clicked()
@@ -4389,3 +4373,36 @@ void MainWindow::on_actionTip_of_the_day_triggered()
   dlg.exec();
 }
 
+void MainWindow::slotDsoCenter()
+{
+  dso_t* dso = &cDSO.dso[m_DSOCatalogueDlg->m_selectedIndex];
+
+  double ra = dso->rd.Ra;
+  double dec = dso->rd.Dec;
+
+  precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
+  double fov = getOptObjFov(dso->sx / 3600., dso->sy / 3600.);
+
+  ui->widget->centerMap(ra, dec, fov);
+}
+
+void MainWindow::on_actionDeep_Sky_Objects_triggered(bool checked)
+{
+  if (checked)
+  {
+    m_DSOCatalogueDlg = new CDSOCatalogue();
+
+    m_DSOCatalogueDlg->setWindowFlags(Qt::Window);
+    m_DSOCatalogueDlg->setAttribute(Qt::WA_DeleteOnClose);
+    m_DSOCatalogueDlg->setModal(false);
+    m_DSOCatalogueDlg->show();
+
+    connect(m_DSOCatalogueDlg, SIGNAL(destroyed()), ui->actionDeep_Sky_Objects, SLOT(toggle()));
+    connect(m_DSOCatalogueDlg, SIGNAL(sigCenterObject()), this, SLOT(slotDsoCenter()));
+  }
+  else
+  {
+    m_DSOCatalogueDlg->close();
+    ui->actionDeep_Sky_Objects->toggle();
+  }
+}
