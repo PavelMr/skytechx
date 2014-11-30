@@ -182,7 +182,7 @@
     </layout>
    </item>
    <item row="5" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,3,2,1,1">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,3,2,0,1,1">
      <item>
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
@@ -225,6 +225,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>Remove filter</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_3">

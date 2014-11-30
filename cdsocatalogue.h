@@ -194,6 +194,8 @@ private slots:
 
   void on_cb_top_toggled(bool checked);
 
+  void on_pushButton_4_clicked();
+
 signals:
   void sigCenterObject();
 

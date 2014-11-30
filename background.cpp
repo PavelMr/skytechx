@@ -131,7 +131,7 @@ bool makeHorizon(QList <QPointF> *list)
       alpha = (d - dmin) / (dmax - dmin);
     double h = (1.0 - alpha) * amin + alpha * amax;
 
-    altHorizon[d] = D2R(h);    
+    altHorizon[d] = D2R(h);
   }
 
   return(true);
@@ -194,7 +194,7 @@ void renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
       else
         scanRender.renderPolygonAlpha(color, pImg);
     }
-  }  
+  }
 
   auto drawText = [color](SKPOINT* pt1, SKPOINT* pt2, const QString& text, CSkPainter* p)
   {
@@ -214,12 +214,12 @@ void renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
     rc.moveCenter(QPoint(pt2->sx, pt2->sy));
     rc2 = rc;
 
-    rc2.adjust(-4, -4, 8, 8);
+    rc2.adjust(-4, -4, 4, 4);
 
     p->setPen(QPen(color, 2));
     p->drawLine(pt1->sx, pt1->sy, pt2->sx, pt2->sy);
 
-    p->setBrush(color);   
+    p->setBrush(color);
     setSetFontColor(FONT_HORIZON, p);
     p->drawRoundedRect(rc2, 5, 5);
 

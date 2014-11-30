@@ -272,3 +272,13 @@ void CDSOCatalogue::on_cb_top_toggled(bool checked)
   show();
 }
 
+void CDSOCatalogue::on_pushButton_4_clicked()
+{
+  ui->typeComboBox->setCurrentIndex(0);
+  ui->nameFilterEdit->setText("");
+  ui->checkBox->setChecked(false);
+  ui->sizeComboBox->setCurrentIndex(0);
+  ui->constFilterEdit->setText("");
+  ui->cb_onScreen->setChecked(false);
+}
+

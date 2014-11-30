@@ -154,7 +154,9 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
       if (type == SMCT_ALT_AZM)
       {
         for (int i = 0; i < 3; i++)
+        {
          rd[i].Dec -= cAstro.getInvAtmRef(rd[i].Dec);
+        }
       }
 
       for (int i = 0; i < 4; i++)
@@ -188,7 +190,9 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
           if (type == SMCT_ALT_AZM)
           {
             for (int i = 0; i < 3; i++)
-             srd[i].Dec -= cAstro.getInvAtmRef(srd[i].Dec);
+            {
+              srd[i].Dec -= cAstro.getInvAtmRef(srd[i].Dec);
+            }
           }
 
           for (int i = 0; i < 3; i++)
@@ -231,7 +235,9 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
                   }
                   else
                   {
-                    pPainter->drawTextLL(lnA.sx - m, lnA.sy + m, QString("%1").arg(getStrDeg(R360 - (x + sx), true)));
+                    double value = R360 - (x + sx);
+                    rangeDbl(&value, R360);
+                    pPainter->drawTextLL(lnA.sx - m, lnA.sy + m, QString("%1").arg(getStrDeg(value, true)));
                   }
                   pPainter->drawTextUR(lnA.sx + m, lnA.sy - m, QString("%1").arg(getStrDeg(y + sy, true)));
                 }
