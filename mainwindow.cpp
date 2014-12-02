@@ -63,6 +63,10 @@
 #include "cweather.h"
 #include "csaveimage.h"
 #include "ctipofday.h"
+#include "cgetprofile.h"
+
+#include <QPrintPreviewDialog>
+#include <QPrinter>
 
 // show/hide drawing
 bool g_showDSOShapes = false;
@@ -4405,4 +4409,32 @@ void MainWindow::on_actionDeep_Sky_Objects_triggered(bool checked)
     m_DSOCatalogueDlg->close();
     ui->actionDeep_Sky_Objects->toggle();
   }
+}
+
+void MainWindow::on_actionPrint_preview_triggered()
+{
+  CGetProfile dlgProfile(this);
+
+  if (dlgProfile.exec() == DL_CANCEL)
+  {
+    return;
+  }
+
+  m_dlgProfileName = dlgProfile.m_name;
+
+  QPrintPreviewDialog dlg(this);
+
+  dlg.printer()->setOrientation(QPrinter::Landscape);
+  dlg.printer()->setPageMargins(10, 10, 10, 10, QPrinter::Millimeter);
+  dlg.resize(1000, 1000 / 1.333);
+  dlg.ensurePolished();
+
+
+  connect(&dlg, SIGNAL(paintRequested(QPrinter*)), SLOT(slotPrintPreview(QPrinter*)));
+  dlg.exec();
+}
+
+void MainWindow::slotPrintPreview(QPrinter *printer)
+{
+  ui->widget->printMapView(printer, m_dlgProfileName);
 }

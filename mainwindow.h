@@ -13,6 +13,8 @@
 #include "ctimedialog.h"
 #include "cdsocatalogue.h"
 
+class QPrinter;
+
 namespace Ui {
 class MainWindow;
 }
@@ -99,6 +101,7 @@ protected:
   CTimeDialog    *m_timeDialog;
   bool            m_isNormal;
   bool            m_noRecalculateView;
+  QString         m_dlgProfileName;
 
 private slots:
   void on_action_Exit_2_triggered();
@@ -463,12 +466,15 @@ private slots:
 
   void on_actionDeep_Sky_Objects_triggered(bool checked);
 
+  void on_actionPrint_preview_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
 
   void setTitle();
 public slots:
+  void slotPrintPreview(QPrinter*);
   void slotDsoCenter();
   void slotStatusBarDoubleClick(int id);
   void onTreeViewDSSContextMenuRequested(QPoint pt);

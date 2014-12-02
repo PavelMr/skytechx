@@ -19,6 +19,9 @@
 #define MIN_MAP_FOV        DMS2RAD(0, 0, 15)
 #define MAX_MAP_FOV        DMS2RAD(90, 0, 0)
 
+class QPrinter;
+class CGetProfile;
+
 typedef struct
 {
   double lon;
@@ -89,6 +92,7 @@ public:
   void changeMapView(int type);
 
   void printMap(void);
+  void printMapView(QPrinter *prn, const QString &profileName);
 
   QImage *getImage();
 

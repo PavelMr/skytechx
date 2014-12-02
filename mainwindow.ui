@@ -294,6 +294,8 @@
     <addaction name="separator"/>
     <addaction name="actionExport_map_to_image"/>
     <addaction name="actionCopy_map_to_clipboard"/>
+    <addaction name="separator"/>
+    <addaction name="actionPrint_preview"/>
     <addaction name="actionPrint"/>
     <addaction name="separator"/>
     <addaction name="actionChange_language"/>
@@ -3262,6 +3264,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionTip_of_the_day">
    <property name="text">
     <string>Tip of the day...</string>
+   </property>
+  </action>
+  <action name="actionPrint_preview">
+   <property name="text">
+    <string>Print preview...</string>
    </property>
   </action>
  </widget>

@@ -1443,10 +1443,7 @@ bool CMapView::isRaDecOnScreen(double ra, double dec)
 void CMapView::printMap()
 /////////////////////////
 {
-  // TODO: defaul profil neexistuje pri prvni spusteni!!!!
-
-  setting_t currentSetting = g_skSet;
-  bool bw;
+  // TODO: defaulni profil neexistuje pri prvni spusteni!!!!
 
   CGetProfile dlgProfile(this);
 
@@ -1464,9 +1461,17 @@ void CMapView::printMap()
     return;
   }
 
-  if (dlgProfile.m_name.compare("$BLACKWHITE$"))
+  printMapView(&prn, dlgProfile.m_name);
+}
+
+void CMapView::printMapView(QPrinter *prn, const QString &profileName)
+{
+  setting_t currentSetting = g_skSet;
+  bool bw;
+
+  if (profileName.compare("$BLACKWHITE$"))
   {
-    setLoad(dlgProfile.m_name);
+    setLoad(profileName);
     bw = false;
   }
   else
@@ -1475,7 +1480,7 @@ void CMapView::printMap()
   }
 
   CSkPainter p;
-  p.begin(&prn);
+  p.begin(prn);
   int height = 10 / (double)p.device()->heightMM() * p.device()->height();
   QRect rc = QRect(0, 0, p.device()->width() - 1, p.device()->height() - 1 - height);
 
@@ -1498,6 +1503,19 @@ void CMapView::printMap()
   smRenderSkyMap(&m_mapView, &p1, img);
 
   p1.end();
+
+  if (bw)
+  { // convert to grayscale
+    for (int y = 0; y < img->height(); y++)
+    {
+      for (int x = 0; x < img->width(); x++)
+      {
+        QRgb color = img->pixel(x, y);
+        int gray = qGray(color);
+        img->setPixel(x, y, qRgb(gray, gray, gray));
+      }
+    }
+  }
 
   p.drawImage(0, 0, *img);
 
