@@ -178,7 +178,8 @@ SOURCES += main.cpp\
     ceditsearch.cpp \
     csaveimage.cpp \
     cnamemagview.cpp \
-    ctipofday.cpp
+    ctipofday.cpp \
+    caddcustomobject.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -324,7 +325,8 @@ HEADERS  += mainwindow.h \
     build.h \
     csaveimage.h \
     cnamemagview.h \
-    ctipofday.h
+    ctipofday.h \
+    caddcustomobject.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -390,7 +392,8 @@ FORMS    += mainwindow.ui \
     cplanetaltitude.ui \
     cweather.ui \
     csaveimage.ui \
-    ctipofday.ui
+    ctipofday.ui \
+    caddcustomobject.ui
 
 
 RESOURCES += \

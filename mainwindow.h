@@ -468,6 +468,8 @@ private slots:
 
   void on_actionPrint_preview_triggered();
 
+  void on_pushButton_16_clicked();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

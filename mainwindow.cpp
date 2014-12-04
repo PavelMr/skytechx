@@ -64,6 +64,7 @@
 #include "csaveimage.h"
 #include "ctipofday.h"
 #include "cgetprofile.h"
+#include "caddcustomobject.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -1405,6 +1406,7 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool scroll)
 
   ui->pushButton->setEnabled(true);
   ui->pushButton_4->setEnabled(true);
+  ui->pushButton_16->setEnabled(true);
   ui->checkBox_5->setEnabled(true);
   ui->action_Last_search_object->setEnabled(true);
 
@@ -2093,6 +2095,7 @@ void MainWindow::removeQuickInfo(int type)
     ui->lv_quickInfo->removeInfo();
     ui->pushButton->setEnabled(false);
     ui->pushButton_4->setEnabled(false);
+    ui->pushButton_16->setEnabled(false);
     ui->checkBox_5->setEnabled(false);
     ui->action_Last_search_object->setEnabled(false);
   }
@@ -4429,7 +4432,6 @@ void MainWindow::on_actionPrint_preview_triggered()
   dlg.resize(1000, 1000 / 1.333);
   dlg.ensurePolished();
 
-
   connect(&dlg, SIGNAL(paintRequested(QPrinter*)), SLOT(slotPrintPreview(QPrinter*)));
   dlg.exec();
 }
@@ -4437,4 +4439,17 @@ void MainWindow::on_actionPrint_preview_triggered()
 void MainWindow::slotPrintPreview(QPrinter *printer)
 {
   ui->widget->printMapView(printer, m_dlgProfileName);
+}
+
+void MainWindow::on_pushButton_16_clicked()
+{
+  if (ui->lv_quickInfo->m_info.type != MO_DSO)
+  {
+    msgBoxError(this, tr("You can append only deep sky objects!"));
+    return;
+  }
+
+  CAddCustomObject dlg(this, cDSO.getName((dso_t *)ui->lv_quickInfo->m_info.par1));
+
+  dlg.exec();
 }

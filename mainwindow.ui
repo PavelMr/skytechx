@@ -611,8 +611,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>256</width>
-          <height>402</height>
+          <width>300</width>
+          <height>385</height>
          </rect>
         </property>
         <attribute name="label">
@@ -662,6 +662,16 @@
              </property>
              <property name="text">
               <string>Go to object</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_16">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Add to list...</string>
              </property>
             </widget>
            </item>
