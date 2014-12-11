@@ -116,7 +116,7 @@ void CSohoImg::slotDownFinished(QNetworkReply *reply)
     QPixmap pix;
 
     img = QImage::fromData(reply->readAll());
-    img.save("data/sun/" + QString("%1").arg(m_hash, 0, 16) + ".jpg");
+    img.save("data/sun/sun_" + QString("%1").arg(m_hash, 0, 16) + ".jpg");
 
     if (img.isNull())
     {
@@ -157,7 +157,7 @@ void CSohoImg::on_comboBox_currentIndexChanged(int index)
 {
   m_hash = qHash(tListUrl[index].name);
 
-  QPixmap pix("data/sun/" + QString("%1").arg(m_hash, 0, 16) + ".jpg");
+  QPixmap pix("data/sun/sun_" + QString("%1").arg(m_hash, 0, 16) + ".jpg");
 
   if (pix.isNull())
   {

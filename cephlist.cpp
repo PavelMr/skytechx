@@ -25,6 +25,8 @@ CEphList::CEphList(QWidget *parent, mapView_t *view) :
 {
   ui->setupUi(this);
 
+  setFixedSize(size());
+
   cELColumn[0] = tr("JD");
   cELColumn[1] = tr("Date");
   cELColumn[2] = tr("Time");
@@ -61,6 +63,7 @@ CEphList::CEphList(QWidget *parent, mapView_t *view) :
   ui->comboBox->addItem(tr("Hour(s)"));
   ui->comboBox->addItem(tr("Day(s)"));
 
+  // TODO: pamatovat si priste poradi
   for (int i = 0; i < EL_COLUMN_COUNT; i++)
   {
     QListWidgetItem *item = new QListWidgetItem;

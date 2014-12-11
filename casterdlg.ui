@@ -177,6 +177,9 @@
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
+          <property name="batchSize">
+           <number>1000</number>
+          </property>
          </widget>
         </item>
         <item>

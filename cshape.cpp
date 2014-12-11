@@ -43,7 +43,7 @@ bool CShape::load(QString name)
         header.id[2] == 'P' &&
         header.id[3] == '1')
     {
-      shape = (shp_shape_t *)malloc(header.count * sizeof(shp_shape_t));      
+      shape = (shp_shape_t *)malloc(header.count * sizeof(shp_shape_t));
       for (int i = 0; i < header.count; i++)
       {
         count++;
@@ -58,7 +58,7 @@ bool CShape::load(QString name)
 
         shape[i].pt3d = (SKPOINT *)malloc(shape[i].numPts * sizeof(SKPOINT));
         shape[i].points = (radec_t *)malloc(shape[i].numPts * sizeof(radec_t));
-        shape[i].faces  = (int *)malloc(shape[i].numFaces * sizeof(int) * 3);        
+        shape[i].faces  = (int *)malloc(shape[i].numFaces * sizeof(int) * 3);
 
         for (int v = 0; v < shape[i].numPts; v++)
         {
@@ -68,12 +68,12 @@ bool CShape::load(QString name)
         {
           fs.readRawData((char *)&shape[i].faces[f], sizeof(int));
         }
-      }     
+      }
     }
     else
     {
       return(false);
-    }    
+    }
     bReady = true;
     return(true);
   }
@@ -148,8 +148,6 @@ int CShape::render(QPainter *p, QImage *img, mapView_t *, QColor *colList, QRect
       for (int t = 0; t < newCount; t++)
         trfProjectPointNoCheck(&newPts[t]);
 
-      //p->setPen(QColor(255, 255, 255));
-
       for (int t = 0; t < newCount; t++)
       {
         int t1 = (t + 1) % newCount;
@@ -157,16 +155,18 @@ int CShape::render(QPainter *p, QImage *img, mapView_t *, QColor *colList, QRect
         //p->drawLine(newPts[t].sx, newPts[t].sy, newPts[t1].sx, newPts[t1].sy);
       }
 
-
       /*
       QPolygon poly;
       for (int t = 0; t < newCount; t++)
+      {
         poly.append(QPoint(newPts[t].sx, newPts[t].sy));
+      }
 
       p->setPen(col);
       p->setBrush(col);
       p->drawPolygon(poly);
       */
+
 
       scanRender.renderPolygon(col, img);
     }

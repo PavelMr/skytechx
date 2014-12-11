@@ -76,22 +76,30 @@ void CScanRender::scanLine(int x1, int y1, int x2, int y2)
   }
 
   if (y2 < 0)
+  {
     return; // offscreen
+  }
 
   if (y1 >= m_sy)
+  {
     return; // offscreen
+  }
 
   float dy = (float)(y2 - y1);
 
   if (dy == 0) // hor. line
+  {
     return;
+  }
 
   float dx = (float)(x2 - x1) / dy;
   float x = x1;
   int   y;
 
   if (y2 >= m_sy)
+  {
     y2 = m_sy - 1;
+  }
 
   if (y1 < 0)
   { // partialy off screen
@@ -227,19 +235,23 @@ void CScanRender::renderPolygon(QColor col, QImage *dst)
 
   for (int y = plMinY; y <= plMaxY; y++)
   {
-    if (scan[y].scan[0] > scan[y].scan[1])
-    {
-      qSwap(scan[y].scan[0], scan[y].scan[1]);
-    }
-
     int px1 = scan[y].scan[0];
     int px2 = scan[y].scan[1];
 
+    if (px1 > px2)
+    {
+      qSwap(px1, px2);
+    }
+
     if (px1 < 0)
+    {
       px1 = 0;
+    }
 
     if (px2 >= m_sx)
+    {
       px2 = m_sx - 1;
+    }
 
     quint32 *pDst = bits + (y * dw) + px1;
 
@@ -264,13 +276,13 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
 
   for (int y = plMinY; y <= plMaxY; y++)
   {
-    if (scan[y].scan[0] > scan[y].scan[1])
-    {
-      qSwap(scan[y].scan[0], scan[y].scan[1]);
-    }
-
     int px1 = scan[y].scan[0];
     int px2 = scan[y].scan[1];
+
+    if (px1 > px2)
+    {
+      qSwap(px1, px2);
+    }
 
     if (px1 < 0)
     {
@@ -278,7 +290,9 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
     }
 
     if (px2 >= m_sx)
+    {
       px2 = m_sx - 1;
+    }
 
     quint32 *pDst = bits + (y * dw) + px1;
     for (int x = px1; x < px2; x++)
@@ -321,7 +335,7 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
   bool bw = src->format() == QImage::Format_Indexed8;
 
   // TODO: asi dat pryc je to pomalejsi !!!!!!!
-  #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
+  //#pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])
@@ -410,7 +424,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
   bkScan_t *scan = scLR;
   bool bw = src->format() == QImage::Format_Indexed8;
 
-  #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
+  //#pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])

@@ -50,6 +50,6 @@ void CWaitLogo::paintEvent(QPaintEvent *)
 void CWaitLogo::updateTime()
 {
   m_angle += 10;
-  m_angle = m_angle % 360;
+  m_angle %= 360;
   update();
 }

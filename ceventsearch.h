@@ -260,6 +260,8 @@ private slots:
 
     void on_radioButton_8_clicked();
 
+    void on_pushButton_5_clicked();
+
 private:
     Ui::CEventSearch *ui;
 };

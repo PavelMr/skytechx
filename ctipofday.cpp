@@ -80,12 +80,11 @@ void CTipOfDay::setTip(int &index)
 
                              "Pokud chcete o objektu získat více informací tak v dialogu objektu lze stiskem tlačítka přejít na webový server NED nebo SIMBAD kde se zobrazí podrobnější informace.",
 
-                             "Vzdálenost a poziční ůhel od pozice kurzoru na mapě a měřícího bodu se zobrazuje ve stavovém řádku. Přesun měřícího bodu lze provést klávesou Space."
-                             // (poziční ůhel) Position angle (měřícího bodu) measure point (stavovém řádku) status bar
+                             "Vzdálenost a poziční úhel od pozice kurzoru na mapě a měřícího bodu se zobrazuje ve stavovém řádku. Přesun měřícího bodu lze provést klávesou Space."
+                             // (poziční úhel) Position angle (měřícího bodu) measure point (stavovém řádku) status bar
 
                             };
 
- // ui->textBrowser->setText("<br><h2>" + tr("Did you know...") + "</h2><hr><br>" + "<font size=\"4\">" + tip[index] + "</font>");
    ui->textBrowser->setText("<br><b><font size=\"5\"> &nbsp;" + tr("Did you know...") + "</font></b><br><hr><br>" + "<font size=\"4\">" + tip[index] + "</font>");
 }
 

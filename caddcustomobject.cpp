@@ -59,6 +59,7 @@ void CAddCustomObject::on_comboBox_currentIndexChanged(const QString &arg1)
         QStandardItem *item = new QStandardItem;
 
         item->setText(text);
+        item->setEditable(false);
         model->insertRow(i, item);
         i++;
       }

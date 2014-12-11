@@ -50,6 +50,10 @@
      <height>291</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+</string>
+   </property>
   </widget>
   <widget class="QCheckBox" name="checkBox">
    <property name="geometry">

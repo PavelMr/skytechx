@@ -1475,7 +1475,7 @@ void CBigMoon::run()
   double phase1;
   double phase2;
   double phase3;
-  double jd;
+  double jd = m_jdFrom;
 
   if (m_highPrec)
   {
@@ -1537,4 +1537,10 @@ void CBigMoon::run()
     count++;
   }
   emit sigDone();
+}
+
+void CEventSearch::on_pushButton_5_clicked()
+{
+  ui->dateEdit->setDate(QDate::currentDate());
+  ui->dateEdit_2->setDate(QDate::currentDate().addDays(365));
 }

@@ -239,7 +239,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
       }
 
       int r = 3 + cStarRenderer.renderStar(&pt, sp, mag, pPainter);
-      addMapObj(pt.sx, pt.sy, MO_TYCSTAR, MO_CIRCLE, r + 4, region, j, mag);      
+      addMapObj(pt.sx, pt.sy, MO_TYCSTAR, MO_CIRCLE, r + 4, region, j, mag);
 
       if (!g_showLabels)
       {
@@ -688,7 +688,7 @@ static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o
 ///////////////////////////////////////////////////////////////////////////////////
 static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////////////
-{  
+{
   orbit_t o[PT_PLANET_COUNT];
   int     order[PT_PLANET_COUNT];
   orbit_t *sun;
