@@ -2,6 +2,7 @@
 #include "ui_caddcustomobject.h"
 #include "ctextsel.h"
 #include "skcore.h"
+#include "cdso.h"
 
 static QString lastCatalogue;
 
@@ -54,14 +55,18 @@ void CAddCustomObject::on_comboBox_currentIndexChanged(const QString &arg1)
     if (item.catalogue == arg1)
     {
       int i = 0;
-      foreach (const QString &text, item.list)
+      foreach (const int id, item.list)
       {
         QStandardItem *item = new QStandardItem;
+        dso_t *dso = &cDSO.dso[id];
 
-        item->setText(text);
-        item->setEditable(false);
-        model->insertRow(i, item);
-        i++;
+        if (id >= 0 || id < cDSO.dsoHead.numDso)
+        {
+          item->setText(cDSO.getName(dso, 0));
+          item->setEditable(false);
+          model->insertRow(i, item);
+          i++;
+        }
       }
       return;
     }
@@ -94,29 +99,26 @@ void CAddCustomObject::on_pushButton_clicked()
 
 void CAddCustomObject::on_pushButton_5_clicked()
 {
-  QString dso = ui->lineEdit->text();
+  QString name = ui->lineEdit->text();
 
-  if (dso.simplified().isEmpty())
+  if (name.simplified().isEmpty())
   {
     return;
   }
 
   QStandardItemModel *model = (QStandardItemModel *)ui->listView->model();
 
-  QList<QStandardItem *> list = model->findItems(dso);
-
-  if (list.count() > 0)
+  if (appendTo(ui->comboBox->currentText(), name))
   {
-    msgBoxError(this, tr("Object is already in the list!"));
-    return;
+    QStandardItem *item = new QStandardItem;
+    dso_t *dso;
+
+    int index = cDSO.findDSO((char *)qPrintable(name), &dso);
+
+    item->setText(cDSO.getName(dso, 0));
+    model->insertRow(model->rowCount(), item);
+    ui->lineEdit->setText("");
   }
-  appendTo(ui->comboBox->currentText(), dso);
-
-  QStandardItem *item = new QStandardItem;
-
-  item->setText(dso);
-  model->insertRow(model->rowCount(), item);
-  ui->lineEdit->setText("");
 }
 
 void CAddCustomObject::enableItems()
@@ -160,7 +162,7 @@ void CAddCustomObject::load(QList <customCatalogue_t> *data)
       }
       else
       {
-        cc.list.append(line.simplified());
+        cc.list.append(line.simplified().toInt());
       }
     }
     if (!cc.catalogue.isEmpty())
@@ -180,28 +182,45 @@ void CAddCustomObject::save()
     foreach (const customCatalogue_t &item, m_catalogue)
     {
       s << "#" << item.catalogue << "\n";
-      foreach (const QString &name, item.list)
+      foreach (const int id, item.list)
       {
-        s << name << "\n";
+        s << id << "\n";
       }
     }
   }
 }
 
-void CAddCustomObject::appendTo(const QString &catalogue, const QString &name)
+bool CAddCustomObject::appendTo(const QString &catalogue, const QString &name)
 {
+  dso_t *dso;
+  int index = cDSO.findDSO((char *)qPrintable(name), &dso);
+
+  if (index == -1)
+  {
+    // dso not found
+    msgBoxError(this, tr("Object not found!"));
+    return false;
+  }
+
   for(QList <customCatalogue_t>::iterator it = m_catalogue.begin(); it != m_catalogue.end(); ++it)
   {
     customCatalogue_t &cat = *it;
 
     if (cat.catalogue == catalogue)
     {
-      cat.list.append(name);
-      return;
+      if (cat.list.contains(index))
+      {
+        msgBoxError(this, tr("Object is already in the list!"));
+        return false;
+      }
+      cat.list.append(index);
+      return true;
     }
   }
 
   qDebug() << "append error";
+
+  return false;
 }
 
 // remove

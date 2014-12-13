@@ -24,7 +24,7 @@
           <string>Location</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
+          <item row="3" column="0">
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
              <widget class="QGroupBox" name="groupBox_3">
@@ -300,12 +300,19 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="0">
+          <item row="5" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
              <widget class="QPushButton" name="pushButton_3">
               <property name="text">
                <string>Select from map...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_8">
+              <property name="text">
+               <string>Get location from IP</string>
               </property>
              </widget>
             </item>

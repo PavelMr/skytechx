@@ -17,6 +17,7 @@ CWPosSel::CWPosSel(QWidget *parent, mapView_t *view) :
 
   m_earthTools.setCacheFolder("cache");
   connect(&m_earthTools, SIGNAL(sigDone(bool,double,int)), this, SLOT(slotETDone(bool,double,int)));
+  connect(&m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotLocationDone(QNetworkReply*)));
 
   SkFile f("data/locations/locations.dat");
   if (f.open(SkFile::ReadOnly | SkFile::Text))
@@ -394,6 +395,42 @@ void CWPosSel::saveLoc()
   }
 }
 
+void CWPosSel::slotLocationDone(QNetworkReply *reply)
+{
+  setDisabled(false);
+  unsetCursor();
+
+  QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+  QJsonObject obj = doc.object();
+  QJsonObject tempObject;
+  QJsonValue val;
+  double lon;
+  double lat;
+
+  if (obj.contains("latitude") && obj.contains("longitude"))
+  {
+    lat = obj["latitude"].toDouble();
+    lon = obj["longitude"].toDouble();
+
+    ui->doubleSpinBox->setValue(qAbs(lon));
+    ui->doubleSpinBox_2->setValue(qAbs(lat));
+
+    if (lon < 0)
+      ui->radioButton->setChecked(true);
+    else
+      ui->radioButton_2->setChecked(true);
+
+    if (lat >= 0)
+      ui->radioButton_3->setChecked(true);
+    else
+      ui->radioButton_4->setChecked(true);
+  }
+  else
+  {
+    msgBoxError(this, tr("Cannot get location!!!"));
+  }
+}
+
 // Cancel ////////////////////////////
 void CWPosSel::on_pushButton_clicked()
 //////////////////////////////////////
@@ -568,4 +605,15 @@ void CWPosSel::on_pushButton_7_clicked()
   getData(&loc);
 
   m_earthTools.getTimeZone(loc.lon, loc.lat);
+}
+
+void CWPosSel::on_pushButton_8_clicked()
+{
+  QNetworkRequest request(QUrl("http://www.telize.com/geoip"));
+  QNetworkReply *reply = m_manager.get(request);
+
+  setDisabled(true);
+  setCursor(Qt::WaitCursor);
+
+  Q_UNUSED(reply);
 }

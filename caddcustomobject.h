@@ -6,7 +6,7 @@
 typedef struct
 {
   QString catalogue;
-  QStringList list;
+  QList <int> list;
 } customCatalogue_t;
 
 namespace Ui {
@@ -39,7 +39,7 @@ private:
   void enableItems();
   static void load(QList<customCatalogue_t> *data);
   void save();
-  void appendTo(const QString &catalogue, const QString &name);
+  bool appendTo(const QString &catalogue, const QString &name);
 
   Ui::CAddCustomObject *ui;
   QList <customCatalogue_t> m_catalogue;

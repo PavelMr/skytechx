@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <QNetworkAccessManager>
 
 #include "cmapview.h"
 #include "earthtools/cearthtools.h"
@@ -39,8 +40,11 @@ protected:
   QList <location_t *>  m_tList;
 
   CEarthTools           m_earthTools;
+  QNetworkAccessManager m_manager;
 
 private slots:
+  void slotLocationDone(QNetworkReply *reply);
+
   void on_doubleSpinBox_valueChanged(double arg1);
 
   void on_spinBox_valueChanged(int arg1);
@@ -76,6 +80,8 @@ private slots:
   void slotETDone(bool ok,double val ,int type);
 
   void on_pushButton_7_clicked();
+
+  void on_pushButton_8_clicked();
 
 private:
   Ui::CWPosSel *ui;
