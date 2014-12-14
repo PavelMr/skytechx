@@ -7,6 +7,7 @@
 
 #include "cmapview.h"
 #include "dso_def.h"
+#include "caddcustomobject.h"
 
 extern CMapView   *pcMapView;
 
@@ -15,6 +16,8 @@ class MyProxyDSOModel: public QSortFilterProxyModel
 public:
   MyProxyDSOModel()
   {
+    m_catalogue = NULL;
+    m_catalogueIndex = -1;
     m_objectType = -1;
     m_empty = true;
     m_magLimitEnabled = false;
@@ -37,6 +40,12 @@ public:
   void setObjectType(int type)
   {
     m_objectType = type;
+  }
+
+  void setCatalogue(int index, QList <customCatalogue_t> *catalogue)
+  {
+    m_catalogue = catalogue;
+    m_catalogueIndex = index;
   }
 
   void setNameFilter(QString name)
@@ -72,6 +81,8 @@ private:
   double m_sizeLimit;
   QString m_nameFilter;
   QString m_constFilter;
+  int m_catalogueIndex;
+  QList <customCatalogue_t> *m_catalogue;
 
 protected:
    bool lessThan(const QModelIndex& left, const QModelIndex& right) const
@@ -100,6 +111,17 @@ protected:
       }
 
       QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
+
+      int dsoIndex = index0.data(Qt::UserRole + 2).toInt();
+
+      if (m_catalogueIndex >= 0)
+      {
+        if (!m_catalogue->at(m_catalogueIndex).list.contains(dsoIndex))
+        {
+          return false;
+        }
+      }
+
       QModelIndex index12 = sourceModel()->index(sourceRow, 12, sourceParent);
       QModelIndex index7 = sourceModel()->index(sourceRow, 7, sourceParent);
       QModelIndex index8 = sourceModel()->index(sourceRow, 8, sourceParent);
@@ -196,6 +218,8 @@ private slots:
 
   void on_pushButton_4_clicked();
 
+  void on_cbCatalogue_currentIndexChanged(int index);
+
 signals:
   void sigCenterObject();
 
@@ -204,6 +228,7 @@ private:
 
   MyProxyDSOModel* m_proxy;
   QStandardItemModel* m_model;
+  QList <customCatalogue_t> m_catalogue;
 };
 
 #endif // CDSOCATALOGUE_H

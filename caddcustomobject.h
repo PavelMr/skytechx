@@ -20,6 +20,7 @@ class CAddCustomObject : public QDialog
 public:
   explicit CAddCustomObject(QWidget *parent, const QString &name);
   ~CAddCustomObject();
+  static void load(QList<customCatalogue_t> *data);
 
 private slots:
   void on_pushButton_2_clicked();
@@ -37,7 +38,6 @@ private slots:
 private:
 
   void enableItems();
-  static void load(QList<customCatalogue_t> *data);
   void save();
   bool appendTo(const QString &catalogue, const QString &name);
 

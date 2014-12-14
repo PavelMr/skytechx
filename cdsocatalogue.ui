@@ -50,14 +50,17 @@
    </item>
    <item row="3" column="0">
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
+     <item row="1" column="6">
+      <widget class="QLineEdit" name="constFilterEdit"/>
+     </item>
+     <item row="0" column="1">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Object type filter</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="4">
+     <item row="1" column="5">
       <widget class="QDoubleSpinBox" name="sizeLimitSpin">
        <property name="enabled">
         <bool>false</bool>
@@ -70,30 +73,14 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="5">
-      <widget class="QLineEdit" name="constFilterEdit"/>
-     </item>
-     <item row="1" column="7">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="label_3">
+     <item row="0" column="6">
+      <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Size limit</string>
+        <string>Constellation filter</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="1" column="3">
       <widget class="QDoubleSpinBox" name="magLimitSpin">
        <property name="enabled">
         <bool>false</bool>
@@ -106,27 +93,10 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="1" column="1">
       <widget class="QComboBox" name="typeComboBox"/>
      </item>
-     <item row="0" column="5">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Constellation filter</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QComboBox" name="sizeComboBox"/>
-     </item>
      <item row="0" column="2">
-      <widget class="QCheckBox" name="checkBox">
-       <property name="text">
-        <string>Magnitude limit</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Name filter</string>
@@ -134,19 +104,23 @@
       </widget>
      </item>
      <item row="0" column="7">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QCheckBox" name="cb_onScreen">
+       <property name="text">
+        <string>Only objects on the screen</string>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      </widget>
      </item>
-     <item row="1" column="1">
+     <item row="1" column="4">
+      <widget class="QComboBox" name="sizeComboBox"/>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Size limit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
       <widget class="QLineEdit" name="nameFilterEdit">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -165,19 +139,55 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="6">
+     <item row="0" column="8">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="3">
+      <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string>Magnitude limit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="8">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="7">
       <widget class="QCheckBox" name="cb_top">
        <property name="text">
         <string>Always on top</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="6">
-      <widget class="QCheckBox" name="cb_onScreen">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Only objects on the screen</string>
+        <string>Catalogue</string>
        </property>
       </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QComboBox" name="cbCatalogue"/>
      </item>
     </layout>
    </item>

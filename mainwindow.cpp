@@ -4456,3 +4456,10 @@ void MainWindow::on_pushButton_16_clicked()
 
   dlg.exec();
 }
+
+void MainWindow::on_actionCustom_DSO_triggered()
+{
+  CAddCustomObject dlg(this, "");
+
+  dlg.exec();
+}

@@ -12,6 +12,16 @@ CDSOCatalogue::CDSOCatalogue(QWidget *parent) :
   ui->tableView->setStyleSheet("QTableView::item { padding: 5px; }");
   ui->countLabel->setText("");
 
+  CAddCustomObject::load(&m_catalogue);
+  int i = 0;
+
+  ui->cbCatalogue->addItem(tr("Main DSO catalogue"), -1);
+  foreach (const customCatalogue_t &item, m_catalogue)
+  {
+    ui->cbCatalogue->addItem(item.catalogue, i);
+    i++;
+  }
+
   bool ok;
   // NOTE: kdy pribude typ tak pridat sem
   ui->typeComboBox->addItem(tr("All types"), -1);
@@ -210,6 +220,7 @@ void CDSOCatalogue::updateCount()
 void CDSOCatalogue::on_pushButton_2_clicked()
 {
   m_proxy->setFiltering();
+  m_proxy->setCatalogue(ui->cbCatalogue->currentData().toInt(), &m_catalogue);
   m_proxy->setNameFilter(ui->nameFilterEdit->text());
   m_proxy->setConstFilter(ui->constFilterEdit->text());
   m_proxy->setOnScreenFilter(ui->cb_onScreen->isChecked());
@@ -274,6 +285,7 @@ void CDSOCatalogue::on_cb_top_toggled(bool checked)
 
 void CDSOCatalogue::on_pushButton_4_clicked()
 {
+  ui->cbCatalogue->setCurrentIndex(0);
   ui->typeComboBox->setCurrentIndex(0);
   ui->nameFilterEdit->setText("");
   ui->checkBox->setChecked(false);
@@ -282,3 +294,8 @@ void CDSOCatalogue::on_pushButton_4_clicked()
   ui->cb_onScreen->setChecked(false);
 }
 
+
+void CDSOCatalogue::on_cbCatalogue_currentIndexChanged(int index)
+{
+
+}

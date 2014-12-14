@@ -424,6 +424,7 @@
     <addaction name="actionAsteroids"/>
     <addaction name="actionComets"/>
     <addaction name="actionDeep_Sky_Objects"/>
+    <addaction name="actionCustom_DSO"/>
     <addaction name="separator"/>
     <addaction name="actionDeep_sky_galery"/>
    </widget>
@@ -612,7 +613,7 @@
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>385</height>
+          <height>402</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3279,6 +3280,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionPrint_preview">
    <property name="text">
     <string>Print preview...</string>
+   </property>
+  </action>
+  <action name="actionCustom_DSO">
+   <property name="text">
+    <string>Custom DSO...</string>
    </property>
   </action>
  </widget>

@@ -116,6 +116,7 @@ void CAddCustomObject::on_pushButton_5_clicked()
     int index = cDSO.findDSO((char *)qPrintable(name), &dso);
 
     item->setText(cDSO.getName(dso, 0));
+    item->setEditable(false);
     model->insertRow(model->rowCount(), item);
     ui->lineEdit->setText("");
   }
@@ -250,3 +251,4 @@ void CAddCustomObject::slotDelete()
   model->removeRow(index);
   m_catalogue[ui->comboBox->currentIndex()].list.removeAt(index);
 }
+
