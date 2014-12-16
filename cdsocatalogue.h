@@ -218,7 +218,7 @@ private slots:
 
   void on_pushButton_4_clicked();
 
-  void on_cbCatalogue_currentIndexChanged(int index);
+  void on_pushButton_5_clicked();
 
 signals:
   void sigCenterObject();

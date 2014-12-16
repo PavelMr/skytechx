@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
   QCoreApplication::setOrganizationDomain("Frostware");
   QCoreApplication::setOrganizationName("PMR");
   QCoreApplication::setApplicationName("SkytechX");
-  QCoreApplication::setApplicationVersion(SK_VERSION); 
+  QCoreApplication::setApplicationVersion(SK_VERSION);
 
   qDebug() << "start";
 

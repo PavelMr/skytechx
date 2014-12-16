@@ -17,6 +17,7 @@ CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
 
   ui->comboBox->setCurrentIndex(0);
 
+  setWindowTitle(windowTitle() + " " + getStrDate(view->jd, view->geo.tz));
   m_view = *view;
   calculate(view->jd);
 }

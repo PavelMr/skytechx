@@ -472,6 +472,8 @@ private slots:
 
   void on_actionCustom_DSO_triggered();
 
+  void on_actionGo_to_SkytechX_home_page_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

@@ -123,7 +123,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
     addPhysicalInfo(&parser, "Escape_velocity", tr("Escape velocity"));
   }
   else
-  {    
+  {
     ui->tabWidget->blockSignals(true);
     ui->tabWidget->removeTab(1);
     ui->tabWidget->removeTab(1);
@@ -181,6 +181,8 @@ QPixmap CObjInfo::getPlanetPixmap(int w, int h)
   i.fill(Qt::black);
   CSkPainter p(&i);
 
+  p.setRenderHint(QPainter::Antialiasing);
+  p.setRenderHint(QPainter::SmoothPixmapTransform);
   ui->tab_2->setEnabled(true);
   trfCreateMatrixView(&cAstro, &view, w, h);
   cPlanetRenderer.renderPlanet(&pt, &o, &s, &view, &p, &i, 0, true);

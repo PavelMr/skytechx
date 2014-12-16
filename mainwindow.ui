@@ -290,14 +290,13 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionNight_mode"/>
-    <addaction name="separator"/>
     <addaction name="actionExport_map_to_image"/>
     <addaction name="actionCopy_map_to_clipboard"/>
     <addaction name="separator"/>
     <addaction name="actionPrint_preview"/>
     <addaction name="actionPrint"/>
     <addaction name="separator"/>
+    <addaction name="actionNight_mode"/>
     <addaction name="actionChange_language"/>
     <addaction name="actionChnage_style"/>
     <addaction name="actionSetting"/>
@@ -312,6 +311,8 @@
     <addaction name="actionKeyboard_reference"/>
     <addaction name="separator"/>
     <addaction name="actionTip_of_the_day"/>
+    <addaction name="separator"/>
+    <addaction name="actionGo_to_SkytechX_home_page"/>
     <addaction name="separator"/>
     <addaction name="action_About"/>
    </widget>
@@ -411,6 +412,7 @@
     </widget>
     <addaction name="actionConnect_device"/>
     <addaction name="actionDisconnect"/>
+    <addaction name="actionTPStop"/>
     <addaction name="separator"/>
     <addaction name="actionFind_telescope"/>
     <addaction name="separator"/>
@@ -759,7 +761,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>331</width>
+          <width>308</width>
           <height>509</height>
          </rect>
         </property>
@@ -1168,7 +1170,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>257</width>
+          <width>212</width>
           <height>524</height>
          </rect>
         </property>
@@ -1408,7 +1410,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>402</height>
+          <height>327</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1698,8 +1700,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>101</width>
-          <height>402</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1846,8 +1848,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
-          <height>402</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3033,6 +3035,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Stop current operation</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
    </property>
@@ -3285,6 +3290,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionCustom_DSO">
    <property name="text">
     <string>Custom DSO...</string>
+   </property>
+  </action>
+  <action name="actionGo_to_SkytechX_home_page">
+   <property name="text">
+    <string>Go to SkytechX home page</string>
    </property>
   </action>
  </widget>

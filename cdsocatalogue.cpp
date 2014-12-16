@@ -3,6 +3,9 @@
 #include "cdso.h"
 #include "constellation.h"
 
+#include <QPrintDialog>
+#include <QPrinter>
+
 CDSOCatalogue::CDSOCatalogue(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::CDSOCatalogue)
@@ -295,7 +298,77 @@ void CDSOCatalogue::on_pushButton_4_clicked()
 }
 
 
-void CDSOCatalogue::on_cbCatalogue_currentIndexChanged(int index)
+void CDSOCatalogue::on_pushButton_5_clicked()
 {
+  QString strStream;
+  QTextStream out(&strStream);
 
+  const int rowCount = ui->tableView->model()->rowCount();
+  const int columnCount = ui->tableView->model()->columnCount();
+
+  if (rowCount == 0)
+  {
+    return;
+  }
+
+  if (rowCount > 1000)
+  {
+    if (msgBoxQuest(this, tr("Print more than 1000 rows?")) == QMessageBox::No)
+    {
+      return;
+    }
+  }
+
+  out <<  "<html>\n"
+          "<head>\n"
+          "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+          <<  QString("<title>%1</title>\n").arg(tr("DSO Catalogue"))
+          <<  "</head>\n"
+          "<body bgcolor=#ffffff link=#5000A0>\n"
+          "<table border=1 cellspacing=0 cellpadding=2>\n";
+
+  // headers
+  out << "<tr bgcolor=#f0f0f0>";
+  for (int column = 0; column < columnCount; column++)
+  {
+    if (!ui->tableView->isColumnHidden(column))
+    {
+      out << QString("<th>%1</th>").arg(ui->tableView->model()->headerData(column, Qt::Horizontal).toString());
+    }
+  }
+  out << "</tr>\n";
+
+  // data table
+  for (int row = 0; row < rowCount; row++)
+  {
+    out << "<tr>";
+    for (int column = 0; column < columnCount; column++)
+    {
+      if (!ui->tableView->isColumnHidden(column))
+      {
+        QString data = ui->tableView->model()->data(ui->tableView->model()->index(row, column)).toString().simplified();
+        out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+      }
+    }
+    out << "</tr>\n";
+    //qDebug() << row << strStream.size();
+  }
+  out <<  "</table>\n"
+          "</body>\n"
+          "</html>\n";
+
+  QTextDocument *document = new QTextDocument();
+  document->setHtml(strStream);
+
+  QPrinter printer;
+  printer.setOrientation(QPrinter::Landscape);
+
+  QPrintDialog *dialog = new QPrintDialog(&printer, this);
+  if (dialog->exec() == QDialog::Accepted)
+  {
+    document->print(&printer);
+  }
+
+  delete dialog;
+  delete document;
 }

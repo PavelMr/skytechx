@@ -446,7 +446,7 @@ static bool comSolve2(comet_t *a, double jdt)
 bool comSolve(comet_t *a, double jdt)
 /////////////////////////////////////
 {
-  static double lastJD = -1;  
+  static double lastJD = -1;
 
   #pragma omp critical
   {
@@ -462,7 +462,7 @@ bool comSolve(comet_t *a, double jdt)
     }
   }
 
-  a->lastJD = jdt;  
+  a->lastJD = jdt;
 
   return(comSolve2(a, jdt));
 }
@@ -500,7 +500,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
     }
 
     if ((a->orbit.mag > maxMag + g_skSet.map.comet.plusMag) || (a->orbit.mag > g_skSet.map.comet.maxMag))
-    {      
+    {
       continue;
     }
 

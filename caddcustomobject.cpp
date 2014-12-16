@@ -108,17 +108,22 @@ void CAddCustomObject::on_pushButton_5_clicked()
 
   QStandardItemModel *model = (QStandardItemModel *)ui->listView->model();
 
-  if (appendTo(ui->comboBox->currentText(), name))
+  QStringList list = name.split(";");
+
+  foreach (const QString &object, list)
   {
-    QStandardItem *item = new QStandardItem;
-    dso_t *dso;
+    if (appendTo(ui->comboBox->currentText(), object))
+    {
+      QStandardItem *item = new QStandardItem;
+      dso_t *dso;
 
-    int index = cDSO.findDSO((char *)qPrintable(name), &dso);
+      int index = cDSO.findDSO((char *)qPrintable(object), &dso);
 
-    item->setText(cDSO.getName(dso, 0));
-    item->setEditable(false);
-    model->insertRow(model->rowCount(), item);
-    ui->lineEdit->setText("");
+      item->setText(cDSO.getName(dso, 0));
+      item->setEditable(false);
+      model->insertRow(model->rowCount(), item);
+      ui->lineEdit->setText("");
+    }
   }
 }
 

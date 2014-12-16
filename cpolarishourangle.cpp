@@ -17,6 +17,7 @@ CPolarisHourAngle::CPolarisHourAngle(QWidget *parent, const mapView_t *view) :
   m_reticle = new QPixmap(":/res/reticle.png");
   m_view = *view;
   m_view.jd = jdGetCurrentJD();
+
   updateTime();
 }
 
@@ -44,6 +45,9 @@ void CPolarisHourAngle::paintEvent(QPaintEvent *)
   double r1 = 175;
   double r2 = 160;
 
+  p.setRenderHint(QPainter::Antialiasing);
+  p.setRenderHint(QPainter::SmoothPixmapTransform);
+
   p.drawPixmap(ui->frame->pos(), *m_reticle);
   p.setPen(Qt::yellow);
   p.setBrush(Qt::white);
@@ -62,11 +66,19 @@ void CPolarisHourAngle::updateTime()
   CAstro ast;
 
   ast.setParam(&m_view);
-  m_polarisHourAngle = ast.getPolarisHourAngle();  
+  m_polarisHourAngle = ast.getPolarisHourAngle();
 
   ui->labelDate->setText(getStrDate(m_view.jd, m_view.geo.tz));
   ui->labelTime->setText(getStrTime(m_view.jd, m_view.geo.tz));
   ui->labelPolarisHA->setText(getStrTime(m_polarisHourAngle, 0, false, true));
+
+  QDateTime dt;
+
+  jdConvertJDTo_DateTime(m_view.jd + m_view.geo.tz, &dt);
+
+  ui->dateTimeEdit->blockSignals(true);
+  ui->dateTimeEdit->setDateTime(dt);
+  ui->dateTimeEdit->blockSignals(false);
 
   update();
 }
@@ -80,4 +92,12 @@ void CPolarisHourAngle::on_pushButton_clicked()
 void CPolarisHourAngle::on_pushButton_2_clicked()
 {
   done(DL_OK);
+}
+
+void CPolarisHourAngle::on_dateTimeEdit_dateTimeChanged(const QDateTime &dateTime)
+{
+  QDateTime dt = QDateTime(dateTime);
+
+  m_view.jd = jdGetJDFrom_DateTime(&dt) - m_view.geo.tz;
+  updateTime();
 }

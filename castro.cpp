@@ -388,8 +388,6 @@ void CAstro::setParam(mapView_t *view)
   m_eclObl = getEclObl(m_jd);
   m_eclOblJ2000 = getEclObl(JD2000);
 
-  //qDebug("ecl = %f, %f", R2D(m_eclObl), m_jd);
-
   double m_jd0 = floor(m_jd + 0.5) - 0.5;
 
   double T0 = (m_jd0 - 2451545.0) / 36525.0; // astro. alg. meus (pg.84)
@@ -450,12 +448,6 @@ void CAstro::convAA2RDRef(double azm, double alt, double *ra, double *dec)
   /* Convert the HA into degrees for the return. */
   rangeDbl(&HA, MPI2);
   *ra = HA;
-
-  /*
-  qDebug("oAARD %f %f / %f %f", azm, aaa, *ra, *dec);
-  convRD2AARef(*ra, *dec, &azm, &aaa);
-  qDebug("cAARD %f %f", azm, aaa);
-  */
 }
 
 

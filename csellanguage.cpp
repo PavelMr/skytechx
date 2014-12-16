@@ -64,11 +64,19 @@ void CSelLanguage::on_pushButton_2_clicked()
   QList <QListWidgetItem *> item = ui->listWidget->selectedItems();
 
   if (item.count() == 0)
+  {
     return;
-
-  QString path = item[0]->data(Qt::UserRole).toString();
+  }
 
   QSettings settings;
+  QString path = item[0]->data(Qt::UserRole).toString();
+
+  if (settings.value("language").toString() == path)
+  {
+    done(DL_CANCEL);
+    return;
+  }
+
   settings.setValue("language", path);
 
   QMessageBox msg(tr("Information"),

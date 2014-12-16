@@ -54,6 +54,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
+       <property name="toolTip">
+        <string>Previous day.</string>
+       </property>
        <property name="text">
         <string>&lt;&lt;</string>
        </property>
@@ -61,6 +64,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_2">
+       <property name="toolTip">
+        <string>Next day.</string>
+       </property>
        <property name="text">
         <string>&gt;&gt;</string>
        </property>

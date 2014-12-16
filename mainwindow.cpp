@@ -688,6 +688,11 @@ void MainWindow::slotCheckFirstTime()
     dlg.exec();
   }
 
+  if (set.value("language").toString().isEmpty())
+  {
+    on_actionChange_language_triggered();
+  }
+
   if (set.value("geo/name").toString().isEmpty())
   {
     on_actionSelect_world_location_triggered();
@@ -4462,4 +4467,9 @@ void MainWindow::on_actionCustom_DSO_triggered()
   CAddCustomObject dlg(this, "");
 
   dlg.exec();
+}
+
+void MainWindow::on_actionGo_to_SkytechX_home_page_triggered()
+{
+  QDesktopServices::openUrl(QUrl("www.skytechx.eu"));
 }

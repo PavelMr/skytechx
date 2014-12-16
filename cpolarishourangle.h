@@ -26,6 +26,8 @@ private slots:
 
   void on_pushButton_2_clicked();
 
+  void on_dateTimeEdit_dateTimeChanged(const QDateTime &dateTime);
+
 private:
   void updateTime();
   Ui::CPolarisHourAngle *ui;
