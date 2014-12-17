@@ -295,7 +295,7 @@ void getHMSFromRad(double x, int *hh, int *mm, double *ss)
   *mm = (int)min;
   *ss = ((min - *mm)*60.);
 
-  if (*ss >= 59.999999)
+  if (*ss >= 59.9999)
   {
     if ((*mm += 1) >= 60)
     {

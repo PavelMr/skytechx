@@ -22,6 +22,7 @@
 #include "background.h"
 #include "cobjtracking.h"
 #include "Usno2A.h"
+#include "cucac4.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
 // ALL OBJECT ON MAP DRAW AT EPOCH J2000.0
@@ -51,6 +52,38 @@ QColor currentSkyColor;
 
 
 ////////////////////////////////////////////////////////////////////////////////////
+static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
+////////////////////////////////////////////////////////////////////////////////////
+{
+  if (mapView->fov < D2R(5) && mapView->starMag >= 10)
+  {
+    ucac4Region_t *ucacRegion;
+    SKPOINT        pt;
+
+    ucacRegion = cUcac4.loadGSCRegion(region);
+
+    if (ucacRegion == NULL)
+    {
+      return;
+    }
+
+    foreach (const ucac4Star_t &star, ucacRegion->stars)
+    {
+      if (star.mag <= mapView->starMag && (star.mag >= 10)) // TODO: opravit
+      {
+        trfRaDecToPointNoCorrect(&star.rd, &pt);
+        if (trfProjectPoint(&pt))
+        {
+          int r = cStarRenderer.renderStar(&pt, 0, star.mag, pPainter);
+        }
+      }
+    }
+  }
+
+  //qDebug() << "done";
+}
+
+////////////////////////////////////////////////////////////////////////////////////
 static void smRenderUSNO2Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
@@ -59,7 +92,7 @@ static void smRenderUSNO2Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
     return;
   }
 
-  if (g_skSet.map.usno2.fromFOV && mapView->starMag >= g_skSet.map.usno2.fromMag)
+  if (mapView->fov < g_skSet.map.usno2.fromFOV && mapView->starMag >= g_skSet.map.usno2.fromMag)
   {
     usnoZone_t *zone;
 
@@ -283,6 +316,11 @@ static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
 {
   SKPOINT pt[2];
 
+  if (region != 584)
+  {
+    return;
+  }
+
   gscRegion_t *reg = cGSCReg.getRegion(region);
 
   pt[0].w.x = reg->p[0][0];
@@ -356,11 +394,12 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
       continue; // region already rendered
     }
 
-    //smRenderGSCRegions(mapView, pPainter, region);
+    smRenderGSCRegions(mapView, pPainter, region);
 
-    smRenderUSNO2Stars(mapView, pPainter, region);
-    smRenderPPMXLStars(mapView, pPainter, region);
-    smRenderGSCStars(mapView, pPainter, region);
+    //smRenderUSNO2Stars(mapView, pPainter, region);
+    //smRenderPPMXLStars(mapView, pPainter, region);
+    smRenderUCAC4Stars(mapView, pPainter, region);
+    //smRenderGSCStars(mapView, pPainter, region);
     smRenderTychoStars(mapView, pPainter, region);
   }
 }

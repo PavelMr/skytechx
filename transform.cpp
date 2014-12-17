@@ -268,7 +268,7 @@ void trfRaDecToPointCorrectFromTo(const radec_t *rd, SKPOINT *p, double jdFrom, 
 
 
 //////////////////////////////////////////////////////
-void trfRaDecToPointNoCorrect(radec_t *rd, SKPOINT *p)
+void trfRaDecToPointNoCorrect(const radec_t *rd, SKPOINT *p)
 //////////////////////////////////////////////////////
 {
   double cd;

@@ -179,7 +179,8 @@ SOURCES += main.cpp\
     csaveimage.cpp \
     cnamemagview.cpp \
     ctipofday.cpp \
-    caddcustomobject.cpp
+    caddcustomobject.cpp \
+    cucac4.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -326,7 +327,8 @@ HEADERS  += mainwindow.h \
     csaveimage.h \
     cnamemagview.h \
     ctipofday.h \
-    caddcustomobject.h
+    caddcustomobject.h \
+    cucac4.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \

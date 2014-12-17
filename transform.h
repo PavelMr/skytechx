@@ -8,7 +8,7 @@
 
 void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h);
 
-void trfRaDecToPointNoCorrect(radec_t *rd, SKPOINT *p);
+void trfRaDecToPointNoCorrect(const radec_t *rd, SKPOINT *p);
 void trfRaDecToPointNoCorrect(radec_t *rd, SKPOINT *p, SKMATRIX *mat);
 
 void trfRaDecToPointCorrectFromTo(const radec_t *rd, SKPOINT *p, double jdFrom, double jdTo);
