@@ -18,10 +18,11 @@
 #define MO_TYCSTAR       5
 #define MO_GSCSTAR       6
 #define MO_USNOSTAR      7
-#define MO_PPMXLSTAR     8
-#define MO_DSO           9
-#define MO_CONSTELL     10
-#define MO_EARTH_SHD    11
+#define MO_UCAC4         8
+#define MO_PPMXLSTAR     9
+#define MO_DSO          10
+#define MO_CONSTELL     11
+#define MO_EARTH_SHD    12
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

@@ -61,6 +61,7 @@ typedef struct
 typedef struct
 {
   int     ra;
+  int     index;
   quint64 offset;
 } ucac4AccFile_t;
 
@@ -69,6 +70,7 @@ class CUCAC4
 public:
   CUCAC4();
   void setUCAC4Dir(const QString dir);
+  ucac4Region_t *getStar(ucac4Star_t &s, int reg, int index);
   ucac4Region_t *loadGSCRegion(int region);
 
 private:

@@ -11,6 +11,7 @@
 #include "curlfile.h"
 #include "cppmxl.h"
 #include "Usno2A.h"
+#include "cucac4.h"
 
 #include <QSettings>
 
@@ -80,6 +81,7 @@ CSetting::CSetting(QWidget *parent) :
   ui->listWidget_2->addItem(tr("PPMXL Catalogue"));
   ui->listWidget_2->addItem(tr("GSC Catalogue"));
   ui->listWidget_2->addItem(tr("USNO2 Catalogue"));
+  ui->listWidget_2->addItem(tr("UCAC4 Catalogue"));
   ui->listWidget_2->setCurrentRow(currentRow);
 
   QStandardItemModel *m = new QStandardItemModel;
@@ -376,6 +378,12 @@ void CSetting::setValues()
   ui->doubleSpinBox_34->setValue(R2D(set.map.usno2.fromFOV));
   ui->doubleSpinBox_31->setValue(set.map.usno2.fromMag);
 
+  //UCAC4
+  ui->showUCAC4CheckBox->setChecked(set.map.ucac4.show);
+  ui->lineEdit_4->setText(rset.value("ucac4_path", "").toString());
+  ui->doubleSpinBox_37->setValue(R2D(set.map.ucac4.fromFOV));
+  ui->doubleSpinBox_36->setValue(set.map.ucac4.fromMag);
+
   // GSC
   ui->showGSCCheckBox->setChecked(set.map.gsc.show);
   ui->doubleSpinBox_28->setValue(R2D(set.map.gsc.fromFOV));
@@ -584,6 +592,14 @@ void CSetting::apply()
   g_skSet.map.usno2.show = ui->showUSNOCheckBox->isChecked();
   g_skSet.map.usno2.fromFOV = D2R(ui->doubleSpinBox_34->value());
   g_skSet.map.usno2.fromMag = ui->doubleSpinBox_31->value();
+
+  // UCAC4
+  cUcac4.setUCAC4Dir(ui->lineEdit_4->text());
+  rset.setValue("ucac4_path", ui->lineEdit_4->text());
+
+  g_skSet.map.ucac4.show = ui->showUCAC4CheckBox->isChecked();
+  g_skSet.map.ucac4.fromFOV = D2R(ui->doubleSpinBox_37->value());
+  g_skSet.map.ucac4.fromMag = ui->doubleSpinBox_36->value();
 
   // GSC
   g_skSet.map.gsc.show = ui->showGSCCheckBox->isChecked();
@@ -1455,4 +1471,11 @@ void CSetting::on_pushButton_54_clicked()
 void CSetting::on_pushButton_55_clicked()
 {
   setFontColor(FONT_GRID, ui->pushButton_55);
+}
+
+void CSetting::on_pushButton_56_clicked()
+{
+  QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
+
+  ui->lineEdit_4->setText(folder);
 }

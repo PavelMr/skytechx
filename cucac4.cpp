@@ -30,10 +30,23 @@ void CUCAC4::setUCAC4Dir(const QString dir)
   }
 }
 
+ucac4Region_t *CUCAC4::getStar(ucac4Star_t &s, int reg, int index)
+{
+  ucac4Region_t *region = loadGSCRegion(reg);
+
+  s = region->stars[index];
+
+  qDebug() << reg << index;
+
+  return region;
+}
+
 ucac4Region_t *CUCAC4::loadGSCRegion(int region)
 {
-  //if (region != 584)
-    //return NULL;
+  if (m_folder.isEmpty())
+  {
+    return NULL;
+  }
 
   int   z = -1;
   int   emptyZ = -1;
@@ -45,7 +58,6 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
     if (m_region[i].bUsed && m_region[i].region == region)
     {
       m_region[i].timer = QDateTime::currentMSecsSinceEpoch() / 1000.0;
-      //qDebug() << "cache" << region;
       return &m_region[i];
     }
 
@@ -74,8 +86,6 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
 
   ucac4Region_t *regionPtr = &m_region[z];
 
-  //qDebug() << "reading region" << region;
-
   int minRa  = (int)(R2D(cGSCReg.gscRegionSector[region].RaMin) * 3600. * 1000.);
   int maxRa  = (int)(R2D(cGSCReg.gscRegionSector[region].RaMax) * 3600. * 1000.);
   int minDec = (int)((R2D(cGSCReg.gscRegionSector[region].DecMin) + 90.) * 3600. * 1000.);
@@ -85,8 +95,6 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
   {
     maxRa = 360 * 3600 * 1000;
   }
-
-  //qDebug() << minRa << maxRa << minDec << maxDec;
 
   const double zone_height = 0.2;  // zones are .2 degrees each
   double dDecMax = R2D(cGSCReg.gscRegionSector[region].DecMax);
@@ -108,12 +116,10 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
     qSwap(maxDec, minDec);
   }
 
-  //qDebug() << "zone " << zoneStart << zoneEnd;
-
   for (int z = zoneStart; z <= zoneEnd; z++)
   {
-    QFile f(m_folder + QString("z%1").arg(z, 3, 10, QChar('0')));
-    QFile acc(m_folder + QString("z%1.acc").arg(z, 3, 10, QChar('0')));
+    QFile f(m_folder + QString("/z%1").arg(z, 3, 10, QChar('0')));
+    QFile acc(m_folder + QString("/z%1.acc").arg(z, 3, 10, QChar('0')));
 
     m_accList.clear();
 
@@ -123,7 +129,9 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
       { // create accelerated index file
         if (f.open(QFile::ReadOnly))
         {
+          quint64 lastOffset = 0;
           int lastRa = 0;
+          int index = 1;
           int step = 2.5 * 3600 * 1000; // 2.5 deg. step
           while (!f.atEnd())
           {
@@ -133,19 +141,23 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
 
             if (star.ra >= lastRa)
             {
-              quint64 offset = f.pos();
+              lastOffset = f.pos() - sizeof(star);
+
               acc.write((char *)&lastRa, sizeof(lastRa));
-              acc.write((char *)&offset, sizeof(offset));
+              acc.write((char *)&index, sizeof(index));
+              acc.write((char *)&lastOffset, sizeof(lastOffset));
 
               ucac4AccFile_t acc;
 
               acc.ra = lastRa;
-              acc.offset = offset;
+              acc.index = index;
+              acc.offset = lastOffset;
 
               m_accList.append(acc);
 
               lastRa += step;
             }
+            index++;
           }
           f.close();
           acc.close();
@@ -156,17 +168,19 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
     if (f.open(QFile::ReadOnly))
     {
       quint64 last = 0;
+      int lastIndex = 1;
       foreach (const ucac4AccFile_t &acc, m_accList)
       {
         if (acc.ra >= minRa)
         {
           f.seek(last);
-          //qDebug() << acc.offset << acc.ra / 3600.0 << minRa / 3600.0;
           break;
         }
         last = acc.offset;
+        lastIndex = acc.index;
       }
 
+      int ucac4Index = lastIndex;
       while (!f.atEnd())
       {
         UCAC4_Star_t star;
@@ -185,33 +199,21 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
           skStar.rd.Ra = D2R(star.ra / 3600. / 1000.0);
           skStar.rd.Dec = D2R((star.spd / 3600. / 1000.0) - 90.0);
           skStar.mag = star.mag2 / 1000.0;
+          skStar.number = ucac4Index;
+          skStar.zone = z;
 
           regionPtr->stars.append(skStar);
         }
+        ucac4Index++;
       }
     }
   }
-
-  //qDebug() << R2D(regionPtr->stars[0].rd.Dec);
-  //qDebug() << "cnt" << regionPtr->stars.count() << rr;
-
-  /*
-  QFile f(m_folder + "z001");
-
-  if (f.open(QFile::ReadOnly))
-  {
-    f.read((char *)&star, sizeof(star));
-
-    qDebug() << star.ucac2_zone << star.ucac2_number << star.ra / 3600.0 / 1000.0 << -90 + (star.spd / 3600.0 / 1000.0) << star.mag2 / 1000.0;
-  }
-  */
 
   if (regionPtr->stars.count() > 0)
   {
     regionPtr->bUsed = true;
     regionPtr->region = region;
     regionPtr->timer = QDateTime::currentMSecsSinceEpoch() / 1000.0;
-    //qDebug() << region;
     return regionPtr;
   }
   else
@@ -219,7 +221,6 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
     regionPtr->bUsed = false;
   }
 
-  qDebug() << "NULL";
   return NULL;
 }
 
@@ -232,6 +233,7 @@ bool CUCAC4::readAccFile(QFile &file)
       ucac4AccFile_t acc;
 
       file.read((char *)&acc.ra, sizeof(acc.ra));
+      file.read((char *)&acc.index, sizeof(acc.index));
       file.read((char *)&acc.offset, sizeof(acc.offset));
 
       m_accList.append(acc);

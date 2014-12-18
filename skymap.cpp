@@ -55,7 +55,12 @@ QColor currentSkyColor;
 static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
-  if (mapView->fov < D2R(5) && mapView->starMag >= 10)
+  if (!g_skSet.map.ucac4.show)
+  {
+    return;
+  }
+
+  if (mapView->fov < g_skSet.map.ucac4.fromFOV && mapView->starMag >= g_skSet.map.ucac4.fromMag)
   {
     ucac4Region_t *ucacRegion;
     SKPOINT        pt;
@@ -67,20 +72,21 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
       return;
     }
 
+    int i = 0;
     foreach (const ucac4Star_t &star, ucacRegion->stars)
     {
-      if (star.mag <= mapView->starMag && (star.mag >= 10)) // TODO: opravit
+      if (star.mag <= mapView->starMag && (star.mag >= g_skSet.map.ucac4.fromMag))
       {
         trfRaDecToPointNoCorrect(&star.rd, &pt);
         if (trfProjectPoint(&pt))
         {
           int r = cStarRenderer.renderStar(&pt, 0, star.mag, pPainter);
+          addMapObj(pt.sx, pt.sy, MO_UCAC4, MO_CIRCLE, r + 4, region, i, star.mag);
         }
       }
+      i++;
     }
   }
-
-  //qDebug() << "done";
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -394,12 +400,12 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
       continue; // region already rendered
     }
 
-    smRenderGSCRegions(mapView, pPainter, region);
+    //smRenderGSCRegions(mapView, pPainter, region);
 
-    //smRenderUSNO2Stars(mapView, pPainter, region);
-    //smRenderPPMXLStars(mapView, pPainter, region);
+    smRenderUSNO2Stars(mapView, pPainter, region);
+    smRenderPPMXLStars(mapView, pPainter, region);
     smRenderUCAC4Stars(mapView, pPainter, region);
-    //smRenderGSCStars(mapView, pPainter, region);
+    smRenderGSCStars(mapView, pPainter, region);
     smRenderTychoStars(mapView, pPainter, region);
   }
 }

@@ -188,7 +188,7 @@ void CLoading::run()
 
   usno.setUsnoDir(set.value("usno2_path", "").toString());
   cPPMXL.setDir(set.value("ppmxl_path", "").toString());
-  cUcac4.setUCAC4Dir("../data/ucac4/");
+  cUcac4.setUCAC4Dir(set.value("ucac4_path", "").toString());
 
   msleep(1000);
 

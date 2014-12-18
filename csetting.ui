@@ -198,7 +198,7 @@
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>16</number>
      </property>
      <widget class="QWidget" name="stackedWidget_2Page1">
       <widget class="QDoubleSpinBox" name="doubleSpinBox">
@@ -3611,6 +3611,153 @@
         </property>
         <property name="text">
          <string>Show USNO2 Catalogue</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_7">
+      <widget class="QGroupBox" name="groupBox_20">
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>10</y>
+         <width>481</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Show</string>
+       </property>
+       <widget class="QCheckBox" name="showUCAC4CheckBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>15</y>
+          <width>271</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Show UCAC4 Catalogue</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_21">
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>60</y>
+         <width>481</width>
+         <height>241</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Settings</string>
+       </property>
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_36">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>81</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="suffix">
+         <string> mag.</string>
+        </property>
+        <property name="decimals">
+         <number>0</number>
+        </property>
+        <property name="minimum">
+         <double>0.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>99.000000000000000</double>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_73">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>70</y>
+          <width>171</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Show UCAC4 stars from FOV</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_74">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>120</y>
+          <width>191</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Show UCAC4 stars from magnitude</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_37">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>81</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="suffix">
+         <string>°</string>
+        </property>
+        <property name="decimals">
+         <number>0</number>
+        </property>
+        <property name="minimum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>45.000000000000000</double>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>40</y>
+          <width>371</width>
+          <height>23</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_75">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>181</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Path to UCAC4 folder</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_56">
+        <property name="geometry">
+         <rect>
+          <x>390</x>
+          <y>40</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Browse...</string>
         </property>
        </widget>
       </widget>

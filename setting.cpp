@@ -270,6 +270,11 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.usno2.fromFOV", set->map.usno2.fromFOV, ds);
   writeVal("map.usno2.fromMag", set->map.usno2.fromMag, ds);
 
+  // UCAC4
+  writeVal("map.ucac4.show", set->map.ucac4.show, ds);
+  writeVal("map.ucac4.fromFOV", set->map.ucac4.fromFOV, ds);
+  writeVal("map.ucac4.fromMag", set->map.ucac4.fromMag, ds);
+
   // PPMXL
   writeVal("map.ppmxl.show", set->map.ppmxl.show, ds);
   writeVal("map.ppmxl.fromFOV", set->map.ppmxl.fromFOV, ds);
@@ -522,7 +527,7 @@ bool setLoad(QString name, setting_t *set)
 
   set->map.aster.color = readVal("map.aster.color", MRGB(255, 255, 255), tMap).toUInt();
   set->map.aster.radius = readVal("map.aster.radius", 5, tMap).toInt();
-  set->map.aster.plusMag = readVal("map.aster.plusMag", 5, tMap).toFloat();  
+  set->map.aster.plusMag = readVal("map.aster.plusMag", 5, tMap).toFloat();
   set->map.aster.maxMag = readVal("map.aster.magMag", 16, tMap).toFloat();
 
   // milky way
@@ -540,17 +545,22 @@ bool setLoad(QString name, setting_t *set)
   set->map.tracking.color = readVal("map.tracking.color", MRGB(225, 255, 225), tMap).toUInt();
 
   // USNO2
-  set->map.usno2.show = readVal("map.usno2.show", true, tMap).toBool();
+  set->map.usno2.show = readVal("map.usno2.show", false, tMap).toBool();
   set->map.usno2.fromFOV = readVal("map.usno2.fromFOV", D2R(5), tMap).toDouble();
-  set->map.usno2.fromMag = readVal("map.usno2.fromMag", 13, tMap).toDouble();;
+  set->map.usno2.fromMag = readVal("map.usno2.fromMag", 13, tMap).toDouble();
+
+  // UCAC4
+  set->map.ucac4.show = readVal("map.ucac4.show", false, tMap).toBool();
+  set->map.ucac4.fromFOV = readVal("map.ucac4.fromFOV", D2R(15), tMap).toDouble();
+  set->map.ucac4.fromMag = readVal("map.ucac4.fromMag", 12, tMap).toDouble();;
 
   // PPMXL
-  set->map.ppmxl.show = readVal("map.ppmxl.show", true, tMap).toBool();
+  set->map.ppmxl.show = readVal("map.ppmxl.show", false, tMap).toBool();
   set->map.ppmxl.fromFOV = readVal("map.ppmxl.fromFOV", D2R(5), tMap).toDouble();
   set->map.ppmxl.fromMag = readVal("map.ppmxl.fromMag", 13, tMap).toDouble();
 
   // GSC
-  set->map.gsc.show = readVal("map.gsc.show", true, tMap).toBool();
+  set->map.gsc.show = readVal("map.gsc.show", false, tMap).toBool();
   set->map.gsc.fromFOV = readVal("map.gsc.fromFOV", D2R(10), tMap).toDouble();
   set->map.gsc.fromMag = readVal("map.gsc.fromMag", 11, tMap).toDouble();
 
@@ -849,7 +859,7 @@ void setPrintConfig(void)
 
   g_skSet.map.measurePoint.color = lred;
 
-  // planets  
+  // planets
   g_skSet.map.planet.penColor = lred;
   g_skSet.map.planet.brColor = lred2;
   g_skSet.map.planet.satColor = lred;

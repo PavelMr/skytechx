@@ -8,6 +8,7 @@
 #include "ccomdlg.h"
 #include "csatxyz.h"
 #include "Usno2A.h"
+#include "cucac4.h"
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
@@ -246,7 +247,7 @@ void mapObjContextMenu(CMapView *map)
   }
 
   if (g_pTelePlugin)
-  {    
+  {
     if (g_pTelePlugin->getAttributes() & TPI_CAN_SLEW)
     {
       myMenu.addSeparator();
@@ -411,6 +412,17 @@ void mapObjContextMenu(CMapView *map)
         ppmxl_t *star = &data->data[o.par2];
 
         str = QString("PPMXL %1").arg(star->id) + QString(QObject::tr(", %1 mag.")).arg(star->mag / 1000.0, 0, 'f', 2);
+        break;
+      }
+
+      case MO_UCAC4:
+      {
+        ucac4Star_t s;
+        ucac4Region_t *z;
+
+        z = cUcac4.getStar(s, o.par1, o.par2);
+
+        str = QString("UCAC4 %1-%2").arg(s.zone).arg(s.number, 6, 10, QChar('0')) + QString(QObject::tr(", %1 mag.")).arg(s.mag, 0, 'f', 2);
         break;
       }
 

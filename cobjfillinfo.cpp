@@ -6,6 +6,7 @@
 #include "csatxyz.h"
 #include "dsoplug.h"
 #include "Usno2A.h"
+#include "cucac4.h"
 
 static QString gscMB[19][3] = {{"IIIaJ","GG395","SERC-J/EJ"},    //0
                                {"IIaD","W12","Pal Quick-V"},     //1
@@ -70,6 +71,10 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
 
     case MO_TYCSTAR:
       fillTYCInfo(view, obj, item);
+      break;
+
+    case MO_UCAC4:
+      fillUCAC4Info(view, obj, item);
       break;
 
     case MO_GSCSTAR:
@@ -452,7 +457,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   else
   {
     addTextItem(item, label, tr("Non periodic"));
-  }  
+  }
 
   double v;
   if (a->e < 1)
@@ -461,7 +466,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
     v = 42.1219 * sqrt((1 / a->orbit.r) - (1 / (2 * ap)));
   }
   else
-    v = 42.1219 * sqrt(1 / a->orbit.r);  
+    v = 42.1219 * sqrt(1 / a->orbit.r);
 
   addTextItem(item, tr("Current speed"), QString("%1").arg(v, 0, 'f', 3) + tr(" km/s"));
   addSeparator(item);
@@ -604,6 +609,87 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The Tycho-2 Catalogue (Hog+ 2000)", "");
+}
+
+
+void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
+{
+  ucac4Star_t s;
+  ucac4Region_t *z;
+
+  z = cUcac4.getStar(s, obj->par1, obj->par2);
+
+  item->radec.Ra = s.rd.Ra;
+  item->radec.Dec = s.rd.Dec;
+  item->zoomFov = getOptObjFov(0, 0, D2R(0.15));
+  item->title = QString("UCAC4 %1-%2").arg(s.zone).arg(s.number, 6, 10, QChar('0'));
+  item->simbad = item->title;
+  item->id = QString("UCAC4_%1-%2").arg(s.zone).arg(s.number, 6, 10, QChar('0'));
+
+  addLabelItem(item, txDateTime);
+  addSeparator(item);
+  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+  addSeparator(item);
+
+  addLabelItem(item, txObjType);
+  addSeparator(item);
+  addTextItem(item, txObjType, tr("Star (UCAC4 cat.)"));
+  addSeparator(item);
+
+  addLabelItem(item, txDesig);
+  addSeparator(item);
+
+  int con = constWhatConstel(s.rd.Ra, s.rd.Dec, JD2000);
+
+  addTextItem(item, item->title, "");
+  addSeparator(item);
+
+  double ra, dec;
+
+  ra = item->radec.Ra;
+  dec = item->radec.Dec;
+
+  precess(&ra, &dec, JD2000, view->jd);
+
+  addLabelItem(item, txLocInfo);
+  addSeparator(item);
+  addTextItem(item, txRA, getStrRA(ra));
+  addTextItem(item, txDec, getStrDeg(dec));
+  addSeparator(item);
+  addTextItem(item, txVisMag, getStrMag(s.mag));
+  addTextItem(item, txConstel, constGetName(con, 1));
+
+  double azm, alt;
+  double nazm, nalt;
+
+  cAstro.convRD2AARef(ra, dec, &azm, &alt);
+  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+
+  addSeparator(item);
+  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addSeparator(item);
+  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addSeparator(item);
+
+  CRts   cRts;
+  rts_t  rts;
+  cRts.calcFixed(&rts, ra, dec, view);
+  fillRTS(&rts, view, item);
+
+  addLabelItem(item, tr("Position at JD2000.0"));
+  addSeparator(item);
+  addTextItem(item, txRA, getStrRA(item->radec.Ra));
+  addTextItem(item, txDec, getStrDeg(item->radec.Dec));
+  addSeparator(item);
+
+  fillAtlas(item->radec.Ra, item->radec.Dec, item);
+
+  addLabelItem(item, tr("Source"));
+  addSeparator(item);
+  addTextItem(item, "The UCAC4 Catalogue (Zacharias+ 2012)", "");
 }
 
 
@@ -751,8 +837,6 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(t->mag / 1000.0));
   addTextItem(item, txConstel, constGetName(con, 1));
-
-
 
   double azm, alt;
   double nazm, nalt;
@@ -1125,7 +1209,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     addTextItem(item, tr("Phase"), QString("%1%").arg(o.phase * 100.0, 0, 'f', 2));
     addTextItem(item, tr("Phase angle"), QString("%1°").arg(R2D(o.FV), 0, 'f', 2));
   }
-  addTextItem(item, tr("P.A."), QString("%1°").arg(R2D(o.PA), 0, 'f', 2));  
+  addTextItem(item, tr("P.A."), QString("%1°").arg(R2D(o.PA), 0, 'f', 2));
 
   if (o.cMer != CM_UNDEF)
   {

@@ -32,7 +32,7 @@ CAbout::CAbout(QWidget *parent) :
                                       "Source code : <a href=\"https://github.com/PavelMr/skytechx.git\">https://github.com/PavelMr/skytechx.git</a><br>"
                                       "<br>"
                                       "This program is free software; you can redistribute it and/or modify it "
-                                      "under the term of the GNU General Public License."                                      
+                                      "under the term of the GNU General Public License."
                                       "<br><br>"
                                       "Release date : %2 %3<br>"
                                       "Based on Qt v%4<br>"
@@ -44,7 +44,7 @@ CAbout::CAbout(QWidget *parent) :
 
 
 
-  ui->textEdit_license->setText(readAllFile("data/gnu/gnu2.txt"));  
+  ui->textEdit_license->setText(readAllFile("data/gnu/gnu2.txt"));
 
   ui->textEdit_source->append(tr("<b>Main DSO catalogue</b><br>"));
   int i = 0;
@@ -65,12 +65,10 @@ CAbout::CAbout(QWidget *parent) :
   ui->textEdit_source->append(tr("<br><br><b>Star catalogues</b>"));
 
   ui->textEdit_source->append("<br>The Tycho-2 Catalogue (Hog+ 2000) (Internal)");
-
-  if (cGSC.bIsGsc)
-    ui->textEdit_source->append("The HST Guide Star Catalogue, Version 1.2 (Lasker+ 1996) (Optional)");
-
+  ui->textEdit_source->append("The HST Guide Star Catalogue, Version 1.2 (Lasker+ 1996) (Optional)");
   ui->textEdit_source->append("The PPMXL Catalogue (Roeser+ 2010) (Optional)");
   ui->textEdit_source->append("The USNO A2.0 Catalogue (Monet+ 1998) (Optional)");
+  ui->textEdit_source->append("The UCAC4 Catalogue (Zacharias+ 2012) (Optional)");
   ui->textEdit_source->moveCursor(QTextCursor::Start) ;
   ui->textEdit_source->ensureCursorVisible();
 }
