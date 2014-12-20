@@ -16,7 +16,6 @@ CUCAC4::CUCAC4()
 void CUCAC4::setUCAC4Dir(const QString dir)
 {
   qDebug() << "Setting UCAC4 folder" << dir;
-  qDebug() << "size" << sizeof(UCAC4_Star_t);
 
   m_folder = dir;
 
@@ -35,8 +34,6 @@ ucac4Region_t *CUCAC4::getStar(ucac4Star_t &s, int reg, int index)
   ucac4Region_t *region = loadGSCRegion(reg);
 
   s = region->stars[index];
-
-  qDebug() << reg << index;
 
   return region;
 }

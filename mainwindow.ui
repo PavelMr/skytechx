@@ -604,7 +604,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -761,7 +761,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>308</width>
+          <width>331</width>
           <height>509</height>
          </rect>
         </property>
@@ -816,6 +816,9 @@
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(162, 175, 180);</string>
            </property>
           </widget>
          </item>

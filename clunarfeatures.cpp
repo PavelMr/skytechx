@@ -19,7 +19,7 @@ CLunarFeatures::CLunarFeatures()
 ///////////////////////////////////////
 void CLunarFeatures::load(QString name)
 ///////////////////////////////////////
-{  
+{
   SkFile f(name);
 
   if (!f.open(SkFile::ReadOnly | SkFile::Text))

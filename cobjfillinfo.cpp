@@ -1021,8 +1021,6 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, txVisMag, dso->mag == NO_DSO_MAG ? tr("N/A") : getStrMag(dso->DSO_MAG));
   addTextItem(item, txConstel, constGetName(con, 1));
 
-
-
   double azm, alt;
   double nazm, nalt;
 
