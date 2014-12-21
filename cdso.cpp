@@ -75,7 +75,7 @@ void CDso::load()
 
   pf.read((char *)dsoNames, dsoHead.textSegSize);
   pf.read((char *)dsoClass, dsoHead.galClassSize);
-  pf.read((char *)dsoCats, dsoHead.catNamesSize);  
+  pf.read((char *)dsoCats, dsoHead.catNamesSize);
 
   for (unsigned int i = 0; i < dsoHead.numDso; i++)
   {
@@ -87,7 +87,7 @@ void CDso::load()
       dso[i].sy = dso[i].sx;
     }
   }
-  pf.close();  
+  pf.close();
 
   //qDebug("dsoHead.numDso = %ld\n", dsoHead.numDso);
 
@@ -98,7 +98,7 @@ void CDso::load()
   qsort(dso, dsoHead.numDso, sizeof(dso_t), dsoSort1);
   //qSort(dso.begin(), dso.end(), dsoSort);
 
-  createSectors();  
+  createSectors();
 
   // assign to sectors
   for (unsigned long i = 0; i < dsoHead.numDso; i++)
@@ -106,7 +106,7 @@ void CDso::load()
     int ra  = (int)((RAD2DEG(dso[i].rd.Ra)) / DSO_SEG_SIZE);
     int dec = (int)((RAD2DEG(dso[i].rd.Dec) + 90.) / DSO_SEG_SIZE);
     tDsoSectors[(int)dec][(int)ra].append(i);
-  }  
+  }
 
   // create name map list
   for (unsigned int i = 0; i < dsoHead.numDso; i++)
@@ -364,11 +364,33 @@ int CDso::findDSO(char *pszName, dso_t **pDso)
   return(-1);
 }
 
+int CDso::findDSOFirstName(char *pszName)
+{
+  if (pszName[0] == '\0')
+    return(-1);
+
+  QString name = pszName;
+
+  name.remove(" ");
+
+  for (unsigned long i = 0; i < dsoHead.numDso; i++)
+  {
+    QString pName = getName(&dso[i], 0);
+
+    if (pName.compare(name, Qt::CaseInsensitive) == 0)
+    {
+      return(i);
+    }
+  }
+
+  return -1;
+}
+
 
 ///////////////////////
 void CDso::loadShapes()
 ///////////////////////
-{  
+{
   int idx = 0;
   QDir dir("data/dso/shapes/", "*.dat");
   dir.setFilter(QDir::Files);
@@ -485,6 +507,8 @@ QStringList CDso::getNameInt(dso_t *pDso)
 {
   char *p = dsoNames + pDso->nameOffs;
   QString str = QString(p);
+
+  str = str.remove(" ");
 
   return str.split("\t");
 }
@@ -700,7 +724,7 @@ void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
-  int  s = qMax(sx, MIN_DSO_SIZE);  
+  int  s = qMax(sx, MIN_DSO_SIZE);
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
   pPainter->drawHalfCross(pt->sx, pt->sy, s, s / 2);
@@ -762,7 +786,7 @@ void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view)
 /////////////////////////////////////////////////////////////////
 void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView)
 /////////////////////////////////////////////////////////////////
-{  
+{
   if (pDso->shape != NO_DSO_SHAPE)
   {
     if (g_showDSOShapes)

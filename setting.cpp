@@ -17,6 +17,21 @@ setting_t     skPrintTmp;
 static QString       qssStyle;
 extern QApplication *g_pApp;
 
+
+
+static double starMagnitudes[10][2] = {
+                                        {D2R(90), 5.5},
+                                        {D2R(75), 6.0},
+                                        {D2R(50), 7.0},
+                                        {D2R(30), 8.0},
+                                        {D2R(20), 9.0},
+                                        {D2R(10), 10.0},
+                                        {D2R(5),  11.3},
+                                        {D2R(2.5), 12.5},
+                                        {D2R(1), 15.0},
+                                        {D2R(0.25), 20.0}
+                                      };
+
 bool setRemove(QString name)
 {
   SkFile f("data/profiles/" + name + ".dat");
@@ -417,28 +432,26 @@ bool setLoad(QString name, setting_t *set)
     set->map.dsoTypeShowAll[i] = readVal("map.dsoTypeShowAll" + QString::number(i), true, tMap).toBool();
   }
 
-  set->map.starRange[0].fromFov = readVal("map.starRangeFOV0", D2R(90), tMap).toDouble();
-  set->map.starRange[0].mag = readVal("map.starRangeMag0", 5.5, tMap).toDouble();
-  set->map.starRange[1].fromFov = readVal("map.starRangeFOV1", D2R(75), tMap).toDouble();
-  set->map.starRange[1].mag = readVal("map.starRangeMag1", 6.0, tMap).toDouble();
-  set->map.starRange[2].fromFov = readVal("map.starRangeFOV2", D2R(50), tMap).toDouble();
-  set->map.starRange[2].mag = readVal("map.starRangeMag2", 7.0, tMap).toDouble();
-  set->map.starRange[3].fromFov = readVal("map.starRangeFOV3", D2R(30), tMap).toDouble();
-  set->map.starRange[3].mag = readVal("map.starRangeMag3", 8.0, tMap).toDouble();
-  set->map.starRange[4].fromFov = readVal("map.starRangeFOV4", D2R(20), tMap).toDouble();
-  set->map.starRange[4].mag = readVal("map.starRangeMag4", 9.0, tMap).toDouble();
-  set->map.starRange[4].fromFov = readVal("map.starRangeFOV4", D2R(20), tMap).toDouble();
-  set->map.starRange[4].mag = readVal("map.starRangeMag4", 9.0, tMap).toDouble();
-  set->map.starRange[5].fromFov = readVal("map.starRangeFOV5", D2R(10), tMap).toDouble();
-  set->map.starRange[5].mag = readVal("map.starRangeMag5", 10.0, tMap).toDouble();
-  set->map.starRange[6].fromFov = readVal("map.starRangeFOV6", D2R(5), tMap).toDouble();
-  set->map.starRange[6].mag = readVal("map.starRangeMag6", 11.3, tMap).toDouble();
-  set->map.starRange[7].fromFov = readVal("map.starRangeFOV7", D2R(2.5), tMap).toDouble();
-  set->map.starRange[7].mag = readVal("map.starRangeMag7", 12.5, tMap).toDouble();
-  set->map.starRange[8].fromFov = readVal("map.starRangeFOV8", D2R(1), tMap).toDouble();
-  set->map.starRange[8].mag = readVal("map.starRangeMag8", 15.0, tMap).toDouble();
-  set->map.starRange[9].fromFov = readVal("map.starRangeFOV9", D2R(0.25), tMap).toDouble();
-  set->map.starRange[9].mag = readVal("map.starRangeMag9", 20.0, tMap).toDouble();
+  set->map.starRange[0].fromFov = readVal("map.starRangeFOV0", starMagnitudes[0][0], tMap).toDouble();
+  set->map.starRange[0].mag = readVal("map.starRangeMag0", starMagnitudes[0][1], tMap).toDouble();
+  set->map.starRange[1].fromFov = readVal("map.starRangeFOV1", starMagnitudes[1][0], tMap).toDouble();
+  set->map.starRange[1].mag = readVal("map.starRangeMag1", starMagnitudes[1][1], tMap).toDouble();
+  set->map.starRange[2].fromFov = readVal("map.starRangeFOV2", starMagnitudes[2][0], tMap).toDouble();
+  set->map.starRange[2].mag = readVal("map.starRangeMag2", starMagnitudes[2][1], tMap).toDouble();
+  set->map.starRange[3].fromFov = readVal("map.starRangeFOV3", starMagnitudes[3][0], tMap).toDouble();
+  set->map.starRange[3].mag = readVal("map.starRangeMag3", starMagnitudes[3][1], tMap).toDouble();
+  set->map.starRange[4].fromFov = readVal("map.starRangeFOV4", starMagnitudes[4][0], tMap).toDouble();
+  set->map.starRange[4].mag = readVal("map.starRangeMag4", starMagnitudes[4][1], tMap).toDouble();
+  set->map.starRange[5].fromFov = readVal("map.starRangeFOV5", starMagnitudes[5][0], tMap).toDouble();
+  set->map.starRange[5].mag = readVal("map.starRangeMag5", starMagnitudes[5][1], tMap).toDouble();
+  set->map.starRange[6].fromFov = readVal("map.starRangeFOV6", starMagnitudes[6][0], tMap).toDouble();
+  set->map.starRange[6].mag = readVal("map.starRangeMag6", starMagnitudes[6][1], tMap).toDouble();
+  set->map.starRange[7].fromFov = readVal("map.starRangeFOV7", starMagnitudes[7][0], tMap).toDouble();
+  set->map.starRange[7].mag = readVal("map.starRangeMag7", starMagnitudes[7][1], tMap).toDouble();
+  set->map.starRange[8].fromFov = readVal("map.starRangeFOV8", starMagnitudes[8][0], tMap).toDouble();
+  set->map.starRange[8].mag = readVal("map.starRangeMag8", starMagnitudes[8][1], tMap).toDouble();
+  set->map.starRange[9].fromFov = readVal("map.starRangeFOV9", starMagnitudes[9][0], tMap).toDouble();
+  set->map.starRange[9].mag = readVal("map.starRangeMag9", starMagnitudes[9][1], tMap).toDouble();
 
   set->map.dsoRange[0].fromFov = readVal("map.dsoRangeFOV0", D2R(90), tMap).toDouble();
   set->map.dsoRange[0].mag = readVal("map.dsoRangeMag0", 5.5, tMap).toDouble();
@@ -448,8 +461,6 @@ bool setLoad(QString name, setting_t *set)
   set->map.dsoRange[2].mag = readVal("map.dsoRangeMag2", 7.0, tMap).toDouble();
   set->map.dsoRange[3].fromFov = readVal("map.dsoRangeFOV3", D2R(30), tMap).toDouble();
   set->map.dsoRange[3].mag = readVal("map.dsoRangeMag3", 8.0, tMap).toDouble();
-  set->map.dsoRange[4].fromFov = readVal("map.dsoRangeFOV4", D2R(20), tMap).toDouble();
-  set->map.dsoRange[4].mag = readVal("map.dsoRangeMag4", 9.0, tMap).toDouble();
   set->map.dsoRange[4].fromFov = readVal("map.dsoRangeFOV4", D2R(20), tMap).toDouble();
   set->map.dsoRange[4].mag = readVal("map.dsoRangeMag4", 9.0, tMap).toDouble();
   set->map.dsoRange[5].fromFov = readVal("map.dsoRangeFOV5", D2R(10), tMap).toDouble();

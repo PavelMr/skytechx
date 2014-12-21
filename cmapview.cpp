@@ -1706,6 +1706,7 @@ void CMapView::paintEvent(QPaintEvent *)
     int size = qMax((int)(mm * 0.05f), 5);
     p.setPen(QPen(QColor(255, 255, 255), 1, Qt::SolidLine));
     p.drawCross(m_zoomPoint + (m_lastMousePos - m_zoomPoint) * 0.5, size);
+
     p.setCompositionMode(QPainter::CompositionMode_SourceOver);
   }
 

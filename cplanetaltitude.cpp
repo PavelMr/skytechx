@@ -98,10 +98,15 @@ void CPlanetAltitude::paintEvent(QPaintEvent *)
   {
     int x = ((i / 24.0) * width);
 
+    p.setOpacity(1);
     p.setPen(Qt::white);
     p.drawLine(x, height, x, height - 8);
 
-    p.drawText(x - 10, height - 8 - 15, 20, 12, Qt::AlignCenter, QString("%1").arg(qAbs(i - 12)));
+    p.drawText(x - 10, height - 8 - 15, 20, 12, Qt::AlignCenter, QString("%1").arg(qAbs((i  + 12) % 24)));
+
+    p.setOpacity(0.3);
+    p.setPen(QPen(Qt::white, 1, Qt::DotLine));
+    p.drawLine(x, height - 22, x, 0);
   }
 
   p.drawText(0, height / 4, 20, 20, Qt::AlignCenter, "45°");
@@ -116,7 +121,6 @@ void CPlanetAltitude::calculate(double jd)
   m_step = JD1SEC * 60 * 30; // 10 min
   CAstro ast;
 
-  //jd = (floor(jd + 0.5) - 0.5) - m_view.geo.tz;
   jd = (floor(jd + 0.5)) - m_view.geo.tz;
 
   qDebug() << getStrDate(jd, m_view.geo.tz) << getStrTime(jd, m_view.geo.tz);

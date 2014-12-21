@@ -5,7 +5,7 @@
 #include <QDateTime>
 #include <QSettings>
 
-#define TIPS_COUNT    10
+#define TIPS_COUNT    11
 
 CTipOfDay::CTipOfDay(QWidget *parent) :
     QDialog(parent),
@@ -79,6 +79,8 @@ void CTipOfDay::setTip(int &index)
                              "Pokud chcete vyhledat např. nejbližší zatmění Měsíce ve Vámi nastavené poloze tak ho můžete najít v menu 'Pozorování->Hledání událostí...'",
 
                              "Pokud chcete o objektu získat více informací tak v dialogu objektu lze stiskem tlačítka přejít na webový server NED nebo SIMBAD kde se zobrazí podrobnější informace.",
+
+                             "Pokud není psáno jinak tak všechny vypsané časy jsou v časovém pásmu zadaném v nastavení polohy pozorovatele.",
 
                              "Vzdálenost a poziční úhel od pozice kurzoru na mapě a měřícího bodu se zobrazuje ve stavovém řádku. Přesun měřícího bodu lze provést klávesou Space."
                              // (poziční úhel) Position angle (měřícího bodu) measure point (stavovém řádku) status bar

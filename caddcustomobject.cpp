@@ -60,7 +60,7 @@ void CAddCustomObject::on_comboBox_currentIndexChanged(const QString &arg1)
         QStandardItem *item = new QStandardItem;
         dso_t *dso = &cDSO.dso[id];
 
-        if (id >= 0 || id < cDSO.dsoHead.numDso)
+        if (id >= 0 || id < (int)cDSO.dsoHead.numDso)
         {
           item->setText(cDSO.getName(dso, 0));
           item->setEditable(false);
@@ -168,7 +168,13 @@ void CAddCustomObject::load(QList <customCatalogue_t> *data)
       }
       else
       {
-        cc.list.append(line.simplified().toInt());
+        QString name = line.simplified();
+
+        int id = cDSO.findDSOFirstName(name.toLocal8Bit().data());
+        if (id >= 0)
+        {
+          cc.list.append(id);
+        }
       }
     }
     if (!cc.catalogue.isEmpty())
@@ -190,7 +196,9 @@ void CAddCustomObject::save()
       s << "#" << item.catalogue << "\n";
       foreach (const int id, item.list)
       {
-        s << id << "\n";
+        dso_t *dso = &cDSO.dso[id];
+
+        s << cDSO.getName(dso) << "\n";
       }
     }
   }

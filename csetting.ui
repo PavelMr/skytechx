@@ -198,7 +198,7 @@
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="currentIndex">
-      <number>16</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="stackedWidget_2Page1">
       <widget class="QDoubleSpinBox" name="doubleSpinBox">

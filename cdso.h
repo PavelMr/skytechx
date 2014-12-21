@@ -43,6 +43,7 @@ class CDso : public QObject
     void setPainter(CSkPainter *p, QImage *pImg);
     void renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView);
     int  findDSO(char *pszName, dso_t **pDso);
+    int  findDSOFirstName(char *pszName);
     QString getTypeName(int type, bool &ok);
     QString getCatalogue(dso_t *pDso);
     QString getCatalogue(int index);
