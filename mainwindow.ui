@@ -330,6 +330,18 @@
     <property name="title">
      <string>&amp;Time &amp;&amp; Location</string>
     </property>
+    <widget class="QMenu" name="menuSet_time_to">
+     <property name="title">
+      <string>Set time to</string>
+     </property>
+     <addaction name="actionSunrise"/>
+     <addaction name="actionSun_transit"/>
+     <addaction name="actionSunset"/>
+     <addaction name="separator"/>
+     <addaction name="actionMoonrise"/>
+     <addaction name="actionMoon_transit"/>
+     <addaction name="actionMoonset"/>
+    </widget>
     <addaction name="actionSelect_world_location"/>
     <addaction name="separator"/>
     <addaction name="actionSet_current_time"/>
@@ -340,6 +352,8 @@
     <addaction name="separator"/>
     <addaction name="actionSave_time_mark"/>
     <addaction name="actionRestore_time_mark"/>
+    <addaction name="separator"/>
+    <addaction name="menuSet_time_to"/>
     <addaction name="separator"/>
     <addaction name="actionDeltaT"/>
    </widget>
@@ -1173,7 +1187,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>212</width>
+          <width>257</width>
           <height>524</height>
          </rect>
         </property>
@@ -1413,7 +1427,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>327</height>
+          <height>402</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1703,8 +1717,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>101</width>
+          <height>402</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1851,8 +1865,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>468</width>
+          <height>402</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3298,6 +3312,36 @@ p, li { white-space: pre-wrap; }
   <action name="actionGo_to_SkytechX_home_page">
    <property name="text">
     <string>Go to SkytechX home page</string>
+   </property>
+  </action>
+  <action name="actionSunrise">
+   <property name="text">
+    <string>Sunrise</string>
+   </property>
+  </action>
+  <action name="actionSun_transit">
+   <property name="text">
+    <string>Sun transit</string>
+   </property>
+  </action>
+  <action name="actionSunset">
+   <property name="text">
+    <string>Sunset</string>
+   </property>
+  </action>
+  <action name="actionMoonrise">
+   <property name="text">
+    <string>Moonrise</string>
+   </property>
+  </action>
+  <action name="actionMoon_transit">
+   <property name="text">
+    <string>Moon transit</string>
+   </property>
+  </action>
+  <action name="actionMoonset">
+   <property name="text">
+    <string>Moonset</string>
    </property>
   </action>
  </widget>

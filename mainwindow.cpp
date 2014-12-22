@@ -4473,3 +4473,117 @@ void MainWindow::on_actionGo_to_SkytechX_home_page_triggered()
 {
   QDesktopServices::openUrl(QUrl("www.skytechx.eu"));
 }
+
+void MainWindow::on_actionSunrise_triggered()
+{
+  rts_t rts;
+  CRts  rtsObj;
+
+  rtsObj.calcOrbitRTS(&rts, PT_SUN, MO_PLANET, &ui->widget->m_mapView);
+
+  if ((rts.rts & RTS_T_RISE) == RTS_T_RISE)
+  {
+    ui->widget->m_mapView.jd = rts.rise;
+    recenterHoldObject(ui->widget, false);
+    ui->widget->repaintMap();
+  }
+  else
+  {
+    msgBoxError(this, tr("Can not compute!"));
+  }
+}
+
+void MainWindow::on_actionSun_transit_triggered()
+{
+  rts_t rts;
+  CRts  rtsObj;
+
+  rtsObj.calcOrbitRTS(&rts, PT_SUN, MO_PLANET, &ui->widget->m_mapView);
+
+  if ((rts.rts & RTS_T_TRANSIT) == RTS_T_TRANSIT)
+  {
+    ui->widget->m_mapView.jd = rts.transit;
+    recenterHoldObject(ui->widget, false);
+    ui->widget->repaintMap();
+  }
+  else
+  {
+    msgBoxError(this, tr("Can not compute!"));
+  }
+}
+
+void MainWindow::on_actionSunset_triggered()
+{
+  rts_t rts;
+  CRts  rtsObj;
+
+  rtsObj.calcOrbitRTS(&rts, PT_SUN, MO_PLANET, &ui->widget->m_mapView);
+
+  if ((rts.rts & RTS_T_SET) == RTS_T_SET)
+  {
+    ui->widget->m_mapView.jd = rts.set;
+    recenterHoldObject(ui->widget, false);
+    ui->widget->repaintMap();
+  }
+  else
+  {
+    msgBoxError(this, tr("Can not compute!"));
+  }
+}
+
+void MainWindow::on_actionMoonrise_triggered()
+{
+  rts_t rts;
+  CRts  rtsObj;
+
+  rtsObj.calcOrbitRTS(&rts, PT_MOON, MO_PLANET, &ui->widget->m_mapView);
+
+  if ((rts.rts & RTS_T_RISE) == RTS_T_RISE)
+  {
+    ui->widget->m_mapView.jd = rts.rise;
+    recenterHoldObject(ui->widget, false);
+    ui->widget->repaintMap();
+  }
+  else
+  {
+    msgBoxError(this, tr("Can not compute!"));
+  }
+}
+
+void MainWindow::on_actionMoon_transit_triggered()
+{
+  rts_t rts;
+  CRts  rtsObj;
+
+  rtsObj.calcOrbitRTS(&rts, PT_MOON, MO_PLANET, &ui->widget->m_mapView);
+
+  if ((rts.rts & RTS_T_TRANSIT) == RTS_T_TRANSIT)
+  {
+    ui->widget->m_mapView.jd = rts.transit;
+    recenterHoldObject(ui->widget, false);
+    ui->widget->repaintMap();
+  }
+  else
+  {
+    msgBoxError(this, tr("Can not compute!"));
+  }
+}
+
+void MainWindow::on_actionMoonset_triggered()
+{
+  rts_t rts;
+  CRts  rtsObj;
+
+  rtsObj.calcOrbitRTS(&rts, PT_MOON, MO_PLANET, &ui->widget->m_mapView);
+
+  if ((rts.rts & RTS_T_SET) == RTS_T_SET)
+  {
+    ui->widget->m_mapView.jd = rts.set;
+    recenterHoldObject(ui->widget, false);
+    ui->widget->repaintMap();
+  }
+  else
+  {
+    msgBoxError(this, tr("Can not compute!"));
+  }
+}

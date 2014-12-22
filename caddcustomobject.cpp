@@ -117,12 +117,18 @@ void CAddCustomObject::on_pushButton_5_clicked()
       QStandardItem *item = new QStandardItem;
       dso_t *dso;
 
-      int index = cDSO.findDSO((char *)qPrintable(object), &dso);
+      cDSO.findDSO((char *)qPrintable(object), &dso);
 
       item->setText(cDSO.getName(dso, 0));
       item->setEditable(false);
       model->insertRow(model->rowCount(), item);
       ui->lineEdit->setText("");
+    }
+    else
+    {
+      ui->lineEdit->setFocus();
+      ui->lineEdit->selectAll();
+      return;
     }
   }
 }
@@ -212,7 +218,7 @@ bool CAddCustomObject::appendTo(const QString &catalogue, const QString &name)
   if (index == -1)
   {
     // dso not found
-    msgBoxError(this, tr("Object not found!"));
+    msgBoxError(this, tr("Object '%1' not found!").arg(name));
     return false;
   }
 
@@ -224,7 +230,7 @@ bool CAddCustomObject::appendTo(const QString &catalogue, const QString &name)
     {
       if (cat.list.contains(index))
       {
-        msgBoxError(this, tr("Object is already in the list!"));
+        msgBoxError(this, tr("Object '%1' is already in the list!").arg(name));
         return false;
       }
       cat.list.append(index);

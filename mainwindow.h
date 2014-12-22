@@ -474,6 +474,18 @@ private slots:
 
   void on_actionGo_to_SkytechX_home_page_triggered();
 
+  void on_actionSunrise_triggered();
+
+  void on_actionSun_transit_triggered();
+
+  void on_actionSunset_triggered();
+
+  void on_actionMoonrise_triggered();
+
+  void on_actionMoon_transit_triggered();
+
+  void on_actionMoonset_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
