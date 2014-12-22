@@ -4,6 +4,8 @@
 #include <QtGui>
 #include <QtWidgets>
 
+#include "cmapview.h"
+
 namespace Ui {
   class CPlnSearch;
 }
@@ -11,15 +13,16 @@ namespace Ui {
 class CPlnSearch : public QDialog
 {
   Q_OBJECT
-  
+
 public:
   explicit CPlnSearch(QWidget *parent = 0);
   ~CPlnSearch();
+  static void findPlanet(int id, mapView_t *view, double &ra, double &dec, double &fov);
 
   double m_ra;
   double m_dec;
   double m_fov;
-  
+
 private slots:
   void on_pushButton_2_clicked();
   void slotDblClk(QModelIndex);

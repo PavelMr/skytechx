@@ -36,6 +36,25 @@ CSetting::CSetting(QWidget *parent) :
   ui->checkBox_12->setChecked(g_autoSave.mapPosition);
   ui->checkBox_10->setChecked(g_showZoomBar);
 
+  ui->cb_iconSize->addItem(tr("24x24 (Default size)"));
+  ui->cb_iconSize->addItem(tr("18x18 (Small size)"));
+
+  QSettings setting;
+
+  int tbIconSize = setting.value("toolbar_icon_size", 24).toInt();
+
+  if (tbIconSize == 18)
+  {
+    ui->cb_iconSize->setCurrentIndex(1);
+  }
+  else
+  if (tbIconSize == 24)
+  {
+    ui->cb_iconSize->setCurrentIndex(0);
+  }
+
+  //int size = set.value("toolbar_icon_size", 24).toInt();
+
   ui->checkBox_13->setChecked(bAlternativeMouse);
 
   connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
@@ -103,7 +122,6 @@ void CSetting::setValues()
 //////////////////////////
 {
   // stars ///////////////////////////////////////////////////////
-
   ui->doubleSpinBox->setValue(R2D(set.map.star.propNamesFromFov));
   ui->doubleSpinBox_2->setValue(R2D(set.map.star.bayerFromFov));
   ui->doubleSpinBox_3->setValue(R2D(set.map.star.flamsFromFov));
@@ -693,6 +711,18 @@ void CSetting::on_pushButton_clicked()
   g_showZoomBar = ui->checkBox_10->isChecked();
 
   bAlternativeMouse = ui->checkBox_13->isChecked();
+
+  QSettings setting;
+
+  if (ui->cb_iconSize->currentIndex() == 0)
+  {
+    setting.setValue("toolbar_icon_size", 24);
+  }
+  else
+  if (ui->cb_iconSize->currentIndex() == 1)
+  {
+    setting.setValue("toolbar_icon_size", 18);
+  }
 
   apply();
 

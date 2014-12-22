@@ -105,6 +105,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
+  connect(ui->actionSearch_a_Sun, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+  connect(ui->actionSearch_a_Moon, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+  connect(ui->actionSearch_a_Mercury, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+  connect(ui->actionSearch_a_Venus, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+  connect(ui->actionSearch_a_Mars, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+  connect(ui->actionSearch_a_Jupiter, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+  connect(ui->actionSearch_a_Saturn, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+  connect(ui->actionSearch_a_Uranus, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+  connect(ui->actionSearch_a_Neptune, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
+
   setWindowIcon(QIcon(":/res/ico_app.ico"));
 
   m_DSOCatalogueDlg = NULL;
@@ -257,9 +267,13 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_mag->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_search->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_time->setToolButtonStyle(Qt::ToolButtonIconOnly);
+  ui->tb_render->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_view->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_tele->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_drawing->setToolButtonStyle(Qt::ToolButtonIconOnly);
+  ui->tb_planets->setToolButtonStyle(Qt::ToolButtonIconOnly);
+
+  setToolbarIconSize();
 
   /*
   QGraphicsDropShadowEffect *tbEffect[8];
@@ -578,6 +592,24 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionDrawings->setChecked(g_showDrawings);
 
   setTitle();
+}
+
+void MainWindow::setToolbarIconSize()
+{
+  QSettings set;
+
+  int size = set.value("toolbar_icon_size", 24).toInt();
+
+  ui->tb_alt_azm->setIconSize(QSize(size, size));
+  ui->tb_grid->setIconSize(QSize(size, size));
+  ui->tb_mag->setIconSize(QSize(size, size));
+  ui->tb_render->setIconSize(QSize(size, size));
+  ui->tb_search->setIconSize(QSize(size, size));
+  ui->tb_time->setIconSize(QSize(size, size));
+  ui->tb_view->setIconSize(QSize(size, size));
+  ui->tb_tele->setIconSize(QSize(size, size));
+  ui->tb_drawing->setIconSize(QSize(size, size));
+  ui->tb_planets->setIconSize(QSize(size, size));
 }
 
 void MainWindow::setTitle()
@@ -2600,8 +2632,8 @@ void MainWindow::on_actionSetting_triggered()
 
   dlg.exec();
   ui->widget->repaintMap();
-
   ui->widget->m_zoom->setVisible(g_showZoomBar);
+  setToolbarIconSize();
 }
 
 ///////////////////////////////////////////////////
@@ -4586,4 +4618,63 @@ void MainWindow::on_actionMoonset_triggered()
   {
     msgBoxError(this, tr("Can not compute!"));
   }
+}
+
+void MainWindow::slotSearchPlanetTriggered()
+{
+  double ra, dec, fov;
+  int id;
+
+  if (sender() == ui->actionSearch_a_Sun)
+  {
+    id = PT_SUN;
+  }
+  else
+  if (sender() == ui->actionSearch_a_Moon)
+  {
+    id = PT_MOON;
+  }
+  else
+  if (sender() == ui->actionSearch_a_Mercury)
+  {
+    id = PT_MERCURY;
+  }
+  else
+  if (sender() == ui->actionSearch_a_Venus)
+  {
+    id = PT_VENUS;
+  }
+  else
+  if (sender() == ui->actionSearch_a_Mars)
+  {
+    id = PT_MARS;
+  }
+  else
+  if (sender() == ui->actionSearch_a_Jupiter)
+  {
+    id = PT_JUPITER;
+  }
+  else
+  if (sender() == ui->actionSearch_a_Saturn)
+  {
+    id = PT_SATURN;
+  }
+  else
+  if (sender() == ui->actionSearch_a_Uranus)
+  {
+    id = PT_URANUS;
+  }
+  else
+  if (sender() == ui->actionSearch_a_Neptune)
+  {
+    id = PT_NEPTUNE;
+  }
+  else
+  {
+    return;
+  }
+
+  CPlnSearch::findPlanet(id, &ui->widget->m_mapView, ra, dec, fov);
+  ui->widget->centerMap(ra, dec, fov);
+  recenterHoldObject(ui->widget, false);
 }

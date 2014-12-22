@@ -64,5 +64,14 @@
         <file>res/weather/13n.png</file>
         <file>res/weather/50d.png</file>
         <file>res/weather/50n.png</file>
+        <file>res/sun_sym.png</file>
+        <file>res/moon_sym.png</file>
+        <file>res/mercury_sym.png</file>
+        <file>res/mars_sym.png</file>
+        <file>res/venus_sym.png</file>
+        <file>res/jupiter_sym.png</file>
+        <file>res/saturn_sym.png</file>
+        <file>res/neptune_sym.png</file>
+        <file>res/uranus_sym.png</file>
     </qresource>
 </RCC>

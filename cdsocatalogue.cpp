@@ -372,3 +372,42 @@ void CDSOCatalogue::on_pushButton_5_clicked()
   delete dialog;
   delete document;
 }
+
+void CDSOCatalogue::on_pushButton_6_clicked()
+{
+  QString name = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                              "untitled.csv",
+                                              tr("CSV Files (*.csv)"));
+  if (name.isEmpty())
+  {
+    return;
+  }
+
+  const int rowCount = ui->tableView->model()->rowCount();
+  const int columnCount = ui->tableView->model()->columnCount();
+
+  SkFile fOut(name);
+  if (fOut.open(SkFile::WriteOnly | SkFile::Text))
+  {
+    QTextStream s(&fOut);
+
+    for (int column = 0; column < columnCount; column++)
+    {
+      s << ui->tableView->model()->headerData(column, Qt::Horizontal).toString().replace(';', ",");
+      s << ";";
+    }
+
+    s << "\n";
+
+    for (int row = 0; row < rowCount; row++)
+    {
+      for (int column = 0; column < columnCount; column++)
+      {
+        QString data = ui->tableView->model()->data(ui->tableView->model()->index(row, column)).toString().simplified().replace(';', ",");
+        s << data + ";";
+      }
+      s << "\n";
+    }
+  }
+  fOut.close();
+}

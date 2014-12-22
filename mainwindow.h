@@ -64,6 +64,7 @@ public:
   void saveAndExit();
   void timeDialogUpdate();
 
+  void setToolbarIconSize();
 protected:
 
   void changeEvent(QEvent *e);
@@ -485,6 +486,8 @@ private slots:
   void on_actionMoon_transit_triggered();
 
   void on_actionMoonset_triggered();
+
+  void slotSearchPlanetTriggered();
 
 private:
   Ui::MainWindow *ui;

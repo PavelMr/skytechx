@@ -24,7 +24,7 @@
     <normaloff>:/res/ico_skytech.png</normaloff>:/res/ico_skytech.png</iconset>
   </property>
   <property name="toolButtonStyle">
-   <enum>Qt::ToolButtonTextBesideIcon</enum>
+   <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <property name="animated">
    <bool>true</bool>
@@ -629,7 +629,7 @@
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>402</height>
+          <height>370</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1427,7 +1427,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>402</height>
+          <height>370</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1718,7 +1718,7 @@
           <x>0</x>
           <y>0</y>
           <width>101</width>
-          <height>402</height>
+          <height>370</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1866,7 +1866,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>402</height>
+          <height>370</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2058,6 +2058,29 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionTelrad"/>
    <addaction name="actionFrame_field"/>
    <addaction name="actionCircle"/>
+  </widget>
+  <widget class="QToolBar" name="tb_planets">
+   <property name="windowTitle">
+    <string>Search planet</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="actionSearch_a_Sun"/>
+   <addaction name="actionSearch_a_Moon"/>
+   <addaction name="actionSearch_a_Mercury"/>
+   <addaction name="actionSearch_a_Venus"/>
+   <addaction name="actionSearch_a_Mars"/>
+   <addaction name="actionSearch_a_Jupiter"/>
+   <addaction name="actionSearch_a_Saturn"/>
+   <addaction name="actionSearch_a_Uranus"/>
+   <addaction name="actionSearch_a_Neptune"/>
   </widget>
   <action name="action_Exit_2">
    <property name="text">
@@ -3342,6 +3365,114 @@ p, li { white-space: pre-wrap; }
   <action name="actionMoonset">
    <property name="text">
     <string>Moonset</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Sun">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sun_sym.png</normaloff>:/res/sun_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Sun</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Sun</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Mercury">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/mercury_sym.png</normaloff>:/res/mercury_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Mercury</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Mercury</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Venus">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/venus_sym.png</normaloff>:/res/venus_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Venus</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Venus</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Mars">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/mars_sym.png</normaloff>:/res/mars_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Mars</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Mars</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Jupiter">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/jupiter_sym.png</normaloff>:/res/jupiter_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Jupiter</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Jupiter</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Saturn">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/saturn_sym.png</normaloff>:/res/saturn_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Saturn</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Saturn</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Uranus">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/uranus_sym.png</normaloff>:/res/uranus_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Uranus</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Uranus</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Neptune">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/neptune_sym.png</normaloff>:/res/neptune_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Neptune</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Neptune</string>
+   </property>
+  </action>
+  <action name="actionSearch_a_Moon">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/moon_sym.png</normaloff>:/res/moon_sym.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search a Moon</string>
+   </property>
+   <property name="toolTip">
+    <string>Search a Moon</string>
    </property>
   </action>
  </widget>

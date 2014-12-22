@@ -65,7 +65,7 @@
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <property name="documentMode">
     <bool>false</bool>
@@ -3784,7 +3784,7 @@
        <x>10</x>
        <y>10</y>
        <width>641</width>
-       <height>171</height>
+       <height>311</height>
       </rect>
      </property>
      <property name="title">
@@ -3878,6 +3878,29 @@
      </property>
      <property name="text">
       <string>Alternative mouse commands</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="cb_iconSize">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>191</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_76">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>161</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Toolbar icon size</string>
      </property>
     </widget>
    </widget>

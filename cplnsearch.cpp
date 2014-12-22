@@ -48,6 +48,19 @@ void CPlnSearch::on_pushButton_2_clicked()
   done(DL_OK);
 }
 
+void CPlnSearch::findPlanet(int id, mapView_t *view, double &ra, double &dec, double &fov)
+{
+  orbit_t o;
+  CAstro ast;
+
+  ast.setParam(view);
+
+  ast.calcPlanet(id, &o);
+
+  ra = o.lRD.Ra;
+  dec = o.lRD.Dec;
+  fov = getOptObjFov(o.sx / 3600., o.sy / 3600.);
+}
 
 void CPlnSearch::slotDblClk(QModelIndex)
 {
