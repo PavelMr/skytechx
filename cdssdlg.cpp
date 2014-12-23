@@ -636,6 +636,7 @@ void CDSSDlg::on_pushButton_3_clicked()
     url = url.replace("{RA_DEG}", QString("%1").arg(R2D(rd.Ra), 0, 'f', 5));
     url = url.replace("{DEC_DEG}", QString("%1").arg(R2D(rd.Dec), 0, 'f', 5));
     url = url.replace("{SIZE_MIN}", QString("%1").arg(m_size, 0, 'f', 5));
+    url = url.replace("{SIZE_DEG}", QString("%1").arg(m_size / 60.0, 0, 'f', 5));
 
     qDebug("%s", qPrintable(url));
 
