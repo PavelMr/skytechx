@@ -99,6 +99,12 @@ void trfSetTransform(SKMATRIX *trans, SKMATRIX *proj, SKMATRIX *view, SKMATRIX *
   SKPLANEFromPoint(&m_frustum[4], &vecFrustum[0], &vecFrustum[1], &vecFrustum[2]); // near
 }
 
+void trfGetScreenSize(int &width, int &height)
+{
+  width = (int)scrx;
+  height = (int)scry;
+}
+
 ////////////////////////////
 SKPLANE *trfGetFrustum(void)
 ////////////////////////////

@@ -4,6 +4,16 @@
 #include <QPainter>
 #include <QtOpenGL/QGLWidget>
 
+#define RT_CENTER         0
+#define RT_TOP            1
+#define RT_TOP_RIGHT      2
+#define RT_RIGHT          3
+#define RT_BOTTOM_RIGHT   4
+#define RT_BOTTOM         5
+#define RT_BOTTOM_LEFT    6
+#define RT_LEFT           7
+#define RT_TOP_LEFT       8
+
 class CSkPainter : public QPainter
 {
   public:
@@ -21,6 +31,7 @@ class CSkPainter : public QPainter
     void drawCornerBox(int x, int y, int halfSize, int cornerSize);
     void drawCross(QPoint p, int size);
     void drawRotatedText(float degrees, int x, int y, const QString &text);
+    QRect renderText(int x, int y, double offset, const QString &text, int align);
 };
 
 #endif // CSKPAINTER_H

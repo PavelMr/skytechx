@@ -5,7 +5,12 @@
 
 // TODO: udelat kruh pro absolutni viditelny obzor. ???? to nechapu
 
+#define IS_NEAR(v1, v2, d)   (qAbs(v1 - v2) <= d)
+
 extern bool g_showLabels;
+static int scrWidth;
+static int scrHeight;
+static int clipSize = 30;
 
 //////////////
 CGrid::CGrid()
@@ -67,7 +72,10 @@ inline static bool getClipPoint(int &cx, int &cy, int x1, int y1, int x2, int y2
   double cpy1;
   double cpy2;
 
-  if (liangBarsky(10, 1000, 10, 500, x1, y1, x2, y2, cpx1, cpy1, cpx2, cpy2))
+  int w, h;
+  trfGetScreenSize(w, h);
+
+  if (liangBarsky(0, w, 0, h, x1, y1, x2, y2, cpx1, cpy1, cpx2, cpy2))
   {
     cx = cpx2;
     cy = cpy2;
@@ -77,9 +85,47 @@ inline static bool getClipPoint(int &cx, int &cy, int x1, int y1, int x2, int y2
   return false;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-inline static void drawInterpolatedLineRD(SKMATRIX *mat, int c, radec_t *rd1, radec_t *rd2, CSkPainter *pPainter)
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline void drawEdgeAlignTextY(CSkPainter *p, int px, int py, const QString &text)
+{
+  double offset = 4;
+  int w, h;
+
+  trfGetScreenSize(w, h);
+  setSetFontColor(FONT_GRID, p);
+
+  if (IS_NEAR(py, 0, 2))
+  {
+    p->renderText(px, 0, offset, text, RT_BOTTOM);
+  }
+  else
+  if (IS_NEAR(py, h, 2))
+  {
+    p->renderText(px, h, offset, text, RT_TOP);
+  }
+}
+
+inline void drawEdgeAlignTextX(CSkPainter *p, int px, int py, const QString &text)
+{
+  double offset = 4;
+  int w, h;
+
+  trfGetScreenSize(w, h);
+  setSetFontColor(FONT_GRID, p);
+
+  if (IS_NEAR(px, 0, 2))
+  {
+    p->renderText(0, py, offset, text, RT_RIGHT);
+  }
+  else
+  if (IS_NEAR(px, w, 2))
+  {
+    p->renderText(w, py, offset, text, RT_LEFT);
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline static bool drawInterpolatedLineRD(SKMATRIX *mat, int c, radec_t *rd1, radec_t *rd2, CSkPainter *pPainter, int &cx, int &cy)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   double dx = (rd2->Ra - rd1->Ra) / (double)(c - 1);
   double dy = (rd2->Dec - rd1->Dec) / (double)(c - 1);
@@ -87,6 +133,7 @@ inline static void drawInterpolatedLineRD(SKMATRIX *mat, int c, radec_t *rd1, ra
 
   SKPOINT pt1;
   SKPOINT pt2;
+  bool    cliped = false;
 
   trfRaDecToPointNoCorrect(&rd, &pt1, mat);
 
@@ -99,9 +146,17 @@ inline static void drawInterpolatedLineRD(SKMATRIX *mat, int c, radec_t *rd1, ra
     if (trfProjectLine(&pt1, &pt2))
     {
       pPainter->drawLine(pt1.sx, pt1.sy, pt2.sx, pt2.sy);
+
+      if (getClipPoint(cx, cy, pt1.sx, pt1.sy, pt2.sx, pt2.sy))
+      {
+        pPainter->drawCrossX(cx, cy, 10);
+        cliped = true;
+      }
     }
     pt1 = pt2;
   }
+
+  return cliped;
 }
 
 
@@ -112,12 +167,16 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
   QColor col = g_skSet.map.grid[type].color;
 
   setSetFont(FONT_GRID, pPainter);
+  trfGetScreenSize(scrWidth, scrHeight);
 
   SKPOINT pt[4];
   radec_t rd[4];
   radec_t rdc[4];
 
   double spc; // grid spacing
+
+  pPainter->setPen(col);
+  pPainter->drawRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
 
   if (mapView->fov > D2R(45)) spc = D2R(10);
     else
@@ -207,7 +266,23 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
 
           lnA = spt[0]; lnB = spt[1];
           if (!eqOnly || (eqOnly && (iy == 0 && sy == 0)))
-            drawInterpolatedLineRD(mat, 4, &srd[0], &srd[1], pPainter);
+          {
+            int cx, cy;
+
+            pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
+            if (drawInterpolatedLineRD(mat, 4, &srd[0], &srd[1], pPainter, cx, cy))
+            {
+              pPainter->setClipping(false);
+              if (g_skSet.map.showGridLabels && g_showLabels)
+              {
+                drawEdgeAlignTextX(pPainter, cx, cy, QString("%1").arg(getStrDeg(y + sy, true)));
+              }
+            }
+            else
+            {
+              pPainter->setClipping(false);
+            }
+          }
 
           lnA = spt[0]; lnB = spt[2];
           if (trfProjectLine(&lnA, &lnB))
@@ -216,30 +291,38 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
             {
               if (!eqOnly)
               {
-                const int m = 3;
-
                 pPainter->setPen(QPen(col, 1));
-                pPainter->drawLine(lnA.sx, lnA.sy, lnB.sx, lnB.sy);
 
-                if (g_skSet.map.showGridLabels && g_showLabels)
+                pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
+                pPainter->drawLine(lnA.sx, lnA.sy, lnB.sx, lnB.sy);
+                pPainter->setClipping(false);
+
+                int cx, cy;
+
+                if (getClipPoint(cx, cy, lnA.sx, lnA.sy, lnB.sx, lnB.sy))
                 {
-                  setSetFontColor(FONT_GRID, pPainter);
-                  if (type == SMCT_RA_DEC)
+                  QString text;
+
+                  if (g_skSet.map.showGridLabels && g_showLabels)
                   {
-                    pPainter->drawTextLL(lnA.sx - m, lnA.sy + m, QString("%1").arg(getStrRA(srd[0].Ra, true)));
+                    if (type == SMCT_RA_DEC)
+                    {
+                      text = QString("%1").arg(getStrRA(srd[0].Ra, true));
+                    }
+                    else
+                    if (type == SMCT_ECL)
+                    {
+                      text = QString("%1").arg(getStrDeg(x + sx, true));
+                    }
+                    else
+                    {
+                      double value = R360 - (x + sx);
+                      rangeDbl(&value, R360);
+
+                      text = QString("%1").arg(getStrDeg(value, true));
+                    }
+                    drawEdgeAlignTextY(pPainter, cx, cy, text);
                   }
-                  else
-                  if (type == SMCT_ECL)
-                  {
-                    pPainter->drawTextLL(lnA.sx - m, lnA.sy + m, QString("%1").arg(getStrDeg(x + sx, true)));
-                  }
-                  else
-                  {
-                    double value = R360 - (x + sx);
-                    rangeDbl(&value, R360);
-                    pPainter->drawTextLL(lnA.sx - m, lnA.sy + m, QString("%1").arg(getStrDeg(value, true)));
-                  }
-                  pPainter->drawTextUR(lnA.sx + m, lnA.sy - m, QString("%1").arg(getStrDeg(y + sy, true)));
                 }
               }
             }

@@ -1,4 +1,6 @@
 #include "cskpainter.h"
+#include "const.h"
+
 #include <QDebug>
 
 ///////////////////////////////////////////////////////////////
@@ -123,6 +125,80 @@ void CSkPainter::drawRotatedText(float degrees, int x, int y, const QString &tex
   restore();
 }
 
+QRect CSkPainter::renderText(int x, int y, double offset, const QString &text, int align)
+{
+  QFontMetrics fm(font());
+  QRect trc = fm.boundingRect(text);
+
+  trc.moveLeft(x);
+  trc.moveBottom(y);
+
+  switch (align)
+  {
+    case RT_CENTER:
+    {
+      trc.moveCenter(QPoint(x, y));
+      break;
+    }
+    case RT_TOP:
+    {
+      trc.moveLeft(x - trc.width() / 2);
+      trc.moveBottom(y - offset);
+      break;
+    }
+    case RT_TOP_RIGHT:
+    {
+      int offset2 = 0.5 * sqrt(POW2(offset) + POW2(offset));
+      trc.moveLeft(x + offset2);
+      trc.moveBottom(y - offset2);
+      break;
+    }
+    case RT_TOP_LEFT:
+    {
+      int offset2 = 0.5 * sqrt(POW2(offset) + POW2(offset));
+      trc.moveRight(x - offset2);
+      trc.moveBottom(y - offset2);
+      break;
+    }
+    case RT_BOTTOM_RIGHT:
+    {
+      int offset2 = 0.5 * sqrt(POW2(offset) + POW2(offset));
+      trc.moveLeft(x + offset2);
+      trc.moveTop(y + offset2);
+      break;
+    }
+    case RT_BOTTOM_LEFT:
+    {
+      int offset2 = 0.5 * sqrt(POW2(offset) + POW2(offset));
+      trc.moveRight(x - offset2);
+      trc.moveTop(y + offset2);
+      break;
+    }
+    case RT_BOTTOM:
+    {
+      trc.moveLeft(x - trc.width() / 2);
+      trc.moveTop(y + offset);
+      break;
+    }
+    case RT_RIGHT:
+    {
+      trc.moveLeft(x + offset);
+      trc.moveTop(y - trc.height() / 2);
+      break;
+    }
+    case RT_LEFT:
+    {
+      trc.moveRight(x - offset);
+      trc.moveTop(y - trc.height() / 2);
+      break;
+    }
+  }
+  trc.adjust(-1, -1 ,1 ,1);
+  drawText(trc, Qt::AlignCenter, text);
+  //m_painter->drawRect(trc);
+
+  return trc;
+}
 
 
 

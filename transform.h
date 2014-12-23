@@ -21,6 +21,7 @@ bool trfProjectPoint(SKPOINT *p);
 void trfProjectPointNoCheck(SKPOINT *p);
 void trfProjectPointNoCheckDbl(SKPOINT *p, double &x, double &y);
 
+void trfGetScreenSize(int &width, int &height);
 bool trfPointOnScr(int x, int y, double rad = 0);
 bool trfCheckRDPolygonVis(radec_t *rd, int count);
 
