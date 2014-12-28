@@ -16,7 +16,6 @@ CPolarisHourAngle::CPolarisHourAngle(QWidget *parent, const mapView_t *view) :
   setFixedSize(size());
   m_reticle = new QPixmap(":/res/reticle.png");
   m_view = *view;
-  m_view.jd = jdGetCurrentJD();
 
   updateTime();
 }
@@ -59,6 +58,7 @@ void CPolarisHourAngle::paintEvent(QPaintEvent *)
 
   p.drawLine(QPoint(255, 255), QPoint(center.x() + s * r1, center.y() + c * r1));
   p.drawEllipse(QPoint(center.x() + s * r2, center.y() + c * r2), 5, 5);
+  p.drawEllipse(QPoint(center.x(), center.y()), 5, 5);
 }
 
 void CPolarisHourAngle::updateTime()

@@ -532,7 +532,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   {
     if (maxSize >= minSize)
     { // render textured planet
-      renderPlanet(pt, o, sun, mapView, pPainter, pImg);            
+      renderPlanet(pt, o, sun, mapView, pPainter, pImg);
       return(maxSize);
     }
   }
@@ -768,7 +768,7 @@ int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t 
       p->setPen(QColor(0, 0, 0));
       p->setBrush(QColor(0, 0, 0));
       p->setOpacity(g_skSet.map.planet.phaseAlpha / 255.f);
-      p->drawEllipse(QPoint(sp.sx, sp.sy), r, r);      
+      p->drawEllipse(QPoint(sp.sx, sp.sy), r, r);
       p->setOpacity(1);
     }
   }

@@ -886,7 +886,7 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdssdlg.cpp" line="646"/>
+        <location filename="cdssdlg.cpp" line="647"/>
         <source>Save DSS File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1249,6 +1249,34 @@ Do you wish show this dialog window next time?</source>
     <message>
         <location filename="cdownloadmpc.ui" line="91"/>
         <source>Lines readed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CDrawing</name>
+    <message>
+        <location filename="cdrawing.cpp" line="156"/>
+        <location filename="cdrawing.cpp" line="168"/>
+        <location filename="cdrawing.cpp" line="184"/>
+        <location filename="cdrawing.cpp" line="200"/>
+        <source>Move object by mouse.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdrawing.cpp" line="156"/>
+        <location filename="cdrawing.cpp" line="168"/>
+        <location filename="cdrawing.cpp" line="184"/>
+        <location filename="cdrawing.cpp" line="200"/>
+        <source>ENTER : Done
+ESC : Cancel
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdrawing.cpp" line="184"/>
+        <source>Rotate object by an edge.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8012,6 +8040,18 @@ p, li { white-space: pre-wrap; }
         <source>Can not compute!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4686"/>
+        <source>Qt Simple SMTP client</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4686"/>
+        <source>Message sent!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -8137,25 +8177,6 @@ p, li { white-space: pre-wrap; }
         <location filename="cdailyev.cpp" line="58"/>
         <location filename="crestoretm.cpp" line="38"/>
         <source>Desc.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cdrawing.cpp" line="124"/>
-        <source>Move object by mouse.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cdrawing.cpp" line="125"/>
-        <source>Rotate object by an edge.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cdrawing.cpp" line="126"/>
-        <source>ENTER : Done
-ESC : Cancel
-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -611,7 +611,7 @@ double CAstro::getInvAtmRef(double alt)
 {
   double ref = 0;
 
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < 6; i++)
   {
     ref = getAtmRef(alt - ref);
   }
@@ -1093,9 +1093,10 @@ void CAstro::solveSun(orbit_t *o)
   o->light = SECTODAY(o->r * AU1 / LSPEED);
 
   o->flattening = 0;
-  o->mag = -26.8;
+  o->mag = -26.74;
   o->dx = 696342 * 2;
   o->dy = o->dx * (1 - o->flattening);
+  o->phase = 1;
 
   o->sx = calcAparentSize(o->R, o->dx);
   o->sy = o->sx;

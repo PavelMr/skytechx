@@ -276,16 +276,15 @@ MainWindow::MainWindow(QWidget *parent) :
   setToolbarIconSize();
 
   /*
-  QGraphicsDropShadowEffect *tbEffect[8];
+  QGraphicsBlurEffect *tbEffect[8];
 
   for (int i = 0; i < 8; i++)
   {
-    tbEffect[i] = new QGraphicsDropShadowEffect();
-    tbEffect[i]->setOffset(1);
-    tbEffect[i]->setBlurRadius(12);
+    tbEffect[i] = new QGraphicsBlurEffect();
+    //tbEffect[i]->set setOffset(1);
+    tbEffect[i]->setBlurRadius(2);
   }
-  */
-/*
+
   ui->tb_alt_azm->setGraphicsEffect(tbEffect[0]);
   ui->tb_grid->setGraphicsEffect(tbEffect[1]);
   ui->tb_mag->setGraphicsEffect(tbEffect[2]);
@@ -295,6 +294,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_tele->setGraphicsEffect(tbEffect[6]);
   ui->tb_drawing->setGraphicsEffect(tbEffect[7]);
   */
+
 
   /*
   ui->tb_alt_azm->setStyleSheet("font-size: 10pt;");

@@ -40,13 +40,13 @@ void drawingSave(void)
 
   if (f.open(SkFile::WriteOnly))
   {
-    int count = m_tList.count();    
+    int count = m_tList.count();
 
     s << count;
 
     for (int i = 0; i < count; i++)
     {
-      drawing_t t = m_tList.at(i);      
+      drawing_t t = m_tList.at(i);
 
       s << t.type;
       s << t.show;
@@ -109,7 +109,7 @@ void drawingLoad(void)
       s >> t.text_t.text;
       s >> t.text_t.align;
       s >> t.text_t.bRect;
-      s >> t.text_t.font;      
+      s >> t.text_t.font;
 
       m_tList.append(t);
     }
@@ -120,10 +120,6 @@ CDrawing::CDrawing(QObject *parent) :
   QObject(parent)
 {
   m_drawing.type = DT_NONE;
-
-  txMove = QObject::tr("Move object by mouse.\n");
-  txRotate = QObject::tr("Rotate object by an edge.\n");
-  txDone = QObject::tr("ENTER : Done\nESC : Cancel\n");
 }
 
 ///////////////////////////////////////
@@ -157,7 +153,7 @@ void CDrawing::insertTelescope(radec_t *rd, float rad, QString text)
   m_drawing.telescope_t.name = text;
   m_drawing.telescope_t.rad = rad;
 
-  setHelpText(txMove + txDone);
+  setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\n"));
 
   emit sigChange(true, m_tList.count() == 0);
 }
@@ -169,7 +165,7 @@ void CDrawing::insertTelrad(radec_t *rd)
   m_drawing.type = DT_TELRAD;
   m_drawing.rd = *rd;
 
-  setHelpText(txMove + txDone);
+  setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\n"));
 
   emit sigChange(true, m_tList.count() == 0);
 }
@@ -185,7 +181,7 @@ void CDrawing::insertFrmField(radec_t *rd, double x, double y, QString name)
   m_drawing.frmField_t.y = y;
   m_drawing.angle = 0;
 
-  setHelpText(txMove + txRotate + txDone);
+  setHelpText(tr("Move object by mouse.\n") + tr("Rotate object by an edge.\n") + tr("ENTER : Done\nESC : Cancel\n"));
 
   emit sigChange(true, m_tList.count() == 0);
 }
@@ -201,7 +197,7 @@ void CDrawing::insertText(radec_t *rd, QString name, QFont *font, int align, boo
   m_drawing.text_t.align = align;
   m_drawing.text_t.bRect = bRect;
 
-  setHelpText(txMove + txDone);
+  setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\n"));
 
   emit sigChange(true, m_tList.count() == 0);
 }
@@ -686,7 +682,7 @@ int CDrawing::drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bE
       p->drawLine(newPts[3].sx, newPts[3].sy, newPts[0].sx, newPts[0].sy);
       bndBox.append(QPoint(newPts[3].sx, newPts[3].sy));
       bndBox.append(QPoint(newPts[0].sx, newPts[0].sy));
-    }      
+    }
 
     QRect rc;
 
