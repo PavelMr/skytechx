@@ -10,6 +10,7 @@
 
 #define EL_COLUMN_COUNT     23
 
+static int columnOrder[EL_COLUMN_COUNT];
 static QString cELColumn[EL_COLUMN_COUNT];
 static bool firstTime = true;
 static bool isUTC = false;
@@ -54,7 +55,10 @@ CEphList::CEphList(QWidget *parent, mapView_t *view) :
   if (firstTime)
   {
     for (int i = 0; i < EL_COLUMN_COUNT; i++)
+    {
       bChecked[i] = Qt::Checked;
+      columnOrder[i] = i;
+    }
   }
 
   m_view = *view;
@@ -63,17 +67,16 @@ CEphList::CEphList(QWidget *parent, mapView_t *view) :
   ui->comboBox->addItem(tr("Hour(s)"));
   ui->comboBox->addItem(tr("Day(s)"));
 
-  // TODO: pamatovat si priste poradi
   for (int i = 0; i < EL_COLUMN_COUNT; i++)
   {
     QListWidgetItem *item = new QListWidgetItem;
 
-    item->setText(cELColumn[i]);
+    item->setText(cELColumn[columnOrder[i]]);
     item->setFlags(Qt::ItemIsSelectable |
                    Qt::ItemIsUserCheckable |
                    Qt::ItemIsEnabled);
-    item->setCheckState(bChecked[i]);
-    item->setData(Qt::UserRole + 1, i);
+    item->setCheckState(bChecked[columnOrder[i]]);
+    item->setData(Qt::UserRole + 1, columnOrder[i]);
 
     ui->listWidget_2->addItem(item);
   }
@@ -149,6 +152,7 @@ CEphList::~CEphList()
   {
     QListWidgetItem *item = ui->listWidget_2->item(i);
     bChecked[i] = item->checkState();
+    columnOrder[i] = item->data(Qt::UserRole + 1).toInt();
   }
 
   delete ui;
