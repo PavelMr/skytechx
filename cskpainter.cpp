@@ -195,7 +195,7 @@ QRect CSkPainter::renderText(int x, int y, double offset, const QString &text, i
   }
   trc.adjust(-1, -1 ,1 ,1);
   drawText(trc, Qt::AlignCenter, text);
-  //m_painter->drawRect(trc);
+  //drawRect(trc);
 
   return trc;
 }

@@ -21,19 +21,34 @@ void CDemonstration::setupPoints()
 {
  curvePoint_t p;
 
+ p.delay = 0;
  p.x = D2R(90);
  p.y = D2R(-10);
  p.fov = D2R(90);
  m_points.append(p);
 
+ p.delay = 1000;
  p.x = D2R(5);
  p.y = D2R(5);
  p.fov = D2R(10);
  m_points.append(p);
 
+ p.delay = 0;
  p.x = D2R(-5);
  p.y = D2R(-10);
  p.fov = D2R(90);
+ m_points.append(p);
+
+ p.delay = 0;
+ p.x = D2R(0);
+ p.y = D2R(90);
+ p.fov = D2R(50);
+ m_points.append(p);
+
+ p.delay = 0;
+ p.x = D2R(0);
+ p.y = D2R(-90);
+ p.fov = D2R(10);
  m_points.append(p);
 
  qDebug() << m_curve->valueForProgress(0.1);
@@ -84,6 +99,8 @@ void CDemonstration::slotTimer()
   emit sigAnimChanged(p);
 
   m_progress += 0.01;
+
+
 }
 
 

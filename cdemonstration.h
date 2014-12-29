@@ -8,6 +8,7 @@
 
 typedef struct
 {
+  int    delay;
   double x, y;
   double fov;
   double jd;
