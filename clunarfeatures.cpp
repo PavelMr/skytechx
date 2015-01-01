@@ -308,12 +308,22 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
 
       double rad = D2R(o.sx / 3600.0 / 2.);
 
-      getRaDecOffset(o.lRD.Ra, o.lRD.Dec, out.x * rad, out.y * rad, ra, dec);
+      //getRaDecOffset(o.lRD.Ra, o.lRD.Dec, out.x * rad, out.y * rad, ra, dec);
 
-      //ra =  o.lRD.Ra -  out.x * rad;
-      //dec = o.lRD.Dec - out.y * rad;
+      ra =  o.lRD.Ra -  out.x * rad;
+      dec = o.lRD.Dec - out.y * rad;
 
-      fov = D2R(0.6);
+      fov = D2R(0.006 * lf->rad);
+      if (fov < D2R(0.2))
+      {
+        fov = D2R(0.2);
+      }
+      else
+      if (fov > D2R(1))
+      {
+        fov = D2R(1);
+      }
+
 
       return(true);
     }

@@ -73,5 +73,6 @@
         <file>res/saturn_sym.png</file>
         <file>res/neptune_sym.png</file>
         <file>res/uranus_sym.png</file>
+        <file>res/skytech_about.png</file>
     </qresource>
 </RCC>

@@ -31,7 +31,7 @@ class CSkPainter : public QPainter
     void drawCornerBox(int x, int y, int halfSize, int cornerSize);
     void drawCross(QPoint p, int size);
     void drawRotatedText(float degrees, int x, int y, const QString &text);
-    QRect renderText(int x, int y, double offset, const QString &text, int align);
+    QRect renderText(int x, int y, double offset, const QString &text, int align, bool render = true);
 };
 
 #endif // CSKPAINTER_H

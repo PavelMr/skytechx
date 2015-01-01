@@ -125,7 +125,7 @@ void CSkPainter::drawRotatedText(float degrees, int x, int y, const QString &tex
   restore();
 }
 
-QRect CSkPainter::renderText(int x, int y, double offset, const QString &text, int align)
+QRect CSkPainter::renderText(int x, int y, double offset, const QString &text, int align, bool render)
 {
   QFontMetrics fm(font());
   QRect trc = fm.boundingRect(text);
@@ -194,7 +194,11 @@ QRect CSkPainter::renderText(int x, int y, double offset, const QString &text, i
     }
   }
   trc.adjust(-1, -1 ,1 ,1);
-  drawText(trc, Qt::AlignCenter, text);
+
+  if (render)
+  {
+    drawText(trc, Qt::AlignCenter, text);
+  }
   //drawRect(trc);
 
   return trc;

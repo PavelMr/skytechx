@@ -82,10 +82,10 @@ SKVECTOR *SKVecSub(SKVECTOR *out, SKVECTOR *a1, SKVECTOR *a2)
 ///////////////////////////////////////////
 double SKVecDot(SKVECTOR *a1, SKVECTOR *a2)
 ///////////////////////////////////////////
-{  
+{
   double d = a1->x * a2->x +
              a1->y * a2->y +
-             a1->z * a2->z; 
+             a1->z * a2->z;
   return(d);
 }
 
@@ -100,7 +100,6 @@ SKVECTOR *SKVecCross(SKVECTOR *out, SKVECTOR *a1, SKVECTOR *a2)
 
   return(out);
 }
-
 
 
 /////////////////////////////////////////////////////////////////////
