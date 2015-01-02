@@ -698,7 +698,7 @@ void CAstro::calcEarthShadow(orbit_t *orbit, orbit_t *moon)
 {
   double ERAD = 6378138.12;
   double erad = ERAD * 1.02; /* earth equitorial radius, m + atm */
-  double SRAD = 696010000;
+  double SRAD = 696342000;
 
   double mr;
   orbit_t sun;
@@ -1049,9 +1049,9 @@ void CAstro::solveMoon(orbit_t *o)
   double FV = (MPI - fabs(o->elongation)) * RAD;
   o->mag = -21.62 + 5*log10(m_sunOrbit.r * R) + 0.026 * (FV) + 4.0E-9  * pow(FV, 4);
 
-  o->sx = 1873.7 * 60 / o->R;
+  o->sx = 1737.1 * 60 / o->R;
   o->sy = o->sx;
-  o->dx = o->dy = 3746;
+  o->dx = o->dy = 1737.1 * 2;
 
   o->PA = getNPA(DEG2RAD(266.8577), 0, DEG2RAD(65.6411), 0, o->gRD.Ra, o->gRD.Dec);
 
@@ -1194,7 +1194,8 @@ void CAstro::solveMercury(orbit_t *orbit)
 {
   orbit->mag = -0.36 + 5 * log10(orbit->r * orbit->R) + 0.027 * (orbit->FV * RAD) + 2.2E-13 * pow((orbit->FV*RAD), 6);
   orbit->flattening = 0;
-  orbit->dx = 3397.2 * 2;
+  orbit->dx = 2439.7 * 2;
+
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
   orbit->sy = calcAparentSize(orbit->R, orbit->dy);
@@ -1226,9 +1227,9 @@ void CAstro::solveMars(orbit_t *orbit)
   // TODO: dat konstanty do souboru
   orbit->mag = -1.51 + 5*log10(orbit->r*orbit->R) + 0.016 * (orbit->FV*RAD);
 
-  orbit->flattening = 0.006476;
+  orbit->flattening = 0.00589;
 
-  orbit->dx = 3397.2 * 2;
+  orbit->dx = 3396.2 * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
 
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
@@ -1250,6 +1251,7 @@ void CAstro::solveJupiter(orbit_t *orbit)
 {
   orbit->mag = -9.4 + 5*log10(orbit->r*orbit->R) + 0.014 * (orbit->FV*RAD);
   orbit->flattening = 0.064874;
+
   orbit->dx = 71492 * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);

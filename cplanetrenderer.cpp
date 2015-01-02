@@ -636,7 +636,7 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   int side = 1;
-  float scale = 1.005f;
+  float scale = 1.001f;
   int   maxSize = qMax(rx, ry);
   p->setPen(Qt::NoPen);
   p->setBrush(QColor(0, 0, 0));
@@ -687,7 +687,7 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
      else
    if (maxSize < 100) add = 0.1f;
      else
-   add = 0.05f;
+   add = 0.025f;
 
    float c, s;
    float tx, ty;
