@@ -25,6 +25,7 @@ TEMPLATE = app
 
 INCLUDEPATH = core \
               de404 \
+              libsgp4 \
               $$PWD \
 
 
@@ -180,7 +181,22 @@ SOURCES += main.cpp\
     cnamemagview.cpp \
     ctipofday.cpp \
     caddcustomobject.cpp \
-    cucac4.cpp
+    cucac4.cpp \
+    libsgp4/CoordGeodetic.cpp \
+    libsgp4/CoordTopocentric.cpp \
+    libsgp4/DateTime.cpp \
+    libsgp4/Eci.cpp \
+    libsgp4/Globals.cpp \
+    libsgp4/Observer.cpp \
+    libsgp4/OrbitalElements.cpp \
+    libsgp4/SGP4.cpp \
+    libsgp4/SolarPosition.cpp \
+    libsgp4/TimeSpan.cpp \
+    libsgp4/Tle.cpp \
+    libsgp4/Util.cpp \
+    libsgp4/Vector.cpp \
+    csgp4.cpp \
+    csatellitedlg.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -328,7 +344,25 @@ HEADERS  += mainwindow.h \
     cnamemagview.h \
     ctipofday.h \
     caddcustomobject.h \
-    cucac4.h
+    cucac4.h \
+    libsgp4/CoordGeodetic.h \
+    libsgp4/CoordTopocentric.h \
+    libsgp4/DateTime.h \
+    libsgp4/DecayedException.h \
+    libsgp4/Eci.h \
+    libsgp4/Globals.h \
+    libsgp4/Observer.h \
+    libsgp4/OrbitalElements.h \
+    libsgp4/SatelliteException.h \
+    libsgp4/SGP4.h \
+    libsgp4/SolarPosition.h \
+    libsgp4/TimeSpan.h \
+    libsgp4/Tle.h \
+    libsgp4/TleException.h \
+    libsgp4/Util.h \
+    libsgp4/Vector.h \
+    csgp4.h \
+    csatellitedlg.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -395,7 +429,8 @@ FORMS    += mainwindow.ui \
     cweather.ui \
     csaveimage.ui \
     ctipofday.ui \
-    caddcustomobject.ui
+    caddcustomobject.ui \
+    csatellitedlg.ui
 
 
 RESOURCES += \
@@ -405,6 +440,10 @@ RC_FILE = skytech_rc.rc
 
 TRANSLATIONS = english.ts \
                cesky.ts
+
+OTHER_FILES += \
+    libsgp4/Makefile.am \
+    libsgp4/Makefile.in
 
 
 

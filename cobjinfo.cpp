@@ -60,17 +60,20 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
   ui->clb_sync->setEnabled(g_pTelePlugin && (g_pTelePlugin->getAttributes() & TPI_CAN_SYNC));
   ui->clb_tracking->setEnabled(obj->type == MO_PLANET ||
                                obj->type == MO_ASTER ||
-                               obj->type == MO_COMET);
+                               obj->type == MO_COMET ||
+                               obj->type == MO_SATELLITE);
 
   ui->cb_simbad->setDisabled(obj->type == MO_PLANET ||
                              obj->type == MO_ASTER ||
                              obj->type == MO_COMET ||
-                             obj->type == MO_PLN_SAT);
+                             obj->type == MO_PLN_SAT ||
+                             obj->type == MO_SATELLITE);
 
   ui->pushButton_2->setDisabled(obj->type == MO_PLANET ||
                                 obj->type == MO_ASTER ||
                                 obj->type == MO_COMET ||
-                                obj->type == MO_PLN_SAT);
+                                obj->type == MO_PLN_SAT ||
+                                obj->type == MO_SATELLITE);
 
   /*
   ui->clb_rise->setEnabled(false);

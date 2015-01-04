@@ -11,6 +11,7 @@
 #include "Usno2A.h"
 #include "cucac4.h"
 #include "cplanetrenderer.h"
+#include "csgp4.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
@@ -36,7 +37,7 @@ CLoadingDlg::CLoadingDlg(QWidget *parent) :
   setWindowFlags(Qt::Popup);
   setFixedSize(size());
 
-  ui->progressBar->setRange(0, 14);
+  ui->progressBar->setRange(0, 15);
 
   QSettings set;
 
@@ -185,6 +186,10 @@ void CLoading::run()
 
   emit sigProgress(14);
   loadDSOPlugins();
+
+  emit sigProgress(15);
+  sgp4.loadTLEData("data/tle/visual.tle");
+  //sgp4.loadTLEData("data/tle/geo.tle");
 
   usno.setUsnoDir(set.value("usno2_path", "").toString());
   cPPMXL.setDir(set.value("ppmxl_path", "").toString());

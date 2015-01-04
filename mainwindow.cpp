@@ -65,6 +65,7 @@
 #include "ctipofday.h"
 #include "cgetprofile.h"
 #include "caddcustomobject.h"
+#include "csgp4.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -2106,6 +2107,28 @@ void MainWindow::centerSearchBox(bool bCenter)
 
     if (bCenter)
       ui->widget->centerMap(ra, dec, info->zoomFov);
+  }
+  else
+  if (info->type == MO_SATELLITE)
+  {
+    radec_t rd;
+    double ra2000, dec2000;
+    satellite_t s;
+
+    sgp4.solve(info->par1, &ui->widget->m_mapView, &s);
+    cAstro.setParam(&ui->widget->m_mapView);
+    cAstro.convAA2RDRef(s.azimuth, s.elevation, &rd.Ra, &rd.Dec);
+
+    precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
+
+    ra2000 = rd.Ra;
+    dec2000 = rd.Dec;
+
+    info->radec.Ra = ra2000;
+    info->radec.Dec = dec2000;
+
+    if (bCenter)
+      ui->widget->centerMap(rd.Ra, rd.Dec, info->zoomFov);
   }
   else
   {

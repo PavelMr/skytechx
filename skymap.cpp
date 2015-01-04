@@ -23,6 +23,7 @@
 #include "cobjtracking.h"
 #include "Usno2A.h"
 #include "cucac4.h"
+#include "csgp4.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
 // ALL OBJECT ON MAP DRAW AT EPOCH J2000.0
@@ -886,6 +887,57 @@ static void renderTelescope(mapView_t *mapView, CSkPainter *pPainter)
   }
 }
 
+//////////////////////////////////////////////////////////////////////
+static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
+//////////////////////////////////////////////////////////////////////
+{
+  sgp4.setObserver(mapView);
+
+  for (int i = 0; i < sgp4.count(); i++)
+  {
+    satellite_t out;
+    radec_t rd;
+
+    if (sgp4.solve(i, mapView, &out))
+    {
+      cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
+
+      SKPOINT pt;
+
+      //trfRaDecToPointNoCorrect(&rd, &pt); // TODO: kontrola jestli to nema byt v J2000
+      trfRaDecToPointCorrectFromTo(&rd, &pt, mapView->jd, JD2000);
+      if (trfProjectPoint(&pt))
+      {
+        pPainter->setPen(QColor(255, 255, 0));
+        pPainter->setBrush(QColor(255, 255, 0));
+
+        QRect rc1 = QRect(-5, -5, 10, 10);
+        QRect rc2 = QRect(-5, -8, 10, -20);
+        QRect rc3 = QRect(-5, 8, 10, 20);
+
+        pPainter->save();
+        pPainter->translate(pt.sx, pt.sy);
+        pPainter->scale(0.5, 0.5);
+        pPainter->rotate(-45);
+
+        pPainter->drawRect(rc1);
+        pPainter->drawRect(rc2);
+        pPainter->drawRect(rc3);
+        pPainter->drawEllipse(QPoint(8, 0), 5, 5);
+        pPainter->drawLine(10, 0, 25, 0);
+
+        pPainter->restore();
+
+        //pPainter->setBrush(QColor(255, 0, 0));
+        //pPainter->drawEllipse(QPoint(pt.sx, pt.sy), 5, 5);
+
+        pPainter->renderText(pt.sx, pt.sy, 15, out.name, RT_BOTTOM_RIGHT);
+        addMapObj(pt.sx, pt.sy, MO_SATELLITE, MO_CIRCLE, 10, i, 0);
+      }
+    }
+  }
+}
+
 ///////////////////////////////////////////////////////////////////////////
 bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////
@@ -967,6 +1019,11 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   if (g_showSS)
   {
     smRenderPlanets(mapView, pPainter, pImg);
+  }
+
+  if (1)
+  {
+    renderSatellites(mapView, pPainter);
   }
 
   if (!g_skSet.map.hor.cb_hor_show_alt_azm || (g_skSet.map.hor.cb_hor_show_alt_azm && mapView->coordType == SMCT_ALT_AZM))

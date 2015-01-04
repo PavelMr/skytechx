@@ -62,7 +62,6 @@ static bool getCommandParamValue(const QString command, const QString& param, co
   return true;
 }
 
-
 ////////////////////////////////
 int main(int argc, char *argv[])
 ////////////////////////////////
@@ -80,6 +79,33 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   qDebug() << "start";
+
+#if 0
+  Observer obs( 50.087, 14.42024, 0.5);
+     Tle tle = Tle("UK-DMC 2                ",
+         "1 25544U 98067A   15002.15562623  .00006329  00000-0  10729-3 0  6661",
+         "2 25544  51.6455 192.6725 0006692 199.8843 268.0429 15.52906336922201");
+
+     SGP4 sgp4(tle);
+
+     DateTime now = DateTime(2015, 1, 2, 16, 23, 7);
+             /*
+              * calculate satellite position
+              */
+             Eci eci = sgp4.FindPosition(now);
+             /*
+              * get look angle for observer to satellite
+              */
+             CoordTopocentric topo = obs.GetLookAngle(eci);
+             /*
+              * convert satellite position to geodetic coordinates
+              */
+             CoordGeodetic geo = eci.ToGeodetic();
+
+             qDebug() << now.ToJulian() << " " << R2D(geo.latitude) << R2D(geo.longitude) << geo.altitude;// << " " << geo;
+             qDebug() << now.ToJulian() << " " << R2D(topo.azimuth) << R2D(topo.elevation) << topo.range;// << " " << geo;
+#endif
+
 
   QApplication a(argc, argv);
   CLoadingDlg *dlg = new CLoadingDlg;

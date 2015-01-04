@@ -2,6 +2,7 @@
 #include "casterdlg.h"
 #include "ccomedit.h"
 #include "clunarfeatures.h"
+#include "csgp4.h"
 
 //////////////////
 CSearch::CSearch()
@@ -61,6 +62,33 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
     }
   }
 
+  QString satName = str;
+
+  satName = satName.remove("(");
+  satName = satName.remove(")");
+
+  for (int i = 0; i < sgp4.count(); i++)
+  {
+    satellite_t out;
+    radec_t rd;
+
+    if (sgp4.getName(i).compare(satName, Qt::CaseInsensitive) == 0)
+    {
+      if (sgp4.solve(i, mapView, &out))
+      {
+        cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
+
+        precess(&rd.Ra, &rd.Dec, mapView->jd, JD2000);
+
+        ra = rd.Ra;
+        dec = rd.Dec;
+        fov = getOptObjFov(0, 0, D2R(2.5));
+
+        return true;
+      }
+    }
+  }
+
   QApplication::processEvents();
 
   // asteroids
@@ -80,6 +108,8 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       return(true);
     }
   }
+
+  QApplication::processEvents();
 
   // comets
   for (int i = 0; i < tComets.count(); i++)

@@ -23,6 +23,7 @@
 #define MO_DSO          10
 #define MO_CONSTELL     11
 #define MO_EARTH_SHD    12
+#define MO_SATELLITE    13
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

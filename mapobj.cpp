@@ -9,6 +9,7 @@
 #include "csatxyz.h"
 #include "Usno2A.h"
 #include "cucac4.h"
+#include "csgp4.h"
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
@@ -78,6 +79,20 @@ void recenterHoldObject(CMapView *p, bool bRepaint)
     cAstro.setParam(&p->m_mapView);
     comSolve(a, pcMapView->m_mapView.jd);
     p->centerMap(a->orbit.lRD.Ra, a->orbit.lRD.Dec, CM_UNDEF);
+  }
+  else
+  if (g_HoldObject.objType == MO_SATELLITE)
+  {
+    radec_t rd;
+    double ra2000, dec2000;
+    satellite_t s;
+
+    sgp4.solve(g_HoldObject.objIdx, &p->m_mapView, &s);
+    cAstro.setParam(&p->m_mapView);
+    cAstro.convAA2RDRef(s.azimuth, s.elevation, &rd.Ra, &rd.Dec);
+
+    //precess(&rd.Ra, &rd.Dec, p->m_mapView.jd, JD2000);
+    p->centerMap(rd.Ra, rd.Dec, CM_UNDEF);
   }
 
   if (bRepaint)
@@ -373,23 +388,40 @@ void mapObjContextMenu(CMapView *map)
       }
 
     case MO_COMET:
-    {
-      comet_t *a = (comet_t *)o.par2;
-
-      str = QString(a->name) + " " + getStrMag(a->orbit.mag);
-
-      if (!g_bHoldObject && !isHoldObjFirst)
       {
-        strSuf.append(cHoldObj + a->name);
-        strIdx.append(-4);
+        comet_t *a = (comet_t *)o.par2;
 
-        g_HoldObject.objName = a->name;
-        g_HoldObject.objIdx = o.par2;
-        g_HoldObject.objType = MO_COMET;
-        isHoldObjFirst =  true;
+        str = QString(a->name) + " " + getStrMag(a->orbit.mag);
+
+        if (!g_bHoldObject && !isHoldObjFirst)
+        {
+          strSuf.append(cHoldObj + a->name);
+          strIdx.append(-4);
+
+          g_HoldObject.objName = a->name;
+          g_HoldObject.objIdx = o.par2;
+          g_HoldObject.objType = MO_COMET;
+          isHoldObjFirst =  true;
+        }
+        break;
+      }
+
+      case MO_SATELLITE:
+      {
+        str = sgp4.getName(o.par1);
+
+        if (!g_bHoldObject && !isHoldObjFirst)
+        {
+          strSuf.append(cHoldObj + str);
+          strIdx.append(-4);
+
+          g_HoldObject.objName = str;
+          g_HoldObject.objIdx = o.par1;
+          g_HoldObject.objType = MO_SATELLITE;
+          isHoldObjFirst =  true;
+        }
       }
       break;
-    }
 
       case MO_DSO:
       {
@@ -418,9 +450,8 @@ void mapObjContextMenu(CMapView *map)
       case MO_UCAC4:
       {
         ucac4Star_t s;
-        ucac4Region_t *z;
 
-        z = cUcac4.getStar(s, o.par1, o.par2);
+        cUcac4.getStar(s, o.par1, o.par2);
 
         str = QString("UCAC4 %1-%2").arg(s.zone).arg(s.number, 6, 10, QChar('0')) + QString(QObject::tr(", %1 mag.")).arg(s.mag, 0, 'f', 2);
         break;
@@ -495,6 +526,7 @@ void mapObjContextMenu(CMapView *map)
         str += " " + mag;
         break;
       }
+
       default:
         str = "???";
     }
@@ -668,6 +700,13 @@ QString checkObjOnMap(const QPoint &pos)
 
         nameStr = cDSO.getName(dso);
         magStr = ((dso->mag != NO_DSO_MAG) ? (getStrMag(dso->DSO_MAG)) : QString(""));
+      }
+      break;
+
+      case MO_SATELLITE:
+      {
+        nameStr = sgp4.getName(obj.par1);
+        magStr = "";
       }
       break;
     }

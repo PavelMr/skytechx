@@ -3,6 +3,7 @@
 #include "casterdlg.h"
 #include "ccomdlg.h"
 #include "setting.h"
+#include "csgp4.h"
 
 QList <tracking_t> tTracking;
 
@@ -249,6 +250,7 @@ CObjTracking::CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view) :
   ui->dateTimeEdit_2->setDate(dt.date());
   ui->dateTimeEdit_2->setTime(dt.time());
 
+  ui->comboBox->addItem(tr("Second(s)"));
   ui->comboBox->addItem(tr("Minute(s)"));
   ui->comboBox->addItem(tr("Hour(s)"));
   ui->comboBox->addItem(tr("Day(s)"));
@@ -306,6 +308,7 @@ void CObjTracking::on_pushButton_2_clicked()
   trackPos_t pos;
   asteroid_t *ast;
   comet_t    *com;
+  satellite_t sat;
 
   if (jdFrom >= jdTo)
   {
@@ -316,12 +319,15 @@ void CObjTracking::on_pushButton_2_clicked()
   switch (tt)
   {
     case 0:
-      jdStep = step * 60.0;
+      jdStep = step;
       break;
     case 1:
-      jdStep = step * 3600.0;
+      jdStep = step * 60.0;
       break;
     case 2:
+      jdStep = step * 3600.0;
+      break;
+    case 3:
       jdStep = step * 86400.0;
       break;
   }
@@ -342,18 +348,22 @@ void CObjTracking::on_pushButton_2_clicked()
   switch (m_item->type)
   {
     case MO_PLANET:
-       track.objName = cAstro.getName(m_item->par1);
-       break;
+      track.objName = cAstro.getName(m_item->par1);
+      break;
 
     case MO_COMET:
-       com = (comet_t *)m_item->par2;
-       track.objName = com->name;
-       break;
+      com = (comet_t *)m_item->par2;
+      track.objName = com->name;
+      break;
 
     case MO_ASTER:
-       ast = (asteroid_t *)m_item->par2;
-       track.objName = ast->name;
-       break;
+      ast = (asteroid_t *)m_item->par2;
+      track.objName = ast->name;
+      break;
+
+    case MO_SATELLITE:
+      track.objName = sgp4.getName(m_item->par1);
+      break;
   }
 
   for (double j = jdFrom; j <= jdTo; j+= jdStep, c++)
@@ -384,6 +394,14 @@ void CObjTracking::on_pushButton_2_clicked()
         pos.rd.Ra = ast->orbit.lRD.Ra;
         pos.rd.Dec = ast->orbit.lRD.Dec;
         pos.mag = ast->orbit.mag;
+        pos.jd = j;
+        break;
+
+      case MO_SATELLITE:
+        sgp4.solve(m_item->par1, &m_view, &sat);
+
+        cAstro.convAA2RDRef(sat.azimuth, sat.elevation, &pos.rd.Ra, &pos.rd.Dec);
+        pos.mag = CM_UNDEF;
         pos.jd = j;
         break;
     }

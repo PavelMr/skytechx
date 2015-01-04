@@ -7,6 +7,7 @@
 #include "dsoplug.h"
 #include "Usno2A.h"
 #include "cucac4.h"
+#include "csgp4.h"
 
 static QString gscMB[19][3] = {{"IIIaJ","GG395","SERC-J/EJ"},    //0
                                {"IIaD","W12","Pal Quick-V"},     //1
@@ -107,6 +108,10 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
 
     case MO_EARTH_SHD:
       fillESInfo(view, obj, item);
+      break;
+
+    case MO_SATELLITE:
+      fillSatelliteInfo(view, obj, item);
       break;
   }
 }
@@ -483,6 +488,74 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   fillAtlas(ra, dec, item);
+}
+
+void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
+{
+  satellite_t s;
+  radec_t rd;
+  double ra2000, dec2000;
+
+  sgp4.solve(obj->par1, view, &s);
+  tleItem_t *tle = sgp4.tleItem(obj->par1);
+
+  cAstro.convAA2RDRef(s.azimuth, s.elevation, &rd.Ra, &rd.Dec);
+
+  ra2000 = rd.Ra;
+  dec2000 = rd.Dec;
+  precess(&ra2000, &dec2000, view->jd, JD2000);
+
+  item->radec.Ra = ra2000;
+  item->radec.Dec = dec2000;
+  item->zoomFov = getOptObjFov(0, 0, D2R(2.5));
+  item->id = s.name;
+  item->title = s.name;
+  item->simbad = item->id;
+
+  addLabelItem(item, txDateTime);
+  addSeparator(item);
+  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+  addSeparator(item);
+
+  addLabelItem(item, txObjType);
+  addSeparator(item);
+  addTextItem(item, txObjType, tr("Satellite"));
+  addSeparator(item);
+
+  addLabelItem(item, txDesig);
+  addSeparator(item);
+
+  addTextItem(item, s.name, "");
+  addSeparator(item);
+
+  int con = constWhatConstel(rd.Ra, rd.Dec, view->jd);
+
+  addLabelItem(item, txLocInfo);
+  addSeparator(item);
+  addTextItem(item, txRA, getStrRA(rd.Ra));
+  addTextItem(item, txDec, getStrDeg(rd.Dec));
+  addSeparator(item);
+  addTextItem(item, txConstel, constGetName(con, 1));
+
+  addSeparator(item);
+  addTextItem(item, tr("Azimuth"), getStrDeg(s.azimuth));
+  addTextItem(item, tr("Altitude"), getStrDeg(s.elevation));
+  addTextItem(item, tr("Range"), QString("%1").arg(s.range, 0, 'f', 1) + tr(" km."));
+  addSeparator(item);
+
+  addLabelItem(item, tr("Geocentric information"));
+  addSeparator(item);
+  addTextItem(item, tr("Longitude"), getStrDeg(s.longitude));
+  addTextItem(item, tr("Latitude"), getStrDeg(s.latitude));
+  addTextItem(item, tr("Altitude"), QString("%1").arg(s.altitude, 0, 'f', 1) + tr(" km."));
+
+  addLabelItem(item, tr("Other"));
+  addSeparator(item);
+  addTextItem(item, tr("Orbital period"), QString("%1").arg(tle->period, 0, 'f', 1) + tr(" min."));
+  addTextItem(item, tr("Inclination"), getStrDeg(tle->inclination));
+  addTextItem(item, tr("Perigee"), QString("%1").arg(tle->perigee, 0, 'f', 1) + tr(" km."));
+  addTextItem(item, tr("Epoch"), QString("%1 / %2").arg(getStrDate(tle->epoch, view->geo.tz)).arg(getStrTime(tle->epoch, view->geo.tz)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
