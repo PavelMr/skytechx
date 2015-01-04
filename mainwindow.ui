@@ -382,6 +382,7 @@
     <addaction name="actionPlanets_Sun_Moon"/>
     <addaction name="actionAsteroid"/>
     <addaction name="actionComet"/>
+    <addaction name="actionSatellite_2"/>
     <addaction name="separator"/>
     <addaction name="actionPosition"/>
     <addaction name="actionTelescope"/>
@@ -439,6 +440,8 @@
     </property>
     <addaction name="actionAsteroids"/>
     <addaction name="actionComets"/>
+    <addaction name="actionSatellite"/>
+    <addaction name="separator"/>
     <addaction name="actionDeep_Sky_Objects"/>
     <addaction name="actionCustom_DSO"/>
     <addaction name="separator"/>
@@ -629,7 +632,7 @@
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>370</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1427,7 +1430,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>370</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1718,7 +1721,7 @@
           <x>0</x>
           <y>0</y>
           <width>101</width>
-          <height>370</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1866,7 +1869,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>370</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3473,6 +3476,16 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Search a Moon</string>
+   </property>
+  </action>
+  <action name="actionSatellite">
+   <property name="text">
+    <string>Satellite...</string>
+   </property>
+  </action>
+  <action name="actionSatellite_2">
+   <property name="text">
+    <string>Satellite...</string>
    </property>
   </action>
  </widget>

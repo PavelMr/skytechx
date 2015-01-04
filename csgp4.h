@@ -13,12 +13,14 @@
 
 typedef struct
 {
+  bool     used;
   SGP4    *sgp4;
   QString  name;
   double   period;
   double   inclination;
   double   perigee;
   double   epoch;
+  QString  data[3];
 } tleItem_t;
 
 typedef struct
@@ -45,6 +47,7 @@ public:
   tleItem_t *tleItem(int index);
   QString &getName(int index);
   int count();
+  void removeAll();
 
 private:
   QList <tleItem_t> m_data;

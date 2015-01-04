@@ -893,46 +893,54 @@ static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
 {
   sgp4.setObserver(mapView);
 
+  setSetFont(FONT_SATELLITE, pPainter);
+
   for (int i = 0; i < sgp4.count(); i++)
   {
     satellite_t out;
     radec_t rd;
 
-    if (sgp4.solve(i, mapView, &out))
+    if (sgp4.tleItem(i)->used)
     {
-      cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
-
-      SKPOINT pt;
-
-      //trfRaDecToPointNoCorrect(&rd, &pt); // TODO: kontrola jestli to nema byt v J2000
-      trfRaDecToPointCorrectFromTo(&rd, &pt, mapView->jd, JD2000);
-      if (trfProjectPoint(&pt))
+      if (sgp4.solve(i, mapView, &out))
       {
-        pPainter->setPen(QColor(255, 255, 0));
-        pPainter->setBrush(QColor(255, 255, 0));
+        cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
 
-        QRect rc1 = QRect(-5, -5, 10, 10);
-        QRect rc2 = QRect(-5, -8, 10, -20);
-        QRect rc3 = QRect(-5, 8, 10, 20);
+        SKPOINT pt;
 
-        pPainter->save();
-        pPainter->translate(pt.sx, pt.sy);
-        pPainter->scale(0.5, 0.5);
-        pPainter->rotate(-45);
+        trfRaDecToPointCorrectFromTo(&rd, &pt, mapView->jd, JD2000);
+        if (trfProjectPoint(&pt))
+        {
+          pPainter->setPen(g_skSet.map.satellite.color);
+          pPainter->setBrush(QColor(g_skSet.map.satellite.color));
 
-        pPainter->drawRect(rc1);
-        pPainter->drawRect(rc2);
-        pPainter->drawRect(rc3);
-        pPainter->drawEllipse(QPoint(8, 0), 5, 5);
-        pPainter->drawLine(10, 0, 25, 0);
+          QRect rc1 = QRect(-5, -5, 10, 10);
+          QRect rc2 = QRect(-5, -8, 10, -20);
+          QRect rc3 = QRect(-5, 8, 10, 20);
 
-        pPainter->restore();
+          pPainter->save();
+          pPainter->translate(pt.sx, pt.sy);
+          pPainter->scale(0.5 * g_skSet.map.satellite.size, 0.5 * g_skSet.map.satellite.size);
+          pPainter->rotate(-45);
 
-        //pPainter->setBrush(QColor(255, 0, 0));
-        //pPainter->drawEllipse(QPoint(pt.sx, pt.sy), 5, 5);
+          pPainter->drawRect(rc1);
+          pPainter->drawRect(rc2);
+          pPainter->drawRect(rc3);
+          pPainter->drawEllipse(QPoint(8, 0), 5, 5);
+          pPainter->drawLine(10, 0, 25, 0);
 
-        pPainter->renderText(pt.sx, pt.sy, 15, out.name, RT_BOTTOM_RIGHT);
-        addMapObj(pt.sx, pt.sy, MO_SATELLITE, MO_CIRCLE, 10, i, 0);
+          pPainter->restore();
+
+          //pPainter->setBrush(QColor(255, 0, 0));
+          //pPainter->drawEllipse(QPoint(pt.sx, pt.sy), 5, 5);
+
+          if (g_showLabels)
+          {
+            setSetFontColor(FONT_SATELLITE, pPainter);
+            pPainter->renderText(pt.sx, pt.sy, 15 * g_skSet.map.satellite.size, out.name, RT_BOTTOM_RIGHT);
+          }
+          addMapObj(pt.sx, pt.sy, MO_SATELLITE, MO_CIRCLE, 10, i, 0);
+        }
       }
     }
   }

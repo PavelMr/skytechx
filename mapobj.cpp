@@ -84,14 +84,12 @@ void recenterHoldObject(CMapView *p, bool bRepaint)
   if (g_HoldObject.objType == MO_SATELLITE)
   {
     radec_t rd;
-    double ra2000, dec2000;
     satellite_t s;
 
     sgp4.solve(g_HoldObject.objIdx, &p->m_mapView, &s);
     cAstro.setParam(&p->m_mapView);
     cAstro.convAA2RDRef(s.azimuth, s.elevation, &rd.Ra, &rd.Dec);
 
-    //precess(&rd.Ra, &rd.Dec, p->m_mapView.jd, JD2000);
     p->centerMap(rd.Ra, rd.Dec, CM_UNDEF);
   }
 

@@ -12,10 +12,22 @@ CSGP4::CSGP4() :
 {
 }
 
+static bool compFnc(const tleItem_t &i1, const tleItem_t &i2)
+{
+  if (i1.name.compare(i2.name, Qt::CaseInsensitive) < 0)
+  {
+    return true;
+  }
+
+  return false;
+}
+
 bool CSGP4::loadTLEData(const QString &fileName)
 {
   QFile f(fileName);
   QTextStream s(&f);
+
+  removeAll();
 
   if (!f.open(QFile::ReadOnly | QFile::Text))
   {
@@ -39,10 +51,21 @@ bool CSGP4::loadTLEData(const QString &fileName)
     data[row] = str;
     if (row == 2)
     {
+      bool used = data[0].startsWith("*");
+
+      if (used)
+      {
+        data[0] = data[0].mid(1);
+      }
+
       Tle tle = Tle(data[0].toStdString(), data[1].toStdString(), data[2].toStdString());
 
       OrbitalElements elem = OrbitalElements(tle);
 
+      item.data[0] = data[0];
+      item.data[1] = data[1];
+      item.data[2] = data[2];
+      item.used = used;
       item.sgp4 = new SGP4(tle);
       item.name = data[0].simplified();
       item.perigee = elem.Perigee();
@@ -53,13 +76,15 @@ bool CSGP4::loadTLEData(const QString &fileName)
       m_data.append(item);
       row = 0;
 
-      qDebug() << item.name << m_data.count() - 1 << elem.Epoch().ToString().data();
+      //qDebug() << item.name << m_data.count() - 1 << elem.Epoch().ToString().data();
     }
     else
     {
       row++;
     }
   }
+
+  qSort(m_data.begin(), m_data.end(), compFnc);
 
   return true;
 }
@@ -129,4 +154,14 @@ QString &CSGP4::getName(int index)
 int CSGP4::count()
 {
   return m_data.count();
+}
+
+void CSGP4::removeAll()
+{
+  foreach (const tleItem_t &item, m_data)
+  {
+    delete item.sgp4;
+  }
+
+  m_data.clear();
 }

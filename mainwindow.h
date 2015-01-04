@@ -489,6 +489,10 @@ private slots:
 
   void slotSearchPlanetTriggered();
 
+  void on_actionSatellite_triggered();
+
+  void on_actionSatellite_2_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

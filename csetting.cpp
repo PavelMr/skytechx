@@ -351,6 +351,10 @@ void CSetting::setValues()
   ui->spinBox_2->setValue(set.map.planet.satRad);
   ui->doubleSpinBox_32->setValue(set.map.planet.jupGRSLon);
 
+  ui->pushButton_57->setColor(set.map.satellite.color);
+  ui->pushButton_58->setFontColor(setFonts[FONT_SATELLITE], set.fonst[FONT_SATELLITE].color);
+  ui->doubleSpinBox_38->setValue(set.map.satellite.size);
+
   ui->pushButton_34->setColor(set.map.comet.color);
   ui->pushButton_33->setFontColor(setFonts[FONT_COMET], set.fonst[FONT_COMET].color);
   ui->spinBox_3->setValue(set.map.comet.radius);
@@ -584,6 +588,8 @@ void CSetting::apply()
   g_skSet.map.es.alpha = ui->horizontalSlider_15->value();
 
   g_skSet.map.planet.jupGRSLon = ui->doubleSpinBox_32->value();
+
+  g_skSet.map.satellite.size = ui->doubleSpinBox_38->value();
 
   // milky way
   g_skSet.map.milkyWay.bShow = ui->checkBox_6->isChecked();
@@ -1508,4 +1514,20 @@ void CSetting::on_pushButton_56_clicked()
   QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
 
   ui->lineEdit_4->setText(folder);
+}
+
+void CSetting::on_pushButton_57_clicked()
+{
+  QColorDialog dlg(set.map.satellite.color, this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    set.map.satellite.color = dlg.currentColor().rgb();
+    ui->pushButton_57->setColor(dlg.currentColor());
+  }
+}
+
+void CSetting::on_pushButton_58_clicked()
+{
+  setFontColor(FONT_SATELLITE, ui->pushButton_58);
 }

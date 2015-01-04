@@ -12,6 +12,7 @@
 #include "cucac4.h"
 #include "cplanetrenderer.h"
 #include "csgp4.h"
+#include "csatellitedlg.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
@@ -188,8 +189,8 @@ void CLoading::run()
   loadDSOPlugins();
 
   emit sigProgress(15);
-  sgp4.loadTLEData("data/tle/visual.tle");
-  //sgp4.loadTLEData("data/tle/geo.tle");
+  curSatelliteCatName = set.value("satellite_file", "").toString();
+  sgp4.loadTLEData(curSatelliteCatName);
 
   usno.setUsnoDir(set.value("usno2_path", "").toString());
   cPPMXL.setDir(set.value("ppmxl_path", "").toString());

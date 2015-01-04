@@ -2839,6 +2839,98 @@
          </property>
         </widget>
        </widget>
+       <widget class="QWidget" name="tab_15">
+        <attribute name="title">
+         <string>Satellites</string>
+        </attribute>
+        <widget class="CPushColorButton" name="pushButton_57">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_77">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>111</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Symbol multiplier</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_78">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>111</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Color</string>
+         </property>
+        </widget>
+        <widget class="CFontColorButton" name="pushButton_58">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>80</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_79">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>60</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Label font &amp; color</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_38">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>130</y>
+           <width>62</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="minimum">
+          <double>0.100000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>3.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.250000000000000</double>
+         </property>
+        </widget>
+       </widget>
        <widget class="QWidget" name="tab_14">
         <attribute name="title">
          <string>Jupiter</string>

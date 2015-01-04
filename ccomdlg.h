@@ -54,7 +54,7 @@ public:
 protected:
   void changeEvent(QEvent *e);
   void updateDlg(void);
-  void reject() {};
+  void reject() {}
   void fillList(void);
 
   QString cSaveQuest;

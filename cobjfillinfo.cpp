@@ -556,6 +556,15 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addTextItem(item, tr("Inclination"), getStrDeg(tle->inclination));
   addTextItem(item, tr("Perigee"), QString("%1").arg(tle->perigee, 0, 'f', 1) + tr(" km."));
   addTextItem(item, tr("Epoch"), QString("%1 / %2").arg(getStrDate(tle->epoch, view->geo.tz)).arg(getStrTime(tle->epoch, view->geo.tz)));
+
+  double diff = view->jd - tle->epoch;
+  addTextItem(item, tr("Time difference"), QString("%1").arg(diff, 0, 'f', 1) + tr(" day(s)"));
+
+  addSeparator(item);
+
+  addLabelItem(item, tr("Source"));
+  addSeparator(item);
+  addTextItem(item, "SGP4 C++ Satellite Library", "");
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

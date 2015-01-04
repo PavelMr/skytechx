@@ -66,6 +66,7 @@
 #include "cgetprofile.h"
 #include "caddcustomobject.h"
 #include "csgp4.h"
+#include "csatellitedlg.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -2119,10 +2120,10 @@ void MainWindow::centerSearchBox(bool bCenter)
     cAstro.setParam(&ui->widget->m_mapView);
     cAstro.convAA2RDRef(s.azimuth, s.elevation, &rd.Ra, &rd.Dec);
 
-    precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
-
     ra2000 = rd.Ra;
     dec2000 = rd.Dec;
+
+    precess(&ra2000, &dec2000, ui->widget->m_mapView.jd, JD2000);
 
     info->radec.Ra = ra2000;
     info->radec.Dec = dec2000;
@@ -4700,4 +4701,17 @@ void MainWindow::slotSearchPlanetTriggered()
   CPlnSearch::findPlanet(id, &ui->widget->m_mapView, ra, dec, fov);
   ui->widget->centerMap(ra, dec, fov);
   recenterHoldObject(ui->widget, false);
+}
+
+void MainWindow::on_actionSatellite_triggered()
+{
+  CSatelliteDlg dlg(this);
+
+  dlg.exec();
+  ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionSatellite_2_triggered()
+{
+
 }

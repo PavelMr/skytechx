@@ -183,7 +183,7 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
 
           if (bDT)
             str += getStrDate(pos1->jd, view->geo.tz) + " " + getStrTime(pos1->jd, view->geo.tz, true) + " ";
-          if (bMag)
+          if (bMag && pos1->mag != CM_UNDEF)
             str += getStrMag(pos1->mag);
 
           pPainter->drawCross(p1.sx, p1.sy, 7);

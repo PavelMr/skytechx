@@ -64,8 +64,8 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
   QString satName = str;
 
-  satName = satName.remove("(");
-  satName = satName.remove(")");
+  //satName = satName.remove("(");
+  //satName = satName.remove(")");
 
   for (int i = 0; i < sgp4.count(); i++)
   {
@@ -78,7 +78,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       {
         cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
 
-        precess(&rd.Ra, &rd.Dec, mapView->jd, JD2000);
+        //precess(&rd.Ra, &rd.Dec, mapView->jd, JD2000);
 
         ra = rd.Ra;
         dec = rd.Dec;

@@ -53,7 +53,8 @@ typedef struct
 #define FONT_EARTH_SHD         12
 #define FONT_LUNAR_FEATURES    13
 #define FONT_GRID              14
-#define FONT_COUNT             15
+#define FONT_SATELLITE         15
+#define FONT_COUNT             16
 
 #define GRID_NONE               0
 #define GRID_EQ                 1
@@ -180,6 +181,12 @@ typedef struct
 
 typedef struct
 {
+  QRgb  color;
+  double size;
+} setSatellite_t;
+
+typedef struct
+{
   bool       dsoTypeShow[DSOT_COUNT];
   bool       dsoTypeShowAll[DSOT_COUNT];
   QRgb       dsoColors[DSO_COL_COUNT];
@@ -208,6 +215,7 @@ typedef struct
   planet_t   planet;
   astCom_t   comet;
   astCom_t   aster;
+  setSatellite_t satellite;
   setDraw_t  drawing;
   setTrack_t tracking;
   setPpmxl_t ppmxl;

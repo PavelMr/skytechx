@@ -110,6 +110,7 @@ bool setSave(QString name, setting_t *set)
   writeFont("font.earth.shd", &set->fonst[FONT_EARTH_SHD], ds);
   writeFont("font.lunar.features", &set->fonst[FONT_LUNAR_FEATURES], ds);
   writeFont("font.grid", &set->fonst[FONT_GRID], ds);
+  writeFont("font.satellite", &set->fonst[FONT_SATELLITE], ds);
 
   // earth shadow
   writeVal("map.es.color", set->map.es.color, ds);
@@ -124,6 +125,10 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.star.useSpectralTp", set->map.star.useSpectralTp, ds);
   writeVal("map.star.starSizeFactor", set->map.star.starSizeFactor, ds);
   writeVal("map.starBitmapName", set->map.starBitmapName, ds);
+
+  // satellite
+  writeVal("map.satellite.color", set->map.satellite.color, ds);
+  writeVal("map.satellite.size", set->map.satellite.size, ds);
 
   // horizon
   writeVal("map.hor.color", set->map.hor.color, ds);
@@ -358,6 +363,11 @@ bool setLoad(QString name, setting_t *set)
   set->fonst[FONT_EARTH_SHD] = readFont("font.earth.shd", tMap, "arial", false, QFont::Bold, 12, MRGB(150, 255, 150));
   set->fonst[FONT_LUNAR_FEATURES] = readFont("font.lunar.features", tMap, "arial", false, QFont::Normal, 12, MRGB(255, 255, 0));
   set->fonst[FONT_GRID] = readFont("font.grid", tMap, "arial", false, QFont::Normal, 10, MRGB(150, 180, 150));
+  set->fonst[FONT_SATELLITE] = readFont("font.satellite", tMap, "arial", false, QFont::Normal, 10, MRGB(150, 150, 150));
+
+  // satellite
+  set->map.satellite.color = readVal("map.satellite.color", MRGB(150, 160, 150), tMap).toUInt();
+  set->map.satellite.size = readVal("map.satellite.size", 1, tMap).toDouble();
 
   // earth shadow
   set->map.es.color = readVal("map.es.color", MRGB(0, 200, 0), tMap).toUInt();
