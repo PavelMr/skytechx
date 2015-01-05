@@ -2107,7 +2107,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_12">
         <attribute name="title">
@@ -2927,7 +2927,7 @@
           <double>3.000000000000000</double>
          </property>
          <property name="singleStep">
-          <double>0.250000000000000</double>
+          <double>0.100000000000000</double>
          </property>
         </widget>
        </widget>

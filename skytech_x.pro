@@ -196,7 +196,8 @@ SOURCES += main.cpp\
     libsgp4/Util.cpp \
     libsgp4/Vector.cpp \
     csgp4.cpp \
-    csatellitedlg.cpp
+    csatellitedlg.cpp \
+    csatellitesearch.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -362,7 +363,8 @@ HEADERS  += mainwindow.h \
     libsgp4/Util.h \
     libsgp4/Vector.h \
     csgp4.h \
-    csatellitedlg.h
+    csatellitedlg.h \
+    csatellitesearch.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -430,7 +432,8 @@ FORMS    += mainwindow.ui \
     csaveimage.ui \
     ctipofday.ui \
     caddcustomobject.ui \
-    csatellitedlg.ui
+    csatellitedlg.ui \
+    csatellitesearch.ui
 
 
 RESOURCES += \

@@ -549,6 +549,7 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addTextItem(item, tr("Longitude"), getStrDeg(s.longitude));
   addTextItem(item, tr("Latitude"), getStrDeg(s.latitude));
   addTextItem(item, tr("Altitude"), QString("%1").arg(s.altitude, 0, 'f', 1) + tr(" km."));
+  addSeparator(item);
 
   addLabelItem(item, tr("Other"));
   addSeparator(item);

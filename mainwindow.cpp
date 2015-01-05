@@ -67,6 +67,7 @@
 #include "caddcustomobject.h"
 #include "csgp4.h"
 #include "csatellitedlg.h"
+#include "csatellitesearch.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -2570,7 +2571,7 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
 
   if (checked)
   {
-    m_realTimer.start(1000);
+    m_realTimer.start(250); // TODO: do nastaveni
     slotRealTime();
   }
   else
@@ -4713,5 +4714,10 @@ void MainWindow::on_actionSatellite_triggered()
 
 void MainWindow::on_actionSatellite_2_triggered()
 {
+  CSatelliteSearch dlg(&ui->widget->m_mapView, this);
 
+  if (dlg.exec() == DL_OK)
+  {
+    ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
+  }
 }
