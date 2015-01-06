@@ -44,6 +44,7 @@ extern bool g_showDrawings;
 
 extern bool g_showAsteroids;
 extern bool g_showComets;
+extern bool g_showSatellites;
 
 extern bool g_antialiasing;
 
@@ -1029,7 +1030,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     smRenderPlanets(mapView, pPainter, pImg);
   }
 
-  if (1)
+  if (g_showSatellites)
   {
     renderSatellites(mapView, pPainter);
   }

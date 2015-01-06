@@ -446,7 +446,8 @@ TRANSLATIONS = english.ts \
 
 OTHER_FILES += \
     libsgp4/Makefile.am \
-    libsgp4/Makefile.in
+    libsgp4/Makefile.in \
+    skytech_rc.rc
 
 
 

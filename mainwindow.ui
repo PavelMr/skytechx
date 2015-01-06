@@ -102,7 +102,7 @@
        <x>60</x>
        <y>320</y>
        <width>231</width>
-       <height>112</height>
+       <height>138</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -153,7 +153,7 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_22">
            <property name="font">
             <font>
@@ -166,7 +166,7 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="2" column="1">
           <widget class="QLabel" name="label_tele2">
            <property name="font">
             <font>
@@ -179,7 +179,7 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="label_23">
            <property name="font">
             <font>
@@ -192,7 +192,7 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QLabel" name="label_tele3">
            <property name="font">
             <font>
@@ -205,7 +205,7 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="label_24">
            <property name="font">
             <font>
@@ -218,7 +218,7 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="4" column="1">
           <widget class="QLabel" name="label_tele4">
            <property name="font">
             <font>
@@ -230,6 +230,9 @@
             <string/>
            </property>
           </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QFontComboBox" name="fontComboBox"/>
          </item>
         </layout>
        </item>
@@ -462,6 +465,7 @@
     <addaction name="actionSolar_system"/>
     <addaction name="action_Asteroids1"/>
     <addaction name="actionComets_2"/>
+    <addaction name="actionSatellite_3"/>
     <addaction name="separator"/>
     <addaction name="actionMilkyway"/>
     <addaction name="separator"/>
@@ -2085,6 +2089,35 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionSearch_a_Uranus"/>
    <addaction name="actionSearch_a_Neptune"/>
   </widget>
+  <widget class="QToolBar" name="tb_show">
+   <property name="windowTitle">
+    <string>Show/Hide objects</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionStars"/>
+   <addaction name="separator"/>
+   <addaction name="actionDSO"/>
+   <addaction name="actionDSO_Shapes"/>
+   <addaction name="separator"/>
+   <addaction name="actionConstellation_lines"/>
+   <addaction name="actionConstellation_boundaries"/>
+   <addaction name="separator"/>
+   <addaction name="actionSolar_system"/>
+   <addaction name="action_Asteroids1"/>
+   <addaction name="actionComets_2"/>
+   <addaction name="actionSatellite_3"/>
+   <addaction name="separator"/>
+   <addaction name="actionMilkyway"/>
+   <addaction name="separator"/>
+   <addaction name="actionDrawings"/>
+   <addaction name="actionLabels"/>
+   <addaction name="actionLegends"/>
+  </widget>
   <action name="action_Exit_2">
    <property name="text">
     <string>&amp;Exit</string>
@@ -2763,8 +2796,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_star.png</normaloff>:/res/sh_star.png</iconset>
+   </property>
    <property name="text">
     <string>Stars</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Stars</string>
    </property>
   </action>
   <action name="actionDSO_Shapes">
@@ -2774,8 +2814,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_dso_shape.png</normaloff>:/res/sh_dso_shape.png</iconset>
+   </property>
    <property name="text">
     <string>DSO Shapes</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide DSO Shapes</string>
    </property>
   </action>
   <action name="actionConstellation_lines">
@@ -2785,8 +2832,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_con_lines.png</normaloff>:/res/sh_con_lines.png</iconset>
+   </property>
    <property name="text">
     <string>Constellation lines</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Constellation lines</string>
    </property>
   </action>
   <action name="actionConstellation_boundaries">
@@ -2796,8 +2850,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_con_bnd.png</normaloff>:/res/sh_con_bnd.png</iconset>
+   </property>
    <property name="text">
     <string>Constellation boundaries</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Constellation boundaries</string>
    </property>
   </action>
   <action name="actionDSO">
@@ -2807,8 +2868,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_dso.png</normaloff>:/res/sh_dso.png</iconset>
+   </property>
    <property name="text">
     <string>DSO</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide DSO</string>
    </property>
   </action>
   <action name="actionMilkyway">
@@ -2818,8 +2886,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_mw.png</normaloff>:/res/sh_mw.png</iconset>
+   </property>
    <property name="text">
     <string>Milkyway</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Milkyway</string>
    </property>
   </action>
   <action name="actionSolar_system">
@@ -2829,8 +2904,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_planets.png</normaloff>:/res/sh_planets.png</iconset>
+   </property>
    <property name="text">
     <string>Planets, Sun &amp;&amp; Moon</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Planets, Sun &amp; Moon</string>
    </property>
   </action>
   <action name="actionSatelitte_daily_events">
@@ -2877,8 +2959,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_aster.png</normaloff>:/res/sh_aster.png</iconset>
+   </property>
    <property name="text">
     <string>Asteroids</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Asteroids</string>
    </property>
   </action>
   <action name="actionAntialiasing">
@@ -2951,8 +3040,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_legends.png</normaloff>:/res/sh_legends.png</iconset>
+   </property>
    <property name="text">
     <string>Legends</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Legends</string>
    </property>
   </action>
   <action name="actionComets_2">
@@ -2962,8 +3058,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_comet.png</normaloff>:/res/sh_comet.png</iconset>
+   </property>
    <property name="text">
     <string>Comets</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Comets</string>
    </property>
   </action>
   <action name="actionDoube_star">
@@ -2975,6 +3078,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Planets, Sun &amp; Moon...</string>
    </property>
+   <property name="toolTip">
+    <string>Planets, Sun  Moon</string>
+   </property>
   </action>
   <action name="actionLabels">
    <property name="checkable">
@@ -2983,8 +3089,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_labels.png</normaloff>:/res/sh_labels.png</iconset>
+   </property>
    <property name="text">
     <string>Labels</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Labels</string>
    </property>
   </action>
   <action name="actionTelrad">
@@ -3316,8 +3429,15 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_telrad.png</normaloff>:/res/ico_telrad.png</iconset>
+   </property>
    <property name="text">
     <string>Drawings</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Drawings</string>
    </property>
   </action>
   <action name="actionTip_of_the_day">
@@ -3486,6 +3606,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionSatellite_2">
    <property name="text">
     <string>Satellite...</string>
+   </property>
+  </action>
+  <action name="actionSatellite_3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_satellite.png</normaloff>:/res/sh_satellite.png</iconset>
+   </property>
+   <property name="text">
+    <string>Satellite</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Satellite</string>
    </property>
   </action>
  </widget>

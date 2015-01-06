@@ -74,5 +74,17 @@
         <file>res/neptune_sym.png</file>
         <file>res/uranus_sym.png</file>
         <file>res/skytech_about.png</file>
+        <file>res/sh_star.png</file>
+        <file>res/sh_dso.png</file>
+        <file>res/sh_dso_shape.png</file>
+        <file>res/sh_aster.png</file>
+        <file>res/sh_comet.png</file>
+        <file>res/sh_con_bnd.png</file>
+        <file>res/sh_con_lines.png</file>
+        <file>res/sh_planets.png</file>
+        <file>res/sh_mw.png</file>
+        <file>res/sh_satellite.png</file>
+        <file>res/sh_labels.png</file>
+        <file>res/sh_legends.png</file>
     </qresource>
 </RCC>

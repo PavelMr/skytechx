@@ -559,6 +559,10 @@ void CAsterDlg::on_pushButton_3_clicked()
     }
   }
 
+  deleteTracking(MO_ASTER);
+  releaseHoldObject(MO_ASTER);
+  pcMainWnd->removeQuickInfo(MO_ASTER);
+
   astClear();
 
   QString name = QFileDialog::getOpenFileName(this, tr("Open a File"), "data/catalogue/asteroids", "Asteroid file (*.adf)");
@@ -670,6 +674,11 @@ void CAsterDlg::on_pushButton_7_clicked()
       astSave(curAsteroidCatName, this);
     }
   }
+
+  deleteTracking(MO_ASTER);
+  releaseHoldObject(MO_ASTER);
+  pcMainWnd->removeQuickInfo(MO_ASTER);
+
   astClear();
 
   CDownloadMPC dlg(this, &tAsteroids);

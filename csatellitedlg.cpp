@@ -97,6 +97,10 @@ void CSatelliteDlg::on_pushButton_4_clicked()
     }
   }
 
+  deleteTracking(MO_SATELLITE);
+  releaseHoldObject(MO_SATELLITE);
+  pcMainWnd->removeQuickInfo(MO_SATELLITE);
+
   sgp4.removeAll();
   fillList();
 
@@ -248,6 +252,10 @@ void CSatelliteDlg::on_pushButton_5_clicked()
       }
     }
   }
+
+  deleteTracking(MO_SATELLITE);
+  releaseHoldObject(MO_SATELLITE);
+  pcMainWnd->removeQuickInfo(MO_SATELLITE);
 
   curSatelliteCatName = "";
   sgp4.removeAll();

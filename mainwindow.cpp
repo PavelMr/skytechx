@@ -83,6 +83,7 @@ bool g_showMW = false;
 bool g_showGrids = false;
 bool g_showAsteroids = false;
 bool g_showComets = false;
+bool g_showSatellites = false;
 bool g_showLegends = false;
 bool g_showLabels = false;
 bool g_showDrawings = false;
@@ -275,6 +276,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_tele->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_drawing->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_planets->setToolButtonStyle(Qt::ToolButtonIconOnly);
+  ui->tb_show->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
   setToolbarIconSize();
 
@@ -572,6 +574,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showGrids = settings.value("show_grids", true).toBool();
   g_showAsteroids = settings.value("show_asteroids", true).toBool();
   g_showComets = settings.value("show_comets", true).toBool();
+  g_showSatellites = settings.value("show_satellites", true).toBool();
   g_showLegends = settings.value("show_legends", true).toBool();
   g_showLabels = settings.value("show_labels", true).toBool();
   g_showDrawings = settings.value("show_drawings", true).toBool();
@@ -588,6 +591,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionSolar_system->setChecked(g_showSS);
   ui->action_Asteroids1->setChecked(g_showAsteroids);
   ui->actionComets_2->setChecked(g_showComets);
+  ui->actionSatellite_3->setChecked(g_showSatellites);
   ui->actionLegends->setChecked(g_showLegends);
   ui->actionLabels->setChecked(g_showLabels);
   ui->actionGrids->setChecked(g_showGrids);
@@ -613,6 +617,7 @@ void MainWindow::setToolbarIconSize()
   ui->tb_tele->setIconSize(QSize(size, size));
   ui->tb_drawing->setIconSize(QSize(size, size));
   ui->tb_planets->setIconSize(QSize(size, size));
+  ui->tb_show->setIconSize(QSize(size, size));
 }
 
 void MainWindow::setTitle()
@@ -840,6 +845,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_grids", g_showGrids);
   settings.setValue("show_asteroids", g_showAsteroids);
   settings.setValue("show_comets", g_showComets);
+  settings.setValue("show_satellites", g_showSatellites);
   settings.setValue("show_legends", g_showLegends);
   settings.setValue("show_labels", g_showLabels);
   settings.setValue("show_drawings", g_showDrawings);
@@ -2571,7 +2577,7 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
 
   if (checked)
   {
-    m_realTimer.start(250); // TODO: do nastaveni
+    m_realTimer.start(500);
     slotRealTime();
   }
   else
@@ -3514,6 +3520,9 @@ void MainWindow::on_actionShow_all_triggered()
   ui->actionComets_2->setChecked(true);
   g_showComets = true;
 
+  ui->actionSatellite_3->setChecked(true);
+  g_showSatellites = true;
+
   ui->actionLegends->setChecked(true);
   g_showLegends = true;
 
@@ -3878,6 +3887,9 @@ void MainWindow::on_actionHide_all_triggered()
 
   ui->actionComets_2->setChecked(false);
   g_showComets = false;
+
+  ui->actionSatellite_3->setChecked(false);
+  g_showSatellites = false;
 
   ui->actionLegends->setChecked(false);
   g_showLegends = false;
@@ -4720,4 +4732,10 @@ void MainWindow::on_actionSatellite_2_triggered()
   {
     ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
   }
+}
+
+void MainWindow::on_actionSatellite_3_triggered(bool checked)
+{
+  g_showSatellites = checked;
+  ui->widget->repaintMap();
 }

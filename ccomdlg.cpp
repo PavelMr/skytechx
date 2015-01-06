@@ -842,6 +842,10 @@ void CComDlg::on_pushButton_3_clicked()
     }
   }
 
+  deleteTracking(MO_COMET);
+  releaseHoldObject(MO_COMET);
+  pcMainWnd->removeQuickInfo(MO_COMET);
+
   comClear();
 
   QString name = QFileDialog::getOpenFileName(this, tr("Open a File"), "data/catalogue/comets", "Comets file (*.cdf)");
@@ -953,6 +957,11 @@ void CComDlg::on_pushButton_7_clicked()
       comSave(curCometCatName, this);
     }
   }
+
+  deleteTracking(MO_COMET);
+  releaseHoldObject(MO_COMET);
+  pcMainWnd->removeQuickInfo(MO_COMET);
+
   comClear();
 
   CDownloadMPC dlg(this, &tComets);
@@ -1010,6 +1019,10 @@ void CComDlg::on_pushButton_4_clicked()
       comSave(curCometCatName, this);
     }
   }
+
+  deleteTracking(MO_COMET);
+  releaseHoldObject(MO_COMET);
+  pcMainWnd->removeQuickInfo(MO_COMET);
 
   comClear();
   fillList();
