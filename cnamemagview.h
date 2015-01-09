@@ -47,6 +47,7 @@ public:
   explicit CNameMagView(QWidget *parent = 0);
   void addRow(const QString &name, double mag, const QVariant &data = 0);
   void setHeaderSize(int c1 = 100, int c2 = 100);
+  QSortFilterProxyModel *getModel() { return m_proxy; }
   QVariant getSelectedData();
 
 signals:

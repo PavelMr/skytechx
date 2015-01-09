@@ -3,6 +3,7 @@
 
 #include <QListView>
 #include <QStandardItemModel>
+#include <QSortFilterProxyModel>
 
 class CSimpleList : public QListView
 {
@@ -20,6 +21,7 @@ public:
   QVariant getCustomData(const QModelIndex &index);
   int count() { return m_model->rowCount(); }
   void setTextAt(int index, const QString &text);
+  QSortFilterProxyModel *getModel() { return m_proxy; }
 
 signals:
 
@@ -27,6 +29,7 @@ public slots:
 
 protected:
   QStandardItemModel *m_model;
+  QSortFilterProxyModel *m_proxy;
 
 };
 

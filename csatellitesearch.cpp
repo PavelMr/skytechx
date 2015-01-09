@@ -15,6 +15,9 @@ CSatelliteSearch::CSatelliteSearch(mapView_t *view, QWidget *parent) :
   {
     ui->listView->addRow(sgp4.getName(i), i);
   }
+
+  ui->widget->setModel(ui->listView->getModel(), 0);
+  connect(ui->widget, SIGNAL(sigSetSelection(QModelIndex&)), this, SLOT(slotSelChange(QModelIndex&)));
 }
 
 CSatelliteSearch::~CSatelliteSearch()
@@ -55,4 +58,10 @@ void CSatelliteSearch::on_pushButton_clicked()
   m_fov = getOptObjFov(0, 0, D2R(2.5));
 
   done(DL_OK);
+}
+
+void CSatelliteSearch::slotSelChange(QModelIndex &index)
+{
+  ui->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+  ui->listView->scrollTo(index);
 }

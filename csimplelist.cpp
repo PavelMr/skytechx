@@ -5,7 +5,11 @@ CSimpleList::CSimpleList(QWidget *parent) :
 {
   m_model = new QStandardItemModel(0, 1, this);
   setEditTriggers(QAbstractItemView::NoEditTriggers);
-  setModel(m_model);
+
+  m_proxy = new QSortFilterProxyModel(this);
+  m_proxy->setSourceModel(m_model);
+  setModel(m_proxy);
+
 }
 
 void CSimpleList::addRow(const QString &text, const QVariant &data)

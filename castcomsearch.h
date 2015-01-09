@@ -11,22 +11,23 @@ class CAstComSearch;
 class CAstComSearch : public QDialog
 {
   Q_OBJECT
-  
+
 public:
   explicit CAstComSearch(QWidget *parent, double jd, bool isComet);
   ~CAstComSearch();
 
   radec_t m_rd;
   double  m_fov;
-  
+
 protected:
   void changeEvent(QEvent *e);
   bool m_bComet;
-  
+
 private slots:
+  void slotSelChange(QModelIndex &index);
   void on_pushButton_2_clicked();
 
-  void on_pushButton_clicked();  
+  void on_pushButton_clicked();
 
   void on_treeView_doubleClicked(const QModelIndex &);
 

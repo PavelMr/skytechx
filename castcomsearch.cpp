@@ -7,7 +7,7 @@ CAstComSearch::CAstComSearch(QWidget *parent, double jd, bool isComet) :
   QDialog(parent),
   ui(new Ui::CAstComSearch)
 {
-  ui->setupUi(this);  
+  ui->setupUi(this);
   m_bComet = isComet;
 
   if (!isComet)
@@ -40,7 +40,10 @@ CAstComSearch::CAstComSearch(QWidget *parent, double jd, bool isComet) :
 
       ui->treeView->addRow(a->name, a->orbit.mag, (int)a);
     }
-  }  
+  }
+
+  ui->widget->setModel(ui->treeView->getModel(), 0);
+  connect(ui->widget, SIGNAL(sigSetSelection(QModelIndex&)), this, SLOT(slotSelChange(QModelIndex&)));
 
   ui->treeView->setHeaderSize(180, 80);
 }
@@ -62,6 +65,12 @@ void CAstComSearch::changeEvent(QEvent *e)
   }
 }
 
+void CAstComSearch::slotSelChange(QModelIndex &index)
+{
+  ui->treeView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+  ui->treeView->scrollTo(index);
+}
+
 /////////////////////////////////////////////
 void CAstComSearch::on_pushButton_2_clicked()
 /////////////////////////////////////////////
@@ -72,7 +81,7 @@ void CAstComSearch::on_pushButton_2_clicked()
 ///////////////////////////////////////////
 void CAstComSearch::on_pushButton_clicked()
 ///////////////////////////////////////////
-{      
+{
   QVariant data = ui->treeView->getSelectedData();
 
   if (!data.isValid())
@@ -93,7 +102,7 @@ void CAstComSearch::on_pushButton_clicked()
     m_fov = DEG2RAD(COM_ZOOM);
     m_rd.Ra = a->orbit.lRD.Ra;
     m_rd.Dec = a->orbit.lRD.Dec;
-  }  
+  }
 
   done(DL_OK);
 }

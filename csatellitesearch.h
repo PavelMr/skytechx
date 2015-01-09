@@ -27,6 +27,8 @@ private slots:
 
   void on_pushButton_clicked();
 
+  void slotSelChange(QModelIndex &);
+
 private:
   Ui::CSatelliteSearch *ui;
   mapView_t *m_mapView;
