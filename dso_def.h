@@ -24,7 +24,7 @@
 #define DSOT_OPEN_CLUSTER    10
 #define DSOT_OPEN_CLS_NEB    11  // open cluster with nebulosity
 
-#define DSOT_GLOB_CLUSTER    12 
+#define DSOT_GLOB_CLUSTER    12
 
 #define DSOT_STAR            13
 #define DSOT_STARS           14
@@ -48,8 +48,8 @@
 typedef struct
 {
   char            id[4];          // DSO2
-  unsigned long   numDso;         // dso count 
-  unsigned long   textSegSize;    // byte size   
+  unsigned long   numDso;         // dso count
+  unsigned long   textSegSize;    // byte size
   unsigned long   galClassSize;   // byte size
   unsigned long   catNamesSize;   // byte size
 } dsoHead_t;
@@ -63,15 +63,17 @@ typedef struct
 // catalogue names (char array)
 // NGC\0PGC\0
 
+//#pragma pack (4)
+
 typedef struct
 {
-  unsigned long   nameOffs;  
+  unsigned long   nameOffs;
   radec_t         rd;        // in rads in FK5 (J2000.0)
 
-  signed   short  mag;       // mag * 100        
+  signed   short  mag;       // mag * 100
   unsigned short  pa;        // in degs (0..180)
 
-  unsigned int    sx;        // in arc sec   
+  unsigned int    sx;        // in arc sec
   unsigned int    sy;        // in arc sec
 
   unsigned char   type;      // DSOT_xxx
@@ -79,8 +81,8 @@ typedef struct
 
   unsigned short  shape;     // shape index
 
-  unsigned short  galType;   // index to galaxy class 
-} dso_t;
+  unsigned short  galType;   // index to galaxy class
+}  dso_t;
 
 #pragma pack()
 

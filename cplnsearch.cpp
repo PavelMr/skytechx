@@ -8,7 +8,6 @@ CPlnSearch::CPlnSearch(QWidget *parent) :
   ui(new Ui::CPlnSearch)
 {
   ui->setupUi(this);
-  //setFixedSize(size());
 
   ui->widget->addRow(cAstro.getName(PT_SUN), PT_SUN);
   ui->widget->addRow(cAstro.getName(PT_MOON), PT_MOON);

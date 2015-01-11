@@ -100,6 +100,8 @@ void CDso::load()
 
   createSectors();
 
+  qDebug() << "dso = " << sizeof(dso_t);
+
   // assign to sectors
   for (unsigned long i = 0; i < dsoHead.numDso; i++)
   {

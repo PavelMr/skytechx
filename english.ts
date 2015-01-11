@@ -886,7 +886,7 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdssdlg.cpp" line="647"/>
+        <location filename="cdssdlg.cpp" line="651"/>
         <source>Save DSS File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1331,103 +1331,103 @@ ESC : Cancel
 <context>
     <name>CDso</name>
     <message>
-        <location filename="cdso.cpp" line="275"/>
+        <location filename="cdso.cpp" line="277"/>
         <source>Unknown object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="277"/>
+        <location filename="cdso.cpp" line="279"/>
         <source>Nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="279"/>
+        <location filename="cdso.cpp" line="281"/>
         <source>Bright nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="281"/>
+        <location filename="cdso.cpp" line="283"/>
         <source>Dark nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="283"/>
+        <location filename="cdso.cpp" line="285"/>
         <source>NGC Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="285"/>
+        <location filename="cdso.cpp" line="287"/>
         <source>Planetary nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="287"/>
+        <location filename="cdso.cpp" line="289"/>
         <source>Open cluster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="289"/>
+        <location filename="cdso.cpp" line="291"/>
         <source>Open cluster with nebulosity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="291"/>
+        <location filename="cdso.cpp" line="293"/>
         <source>Asterism</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="293"/>
+        <location filename="cdso.cpp" line="295"/>
         <source>Double star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="295"/>
+        <location filename="cdso.cpp" line="297"/>
         <source>Milky Way star cloud</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="297"/>
+        <location filename="cdso.cpp" line="299"/>
         <source>Galaxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="299"/>
+        <location filename="cdso.cpp" line="301"/>
         <source>Part of galaxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="301"/>
+        <location filename="cdso.cpp" line="303"/>
         <source>Cluster of galaxies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="303"/>
+        <location filename="cdso.cpp" line="305"/>
         <source>Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="305"/>
+        <location filename="cdso.cpp" line="307"/>
         <source>Supernova remnant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="307"/>
+        <location filename="cdso.cpp" line="309"/>
         <source>Quasar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="309"/>
+        <location filename="cdso.cpp" line="311"/>
         <source>Globular cluster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="311"/>
+        <location filename="cdso.cpp" line="313"/>
         <source>Other object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="314"/>
-        <location filename="cdso.cpp" line="317"/>
+        <location filename="cdso.cpp" line="316"/>
+        <location filename="cdso.cpp" line="319"/>
         <source>Invalid object</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5814,7 +5814,69 @@ with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="92"/>
+        <location filename="ctipofday.cpp" line="62"/>
+        <source>During object search on toolbar press Enter + Shift to locate the object with current field of view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="63"/>
+        <source>Keyboard shortcut list and map controls help can be displayed by pressing F2 key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="64"/>
+        <source>Double click item on status bar to open particular dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="65"/>
+        <source>Hold Ctrl key and move mouse cursor over an object to see its name and magnitude.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="66"/>
+        <source>By clicking left mouse button on an object will display object&apos;s information on status bar.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="67"/>
+        <source>Object&apos;s dialog allows you to keep personal notes or to add images to gallery.</source>
+        <oldsource>Object&apos;s dialog allows you to keep personal notes or to add images to gallery</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="68"/>
+        <source>To change star appearance go to settings tab Map&gt;Stars&gt;Star bitmap.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="69"/>
+        <source>Map can be printed in black and white or in any other color profile.</source>
+        <oldsource>Map can be printed in black&amp;white or in any other color profile.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="70"/>
+        <source>To search for example nearest Moon eclipse in given time range go to menu Observating &gt; Search events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="71"/>
+        <source>To get more information about current object press button on object&apos;s dialog to go to web server NED or SIMBAD.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="72"/>
+        <source>Unless stated, all displayed time informations are in given time zone as set in observing location.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="73"/>
+        <source>Distance or position angle from measure point are displayed on status bar. Measure point will be placed on current mouse cursor by pressing space button.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ctipofday.cpp" line="76"/>
         <source>Did you know...</source>
         <translation type="unfinished"></translation>
     </message>

@@ -73,7 +73,7 @@ bool CGsc::readRegion(int r, gscRegion2_t *rgn)
   if (!bIsGsc)
     return(false);
 
-  rgn->loaded = FALSE;
+  rgn->loaded = false;
   h = &rgn->h;
 
   SkFile f(FN_GSCMAINFILE);

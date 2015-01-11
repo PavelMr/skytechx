@@ -633,7 +633,7 @@
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>123</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1191,7 +1191,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>212</width>
+          <width>257</width>
           <height>524</height>
          </rect>
         </property>
@@ -1431,7 +1431,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>327</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1721,8 +1721,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>101</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1869,8 +1869,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>468</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2110,6 +2110,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionSatellite_3"/>
    <addaction name="separator"/>
    <addaction name="actionMilkyway"/>
+   <addaction name="separator"/>
+   <addaction name="actionGrids"/>
    <addaction name="separator"/>
    <addaction name="actionDrawings"/>
    <addaction name="actionLabels"/>
@@ -2924,8 +2926,15 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_full_grid.png</normaloff>:/res/ico_full_grid.png</iconset>
+   </property>
    <property name="text">
     <string>Grids</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Grids</string>
    </property>
   </action>
   <action name="actionShow_all">

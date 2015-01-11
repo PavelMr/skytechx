@@ -14,7 +14,6 @@ typedef struct
     short p;
 } constBndLines_t;
 
-
 typedef struct
 {
   double Ra1, Ra2;

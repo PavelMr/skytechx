@@ -78,8 +78,6 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationName("SkytechX");
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
-  qDebug() << "start";
-
 #if 0
   Observer obs( 50.087, 14.42024, 0.5);
      Tle tle = Tle("UK-DMC 2                ",

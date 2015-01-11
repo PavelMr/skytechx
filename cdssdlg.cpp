@@ -12,6 +12,8 @@ bool    g_dssUse = false;
 bool    g_ddsSimpleRect;
 radec_t g_dssCorner[4];
 
+#if 0
+
 #define PLATE_DATA struct plate_data
 
 PLATE_DATA
@@ -346,6 +348,8 @@ static inline void traneqstd(
     *object_eta *= ARCSECONDS_PER_RADIAN / divisor;
 }
 
+
+
 static double compute_plate_poly( const double ox, const double oy,
                      const double *poly)
 {
@@ -552,14 +556,13 @@ PLATE_DATA *get_plate_list( const char *szDataDir,
    return( rval);
 }
 
-
+#endif
 
 CDSSDlg::CDSSDlg(QWidget *parent, double ra, double dec, double jd) :
   QDialog(parent),
   ui(new Ui::CDSSDlg)
 {
   ui->setupUi(this);
-  setFixedSize(size());
 
   m_ra = ra;
   m_dec = dec;

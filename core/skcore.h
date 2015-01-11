@@ -4,6 +4,8 @@
 #include <QtCore>
 #include <QtWidgets>
 
+#define ALIGNED(x)   __attribute__ ((aligned (x)))
+
 #include "const.h"
 #include "skmath.h"
 #include "skmatrix.h"

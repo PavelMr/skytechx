@@ -98,9 +98,9 @@ class CTycho : public QObject
 protected:
     tychoHead_t       m_head;
     tychoRegion2_t   *m_region;
-    QByteArray        m_names;    
+    QByteArray        m_names;
 
-  signals:    
+  signals:
 };
 
 extern CTycho cTYC;

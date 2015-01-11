@@ -2,6 +2,7 @@
 #define CPPMXL_H
 
 #include <QtCore>
+#include "skcore.h"
 
 #pragma pack(2)
 
@@ -11,10 +12,9 @@ typedef struct
     uint ra;
      int dec;
    short mag;
-} ppmxl_t;
+}  ppmxl_t;
 
 #pragma pack()
-
 
 typedef struct
 {

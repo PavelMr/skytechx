@@ -59,34 +59,18 @@ void CTipOfDay::setTip(int &index)
 
   // TODO: prelozit a pak pak i v linguistu
 
-  QString tip[TIPS_COUNT] = {"Při hledání objektu v nástrojové liště pokud stiskněte Enter spolu s klávesou Shift tak se objekt vycentruje ale zorné pole se nezmění.",
-                             // "(nástrojové liště) toolbar (zorné pole) field of view",
-
-                             "Nápovědu pro klávesnicové zkratky a ovládání mapy zobrazíte klávesou F2.",
-                             //  (klávesnicové zkratky) keyboard shortcut
-
-                             "Dvojklik na položku stavového řádku otevře příslušný dialog.",
-
-                             "Při stisku klávesy CTRL a najetí kurzorem na objekt se zobrazí název a jasnost objektu.",
-
-                             "Kliknutím levého tlačítka myši na object se zobrazí v postraním panelu informace o objektu.",
-                             // (postraním panelu) side bar
-
-                             "V dialogu objektu lze přidat vlastní poznámky nebo přiřadit do galerie obrázky.",
-
-                             "Pokud chcete změnit vzhled hvězd tak ho můžete změnit v nastavení pod záložkou Mapa->Hvězdy->Bitmapa hvězdy.",
-
-                             "Tisk mapy lze tisknout jak černobíle tak v jakémkoli jiném barevném profilu.",
-
-                             "Pokud chcete vyhledat např. nejbližší zatmění Měsíce ve Vámi nastavené poloze tak ho můžete najít v menu 'Pozorování->Hledání událostí...'",
-
-                             "Pokud chcete o objektu získat více informací tak v dialogu objektu lze stiskem tlačítka přejít na webový server NED nebo SIMBAD kde se zobrazí podrobnější informace.",
-
-                             "Pokud není psáno jinak tak všechny vypsané časy jsou v časovém pásmu zadaném v nastavení polohy pozorovatele.",
-
-                             "Vzdálenost a poziční úhel od pozice kurzoru na mapě a měřícího bodu se zobrazuje ve stavovém řádku. Přesun měřícího bodu lze provést klávesou Space."
-                             // (poziční úhel) Position angle (měřícího bodu) measure point (stavovém řádku) status bar
-
+  QString tip[TIPS_COUNT] = {tr("During object search on toolbar press Enter + Shift to locate the object with current field of view."),
+                             tr("Keyboard shortcut list and map controls help can be displayed by pressing F2 key."),
+                             tr("Double click item on status bar to open particular dialog."),
+                             tr("Hold Ctrl key and move mouse cursor over an object to see its name and magnitude."),
+                             tr("By clicking left mouse button on an object will display object's information on status bar."),
+                             tr("Object's dialog allows you to keep personal notes or to add images to gallery."),
+                             tr("To change star appearance go to settings tab Map>Stars>Star bitmap."),
+                             tr("Map can be printed in black and white or in any other color profile."),
+                             tr("To search for example nearest Moon eclipse in given time range go to menu Observating > Search events"),
+                             tr("To get more information about current object press button on object's dialog to go to web server NED or SIMBAD."),
+                             tr("Unless stated, all displayed time informations are in given time zone as set in observing location."),
+                             tr("Distance or position angle from measure point are displayed on status bar. Measure point will be placed on current mouse cursor by pressing space button."),
                             };
 
    ui->textBrowser->setText("<br><b><font size=\"5\"> &nbsp;" + tr("Did you know...") + "</font></b><br><hr><br>" + "<font size=\"4\">" + tip[index] + "</font>");

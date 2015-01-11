@@ -17,7 +17,7 @@ typedef struct
 } shp_header_t;
 
 typedef struct
-{  
+{
   int        typeId;
   char       name[32];
   int        numPts;
@@ -43,7 +43,7 @@ protected:
     bool          bReady;
     int           count;
     shp_shape_t  *shape;
-    shp_header_t  header;    
+    shp_header_t  header;
 };
 
 #endif // CSHAPE_H
