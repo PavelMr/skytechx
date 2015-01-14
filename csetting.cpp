@@ -25,7 +25,7 @@ CSetting::CSetting(QWidget *parent) :
   ui(new Ui::CSetting)
 {
   ui->setupUi(this);
-  setFixedSize(size());
+  //setFixedSize(size());
 
   set = g_skSet;
 

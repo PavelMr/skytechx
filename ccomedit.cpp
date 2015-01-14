@@ -6,7 +6,6 @@ CComEdit::CComEdit(QWidget *parent, bool bNew, comet_t *a) :
   ui(new Ui::CComEdit)
 {
   ui->setupUi(this);
-  setFixedSize(size());
 
   if (bNew)
   {

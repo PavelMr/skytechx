@@ -68,7 +68,7 @@ class CDso : public QObject
     void renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter);
 
     //TODO: dat nazvy do QStringList *dsoNames;
-    dsoHead_t        dsoHead;
+    dsoHeader_t        dsoHead;
     dso_t           *dso;
     char            *dsoNames;
     char            *dsoClass;

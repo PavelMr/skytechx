@@ -13,7 +13,8 @@ CPolarisHourAngle::CPolarisHourAngle(QWidget *parent, const mapView_t *view) :
   m_polarisHourAngle(0)
 {
   ui->setupUi(this);
-  setFixedSize(size());
+  setFixedHeight(size().height());
+
   m_reticle = new QPixmap(":/res/reticle.png");
   m_view = *view;
 

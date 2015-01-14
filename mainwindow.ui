@@ -2117,6 +2117,20 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionLabels"/>
    <addaction name="actionLegends"/>
   </widget>
+  <widget class="QToolBar" name="tb_map">
+   <property name="windowTitle">
+    <string>Chart orientation</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAtlas_mode_Pole_Up"/>
+   <addaction name="actionHorizon_mode_Zenith_up"/>
+   <addaction name="actionEcliptic"/>
+  </widget>
   <action name="action_Exit_2">
    <property name="text">
     <string>&amp;Exit</string>
@@ -2294,6 +2308,10 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_eq.png</normaloff>:/res/ico_eq.png</iconset>
+   </property>
    <property name="text">
     <string>Atlas mode (Pole up)</string>
    </property>
@@ -2304,6 +2322,10 @@ p, li { white-space: pre-wrap; }
   <action name="actionHorizon_mode_Zenith_up">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_aa.png</normaloff>:/res/ico_aa.png</iconset>
    </property>
    <property name="text">
     <string>Horizon mode (Zenith up)</string>
@@ -2570,6 +2592,10 @@ p, li { white-space: pre-wrap; }
   <action name="actionEcliptic">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_ec.png</normaloff>:/res/ico_ec.png</iconset>
    </property>
    <property name="text">
     <string>Ecliptic coordinates</string>

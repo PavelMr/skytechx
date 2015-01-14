@@ -6,7 +6,6 @@ CSaveTM::CSaveTM(QWidget *parent, double jd) :
   ui(new Ui::CSaveTM)
 {
   ui->setupUi(this);
-  setFixedSize(size());
   ui->lineEdit->setFocus();
   m_jd = jd;
 

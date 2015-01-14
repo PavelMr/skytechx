@@ -22,11 +22,11 @@ CWeather::CWeather(QWidget *parent, mapView_t *view) :
 {
   ui->setupUi(this);
   setWindowTitle(windowTitle() + " - openweathermap.org");
-  setFixedSize(size());
+
   connect(&m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotDownloadFinished(QNetworkReply*)));
   m_lon = R2D(view->geo.lon);
   m_lat = R2D(view->geo.lat);
-  getData();  
+  getData();
 }
 
 CWeather::~CWeather()
@@ -45,7 +45,7 @@ void CWeather::updateInfo()
   double pressure = 0;
   double windSpeed = 0;
   double windDeg = 0;
-  double cloudiness = 0;    
+  double cloudiness = 0;
   QString icon;
   QString cityName;
   QString country = "N/A";
@@ -56,7 +56,7 @@ void CWeather::updateInfo()
     val = obj.value(QStringLiteral("main"));
     tempObject = val.toObject();
     temp = tempObject.value(QStringLiteral("temp")).toDouble();
-    humidity = tempObject.value(QStringLiteral("humidity")).toDouble();    
+    humidity = tempObject.value(QStringLiteral("humidity")).toDouble();
     pressure = tempObject.value(QStringLiteral("pressure")).toDouble();
   }
 
@@ -104,7 +104,7 @@ void CWeather::updateInfo()
     val = obj.value(QStringLiteral("clouds"));
     tempObject = val.toObject();
     cloudiness = tempObject.value(QStringLiteral("all")).toDouble();
-  }    
+  }
 
   if (m_error.isEmpty())
   {

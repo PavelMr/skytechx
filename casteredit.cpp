@@ -6,7 +6,6 @@ CAsterEdit::CAsterEdit(QWidget *parent, bool bNew, asteroid_t *a) :
   ui(new Ui::CAsterEdit)
 {
   ui->setupUi(this);
-  setFixedSize(size());
 
   if (bNew)
   {

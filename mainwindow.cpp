@@ -277,6 +277,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_drawing->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_planets->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_show->setToolButtonStyle(Qt::ToolButtonIconOnly);
+  ui->tb_map->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
   setToolbarIconSize();
 
@@ -3336,6 +3337,8 @@ void MainWindow::on_pushButton_dssDA_clicked()
 
   model->removeRows(0, model->rowCount());
 
+  ui->label_5->setText(tr("Total size : ") + "0 MB");
+
   checkDSS();
   ui->widget->repaintMap();
 }
@@ -4288,11 +4291,13 @@ void MainWindow::on_pushButton_8_clicked()
 
   if (f.open(QFile::WriteOnly))
   {
-    int cnt = tConstLines.count();
-    f.write((char *)&cnt, 4);
+    qint32 cnt = tConstLines.count();
+    f.write((char *)&cnt, sizeof(qint32));
     for (int i = 0; i < tConstLines.count(); i++)
     {
-      f.write((char *)&tConstLines[i], sizeof(constelLine_t));
+      f.read((char *)&tConstLines[i].pt.Ra, sizeof(double));
+      f.read((char *)&tConstLines[i].pt.Dec, sizeof(double));
+      f.read((char *)&tConstLines[i].cmd, sizeof(qint32));
     }
   }
   ui->widget->repaintMap(true);

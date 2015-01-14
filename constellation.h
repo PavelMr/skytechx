@@ -9,15 +9,11 @@
 
 #include "cskpainter.h"
 
-#pragma pack(8)
-
 typedef struct
 {
   radec_t pt;
-      int cmd;     // 0-data, 1-main line to, 2-sec. line to
+   qint32 cmd;     // 0-data, 1-main line to, 2-sec. line to
 } constelLine_t;
-
-#pragma pack()
 
 void constLoad(void);
 void getConstPosition(int index, double &ra, double &dec);

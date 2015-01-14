@@ -6,13 +6,13 @@
 
 #define NBNDRIES 357
 
-#pragma pack(2)
-
 typedef struct
 {
   radec_t rd;
     short p;
 } constBndLines_t;
+
+#pragma pack(2)
 
 typedef struct
 {
@@ -25,7 +25,7 @@ typedef struct
 
 QList <constelLine_t> tConstLines;
 
-static int numConstelNBnd = 0;
+static qint32 numConstelNBnd = 0;
 static constBndLines_t *constelNBnd;
 
 static QString constel2nd[88];
@@ -194,14 +194,17 @@ void constLinesLoad(QString name)
   f.setFileName(name);
   if (f.open(SkFile::ReadOnly))
   {
-    int cnt;
-    f.read((char *)&cnt, 4);
+    qint32 cnt;
+    f.read((char *)&cnt, sizeof(qint32));
 
     for (int i = 0; i < cnt; i++)
     {
       constelLine_t l;
 
-      f.read((char *)&l, sizeof(l));
+      f.read((char *)&l.pt.Ra, sizeof(double));
+      f.read((char *)&l.pt.Dec, sizeof(double));
+      f.read((char *)&l.cmd, sizeof(qint32));
+
       tConstLines.append(l);
     }
     f.close();
@@ -217,11 +220,13 @@ static void constLoadBoundLines(void)
   SkFile f("data\\constellation\\constel.bnd");
   if (f.open(SkFile::ReadOnly))
   {
-    f.read((char *)&numConstelNBnd, 4);
+    f.read((char *)&numConstelNBnd, sizeof(qint32));
     constelNBnd = (constBndLines_t *)malloc(numConstelNBnd * sizeof(constBndLines_t));
     for (int i = 0; i < numConstelNBnd; i++)
     {
-      f.read((char *)&constelNBnd[i], sizeof(constBndLines_t));
+      f.read((char *)&constelNBnd[i].rd.Ra, sizeof(double));
+      f.read((char *)&constelNBnd[i].rd.Dec, sizeof(double));
+      f.read((char *)&constelNBnd[i].p, sizeof(short));
     }
     f.close();
   }

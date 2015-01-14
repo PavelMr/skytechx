@@ -66,7 +66,11 @@ void CDso::load()
   if (!pf.open(SkFile::ReadOnly))
     return;
 
-  pf.read((char *)&dsoHead, sizeof(dsoHead_t));
+  pf.read((char *)&dsoHead.id, 4);
+  pf.read((char *)&dsoHead.numDso, sizeof(qint32));
+  pf.read((char *)&dsoHead.textSegSize, sizeof(qint32));
+  pf.read((char *)&dsoHead.galClassSize, sizeof(qint32));
+  pf.read((char *)&dsoHead.catNamesSize, sizeof(qint32));
 
   dso =      (dso_t *)malloc(sizeof(dso_t) * dsoHead.numDso);
   dsoNames = (char *)malloc(dsoHead.textSegSize);
@@ -77,9 +81,19 @@ void CDso::load()
   pf.read((char *)dsoClass, dsoHead.galClassSize);
   pf.read((char *)dsoCats, dsoHead.catNamesSize);
 
-  for (unsigned int i = 0; i < dsoHead.numDso; i++)
+  for (qint32 i = 0; i < dsoHead.numDso; i++)
   {
-    pf.read((char *)&dso[i], sizeof(dso_t));
+    pf.read((char *)&dso[i].nameOffs, sizeof(qint32));
+    pf.read((char *)&dso[i].rd.Ra, sizeof(double));
+    pf.read((char *)&dso[i].rd.Dec, sizeof(double));
+    pf.read((char *)&dso[i].mag, sizeof(signed short));
+    pf.read((char *)&dso[i].pa, sizeof(unsigned short));
+    pf.read((char *)&dso[i].sx, sizeof(quint32));
+    pf.read((char *)&dso[i].sy, sizeof(quint32));
+    pf.read((char *)&dso[i].type, sizeof(unsigned char));
+    pf.read((char *)&dso[i].cataloque, sizeof(unsigned char));
+    pf.read((char *)&dso[i].shape, sizeof(unsigned short));
+    pf.read((char *)&dso[i].galType, sizeof(unsigned short));
 
     rangeDbl(&dso[i].rd.Ra, MPI2);
     if (dso[i].sx > 0 && dso[i].sy == 0)
@@ -103,7 +117,7 @@ void CDso::load()
   qDebug() << "dso = " << sizeof(dso_t);
 
   // assign to sectors
-  for (unsigned long i = 0; i < dsoHead.numDso; i++)
+  for (qint32 i = 0; i < dsoHead.numDso; i++)
   {
     int ra  = (int)((RAD2DEG(dso[i].rd.Ra)) / DSO_SEG_SIZE);
     int dec = (int)((RAD2DEG(dso[i].rd.Dec) + 90.) / DSO_SEG_SIZE);
@@ -111,7 +125,7 @@ void CDso::load()
   }
 
   // create name map list
-  for (unsigned int i = 0; i < dsoHead.numDso; i++)
+  for (qint32 i = 0; i < dsoHead.numDso; i++)
   {
     namesMap[dso[i].nameOffs].append(cDSO.getNameInt(&dso[i]));
     Q_ASSERT(namesMap[dso[i].nameOffs].size() > 0);
@@ -212,8 +226,8 @@ QString CDso::getCatalogue(int index)
   QString str;
   static char tmp[256];
   char *ptmp = tmp;
-  int   idx = 0;
-  ulong cnt = 0;
+  qint32 idx = 0;
+  qint32 cnt = 0;
 
   while (1)
   {
@@ -327,7 +341,7 @@ int CDso::findDSO(char *pszName, dso_t **pDso)
   if (pszName[0] == '\0')
     return(-1);
 
-  for (unsigned long i = 0; i < dsoHead.numDso; i++)
+  for (qint32 i = 0; i < dsoHead.numDso; i++)
   {
     for (int j = 0; j < 20; j++)
     {
@@ -346,7 +360,7 @@ int CDso::findDSO(char *pszName, dso_t **pDso)
   {
     if (tDsoCommonNames[c].commonName.compare(pszName, Qt::CaseInsensitive) == 0)
     {
-      for (unsigned long i = 0; i < dsoHead.numDso; i++)
+      for (qint32 i = 0; i < dsoHead.numDso; i++)
       {
         for (int j = 0; j < 20; j++)
         {
@@ -375,7 +389,7 @@ int CDso::findDSOFirstName(char *pszName)
 
   name.remove(" ");
 
-  for (unsigned long i = 0; i < dsoHead.numDso; i++)
+  for (qint32 i = 0; i < dsoHead.numDso; i++)
   {
     QString pName = getName(&dso[i], 0);
 

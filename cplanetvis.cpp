@@ -6,7 +6,6 @@ CPlanetVis::CPlanetVis(QWidget *parent, mapView_t *view) :
   ui(new Ui::CPlanetVis)
 {
   ui->setupUi(this);
-  setFixedSize(size());
 
   m_view = *view;
   updateTitle();

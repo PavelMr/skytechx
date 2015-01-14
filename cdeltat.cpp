@@ -9,7 +9,6 @@ CDeltaT::CDeltaT(QWidget *parent, mapView_t *view) :
   ui(new Ui::CDeltaT)
 {
   ui->setupUi(this);
-  setFixedSize(size());
 
   m_view = *view;
 
