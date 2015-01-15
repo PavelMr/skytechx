@@ -8,7 +8,6 @@
 CSearch::CSearch()
 //////////////////
 {
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -62,10 +61,10 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
     }
   }
 
-  QString satName = str;
+  QApplication::processEvents();
 
-  //satName = satName.remove("(");
-  //satName = satName.remove(")");
+  // satellites
+  QString satName = str;
 
   for (int i = 0; i < sgp4.count(); i++)
   {
@@ -77,8 +76,6 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       if (sgp4.solve(i, mapView, &out))
       {
         cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
-
-        //precess(&rd.Ra, &rd.Dec, mapView->jd, JD2000);
 
         ra = rd.Ra;
         dec = rd.Dec;

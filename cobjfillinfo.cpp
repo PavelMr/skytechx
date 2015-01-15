@@ -1316,6 +1316,10 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
 
   fillAtlas(ra, dec, item);
+
+  addLabelItem(item, tr("Source"));
+  addSeparator(item);
+  addTextItem(item, "S. L. Moshier", "Residuals against JPL ephemeris DE404");
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

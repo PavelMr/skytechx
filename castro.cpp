@@ -1049,7 +1049,7 @@ void CAstro::solveMoon(orbit_t *o)
   double FV = (MPI - fabs(o->elongation)) * RAD;
   o->mag = -21.62 + 5*log10(m_sunOrbit.r * R) + 0.026 * (FV) + 4.0E-9  * pow(FV, 4);
 
-  o->sx = 1737.1 * 60 / o->R;
+  o->sx = 1873.7 * 60 / o->R;
   o->sy = o->sx;
   o->dx = o->dy = 1737.1 * 2;
 
@@ -1094,7 +1094,7 @@ void CAstro::solveSun(orbit_t *o)
 
   o->flattening = 0;
   o->mag = -26.74;
-  o->dx = 696342 * 2;
+  o->dx = 696010 * 2;
   o->dy = o->dx * (1 - o->flattening);
   o->phase = 1;
 

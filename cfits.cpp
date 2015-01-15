@@ -1,6 +1,5 @@
 #include "cfits.h"
 
-
 typedef struct
 {
   QString name;
@@ -192,7 +191,7 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
 
   if (!bAll)
   {
-    return(true);  
+    return(true);
   }
 
   m_pix = new QImage(sx, sy, QImage::Format_Indexed8);
@@ -200,9 +199,9 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
   {
     memOk = false;
     return false;
-  }  
+  }
 
-  // posun se na nasledujici nasobek 2880  
+  // posun se na nasledujici nasobek 2880
   long prv = f.pos();
   long al = 2880 - (prv % 2880);
   if (al != 2880)

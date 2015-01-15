@@ -89,5 +89,6 @@
         <file>res/ico_aa.png</file>
         <file>res/ico_ec.png</file>
         <file>res/ico_eq.png</file>
+        <file>res/ico_web_help.png</file>
     </qresource>
 </RCC>

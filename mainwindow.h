@@ -501,6 +501,7 @@ private:
 
   void setTitle();
 public slots:
+  void slotOpenWebHelp();
   void slotPrintPreview(QPrinter*);
   void slotDsoCenter();
   void slotStatusBarDoubleClick(int id);

@@ -529,14 +529,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBox->removeItem(4);
   }
 
+  QAction *openWebHelp = new QAction(QIcon(":/res/ico_web_help.png"), "web", this);
   QToolBar *tb = new QToolBar;
   ui->horizontalLayout_10->addWidget(tb);
+
+  openWebHelp->setToolTip(tr("Open help in default web browser."));
 
   tb->addAction(ui->webView->pageAction(QWebPage::Back));
   tb->addAction(ui->webView->pageAction(QWebPage::Forward));
   tb->addAction(ui->webView->pageAction(QWebPage::Reload));
   tb->addAction(ui->webView->pageAction(QWebPage::Stop));
   tb->addAction(ui->actionShow_help);
+  tb->addSeparator();
+  tb->addAction(openWebHelp);
+
+  connect(openWebHelp, SIGNAL(triggered()), this, SLOT(slotOpenWebHelp()));
 
   ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));
 
@@ -635,6 +642,11 @@ void MainWindow::setTitle()
   }
 
   setWindowTitle(QString("Skytech X ") + SK_VERSION + QString(tr("   Location : ")) + ui->widget->m_mapView.geo.name + " " + tzName);
+}
+
+void MainWindow::slotOpenWebHelp()
+{
+  QDesktopServices::openUrl(QUrl::fromLocalFile(ui->webView->url().toString()));
 }
 
 void MainWindow::slotStatusBarDoubleClick(int id)
