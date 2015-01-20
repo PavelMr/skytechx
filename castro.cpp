@@ -619,7 +619,7 @@ double CAstro::getInvAtmRef(double alt)
   return(ref);
 }
 
-#define THRESH 1.e-8
+#define THRESH 1.e-10
 #define CUBE_ROOT( X)  (exp( log( X) / 3.))
 
 ////////////////////////////////////
@@ -638,15 +638,6 @@ double CAstro::solveKepler(double eccent, double M)
 
   if (M == 0.0)
     return(0.0);
-
-  if( eccent < 0.3)
-  { /* low-eccentricity formula from Meeus,  p. 195 */
-    curr = atan2( sin(M), cos(M) - eccent);
-    /* one correction step,  and we're done */
-    err = curr - eccent * sin(curr) - M;
-    curr -= err / (1. - eccent * cos(curr));
-    return (curr);
-  }
 
   if (M < 0.0)
   {

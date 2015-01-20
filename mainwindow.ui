@@ -364,6 +364,7 @@
     <addaction name="actionShow_sidebar"/>
     <addaction name="actionShow_full_screen"/>
     <addaction name="separator"/>
+    <addaction name="actionTime_dialog"/>
     <addaction name="actionTime_window"/>
     <addaction name="actionTelescope_window"/>
    </widget>
@@ -2346,6 +2347,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Set local time...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
   </action>
   <action name="actionSet_UTC_time">
    <property name="text">
@@ -3108,7 +3112,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionPlanets_Sun_Moon">
    <property name="text">
-    <string>Planets, Sun &amp; Moon...</string>
+    <string>Planets, Sun &amp;&amp; Moon...</string>
    </property>
    <property name="toolTip">
     <string>Planets, Sun  Moon</string>
