@@ -192,8 +192,6 @@ static void astSolve2(asteroid_t *a, double jdt)
   a->orbit.gRD.Dec = atan2(ze, sqrt(xe * xe + ye * ye));
   rangeDbl(&a->orbit.gRD.Ra, MPI2);
 
-  precess(&a->orbit.gRD.Ra, &a->orbit.gRD.Dec, JD2000, jdt);
-
   a->orbit.lRD.Ra  = a->orbit.gRD.Ra;
   a->orbit.lRD.Dec = a->orbit.gRD.Dec;
 

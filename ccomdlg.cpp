@@ -211,7 +211,7 @@ static bool comSolve2(comet_t *a, double jdt)
     double zg = rh[2] + zs;
 
     // geocentric pos eq. J2000.0
-    double ea = cAstro.m_eclOblJ2000;
+    double ea = cAstro.getEclObl(JD2000);
     xe = xg;
     ye = yg * cos(ea) - zg * sin(ea);
     ze = yg * sin(ea) + zg * cos(ea);
@@ -223,199 +223,12 @@ static bool comSolve2(comet_t *a, double jdt)
     a->orbit.light = SECTODAY(a->orbit.R * AU1 / LSPEED);
     t -= a->orbit.light;
   }
-
-    //qDebug() << a->name;
-    //qDebug() << "   " << r << v << jdt;
-
-  //double xc = r * comelem.Oa * sin(comelem.Oaa + comelem.Oomi + v);
-  //double yc = r * comelem.Ob * sin(comelem.Obb + comelem.Oomi + v);
-  //double zc = r * comelem.Oc * sin(comelem.Occ + comelem.Oomi + v);
-
-#if 0
-    if (a->e >= 0.9999999)
-    { // solve hyperbolic / parabolic
-      double aa = a->q / (1 - a->e);
-      double k = 0.01720209895;
-
-      double M = (180 / M_PI) * (t) * k / (sqrt(aa * aa * aa));
-
-      double b = sqrt( 1 + aa * aa);
-      double w = cbrt(b + aa) - cbrt(b - aa);
-
-      v = 2 * atan(w);
-      rangeDbl(&v, MPI2);
-      r = a->q * (1 + w * w);
-
-      /*
-      double k = 0.01720209895;
-      double d1 = 10000;
-      double c = 1 / 3.;
-      double d = 1e-9;
-
-      double q1 = k * sqrt((1 + a->e) / a->q) / (2 * a->q);
-      double g = (1 - a->e) / (1 + a->e);
-
-      if (t != 0)
-      {
-        double q2 = q1 * t;
-        double s = 2 / (3 * fabs(q2));
-
-        s = 2 / tan(2 * atan(pow(tan(atan(s) / 2.), c)));
-        if (t < 0)
-          s = -s;
-
-        double q3 = 0;
-        double s0 = 0;
-
-        if (a->e != 1)
-        {
-          double l = 0;
-
-        l40:
-
-          s0 = s;
-          double z = 1;
-          double y = s * s;
-          double g1 = -y * s;
-          q3 = q2 + 2 * g * s * y / 3.;
-          double f;
-
-        l44:
-
-          z++;
-          g1 = -g1 * g * y;
-          double z1 = (z - (z + 1) * g) / (2 * z + 1);
-          f = z1 * g1;
-          q3 += f;
-          if (z > 200 || fabs(f) > d1)
-          { // error
-            qDebug("err1 %s (fabs(%f) , %f)", qPrintable(a->name), fabs(f), d1);
-            return(false);
-          }
-          if (fabs(f) > d) goto l44;
-          l++;
-          if (l > 200)
-          { // error
-            qDebug() << "err2" << a->name;
-            return(false);
-          }
-
-        l60:
-
-          double s1 = s;
-          s = (2 * s * s *s / 3.0 + q3) / (s * s + 1);
-          if (fabs(s - s1) > d) goto l60;
-          if (fabs(s - s0) > d) goto l40;
-        }
-
-        v = 2 * atan(s);
-        r = a->q  * (1 + a->e) / (1 + a->e * cos(v));
-        rangeDbl(&v, MPI2);
-
-      }
-      else
-      {
-        r = a->q;
-        v = 0;
-      }
-      */
-    }
-    else
-    { // solve eliptical
-       double aa = a->q / fabs(1 - a->e);
-       double P = 365.2568984 * pow(aa, 1.5);
-       double M = R360 * t / P;
-
-       rangeDbl(&M, MPI2);
-
-       double E = cAstro.solveKepler(a->e, M);
-       rangeDbl(&E, MPI2);
-
-       double xv = a->q * (cos(E) - a->e);
-       double yv = a->q * (sqrt(1.0 - a->e * a->e) * sin(E));
-
-       v = atan2(yv, xv);
-       rangeDbl(&v, MPI2);
-       r = a->q  * (1 + a->e) / (1 + a->e * cos(v));
-       //r = sqrt(xv * xv + yv * yv);
-    }
-#endif
-
-
-#if 0
-    // "C/2007 T1 (McNaught)"
-    // 18.8496 2.68543 2.45686e+06
-
-    // "P/2008 QP20 (LINEAR-Hill)"
-    //  2.99204 4.44825 2.45686e+06
-
-    double n = a->w;
-    double p = a->W;
-
-    // heliocentric pos J2000.0
-    double rh[3];
-    rh[0] = r * ( cos(n) * cos(v + p) - sin(n) * sin(v + p) * cos(a->i));
-    rh[1] = r * ( sin(n) * cos(v + p) + cos(n) * sin(v + p) * cos(a->i));
-    rh[2] = r * ( sin(v + p) * sin(a->i));
-
-    a->orbit.hRect[0] = rh[0];
-    a->orbit.hRect[1] = rh[1];
-    a->orbit.hRect[2] = rh[2];
-
-    a->orbit.hLon = atan2(rh[1], rh[0]);
-    a->orbit.hLat = atan2(rh[2], sqrt(rh[0] * rh[0] + rh[1] * rh[1]));
-    rangeDbl(&a->orbit.hLon, MPI2);
-
-    //double vx = rh[0] / r;
-    //double vy = rh[1] / r;
-    //double vz = rh[2] / r;
-
-    //double xet = (rh[0] + xs) + vx * 0.5;
-    //double yet = (rh[1] + ys) + vy * 0.5;
-    //double zet = (rh[2] + zs) + vz * 0.5;
-
-    //double ea = cAstro.m_eclOblJ2000;
-    //double qxe = xet;
-    //double qye = yet * cos(ea) - zet * sin(ea);
-    //double qze = yet * sin(ea) + zet * cos(ea);
-
-    //a->orbit.gTailRD.Ra  = atan2(qye, qxe);
-    //a->orbit.gTailRD.Dec = atan2(qze, sqrt(qxe * qxe + qye * qye));
-    //precess(&a->orbit.gTailRD.Ra, &a->orbit.gTailRD.Dec, JD2000, jd);
-
-    // geocentric ecl. J2000.0
-    double xg = rh[0] + xs;
-    double yg = rh[1] + ys;
-    double zg = rh[2] + zs;
-
-    // geocentric pos eq. J2000.0
-    double ea = cAstro.m_eclOblJ2000;
-    xe = xg;
-    ye = yg * cos(ea) - zg * sin(ea);
-    ze = yg * sin(ea) + zg * cos(ea);
-
-    a->orbit.r = r;
-    a->orbit.R = sqrt(xg * xg + yg * yg + zg *zg);
-    R = a->orbit.R;
-
-    a->orbit.light = SECTODAY(a->orbit.R * AU1 / LSPEED);
-    t -= a->orbit.light;
-  }
-  #endif
-
-  /*
-  double xyz[3] = {xe, ye, ze};
-  precessRect(xyz, JD2000, jdt);
-  xe = xyz[0];
-  ye = xyz[1];
-  ze = xyz[2];
-  */
 
   a->orbit.gRD.Ra  = atan2(ye, xe);
   a->orbit.gRD.Dec = atan2(ze, sqrt(xe * xe + ye * ye));
   rangeDbl(&a->orbit.gRD.Ra, MPI2);
 
-  precess(&a->orbit.gRD.Ra, &a->orbit.gRD.Dec, JD2000, jdt);
+  //precess(&a->orbit.gRD.Ra, &a->orbit.gRD.Dec, JD2000, jdt);
 
   a->orbit.lRD.Ra  = a->orbit.gRD.Ra;
   a->orbit.lRD.Dec = a->orbit.gRD.Dec;
@@ -436,8 +249,6 @@ static bool comSolve2(comet_t *a, double jdt)
   cAstro.convRD2AARef(a->orbit.lRD.Ra, a->orbit.lRD.Dec,
                      &a->orbit.lAzm, &a->orbit.lAlt);
 
-  //qDebug("r = %f", r);
-  //qDebug("v = %f", RAD2DEG(v));
   return(true);
 }
 

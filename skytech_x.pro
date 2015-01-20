@@ -23,6 +23,11 @@ win32-g++ : LIBS += -lgomp -lpsapi
 TARGET = skytech_x
 TEMPLATE = app
 
+Release:win32-g++ : build_nr.commands = d:/skytechx/skytech_source/build_inc.bat
+Release:win32-g++ : build_nr.depends = FORCE
+Release:win32-g++ : QMAKE_EXTRA_TARGETS += build_nr
+Release:win32-g++ : PRE_TARGETDEPS += build_nr
+
 INCLUDEPATH = core \
               de404 \
               libsgp4 \
@@ -366,7 +371,8 @@ HEADERS  += mainwindow.h \
     csgp4.h \
     csatellitedlg.h \
     csatellitesearch.h \
-    csearchwidget.h
+    csearchwidget.h \
+    build_inc.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
