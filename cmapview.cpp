@@ -1207,7 +1207,7 @@ void CMapView::addX(double dir, double mul)
 
   //qDebug("f = %f", LERP(sin(fabs(m_mapView.y)), m_mapView.fov, MAX_MAP_FOV));
 
-  m_mapView.x += dir * LERP(sin(fabs(m_mapView.y)), m_mapView.fov, MAX_MAP_FOV) * 0.05 * asp * mul;
+  m_mapView.x += dir * LERP(sin(fabs(m_mapView.y)), m_mapView.fov, MAX_MAP_FOV) * 0.02 * asp * mul;
   rangeDbl(&m_mapView.x, R360);
 }
 
