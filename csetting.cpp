@@ -12,6 +12,7 @@
 #include "cppmxl.h"
 #include "Usno2A.h"
 #include "cucac4.h"
+#include "ctextsel.h"
 
 #include <QSettings>
 
@@ -25,7 +26,6 @@ CSetting::CSetting(QWidget *parent) :
   ui(new Ui::CSetting)
 {
   ui->setupUi(this);
-  //setFixedSize(size());
 
   set = g_skSet;
 
@@ -109,6 +109,7 @@ CSetting::CSetting(QWidget *parent) :
   setValues();
   setProfileLabel();
   fillProfiles();
+  resize(sizeHint());
 }
 
 CSetting::~CSetting()
@@ -1530,4 +1531,37 @@ void CSetting::on_pushButton_57_clicked()
 void CSetting::on_pushButton_58_clicked()
 {
   setFontColor(FONT_SATELLITE, ui->pushButton_58);
+}
+
+void CSetting::on_pushButton_31_clicked()
+{
+  CTextSel dlg(this, tr("Select name of new profile"));
+
+  if (dlg.exec() == DL_CANCEL)
+  {
+    return;
+  }
+
+  QStandardItemModel *m = (QStandardItemModel *)ui->listView->model();
+
+  for (int i = 0; i < m->rowCount(); i++)
+  {
+    QStandardItem *item = m->item(i);
+
+    if (item->text().compare(dlg.m_text, Qt::CaseInsensitive) == 0)
+    {
+      msgBoxError(this, tr("Profile already exist!!!"));
+    }
+  }
+
+  g_setName = dlg.m_text;
+  setSave(g_setName, &set);
+
+  setProfileLabel();
+  fillProfiles();
+}
+
+void CSetting::on_listView_doubleClicked(const QModelIndex &)
+{
+  on_pushButton_28_clicked();
 }

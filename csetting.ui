@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -77,6 +77,13 @@
            </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QPushButton" name="pushButton_31">
+               <property name="text">
+                <string>New...</string>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QPushButton" name="pushButton_28">
                <property name="text">
@@ -3667,9 +3674,6 @@
     </layout>
    </item>
   </layout>
-  <zorder>tabWidget</zorder>
-  <zorder>label_10</zorder>
-  <zorder>horizontalLayoutWidget_13</zorder>
  </widget>
  <customwidgets>
   <customwidget>

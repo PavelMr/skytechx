@@ -379,12 +379,12 @@ bool setLoad(QString name, setting_t *set)
   set->map.star.flamsFromFov = readVal("map.star.flamsFromFov", D2R(30), tMap).toDouble();
   set->map.star.bayerPriority = readVal("map.star.bayerPriority", true, tMap).toBool();
   set->map.star.namePriority = readVal("map.star.namePriority", false, tMap).toBool();
-  set->map.star.useSpectralTp = readVal("map.star.useSpectralTp", false, tMap).toBool();
-  set->map.star.starSizeFactor = readVal("map.star.starSizeFactor", 0, tMap).toDouble();
+  set->map.star.useSpectralTp = readVal("map.star.useSpectralTp", true, tMap).toBool();
+  set->map.star.starSizeFactor = readVal("map.star.starSizeFactor", -0.5, tMap).toDouble();
   set->map.starBitmapName = readVal("map.starBitmapName", "data/stars/bitmaps/stars2.png", tMap).toString();
 
   // horizon
-  set->map.hor.color = readVal("map.hor.color", MRGB(48, 48, 48), tMap).toUInt();
+  set->map.hor.color = readVal("map.hor.color", MRGB(48, 68, 48), tMap).toUInt();
   set->map.hor.alpha = readVal("map.hor.alpha", 200, tMap).toInt();
   set->map.hor.cb_hor_show_alt_azm = readVal("map.hor.cb_hor_show_alt_azm", true, tMap).toBool();
 
@@ -553,8 +553,8 @@ bool setLoad(QString name, setting_t *set)
 
   // milky way
   set->map.milkyWay.bShow = readVal("map.milkyWay.bShow", true, tMap).toBool();
-  set->map.milkyWay.light = readVal("map.milkyWay.light", 80, tMap).toInt();
-  set->map.milkyWay.dark = readVal("map.milkyWay.dark", 50, tMap).toInt();
+  set->map.milkyWay.light = readVal("map.milkyWay.light", 20, tMap).toInt();
+  set->map.milkyWay.dark = readVal("map.milkyWay.dark", 10, tMap).toInt();
 
   // drawing
   set->map.drawing.color = readVal("map.drawing.color", MRGB(255, 255, 255), tMap).toUInt();
@@ -586,6 +586,11 @@ bool setLoad(QString name, setting_t *set)
   set->map.gsc.fromMag = readVal("map.gsc.fromMag", 11, tMap).toDouble();
 
   setCreateFonts();
+
+  if (name.isEmpty())
+  {
+    setSave("default", set);
+  }
 
   return true;
 }
