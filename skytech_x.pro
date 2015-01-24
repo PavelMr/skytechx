@@ -11,22 +11,22 @@ CONFIG   += axcontainer
 CONFIG   += plugin
 CONFIG   += c++11
 
-Release:win32-g++ : DEFINES  += QT_NO_DEBUG_OUTPUT
+Release:DEFINES  += QT_NO_DEBUG_OUTPUT
 
 Release:win32-g++ : QMAKE_CXXFLAGS += -march=native -O3 -ffast-math -fopenmp -fomit-frame-pointer -momit-leaf-frame-pointer -flto -fwhole-program -ftree-loop-distribution
 Debug:win32-g++ : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
 win32-g++ : LIBS += -lgomp -lpsapi
 
-#win32-msvc2010 :  QMAKE_CXXFLAGS += /openmp /arch:SSE /arch:SSE2 /O2 /GL /GS- /GA
-#win32-msvc2010 :  QMAKE_LFLAGS += /LTCG
+win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA
+win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
 
 TARGET = skytech_x
 TEMPLATE = app
 
-Release:win32-g++ : build_nr.commands = d:/skytechx/skytech_source/build_inc.bat
-Release:win32-g++ : build_nr.depends = FORCE
-Release:win32-g++ : QMAKE_EXTRA_TARGETS += build_nr
-Release:win32-g++ : PRE_TARGETDEPS += build_nr
+Release: build_nr.commands = d:/skytechx/skytech_source/build_inc.bat
+Release: build_nr.depends = FORCE
+Release: QMAKE_EXTRA_TARGETS += build_nr
+Release: PRE_TARGETDEPS += build_nr
 
 INCLUDEPATH = core \
               de404 \
@@ -187,6 +187,10 @@ SOURCES += main.cpp\
     ctipofday.cpp \
     caddcustomobject.cpp \
     cucac4.cpp \
+    csgp4.cpp \
+    csatellitedlg.cpp \
+    csatellitesearch.cpp \
+    csearchwidget.cpp \
     libsgp4/CoordGeodetic.cpp \
     libsgp4/CoordTopocentric.cpp \
     libsgp4/DateTime.cpp \
@@ -199,11 +203,7 @@ SOURCES += main.cpp\
     libsgp4/TimeSpan.cpp \
     libsgp4/Tle.cpp \
     libsgp4/Util.cpp \
-    libsgp4/Vector.cpp \
-    csgp4.cpp \
-    csatellitedlg.cpp \
-    csatellitesearch.cpp \
-    csearchwidget.cpp
+    libsgp4/Vector.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -352,6 +352,11 @@ HEADERS  += mainwindow.h \
     ctipofday.h \
     caddcustomobject.h \
     cucac4.h \
+    csgp4.h \
+    csatellitedlg.h \
+    csatellitesearch.h \
+    csearchwidget.h \
+    build_inc.h \
     libsgp4/CoordGeodetic.h \
     libsgp4/CoordTopocentric.h \
     libsgp4/DateTime.h \
@@ -367,12 +372,7 @@ HEADERS  += mainwindow.h \
     libsgp4/Tle.h \
     libsgp4/TleException.h \
     libsgp4/Util.h \
-    libsgp4/Vector.h \
-    csgp4.h \
-    csatellitedlg.h \
-    csatellitesearch.h \
-    csearchwidget.h \
-    build_inc.h
+    libsgp4/Vector.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -454,9 +454,11 @@ TRANSLATIONS = english.ts \
                cesky.ts
 
 OTHER_FILES += \
-    libsgp4/Makefile.am \
-    libsgp4/Makefile.in \
     skytech_rc.rc
+
+DISTFILES += \
+    libsgp4/Makefile.am \
+    libsgp4/Makefile.in
 
 
 

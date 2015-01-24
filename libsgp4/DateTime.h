@@ -24,10 +24,7 @@
 #include "TimeSpan.h"
 #include "Util.h"
 
-#ifdef __MACH__
-#include <mach/clock.h>
-#include <mach/mach.h>
-#endif
+#include <QDateTime>
 
 namespace
 {
@@ -62,7 +59,7 @@ public:
      * Constructor
      * @param[in] ticks raw tick value
      */
-    DateTime(long long ticks)
+    DateTime(unsigned long long ticks)
         : m_encoded(ticks)
     {
     }
@@ -141,34 +138,41 @@ public:
      * @param[in] microseconds whether to set the microsecond component
      * @returns a DateTime object set to the current date and time
      */
-    static DateTime Now(bool microseconds = false)
+    static DateTime Now(bool /*microseconds = false */)
     {
-        DateTime dt;
+        QDateTime current = QDateTime::currentDateTime();
+
+        DateTime dt = DateTime(current.date().year(),
+                               current.date().month(),
+                               current.date().day(),
+                               current.time().hour(),
+                               current.time().minute(),
+                               current.time().second());
+
+
+        /*
+
         struct timespec ts;
-#ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
-        clock_serv_t cclock;
-        mach_timespec_t mts;
-        host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
-        clock_get_time(cclock, &mts);
-        mach_port_deallocate(mach_task_self(), cclock);
-        ts.tv_sec = mts.tv_sec;
-        ts.tv_nsec = mts.tv_nsec;
-#else
-        if (clock_gettime(CLOCK_REALTIME, &ts) != 0)
-          throw 1;
-#endif
- 
-        if (microseconds)
+
+        if (clock_gettime(CLOCK_REALTIME, &ts) == 0)
         {
-            dt = DateTime(UnixEpoch
-                + ts.tv_sec * TicksPerSecond
-                + ts.tv_nsec / 1000LL * TicksPerMicrosecond);
+            if (microseconds)
+            {
+                dt = DateTime(UnixEpoch
+                    + ts.tv_sec * TicksPerSecond
+                    + ts.tv_nsec / 1000LL * TicksPerMicrosecond);
+            }
+            else
+            {
+                dt = DateTime(UnixEpoch
+                    + ts.tv_sec * TicksPerSecond);
+            }
         }
         else
         {
-            dt = DateTime(UnixEpoch
-                + ts.tv_sec * TicksPerSecond);
+            throw 1;
         }
+        */
 
         return dt;
     }
@@ -219,13 +223,13 @@ public:
                 valid = false;
             }
         }
-        else 
+        else
         {
             valid = false;
         }
         return valid;
     }
-    
+
     /**
      * Check whether the year/month/day is valid
      * @param[in] year the year to check
@@ -262,7 +266,7 @@ public:
         {
             throw 1;
         }
-        
+
         const int* daysInMonthPtr;
 
         if (IsLeapYear(year))
@@ -414,7 +418,7 @@ public:
         }
 
         int maxday = DaysInMonth(year, month);
-        day = std::min(day, maxday);
+        day = qMin(day, maxday);
 
         return DateTime(year, month, day).Add(TimeOfDay());
     }
@@ -472,7 +476,7 @@ public:
     void FromTicks(int& year, int& month, int& day) const
     {
         int totalDays = static_cast<int>(m_encoded / TicksPerDay);
-        
+
         /*
          * number of 400 year cycles
          */
@@ -512,7 +516,7 @@ public:
          * find year
          */
         year = (num400 * 400) + (num100 * 100) + (num4 * 4) + num1 + 1;
-        
+
         /*
          * convert day of year to month/day
          */
@@ -656,7 +660,7 @@ public:
     }
 
 private:
-    long long m_encoded;
+    unsigned long long m_encoded;
 };
 
 inline std::ostream& operator<<(std::ostream& strm, const DateTime& dt)

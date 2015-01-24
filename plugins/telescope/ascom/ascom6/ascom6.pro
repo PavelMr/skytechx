@@ -5,8 +5,10 @@
 #-------------------------------------------------
 
 
-Debug:TARGET = $$qtLibraryTarget(ascom6) + "_d"
-Release:TARGET = $$qtLibraryTarget(ascom6)
+win32-msvc2013:TARGET = "ascom6_x64"
+win32-g++:TARGET = "ascom6"
+
+TARGET = $$qtLibraryTarget($$TARGET)
 
 QT += axcontainer
 TEMPLATE = lib
