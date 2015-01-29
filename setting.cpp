@@ -1,10 +1,7 @@
 #include "skcore.h"
 #include "setting.h"
 #include "cskpainter.h"
-#include "skconfigproperty.h"
 #include "cstarrenderer.h"
-
-SkConfigProperty pr;
 
 setAutosave_t g_autoSave;
 QString       g_setName;
@@ -666,8 +663,6 @@ void setSetFontColor(int no, CSkPainter *p)
 {
   p->setPen(g_skSet.fonst[no].color);
 }
-
-Q_DECLARE_METATYPE(gridTest_t)
 
 /////////////////////////
 void setCreateFonts(void)

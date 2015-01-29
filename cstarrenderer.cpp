@@ -95,43 +95,24 @@ int CStarRenderer::getStarSize(float mag)
 /////////////////////////////////////////
 {
   int   r;
-    float vm;
-    float a = (float)(numStars);
-    float brMag = g_skSet.map.star.starSizeFactor;
-    float faMag = maxMag;
-
-    if (mag < brMag) mag = brMag;
-      else
-    if (mag > faMag) mag = faMag;
-
-    vm = a / (faMag - brMag);
-    vm = vm * (mag - brMag);
-    r = vm;
-
-    if (r < 0)
-      r = 0;
-    else
-    if (r >= numStars)
-      r = numStars - 1;
-
-  /*
-  int   r;
   float vm;
   float a = (float)(numStars);
+  float brMag = g_skSet.map.star.starSizeFactor;
+  float faMag = maxMag;
 
-  if (mag < 0) mag = 0;
+  if (mag < brMag) mag = brMag;
     else
-  if (mag > maxMag) mag = maxMag;
+  if (mag > faMag) mag = faMag;
 
-  vm = (a / maxMag) * mag;
-  r = vm - 4;
+  vm = a / (faMag - brMag);
+  vm = vm * (mag - brMag);
+  r = vm;
 
   if (r < 0)
     r = 0;
   else
   if (r >= numStars)
     r = numStars - 1;
-    */
 
   return(r);
 }

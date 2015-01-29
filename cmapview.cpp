@@ -35,7 +35,6 @@ QCursor cur_rotate;
 
 MainWindow    *pcMainWnd;
 QElapsedTimer  timer;
-CBkImages      bkImg;
 CMapView      *pcMapView;
 QString        helpText;
 

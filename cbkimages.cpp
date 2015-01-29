@@ -9,6 +9,8 @@ extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
 extern bool g_showDSSFrameName;
 
+CBkImages    bkImg;
+
 //////////////////////
 CBkImages::CBkImages()
 //////////////////////
@@ -43,7 +45,7 @@ bool CBkImages::load(const QString name, int resizeTo)
     {
       delete f;
       return(false);
-    }        
+    }
 
     i.bShow = true;
     i.filePath = name;

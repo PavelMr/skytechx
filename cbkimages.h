@@ -46,7 +46,7 @@ class CBkImages : public QObject
     QList <bkImgItem_t> m_tImgList;
     qint64              m_totalSize;
 
-  protected:       
+  protected:
 };
 
 extern CBkImages bkImg;

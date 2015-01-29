@@ -13,7 +13,7 @@ CONFIG   += c++11
 
 Release:DEFINES  += QT_NO_DEBUG_OUTPUT
 
-Release:win32-g++ : QMAKE_CXXFLAGS += -march=native -O3 -ffast-math -fopenmp -fomit-frame-pointer -momit-leaf-frame-pointer -flto -fwhole-program -ftree-loop-distribution
+Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11
 Debug:win32-g++ : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
 win32-g++ : LIBS += -lgomp -lpsapi
 
@@ -23,7 +23,7 @@ win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
 TARGET = skytech_x
 TEMPLATE = app
 
-Release: build_nr.commands = d:/skytechx/skytech_source/build_inc.bat
+Release: build_nr.commands = $$PWD/build_inc.bat
 Release: build_nr.depends = FORCE
 Release: QMAKE_EXTRA_TARGETS += build_nr
 Release: PRE_TARGETDEPS += build_nr
@@ -162,7 +162,6 @@ SOURCES += main.cpp\
     ctimewidget.cpp \
     core/skdebug.cpp \
     core/skfile.cpp \
-    core/skconfigproperty.cpp \
     cdsocatalogue.cpp \
     cpixmapwidget.cpp \
     cgetprofile.cpp \
@@ -327,7 +326,6 @@ HEADERS  += mainwindow.h \
     core/skdebug.h \
     core/skfile.h \
     cdsoplugininterface.h \
-    core/skconfigproperty.h \
     cdsocatalogue.h \
     cpixmapwidget.h \
     cgetprofile.h \
