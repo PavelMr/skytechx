@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 
+#include "castro.h"
 #include "cmapview.h"
 #include "dso_def.h"
 #include "caddcustomobject.h"
@@ -63,15 +64,32 @@ public:
     m_onScreenOnly = enable;
   }
 
+  void setLimits(double fromRa, double toRa, double fromDec, double toDec)
+  {
+    m_fromRa = fromRa;
+    m_toRa = toRa;
+    m_fromDec = fromDec;
+    m_toDec = toDec;
+  }
+
   void setFiltering()
   {
     m_empty = false;
+  }
+
+  void setAboveHorOnly(bool enable, CAstro *astro)
+  {
+    m_aboveHor = enable;
+    m_astro = astro;
   }
 
   void beginReset() { beginResetModel(); }
   void endReset() { endResetModel(); }
 
 private:
+  CAstro *m_astro;
+  bool   m_aboveHor;
+  double m_fromRa, m_toRa, m_fromDec, m_toDec;
   bool m_onScreenOnly;
   int m_objectType;
   bool m_empty;
@@ -86,7 +104,7 @@ private:
 
 protected:
    bool lessThan(const QModelIndex& left, const QModelIndex& right) const
-   {
+   { // sorting
      if (sortColumn() == 5 ||
          sortColumn() == 6 ||
          sortColumn() == 7 ||
@@ -104,7 +122,7 @@ protected:
    }
 
    virtual bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
-   {
+   { // filtering
       if (m_empty)
       {
         return false;
@@ -139,6 +157,28 @@ protected:
       if (m_onScreenOnly && !pcMapView->isRaDecOnScreen(ra, dec))
       {
         return false;
+      }
+
+      if (ra < m_fromRa || ra > m_toRa)
+      {
+        return false;
+      }
+
+      if (dec > m_fromDec || dec < m_toDec)
+      {
+        return false;
+      }
+
+      if (m_aboveHor)
+      {
+        double alt, azm;
+
+        m_astro->convRD2AARef(ra, dec, &azm, &alt);
+
+        if (alt <= 0)
+        {
+          return false;
+        }
       }
 
       if (type == DSOT_NGC_DUPP)
@@ -192,7 +232,7 @@ class CDSOCatalogue : public QDialog
   Q_OBJECT
 
 public:
-  explicit CDSOCatalogue(QWidget *parent = 0);
+  explicit CDSOCatalogue(QWidget *parent, mapView_t *view);
   ~CDSOCatalogue();
   int m_selectedIndex;
 
@@ -222,12 +262,17 @@ private slots:
 
   void on_pushButton_6_clicked();
 
+  void on_pushButton_7_clicked();
+
+  void on_pushButton_8_clicked();
+
 signals:
   void sigCenterObject();
 
 private:
+  CAstro m_astro;
   Ui::CDSOCatalogue *ui;
-
+  mapView_t *m_mapView;
   MyProxyDSOModel* m_proxy;
   QStandardItemModel* m_model;
   QList <customCatalogue_t> m_catalogue;

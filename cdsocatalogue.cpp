@@ -6,11 +6,14 @@
 #include <QPrintDialog>
 #include <QPrinter>
 
-CDSOCatalogue::CDSOCatalogue(QWidget *parent) :
+CDSOCatalogue::CDSOCatalogue(QWidget *parent, mapView_t *view) :
   QDialog(parent),
   ui(new Ui::CDSOCatalogue)
 {
+  m_mapView = view;
   ui->setupUi(this);
+  ui->w_ext_filter->hide();
+  on_pushButton_8_clicked(); // reset limits
 
   ui->tableView->setStyleSheet("QTableView::item { padding: 5px; }");
   ui->countLabel->setText("");
@@ -113,7 +116,7 @@ void CDSOCatalogue::fillList()
   m_proxy->beginReset();
   ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 
-  for (unsigned long i = 0; i < cDSO.dsoHead.numDso; i++)
+  for (qint32 i = 0; i < cDSO.dsoHead.numDso; i++)
   {
     bool ok;
     dso_t* dso = &cDSO.dso[i];
@@ -222,6 +225,84 @@ void CDSOCatalogue::updateCount()
 
 void CDSOCatalogue::on_pushButton_2_clicked()
 {
+  double fromRa = HMS2RAD(ui->sb_ra_h->value(), ui->sb_ra_m->value(), ui->sb_ra_s->value());
+  double toRa = HMS2RAD(ui->sb_ra2_h->value(), ui->sb_ra2_m->value(), ui->sb_ra2_s->value());
+  double fromDec = DMS2RAD(qAbs(ui->sb_dec_d->value()), ui->sb_dec_m->value(), ui->sb_dec_s->value());
+  double toDec = DMS2RAD(qAbs(ui->sb_dec2_d->value()), ui->sb_dec2_m->value(), ui->sb_dec2_s->value());
+
+  if (ui->sb_dec_d->value() < 0)
+  {
+    fromDec = -fromDec;
+  }
+
+  if (ui->sb_dec2_d->value() < 0)
+  {
+    toDec = -toDec;
+  }
+
+  if (fromRa > R360)
+  {
+    ui->sb_ra_h->setValue(24);
+    ui->sb_ra_m->setValue(0);
+    ui->sb_ra_s->setValue(0);
+  }
+
+  if (toRa > R360)
+  {
+    ui->sb_ra2_h->setValue(24);
+    ui->sb_ra2_m->setValue(0);
+    ui->sb_ra2_s->setValue(0);
+  }
+
+  if (fromDec > R90)
+  {
+    ui->sb_dec_d->setValue(90);
+    ui->sb_dec_m->setValue(0);
+    ui->sb_dec_s->setValue(0);
+  }
+
+  if (fromDec < -R90)
+  {
+    ui->sb_dec_d->setValue(-90);
+    ui->sb_dec_m->setValue(0);
+    ui->sb_dec_s->setValue(0);
+  }
+
+  if (toDec > R90)
+  {
+    ui->sb_dec2_d->setValue(90);
+    ui->sb_dec2_m->setValue(0);
+    ui->sb_dec2_s->setValue(0);
+  }
+
+  if (toDec < -R90)
+  {
+    ui->sb_dec2_d->setValue(-90);
+    ui->sb_dec2_m->setValue(0);
+    ui->sb_dec2_s->setValue(0);
+  }
+
+  if (toRa > R360)
+  {
+    ui->sb_ra2_h->setValue(24);
+    ui->sb_ra2_m->setValue(0);
+    ui->sb_ra2_s->setValue(0);
+  }
+
+  if (fromRa > toRa)
+  {
+    qSwap(fromRa, toRa);
+  }
+
+  if (fromDec < toDec)
+  {
+    qSwap(fromDec, toDec);
+  }
+
+  m_astro.setParam(m_mapView);
+
+  m_proxy->setAboveHorOnly(ui->cb_hor_only->isChecked(), &m_astro);
+  m_proxy->setLimits(fromRa, toRa, fromDec, toDec);
   m_proxy->setFiltering();
   m_proxy->setCatalogue(ui->cbCatalogue->currentData().toInt(), &m_catalogue);
   m_proxy->setNameFilter(ui->nameFilterEdit->text());
@@ -295,6 +376,8 @@ void CDSOCatalogue::on_pushButton_4_clicked()
   ui->sizeComboBox->setCurrentIndex(0);
   ui->constFilterEdit->setText("");
   ui->cb_onScreen->setChecked(false);
+  ui->cb_hor_only->setChecked(false);
+  on_pushButton_8_clicked(); // reset limits
 }
 
 
@@ -410,4 +493,37 @@ void CDSOCatalogue::on_pushButton_6_clicked()
     }
   }
   fOut.close();
+}
+
+void CDSOCatalogue::on_pushButton_7_clicked()
+{
+  if (ui->w_ext_filter->isHidden())
+  {
+    ui->pushButton_7->setText(tr("Hide ext. filter"));
+    ui->w_ext_filter->show();
+  }
+  else
+  {
+    ui->pushButton_7->setText(tr("Show ext. filter"));
+    ui->w_ext_filter->hide();
+  }
+}
+
+void CDSOCatalogue::on_pushButton_8_clicked()
+{
+  ui->sb_ra_h->setValue(0);
+  ui->sb_ra_m->setValue(0);
+  ui->sb_ra_s->setValue(0);
+
+  ui->sb_ra2_h->setValue(24);
+  ui->sb_ra2_m->setValue(0);
+  ui->sb_ra2_s->setValue(0);
+
+  ui->sb_dec_d->setValue(90);
+  ui->sb_dec_m->setValue(0);
+  ui->sb_dec_s->setValue(0);
+
+  ui->sb_dec2_d->setValue(-90);
+  ui->sb_dec2_m->setValue(0);
+  ui->sb_dec2_s->setValue(0);
 }

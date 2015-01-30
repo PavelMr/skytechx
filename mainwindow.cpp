@@ -4491,7 +4491,7 @@ void MainWindow::on_actionDeep_Sky_Objects_triggered(bool checked)
 {
   if (checked)
   {
-    m_DSOCatalogueDlg = new CDSOCatalogue();
+    m_DSOCatalogueDlg = new CDSOCatalogue(NULL, &ui->widget->m_mapView);
 
     m_DSOCatalogueDlg->setWindowFlags(Qt::Window);
     m_DSOCatalogueDlg->setAttribute(Qt::WA_DeleteOnClose);

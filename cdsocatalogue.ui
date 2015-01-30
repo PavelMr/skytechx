@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1059</width>
-    <height>487</height>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>DSO Catalogue</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
     <widget class="QTableView" name="tableView">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
@@ -48,79 +48,66 @@
      </attribute>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="1" column="6">
-      <widget class="QLineEdit" name="constFilterEdit"/>
+     <item row="0" column="10">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="label_2">
+     <item row="1" column="9">
+      <widget class="QPushButton" name="pushButton_7">
        <property name="text">
-        <string>Object type filter</string>
+        <string>Show ext. filter</string>
        </property>
       </widget>
-     </item>
-     <item row="1" column="5">
-      <widget class="QDoubleSpinBox" name="sizeLimitSpin">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="suffix">
-        <string>'</string>
-       </property>
-       <property name="maximum">
-        <double>99999.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="6">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Constellation filter</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QDoubleSpinBox" name="magLimitSpin">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="suffix">
-        <string>mag.</string>
-       </property>
-       <property name="minimum">
-        <double>-99.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="typeComboBox"/>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Name filter</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="7">
-      <widget class="QCheckBox" name="cb_onScreen">
-       <property name="text">
-        <string>Only objects on the screen</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="4">
-      <widget class="QComboBox" name="sizeComboBox"/>
      </item>
      <item row="0" column="4">
-      <widget class="QLabel" name="label_3">
+      <widget class="QCheckBox" name="checkBox">
        <property name="text">
-        <string>Size limit</string>
+        <string>Magnitude limit</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="1" column="0">
+      <widget class="QComboBox" name="cbCatalogue"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Catalogue</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="8">
+      <widget class="QCheckBox" name="cb_top">
+       <property name="text">
+        <string>Always on top</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="10">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="3">
       <widget class="QLineEdit" name="nameFilterEdit">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -139,59 +126,363 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="5">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Size limit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="5">
+      <widget class="QComboBox" name="sizeComboBox"/>
+     </item>
      <item row="0" column="8">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QCheckBox" name="cb_onScreen">
+       <property name="text">
+        <string>Only objects on the screen</string>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      </widget>
      </item>
      <item row="0" column="3">
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Magnitude limit</string>
+        <string>Name filter</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="8">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+     <item row="1" column="2">
+      <widget class="QComboBox" name="typeComboBox"/>
+     </item>
+     <item row="1" column="4">
+      <widget class="QDoubleSpinBox" name="magLimitSpin">
+       <property name="enabled">
+        <bool>false</bool>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
+       <property name="suffix">
+        <string>mag.</string>
        </property>
-      </spacer>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="7">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Constellation filter</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="6">
+      <widget class="QDoubleSpinBox" name="sizeLimitSpin">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="suffix">
+        <string>'</string>
+       </property>
+       <property name="maximum">
+        <double>99999.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Object type filter</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="7">
-      <widget class="QCheckBox" name="cb_top">
+      <widget class="QLineEdit" name="constFilterEdit"/>
+     </item>
+     <item row="0" column="9">
+      <widget class="QCheckBox" name="cb_hor_only">
        <property name="text">
-        <string>Always on top</string>
+        <string>Show only object above horizon</string>
        </property>
       </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Catalogue</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QComboBox" name="cbCatalogue"/>
      </item>
     </layout>
    </item>
-   <item row="5" column="0">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QWidget" name="w_ext_filter" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="2" column="6">
+           <widget class="QSpinBox" name="sb_ra2_m">
+            <property name="suffix">
+             <string> m</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="sb_ra_m">
+            <property name="suffix">
+             <string> m</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QSpinBox" name="sb_ra_h">
+            <property name="suffix">
+             <string> h</string>
+            </property>
+            <property name="maximum">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="7">
+           <widget class="QSpinBox" name="sb_ra2_s">
+            <property name="suffix">
+             <string> s</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QSpinBox" name="sb_ra2_h">
+            <property name="suffix">
+             <string> h</string>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="18">
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="17">
+           <widget class="QPushButton" name="pushButton_8">
+            <property name="text">
+             <string>Reset limits</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="9">
+           <widget class="QSpinBox" name="sb_dec_d">
+            <property name="suffix">
+             <string>°</string>
+            </property>
+            <property name="minimum">
+             <number>-90</number>
+            </property>
+            <property name="maximum">
+             <number>90</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="10">
+           <widget class="QSpinBox" name="sb_dec_m">
+            <property name="suffix">
+             <string>'</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="11">
+           <widget class="QSpinBox" name="sb_dec_s">
+            <property name="suffix">
+             <string>&quot;</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="13">
+           <widget class="QSpinBox" name="sb_dec2_d">
+            <property name="suffix">
+             <string>°</string>
+            </property>
+            <property name="minimum">
+             <number>-90</number>
+            </property>
+            <property name="maximum">
+             <number>90</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="14">
+           <widget class="QSpinBox" name="sb_dec2_m">
+            <property name="suffix">
+             <string>'</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="15">
+           <widget class="QSpinBox" name="sb_dec2_s">
+            <property name="showGroupSeparator" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="suffix">
+             <string>&quot;</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="12">
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
+              <height>8</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="4">
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
+              <height>8</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="8">
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
+              <height>8</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="16">
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
+              <height>8</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>From R.A.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5" colspan="3">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>To R.A.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="9" colspan="3">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>From Dec.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="13" colspan="3">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>To Dec.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QSpinBox" name="sb_ra_s">
+            <property name="suffix">
+             <string> s</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,3,2,0,1,0,0,1">
      <item>
       <widget class="QPushButton" name="pushButton_2">
@@ -272,13 +563,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item row="4" column="0">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
