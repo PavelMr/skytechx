@@ -495,6 +495,8 @@ private slots:
 
   void on_actionSatellite_3_triggered(bool checked);
 
+  void on_actionDSO_by_catalogue_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

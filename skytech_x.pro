@@ -203,7 +203,8 @@ SOURCES += main.cpp\
     libsgp4/Tle.cpp \
     libsgp4/Util.cpp \
     libsgp4/Vector.cpp \
-    clog.cpp
+    clog.cpp \
+    csearchdsocat.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -372,7 +373,8 @@ HEADERS  += mainwindow.h \
     libsgp4/TleException.h \
     libsgp4/Util.h \
     libsgp4/Vector.h \
-    clog.h
+    clog.h \
+    csearchdsocat.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -442,7 +444,8 @@ FORMS    += mainwindow.ui \
     caddcustomobject.ui \
     csatellitedlg.ui \
     csatellitesearch.ui \
-    csearchwidget.ui
+    csearchwidget.ui \
+    csearchdsocat.ui
 
 
 RESOURCES += \

@@ -375,10 +375,13 @@
     <addaction name="action_Last_search_object"/>
     <addaction name="separator"/>
     <addaction name="action_Constellation"/>
+    <addaction name="separator"/>
     <addaction name="actionStar_in_Tycho_catalogue"/>
     <addaction name="actionStar_by_proper_name"/>
     <addaction name="actionDoube_star"/>
+    <addaction name="separator"/>
     <addaction name="actionDOS_by_common_name"/>
+    <addaction name="actionDSO_by_catalogue"/>
     <addaction name="separator"/>
     <addaction name="actionPlanets_Sun_Moon"/>
     <addaction name="actionAsteroid"/>
@@ -634,7 +637,7 @@
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>368</height>
+          <height>123</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1192,7 +1195,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>257</width>
+          <width>212</width>
           <height>524</height>
          </rect>
         </property>
@@ -1432,7 +1435,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>368</height>
+          <height>327</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1722,8 +1725,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>101</width>
-          <height>368</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1870,8 +1873,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
-          <height>368</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3657,6 +3660,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Show/Hide Satellite</string>
+   </property>
+  </action>
+  <action name="actionDSO_by_catalogue">
+   <property name="text">
+    <string>Custom DSO...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>

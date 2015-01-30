@@ -68,6 +68,7 @@
 #include "csgp4.h"
 #include "csatellitedlg.h"
 #include "csatellitesearch.h"
+#include "csearchdsocat.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -4755,4 +4756,15 @@ void MainWindow::on_actionSatellite_3_triggered(bool checked)
 {
   g_showSatellites = checked;
   ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionDSO_by_catalogue_triggered()
+{
+  CSearchDSOCat dlg(this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    precess(&dlg.m_ra, &dlg.m_dec, JD2000, ui->widget->m_mapView.jd);
+    ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
+  }
 }
