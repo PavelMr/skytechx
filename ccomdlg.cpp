@@ -108,9 +108,10 @@ static void solveCometElliptic(comet_t *com, double dt, double &r, double &v)
 
   v = 2.0 * atan2(num, den);
   r = a * (1.0 - com->e * cos(E));
-  rangeDbl(&v, MPI2);
 
-  //qDebug() << "elip" << v << r;
+  qDebug() << v << r;
+
+  rangeDbl(&v, MPI2);
 }
 
 static void solveCometParabolic(comet_t *com, double dt, double &r, double &v)
@@ -169,6 +170,8 @@ static bool comSolve2(comet_t *a, double jdt)
   double ye;
   double ze;
 
+  qDebug() << "------";
+
   // NOTE: komety a asteroidy maji uz deltaT v sobe
   double t = (jdt - a->perihelionDate);
 
@@ -191,15 +194,19 @@ static bool comSolve2(comet_t *a, double jdt)
     double n = a->w;
     double p = a->W;
 
-    // heliocentric pos J2000.0
+    // Helio. ecliptic J2000.0
     double rh[3];
     rh[0] = r * ( cos(n) * cos(v + p) - sin(n) * sin(v + p) * cos(a->i));
     rh[1] = r * ( sin(n) * cos(v + p) + cos(n) * sin(v + p) * cos(a->i));
     rh[2] = r * ( sin(v + p) * sin(a->i));
 
+    qDebug() << "rh" << rh[0] << rh[1] << rh[2];
+
+    // helio eqt. J2000.0
+    double ea1 = cAstro.getEclObl(JD2000);
     a->orbit.hRect[0] = rh[0];
-    a->orbit.hRect[1] = rh[1];
-    a->orbit.hRect[2] = rh[2];
+    a->orbit.hRect[1] = rh[1] * cos(ea1) - rh[2] * sin(ea1);
+    a->orbit.hRect[2] = rh[1] * sin(ea1) + rh[2] * cos(ea1);
 
     a->orbit.hLon = atan2(rh[1], rh[0]);
     a->orbit.hLat = atan2(rh[2], sqrt(rh[0] * rh[0] + rh[1] * rh[1]));
@@ -210,11 +217,15 @@ static bool comSolve2(comet_t *a, double jdt)
     double yg = rh[1] + ys;
     double zg = rh[2] + zs;
 
-    // geocentric pos eq. J2000.0
+    qDebug() << "g" << xg << yg << zg;
+
+    // geocentric eq. J2000.0
     double ea = cAstro.getEclObl(JD2000);
     xe = xg;
     ye = yg * cos(ea) - zg * sin(ea);
     ze = yg * sin(ea) + zg * cos(ea);
+
+    qDebug() << "e" << xe << ye << ze;
 
     a->orbit.r = r;
     a->orbit.R = sqrt(xg * xg + yg * yg + zg *zg);
@@ -228,16 +239,15 @@ static bool comSolve2(comet_t *a, double jdt)
   a->orbit.gRD.Dec = atan2(ze, sqrt(xe * xe + ye * ye));
   rangeDbl(&a->orbit.gRD.Ra, MPI2);
 
-  //precess(&a->orbit.gRD.Ra, &a->orbit.gRD.Dec, JD2000, jdt);
-
-  a->orbit.lRD.Ra  = a->orbit.gRD.Ra;
-  a->orbit.lRD.Dec = a->orbit.gRD.Dec;
+  precess(&a->orbit.gRD.Ra, &a->orbit.gRD.Dec, JD2000, jdt);
 
   a->orbit.mag = a->H + 5 * log10(a->orbit.R) + 2.5 * a->G * log10(a->orbit.r);
 
   a->orbit.elongation = acos((sunOrbit.r * sunOrbit.r + R * R - r * r) / (2 * sunOrbit.r * R));
   if ((sunOrbit.r * sunOrbit.r + R * R - r*r) < 0)
+  {
     a->orbit.elongation = -a->orbit.elongation;
+  }
 
   a->orbit.sx = 0;
   a->orbit.sy = 0;

@@ -18,6 +18,40 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
   str = str.simplified();
 
+  // ra/dec
+  {
+    QStringList list = str.split(' ');
+    if (list.count() == 6)
+    {
+      double rah, ram, ras;
+      double decd, decm, decs;
+
+      rah = list.at(0).toDouble();
+      ram = list.at(1).toDouble();
+      ras = list.at(2).toDouble();
+
+      decd = list.at(3).toDouble();
+      decm = list.at(4).toDouble();
+      decs = list.at(5).toDouble();
+
+      double mra = HMS2RAD(qAbs(rah), qAbs(ram), qAbs(ras));
+      double mdec = DMS2RAD(qAbs(decd), qAbs(decm), qAbs(decs));
+
+      if (decd < 0)
+      {
+        mdec = -mdec;
+      }
+
+      if (mra >= 0 && mra <= R360 && mdec >= -R90 && mdec <= R90)
+      {
+        ra = mra;
+        dec = mdec;
+        fov = CM_UNDEF;
+        return true;
+      }
+    }
+  }
+
   QApplication::processEvents();
 
   // constellation

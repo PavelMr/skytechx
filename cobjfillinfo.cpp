@@ -436,7 +436,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Light time"), QString::number(a->orbit.light * 24.) + tr(" hours"));
   addSeparator(item);
 
-  addLabelItem(item, tr("Heliocentric information"));
+  addLabelItem(item, tr("Heliocentric information")  + " " + tr("J2000.0"));
   addSeparator(item);
   addTextItem(item, tr("X"), QString::number(a->orbit.hRect[0]));
   addTextItem(item, tr("Y"), QString::number(a->orbit.hRect[1]));

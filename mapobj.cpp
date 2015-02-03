@@ -655,6 +655,17 @@ QString checkObjOnMap(const QPoint &pos)
         break;
       }
 
+      case MO_UCAC4:
+      {
+        ucac4Star_t s;
+
+        cUcac4.getStar(s, obj.par1, obj.par2);
+
+        nameStr = QString("UCAC4 %1-%2").arg(s.zone).arg(s.number, 6, 10, QChar('0'));
+        magStr = getStrMag(s.mag);
+        break;
+      }
+
       case MO_PPMXLSTAR:
       {
         ppmxlCache_t *data;
