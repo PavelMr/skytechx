@@ -616,6 +616,10 @@ void de404(int pln, double jd, double rect[])
   rec[1] = sin (pol[0]) * r;
   rec[2] = sin (pol[1]) * r;
 
+  rect[3] = -rec[0];
+  rect[4] = -rec[1];
+  rect[5] = -rec[2];
+
   /* Rotate coordinates from ecliptic to equatorial.  */
   cp.epsiln (J2000);
 
@@ -649,11 +653,4 @@ void de404(int pln, double jd, double rect[])
   rect[2] = pol[2];
 
   rangeDbl(&rect[0], R360);
-
-  /*
-  qDebug("pln = %d", pln);
-  qDebug("  lon = %s", getStrDeg(rect[0]).toAscii().data());
-  qDebug("  lat = %s", getStrDeg(rect[1]).toAscii().data());
-  qDebug("    r = %f", rect[2]);
-  */
 }

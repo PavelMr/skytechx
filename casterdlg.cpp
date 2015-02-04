@@ -228,9 +228,9 @@ void astSolve(asteroid_t *a, double jdt)
     {
       cAstro.calcPlanet(PT_SUN, &sunOrbit);
 
-      xs = sunOrbit.r * cos(sunOrbit.hLon) * cos(sunOrbit.hLat);
-      ys = sunOrbit.r * sin(sunOrbit.hLon) * cos(sunOrbit.hLat);
-      zs = sunOrbit.r                      * sin(sunOrbit.hLat);
+      xs = sunOrbit.sRectJ2000[0];
+      ys = sunOrbit.sRectJ2000[1];
+      zs = sunOrbit.sRectJ2000[2];
 
       lastJD = jdt;
     }

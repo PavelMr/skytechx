@@ -49,6 +49,7 @@ typedef struct
   double  hLat;
   double  hRect[3];
   double  eRect[3];       // earth helio rect
+  double  sRectJ2000[3];
   double  r, R;
 
   double  light;          // in days

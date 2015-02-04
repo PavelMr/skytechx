@@ -771,7 +771,6 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy)
       orbit->hLon = data[0];
       orbit->hLat = data[1];
       orbit->r = data[2];
-
     }
     else
     { // solve moon
@@ -791,6 +790,10 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy)
       orbit->hLon = data[0];
       orbit->hLat = data[1];
       orbit->r = data[2];
+
+      orbit->sRectJ2000[0] = data[3];
+      orbit->sRectJ2000[1] = data[4];
+      orbit->sRectJ2000[2] = data[5];
 
       solveSun(orbit);
       return;

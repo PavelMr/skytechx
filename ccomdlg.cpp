@@ -109,8 +109,6 @@ static void solveCometElliptic(comet_t *com, double dt, double &r, double &v)
   v = 2.0 * atan2(num, den);
   r = a * (1.0 - com->e * cos(E));
 
-  qDebug() << v << r;
-
   rangeDbl(&v, MPI2);
 }
 
@@ -128,37 +126,31 @@ static void solveCometParabolic(comet_t *com, double dt, double &r, double &v)
 
   s = s1;
 
-  //qDebug() << s;
-
   v = 2.0 * atan(s);
   r = com->q * (1.0 + s * s);
   rangeDbl(&v, MPI2);
-
-  //qDebug() << "para" << v << r;
 }
 
 static void solveCometHyperbolic(comet_t *com, double dt, double &r, double &v)
 {
-    double da = com->q / qAbs(1.0 - com->e);
-    double n0 = 0.01720209895 / (da * sqrt(da));
+  double da = com->q / qAbs(1.0 - com->e);
+  double n0 = 0.01720209895 / (da * sqrt(da));
 
-    double m = n0 * dt;
-    double U = 0.5;
-    double U0;
+  double m = n0 * dt;
+  double U = 0.5;
+  double U0;
 
-    do
-    {
-      U0 = U ;
-      U = (2 * U0 * (com->e - U0 * (1 - m - log(qAbs(U0))))) / (com->e * (U0 * U0 + 1) - 2 * U0);
-    } while (qAbs(U - U0) > 1E-9);
+  do
+  {
+    U0 = U ;
+    U = (2 * U0 * (com->e - U0 * (1 - m - log(qAbs(U0))))) / (com->e * (U0 * U0 + 1) - 2 * U0);
+  } while (qAbs(U - U0) > 1E-9);
 
-    double num = sqrt(com->e * com->e - 1)*(U * U - 1)/(2 * U) ;
-    double den = com->e-(U * U + 1)/(2 * U) ;
-    v = atan2(num, den);
-    r = da * ((com->e * (U * U + 1)/(2 * U)) - 1) ;
-    rangeDbl(&v, MPI2);
-
-  //qDebug() << "hyper" << v << r;
+  double num = sqrt(com->e * com->e - 1)*(U * U - 1)/(2 * U) ;
+  double den = com->e-(U * U + 1)/(2 * U) ;
+  v = atan2(num, den);
+  r = da * ((com->e * (U * U + 1)/(2 * U)) - 1) ;
+  rangeDbl(&v, MPI2);
 }
 
 /////////////////////////////////////////////
@@ -169,8 +161,6 @@ static bool comSolve2(comet_t *a, double jdt)
   double xe;
   double ye;
   double ze;
-
-  qDebug() << "------";
 
   // NOTE: komety a asteroidy maji uz deltaT v sobe
   double t = (jdt - a->perihelionDate);
@@ -191,6 +181,8 @@ static bool comSolve2(comet_t *a, double jdt)
       solveCometHyperbolic(a, t, r, v);
     }
 
+    ////////////////////////////////////////////////
+
     double n = a->w;
     double p = a->W;
 
@@ -199,8 +191,6 @@ static bool comSolve2(comet_t *a, double jdt)
     rh[0] = r * ( cos(n) * cos(v + p) - sin(n) * sin(v + p) * cos(a->i));
     rh[1] = r * ( sin(n) * cos(v + p) + cos(n) * sin(v + p) * cos(a->i));
     rh[2] = r * ( sin(v + p) * sin(a->i));
-
-    qDebug() << "rh" << rh[0] << rh[1] << rh[2];
 
     // helio eqt. J2000.0
     double ea1 = cAstro.getEclObl(JD2000);
@@ -217,15 +207,11 @@ static bool comSolve2(comet_t *a, double jdt)
     double yg = rh[1] + ys;
     double zg = rh[2] + zs;
 
-    qDebug() << "g" << xg << yg << zg;
-
     // geocentric eq. J2000.0
     double ea = cAstro.getEclObl(JD2000);
     xe = xg;
     ye = yg * cos(ea) - zg * sin(ea);
     ze = yg * sin(ea) + zg * cos(ea);
-
-    qDebug() << "e" << xe << ye << ze;
 
     a->orbit.r = r;
     a->orbit.R = sqrt(xg * xg + yg * yg + zg *zg);
@@ -275,9 +261,9 @@ bool comSolve(comet_t *a, double jdt)
     {
       cAstro.calcPlanet(PT_SUN, &sunOrbit);
 
-      xs = sunOrbit.r * cos(sunOrbit.hLon) * cos(sunOrbit.hLat);
-      ys = sunOrbit.r * sin(sunOrbit.hLon) * cos(sunOrbit.hLat);
-      zs = sunOrbit.r                      * sin(sunOrbit.hLat);
+      xs = sunOrbit.sRectJ2000[0];
+      ys = sunOrbit.sRectJ2000[1];
+      zs = sunOrbit.sRectJ2000[2];
 
       lastJD = jdt;
     }
