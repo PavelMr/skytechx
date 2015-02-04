@@ -29,9 +29,9 @@ private slots:
 
   void on_pushButton_3_clicked();
 
-  void on_lineEdit_textChanged(const QString &arg1);
-
   void on_pushButton_5_clicked();
+
+  void slotSelChange(QModelIndex &index);
 
 private:
   Ui::CSatelliteDlg *ui;

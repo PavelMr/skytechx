@@ -118,14 +118,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Search</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit"/>
+         <widget class="CSearchWidget" name="widget" native="true"/>
         </item>
         <item>
          <widget class="QListView" name="listView"/>
@@ -192,6 +185,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CSearchWidget</class>
+   <extends>QWidget</extends>
+   <header>csearchwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

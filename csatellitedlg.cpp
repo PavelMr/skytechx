@@ -27,6 +27,9 @@ CSatelliteDlg::CSatelliteDlg(QWidget *parent) :
   ui->listView->activateWindow();
 
   fillList();
+
+  ui->widget->setModel((QSortFilterProxyModel *)ui->listView->model(), 0);
+  connect(ui->widget, SIGNAL(sigSetSelection(QModelIndex&)), this, SLOT(slotSelChange(QModelIndex&)));
 }
 
 CSatelliteDlg::~CSatelliteDlg()
@@ -213,24 +216,6 @@ void CSatelliteDlg::on_pushButton_3_clicked()
   }
 }
 
-void CSatelliteDlg::on_lineEdit_textChanged(const QString &arg1)
-{
-  QStandardItemModel *model = (QStandardItemModel *)ui->listView->model();
-
-  for (int i = 0; i < model->rowCount(); i++)
-  {
-    QStandardItem *item = model->item(i);
-    if (item->text().contains(arg1, Qt::CaseInsensitive))
-    {
-      ui->listView->clearSelection();
-      QModelIndex idx = model->index(i, 0);
-      ui->listView->selectionModel()->select(idx, QItemSelectionModel::Select);
-      ui->listView->scrollTo(idx);
-      return;
-    }
-  }
-}
-
 void CSatelliteDlg::on_pushButton_5_clicked()
 {
   QStandardItemModel *model = (QStandardItemModel *)ui->listView->model();
@@ -260,4 +245,10 @@ void CSatelliteDlg::on_pushButton_5_clicked()
   curSatelliteCatName = "";
   sgp4.removeAll();
   fillList();
+}
+
+void CSatelliteDlg::slotSelChange(QModelIndex &index)
+{
+  ui->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+  ui->listView->scrollTo(index);
 }

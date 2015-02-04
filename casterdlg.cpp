@@ -472,6 +472,9 @@ CAsterDlg::CAsterDlg(QWidget *parent) :
 
   QShortcut *sh1 = new QShortcut(QKeySequence(Qt::Key_Delete), ui->listView, 0, 0,  Qt::WidgetShortcut);
   connect(sh1, SIGNAL(activated()), this, SLOT(slotDelete()));
+
+  ui->widget->setModel((QSortFilterProxyModel *)ui->listView->model(), 0);
+  connect(ui->widget, SIGNAL(sigSetSelection(QModelIndex&)), this, SLOT(slotSelChange(QModelIndex&)));
 }
 
 CAsterDlg::~CAsterDlg()
@@ -642,26 +645,12 @@ void CAsterDlg::slotDelete()
   updateDlg();
 }
 
-
-////////////////////////////////////////////////////////////
-void CAsterDlg::on_lineEdit_textChanged(const QString &arg1)
-////////////////////////////////////////////////////////////
+void CAsterDlg::slotSelChange(QModelIndex &index)
 {
-  QStandardItemModel *model = (QStandardItemModel *)ui->listView->model();
-
-  for (int i = 0; i < model->rowCount(); i++)
-  {
-    QStandardItem *item = model->item(i);
-    if (item->text().contains(arg1, Qt::CaseInsensitive))
-    {
-      ui->listView->clearSelection();
-      QModelIndex idx = model->index(i, 0);
-      ui->listView->selectionModel()->select(idx, QItemSelectionModel::Select);
-      ui->listView->scrollTo(idx);
-      return;
-    }
-  }
+  ui->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+  ui->listView->scrollTo(index);
 }
+
 
 /////////////////////////////////////////
 void CAsterDlg::on_pushButton_7_clicked()

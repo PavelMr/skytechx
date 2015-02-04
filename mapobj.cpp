@@ -703,19 +703,19 @@ QString checkObjOnMap(const QPoint &pos)
         break;
       }
 
+      case MO_SATELLITE:
+      {
+        nameStr = sgp4.getName(obj.par1);
+        magStr = "";
+      }
+      break;
+
       case MO_DSO:
       {
         dso_t *dso = (dso_t *)obj.par1;
 
         nameStr = cDSO.getName(dso);
         magStr = ((dso->mag != NO_DSO_MAG) ? (getStrMag(dso->DSO_MAG)) : QString(""));
-      }
-      break;
-
-      case MO_SATELLITE:
-      {
-        nameStr = sgp4.getName(obj.par1);
-        magStr = "";
       }
       break;
     }

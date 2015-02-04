@@ -68,7 +68,7 @@ private slots:
 
   void slotDelete(void);
 
-  void on_lineEdit_textChanged(const QString &arg1);
+  void slotSelChange(QModelIndex &index);
 
   void on_pushButton_7_clicked();
 
