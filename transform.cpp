@@ -139,9 +139,15 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
 
   dxArcSec = scrx / RAD2DEG(mapView->fov);
 
+  // TODO: epoch mapy + udelat i v cGrid
+  double mapEpoch = mapView->jd;
+
   SKMATRIX proj;
   SKMATRIX fproj;
   SKMATRIX scale;
+  SKMATRIX precMat;
+
+  precessMatrix(JD2000, mapEpoch, &precMat);
 
   SKMATRIXProjection(&proj, mapView->fov, scrx / scry, NEAR_PLANE_DIST, 1);
   SKMATRIXProjection(&fproj, mapView->fov * 1.2, scrx / scry, NEAR_PLANE_DIST, 1);
@@ -151,11 +157,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
   {
     SKMATRIX view;
     SKMATRIX mat;
-    SKMATRIX precMat;
-
     SKMATRIX mx, my, mz;
-
-    precessMatrix(JD2000, mapView->jd, &precMat);
 
     SKMATRIXRotateX(&mx, -mapView->y);
     SKMATRIXRotateY(&my, mapView->x);
@@ -177,11 +179,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     SKMATRIX mat;
     SKMATRIX gmx;
     SKMATRIX gmy;
-    SKMATRIX precMat;
-
     SKMATRIX mx, my, mz;
-
-    precessMatrix(JD2000, mapView->jd, &precMat);
 
     SKMATRIXRotateX(&gmx, ast->m_geoLat - R90);
     SKMATRIXRotateY(&gmy, ast->m_lst + R180);
@@ -205,11 +203,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     SKMATRIX view;
     SKMATRIX mat;
     SKMATRIX gmz;
-    SKMATRIX precMat;
-
     SKMATRIX mx, my, mz;
-
-    precessMatrix(JD2000, mapView->jd, &precMat);
 
     SKMATRIXRotateZ(&gmz, -cAstro.m_eclObl);
 

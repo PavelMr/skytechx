@@ -73,6 +73,9 @@ CWPosSel::CWPosSel(QWidget *parent, mapView_t *view) :
 
   QShortcut *sh1 = new QShortcut(QKeySequence(Qt::Key_Delete), ui->listWidget, 0, 0,  Qt::WidgetShortcut);
   connect(sh1, SIGNAL(activated()), this, SLOT(slotDeleteItem()));
+
+  ui->widget->setModel((QSortFilterProxyModel *)ui->listWidget->model(), 0);
+  connect(ui->widget, SIGNAL(sigSetSelection(QModelIndex&)), this, SLOT(slotSelChange(QModelIndex&)));
 }
 
 /////////////////////
@@ -616,4 +619,10 @@ void CWPosSel::on_pushButton_8_clicked()
   setCursor(Qt::WaitCursor);
 
   Q_UNUSED(reply);
+}
+
+void CWPosSel::slotSelChange(QModelIndex &index)
+{
+  ui->listWidget->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+  ui->listWidget->scrollTo(index);
 }

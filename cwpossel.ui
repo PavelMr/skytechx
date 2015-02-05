@@ -529,7 +529,7 @@
         <string>Saved locations</string>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
+        <item row="1" column="0">
          <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
           <item>
            <widget class="CListWidget" name="listWidget">
@@ -577,6 +577,9 @@
           </item>
          </layout>
         </item>
+        <item row="0" column="0">
+         <widget class="CSearchWidget" name="widget" native="true"/>
+        </item>
        </layout>
       </widget>
      </item>
@@ -620,6 +623,12 @@
    <class>CListWidget</class>
    <extends>QListWidget</extends>
    <header>clistwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CSearchWidget</class>
+   <extends>QWidget</extends>
+   <header>csearchwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
