@@ -10,6 +10,7 @@ typedef struct
   QString name;
   double  x, y, z;
   double  distance;
+  double  distanceFromPlanet; // in km from surface
   float   mag;
   double  diam; // in km
   double  size; // in arcsec

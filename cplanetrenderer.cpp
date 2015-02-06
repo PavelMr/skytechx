@@ -765,9 +765,15 @@ int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t 
     trfRaDecToPointCorrectFromTo(&sat->srd, &sp, view->jd, JD2000);
     if (trfProjectPoint(&sp))
     {
-      p->setPen(QColor(0, 0, 0));
-      p->setBrush(QColor(0, 0, 0));
-      p->setOpacity(g_skSet.map.planet.phaseAlpha / 255.f);
+      QRadialGradient gradient(QPointF(sp.sx, sp.sy), r, QPointF(sp.sx, sp.sy));
+
+      gradient.setColorAt(0, QColor(0, 0, 0, g_skSet.map.planet.phaseAlpha));
+      gradient.setColorAt(0.7, QColor(0, 0, 0, g_skSet.map.planet.phaseAlpha));
+      gradient.setColorAt(1, QColor(0, 0, 0, 1));
+
+      p->setPen(Qt::NoPen);
+      p->setBrush(gradient);
+
       p->drawEllipse(QPoint(sp.sx, sp.sy), r, r);
       p->setOpacity(1);
     }

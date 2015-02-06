@@ -27,6 +27,8 @@
 #include "cgeohash.h"
 #include "cgetprofile.h"
 
+double m_lastFOV;
+
 extern bool g_developMode;
 extern bool g_showFps;
 extern bool g_lockFOV;
@@ -137,6 +139,8 @@ CMapView::CMapView(QWidget *parent) :
     m_mapView.roll = settings.value("map/roll", 0).toDouble();
     m_mapView.fov = settings.value("map/fov", D2R(90)).toDouble();
   }
+
+  m_lastFOV = m_mapView.fov;
 
   m_mapView.deltaT = settings.value("delta_t/delta_t", CM_UNDEF).toDouble();
   m_mapView.deltaTAlg = settings.value("delta_t/delta_t_alg", DELTA_T_ESPENAK_MEEUS_06).toInt();
@@ -602,6 +606,7 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
     double fov = calcNewPos(&rc, &x, &y);
     if (fov != 0)
     {
+      m_lastFOV = m_mapView.fov;
       centerMap(x, y, fov);
     }
     m_bZoomByMouse = false;
@@ -935,6 +940,13 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
     repaintMap(true);
   }
 
+  if (key == Qt::Key_Backspace && m_lastFOV > CM_UNDEF)
+  {
+    m_mapView.fov = m_lastFOV;
+    m_lastFOV = CM_UNDEF;
+    repaintMap(true);
+  }
+
   if (key == Qt::Key_Escape)
   {
     g_cDrawing.cancel();
@@ -1262,7 +1274,6 @@ void CMapView::addDsoMag(int dir)
 {
   m_mapView.dsoMagAdd += dir * 0.5;
 }
-
 
 
 ////////////////////////////////////

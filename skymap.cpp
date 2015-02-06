@@ -777,12 +777,8 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     }
   } while (!ok);
 
-  //qDebug() << "";
-
   for (int i = PT_SUN; i <= PT_MOON; i++)
   {
-    //qDebug() << i << cAstro.getName(order[i]) << o[order[i]].R;
-
     SKPOINT pt;
     satxyz_t sat;
 
@@ -792,7 +788,9 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       moons = false;
 
     if (moons)
+    {
       smRenderMoons(pPainter, &sat, NULL, NULL, false, mapView, order[i]);
+    }
 
     trfRaDecToPointCorrectFromTo(&o[order[i]].lRD, &pt, mapView->jd, JD2000);
 
@@ -804,7 +802,9 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     }
 
     if (moons)
+    {
       smRenderMoons(pPainter, &sat, &pt, &o[order[i]], true, mapView, order[i]);
+    }
   }
 
   // draw earth shadow
