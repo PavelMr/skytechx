@@ -197,11 +197,12 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
 
     SKVECTOR out;
     SKVECTOR in;
+    double ss = 0.997;
 
     double clat = cos(lf->lat);
-    in.x = clat * cos(-lf->lon) * scale;
-    in.y =        sin(lf->lat)  * scale;
-    in.z = clat * sin(-lf->lon) * scale;
+    in.x = clat * cos(-lf->lon) * scale * ss;
+    in.y =        sin(lf->lat)  * scale * ss;
+    in.z = clat * sin(-lf->lon) * scale * ss;
 
     SKVECTransform3(&out, &in, &mat);
 

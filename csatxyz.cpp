@@ -403,10 +403,6 @@ bool CSatXYZ::solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat)
     sat->sat[i].distanceFromPlanet = sqrt(sat->sat[i].x * sat->sat[i].x +
                                           sat->sat[i].y * sat->sat[i].y +
                                           sat->sat[i].z * sat->sat[i].z) * o->dx * 0.5;
-    if (o->type == PT_JUPITER)
-    {
-      qDebug() << "pln" << sat->sat[i].name << sat->sat[i].distanceFromPlanet;
-    }
 
     double rad = DEG2RAD((double)o->sx / 3600.0) / 2.0;
     double ra = o->lRD.Ra;
