@@ -44,6 +44,7 @@ CObjFillInfo::CObjFillInfo()
   txVisMag   = tr("Visual magnitude");
   txConstel  = tr("Constellation");
   txElongation = tr("Elongation");
+  txJ2000      = tr(" (J2000.0)");
 
   gscClass[0] = tr("Star");
   gscClass[1] = tr("Galaxy");
@@ -216,10 +217,20 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   int con = constWhatConstel(sat.sat[obj->par2].rd.Ra,
                              sat.sat[obj->par2].rd.Dec, view->jd);
 
+  double ra = sat.sat[obj->par2].rd.Ra;
+  double dec = sat.sat[obj->par2].rd.Dec;
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+    precess(&ra, &dec, view->jd, JD2000);
+  }
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(sat.sat[obj->par2].rd.Ra));
-  addTextItem(item, txDec, getStrDeg(sat.sat[obj->par2].rd.Dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txConstel, constGetName(con, 1));
   addSeparator(item);
@@ -279,11 +290,18 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   dec = a->orbit.lRD.Dec;
 
   int con = constWhatConstel(ra, dec, view->jd);
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+    precess(&ra, &dec, view->jd, JD2000);
+  }
 
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(a->orbit.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -316,10 +334,16 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   ra  = a->orbit.gRD.Ra;
   dec = a->orbit.gRD.Dec;
 
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+    precess(&ra, &dec, view->jd, JD2000);
+  }
+
   addLabelItem(item, tr("Geocentric information"));
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addTextItem(item, tr("R"), QString::number(a->orbit.R) + tr("AU"));
   addTextItem(item, tr("Light time"), QString::number(a->orbit.light * 24.) + tr(" hours"));
   addSeparator(item);
@@ -395,10 +419,18 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   int con = constWhatConstel(ra, dec, view->jd);
 
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+    precess(&ra, &dec, view->jd, JD2000);
+  }
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(a->orbit.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -428,10 +460,16 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   ra  = a->orbit.gRD.Ra;
   dec = a->orbit.gRD.Dec;
 
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+    precess(&ra, &dec, view->jd, JD2000);
+  }
+
   addLabelItem(item, tr("Geocentric information"));
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addTextItem(item, tr("R"), QString::number(a->orbit.R) + tr("AU"));
   addTextItem(item, tr("Light time"), QString::number(a->orbit.light * 24.) + tr(" hours"));
   addSeparator(item);
@@ -530,11 +568,20 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addSeparator(item);
 
   int con = constWhatConstel(rd.Ra, rd.Dec, view->jd);
+  QString jd2000;
+  double ra = rd.Ra;
+  double dec = rd.Dec;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+    precess(&ra, &dec, view->jd, JD2000);
+  }
 
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(rd.Ra));
-  addTextItem(item, txDec, getStrDeg(rd.Dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -625,21 +672,27 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
 
   double ra, dec;
+  QString jd2000;
 
   ra = t->rd.Ra;
   dec = t->rd.Dec;
 
-  precess(&ra, &dec, JD2000, view->jd);
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
 
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(cTYC.getVisMag(t)));
   addTextItem(item, txConstel, constGetName(con, 1));
-
-
 
   double azm, alt;
   double nazm, nalt;
@@ -733,12 +786,22 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   ra = item->radec.Ra;
   dec = item->radec.Dec;
 
-  precess(&ra, &dec, JD2000, view->jd);
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
 
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(s.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -818,12 +881,22 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   ra = t.Ra;
   dec = t.Dec;
 
-  precess(&ra, &dec, JD2000, view->jd);
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
 
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(t.pMag));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -910,13 +983,22 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   ra = item->radec.Ra;
   dec = item->radec.Dec;
+  QString jd2000;
 
-  precess(&ra, &dec, JD2000, view->jd);
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
 
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(t->mag / 1000.0));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -995,16 +1077,24 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   ra = item->radec.Ra;
   dec = item->radec.Dec;
 
-  precess(&ra, &dec, JD2000, view->jd);
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
 
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(s.rMag));
   addTextItem(item, txConstel, constGetName(con, 1));
-
 
   double azm, alt;
   double nazm, nalt;
@@ -1094,12 +1184,22 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   int con = constWhatConstel(item->radec.Ra, item->radec.Dec, JD2000);
 
-  precess(&ra, &dec, JD2000, view->jd);
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
 
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, dso->mag == NO_DSO_MAG ? tr("N/A") : getStrMag(dso->DSO_MAG));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -1201,14 +1301,21 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   dec = o.lRD.Dec;
   int con = constWhatConstel(ra, dec, view->jd);
 
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+    precess(&ra, &dec, view->jd, JD2000);
+  }
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(o.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
-
 
   addSeparator(item);
   addTextItem(item, txElongation, QString("%1").arg(R2D(o.elongation), 0, 'f', 2));
@@ -1236,10 +1343,16 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   ra  = o.gRD.Ra;
   dec = o.gRD.Dec;
 
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+    precess(&ra, &dec, view->jd, JD2000);
+  }
+
   addLabelItem(item, tr("Geocentric information"));
   addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
   if (item->par1 != PT_MOON)
   {
     addTextItem(item, tr("R"), QString::number(o.R) + tr("AU"));

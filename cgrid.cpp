@@ -375,7 +375,14 @@ void CGrid::renderRD(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly)
 {
   SKMATRIX precMat;
 
-  precessMatrix(mapView->jd, JD2000, &precMat);
+  if (mapView->epochJ2000 && mapView->coordType == SMCT_RA_DEC)
+  {
+    SKMATRIXIdentity(&precMat);
+  }
+  else
+  {
+    precessMatrix(mapView->jd, JD2000, &precMat);
+  }
 
   renderGrid(SMCT_RA_DEC, &precMat, mapView, pPainter, eqOnly);
 }

@@ -45,6 +45,7 @@ typedef struct
   double   roll;
   double   fov;
   double   jd;
+  bool     epochJ2000;
   double   deltaT;    // in days, CM_UNDEF = compute
   int      deltaTAlg; // DELTA_T_xxx
   bool     flipX;

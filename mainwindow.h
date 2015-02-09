@@ -497,6 +497,8 @@ private slots:
 
   void on_actionDSO_by_catalogue_triggered();
 
+  void on_actionEpoch_J2000_0_toggled(bool arg1);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

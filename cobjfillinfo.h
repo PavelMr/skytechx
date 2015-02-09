@@ -74,6 +74,7 @@ protected:
     QString txVisMag;
     QString txConstel;
     QString txElongation;
+    QString txJ2000;
 
     QString gscClass[6];
 };

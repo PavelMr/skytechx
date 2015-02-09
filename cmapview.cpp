@@ -40,6 +40,7 @@ QElapsedTimer  timer;
 CMapView      *pcMapView;
 QString        helpText;
 
+extern bool    g_quickInfoForced;
 extern bool    g_bHoldObject;
 extern double  g_dssRa;
 extern double  g_dssDec;
@@ -141,6 +142,8 @@ CMapView::CMapView(QWidget *parent) :
   }
 
   m_lastFOV = m_mapView.fov;
+
+  m_mapView.epochJ2000 = settings.value("map/epochJ2000", jdGetCurrentJD()).toBool();
 
   m_mapView.deltaT = settings.value("delta_t/delta_t", CM_UNDEF).toDouble();
   m_mapView.deltaTAlg = settings.value("delta_t/delta_t_alg", DELTA_T_ESPENAK_MEEUS_06).toInt();
@@ -976,6 +979,8 @@ void CMapView::saveSetting()
   settings.setValue("geo/press", m_mapView.geo.press);
   settings.setValue("geo/name", m_mapView.geo.name);
 
+  settings.setValue("map/epochJ2000", m_mapView.epochJ2000);
+
   settings.setValue("delta_t/delta_t", m_mapView.deltaT);
   settings.setValue("delta_t/delta_t_alg", m_mapView.deltaTAlg);
 
@@ -1008,6 +1013,14 @@ void CMapView::centerMap(double ra, double dec, double fov)
 ///////////////////////////////////////////////////////////
 {
   cAstro.setParam(&m_mapView);
+
+  if (m_mapView.epochJ2000 && m_mapView.coordType == SMCT_RA_DEC)
+  {
+    if (ra > CM_UNDEF && dec > CM_UNDEF)
+    {
+      precess(&ra, &dec, m_mapView.jd, JD2000);
+    }
+  }
 
   if (m_mapView.coordType == SMCT_ALT_AZM)
   {
@@ -1065,6 +1078,7 @@ void CMapView::changeMapView(int type)
 
   double x, y;
   trfConvScrPtToXY(width() / 2., height() / 2.0, x, y);
+  g_quickInfoForced = true;
 
   m_mapView.coordType = type;
   centerMap(x, y, CM_UNDEF);
@@ -1282,13 +1296,25 @@ void CMapView::updateStatusBar(void)
 {
   double ra, dec;
   double azm, alt;
+  double epoch;
 
   trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), ra, dec);
+
   cAstro.convRD2AARef(ra, dec, &azm, &alt);
+
+  if (m_mapView.epochJ2000 && m_mapView.coordType == SMCT_RA_DEC)
+  {
+    precess(&ra, &dec, m_mapView.jd, JD2000);
+    epoch = JD2000;
+  }
+  else
+  {
+    epoch = m_mapView.jd;
+  }
 
   if (pcMainWnd->statusBar)
   {
-    pcMainWnd->statusBar->setItem(SB_SM_CONST,QString("%1").arg(constGetName(constWhatConstel(ra, dec, m_mapView.jd), 1)));
+    pcMainWnd->statusBar->setItem(SB_SM_CONST,QString("%1").arg(constGetName(constWhatConstel(ra, dec, epoch), 1)));
     pcMainWnd->statusBar->setItem(SB_SM_RA,   QString(tr("R.A. : %1")).arg(getStrRA(ra)));
     pcMainWnd->statusBar->setItem(SB_SM_DEC,  QString(tr("Dec. : %1")).arg(getStrDeg(dec)));
     pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : %1")).arg(getStrDeg(m_mapView.fov)));
@@ -1299,6 +1325,11 @@ void CMapView::updateStatusBar(void)
 
     pcMainWnd->statusBar->setItem(SB_SM_DATE,  QString(tr("Date : %1")).arg(getStrDate(m_mapView.jd, m_mapView.geo.tz)));
     pcMainWnd->statusBar->setItem(SB_SM_TIME,  QString(tr("Time : %1")).arg(getStrTime(m_mapView.jd, m_mapView.geo.tz)));
+
+    if (m_mapView.epochJ2000 && m_mapView.coordType == SMCT_RA_DEC)
+    {
+      precess(&ra, &dec, JD2000, m_mapView.jd);
+    }
 
     double sep = anSep(m_measurePoint.Ra, m_measurePoint.Dec, ra, dec);
     double ang = RAD2DEG(trfGetPosAngle(ra, dec, m_measurePoint.Ra, m_measurePoint.Dec));
@@ -1585,8 +1616,9 @@ void CMapView::repaintMap(bool bRepaint)
       ofiItem_t    *item = pcMainWnd->getQuickInfo();
       ofiItem_t    newItem;
 
-      if (item && !equals(m_mapView.jd, item->jd))
+      if ((g_quickInfoForced && item) || (item && !equals(m_mapView.jd, item->jd)))
       {
+        g_quickInfoForced = false;
         info.fillInfo(&m_mapView, &item->mapObj, &newItem);
         pcMainWnd->fillQuickInfo(&newItem, true);
       }

@@ -98,6 +98,8 @@ bool g_lockFOV = false;
 bool g_antialiasing;
 bool g_planetReal;
 
+bool g_quickInfoForced;
+
 QString g_horizonName = "none";
 
 extern bool g_developMode;
@@ -576,6 +578,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_noRecalculateView = false;
   }
+
+  ui->actionEpoch_J2000_0->setChecked(ui->widget->m_mapView.epochJ2000);
 
   g_showDSOShapes = settings.value("show_dso_shapes", true).toBool();
   g_showDSO = settings.value("show_dso", true).toBool();
@@ -3846,6 +3850,7 @@ void MainWindow::on_actionTelrad_triggered()
 
   trfConvScrPtToXY(ui->widget->width() * 0.5,
                    ui->widget->height() * 0.5, rd.Ra, rd.Dec);
+
   precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
 
   g_cDrawing.insertTelrad(&rd);
@@ -4772,4 +4777,11 @@ void MainWindow::on_actionDSO_by_catalogue_triggered()
     precess(&dlg.m_ra, &dlg.m_dec, JD2000, ui->widget->m_mapView.jd);
     ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
   }
+}
+
+void MainWindow::on_actionEpoch_J2000_0_toggled(bool arg1)
+{
+  g_quickInfoForced = true;
+  ui->widget->m_mapView.epochJ2000 = arg1;
+  ui->widget->repaintMap();
 }

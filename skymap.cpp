@@ -814,17 +814,23 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 
   cAstro.calcEarthShadow(&es, &o[PT_MOON]);
 
+  double ra = es.lRD.Ra;
+  double dec = es.lRD.Dec;
+
+  precess(&ra, &dec, mapView->jd, JD2000);
+
   trfRaDecToPointCorrectFromTo(&es.lRD, &pt, mapView->jd, JD2000);
   if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, 0.5 * D2R(es.sx / 3600.0)))
   {
     trfProjectPointNoCheck(&pt);
+    double rot = R2D(trfGetAngleToNPole(ra, dec));
 
     int r1 = trfGetArcSecToPix(es.sx);
     int r2 = trfGetArcSecToPix(es.sy);
 
     pPainter->save();
     pPainter->translate(pt.sx, pt.sy);
-    pPainter->rotate(R2D(trfGetAngleToNPole(es.lRD.Ra, es.lRD.Dec)));
+    pPainter->rotate(rot);
 
     pPainter->setPen(g_skSet.map.es.color);
     pPainter->setBrush(QColor(0,0,0, g_skSet.map.es.alpha));
@@ -839,7 +845,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     QTransform tr;
 
     tr.translate(pt.sx, pt.sy);
-    tr.rotate(R2D(trfGetAngleToNPole(es.lRD.Ra, es.lRD.Dec)));
+    tr.rotate(rot);
 
     pPainter->restore();
 

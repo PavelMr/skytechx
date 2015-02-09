@@ -325,6 +325,8 @@
     <addaction name="actionEcliptic"/>
     <addaction name="separator"/>
     <addaction name="actionSet_horizon"/>
+    <addaction name="separator"/>
+    <addaction name="actionEpoch_J2000_0"/>
    </widget>
    <widget class="QMenu" name="menu_Time_Location">
     <property name="title">
@@ -637,7 +639,7 @@
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>123</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1195,7 +1197,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>212</width>
+          <width>257</width>
           <height>524</height>
          </rect>
         </property>
@@ -1435,7 +1437,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>327</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1725,8 +1727,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>101</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1873,8 +1875,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>468</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3668,6 +3670,20 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionEpoch_J2000_0">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Atlas chart at epoch J2000.0</string>
+   </property>
+   <property name="toolTip">
+    <string>Mean epoch J2000.0 otherwise true to date.</string>
+   </property>
+   <property name="statusTip">
+    <string>Mean epoch J2000.0 otherwise true to date.</string>
    </property>
   </action>
  </widget>

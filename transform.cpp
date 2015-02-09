@@ -30,6 +30,8 @@ static SKPLANE  m_frustumSave[5];
 
 static double m_jd;
 
+static mapView_t currentMapView;
+
 //////////////////
 void trfSave(void)
 //////////////////
@@ -139,8 +141,17 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
 
   dxArcSec = scrx / RAD2DEG(mapView->fov);
 
-  // TODO: epoch mapy + udelat i v cGrid
-  double mapEpoch = mapView->jd;
+  currentMapView = *mapView;
+
+  double mapEpoch;
+  if (mapView->epochJ2000 && currentMapView.coordType == SMCT_RA_DEC)
+  {
+    mapEpoch = JD2000;
+  }
+  else
+  {
+    mapEpoch = mapView->jd;
+  }
 
   SKMATRIX proj;
   SKMATRIX fproj;
@@ -485,6 +496,11 @@ void trfConvScrPtToXY(double sx, double sy, double &x, double &y)
   double ty  = -atan2(out.y, sqrt(out.x * out.x + out.z * out.z));
 
   rangeDbl(&tx, R360);
+
+  if (currentMapView.epochJ2000 && currentMapView.coordType == SMCT_RA_DEC)
+  {
+    precess(&tx, &ty, JD2000, currentMapView.jd);
+  }
 
   x = tx;
   y = ty;
