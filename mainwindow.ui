@@ -313,6 +313,7 @@
     <addaction name="actionTip_of_the_day"/>
     <addaction name="separator"/>
     <addaction name="actionGo_to_SkytechX_home_page"/>
+    <addaction name="actionCheck_new_version"/>
     <addaction name="separator"/>
     <addaction name="action_About"/>
    </widget>
@@ -3684,6 +3685,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="statusTip">
     <string>Mean epoch J2000.0 otherwise true to date.</string>
+   </property>
+  </action>
+  <action name="actionCheck_new_version">
+   <property name="text">
+    <string>Check new version...</string>
    </property>
   </action>
  </widget>

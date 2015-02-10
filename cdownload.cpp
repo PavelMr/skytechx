@@ -15,9 +15,9 @@ CDownload::CDownload(QObject *parent) :
 void CDownload::begin(QString url, QString fileName)
 ////////////////////////////////////////////////////
 {
-  QUrl qurl(url + ".md5");
+  QUrl qurl(url);
 
-  //qDebug("url '%s'", qPrintable(url));
+  qDebug("url '%s'", qPrintable(url));
 
   QNetworkRequest request(qurl);
   QNetworkReply *reply = manager.get(request);

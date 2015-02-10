@@ -69,6 +69,7 @@
 #include "csatellitedlg.h"
 #include "csatellitesearch.h"
 #include "csearchdsocat.h"
+#include "cversioncheck.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -111,6 +112,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
+
+  connect(&m_versionManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotVersionFinished(QNetworkReply*)));
 
   connect(ui->actionSearch_a_Sun, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
   connect(ui->actionSearch_a_Moon, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
@@ -637,6 +640,16 @@ void MainWindow::setToolbarIconSize()
   ui->tb_show->setIconSize(QSize(size, size));
 }
 
+void MainWindow::checkNewVersion(bool forced)
+{
+  QUrl qurl(QString(SKYTECH_WEB) + "/version/lastversion.dat");
+
+  QNetworkRequest request(qurl);
+
+  m_checkVerForced = forced;
+  m_versionManager.get(request);
+}
+
 void MainWindow::setTitle()
 {
   QString tzName;
@@ -758,6 +771,11 @@ void MainWindow::slotCheckFirstTime()
   if (set.value("geo/name").toString().isEmpty())
   {
     on_actionSelect_world_location_triggered();
+  }
+
+  if (set.value("check_version", true).toBool())
+  {
+    checkNewVersion(false);
   }
 }
 
@@ -1577,6 +1595,28 @@ int MainWindow::getCurDSS()
   QStandardItem *item = model->itemFromIndex(il.at(0));
 
   return(item->row());
+}
+
+void MainWindow::slotVersionFinished(QNetworkReply *reply)
+{
+  QString version;
+
+  if (reply->error() == QNetworkReply::NoError)
+  {
+    version = reply->readAll().simplified();
+  }
+  else
+  {
+    qDebug() << "error" << reply->errorString();
+  }
+
+  if (version.compare(SK_VERSION) || m_checkVerForced)
+  {
+    CVersionCheck dlg(this, version, reply->error(), reply->errorString());
+    dlg.exec();
+  }
+
+  reply->deleteLater();
 }
 
 ///////////////////////////
@@ -4220,9 +4260,6 @@ void MainWindow::on_actionTime_Lapse_prefs_triggered()
 
   if (dlg.exec() == DL_OK)
   {
-    //qDebug() << dlg.m_multiplicator;
-    //qDebug() << dlg.m_updateSpeed;
-
     m_timeLapseMul->setValue(dlg.m_multiplicator);
     m_timeLapseUpdate = dlg.m_updateSpeed;
 
@@ -4784,4 +4821,9 @@ void MainWindow::on_actionEpoch_J2000_0_toggled(bool arg1)
   g_quickInfoForced = true;
   ui->widget->m_mapView.epochJ2000 = arg1;
   ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionCheck_new_version_triggered()
+{
+  checkNewVersion(true);
 }

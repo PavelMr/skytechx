@@ -204,7 +204,8 @@ SOURCES += main.cpp\
     libsgp4/Util.cpp \
     libsgp4/Vector.cpp \
     clog.cpp \
-    csearchdsocat.cpp
+    csearchdsocat.cpp \
+    cversioncheck.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -374,7 +375,8 @@ HEADERS  += mainwindow.h \
     libsgp4/Util.h \
     libsgp4/Vector.h \
     clog.h \
-    csearchdsocat.h
+    csearchdsocat.h \
+    cversioncheck.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -445,7 +447,8 @@ FORMS    += mainwindow.ui \
     csatellitedlg.ui \
     csatellitesearch.ui \
     csearchwidget.ui \
-    csearchdsocat.ui
+    csearchdsocat.ui \
+    cversioncheck.ui
 
 
 RESOURCES += \

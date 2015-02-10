@@ -13,6 +13,9 @@
 #include "ctimedialog.h"
 #include "cdsocatalogue.h"
 
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
+
 class QPrinter;
 
 namespace Ui {
@@ -65,6 +68,8 @@ public:
   void timeDialogUpdate();
 
   void setToolbarIconSize();
+
+  void checkNewVersion(bool forced);
 protected:
 
   void changeEvent(QEvent *e);
@@ -83,6 +88,7 @@ protected:
 
   int getCurDSS(void);
 
+  bool            m_checkVerForced;
   QString         m_evNames[8];
   QSpinBox       *m_timeMul;
   CLineEditComp  *m_search;
@@ -104,7 +110,11 @@ protected:
   bool            m_noRecalculateView;
   QString         m_dlgProfileName;
 
+  QNetworkAccessManager m_versionManager;
+
 private slots:
+  void slotVersionFinished(QNetworkReply *reply);
+
   void on_action_Exit_2_triggered();
 
   void on_action_About_triggered();
@@ -498,6 +508,8 @@ private slots:
   void on_actionDSO_by_catalogue_triggered();
 
   void on_actionEpoch_J2000_0_toggled(bool arg1);
+
+  void on_actionCheck_new_version_triggered();
 
 private:
   Ui::MainWindow *ui;
