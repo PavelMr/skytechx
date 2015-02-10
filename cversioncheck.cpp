@@ -21,7 +21,7 @@ CVersionCheck::CVersionCheck(QWidget *parent, const QString &newVersion, QNetwor
   else
   if (0 == newVersion.compare(SK_VERSION))
   {
-    ui->label_3->setText("SkytechX is up to date.");
+    ui->label_3->setText(tr("SkytechX is up to date."));
   }
 
   QSettings set;
