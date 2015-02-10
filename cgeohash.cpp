@@ -17,6 +17,7 @@ quint64 CGeoHash::calculate(geoPos_t* geoPos)
   hash += qHash(doubleToUInt64(geoPos->lat));
   hash += qHash(doubleToUInt64(geoPos->lon));
   hash += qHash(doubleToUInt64(geoPos->press));
+  hash += qHash(quint64(geoPos->useAtmRefraction));
   hash += qHash(doubleToUInt64(geoPos->sdlt));
   hash += qHash(doubleToUInt64(geoPos->temp));
   hash += qHash(doubleToUInt64(geoPos->tz));

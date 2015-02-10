@@ -64,6 +64,11 @@ public:
     m_onScreenOnly = enable;
   }
 
+  void setJ2000(bool enable)
+  {
+    m_j2000 = enable;
+  }
+
   void setLimits(double fromRa, double toRa, double fromDec, double toDec)
   {
     m_fromRa = fromRa;
@@ -93,6 +98,7 @@ private:
   bool m_onScreenOnly;
   int m_objectType;
   bool m_empty;
+  bool m_j2000;
   bool m_magLimitEnabled;
   double m_magLimit;
   int m_sizeLimitType;
@@ -157,6 +163,19 @@ protected:
       if (m_onScreenOnly && !pcMapView->isRaDecOnScreen(ra, dec))
       {
         return false;
+      }
+
+      if (!m_j2000)
+      {
+        precess(&ra, &dec, JD2000, m_astro->m_jd);
+
+        sourceModel()->setData(index5, getStrRA(ra));
+        sourceModel()->setData(index6, getStrDeg(dec));
+      }
+      else
+      {
+        sourceModel()->setData(index5, getStrRA(ra));
+        sourceModel()->setData(index6, getStrDeg(dec));
       }
 
       if (ra < m_fromRa || ra > m_toRa)

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1059</width>
+    <width>1076</width>
     <height>514</height>
    </rect>
   </property>
@@ -224,38 +224,15 @@
         </property>
         <item>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="2" column="6">
-           <widget class="QSpinBox" name="sb_ra2_m">
-            <property name="suffix">
-             <string> m</string>
-            </property>
-            <property name="maximum">
-             <number>59</number>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>From R.A.</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QSpinBox" name="sb_ra_m">
-            <property name="suffix">
-             <string> m</string>
-            </property>
-            <property name="maximum">
-             <number>59</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QSpinBox" name="sb_ra_h">
-            <property name="suffix">
-             <string> h</string>
-            </property>
-            <property name="maximum">
-             <number>24</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="7">
-           <widget class="QSpinBox" name="sb_ra2_s">
+          <item row="2" column="2">
+           <widget class="QSpinBox" name="sb_ra_s">
             <property name="suffix">
              <string> s</string>
             </property>
@@ -264,32 +241,6 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="5">
-           <widget class="QSpinBox" name="sb_ra2_h">
-            <property name="suffix">
-             <string> h</string>
-            </property>
-            <property name="minimum">
-             <number>0</number>
-            </property>
-            <property name="maximum">
-             <number>24</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="18">
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
           <item row="2" column="17">
            <widget class="QPushButton" name="pushButton_8">
             <property name="text">
@@ -297,56 +248,10 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="9">
-           <widget class="QSpinBox" name="sb_dec_d">
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="sb_ra_m">
             <property name="suffix">
-             <string>°</string>
-            </property>
-            <property name="minimum">
-             <number>-90</number>
-            </property>
-            <property name="maximum">
-             <number>90</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="10">
-           <widget class="QSpinBox" name="sb_dec_m">
-            <property name="suffix">
-             <string>'</string>
-            </property>
-            <property name="maximum">
-             <number>59</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="11">
-           <widget class="QSpinBox" name="sb_dec_s">
-            <property name="suffix">
-             <string>&quot;</string>
-            </property>
-            <property name="maximum">
-             <number>59</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="13">
-           <widget class="QSpinBox" name="sb_dec2_d">
-            <property name="suffix">
-             <string>°</string>
-            </property>
-            <property name="minimum">
-             <number>-90</number>
-            </property>
-            <property name="maximum">
-             <number>90</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="14">
-           <widget class="QSpinBox" name="sb_dec2_m">
-            <property name="suffix">
-             <string>'</string>
+             <string> m</string>
             </property>
             <property name="maximum">
              <number>59</number>
@@ -366,53 +271,29 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="12">
-           <spacer name="horizontalSpacer_8">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="1" column="5" colspan="3">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>To R.A.</string>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>8</width>
-              <height>8</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
-          <item row="2" column="4">
-           <spacer name="horizontalSpacer_6">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="2" column="11">
+           <widget class="QSpinBox" name="sb_dec_s">
+            <property name="suffix">
+             <string>&quot;</string>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
+            <property name="maximum">
+             <number>59</number>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>8</width>
-              <height>8</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
-          <item row="2" column="8">
-           <spacer name="horizontalSpacer_7">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="1" column="9" colspan="3">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>From Dec.</string>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>8</width>
-              <height>8</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item row="2" column="16">
            <spacer name="horizontalSpacer_9">
@@ -430,26 +311,47 @@
             </property>
            </spacer>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>From R.A.</string>
+          <item row="2" column="9">
+           <widget class="QSpinBox" name="sb_dec_d">
+            <property name="suffix">
+             <string>°</string>
+            </property>
+            <property name="minimum">
+             <number>-90</number>
+            </property>
+            <property name="maximum">
+             <number>90</number>
             </property>
            </widget>
           </item>
-          <item row="1" column="5" colspan="3">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>To R.A.</string>
+          <item row="2" column="12">
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
+              <height>8</height>
+             </size>
+            </property>
+           </spacer>
           </item>
-          <item row="1" column="9" colspan="3">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>From Dec.</string>
+          <item row="2" column="19">
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item row="1" column="13" colspan="3">
            <widget class="QLabel" name="label_9">
@@ -458,13 +360,118 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QSpinBox" name="sb_ra_s">
+          <item row="2" column="13">
+           <widget class="QSpinBox" name="sb_dec2_d">
+            <property name="suffix">
+             <string>°</string>
+            </property>
+            <property name="minimum">
+             <number>-90</number>
+            </property>
+            <property name="maximum">
+             <number>90</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="7">
+           <widget class="QSpinBox" name="sb_ra2_s">
             <property name="suffix">
              <string> s</string>
             </property>
             <property name="maximum">
              <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
+              <height>8</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="5">
+           <widget class="QSpinBox" name="sb_ra2_h">
+            <property name="suffix">
+             <string> h</string>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="10">
+           <widget class="QSpinBox" name="sb_dec_m">
+            <property name="suffix">
+             <string>'</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="8">
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
+              <height>8</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="14">
+           <widget class="QSpinBox" name="sb_dec2_m">
+            <property name="suffix">
+             <string>'</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="6">
+           <widget class="QSpinBox" name="sb_ra2_m">
+            <property name="suffix">
+             <string> m</string>
+            </property>
+            <property name="maximum">
+             <number>59</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QSpinBox" name="sb_ra_h">
+            <property name="suffix">
+             <string> h</string>
+            </property>
+            <property name="maximum">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="18">
+           <widget class="QCheckBox" name="cb_j2000">
+            <property name="text">
+             <string>Epoch J2000.0</string>
             </property>
            </widget>
           </item>

@@ -1640,6 +1640,7 @@ void MainWindow::checkDSS()
   ui->horizontalSlider_con->setEnabled(m->rowCount() > 0);
   ui->horizontalSlider_gm->setEnabled(m->rowCount() > 0);
   ui->checkBox_inv->setEnabled(m->rowCount() > 0);
+  ui->cb_showDSS_FN->setEnabled(m->rowCount() > 0);
   ui->checkBox_aa->setEnabled(m->rowCount() > 0);
 
   int i = getCurDSS();

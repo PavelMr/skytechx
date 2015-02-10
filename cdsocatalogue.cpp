@@ -299,8 +299,20 @@ void CDSOCatalogue::on_pushButton_2_clicked()
     qSwap(fromDec, toDec);
   }
 
+  if (ui->cb_j2000->isChecked())
+  {
+    m_model->setHeaderData(5, Qt::Horizontal, tr("R.A. (J2000)"));
+    m_model->setHeaderData(6, Qt::Horizontal, tr("Dec. (J2000)"));
+  }
+  else
+  {
+    m_model->setHeaderData(5, Qt::Horizontal, "R.A.");
+    m_model->setHeaderData(6, Qt::Horizontal, "Dec.");
+  }
+
   m_astro.setParam(m_mapView);
 
+  m_proxy->setJ2000(ui->cb_j2000->isChecked());
   m_proxy->setAboveHorOnly(ui->cb_hor_only->isChecked(), &m_astro);
   m_proxy->setLimits(fromRa, toRa, fromDec, toDec);
   m_proxy->setFiltering();

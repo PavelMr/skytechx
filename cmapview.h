@@ -33,6 +33,7 @@ typedef struct
 
   double temp;
   double press;
+  bool   useAtmRefraction;
 
   quint64 hash;
 

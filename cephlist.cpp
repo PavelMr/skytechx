@@ -8,7 +8,7 @@
 #include "ccomdlg.h"
 #include "casterdlg.h"
 
-#define EL_COLUMN_COUNT     23
+#define EL_COLUMN_COUNT     25
 
 static int columnOrder[EL_COLUMN_COUNT];
 static QString cELColumn[EL_COLUMN_COUNT];
@@ -38,19 +38,21 @@ CEphList::CEphList(QWidget *parent, mapView_t *view) :
   cELColumn[7] = tr("Size Y");
   cELColumn[8] = tr("Local R.A.");
   cELColumn[9] = tr("Local Dec.");
-  cELColumn[10] = tr("Geo. R.A.");
-  cELColumn[11] = tr("Geo. Dec.");
-  cELColumn[12] = tr("Azimuth");
-  cELColumn[13] = tr("Altitude");
-  cELColumn[14] = tr("Dist. to Earth (R)");
-  cELColumn[15] = tr("Helio. dist. (r)");
-  cELColumn[16] = tr("Elongation");
-  cELColumn[17] = tr("Helio. longitude");
-  cELColumn[18] = tr("Helio. latitude");
-  cELColumn[19] = tr("Helio. rect. X");
-  cELColumn[20] = tr("Helio. rect. Y");
-  cELColumn[21] = tr("Helio. rect. Z");
-  cELColumn[22] = tr("Light time");
+  cELColumn[10] = tr("Local R.A. (J2000.0)");
+  cELColumn[11] = tr("Local Dec. (J2000.0)");
+  cELColumn[12] = tr("Geo. R.A.");
+  cELColumn[13] = tr("Geo. Dec.");
+  cELColumn[14] = tr("Azimuth");
+  cELColumn[15] = tr("Altitude");
+  cELColumn[16] = tr("Dist. to Earth (R)");
+  cELColumn[17] = tr("Helio. dist. (r)");
+  cELColumn[18] = tr("Elongation");
+  cELColumn[19] = tr("Helio. longitude");
+  cELColumn[20] = tr("Helio. latitude");
+  cELColumn[21] = tr("Helio. rect. X");
+  cELColumn[22] = tr("Helio. rect. Y");
+  cELColumn[23] = tr("Helio. rect. Z");
+  cELColumn[24] = tr("Light time");
 
   if (firstTime)
   {
@@ -362,6 +364,11 @@ void CEphList::on_pushButton_4_clicked()
     {
       QString str;
 
+      double ra2000 = o.lRD.Ra;
+      double dec2000 = o.lRD.Dec;
+
+      precess(&ra2000, &dec2000, m_view.jd, JD2000);
+
       switch (columns[j])
       {
         case 0:
@@ -405,22 +412,30 @@ void CEphList::on_pushButton_4_clicked()
           break;
 
         case 10:
-          str = getStrRA(o.gRD.Ra);
+          str = getStrRA(ra2000);
           break;
 
         case 11:
-          str = getStrDeg(o.gRD.Dec);
+          str = getStrDeg(dec2000);
           break;
 
         case 12:
-          str = getStrDeg(o.lAzm);
+          str = getStrRA(o.gRD.Ra);
           break;
 
         case 13:
-          str = getStrDeg(o.lAlt);
+          str = getStrDeg(o.gRD.Dec);
           break;
 
         case 14:
+          str = getStrDeg(o.lAzm);
+          break;
+
+        case 15:
+          str = getStrDeg(o.lAlt);
+          break;
+
+        case 16:
           if (!isMoon)
           {
             str = QString::number(o.R, 'f', 6) + " AU";
@@ -431,7 +446,7 @@ void CEphList::on_pushButton_4_clicked()
           }
           break;
 
-        case 15:
+        case 17:
           if (!isMoon)
           {
             str = QString::number(o.r, 'f', 6) + " AU";
@@ -442,31 +457,31 @@ void CEphList::on_pushButton_4_clicked()
           }
           break;
 
-        case 16:
+        case 18:
           str = ((o.elongation >= 0) ? "+" : "") + QString::number(R2D(o.elongation), 'f', 2) + "°";
           break;
 
-        case 17:
+        case 19:
           str = getStrDeg(o.hLon);
           break;
 
-        case 18:
+        case 20:
           str = getStrDeg(o.hLat);
           break;
 
-        case 19:
+        case 21:
           str = QString::number(o.hRect[0], 'f', 6) + " AU";
           break;
 
-        case 20:
+        case 22:
           str = QString::number(o.hRect[1], 'f', 6) + " AU";
           break;
 
-        case 21:
+        case 23:
           str = QString::number(o.hRect[2], 'f', 6) + " AU";
           break;
 
-        case 22:
+        case 24:
           str = QString::number(o.light * 24. * 60., 'f', 2) + tr(" mins.");
           break;
       }

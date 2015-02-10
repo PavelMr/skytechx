@@ -118,6 +118,7 @@ class CAstro
     double m_geoTZ;
     double m_geoTemp;
     double m_geoPress;
+    bool   m_useAtmRefraction;
 
     double m_curGc;
     double m_curGs;

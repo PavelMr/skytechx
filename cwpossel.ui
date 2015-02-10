@@ -518,6 +518,13 @@
             </property>
            </spacer>
           </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="checkBox">
+            <property name="text">
+             <string>Disable atm. refraction</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -620,15 +627,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CListWidget</class>
-   <extends>QListWidget</extends>
-   <header>clistwidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>CSearchWidget</class>
    <extends>QWidget</extends>
    <header>csearchwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CListWidget</class>
+   <extends>QListWidget</extends>
+   <header>clistwidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

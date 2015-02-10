@@ -370,6 +370,7 @@ void CAstro::setParam(mapView_t *view)
   m_geoLat = view->geo.lat;
   m_geoTZ = view->geo.tz;
   m_geoPress = view->geo.press;
+  m_useAtmRefraction = view->geo.useAtmRefraction;
   m_geoTemp = view->geo.temp;
   m_jd = view->jd;
   m_deltaTAlg = view->deltaTAlg;
@@ -550,6 +551,11 @@ double CAstro::getAtmRef(double alt)
   static double sPress = -CM_UNDEF;
   static double PP1;
   static double P, Q;
+
+  if (!m_useAtmRefraction)
+  {
+    return 0;
+  }
 
   if (sTemp != m_geoTemp || sPress != m_geoPress)
   {
