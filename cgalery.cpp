@@ -7,6 +7,11 @@
 static QWidget *pParent;
 static QString objId;
 
+static QString makeString(QString cmd)
+{
+  return cmd.replace("'", "''");
+}
+
 CGalery::CGalery(QWidget *parent, const QString &id, const QString &name) :
   QDialog(parent),
   ui(new Ui::CGalery)
@@ -133,7 +138,9 @@ void CGalleryArea::slotDeleteItem()
   pixmap_t pixmap = selected[0]->data(Qt::UserRole).value<pixmap_t>();
 
   QSqlQuery q(*g_pDb);
-  q.exec(QString("delete from gallery where name='" + objId + "'" + " and path='" + pixmap.path + "'"));
+  QString cmd = QString("delete from gallery where name='" + makeString(objId) + "'" + " and path='" + pixmap.path + "'");
+
+  q.exec(cmd);
   delete selected[0];
 }
 
@@ -142,8 +149,11 @@ void CGalLoader::run()
 //////////////////////
 {
   QSqlQuery q(*g_pDb);
+  QString cmd = "select * from gallery where name='" + makeString(m_id) + "'";
 
-  q.exec("select * from gallery where name='" + m_id + "'");
+  q.exec(cmd);
+
+  qDebug() << cmd;
 
   int imgNo = q.record().indexOf("path");
 

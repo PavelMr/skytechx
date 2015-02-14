@@ -2075,7 +2075,7 @@ ESC : Cancel
     <message>
         <location filename="cgalery.cpp" line="21"/>
         <source>Galery of </source>
-        <translation type="unfinished"></translation>
+        <translation>Gallery of </translation>
     </message>
     <message>
         <location filename="cgalery.cpp" line="187"/>

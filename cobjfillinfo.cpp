@@ -204,6 +204,11 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   item->title = sat.sat[obj->par2].name;
   item->simbad = item->title;
 
+  QString str = item->title;
+
+  str = str.remove(QRegExp("/\\?%*:|\"<>. "));
+  item->id = "pln_sat_" + str;
+
   addLabelItem(item, txObjType);
   addSeparator(item);
   addTextItem(item, txObjType, tr("Satellite"));

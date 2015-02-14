@@ -2652,6 +2652,14 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
 
   ui->actionTime_lapse->setDisabled(checked);
 
+  ui->actionSunrise->setDisabled(checked);
+  ui->actionSunset->setDisabled(checked);
+  ui->actionSun_transit->setDisabled(checked);
+
+  ui->actionMoonrise->setDisabled(checked);
+  ui->actionMoonset->setDisabled(checked);
+  ui->actionMoon_transit->setDisabled(checked);
+
   ui->actionYPlus->setDisabled(checked);
   ui->actionYMinus->setDisabled(checked);
   ui->actionMPlus->setDisabled(checked);
