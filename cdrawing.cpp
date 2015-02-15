@@ -714,18 +714,15 @@ int CDrawing::drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bE
       p->drawRect(rc);
     }
 
-    if (qMax(rc.width(), rc.height()) > 50)
+    if (qMax(rc.width(), rc.height()) > 50 && showText)
     {
       setSetFontColor(FONT_DRAWING, p);
       setSetFont(FONT_DRAWING, p);
 
-      QRect  textRect;
-      QFontMetrics fm(p->font());
       SKPOINT textPoint;
 
-      //double textAngle = R2D(atan2(pp[0].sx - pp[1].sx, pp[0].sy - pp[1].sy)) - 270;
-
-      textRD = drw->rd;
+      textRD.Ra = drw->frmField_t.corner[3].Ra;
+      textRD.Dec = drw->frmField_t.corner[3].Dec;
 
       trfRaDecToPointNoCorrect(&textRD, &textPoint);
       if (trfProjectPoint(&textPoint))
@@ -733,10 +730,7 @@ int CDrawing::drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bE
         p->save();
         p->translate(textPoint.sx, textPoint.sy);
         p->rotate(textAngle);
-        textRect.setSize(QSize(1000, 1000));
-        textRect.moveCenter(QPoint(0, 0));
-        p->drawText(textRect, Qt::AlignCenter,
-                    QString("%1' x %2'").arg(R2D(drw->frmField_t.x * 60), 0, 'f', 2).arg(R2D(drw->frmField_t.y * 60), 0, 'f', 2));
+        p->renderText(0, 0, 5, QString("%1' x %2'").arg(R2D(drw->frmField_t.x * 60), 0, 'f', 2).arg(R2D(drw->frmField_t.y * 60), 0, 'f', 2), RT_TOP_RIGHT);
         p->restore();
       }
     }

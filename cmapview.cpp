@@ -28,6 +28,8 @@
 #include "cgetprofile.h"
 
 double m_lastFOV;
+double m_lastRA;
+double m_lastDec;
 
 extern bool g_developMode;
 extern bool g_showFps;
@@ -142,6 +144,8 @@ CMapView::CMapView(QWidget *parent) :
   }
 
   m_lastFOV = m_mapView.fov;
+  m_lastRA = m_mapView.x;
+  m_lastDec = m_mapView.y;
 
   m_mapView.epochJ2000 = settings.value("map/epochJ2000", jdGetCurrentJD()).toBool();
 
@@ -611,6 +615,9 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
     if (fov != 0)
     {
       m_lastFOV = m_mapView.fov;
+      m_lastRA = m_mapView.x;
+      m_lastDec = m_mapView.y;
+
       centerMap(x, y, fov);
     }
     m_bZoomByMouse = false;
@@ -947,6 +954,9 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
   if (key == Qt::Key_Backspace && m_lastFOV > CM_UNDEF)
   {
     m_mapView.fov = m_lastFOV;
+    m_mapView.x = m_lastRA;
+    m_mapView.y = m_lastDec;
+
     m_lastFOV = CM_UNDEF;
     repaintMap(true);
   }

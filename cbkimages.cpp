@@ -203,19 +203,31 @@ void CBkImages::renderDSSFits(QImage *pDst, CSkPainter *p, CFits *fit)
     p->drawLine(pt[2].sx, pt[2].sy, pt[3].sx, pt[3].sy);
     p->drawLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy);
 
-    // TODO: doplnit nazev
-    QPoint ptText = QPoint(0, 0);
+    SKPOINT newPts[2];
 
-    for (int i = 0; i < 4; i++)
+    if (trfProjectLine(&pt[0], &pt[3], newPts[0], newPts[1]))
     {
-      ptText += QPoint(pt[i].sx, pt[i].sy);
+      double textAngle = -R2D(atan2(newPts[1].sx - newPts[0].sx, newPts[1].sy - newPts[0].sy)) - 270;
+
+      SKPOINT textPoint;
+      radec_t textRD;
+
+      textRD.Ra = fit->m_cor[0].Ra;
+      textRD.Dec = fit->m_cor[0].Dec;
+
+      trfRaDecToPointNoCorrect(&textRD, &textPoint);
+      if (trfProjectPoint(&textPoint))
+      {
+        setSetFontColor(FONT_DRAWING, p);
+        setSetFont(FONT_DRAWING, p);
+
+        p->save();
+        p->translate(textPoint.sx, textPoint.sy);
+        p->rotate(textAngle);
+        p->renderText(0, 0, 5, fit->m_name, RT_TOP_RIGHT);
+        p->restore();
+      }
     }
-    ptText /= 4;
-
-    setSetFontColor(FONT_DRAWING, p);
-    setSetFont(FONT_DRAWING, p);
-
-    p->drawCText(ptText.x(), ptText.y(), fit->m_name);
   }
 }
 

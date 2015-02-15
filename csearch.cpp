@@ -59,6 +59,12 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
           ra = mra;
           dec = mdec;
           fov = CM_UNDEF;
+
+          if (mapView->epochJ2000 && mapView->coordType == SMCT_RA_DEC)
+          {
+            precess(&ra, &dec, JD2000, mapView->jd);
+          }
+
           return true;
         }
       }

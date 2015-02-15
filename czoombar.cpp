@@ -161,7 +161,10 @@ void CZoomBar::timerAlphaUpdate()
     {
       m_alpha = 0.2f;
     }
-    update();
+    else
+    {
+      update();
+    }
   }
 }
 
