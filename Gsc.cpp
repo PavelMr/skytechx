@@ -6,6 +6,7 @@
 
 #include "Gsc.h"
 #include "QtCore"
+#include "setting.h"
 
 CGsc  cGSC;
 
@@ -58,6 +59,31 @@ void CGsc::loadRegion(int r)
   }
 }
 
+bool CGsc::searchStar(int region, int number, gsc_t **star)
+{
+  if (region <= 0 || region >= NUM_GSC_REGS || !g_skSet.map.gsc.show)
+  {
+    return false;
+  }
+
+  gscHeader_t *h;
+  gsc_t       *g;
+
+  h = &cGSC.gscRegion[region - 1].h;
+  g = cGSC.gscRegion[region - 1].gsc;
+
+  for (int i = 0; i < h->nobj; i++)
+  {
+    if (g[i].id == number)
+    {
+      *star = &g[i];
+      return true;
+    }
+  }
+
+
+  return false;
+}
 
 
 //////////////////////////////////////////////

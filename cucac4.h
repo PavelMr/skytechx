@@ -69,6 +69,7 @@ class CUCAC4
 {
 public:
   CUCAC4();
+  bool searchStar(int zone, int number, ucac4Star_t *star);
   void setUCAC4Dir(const QString dir);
   ucac4Region_t *getStar(ucac4Star_t &s, int reg, int index);
   ucac4Region_t *loadGSCRegion(int region);

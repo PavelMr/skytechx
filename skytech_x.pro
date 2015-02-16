@@ -23,10 +23,10 @@ win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
 TARGET = skytech_x
 TEMPLATE = app
 
-Release: build_nr.commands = $$PWD/build_inc.bat
-Release: build_nr.depends = FORCE
-Release: QMAKE_EXTRA_TARGETS += build_nr
-Release: PRE_TARGETDEPS += build_nr
+#Release: build_nr.commands = $$PWD/build_inc.bat
+#Release: build_nr.depends = FORCE
+#Release: QMAKE_EXTRA_TARGETS += build_nr
+#Release: PRE_TARGETDEPS += build_nr
 
 INCLUDEPATH = core \
               de404 \

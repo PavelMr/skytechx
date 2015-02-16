@@ -41,6 +41,7 @@ protected:
   QString usnoDir;
 
 public:
+  bool searchStar(int zone, int number, usnoStar_t *star);
   usnoZone_t *loadGSCRegion(int region);
   usnoZone_t *getStar(usnoStar_t *s, int reg, int index);
   bool readZoneFile(usnoZone_t * pZone, double raMin, double raMax, double decMin, double decMax, const QString &szCat, const QString &acc, int reg);

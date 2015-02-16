@@ -15,18 +15,18 @@
 #define BYTE unsigned char
 #endif
 
-typedef struct 
-{ 
+typedef struct
+{
     int len,vers,region,nobj;
-	double amin,amax,dmin,dmax,magoff;
-	double scale_ra,scale_dec,scale_pos,scale_mag;
-   	int npl;
+  double amin,amax,dmin,dmax,magoff;
+  double scale_ra,scale_dec,scale_pos,scale_mag;
+    int npl;
   char *list;
 } gscHeader_t;
 
 
-typedef struct 
-{   
+typedef struct
+{
    double Ra,Dec;
     short reg, id;
     float posErr;
@@ -40,34 +40,35 @@ typedef struct
 } gsc_t;
 
 
-typedef struct 
+typedef struct
 {
   gscHeader_t h;
-        gsc_t *gsc;         
+        gsc_t *gsc;
         ULONG  timer;
         short  loaded;
         short  region;
 } gscRegion2_t;
 
 
-class CGsc  
+class CGsc
 {
 public:
   CGsc();
   virtual ~CGsc();
 
-  bool getStar(gsc_t *p, int reg, int i);	
-	void loadRegion(int r);
+  bool getStar(gsc_t *p, int reg, int i);
+  void loadRegion(int r);
+  bool searchStar(int region, int number, gsc_t **star);
 
   long         m_maxGSCNumRegions;
   bool         bIsGsc;
   gscRegion2_t gscRegion[NUM_GSC_REGS];
 
-protected : 
+protected :
   void deleteRegion(int rn);
-	void decode(BYTE *c, gscHeader_t *h, gsc_t *r);
+  void decode(BYTE *c, gscHeader_t *h, gsc_t *r);
   bool readRegion(int r, gscRegion2_t *rgn);
-	long m_curGSCNumRegions;        
+  long m_curGSCNumRegions;
   long gscTable[NUM_GSC_REGS];
   bool tableLoaded;
 

@@ -1,5 +1,7 @@
 #include "cucac4.h"
 #include "cgscreg.h"
+#include "setting.h"
+#include "skfile.h"
 
 #include <QDebug>
 
@@ -11,6 +13,41 @@ CUCAC4::CUCAC4()
   {
     m_region[i].bUsed = false;
   }
+}
+
+bool CUCAC4::searchStar(int zone, int number, ucac4Star_t *star)
+{
+  if (zone < 1 || zone > 900 || !g_skSet.map.ucac4.show)
+  {
+    return false;
+  }
+
+  SkFile f(m_folder + QString("/z%1").arg(zone, 3, 10, QChar('0')));
+
+  if (!f.open(QFile::ReadOnly))
+  {
+    return false;
+  }
+
+  UCAC4_Star_t ucacStar;
+
+  if (!f.seek((number - 1) * sizeof(ucacStar)))
+  {
+    return false;
+  }
+
+  if (f.read((char *)&ucacStar, sizeof(ucacStar)) != sizeof(ucacStar))
+  {
+    return false;
+  }
+
+  star->rd.Ra = D2R(ucacStar.ra / 3600. / 1000.0);
+  star->rd.Dec = D2R((ucacStar.spd / 3600. / 1000.0) - 90.0);
+  star->mag = ucacStar.mag2 / 1000.0;
+  star->number = number;
+  star->zone = zone;
+
+  return true;
 }
 
 void CUCAC4::setUCAC4Dir(const QString dir)

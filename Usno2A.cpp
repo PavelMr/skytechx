@@ -5,6 +5,7 @@
 
 #include "Usno2A.h"
 #include "cgscreg.h"
+#include "setting.h"
 
 #include <QtCore>
 
@@ -48,7 +49,65 @@ __inline static long swap (long val)
   b[2] = (val>>16) & 0xFF;
   b[3] = (val>>24) & 0xFF;
 
-  return((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | (b[3])); 
+  return((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | (b[3]));
+}
+
+bool CUsno2A::searchStar(int zone, int number, usnoStar_t *star)
+{
+  if (number <= 0 || zone < 0 || zone > 1725 || !g_skSet.map.usno2.show)
+  {
+    return false;
+  }
+
+  QString catalogue = usnoDir + QString("/zone%1.cat").arg(zone, 4, 10, QChar('0'));
+
+  SkFile pf(catalogue);
+
+  if (!pf.open(QFile::ReadOnly))
+  {
+    return false;
+  }
+
+  if (!pf.seek((number - 1) * USNO_STAR_REC_SIZE))
+  {
+    return false;
+  }
+
+  int iRa;
+  int iDec;
+  int iMag;
+  int cnt = 0;
+
+  cnt += pf.read((char *)&iRa, sizeof(int));
+  cnt += pf.read((char *)&iDec, sizeof(int));
+  cnt += pf.read((char *)&iMag, sizeof(int));
+
+  if (cnt != 3 * sizeof(int))
+  {
+    return false;
+  }
+
+  iRa = swap(iRa);
+  iDec = swap(iDec);
+  iMag = swap(iMag);
+
+  long data[4];
+  long *pPtr = &data[0];
+
+  *pPtr = (long)(number); pPtr++;
+  *pPtr = iRa; pPtr++;
+  *pPtr = iDec; pPtr++;
+  *pPtr = iMag; pPtr++;
+
+  getUSNOStar(star, data);
+
+
+
+  qDebug() << star->id << zone << R2D(star->rd.Dec);
+
+
+
+  return true;
 }
 
 /////////////////////////////////////

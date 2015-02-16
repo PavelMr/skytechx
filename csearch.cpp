@@ -3,6 +3,10 @@
 #include "ccomedit.h"
 #include "clunarfeatures.h"
 #include "csgp4.h"
+#include "Gsc.h"
+#include "Usno2A.h"
+#include "cucac4.h"
+#include "tycho.h"
 
 //////////////////
 CSearch::CSearch()
@@ -17,6 +21,122 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
   QRegExp reg("\\b" + str + "\\b", Qt::CaseInsensitive);
 
   str = str.simplified();
+
+  if (str.startsWith("HD", Qt::CaseInsensitive))
+  {
+    str = str.mid(2);
+
+    int hd = str.toInt();
+
+    int reg, index;
+    tychoStar_t *star;
+
+    if (cTYC.findStar(NULL, TS_HD, 0, hd, 0, 0, 0, 0, 0, 0, reg, index))
+    {
+      cTYC.getStar(&star, reg, index);
+      ra = star->rd.Ra;
+      dec = star->rd.Dec;
+      precess(&ra, &dec, JD2000, mapView->jd);
+      fov = DMS2RAD(10, 0, 0);
+      return true;
+    }
+
+  }
+
+  if (str.startsWith("TYC", Qt::CaseInsensitive))
+  {
+    str = str.mid(3);
+    QStringList list = str.split("-");
+
+    if (list.count() == 3)
+    {
+      int t1 = list[0].toInt();
+      int t2 = list[1].toInt();
+      int t3 = list[2].toInt();
+      int reg, index;
+      tychoStar_t *star;
+
+      if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, t1, t2, t3, 0, reg, index))
+      {
+        cTYC.getStar(&star, reg, index);
+        ra = star->rd.Ra;
+        dec = star->rd.Dec;
+        precess(&ra, &dec, JD2000, mapView->jd);
+        fov = DMS2RAD(10, 0, 0);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  if (str.startsWith("UCAC4", Qt::CaseInsensitive))
+  {
+    str = str.mid(5);
+    QStringList list = str.split("-");
+
+    if (list.count() == 2)
+    {
+      int zone = list[0].toInt();
+      int num = list[1].toInt();
+      ucac4Star_t star;
+
+      if (cUcac4.searchStar(zone, num, &star))
+      {
+        ra = star.rd.Ra;
+        dec = star.rd.Dec;
+        precess(&ra, &dec, JD2000, mapView->jd);
+        fov = DMS2RAD(0, 30, 0);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  if (str.startsWith("USNO2", Qt::CaseInsensitive))
+  {
+    str = str.mid(5);
+    QStringList list = str.split("-");
+
+    if (list.count() == 2)
+    {
+      int zone = list[0].toInt();
+      int num = list[1].toInt();
+      usnoStar_t star;
+
+      if (usno.searchStar(zone, num, &star))
+      {
+        ra = star.rd.Ra;
+        dec = star.rd.Dec;
+        precess(&ra, &dec, JD2000, mapView->jd);
+        fov = DMS2RAD(0, 30, 0);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  if (str.startsWith("GSC", Qt::CaseInsensitive))
+  {
+    str = str.mid(3);
+    QStringList list = str.split("-");
+
+    if (list.count() == 2)
+    {
+      int reg = list[0].toInt();
+      int num = list[1].toInt();
+      gsc_t *star;
+
+      if (cGSC.searchStar(reg, num, &star))
+      {
+        ra = star->Ra;
+        dec = star->Dec;
+        precess(&ra, &dec, JD2000, mapView->jd);
+        fov = DMS2RAD(0, 30, 0);
+        return true;
+      }
+    }
+    return false;
+  }
 
   // ra/dec
   {

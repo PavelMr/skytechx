@@ -241,9 +241,16 @@ bool CTycho::findStar(QWidget *parent, int what, int flamsteed, int hd, int byLt
 
   QProgressDialog dlg(tr("Please wait..."), NULL, from, to, parent);
 
-  dlg.setWindowFlags(((dlg.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
-  dlg.setWindowModality(Qt::WindowModal);
-  dlg.show();
+  if (parent)
+  {
+    dlg.setWindowFlags(((dlg.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
+    dlg.setWindowModality(Qt::WindowModal);
+    dlg.show();
+  }
+  else
+  {
+    dlg.hide();
+  }
 
   for (int i = from; i < to; i++)
   {
