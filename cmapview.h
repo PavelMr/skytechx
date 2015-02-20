@@ -107,6 +107,8 @@ public:
   CZoomBar *m_zoom;
 
   CDemonstration *m_demo;
+  QTimer *slewingTimer;
+  bool slewBlink;
 
   void enableShapeEditor(bool enable);
   void saveShape();
@@ -155,6 +157,7 @@ public slots:
   void slotCheckedFlipY(bool checked);
   void slotTelePlugChange(double ra, double dec);
   void slotZoom(float zoom);
+  void slotSlewingTimer();
 };
 
 extern CMapView      *pcMapView;

@@ -131,6 +131,8 @@ typedef struct
 typedef struct
 {
   bool  bShow;
+  bool  sameAsBkColor;
+  QRgb  color;
   float light;
   float dark;
 } milkyWay_t;

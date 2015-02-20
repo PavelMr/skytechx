@@ -627,19 +627,23 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 {
   int m = 30;
   QRect rc;
+  QRect orc;
+  int sizeX = 370 + 345 + 32;
 
   int g_mapLegendAlign = 3; //TODO: do nastaveni
 
   switch (g_mapLegendAlign)
   {
-    case 0 : rc.setRect(m, m, 370, 70); break;
-    case 1 : rc.setRect(pImg->width() - (m + 370), m, 370, 70); break;
-    case 2 : rc.setRect(pImg->width() - (m + 370), pImg->height() - (m + 70), 370, 70); break;
-    case 3 : rc.setRect(m, pImg->height() - (m + 70), 370, 70); break;
+    case 0 : rc.setRect(m, m, sizeX, 70); break;
+    case 1 : rc.setRect(pImg->width() - (m + sizeX), m, sizeX, 70); break;
+    case 2 : rc.setRect(pImg->width() - (m + 370), pImg->height() - (m + 70), sizeX, 70); break;
+    case 3 : rc.setRect(m, pImg->height() - (m + 70), sizeX, 70); break;
   }
 
-  pPainter->setOpacity(0.9);
-  pPainter->fillRect(rc, Qt::gray);
+  orc = rc;
+
+  pPainter->setOpacity(0.75);
+  pPainter->fillRect(rc, Qt::black);
   pPainter->setOpacity(1);
 
   float c = mapView->starMag;
@@ -694,6 +698,45 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     rc.setWidth(size);
     pPainter->fillRect(rc, Qt::white);
     pPainter->drawText(rc, Qt::AlignCenter, getStrDeg(scale[idx]));
+  }
+
+  struct dsoItem
+  {
+    int     type;
+    QString name;
+  };
+
+  SKPOINT pt;
+  dso_t dso;
+  dsoItem types[12] = {DSOT_GALAXY, QObject::tr("Gal"),
+                       DSOT_NEBULA, QObject::tr("Neb"),
+                       DSOT_BRIGHT_NEB, QObject::tr("BNeb"),
+                       DSOT_DARK_NEB, QObject::tr("DNeb"),
+                       DSOT_PLN_NEBULA, QObject::tr("PNeb"),
+                       DSOT_OPEN_CLUSTER, QObject::tr("OC"),
+                       DSOT_OPEN_CLS_NEB, QObject::tr("OCNeb"),
+                       DSOT_GLOB_CLUSTER, QObject::tr("GC"),
+                       DSOT_GAL_CLUSTER, QObject::tr("GalC"),
+                       DSOT_ASTERISM, QObject::tr("Ast"),
+                       DSOT_QUASAR, QObject::tr("Qua"),
+                       DSOT_UNKNOWN, QObject::tr("Unk")
+                      };
+
+  for (int i = 0; i < 12; i++)
+  {
+    pt.sx = 370 + orc.x() + 10 + i * 32;
+    pt.sy = orc.y() + 14;
+
+    dso.type = types[i].type;
+    dso.sx = 0;
+    dso.sy = 0;
+    dso.nameOffs = 0;
+    dso.mag = 0;
+    dso.shape = 0xffff;
+
+    cDSO.renderObj(&pt, &dso, mapView, false);
+    pPainter->setPen(Qt::white);
+    pPainter->renderText(pt.sx, pt.sy, 17, types[i].name, RT_BOTTOM);
   }
 }
 

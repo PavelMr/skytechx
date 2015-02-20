@@ -90,5 +90,11 @@
         <file>res/ico_ec.png</file>
         <file>res/ico_eq.png</file>
         <file>res/ico_web_help.png</file>
+        <file>res/ico_sidebar.png</file>
+        <file>res/ico_full_scr.png</file>
+        <file>res/ico_time_window.png</file>
+        <file>res/ico_tele_window.png</file>
+        <file>res/slew_1.png</file>
+        <file>res/slew_2.png</file>
     </qresource>
 </RCC>

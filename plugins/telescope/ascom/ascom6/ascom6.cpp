@@ -84,7 +84,7 @@ QString CAscom6::getTelescope()
 }
 
 ////////////////////////////////////
-bool CAscom6::setup(QWidget *parent)
+bool CAscom6::setup(QWidget *parent, bool parkAtExit)
 ////////////////////////////////////
 {
   QSettings set;
@@ -95,7 +95,7 @@ bool CAscom6::setup(QWidget *parent)
   {
     if (msgBoxQuest(parent, "Disconnect current device?") == QMessageBox::Yes)
     {
-      disconnectDev();
+      disconnectDev(parkAtExit);
     }
     else
     {
@@ -223,6 +223,17 @@ int CAscom6::getAttributes()
   return attr;
 }
 
+bool CAscom6::isSlewing()
+{
+  if (m_device == NULL)
+    return false;
+
+  if (m_device->isNull())
+    return false;
+
+  return m_device->property("Slewing").toBool();
+}
+
 
 //////////////////////////
 void CAscom6::slotUpdate()
@@ -253,9 +264,9 @@ void CAscom6::slotUpdate()
   emit sigUpdate(ra, dec);
 }
 
-/////////////////////////////////
-bool CAscom6::disconnectDev(void)
-/////////////////////////////////
+//////////////////////////////////////
+bool CAscom6::disconnectDev(bool park)
+/////////////////////////////////////
 {
   qDebug("ASCOM6 disconnect()");
 
@@ -263,7 +274,10 @@ bool CAscom6::disconnectDev(void)
     return(true);
 
   m_device->setProperty("Tracking", "0");
-  m_device->dynamicCall("Park()");
+  if (park)
+  {
+    m_device->dynamicCall("Park()");
+  }
   m_device->setProperty("Connected", "0");
   m_device->clear();
 

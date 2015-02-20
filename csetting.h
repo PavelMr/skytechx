@@ -158,6 +158,8 @@ private slots:
 
    void on_listView_doubleClicked(const QModelIndex &index);
 
+   void on_pushButton_59_clicked();
+
 private:
    Ui::CSetting *ui;
    void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList);

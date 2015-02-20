@@ -276,6 +276,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionRealtime->setChecked(rt);
   ui->actionRealtime->triggered(rt);
 
+  ui->tb_window->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_alt_azm->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_grid->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_mag->setToolButtonStyle(Qt::ToolButtonIconOnly);

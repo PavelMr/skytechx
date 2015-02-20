@@ -785,7 +785,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-129</y>
+          <y>0</y>
           <width>331</width>
           <height>509</height>
          </rect>
@@ -2141,6 +2141,21 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionHorizon_mode_Zenith_up"/>
    <addaction name="actionEcliptic"/>
   </widget>
+  <widget class="QToolBar" name="tb_window">
+   <property name="windowTitle">
+    <string>Windows</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionShow_sidebar"/>
+   <addaction name="actionShow_full_screen"/>
+   <addaction name="actionTime_window"/>
+   <addaction name="actionTelescope_window"/>
+  </widget>
   <action name="action_Exit_2">
    <property name="text">
     <string>&amp;Exit</string>
@@ -2391,6 +2406,10 @@ p, li { white-space: pre-wrap; }
   <action name="actionShow_sidebar">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_sidebar.png</normaloff>:/res/ico_sidebar.png</iconset>
    </property>
    <property name="text">
     <string>Show sidebar</string>
@@ -3207,6 +3226,10 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_time_window.png</normaloff>:/res/ico_time_window.png</iconset>
+   </property>
    <property name="text">
     <string>Time window</string>
    </property>
@@ -3214,6 +3237,10 @@ p, li { white-space: pre-wrap; }
   <action name="actionShow_full_screen">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_full_scr.png</normaloff>:/res/ico_full_scr.png</iconset>
    </property>
    <property name="text">
     <string>Show full screen</string>
@@ -3259,6 +3286,10 @@ p, li { white-space: pre-wrap; }
   <action name="actionTelescope_window">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_tele_window.png</normaloff>:/res/ico_tele_window.png</iconset>
    </property>
    <property name="text">
     <string>Telescope window</string>

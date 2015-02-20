@@ -97,6 +97,11 @@ CMapView::CMapView(QWidget *parent) :
 
   m_zoom = new CZoomBar(this);
 
+  slewBlink = false;
+  slewingTimer = new QTimer(this);
+  slewingTimer->start(250);
+  connect(slewingTimer, SIGNAL(timeout()), this, SLOT(slotSlewingTimer()));
+
   //setToolTip("");
 
   connect(m_zoom, SIGNAL(sigZoom(float)), this, SLOT(slotZoom(float)));
@@ -1207,6 +1212,7 @@ void CMapView::slotZoom(float zoom)
   repaintMap();
 }
 
+
 /////////////////////////////////////////////
 void CMapView::addFov(double dir, double mul)
 /////////////////////////////////////////////
@@ -1909,6 +1915,15 @@ void CMapView::paintEvent(QPaintEvent *)
     iy += pix.height() + 10;
   }
 
+  if (g_pTelePlugin && g_pTelePlugin->isSlewing())
+  {
+    QPixmap pix[2] = {QPixmap(":/res/slew_1.png"),
+                      QPixmap(":/res/slew_2.png")};
+
+    p.drawPixmap(width() - 10 - pix[slewBlink].width(), iy, pix[slewBlink]);
+    iy += pix[slewBlink].height() + 10;
+  }
+
   /////////////////////////////////////////////////////
 
   if (!helpText.isEmpty())
@@ -1940,4 +1955,24 @@ void CMapView::slotAnimChanged(curvePoint_t &p)
   qDebug() << p.x << p.y;
 
   centerMap(p.x, p.y, p.fov);
+}
+
+
+void CMapView::slotSlewingTimer()
+{
+  static bool slew = false;
+
+  slewBlink = !slewBlink;
+  if (g_pTelePlugin && g_pTelePlugin->isSlewing())
+  {
+    slew = true;
+    update();
+    return;
+  }
+
+  if (slew && g_pTelePlugin && !g_pTelePlugin->isSlewing())
+  {
+    slew = false;
+    update();
+  }
 }

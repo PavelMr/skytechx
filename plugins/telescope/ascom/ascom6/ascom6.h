@@ -28,12 +28,13 @@ public:
   void stop(void);
   void setRefresh(int ms);
   QString getName(void);
-  bool setup(QWidget *parent);
+  bool setup(QWidget *parent, bool parkAtExit = true);
   bool connectDev(QWidget *parent);
-  bool disconnectDev();
+  bool disconnectDev(bool park = true);
   bool slewTo(double ra, double dec);
   bool syncTo(double ra, double dec);
   int  getAttributes();
+  bool isSlewing();
   QString getTelescope();
 
 protected:

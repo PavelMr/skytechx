@@ -272,6 +272,9 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.milkyWay.bShow", set->map.milkyWay.bShow, ds);
   writeVal("map.milkyWay.light", set->map.milkyWay.light, ds);
   writeVal("map.milkyWay.dark", set->map.milkyWay.dark, ds);
+  writeVal("map.milkyWay.sameAsBkColor", set->map.milkyWay.sameAsBkColor, ds);
+  writeVal("map.milkyWay.color", set->map.milkyWay.color, ds);
+
 
   // drawing
   writeVal("map.drawing.color", set->map.drawing.color, ds);
@@ -552,6 +555,8 @@ bool setLoad(QString name, setting_t *set)
   set->map.milkyWay.bShow = readVal("map.milkyWay.bShow", true, tMap).toBool();
   set->map.milkyWay.light = readVal("map.milkyWay.light", 20, tMap).toInt();
   set->map.milkyWay.dark = readVal("map.milkyWay.dark", 10, tMap).toInt();
+  set->map.milkyWay.sameAsBkColor = readVal("map.milkyWay.sameAsBkColor", true, tMap).toBool();
+  set->map.milkyWay.color = readVal("map.milkyWay.color", MRGB(30, 30, 30), tMap).toUInt();
 
   // drawing
   set->map.drawing.color = readVal("map.drawing.color", MRGB(255, 255, 255), tMap).toUInt();

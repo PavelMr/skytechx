@@ -575,7 +575,7 @@ bool CDso::addAddon(const QString /*name*/)
 
 
 /////////////////////////////////////////////////////////////////////////////
-void CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
+void CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 /////////////////////////////////////////////////////////////////////////////
 {
   pPainter->setPen(m_pen);
@@ -592,12 +592,15 @@ void CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
   }
-  addMapObj(pt->sx, pt->sy, MO_DSO, MO_RECT, s, (int)pDso, 0, pDso->DSO_MAG);
+  if (addToList)
+  {
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_RECT, s, (int)pDso, 0, pDso->DSO_MAG);
+  }
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-void CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
+void CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 //////////////////////////////////////////////////////////////////////////////
 {
   pPainter->setPen(m_pen);
@@ -612,12 +615,15 @@ void CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
   }
-  addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  if (addToList)
+  {
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  }
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-void CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
+void CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 //////////////////////////////////////////////////////////////////////////////
 {
   pPainter->setPen(m_pen);
@@ -633,12 +639,15 @@ void CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
   }
-  addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  if (addToList)
+  {
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  }
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
+void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 ////////////////////////////////////////////////////////////////////////////////
 {
   pPainter->setPen(m_pen);
@@ -654,12 +663,15 @@ void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
   }
-  addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  if (addToList)
+  {
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  }
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t * /*mapView*/)
+void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t * /*mapView*/, bool addToList)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 {
   int sz = MIN_DSO_SIZE - 1;
@@ -672,7 +684,10 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
   if (s <= sz)
   {
     pPainter->drawEllipse(QPoint(pt->sx, pt->sy), sz * 2, sz);
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, sz, (int)pDso, 0, pDso->DSO_MAG);
+    if (addToList)
+    {
+      addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, sz, (int)pDso, 0, pDso->DSO_MAG);
+    }
     return;
   }
 
@@ -709,12 +724,15 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
 
     pPainter->drawCText(pt->sx, pt->sy + y + m_fntHeight, getName(pDso));
   }
-  addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  if (addToList)
+  {
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  }
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void CDso::renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
+void CDso::renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 ////////////////////////////////////////////////////////////////////////////////
 {
   pPainter->setPen(m_pen);
@@ -729,12 +747,15 @@ void CDso::renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
   }
-  addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  if (addToList)
+  {
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  }
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
+void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 //////////////////////////////////////////////////////////////////////////////
 {
   pPainter->setPen(m_pen);
@@ -750,12 +771,15 @@ void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
   }
-  addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  if (addToList)
+  {
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  }
 }
 
 
 ////////////////////////////////////////////////////////////////////////////
-void CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
+void CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 ////////////////////////////////////////////////////////////////////////////
 {
   pPainter->setPen(m_pen);
@@ -770,13 +794,16 @@ void CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter)
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
   }
-  addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  if (addToList)
+  {
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+  }
 }
 
 
 
 ///////////////////////////////////////////////////////////////////////////
-void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view)
+void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool addToList)
 ///////////////////////////////////////////////////////////////////////////
 {
   QRect  rc;
@@ -794,20 +821,23 @@ void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view)
 
       tLabels.append(label);
     }
-    addMapObj(rc.center().x(), rc.center().y(), MO_DSO, MO_RECT, rc.width() / 2, (int)dso, 0, dso->DSO_MAG);
+    if (addToList)
+    {
+      addMapObj(rc.center().x(), rc.center().y(), MO_DSO, MO_RECT, rc.width() / 2, (int)dso, 0, dso->DSO_MAG);
+    }
   }
 }
 
 
 /////////////////////////////////////////////////////////////////
-void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView)
+void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList)
 /////////////////////////////////////////////////////////////////
 {
   if (pDso->shape != NO_DSO_SHAPE)
   {
     if (g_showDSOShapes)
     {
-      drawShape(pPainter, pImg, pDso, mapView);
+      drawShape(pPainter, pImg, pDso, mapView, addToList);
       return;
     }
   }
@@ -894,42 +924,42 @@ void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView)
     case DSOT_DARK_NEB:
     case DSOT_BRIGHT_NEB:
     case DSOT_SUPER_REM:
-      renderNebulaSymbol(pt, pDso, pPainter);
+      renderNebulaSymbol(pt, pDso, pPainter, addToList);
       break;
 
     case DSOT_OPEN_CLS_NEB:
     case DSOT_OPEN_CLUSTER:
     case DSOT_MILKY_SC:
     case DSOT_GALAXY_CLD:
-      renderOpenClsSymbol(pt, pDso, pPainter);
+      renderOpenClsSymbol(pt, pDso, pPainter, addToList);
       break;
 
     case DSOT_GLOB_CLUSTER:
-      renderGlobClsSymbol(pt, pDso, pPainter);
+      renderGlobClsSymbol(pt, pDso, pPainter, addToList);
       break;
 
     case DSOT_PLN_NEBULA:
-      renderPlnNebulaSymbol(pt, pDso, pPainter);
+      renderPlnNebulaSymbol(pt, pDso, pPainter, addToList);
       break;
 
     case DSOT_GALAXY:
-      renderGalaxySymbol(pt, pDso, pPainter, mapView);
+      renderGalaxySymbol(pt, pDso, pPainter, mapView, addToList);
       break;
 
     case DSOT_GAL_CLUSTER:
-      renderGalaxyClsSymbol(pt, pDso, pPainter);
+      renderGalaxyClsSymbol(pt, pDso, pPainter, addToList);
       break;
 
     case DSOT_STAR:
     case DSOT_STARS:
     case DSOT_ASTERISM:
     case DSOT_QUASAR:
-      renderDsoStarSymbol(pt, pDso, pPainter);
+      renderDsoStarSymbol(pt, pDso, pPainter, addToList);
       break;
 
     case DSOT_OTHER:
     case DSOT_UNKNOWN:
-      renderOtherSymbol(pt, pDso, pPainter);
+      renderOtherSymbol(pt, pDso, pPainter, addToList);
       break;
   }
 }

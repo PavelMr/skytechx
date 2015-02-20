@@ -22,12 +22,21 @@ void CMilkyWay::render(mapView_t *view, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////
 {
   QRect rc;
-  QColor col = currentSkyColor;
+  QColor col;
   QColor cols[2];
 
   if (!g_skSet.map.milkyWay.bShow)
   {
     return;
+  }
+
+  if (g_skSet.map.milkyWay.sameAsBkColor)
+  {
+    col = currentSkyColor;
+  }
+  else
+  {
+    col = g_skSet.map.milkyWay.color;
   }
 
   cols[0] = QColor(CLAMP(col.red() + g_skSet.map.milkyWay.light, 0, 255),

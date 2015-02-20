@@ -41,7 +41,7 @@ class CDso : public QObject
     void load();
     void createSectors();
     void setPainter(CSkPainter *p, QImage *pImg);
-    void renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView);
+    void renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList = true);
     int  findDSO(char *pszName, dso_t **pDso);
     int  findDSOFirstName(char *pszName);
     QString getTypeName(int type, bool &ok);
@@ -57,15 +57,15 @@ class CDso : public QObject
 
     bool addAddon(const QString name);
 
-    void drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view);
-    void renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter);
-    void renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter);
-    void renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter);
-    void renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter);
-    void renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t *mapView);
-    void renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter);
-    void renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter);
-    void renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter);
+    void drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool addToList);
+    void renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    void renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    void renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    void renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    void renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t *mapView, bool addToList);
+    void renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    void renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    void renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
 
     //TODO: dat nazvy do QStringList *dsoNames;
     dsoHeader_t        dsoHead;

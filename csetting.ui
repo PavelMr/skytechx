@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>12</number>
+            <number>10</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2506,13 +2506,34 @@
                 </widget>
                </item>
                <item row="1" column="0">
+                <widget class="QRadioButton" name="radioButton">
+                 <property name="text">
+                  <string>Use background color</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QRadioButton" name="radioButton_2">
+                 <property name="text">
+                  <string>Select custom color</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="CPushColorButton" name="pushButton_59">
+                 <property name="text">
+                  <string>PushButton</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
                 <widget class="QLabel" name="label_33">
                  <property name="text">
                   <string>Brightness  (Bright part)</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
+               <item row="5" column="0">
                 <widget class="QSlider" name="horizontalSlider_13">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -2540,7 +2561,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
+               <item row="5" column="1">
                 <widget class="QLabel" name="label_43">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -2565,14 +2586,14 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
+               <item row="6" column="0">
                 <widget class="QLabel" name="label_34">
                  <property name="text">
                   <string>Brightness ( Dark part)</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
+               <item row="7" column="0">
                 <widget class="QSlider" name="horizontalSlider_14">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -2600,7 +2621,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="4" column="1">
+               <item row="7" column="1">
                 <widget class="QLabel" name="label_44">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">

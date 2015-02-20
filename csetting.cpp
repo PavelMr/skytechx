@@ -376,6 +376,20 @@ void CSetting::setValues()
   ui->checkBox_6->setChecked(set.map.milkyWay.bShow);
   ui->horizontalSlider_13->setValue(set.map.milkyWay.light);
   ui->horizontalSlider_14->setValue(set.map.milkyWay.dark);
+  ui->pushButton_59->setColor(set.map.milkyWay.color);
+
+  qDebug() << "set" << set.map.milkyWay.sameAsBkColor;
+
+  if (set.map.milkyWay.sameAsBkColor)
+  {
+    ui->radioButton->setChecked(true);
+    ui->radioButton_2->setChecked(false);
+  }
+  else
+  {
+    ui->radioButton->setChecked(false);
+    ui->radioButton_2->setChecked(true);
+  }
 
   // drawings
   ui->pushButton_37->setColor(set.map.drawing.color);
@@ -596,6 +610,7 @@ void CSetting::apply()
   g_skSet.map.milkyWay.bShow = ui->checkBox_6->isChecked();
   g_skSet.map.milkyWay.light = ui->horizontalSlider_13->value();
   g_skSet.map.milkyWay.dark = ui->horizontalSlider_14->value();
+  g_skSet.map.milkyWay.sameAsBkColor = ui->radioButton->isChecked();
 
   // grid
   g_skSet.map.showGridLabels = ui->checkBox_11->isChecked();
@@ -1564,4 +1579,15 @@ void CSetting::on_pushButton_31_clicked()
 void CSetting::on_listView_doubleClicked(const QModelIndex &)
 {
   on_pushButton_28_clicked();
+}
+
+void CSetting::on_pushButton_59_clicked()
+{
+  QColorDialog dlg(set.map.milkyWay.color, this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    set.map.milkyWay.color = dlg.currentColor().rgb();
+    ui->pushButton_59->setColor(dlg.currentColor());
+  }
 }
