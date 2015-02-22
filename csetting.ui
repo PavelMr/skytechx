@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>10</number>
+            <number>9</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2213,42 +2213,28 @@
                     </widget>
                    </item>
                    <item row="7" column="1">
-                    <layout class="QHBoxLayout" name="horizontalLayout_16">
-                     <item>
-                      <widget class="QDoubleSpinBox" name="doubleSpinBox_33">
-                       <property name="suffix">
-                        <string> mag.</string>
-                       </property>
-                       <property name="decimals">
-                        <number>1</number>
-                       </property>
-                       <property name="minimum">
-                        <double>-20.000000000000000</double>
-                       </property>
-                       <property name="maximum">
-                        <double>30.000000000000000</double>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_9">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
+                    <layout class="QHBoxLayout" name="horizontalLayout_16"/>
                    </item>
-                   <item row="6" column="1">
+                   <item row="8" column="0">
                     <widget class="QLabel" name="label_71">
                      <property name="text">
                       <string>Don't use if fainter than</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="9" column="0">
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_33">
+                     <property name="suffix">
+                      <string> mag.</string>
+                     </property>
+                     <property name="decimals">
+                      <number>1</number>
+                     </property>
+                     <property name="minimum">
+                      <double>-20.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>30.000000000000000</double>
                      </property>
                     </widget>
                    </item>
@@ -2318,13 +2304,6 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="6" column="1">
-                    <widget class="QLabel" name="label_72">
-                     <property name="text">
-                      <string>Don't use if fainter than</string>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="8" column="0">
                     <widget class="QDoubleSpinBox" name="doubleSpinBox_25">
                      <property name="suffix">
@@ -2342,37 +2321,30 @@
                     </widget>
                    </item>
                    <item row="8" column="1">
-                    <layout class="QHBoxLayout" name="horizontalLayout_15">
-                     <item>
-                      <widget class="QDoubleSpinBox" name="doubleSpinBox_35">
-                       <property name="suffix">
-                        <string> mag.</string>
-                       </property>
-                       <property name="decimals">
-                        <number>1</number>
-                       </property>
-                       <property name="minimum">
-                        <double>-20.000000000000000</double>
-                       </property>
-                       <property name="maximum">
-                        <double>30.000000000000000</double>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_8">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
+                    <layout class="QHBoxLayout" name="horizontalLayout_15"/>
+                   </item>
+                   <item row="9" column="0">
+                    <widget class="QLabel" name="label_72">
+                     <property name="text">
+                      <string>Don't use if fainter than</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="10" column="0">
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_35">
+                     <property name="suffix">
+                      <string> mag.</string>
+                     </property>
+                     <property name="decimals">
+                      <number>1</number>
+                     </property>
+                     <property name="minimum">
+                      <double>-20.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>30.000000000000000</double>
+                     </property>
+                    </widget>
                    </item>
                   </layout>
                  </item>
@@ -3392,6 +3364,13 @@
               </property>
               <property name="text">
                <string>Alternative mouse commands</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_14">
+              <property name="text">
+               <string>Parking telescope before disconnection</string>
               </property>
              </widget>
             </item>

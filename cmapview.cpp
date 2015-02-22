@@ -66,6 +66,7 @@ typedef struct
 bool bConstEdit = false;
 bool bDevelopMode = false;
 bool bAlternativeMouse = false;
+bool bParkTelescope = false;
 
 int                 dev_move_index = -1;
 int                 dev_shape_index = -1;
@@ -116,6 +117,7 @@ CMapView::CMapView(QWidget *parent) :
   g_autoSave.tracking = settings.value("saving/tracking", true).toBool();
   g_autoSave.mapPosition = settings.value("saving/mapPosition", true).toBool();
   bAlternativeMouse = settings.value("altMouse", false).toBool();
+  bParkTelescope = settings.value("parkTelescope", false).toBool();
 
   setAttribute(Qt::WA_OpaquePaintEvent, true);
   setAttribute(Qt::WA_NoSystemBackground, true);
@@ -1006,6 +1008,7 @@ void CMapView::saveSetting()
   settings.setValue("saving/tracking", g_autoSave.tracking);
   settings.setValue("saving/mapPosition", g_autoSave.mapPosition);
   settings.setValue("altMouse", bAlternativeMouse);
+  settings.setValue("parkTelescope", bParkTelescope);
 
   if (g_autoSave.mapPosition)
   {

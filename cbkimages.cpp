@@ -205,7 +205,7 @@ void CBkImages::renderDSSFits(QImage *pDst, CSkPainter *p, CFits *fit)
 
     SKPOINT newPts[2];
 
-    if (trfProjectLine(&pt[0], &pt[3], newPts[0], newPts[1]))
+    if (trfProjectLine(&pt[0], &pt[1], newPts[0], newPts[1]))
     {
       double textAngle = -R2D(atan2(newPts[1].sx - newPts[0].sx, newPts[1].sy - newPts[0].sy)) - 270;
 

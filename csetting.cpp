@@ -13,6 +13,7 @@
 #include "Usno2A.h"
 #include "cucac4.h"
 #include "ctextsel.h"
+#include "mainwindow.h"
 
 #include <QSettings>
 
@@ -20,6 +21,7 @@ static int currentRow = 0;
 
 extern bool g_showZoomBar;
 extern bool bAlternativeMouse;
+extern bool bParkTelescope;
 
 CSetting::CSetting(QWidget *parent) :
   QDialog(parent),
@@ -56,6 +58,7 @@ CSetting::CSetting(QWidget *parent) :
   //int size = set.value("toolbar_icon_size", 24).toInt();
 
   ui->checkBox_13->setChecked(bAlternativeMouse);
+  ui->checkBox_14->setChecked(bParkTelescope);
 
   connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
   connect(ui->horizontalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
@@ -733,6 +736,7 @@ void CSetting::on_pushButton_clicked()
   g_showZoomBar = ui->checkBox_10->isChecked();
 
   bAlternativeMouse = ui->checkBox_13->isChecked();
+  bParkTelescope = ui->checkBox_14->isChecked();
 
   QSettings setting;
 

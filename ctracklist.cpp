@@ -112,3 +112,8 @@ void CTrackList::on_pushButton_3_clicked()
   model->removeRows(0, model->rowCount());
   tTracking.clear();;
 }
+
+void CTrackList::on_pushButton_2_clicked()
+{
+  slotDeleteItem();
+}

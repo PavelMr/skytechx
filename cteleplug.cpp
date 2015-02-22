@@ -1,6 +1,8 @@
 #include "cteleplug.h"
 #include "mapobj.h"
 
+extern bool bParkTelescope;
+
 CTelePluginInterface   *g_pTelePlugin = NULL;
 static QPluginLoader   *tpLoader = NULL;
 
@@ -76,7 +78,9 @@ void tpUnloadDriver(void)
     return;
 
   if (g_pTelePlugin)
-    g_pTelePlugin->disconnectDev();
+  {
+    g_pTelePlugin->disconnectDev(bParkTelescope);
+  }
 
   releaseHoldObject(MO_TELESCOPE);
 

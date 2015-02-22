@@ -84,6 +84,41 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 
   QSettings settings;
+
+  g_pApp = &a;
+
+  // parse cmd line
+  for (int i = 1; i < argc; i++)
+  {
+    QString value;
+    QString param = argv[i];
+
+    if (getCommandParamValue(param, "-octreedepth=", "=", value))
+    {
+      g_ocTreeDepth = value.toInt();
+    }
+    else
+    if (getCommandParamValue(param, "-numthreads=", "=", value))
+    {
+      omp_set_num_threads(value.toInt());
+    }
+    else
+    if (getCommandParamValue(param, "-develop_mode=", "=", value))
+    {
+      g_developMode = value.toInt();
+    }
+    else
+    if (getCommandParamValue(param, "-show_fps", "=", value))
+    {
+      g_showFps = value.toInt();
+    }
+    else
+    if (param.startsWith("-reset_profile"))
+    {
+      settings.remove("");
+    }
+  }
+
   QString languagePath = settings.value("language").toString();
 
   QTranslator translator;
@@ -94,39 +129,8 @@ int main(int argc, char *argv[])
     a.installTranslator(&translator);
   }
 
-  g_pApp = &a;
-
   QLocale::setDefault(QLocale::c());
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-  // TODO: locale for QDateTimeEdit or custom dialog
-  //QLocale::setDefault(QLocale::Afar);
-
-  //pcDebug = new CConsole();
-
-  // parse cmd line
-  for (int i = 1; i < argc; i++)
-  {
-    QString value;
-    if (getCommandParamValue(argv[i], "octreedepth=", "=", value))
-    {
-      g_ocTreeDepth = value.toInt();
-    }
-    else
-    if (getCommandParamValue(argv[i], "numthreads=", "=", value))
-    {
-      omp_set_num_threads(value.toInt());
-    }
-    else
-    if (getCommandParamValue(argv[i], "develop_mode=", "=", value))
-    {
-      g_developMode = value.toInt();
-    }
-    else
-    if (getCommandParamValue(argv[i], "show_fps", "=", value))
-    {
-      g_showFps = value.toInt();
-    }
-  }
 
   qDebug("octreedepth=%d", g_ocTreeDepth);
   qDebug("numthreads=%d", omp_get_max_threads());

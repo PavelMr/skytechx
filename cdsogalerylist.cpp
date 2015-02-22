@@ -144,6 +144,9 @@ void CDSOGaleryList::slotDelete()
   q.finish();
 
   model->removeRow(item1->row());
+}
 
-  qDebug() << "del";
+void CDSOGaleryList::on_pushButton_4_clicked()
+{
+  slotDelete();
 }

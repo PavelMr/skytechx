@@ -137,3 +137,8 @@ void CDrawingList::on_pushButton_clicked()
 
   done(DL_CANCEL);
 }
+
+void CDrawingList::on_pushButton_3_clicked()
+{
+  slotDelete();
+}

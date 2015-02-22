@@ -57,8 +57,6 @@ void CTipOfDay::setTip(int &index)
     index = TIPS_COUNT - 1;
   }
 
-  // TODO: prelozit a pak pak i v linguistu
-
   QString tip[TIPS_COUNT] = {tr("During object search on toolbar press Enter + Shift to locate the object with current field of view."),
                              tr("Keyboard shortcut list and map controls help can be displayed by pressing F2 key."),
                              tr("Double click item on status bar to open particular dialog."),

@@ -628,3 +628,8 @@ void CWPosSel::slotSelChange(QModelIndex &index)
   ui->listWidget->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
   ui->listWidget->scrollTo(index);
 }
+
+void CWPosSel::on_pushButton_9_clicked()
+{
+  slotDeleteItem();
+}

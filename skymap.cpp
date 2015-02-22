@@ -625,7 +625,7 @@ static void smRenderBackground(mapView_t *mapView, CSkPainter*, QImage *pImg)
 static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 //////////////////////////////////////////////////////////////////////////////////
 {
-  int m = 30;
+  int m = 20;
   QRect rc;
   QRect orc;
   int sizeX = 370 + 345 + 32;
@@ -738,6 +738,10 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     pPainter->setPen(Qt::white);
     pPainter->renderText(pt.sx, pt.sy, 17, types[i].name, RT_BOTTOM);
   }
+
+  pPainter->setPen(QColor(48, 48, 48));
+  pPainter->setBrush(Qt::NoBrush);
+  pPainter->drawRect(orc);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

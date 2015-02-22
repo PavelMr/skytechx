@@ -103,6 +103,7 @@ bool g_quickInfoForced;
 
 QString g_horizonName = "none";
 
+extern bool bParkTelescope;
 extern bool g_developMode;
 extern QApplication *g_pApp;
 
@@ -664,7 +665,7 @@ void MainWindow::setTitle()
     tzName = " UTC+" + QString::number(24 * ui->widget->m_mapView.geo.tz, 'f', 1);
   }
 
-  setWindowTitle(QString("Skytech X ") + SK_VERSION + QString(tr("   Location : ")) + ui->widget->m_mapView.geo.name + " " + tzName);
+  setWindowTitle(QString("Skytech X ") + SK_VERSION + QString(tr("   Location : ")) + ui->widget->m_mapView.geo.name + " " + tzName + " (" + QString(tr("Profile : ")) + g_setName + ")");
 }
 
 void MainWindow::slotOpenWebHelp()
@@ -854,7 +855,7 @@ void MainWindow::saveAndExit()
 {
   if (g_pTelePlugin != NULL)
   {
-    g_pTelePlugin->disconnectDev();
+    g_pTelePlugin->disconnectDev(bParkTelescope);
   }
 
   if (ui->actionNight_mode->isChecked())
@@ -2738,6 +2739,7 @@ void MainWindow::on_actionSetting_triggered()
   ui->widget->repaintMap();
   ui->widget->m_zoom->setVisible(g_showZoomBar);
   setToolbarIconSize();
+  setTitle();
 }
 
 ///////////////////////////////////////////////////

@@ -561,7 +561,7 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     <name>CDSOCatalogue</name>
     <message>
         <location filename="cdsocatalogue.ui" line="14"/>
-        <location filename="cdsocatalogue.cpp" line="408"/>
+        <location filename="cdsocatalogue.cpp" line="420"/>
         <source>DSO Catalogue</source>
         <translation>Katalog DSO</translation>
     </message>
@@ -587,8 +587,8 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     </message>
     <message>
         <location filename="cdsocatalogue.ui" line="182"/>
-        <location filename="cdsocatalogue.ui" line="316"/>
-        <location filename="cdsocatalogue.ui" line="349"/>
+        <location filename="cdsocatalogue.ui" line="418"/>
+        <location filename="cdsocatalogue.ui" line="444"/>
         <source>&apos;</source>
         <translation></translation>
     </message>
@@ -619,7 +619,7 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     </message>
     <message>
         <location filename="cdsocatalogue.ui" line="69"/>
-        <location filename="cdsocatalogue.cpp" line="507"/>
+        <location filename="cdsocatalogue.cpp" line="519"/>
         <source>Show ext. filter</source>
         <translation>Zobraz roz. filtr</translation>
     </message>
@@ -629,92 +629,97 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <translation>Zobraz pouze obj. nad horizontem</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="230"/>
-        <location filename="cdsocatalogue.ui" line="240"/>
+        <location filename="cdsocatalogue.ui" line="254"/>
+        <location filename="cdsocatalogue.ui" line="454"/>
         <source> m</source>
         <translation> m</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="250"/>
-        <location filename="cdsocatalogue.ui" line="270"/>
+        <location filename="cdsocatalogue.ui" line="405"/>
+        <location filename="cdsocatalogue.ui" line="464"/>
         <source> h</source>
         <translation> h</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="260"/>
-        <location filename="cdsocatalogue.ui" line="464"/>
+        <location filename="cdsocatalogue.ui" line="237"/>
+        <location filename="cdsocatalogue.ui" line="379"/>
         <source> s</source>
         <translation> s</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="296"/>
+        <location filename="cdsocatalogue.ui" line="247"/>
         <source>Reset limits</source>
         <translation>Odstraň limity</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="303"/>
-        <location filename="cdsocatalogue.ui" line="336"/>
+        <location filename="cdsocatalogue.ui" line="317"/>
+        <location filename="cdsocatalogue.ui" line="366"/>
         <source>°</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="326"/>
-        <location filename="cdsocatalogue.ui" line="362"/>
+        <location filename="cdsocatalogue.ui" line="267"/>
+        <location filename="cdsocatalogue.ui" line="284"/>
         <source>&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="436"/>
+        <location filename="cdsocatalogue.ui" line="230"/>
         <source>From R.A.</source>
         <translation>Od R.A.</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="443"/>
+        <location filename="cdsocatalogue.ui" line="277"/>
         <source>To R.A.</source>
         <translation>Do R.A.</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="450"/>
+        <location filename="cdsocatalogue.ui" line="294"/>
         <source>From Dec.</source>
         <translation>Od Dek.</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="457"/>
+        <location filename="cdsocatalogue.ui" line="359"/>
         <source>To Dec.</source>
         <translation>Do Dek.</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="490"/>
+        <location filename="cdsocatalogue.ui" line="474"/>
+        <source>Epoch J2000.0</source>
+        <translation>Epocha J2000.0</translation>
+    </message>
+    <message>
+        <location filename="cdsocatalogue.ui" line="497"/>
         <source>Make List</source>
         <translation>Generovat seznam</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="513"/>
+        <location filename="cdsocatalogue.ui" line="520"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="533"/>
+        <location filename="cdsocatalogue.ui" line="540"/>
         <source>Remove filter</source>
         <translation>Odstranit filtr</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="540"/>
+        <location filename="cdsocatalogue.ui" line="547"/>
         <source>Go to Selected Row</source>
         <translation>Jdi na vybraný řádek</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="547"/>
+        <location filename="cdsocatalogue.ui" line="554"/>
         <source>Print...</source>
         <translation>Tisk...</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="554"/>
+        <location filename="cdsocatalogue.ui" line="561"/>
         <source>Save...</source>
         <translation>Uložit...</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.ui" line="561"/>
+        <location filename="cdsocatalogue.ui" line="568"/>
         <source>Close</source>
         <translation>Storno</translation>
     </message>
@@ -828,22 +833,32 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <translation>Počet záznamů : </translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.cpp" line="399"/>
+        <location filename="cdsocatalogue.cpp" line="304"/>
+        <source>R.A. (J2000)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="cdsocatalogue.cpp" line="305"/>
+        <source>Dec. (J2000)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="cdsocatalogue.cpp" line="411"/>
         <source>Print more than 1000 rows?</source>
         <translation>Tisknout více než 1000 řádků?</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.cpp" line="461"/>
+        <location filename="cdsocatalogue.cpp" line="473"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.cpp" line="463"/>
+        <location filename="cdsocatalogue.cpp" line="475"/>
         <source>CSV Files (*.csv)</source>
         <translation>CSV Soubory (*.csv)</translation>
     </message>
     <message>
-        <location filename="cdsocatalogue.cpp" line="502"/>
+        <location filename="cdsocatalogue.cpp" line="514"/>
         <source>Hide ext. filter</source>
         <translation>Skryj roz. filtr</translation>
     </message>
@@ -884,12 +899,17 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <translation>Odstranit vše...</translation>
     </message>
     <message>
-        <location filename="cdsogalerylist.ui" line="49"/>
+        <location filename="cdsogalerylist.ui" line="36"/>
+        <source>Delete</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <location filename="cdsogalerylist.ui" line="56"/>
         <source>Go to galery</source>
         <translation>Jdi do galerie</translation>
     </message>
     <message>
-        <location filename="cdsogalerylist.ui" line="56"/>
+        <location filename="cdsogalerylist.ui" line="63"/>
         <source>Cancel</source>
         <translation>Storno</translation>
     </message>
@@ -1000,32 +1020,32 @@ Přeješ si zobrazovat tento dialog příště?</translation>
 <context>
     <name>CDSSOpenDialog</name>
     <message>
-        <location filename="mainwindow.cpp" line="2758"/>
+        <location filename="mainwindow.cpp" line="2769"/>
         <source>Rescale to</source>
         <translation>Změnit velikost na</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2765"/>
+        <location filename="mainwindow.cpp" line="2776"/>
         <source>Original size</source>
         <translation>Originální velikost</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2766"/>
+        <location filename="mainwindow.cpp" line="2777"/>
         <source>128 x 128</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2767"/>
+        <location filename="mainwindow.cpp" line="2778"/>
         <source>256 x 256</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2768"/>
+        <location filename="mainwindow.cpp" line="2779"/>
         <source>512 x 512</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2769"/>
+        <location filename="mainwindow.cpp" line="2780"/>
         <source>1024 x 1024</source>
         <translation></translation>
     </message>
@@ -1406,12 +1426,17 @@ ESC : Storno
         <translation>Seznam kreslení</translation>
     </message>
     <message>
-        <location filename="cdrawinglist.ui" line="46"/>
+        <location filename="cdrawinglist.ui" line="33"/>
+        <source>Delete</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <location filename="cdrawinglist.ui" line="53"/>
         <source>Center on map</source>
         <translation>Vycentrovat na mapě</translation>
     </message>
     <message>
-        <location filename="cdrawinglist.ui" line="53"/>
+        <location filename="cdrawinglist.ui" line="60"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1687,116 +1712,126 @@ ESC : Storno
     </message>
     <message>
         <location filename="cephlist.cpp" line="41"/>
+        <source>Local R.A. (J2000.0)</source>
+        <translation>Místní R.A. (J2000.0)</translation>
+    </message>
+    <message>
+        <location filename="cephlist.cpp" line="42"/>
+        <source>Local Dec. (J2000.0)</source>
+        <translation>Místní Dek. (J2000.0)</translation>
+    </message>
+    <message>
+        <location filename="cephlist.cpp" line="43"/>
         <source>Geo. R.A.</source>
         <translation>Geo R.A.</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="42"/>
+        <location filename="cephlist.cpp" line="44"/>
         <source>Geo. Dec.</source>
         <translation>Geo Dek.</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="43"/>
+        <location filename="cephlist.cpp" line="45"/>
         <source>Azimuth</source>
         <translation>Azimut</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="44"/>
+        <location filename="cephlist.cpp" line="46"/>
         <source>Altitude</source>
         <translation>Výška</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="45"/>
+        <location filename="cephlist.cpp" line="47"/>
         <source>Dist. to Earth (R)</source>
         <translation>Vzd.k Zemi (R)</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="46"/>
+        <location filename="cephlist.cpp" line="48"/>
         <source>Helio. dist. (r)</source>
         <translation>Helio vzd. (r)</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="47"/>
+        <location filename="cephlist.cpp" line="49"/>
         <source>Elongation</source>
         <translation>Elongace</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="48"/>
+        <location filename="cephlist.cpp" line="50"/>
         <source>Helio. longitude</source>
         <translation>Helio délka</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="49"/>
+        <location filename="cephlist.cpp" line="51"/>
         <source>Helio. latitude</source>
         <translation>Helio šířka</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="50"/>
+        <location filename="cephlist.cpp" line="52"/>
         <source>Helio. rect. X</source>
         <translation>Helio X</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="51"/>
+        <location filename="cephlist.cpp" line="53"/>
         <source>Helio. rect. Y</source>
         <translation>Helio Y</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="52"/>
+        <location filename="cephlist.cpp" line="54"/>
         <source>Helio. rect. Z</source>
         <translation>Helio Z</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="53"/>
+        <location filename="cephlist.cpp" line="55"/>
         <source>Light time</source>
         <translation>Doba letu světla</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="66"/>
+        <location filename="cephlist.cpp" line="68"/>
         <source>Minute(s)</source>
         <translation>Minuty</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="67"/>
+        <location filename="cephlist.cpp" line="69"/>
         <source>Hour(s)</source>
         <translation>Hodiny</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="68"/>
+        <location filename="cephlist.cpp" line="70"/>
         <source>Day(s)</source>
         <translation>Dny</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="165"/>
+        <location filename="cephlist.cpp" line="167"/>
         <source>No object selected!!!</source>
         <translation>Nebyl vybrán žádný objekt!!!</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="247"/>
+        <location filename="cephlist.cpp" line="249"/>
         <source>There is no selected column!!!</source>
         <translation>Nebyl vybrán žádný sloupec!!!</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="300"/>
+        <location filename="cephlist.cpp" line="302"/>
         <source>Invalid date/time range!!!</source>
         <translation>Neplatný rozsah datumu/času!!!</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="327"/>
+        <location filename="cephlist.cpp" line="329"/>
         <source>Calculation 1000+ positions. Do you want to continue?</source>
         <translation>Výpočet více než 1000 pozic. Přeješ si pokračovat?</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="430"/>
+        <location filename="cephlist.cpp" line="445"/>
         <source> Km</source>
         <translation>Km</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="441"/>
+        <location filename="cephlist.cpp" line="456"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="470"/>
+        <location filename="cephlist.cpp" line="485"/>
         <source> mins.</source>
         <translation>min.</translation>
     </message>
@@ -2100,7 +2135,7 @@ ESC : Storno
 <context>
     <name>CGalLoader</name>
     <message>
-        <location filename="cgalery.cpp" line="170"/>
+        <location filename="cgalery.cpp" line="180"/>
         <source>Image was not found!!!</source>
         <translation>Obrázek nebyl nalezen!!!</translation>
     </message>
@@ -2123,22 +2158,22 @@ ESC : Storno
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="cgalery.cpp" line="21"/>
+        <location filename="cgalery.cpp" line="26"/>
         <source>Galery of </source>
         <translation>Galerie </translation>
     </message>
     <message>
-        <location filename="cgalery.cpp" line="187"/>
+        <location filename="cgalery.cpp" line="197"/>
         <source>Open a File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="cgalery.cpp" line="196"/>
+        <location filename="cgalery.cpp" line="206"/>
         <source>Please wait...</source>
         <translation>Prosím čekejte...</translation>
     </message>
     <message>
-        <location filename="cgalery.cpp" line="208"/>
+        <location filename="cgalery.cpp" line="218"/>
         <source>Cannot insert to DB!!!</source>
         <translation>Nelze vložit do databáze!!!</translation>
     </message>
@@ -2417,73 +2452,73 @@ ESC : Storno
 <context>
     <name>CMapView</name>
     <message>
-        <location filename="cmapview.cpp" line="1318"/>
-        <location filename="cmapview.cpp" line="1570"/>
+        <location filename="cmapview.cpp" line="1339"/>
+        <location filename="cmapview.cpp" line="1591"/>
         <source>R.A. : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1319"/>
-        <location filename="cmapview.cpp" line="1570"/>
+        <location filename="cmapview.cpp" line="1340"/>
+        <location filename="cmapview.cpp" line="1591"/>
         <source>Dec. : %1</source>
         <translation>Dek. : %1</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1320"/>
+        <location filename="cmapview.cpp" line="1341"/>
         <source>FOV : %1</source>
         <translation>FOV : %1</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1321"/>
+        <location filename="cmapview.cpp" line="1342"/>
         <source>Star : %1 mag. / DSO %2 mag.</source>
         <translation>Hv : %1 mag. / DSO : %2 mag.</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1323"/>
+        <location filename="cmapview.cpp" line="1344"/>
         <source>Alt. : %1</source>
         <translation>Výš. : %1</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1324"/>
+        <location filename="cmapview.cpp" line="1345"/>
         <source>Azm. : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1326"/>
-        <location filename="cmapview.cpp" line="1571"/>
+        <location filename="cmapview.cpp" line="1347"/>
+        <location filename="cmapview.cpp" line="1592"/>
         <source>Date : %1</source>
         <translation>Datum : %1</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1327"/>
-        <location filename="cmapview.cpp" line="1572"/>
+        <location filename="cmapview.cpp" line="1348"/>
+        <location filename="cmapview.cpp" line="1593"/>
         <source>Time : %1</source>
         <translation>Čas : %1</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1336"/>
+        <location filename="cmapview.cpp" line="1357"/>
         <source>Sep : %1 / PA : %2°</source>
         <translation>Vzd. : %1 / P.U: %2°</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1385"/>
+        <location filename="cmapview.cpp" line="1406"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1387"/>
-        <location filename="cmapview.cpp" line="1419"/>
+        <location filename="cmapview.cpp" line="1408"/>
+        <location filename="cmapview.cpp" line="1440"/>
         <source>Skytech dev. shapes (*.shp)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1417"/>
+        <location filename="cmapview.cpp" line="1438"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1655"/>
-        <location filename="cmapview.cpp" line="1674"/>
+        <location filename="cmapview.cpp" line="1676"/>
+        <location filename="cmapview.cpp" line="1695"/>
         <source>Setting time to epoch J2000.0</source>
         <translation>Nastavuji datum a čas na epochu J2000.0</translation>
     </message>
@@ -2782,7 +2817,7 @@ ESC : Storno
     </message>
     <message>
         <location filename="cobjfillinfo.cpp" line="152"/>
-        <location filename="cobjfillinfo.cpp" line="1204"/>
+        <location filename="cobjfillinfo.cpp" line="1209"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
@@ -2828,441 +2863,441 @@ ESC : Storno
     </message>
     <message>
         <location filename="cobjfillinfo.cpp" line="186"/>
-        <location filename="cobjfillinfo.cpp" line="275"/>
-        <location filename="cobjfillinfo.cpp" line="403"/>
-        <location filename="cobjfillinfo.cpp" line="555"/>
-        <location filename="cobjfillinfo.cpp" line="635"/>
-        <location filename="cobjfillinfo.cpp" line="767"/>
-        <location filename="cobjfillinfo.cpp" line="861"/>
-        <location filename="cobjfillinfo.cpp" line="964"/>
-        <location filename="cobjfillinfo.cpp" line="1057"/>
-        <location filename="cobjfillinfo.cpp" line="1151"/>
-        <location filename="cobjfillinfo.cpp" line="1291"/>
-        <location filename="cobjfillinfo.cpp" line="1463"/>
+        <location filename="cobjfillinfo.cpp" line="280"/>
+        <location filename="cobjfillinfo.cpp" line="408"/>
+        <location filename="cobjfillinfo.cpp" line="560"/>
+        <location filename="cobjfillinfo.cpp" line="640"/>
+        <location filename="cobjfillinfo.cpp" line="772"/>
+        <location filename="cobjfillinfo.cpp" line="866"/>
+        <location filename="cobjfillinfo.cpp" line="969"/>
+        <location filename="cobjfillinfo.cpp" line="1062"/>
+        <location filename="cobjfillinfo.cpp" line="1156"/>
+        <location filename="cobjfillinfo.cpp" line="1296"/>
+        <location filename="cobjfillinfo.cpp" line="1468"/>
         <source>JD</source>
         <translation>JD</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="209"/>
-        <location filename="cobjfillinfo.cpp" line="561"/>
+        <location filename="cobjfillinfo.cpp" line="214"/>
+        <location filename="cobjfillinfo.cpp" line="566"/>
         <source>Satellite</source>
         <translation>Satelit</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="238"/>
+        <location filename="cobjfillinfo.cpp" line="243"/>
         <source>Distance from planet center</source>
         <translation>Vzdálenost od středu planety</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="281"/>
+        <location filename="cobjfillinfo.cpp" line="286"/>
         <source>Asteroid</source>
         <translation>Asteroid</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="319"/>
-        <location filename="cobjfillinfo.cpp" line="448"/>
-        <location filename="cobjfillinfo.cpp" line="589"/>
-        <location filename="cobjfillinfo.cpp" line="704"/>
-        <location filename="cobjfillinfo.cpp" line="816"/>
-        <location filename="cobjfillinfo.cpp" line="911"/>
-        <location filename="cobjfillinfo.cpp" line="1013"/>
-        <location filename="cobjfillinfo.cpp" line="1106"/>
-        <location filename="cobjfillinfo.cpp" line="1214"/>
-        <location filename="cobjfillinfo.cpp" line="1331"/>
+        <location filename="cobjfillinfo.cpp" line="324"/>
+        <location filename="cobjfillinfo.cpp" line="453"/>
+        <location filename="cobjfillinfo.cpp" line="594"/>
+        <location filename="cobjfillinfo.cpp" line="709"/>
+        <location filename="cobjfillinfo.cpp" line="821"/>
+        <location filename="cobjfillinfo.cpp" line="916"/>
+        <location filename="cobjfillinfo.cpp" line="1018"/>
+        <location filename="cobjfillinfo.cpp" line="1111"/>
+        <location filename="cobjfillinfo.cpp" line="1219"/>
+        <location filename="cobjfillinfo.cpp" line="1336"/>
         <source>Azimuth</source>
         <translation>Azimut</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="320"/>
-        <location filename="cobjfillinfo.cpp" line="449"/>
-        <location filename="cobjfillinfo.cpp" line="590"/>
-        <location filename="cobjfillinfo.cpp" line="598"/>
-        <location filename="cobjfillinfo.cpp" line="705"/>
-        <location filename="cobjfillinfo.cpp" line="817"/>
-        <location filename="cobjfillinfo.cpp" line="912"/>
-        <location filename="cobjfillinfo.cpp" line="1014"/>
-        <location filename="cobjfillinfo.cpp" line="1107"/>
-        <location filename="cobjfillinfo.cpp" line="1215"/>
-        <location filename="cobjfillinfo.cpp" line="1332"/>
+        <location filename="cobjfillinfo.cpp" line="325"/>
+        <location filename="cobjfillinfo.cpp" line="454"/>
+        <location filename="cobjfillinfo.cpp" line="595"/>
+        <location filename="cobjfillinfo.cpp" line="603"/>
+        <location filename="cobjfillinfo.cpp" line="710"/>
+        <location filename="cobjfillinfo.cpp" line="822"/>
+        <location filename="cobjfillinfo.cpp" line="917"/>
+        <location filename="cobjfillinfo.cpp" line="1019"/>
+        <location filename="cobjfillinfo.cpp" line="1112"/>
+        <location filename="cobjfillinfo.cpp" line="1220"/>
+        <location filename="cobjfillinfo.cpp" line="1337"/>
         <source>Altitude</source>
         <translation>Výška</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="322"/>
-        <location filename="cobjfillinfo.cpp" line="451"/>
-        <location filename="cobjfillinfo.cpp" line="707"/>
-        <location filename="cobjfillinfo.cpp" line="819"/>
-        <location filename="cobjfillinfo.cpp" line="914"/>
-        <location filename="cobjfillinfo.cpp" line="1016"/>
-        <location filename="cobjfillinfo.cpp" line="1109"/>
-        <location filename="cobjfillinfo.cpp" line="1217"/>
-        <location filename="cobjfillinfo.cpp" line="1334"/>
+        <location filename="cobjfillinfo.cpp" line="327"/>
+        <location filename="cobjfillinfo.cpp" line="456"/>
+        <location filename="cobjfillinfo.cpp" line="712"/>
+        <location filename="cobjfillinfo.cpp" line="824"/>
+        <location filename="cobjfillinfo.cpp" line="919"/>
+        <location filename="cobjfillinfo.cpp" line="1021"/>
+        <location filename="cobjfillinfo.cpp" line="1114"/>
+        <location filename="cobjfillinfo.cpp" line="1222"/>
+        <location filename="cobjfillinfo.cpp" line="1339"/>
         <source>Altitude without ref.</source>
         <translation>Výška bez refrakce</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="323"/>
-        <location filename="cobjfillinfo.cpp" line="452"/>
-        <location filename="cobjfillinfo.cpp" line="708"/>
-        <location filename="cobjfillinfo.cpp" line="820"/>
-        <location filename="cobjfillinfo.cpp" line="915"/>
-        <location filename="cobjfillinfo.cpp" line="1017"/>
-        <location filename="cobjfillinfo.cpp" line="1110"/>
-        <location filename="cobjfillinfo.cpp" line="1218"/>
-        <location filename="cobjfillinfo.cpp" line="1335"/>
+        <location filename="cobjfillinfo.cpp" line="328"/>
+        <location filename="cobjfillinfo.cpp" line="457"/>
+        <location filename="cobjfillinfo.cpp" line="713"/>
+        <location filename="cobjfillinfo.cpp" line="825"/>
+        <location filename="cobjfillinfo.cpp" line="920"/>
+        <location filename="cobjfillinfo.cpp" line="1022"/>
+        <location filename="cobjfillinfo.cpp" line="1115"/>
+        <location filename="cobjfillinfo.cpp" line="1223"/>
+        <location filename="cobjfillinfo.cpp" line="1340"/>
         <source>Atm. refraction</source>
         <translation>Atm. refrakce</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="343"/>
-        <location filename="cobjfillinfo.cpp" line="469"/>
-        <location filename="cobjfillinfo.cpp" line="594"/>
-        <location filename="cobjfillinfo.cpp" line="1352"/>
+        <location filename="cobjfillinfo.cpp" line="348"/>
+        <location filename="cobjfillinfo.cpp" line="474"/>
+        <location filename="cobjfillinfo.cpp" line="599"/>
+        <location filename="cobjfillinfo.cpp" line="1357"/>
         <source>Geocentric information</source>
         <translation>Geocentrické informace</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="347"/>
-        <location filename="cobjfillinfo.cpp" line="473"/>
-        <location filename="cobjfillinfo.cpp" line="1358"/>
+        <location filename="cobjfillinfo.cpp" line="352"/>
+        <location filename="cobjfillinfo.cpp" line="478"/>
+        <location filename="cobjfillinfo.cpp" line="1363"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="347"/>
-        <location filename="cobjfillinfo.cpp" line="360"/>
-        <location filename="cobjfillinfo.cpp" line="473"/>
-        <location filename="cobjfillinfo.cpp" line="486"/>
-        <location filename="cobjfillinfo.cpp" line="1358"/>
-        <location filename="cobjfillinfo.cpp" line="1380"/>
+        <location filename="cobjfillinfo.cpp" line="352"/>
+        <location filename="cobjfillinfo.cpp" line="365"/>
+        <location filename="cobjfillinfo.cpp" line="478"/>
+        <location filename="cobjfillinfo.cpp" line="491"/>
+        <location filename="cobjfillinfo.cpp" line="1363"/>
+        <location filename="cobjfillinfo.cpp" line="1385"/>
         <source>AU</source>
         <translation>AU</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="348"/>
-        <location filename="cobjfillinfo.cpp" line="474"/>
-        <location filename="cobjfillinfo.cpp" line="1359"/>
+        <location filename="cobjfillinfo.cpp" line="353"/>
+        <location filename="cobjfillinfo.cpp" line="479"/>
         <location filename="cobjfillinfo.cpp" line="1364"/>
+        <location filename="cobjfillinfo.cpp" line="1369"/>
         <source>Light time</source>
         <translation>Doba letu světla</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="348"/>
-        <location filename="cobjfillinfo.cpp" line="474"/>
-        <location filename="cobjfillinfo.cpp" line="1359"/>
+        <location filename="cobjfillinfo.cpp" line="353"/>
+        <location filename="cobjfillinfo.cpp" line="479"/>
+        <location filename="cobjfillinfo.cpp" line="1364"/>
         <source> hours</source>
         <translation> hodin</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="351"/>
-        <location filename="cobjfillinfo.cpp" line="477"/>
-        <location filename="cobjfillinfo.cpp" line="1371"/>
+        <location filename="cobjfillinfo.cpp" line="356"/>
+        <location filename="cobjfillinfo.cpp" line="482"/>
+        <location filename="cobjfillinfo.cpp" line="1376"/>
         <source>Heliocentric information</source>
         <translation>Heliocentricke informace</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="353"/>
-        <location filename="cobjfillinfo.cpp" line="479"/>
-        <location filename="cobjfillinfo.cpp" line="1373"/>
+        <location filename="cobjfillinfo.cpp" line="358"/>
+        <location filename="cobjfillinfo.cpp" line="484"/>
+        <location filename="cobjfillinfo.cpp" line="1378"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="354"/>
-        <location filename="cobjfillinfo.cpp" line="480"/>
-        <location filename="cobjfillinfo.cpp" line="1374"/>
+        <location filename="cobjfillinfo.cpp" line="359"/>
+        <location filename="cobjfillinfo.cpp" line="485"/>
+        <location filename="cobjfillinfo.cpp" line="1379"/>
         <source>Y</source>
         <translation>Y</translation>
-    </message>
-    <message>
-        <location filename="cobjfillinfo.cpp" line="355"/>
-        <location filename="cobjfillinfo.cpp" line="481"/>
-        <location filename="cobjfillinfo.cpp" line="1375"/>
-        <source>Z</source>
-        <translation>Z</translation>
-    </message>
-    <message>
-        <location filename="cobjfillinfo.cpp" line="357"/>
-        <location filename="cobjfillinfo.cpp" line="483"/>
-        <location filename="cobjfillinfo.cpp" line="596"/>
-        <location filename="cobjfillinfo.cpp" line="1377"/>
-        <source>Longitude</source>
-        <translation>Délka</translation>
-    </message>
-    <message>
-        <location filename="cobjfillinfo.cpp" line="358"/>
-        <location filename="cobjfillinfo.cpp" line="484"/>
-        <location filename="cobjfillinfo.cpp" line="597"/>
-        <location filename="cobjfillinfo.cpp" line="1378"/>
-        <source>Latitude</source>
-        <translation>Šířka</translation>
     </message>
     <message>
         <location filename="cobjfillinfo.cpp" line="360"/>
         <location filename="cobjfillinfo.cpp" line="486"/>
         <location filename="cobjfillinfo.cpp" line="1380"/>
+        <source>Z</source>
+        <translation>Z</translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="362"/>
+        <location filename="cobjfillinfo.cpp" line="488"/>
+        <location filename="cobjfillinfo.cpp" line="601"/>
+        <location filename="cobjfillinfo.cpp" line="1382"/>
+        <source>Longitude</source>
+        <translation>Délka</translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="363"/>
+        <location filename="cobjfillinfo.cpp" line="489"/>
+        <location filename="cobjfillinfo.cpp" line="602"/>
+        <location filename="cobjfillinfo.cpp" line="1383"/>
+        <source>Latitude</source>
+        <translation>Šířka</translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="365"/>
+        <location filename="cobjfillinfo.cpp" line="491"/>
+        <location filename="cobjfillinfo.cpp" line="1385"/>
         <source>r</source>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="368"/>
-        <location filename="cobjfillinfo.cpp" line="522"/>
-        <location filename="cobjfillinfo.cpp" line="716"/>
-        <location filename="cobjfillinfo.cpp" line="828"/>
-        <location filename="cobjfillinfo.cpp" line="923"/>
-        <location filename="cobjfillinfo.cpp" line="1025"/>
-        <location filename="cobjfillinfo.cpp" line="1118"/>
-        <location filename="cobjfillinfo.cpp" line="1236"/>
-        <location filename="cobjfillinfo.cpp" line="1425"/>
+        <location filename="cobjfillinfo.cpp" line="373"/>
+        <location filename="cobjfillinfo.cpp" line="527"/>
+        <location filename="cobjfillinfo.cpp" line="721"/>
+        <location filename="cobjfillinfo.cpp" line="833"/>
+        <location filename="cobjfillinfo.cpp" line="928"/>
+        <location filename="cobjfillinfo.cpp" line="1030"/>
+        <location filename="cobjfillinfo.cpp" line="1123"/>
+        <location filename="cobjfillinfo.cpp" line="1241"/>
+        <location filename="cobjfillinfo.cpp" line="1430"/>
         <source>Position at JD2000.0</source>
         <translation>Pozice v JD2000.0</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="404"/>
-        <location filename="cobjfillinfo.cpp" line="556"/>
-        <location filename="cobjfillinfo.cpp" line="636"/>
-        <location filename="cobjfillinfo.cpp" line="768"/>
-        <location filename="cobjfillinfo.cpp" line="862"/>
-        <location filename="cobjfillinfo.cpp" line="965"/>
-        <location filename="cobjfillinfo.cpp" line="1058"/>
-        <location filename="cobjfillinfo.cpp" line="1152"/>
-        <location filename="cobjfillinfo.cpp" line="1292"/>
-        <location filename="cobjfillinfo.cpp" line="1464"/>
+        <location filename="cobjfillinfo.cpp" line="409"/>
+        <location filename="cobjfillinfo.cpp" line="561"/>
+        <location filename="cobjfillinfo.cpp" line="641"/>
+        <location filename="cobjfillinfo.cpp" line="773"/>
+        <location filename="cobjfillinfo.cpp" line="867"/>
+        <location filename="cobjfillinfo.cpp" line="970"/>
+        <location filename="cobjfillinfo.cpp" line="1063"/>
+        <location filename="cobjfillinfo.cpp" line="1157"/>
+        <location filename="cobjfillinfo.cpp" line="1297"/>
+        <location filename="cobjfillinfo.cpp" line="1469"/>
         <source>Date/Time</source>
         <translation>Datum/Čas</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="409"/>
+        <location filename="cobjfillinfo.cpp" line="414"/>
         <source>Comet</source>
         <translation>Kometa</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="477"/>
+        <location filename="cobjfillinfo.cpp" line="482"/>
         <source>J2000.0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="489"/>
-        <location filename="cobjfillinfo.cpp" line="601"/>
-        <location filename="cobjfillinfo.cpp" line="929"/>
-        <location filename="cobjfillinfo.cpp" line="1226"/>
+        <location filename="cobjfillinfo.cpp" line="494"/>
+        <location filename="cobjfillinfo.cpp" line="606"/>
+        <location filename="cobjfillinfo.cpp" line="934"/>
+        <location filename="cobjfillinfo.cpp" line="1231"/>
         <source>Other</source>
         <translation>Ostatní</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="492"/>
-        <location filename="cobjfillinfo.cpp" line="603"/>
+        <location filename="cobjfillinfo.cpp" line="497"/>
+        <location filename="cobjfillinfo.cpp" line="608"/>
         <source>Orbital period</source>
         <translation>Orbitální perioda</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="498"/>
+        <location filename="cobjfillinfo.cpp" line="503"/>
         <source> years</source>
         <translation> roků</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="502"/>
+        <location filename="cobjfillinfo.cpp" line="507"/>
         <source>Non periodic</source>
         <translation>Není periodická</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="514"/>
+        <location filename="cobjfillinfo.cpp" line="519"/>
         <source>Current speed</source>
         <translation>Aktuální rychlost</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="514"/>
+        <location filename="cobjfillinfo.cpp" line="519"/>
         <source> km/s</source>
         <translation>km/s</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="591"/>
+        <location filename="cobjfillinfo.cpp" line="596"/>
         <source>Range</source>
         <translation>Vzdálenost</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="591"/>
-        <location filename="cobjfillinfo.cpp" line="598"/>
-        <location filename="cobjfillinfo.cpp" line="605"/>
+        <location filename="cobjfillinfo.cpp" line="596"/>
+        <location filename="cobjfillinfo.cpp" line="603"/>
+        <location filename="cobjfillinfo.cpp" line="610"/>
         <source> km.</source>
         <translation>km.</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="603"/>
+        <location filename="cobjfillinfo.cpp" line="608"/>
         <source> min.</source>
         <translation>min.</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="604"/>
+        <location filename="cobjfillinfo.cpp" line="609"/>
         <source>Inclination</source>
         <translation>Sklon dráhy</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="605"/>
+        <location filename="cobjfillinfo.cpp" line="610"/>
         <source>Perigee</source>
         <translation>Přízemí</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="606"/>
+        <location filename="cobjfillinfo.cpp" line="611"/>
         <source>Epoch</source>
         <translation>Epocha</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="609"/>
+        <location filename="cobjfillinfo.cpp" line="614"/>
         <source>Time difference</source>
         <translation>Rozdíl času</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="609"/>
+        <location filename="cobjfillinfo.cpp" line="614"/>
         <source> day(s)</source>
         <translation>dní</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="641"/>
+        <location filename="cobjfillinfo.cpp" line="646"/>
         <source>Star (TYC2 cat.)</source>
         <translation>Hvězda (TYC2 kat.)</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="722"/>
-        <location filename="cobjfillinfo.cpp" line="1385"/>
+        <location filename="cobjfillinfo.cpp" line="727"/>
+        <location filename="cobjfillinfo.cpp" line="1390"/>
         <source>Apparent view</source>
         <translation>Zdánlivý pohled</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="733"/>
+        <location filename="cobjfillinfo.cpp" line="738"/>
         <source>Spectral type</source>
         <translation>Spektrální typ</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="737"/>
+        <location filename="cobjfillinfo.cpp" line="742"/>
         <source>B-V mag.</source>
         <translation>B-V mag.</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="739"/>
+        <location filename="cobjfillinfo.cpp" line="744"/>
         <source>Johnson BT</source>
         <translation>Johnson BT</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="740"/>
+        <location filename="cobjfillinfo.cpp" line="745"/>
         <source>Johnson VT</source>
         <translation>Johnson VT</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="613"/>
-        <location filename="cobjfillinfo.cpp" line="745"/>
-        <location filename="cobjfillinfo.cpp" line="836"/>
-        <location filename="cobjfillinfo.cpp" line="939"/>
-        <location filename="cobjfillinfo.cpp" line="1033"/>
-        <location filename="cobjfillinfo.cpp" line="1126"/>
-        <location filename="cobjfillinfo.cpp" line="1244"/>
-        <location filename="cobjfillinfo.cpp" line="1433"/>
+        <location filename="cobjfillinfo.cpp" line="618"/>
+        <location filename="cobjfillinfo.cpp" line="750"/>
+        <location filename="cobjfillinfo.cpp" line="841"/>
+        <location filename="cobjfillinfo.cpp" line="944"/>
+        <location filename="cobjfillinfo.cpp" line="1038"/>
+        <location filename="cobjfillinfo.cpp" line="1131"/>
+        <location filename="cobjfillinfo.cpp" line="1249"/>
+        <location filename="cobjfillinfo.cpp" line="1438"/>
         <source>Source</source>
         <translation>Zdroj</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="773"/>
+        <location filename="cobjfillinfo.cpp" line="778"/>
         <source>Star (UCAC4 cat.)</source>
         <translation>Hvězda (UCAC4 kat.)</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="867"/>
+        <location filename="cobjfillinfo.cpp" line="872"/>
         <source>Star (GSC1.2 cat.)</source>
         <translation>Hvězda (GSC1.2 kat.)</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="931"/>
+        <location filename="cobjfillinfo.cpp" line="936"/>
         <source>Emulsion &amp; Filter</source>
         <translation>Emulze a filtr</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="934"/>
+        <location filename="cobjfillinfo.cpp" line="939"/>
         <source>Identification</source>
         <translation>Identifikace</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="970"/>
+        <location filename="cobjfillinfo.cpp" line="975"/>
         <source>Star (PPMXL cat.)</source>
         <translation>Hvězda (PPMXL kat.)</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1063"/>
+        <location filename="cobjfillinfo.cpp" line="1068"/>
         <source>Star (USNO2 cat.)</source>
         <translation>Hvězda (USNO2 kat.)</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1230"/>
-        <location filename="cobjfillinfo.cpp" line="1406"/>
+        <location filename="cobjfillinfo.cpp" line="1235"/>
+        <location filename="cobjfillinfo.cpp" line="1411"/>
         <source>P.A.</source>
         <translation>P.A.</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1232"/>
+        <location filename="cobjfillinfo.cpp" line="1237"/>
         <source>Class</source>
         <translation>Třída</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1363"/>
+        <location filename="cobjfillinfo.cpp" line="1368"/>
         <source>Dist.</source>
         <translation>Vzdálenost</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1363"/>
+        <location filename="cobjfillinfo.cpp" line="1368"/>
         <source>Km</source>
         <translation>Km</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1364"/>
+        <location filename="cobjfillinfo.cpp" line="1369"/>
         <source> sec.</source>
         <translation>sek.</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1393"/>
+        <location filename="cobjfillinfo.cpp" line="1398"/>
         <source>Apparent diameter</source>
         <translation>Zdánlivý průměr</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1398"/>
+        <location filename="cobjfillinfo.cpp" line="1403"/>
         <source>Apparent radius</source>
         <translation>Zdánlivý poloměr</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1403"/>
+        <location filename="cobjfillinfo.cpp" line="1408"/>
         <source>Phase</source>
         <translation>Fáze</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1404"/>
+        <location filename="cobjfillinfo.cpp" line="1409"/>
         <source>Phase angle</source>
         <translation>Fázový úhel</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1410"/>
+        <location filename="cobjfillinfo.cpp" line="1415"/>
         <source>Central Meridian</source>
         <translation>Centrální meridián</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1415"/>
+        <location filename="cobjfillinfo.cpp" line="1420"/>
         <source>Sub-Earth Phi</source>
         <translation>Sub-Earth Phi</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1473"/>
+        <location filename="cobjfillinfo.cpp" line="1478"/>
         <source>Apparent umbra radius</source>
         <translation>Zdánlivý poloměr stínu</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1475"/>
+        <location filename="cobjfillinfo.cpp" line="1480"/>
         <source>Apparent penumbra radius</source>
         <translation>Zdánlivý poloměr polostínu</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1480"/>
+        <location filename="cobjfillinfo.cpp" line="1485"/>
         <source>Apparent umbra diameter</source>
         <translation>Zdánlivý průměr stínu</translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1482"/>
+        <location filename="cobjfillinfo.cpp" line="1487"/>
         <source>Apparent penumbra diameter</source>
         <translation>Zdánlivý průměr polostínu</translation>
     </message>
@@ -3721,12 +3756,17 @@ ESC : Storno
         <translation>Obnovení časová značky</translation>
     </message>
     <message>
-        <location filename="crestoretm.ui" line="57"/>
+        <location filename="crestoretm.ui" line="37"/>
+        <source>Delete</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <location filename="crestoretm.ui" line="64"/>
         <source>Cancel</source>
         <translation>Storno</translation>
     </message>
     <message>
-        <location filename="crestoretm.ui" line="50"/>
+        <location filename="crestoretm.ui" line="57"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -4118,78 +4158,84 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     </message>
     <message>
         <location filename="cseltelefield.ui" line="75"/>
-        <location filename="cseltelefield.ui" line="316"/>
+        <location filename="cseltelefield.ui" line="336"/>
         <source>Add..</source>
         <translation>Přidej...</translation>
     </message>
     <message>
         <location filename="cseltelefield.ui" line="95"/>
-        <location filename="cseltelefield.ui" line="336"/>
+        <location filename="cseltelefield.ui" line="356"/>
+        <source>Delete</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <location filename="cseltelefield.ui" line="115"/>
+        <location filename="cseltelefield.ui" line="376"/>
         <source>Edit...</source>
         <translation>Uprav...</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="107"/>
+        <location filename="cseltelefield.ui" line="127"/>
         <source>Options</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="113"/>
+        <location filename="cseltelefield.ui" line="133"/>
         <source>Barlow power</source>
         <translation>Barlow</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="133"/>
+        <location filename="cseltelefield.ui" line="153"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="171"/>
+        <location filename="cseltelefield.ui" line="191"/>
         <source>Telescope parameters</source>
         <translation>Parametry dalekohledy</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="177"/>
-        <location filename="cseltelefield.ui" line="194"/>
-        <location filename="cseltelefield.ui" line="231"/>
-        <location filename="cseltelefield.ui" line="238"/>
-        <location filename="cseltelefield.ui" line="265"/>
-        <location filename="cseltelefield.ui" line="272"/>
+        <location filename="cseltelefield.ui" line="197"/>
+        <location filename="cseltelefield.ui" line="214"/>
+        <location filename="cseltelefield.ui" line="251"/>
+        <location filename="cseltelefield.ui" line="258"/>
+        <location filename="cseltelefield.ui" line="285"/>
+        <location filename="cseltelefield.ui" line="292"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="184"/>
+        <location filename="cseltelefield.ui" line="204"/>
         <source>Focal ratio</source>
         <translation>Ohnisko / Průměr</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="201"/>
+        <location filename="cseltelefield.ui" line="221"/>
         <source>Exit pupil</source>
         <translation>Výstupní pupila</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="211"/>
+        <location filename="cseltelefield.ui" line="231"/>
         <source>Magnification</source>
         <translation>Zvětšení</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="221"/>
+        <location filename="cseltelefield.ui" line="241"/>
         <source>Resolving power</source>
         <translation>Rozlišení</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="245"/>
+        <location filename="cseltelefield.ui" line="265"/>
         <source>Limiting magnitude</source>
         <translation>Mezní magnituda</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="255"/>
+        <location filename="cseltelefield.ui" line="275"/>
         <source>Field of view</source>
         <translation>Zorné pole</translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="295"/>
+        <location filename="cseltelefield.ui" line="315"/>
         <source>Eyepiece</source>
         <translation>Okulár</translation>
     </message>
@@ -4562,17 +4608,17 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3656"/>
+        <location filename="csetting.ui" line="3684"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3663"/>
+        <location filename="csetting.ui" line="3691"/>
         <source>Apply</source>
         <translation>Použít</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3670"/>
+        <location filename="csetting.ui" line="3698"/>
         <source>Cancel</source>
         <translation>Storno</translation>
     </message>
@@ -4608,8 +4654,8 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     </message>
     <message>
         <location filename="csetting.ui" line="59"/>
-        <location filename="csetting.ui" line="2561"/>
-        <location filename="csetting.ui" line="2621"/>
+        <location filename="csetting.ui" line="2582"/>
+        <location filename="csetting.ui" line="2642"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
@@ -4645,10 +4691,10 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <location filename="csetting.ui" line="1429"/>
         <location filename="csetting.ui" line="1471"/>
         <location filename="csetting.ui" line="2468"/>
-        <location filename="csetting.ui" line="2919"/>
-        <location filename="csetting.ui" line="3006"/>
-        <location filename="csetting.ui" line="3117"/>
-        <location filename="csetting.ui" line="3228"/>
+        <location filename="csetting.ui" line="2940"/>
+        <location filename="csetting.ui" line="3027"/>
+        <location filename="csetting.ui" line="3138"/>
+        <location filename="csetting.ui" line="3249"/>
         <source>°</source>
         <translation></translation>
     </message>
@@ -4750,10 +4796,11 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <location filename="csetting.ui" line="2293"/>
         <location filename="csetting.ui" line="2398"/>
         <location filename="csetting.ui" line="2412"/>
-        <location filename="csetting.ui" line="2654"/>
-        <location filename="csetting.ui" line="2668"/>
-        <location filename="csetting.ui" line="2802"/>
-        <location filename="csetting.ui" line="2816"/>
+        <location filename="csetting.ui" line="2525"/>
+        <location filename="csetting.ui" line="2675"/>
+        <location filename="csetting.ui" line="2689"/>
+        <location filename="csetting.ui" line="2823"/>
+        <location filename="csetting.ui" line="2837"/>
         <source>PushButton</source>
         <translation></translation>
     </message>
@@ -4815,8 +4862,8 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <location filename="csetting.ui" line="2164"/>
         <location filename="csetting.ui" line="2286"/>
         <location filename="csetting.ui" line="2405"/>
-        <location filename="csetting.ui" line="2647"/>
-        <location filename="csetting.ui" line="2809"/>
+        <location filename="csetting.ui" line="2668"/>
+        <location filename="csetting.ui" line="2830"/>
         <source>Label font &amp; color</source>
         <translation>Popisek font a barva</translation>
     </message>
@@ -4963,15 +5010,15 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <location filename="csetting.ui" line="2150"/>
         <location filename="csetting.ui" line="2272"/>
         <location filename="csetting.ui" line="2391"/>
-        <location filename="csetting.ui" line="2661"/>
-        <location filename="csetting.ui" line="2795"/>
-        <location filename="csetting.cpp" line="240"/>
+        <location filename="csetting.ui" line="2682"/>
+        <location filename="csetting.ui" line="2816"/>
+        <location filename="csetting.cpp" line="243"/>
         <source>Color</source>
         <translation>Barva</translation>
     </message>
     <message>
         <location filename="csetting.ui" line="2142"/>
-        <location filename="csetting.ui" line="3443"/>
+        <location filename="csetting.ui" line="3471"/>
         <source>Comets</source>
         <translation>Komety</translation>
     </message>
@@ -4992,10 +5039,10 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <location filename="csetting.ui" line="2220"/>
         <location filename="csetting.ui" line="2331"/>
         <location filename="csetting.ui" line="2349"/>
-        <location filename="csetting.ui" line="2942"/>
-        <location filename="csetting.ui" line="3029"/>
-        <location filename="csetting.ui" line="3140"/>
-        <location filename="csetting.ui" line="3251"/>
+        <location filename="csetting.ui" line="2963"/>
+        <location filename="csetting.ui" line="3050"/>
+        <location filename="csetting.ui" line="3161"/>
+        <location filename="csetting.ui" line="3272"/>
         <source> mag.</source>
         <translation></translation>
     </message>
@@ -5007,7 +5054,7 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     </message>
     <message>
         <location filename="csetting.ui" line="2261"/>
-        <location filename="csetting.ui" line="3489"/>
+        <location filename="csetting.ui" line="3517"/>
         <source>Asteroids</source>
         <translation>Asteroidy</translation>
     </message>
@@ -5043,442 +5090,457 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     </message>
     <message>
         <location filename="csetting.ui" line="2511"/>
+        <source>Use background color</source>
+        <translation>Použij barvu pozadí</translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2518"/>
+        <source>Select custom color</source>
+        <translation>Zvolit vlastní barvu</translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2532"/>
         <source>Brightness  (Bright part)</source>
         <translation>Jasnost (Jasnějsí část)</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2571"/>
+        <location filename="csetting.ui" line="2592"/>
         <source>Brightness ( Dark part)</source>
         <translation>Jasnost (Tmavší část)</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2639"/>
+        <location filename="csetting.ui" line="2660"/>
         <source>Drawing</source>
         <translation>Kreslení</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2693"/>
+        <location filename="csetting.ui" line="2714"/>
         <source>Measure point</source>
         <translation>Měřící bod</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2701"/>
-        <location filename="csetting.ui" line="2745"/>
+        <location filename="csetting.ui" line="2722"/>
+        <location filename="csetting.ui" line="2766"/>
         <source>Color &amp; style</source>
         <translation>Barva a styl</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2737"/>
+        <location filename="csetting.ui" line="2758"/>
         <source>Selected object</source>
         <translation>Vybraný objekt</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2883"/>
-        <location filename="csetting.ui" line="2991"/>
-        <location filename="csetting.ui" line="3081"/>
-        <location filename="csetting.ui" line="3192"/>
-        <location filename="csetting.cpp" line="669"/>
+        <location filename="csetting.ui" line="2904"/>
+        <location filename="csetting.ui" line="3012"/>
+        <location filename="csetting.ui" line="3102"/>
+        <location filename="csetting.ui" line="3213"/>
+        <location filename="csetting.cpp" line="687"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2891"/>
+        <location filename="csetting.ui" line="2912"/>
         <source>Path to PPMXL folder</source>
         <translation>Cesta k složce katalogu PPMXL</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2903"/>
-        <location filename="csetting.ui" line="3101"/>
-        <location filename="csetting.ui" line="3212"/>
+        <location filename="csetting.ui" line="2924"/>
+        <location filename="csetting.ui" line="3122"/>
+        <location filename="csetting.ui" line="3233"/>
         <source>Browse...</source>
         <translation>Procházet...</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2935"/>
+        <location filename="csetting.ui" line="2956"/>
         <source>Show PPXML stars from magnitude</source>
         <translation>Zobraz PPMXL hvězdy od jasnosti</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2912"/>
+        <location filename="csetting.ui" line="2933"/>
         <source>Show PPXML stars from FOV</source>
         <translation>Zobraz PPMXL hvězdy od FOV</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2863"/>
-        <location filename="csetting.ui" line="2971"/>
-        <location filename="csetting.ui" line="3061"/>
-        <location filename="csetting.ui" line="3172"/>
-        <location filename="csetting.cpp" line="186"/>
+        <location filename="csetting.ui" line="2884"/>
+        <location filename="csetting.ui" line="2992"/>
+        <location filename="csetting.ui" line="3082"/>
+        <location filename="csetting.ui" line="3193"/>
+        <location filename="csetting.cpp" line="189"/>
         <source>Show</source>
         <translation>Zobraz</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2871"/>
+        <location filename="csetting.ui" line="2892"/>
         <source>Show PPXML Catalogue</source>
         <translation>Zobraz katalog PPMXL</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2979"/>
+        <location filename="csetting.ui" line="3000"/>
         <source>Show GSC Catalogue</source>
         <translation>Zobraz katalog GSC</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2999"/>
+        <location filename="csetting.ui" line="3020"/>
         <source>Show GSC stars from FOV</source>
         <translation>Zobraz GSC hvězdy od FOV</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3022"/>
+        <location filename="csetting.ui" line="3043"/>
         <source>Show GSC stars from magnitude</source>
         <translation>Zobraz GSC hvězdy od jasnosti</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3110"/>
+        <location filename="csetting.ui" line="3131"/>
         <source>Show USNO2 stars from FOV</source>
         <translation>Zobraz USNO2 hvězdy od FOV</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3133"/>
+        <location filename="csetting.ui" line="3154"/>
         <source>Show USNO stars from magnitude</source>
         <translation>Zobraz USNO2 hvězdy od jasnosti</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3089"/>
+        <location filename="csetting.ui" line="3110"/>
         <source>Path to USNO2 folder</source>
         <translation>Cesta k složce katalogu USNO2</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3069"/>
+        <location filename="csetting.ui" line="3090"/>
         <source>Show USNO2 Catalogue</source>
         <translation>Zobraz katalog USNO2</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3180"/>
+        <location filename="csetting.ui" line="3201"/>
         <source>Show UCAC4 Catalogue</source>
         <translation>Zobraz katalog UCAC4</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3221"/>
+        <location filename="csetting.ui" line="3242"/>
         <source>Show UCAC4 stars from FOV</source>
         <translation>Zobraz UCAC4 hvězdy od FOV</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3244"/>
+        <location filename="csetting.ui" line="3265"/>
         <source>Show UCAC4 stars from magnitude</source>
         <translation>Zobraz UCAC4 hvězdy od jasnosti</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3200"/>
+        <location filename="csetting.ui" line="3221"/>
         <source>Path to UCAC4 folder</source>
         <translation>Cesta k složce katalogu UCAC4</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3281"/>
+        <location filename="csetting.ui" line="3302"/>
         <source>Autosave</source>
         <translation>Automatické ukládání</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3289"/>
+        <location filename="csetting.ui" line="3310"/>
         <source>Autosave at exit</source>
         <translation>Uložit při ukončení programu</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3297"/>
+        <location filename="csetting.ui" line="3318"/>
         <source>Object tracking</source>
         <translation>Sledování dráh objektů</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3311"/>
+        <location filename="csetting.ui" line="3332"/>
         <source>Event list</source>
         <translation>Seznam událostí</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3304"/>
+        <location filename="csetting.ui" line="3325"/>
         <source>Drawing on map</source>
         <translation>Kreslení na mapě</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3318"/>
+        <location filename="csetting.ui" line="3339"/>
         <source>Map position</source>
         <translation>Pozici na mapě</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3346"/>
-        <location filename="csetting.ui" line="3352"/>
-        <location filename="csetting.cpp" line="232"/>
+        <location filename="csetting.ui" line="3367"/>
+        <location filename="csetting.ui" line="3373"/>
+        <location filename="csetting.cpp" line="235"/>
         <source>Other</source>
         <translation>Ostatní</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3360"/>
+        <location filename="csetting.ui" line="3381"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show zoom control bar on map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zobrazí prvek pro ovládání zvětšení mapy.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3363"/>
+        <location filename="csetting.ui" line="3384"/>
         <source>Show zoom bar</source>
         <translation>Zobraz ovládání zoomu</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3370"/>
+        <location filename="csetting.ui" line="3391"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If the box is checked, then the left mouse button moves the map and Shift + left mouse button zoom the map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pokud je zaškrtnuto tak levé tlačítko pohybuje mapu a Shift + leve tlačítko zvětšuje mapu. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3373"/>
+        <location filename="csetting.ui" line="3394"/>
         <source>Alternative mouse commands</source>
         <translation>Alternativní ovládání mapy myší</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3387"/>
+        <location filename="csetting.ui" line="3401"/>
+        <source>Parking telescope before disconnection</source>
+        <translation>Parkovat dalekohled před odpojením</translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3415"/>
         <source>Toolbar icon size</source>
         <translation>Velikost icon v toolbaru</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3433"/>
+        <location filename="csetting.ui" line="3461"/>
         <source>Online data</source>
         <translation>Online data</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3466"/>
-        <location filename="csetting.ui" line="3512"/>
-        <location filename="csetting.ui" line="3565"/>
-        <location filename="csetting.ui" line="3611"/>
+        <location filename="csetting.ui" line="3494"/>
+        <location filename="csetting.ui" line="3540"/>
+        <location filename="csetting.ui" line="3593"/>
+        <location filename="csetting.ui" line="3639"/>
         <source>Reset to default</source>
         <translation>Načti def. hodnoty...</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3535"/>
+        <location filename="csetting.ui" line="3563"/>
         <source>DSS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3541"/>
+        <location filename="csetting.ui" line="3569"/>
         <source>{RA_DEG} R.A. in degress. {DEC_DEG} Declination in degress. {SIZE_MIN} Field size in arc minutes.</source>
         <translation>{RA_DEG} R.A. ve stupních. {DEC_DEG} Deklinace ve stupních. {SIZE_MIN} Zorné pole v úhl. minutách.</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3588"/>
+        <location filename="csetting.ui" line="3616"/>
         <source>Sun Images</source>
         <translation>Obrázky Slunce</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="39"/>
+        <location filename="csetting.cpp" line="41"/>
         <source>24x24 (Default size)</source>
         <translation>24x24 (Původní velikost)</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="40"/>
+        <location filename="csetting.cpp" line="42"/>
         <source>18x18 (Small size)</source>
         <translation>18x18 (Malá velikost)</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="87"/>
+        <location filename="csetting.cpp" line="90"/>
         <source>Stars</source>
         <translation>Hvězdy</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="88"/>
+        <location filename="csetting.cpp" line="91"/>
         <source>Stars magnitude</source>
         <translation>Jasnosti hvězd</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="89"/>
+        <location filename="csetting.cpp" line="92"/>
         <source>Deep sky objects (1)</source>
         <translation>Nehvězdné objekty (1)</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="90"/>
+        <location filename="csetting.cpp" line="93"/>
         <source>Deep sky objects (2)</source>
         <translation>Nehvězdné objekty (2)</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="91"/>
+        <location filename="csetting.cpp" line="94"/>
         <source>DSO magnitude</source>
         <translation>Jasnosti DSO</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="92"/>
+        <location filename="csetting.cpp" line="95"/>
         <source>Grids</source>
         <translation>Souř. síť</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="93"/>
+        <location filename="csetting.cpp" line="96"/>
         <source>Constellations</source>
         <translation>Souhvězdí</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="94"/>
+        <location filename="csetting.cpp" line="97"/>
         <source>Horizon</source>
         <translation>Horizont</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="95"/>
+        <location filename="csetting.cpp" line="98"/>
         <source>Background</source>
         <translation>Pozadí</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="96"/>
+        <location filename="csetting.cpp" line="99"/>
         <source>Solar system</source>
         <translation>Solární systém</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="97"/>
+        <location filename="csetting.cpp" line="100"/>
         <source>Milky Way</source>
         <translation>Mléčná dráha</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="98"/>
+        <location filename="csetting.cpp" line="101"/>
         <source>Drawings</source>
         <translation>Kreslení</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2787"/>
-        <location filename="csetting.cpp" line="99"/>
+        <location filename="csetting.ui" line="2808"/>
+        <location filename="csetting.cpp" line="102"/>
         <source>Tracking</source>
         <translation>Sledování</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="100"/>
+        <location filename="csetting.cpp" line="103"/>
         <source>PPMXL Catalogue</source>
         <translation>Katalog PPMXL</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="101"/>
+        <location filename="csetting.cpp" line="104"/>
         <source>GSC Catalogue</source>
         <translation>Katalog GSC</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="102"/>
+        <location filename="csetting.cpp" line="105"/>
         <source>USNO2 Catalogue</source>
         <translation>Katalog USNO2</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="103"/>
+        <location filename="csetting.cpp" line="106"/>
         <source>UCAC4 Catalogue</source>
         <translation>Katalog UCAC4</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="187"/>
+        <location filename="csetting.cpp" line="190"/>
         <source>Show all</source>
         <translation>Zobraz vše</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="189"/>
+        <location filename="csetting.cpp" line="192"/>
         <source>If checkbox is unchecked show only object
 with magnitude information</source>
         <translation>Pokud není zaškrtnut zobrazují se pouze objekty
 které mají definovanou jasnost.</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="223"/>
+        <location filename="csetting.cpp" line="226"/>
         <source>Nebula</source>
         <translation>Mlhovina</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="224"/>
+        <location filename="csetting.cpp" line="227"/>
         <source>Bright nebula</source>
         <translation>Jasná mlhovina</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="225"/>
+        <location filename="csetting.cpp" line="228"/>
         <source>Dark nebula</source>
         <translation>Temná mlhovina</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="226"/>
+        <location filename="csetting.cpp" line="229"/>
         <source>Open cluster</source>
         <translation>Otevřená hvězdokupa</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="227"/>
+        <location filename="csetting.cpp" line="230"/>
         <source>Globular cluster</source>
         <translation>Kulová hvězdokupa</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="228"/>
+        <location filename="csetting.cpp" line="231"/>
         <source>Planetary nebula</source>
         <translation>Planetární mlhovina</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="229"/>
+        <location filename="csetting.cpp" line="232"/>
         <source>Galaxy</source>
         <translation>Galaxie</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="230"/>
+        <location filename="csetting.cpp" line="233"/>
         <source>Galaxy cluster</source>
         <translation>Kupa galaxií</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="231"/>
+        <location filename="csetting.cpp" line="234"/>
         <source>Star/Stars</source>
         <translation>Hvězda/Hvězdy</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="239"/>
+        <location filename="csetting.cpp" line="242"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="450"/>
+        <location filename="csetting.cpp" line="467"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="451"/>
+        <location filename="csetting.cpp" line="468"/>
         <source>Url</source>
         <translation>Url</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1097"/>
+        <location filename="csetting.cpp" line="1116"/>
         <source>Load this profile?</source>
         <translation>Načíst tento profil?</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1112"/>
+        <location filename="csetting.cpp" line="1131"/>
         <source>Reset current profile?</source>
         <translation>Zresetovat aktuální profil?</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1136"/>
+        <location filename="csetting.cpp" line="1155"/>
         <source>Cannot save profile!!!</source>
         <translation>Nelze uložit profil!!!</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1299"/>
+        <location filename="csetting.cpp" line="1318"/>
         <source>Do you want remove this profile?</source>
         <translation>Chceš opravdu odstranit tento profil?</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1345"/>
+        <location filename="csetting.cpp" line="1364"/>
         <source>Add New</source>
         <translation>Přidej nový</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1353"/>
+        <location filename="csetting.cpp" line="1372"/>
         <source>Delete </source>
         <translation>Smazat </translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1391"/>
+        <location filename="csetting.cpp" line="1410"/>
         <source>Reset to default?</source>
         <translation>Načíst defaultní hodnoty?</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1451"/>
-        <location filename="csetting.cpp" line="1458"/>
-        <location filename="csetting.cpp" line="1515"/>
+        <location filename="csetting.cpp" line="1470"/>
+        <location filename="csetting.cpp" line="1477"/>
+        <location filename="csetting.cpp" line="1534"/>
         <source>Select a folder</source>
         <translation>Vyber složku</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1538"/>
+        <location filename="csetting.cpp" line="1557"/>
         <source>Select name of new profile</source>
         <translation>Zvolte jméno nového profilu</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1553"/>
+        <location filename="csetting.cpp" line="1572"/>
         <source>Profile already exist!!!</source>
         <translation>Tento profil již existuje!!!</translation>
     </message>
@@ -5991,69 +6053,69 @@ které mají definovanou jasnost.</translation>
         <translation>Předchozí</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="62"/>
+        <location filename="ctipofday.cpp" line="60"/>
         <source>During object search on toolbar press Enter + Shift to locate the object with current field of view.</source>
         <translation>Při hledání objektu v nástrojové liště pokud stiskněte Enter spolu s klávesou Shift tak se objekt vycentruje ale zorné pole se nezmění.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="63"/>
+        <location filename="ctipofday.cpp" line="61"/>
         <source>Keyboard shortcut list and map controls help can be displayed by pressing F2 key.</source>
         <translation>Nápovědu pro klávesnicové zkratky a ovládání mapy zobrazíte klávesou F2.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="64"/>
+        <location filename="ctipofday.cpp" line="62"/>
         <source>Double click item on status bar to open particular dialog.</source>
         <translation>Dvojklik na položku stavového řádku otevře příslušný dialog.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="65"/>
+        <location filename="ctipofday.cpp" line="63"/>
         <source>Hold Ctrl key and move mouse cursor over an object to see its name and magnitude.</source>
         <translation>Při stisku klávesy CTRL a najetí kurzorem na objekt se zobrazí název a jasnost objektu.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="66"/>
+        <location filename="ctipofday.cpp" line="64"/>
         <source>By clicking left mouse button on an object will display object&apos;s information on status bar.</source>
         <translation>Kliknutím levého tlačítka myši na object se zobrazí v postraním panelu informace o objektu.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="67"/>
+        <location filename="ctipofday.cpp" line="65"/>
         <source>Object&apos;s dialog allows you to keep personal notes or to add images to gallery.</source>
         <oldsource>Object&apos;s dialog allows you to keep personal notes or to add images to gallery</oldsource>
         <translation>V dialogu objektu lze přidat vlastní poznámky nebo přiřadit do galerie obrázky.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="68"/>
+        <location filename="ctipofday.cpp" line="66"/>
         <source>To change star appearance go to settings tab Map&gt;Stars&gt;Star bitmap.</source>
         <translation>Pokud chcete změnit vzhled hvězd tak ho můžete změnit v nastavení pod záložkou Mapa-&gt;Hvězdy-&gt;Bitmapa hvězdy.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="69"/>
+        <location filename="ctipofday.cpp" line="67"/>
         <source>Map can be printed in black and white or in any other color profile.</source>
         <oldsource>Map can be printed in black&amp;white or in any other color profile.</oldsource>
         <translation>Tisk mapy lze tisknout jak černobíle tak v jakémkoli jiném barevném profilu.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="70"/>
+        <location filename="ctipofday.cpp" line="68"/>
         <source>To search for example nearest Moon eclipse in given time range go to menu Observating &gt; Search events</source>
         <translation>Pokud chcete vyhledat např. nejbližší zatmění Měsíce ve Vámi nastavené poloze tak ho můžete najít v menu &apos;Pozorování-&gt;Hledání událostí...&apos;</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="71"/>
+        <location filename="ctipofday.cpp" line="69"/>
         <source>To get more information about current object press button on object&apos;s dialog to go to web server NED or SIMBAD.</source>
         <translation>Pokud chcete o objektu získat více informací tak v dialogu objektu lze stiskem tlačítka přejít na webový server NED nebo SIMBAD kde se zobrazí podrobnější informace.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="72"/>
+        <location filename="ctipofday.cpp" line="70"/>
         <source>Unless stated, all displayed time informations are in given time zone as set in observing location.</source>
         <translation>Pokud není psáno jinak tak všechny vypsané časy jsou v časovém pásmu zadaném v nastavení polohy pozorovatele.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="73"/>
+        <location filename="ctipofday.cpp" line="71"/>
         <source>Distance or position angle from measure point are displayed on status bar. Measure point will be placed on current mouse cursor by pressing space button.</source>
         <translation>Vzdálenost a poziční úhel od pozice kurzoru na mapě a měřícího bodu se zobrazuje ve stavovém řádku. Přesun měřícího bodu lze provést klávesou Space.</translation>
     </message>
     <message>
-        <location filename="ctipofday.cpp" line="76"/>
+        <location filename="ctipofday.cpp" line="74"/>
         <source>Did you know...</source>
         <translation>Vědeli jste že...</translation>
     </message>
@@ -6071,7 +6133,12 @@ které mají definovanou jasnost.</translation>
         <translation>Smazat vše</translation>
     </message>
     <message>
-        <location filename="ctracklist.ui" line="54"/>
+        <location filename="ctracklist.ui" line="41"/>
+        <source>Delete</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <location filename="ctracklist.ui" line="61"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -6373,57 +6440,67 @@ které mají definovanou jasnost.</translation>
         <translation>Atm.tlak</translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="529"/>
+        <location filename="cwpossel.ui" line="524"/>
+        <source>Disable atm. refraction</source>
+        <translation>Vypnout atm. refrakci</translation>
+    </message>
+    <message>
+        <location filename="cwpossel.ui" line="536"/>
         <source>Saved locations</source>
         <translation>Uložené lokace</translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="552"/>
+        <location filename="cwpossel.ui" line="559"/>
         <source>New...</source>
         <translation>Nový...</translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="572"/>
+        <location filename="cwpossel.ui" line="579"/>
+        <source>Delete</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <location filename="cwpossel.ui" line="599"/>
         <source>Update...</source>
         <translation>Update...</translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="606"/>
+        <location filename="cwpossel.ui" line="633"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="613"/>
+        <location filename="cwpossel.ui" line="640"/>
         <source>Cancel</source>
         <translation>Storno</translation>
     </message>
     <message>
-        <location filename="cwpossel.cpp" line="107"/>
+        <location filename="cwpossel.cpp" line="108"/>
         <source>Location of </source>
         <translation>Poloha </translation>
     </message>
     <message>
-        <location filename="cwpossel.cpp" line="433"/>
+        <location filename="cwpossel.cpp" line="435"/>
         <source>Cannot get location!!!</source>
         <translation>Nelze získat polohu!!!</translation>
     </message>
     <message>
-        <location filename="cwpossel.cpp" line="450"/>
+        <location filename="cwpossel.cpp" line="452"/>
         <source>Enter a new location name</source>
         <translation>Zadej nový název lokace</translation>
     </message>
     <message>
-        <location filename="cwpossel.cpp" line="481"/>
+        <location filename="cwpossel.cpp" line="483"/>
         <source>Enter a location name</source>
         <translation>Název lokace</translation>
     </message>
     <message>
-        <location filename="cwpossel.cpp" line="578"/>
+        <location filename="cwpossel.cpp" line="580"/>
         <source>Cannot get altitude!!!</source>
         <translation>Nelze získat nadmořskou výšku!!!</translation>
     </message>
     <message>
-        <location filename="cwpossel.cpp" line="594"/>
+        <location filename="cwpossel.cpp" line="596"/>
         <source>Cannot get time zone!!!</source>
         <translation>Nelze získat časovou zónu!!!</translation>
     </message>
@@ -6495,14 +6572,14 @@ které mají definovanou jasnost.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="95"/>
-        <location filename="mainwindow.ui" line="3208"/>
+        <location filename="mainwindow.ui" line="3234"/>
         <source>Time window</source>
         <translation>Časové okno</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="124"/>
-        <location filename="mainwindow.ui" line="2799"/>
-        <location filename="mainwindow.cpp" line="3279"/>
+        <location filename="mainwindow.ui" line="2821"/>
+        <location filename="mainwindow.cpp" line="3290"/>
         <source>Telescope</source>
         <translation>Dalekohled</translation>
     </message>
@@ -6528,7 +6605,7 @@ které mají definovanou jasnost.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="274"/>
-        <location filename="mainwindow.ui" line="3416"/>
+        <location filename="mainwindow.ui" line="3450"/>
         <source>Time dialog</source>
         <translation>Časový dialog</translation>
     </message>
@@ -6599,7 +6676,7 @@ které mají definovanou jasnost.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="487"/>
-        <location filename="mainwindow.ui" line="2057"/>
+        <location filename="mainwindow.ui" line="2060"/>
         <source>Drawing</source>
         <translation>&amp;Kreslení</translation>
     </message>
@@ -6650,7 +6727,7 @@ které mají definovanou jasnost.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="802"/>
-        <location filename="mainwindow.ui" line="2690"/>
+        <location filename="mainwindow.ui" line="2712"/>
         <source>Open DSS file...</source>
         <translation>Otevři soubor DSS...</translation>
     </message>
@@ -6681,13 +6758,13 @@ které mají definovanou jasnost.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="933"/>
-        <location filename="mainwindow.ui" line="3172"/>
+        <location filename="mainwindow.ui" line="3194"/>
         <source>Hide all</source>
         <translation>Skryj vše</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="943"/>
-        <location filename="mainwindow.ui" line="2978"/>
+        <location filename="mainwindow.ui" line="3000"/>
         <source>Show all</source>
         <translation>Zobraz vše</translation>
     </message>
@@ -6702,185 +6779,185 @@ které mají definovanou jasnost.</translation>
         <translation>Skryj tvary DSO</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="997"/>
+        <location filename="mainwindow.ui" line="1000"/>
         <source>Show Frame &amp;&amp; Name</source>
         <translation>Zobraz rámeček a jméno</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1031"/>
+        <location filename="mainwindow.ui" line="1034"/>
         <source>Process all images</source>
         <translation>Proveď na všech</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1041"/>
+        <location filename="mainwindow.ui" line="1044"/>
         <source>Reset</source>
         <translation>Reset</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1051"/>
+        <location filename="mainwindow.ui" line="1054"/>
         <source>Reset all</source>
         <translation>Resetuj vše</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1067"/>
+        <location filename="mainwindow.ui" line="1070"/>
         <source>Brightness</source>
         <translation>Jas</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1096"/>
+        <location filename="mainwindow.ui" line="1099"/>
         <source>Contrast</source>
         <translation>Kontrast</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1131"/>
+        <location filename="mainwindow.ui" line="1134"/>
         <source>Gamma</source>
         <translation>Gama</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1175"/>
+        <location filename="mainwindow.ui" line="1178"/>
         <source>Invert image</source>
         <translation>Invertuj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1185"/>
+        <location filename="mainwindow.ui" line="1188"/>
         <source>Auto adjust</source>
         <translation>Nastav automaticky</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1206"/>
+        <location filename="mainwindow.ui" line="1209"/>
         <source>Event information</source>
         <translation>Informace o událostech</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1263"/>
-        <location filename="mainwindow.ui" line="1937"/>
-        <location filename="mainwindow.cpp" line="402"/>
-        <location filename="mainwindow.cpp" line="499"/>
+        <location filename="mainwindow.ui" line="1266"/>
+        <location filename="mainwindow.ui" line="1940"/>
+        <location filename="mainwindow.cpp" line="404"/>
+        <location filename="mainwindow.cpp" line="501"/>
         <source>Time</source>
         <translation>Čas</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1277"/>
+        <location filename="mainwindow.ui" line="1280"/>
         <source>Description</source>
         <translation>Popis</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1291"/>
+        <location filename="mainwindow.ui" line="1294"/>
         <source>Visibility</source>
         <translation>Viditelnost</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1328"/>
-        <location filename="mainwindow.cpp" line="1154"/>
+        <location filename="mainwindow.ui" line="1331"/>
+        <location filename="mainwindow.cpp" line="1156"/>
         <source>Current event : </source>
         <translation>Aktuální událost : </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1335"/>
+        <location filename="mainwindow.ui" line="1338"/>
         <source>Click change time to event</source>
         <translation>Kliknutím nastav čas události</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1375"/>
+        <location filename="mainwindow.ui" line="1378"/>
         <source>Zoom to event</source>
         <translation>Zoom na událost</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1385"/>
+        <location filename="mainwindow.ui" line="1388"/>
         <source>Move to event</source>
         <translation>Přesun na událost</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1429"/>
+        <location filename="mainwindow.ui" line="1432"/>
         <source>Clear all</source>
         <translation>Smaž vše</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1445"/>
+        <location filename="mainwindow.ui" line="1448"/>
         <source>Lunar features</source>
         <translation>Měsíční povrch</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1451"/>
+        <location filename="mainwindow.ui" line="1454"/>
         <source>Go to the Moon</source>
         <translation>Najdi Měsíc</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1467"/>
+        <location filename="mainwindow.ui" line="1470"/>
         <source>Show lunar features</source>
         <translation>Zobraz měsíční povrch</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1480"/>
+        <location filename="mainwindow.ui" line="1483"/>
         <source>Show feature diameter</source>
         <translation>Zobraz rozměry</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1496"/>
+        <location filename="mainwindow.ui" line="1499"/>
         <source>Level of detail</source>
         <translation>Detail</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1538"/>
+        <location filename="mainwindow.ui" line="1541"/>
         <source>abc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1583"/>
+        <location filename="mainwindow.ui" line="1586"/>
         <source>Filter</source>
         <translation>Filtr</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1595"/>
+        <location filename="mainwindow.ui" line="1598"/>
         <source>Select all</source>
         <translation>Vybrat vše</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1615"/>
+        <location filename="mainwindow.ui" line="1618"/>
         <source>Deselect all</source>
         <translation>Zrušit vše</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1633"/>
+        <location filename="mainwindow.ui" line="1636"/>
         <source>Shape editor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1642"/>
-        <location filename="mainwindow.ui" line="1832"/>
+        <location filename="mainwindow.ui" line="1645"/>
+        <location filename="mainwindow.ui" line="1835"/>
         <source>Enable editor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1671"/>
+        <location filename="mainwindow.ui" line="1674"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add new shape: &lt;span style=&quot; font-weight:600;&quot;&gt;N&lt;/span&gt;&lt;br/&gt;Add new vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;V&lt;br/&gt;&lt;/span&gt;Delete vertex:&lt;span style=&quot; font-weight:600;&quot;&gt; Backspace&lt;br/&gt;&lt;/span&gt;Delete shape:&lt;span style=&quot; font-weight:600;&quot;&gt; Delete&lt;br/&gt;&lt;/span&gt;Delete all:&lt;span style=&quot; font-weight:600;&quot;&gt; CTRL + Delete&lt;br/&gt;&lt;/span&gt;Next shape: &lt;span style=&quot; font-weight:600;&quot;&gt;W&lt;/span&gt;&lt;br/&gt;Prev. shape: &lt;span style=&quot; font-weight:600;&quot;&gt;Q&lt;br/&gt;&lt;/span&gt;Next vertex:&lt;span style=&quot; font-weight:600;&quot;&gt; 2&lt;/span&gt;&lt;br/&gt;Prev. vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;1&lt;br/&gt;&lt;/span&gt;Next ID: &lt;span style=&quot; font-weight:600;&quot;&gt;[&lt;br/&gt;&lt;/span&gt;Prev ID: &lt;span style=&quot; font-weight:600;&quot;&gt;]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Nebula brightness ID:&lt;span style=&quot; font-weight:600;&quot;&gt; 0..2&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1684"/>
-        <location filename="mainwindow.ui" line="1794"/>
+        <location filename="mainwindow.ui" line="1687"/>
+        <location filename="mainwindow.ui" line="1797"/>
         <source>Load shapes...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1694"/>
-        <location filename="mainwindow.ui" line="1751"/>
+        <location filename="mainwindow.ui" line="1697"/>
+        <location filename="mainwindow.ui" line="1754"/>
         <source>Save shapes...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1701"/>
-        <location filename="mainwindow.ui" line="1845"/>
+        <location filename="mainwindow.ui" line="1704"/>
+        <location filename="mainwindow.ui" line="1848"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1736"/>
+        <location filename="mainwindow.ui" line="1739"/>
         <source>Constellation editor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1767"/>
+        <location filename="mainwindow.ui" line="1770"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -6893,1753 +6970,1758 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1884"/>
+        <location filename="mainwindow.ui" line="1887"/>
         <source>Help</source>
         <translation>Nápověda</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1913"/>
+        <location filename="mainwindow.ui" line="1916"/>
         <source>about:blank</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1980"/>
-        <location filename="mainwindow.ui" line="2556"/>
-        <location filename="mainwindow.cpp" line="204"/>
+        <location filename="mainwindow.ui" line="1983"/>
+        <location filename="mainwindow.ui" line="2578"/>
+        <location filename="mainwindow.cpp" line="205"/>
         <source>Search</source>
         <translation>Hledat</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1992"/>
+        <location filename="mainwindow.ui" line="1995"/>
         <source>Azm/Alt View</source>
         <translation>Azm/Výška</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2008"/>
-        <location filename="mainwindow.ui" line="2970"/>
+        <location filename="mainwindow.ui" line="2011"/>
+        <location filename="mainwindow.ui" line="2992"/>
         <source>Grids</source>
         <translation>Souř. síť</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2023"/>
+        <location filename="mainwindow.ui" line="2026"/>
         <source>Rendering</source>
         <translation>Rendering</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2040"/>
+        <location filename="mainwindow.ui" line="2043"/>
         <source>Telescope control</source>
         <translation>Ovládání dalekohledu</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2075"/>
+        <location filename="mainwindow.ui" line="2078"/>
         <source>Search planet</source>
         <translation>Hledat planetu</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2098"/>
+        <location filename="mainwindow.ui" line="2101"/>
         <source>Show/Hide objects</source>
         <translation>Zobrazí/Skryje objekty</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2129"/>
+        <location filename="mainwindow.ui" line="2132"/>
         <source>Chart orientation</source>
         <translation>Orientace mapy</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2143"/>
+        <location filename="mainwindow.ui" line="2146"/>
+        <source>Windows</source>
+        <translation>Okna</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2161"/>
         <source>&amp;Exit</source>
         <translation>&amp;Konec</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2152"/>
+        <location filename="mainwindow.ui" line="2170"/>
         <source>&amp;About...</source>
         <translation>&amp;O programu...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2161"/>
+        <location filename="mainwindow.ui" line="2179"/>
         <source>inc_star_mag</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2164"/>
+        <location filename="mainwindow.ui" line="2182"/>
         <source>Increase star magnitude</source>
         <translation>Více hvězd</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2173"/>
+        <location filename="mainwindow.ui" line="2191"/>
         <source>dec_star_mag</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2176"/>
+        <location filename="mainwindow.ui" line="2194"/>
         <source>Decrease star magnitude</source>
         <translation>Méně hvězd</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2188"/>
+        <location filename="mainwindow.ui" line="2206"/>
         <source>star_mag_lock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2191"/>
+        <location filename="mainwindow.ui" line="2209"/>
         <source>Lock magnitude</source>
         <translation>Zamkni jasnosti</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2203"/>
+        <location filename="mainwindow.ui" line="2221"/>
         <source>flipX</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2206"/>
+        <location filename="mainwindow.ui" line="2224"/>
         <source>Flip X axis</source>
         <translation>Otoč osu X</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2218"/>
+        <location filename="mainwindow.ui" line="2236"/>
         <source>flipY</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2221"/>
+        <location filename="mainwindow.ui" line="2239"/>
         <source>Flip Y axis</source>
         <translation>Otoč osu Y</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2230"/>
+        <location filename="mainwindow.ui" line="2248"/>
         <source>inc_dso_mag</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2233"/>
+        <location filename="mainwindow.ui" line="2251"/>
         <source>Increase DSO magnitude</source>
         <translation>Více DSO</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2242"/>
+        <location filename="mainwindow.ui" line="2260"/>
         <source>dec_dso_mag</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2245"/>
+        <location filename="mainwindow.ui" line="2263"/>
         <source>Decrease DSO magnitude</source>
         <translation>Méně DSO</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2250"/>
+        <location filename="mainwindow.ui" line="2268"/>
         <source>1°</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2253"/>
+        <location filename="mainwindow.ui" line="2271"/>
         <source>Zoom to 1°</source>
         <translation>Zvětšit na 1°</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2258"/>
+        <location filename="mainwindow.ui" line="2276"/>
         <source>5°</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2261"/>
+        <location filename="mainwindow.ui" line="2279"/>
         <source>Zoom to 5°</source>
         <translation>Zvětšit na 5°</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2266"/>
+        <location filename="mainwindow.ui" line="2284"/>
         <source>10°</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2269"/>
+        <location filename="mainwindow.ui" line="2287"/>
         <source>Zoom to 10°</source>
         <translation>Zvětšit na 10°</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2274"/>
+        <location filename="mainwindow.ui" line="2292"/>
         <source>20°</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2277"/>
+        <location filename="mainwindow.ui" line="2295"/>
         <source>Zoom to 20°</source>
         <translation>Zvětšit na 20°</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2282"/>
+        <location filename="mainwindow.ui" line="2300"/>
         <source>45°</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2285"/>
+        <location filename="mainwindow.ui" line="2303"/>
         <source>Zoom to 45°</source>
         <translation>Zvětšit na 45°</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2290"/>
+        <location filename="mainwindow.ui" line="2308"/>
         <source>90°</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2293"/>
+        <location filename="mainwindow.ui" line="2311"/>
         <source>Zoom to 90°</source>
         <translation>Zvětšit na 90°</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2298"/>
+        <location filename="mainwindow.ui" line="2316"/>
         <source>Export map to image...</source>
         <translation>Exportuj mapu do obrázku...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2303"/>
+        <location filename="mainwindow.ui" line="2321"/>
         <source>Print...</source>
         <translation>Tisk...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2306"/>
+        <location filename="mainwindow.ui" line="2324"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2311"/>
+        <location filename="mainwindow.ui" line="2329"/>
         <source>Copy map to clipboard</source>
         <translation>Kopíruj mapu do schránky</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2323"/>
+        <location filename="mainwindow.ui" line="2341"/>
         <source>Atlas mode (Pole up)</source>
         <translation>Režim atlasu (Pól je nahoře)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2326"/>
+        <location filename="mainwindow.ui" line="2344"/>
         <source>Ctrl+A</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2338"/>
+        <location filename="mainwindow.ui" line="2356"/>
         <source>Horizon mode (Zenith up)</source>
         <translation>Režim horizontu (Zenit je nahoře)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2341"/>
+        <location filename="mainwindow.ui" line="2359"/>
         <source>Ctrl+H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2346"/>
+        <location filename="mainwindow.ui" line="2364"/>
         <source>Set JD...</source>
         <translation>Nastav JD...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2349"/>
+        <location filename="mainwindow.ui" line="2367"/>
         <source>Ctrl+J</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2354"/>
+        <location filename="mainwindow.ui" line="2372"/>
         <source>Set local time...</source>
         <translation>Nastavení místního času...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2357"/>
+        <location filename="mainwindow.ui" line="2375"/>
         <source>Ctrl+L</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2362"/>
+        <location filename="mainwindow.ui" line="2380"/>
         <source>Set UTC time...</source>
         <translation>Nastavení času UTC...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2371"/>
+        <location filename="mainwindow.ui" line="2389"/>
         <source>Set current time</source>
         <translation>Nastav aktuální čas</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2374"/>
+        <location filename="mainwindow.ui" line="2392"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2379"/>
+        <location filename="mainwindow.ui" line="2397"/>
         <source>DeltaT...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2382"/>
+        <location filename="mainwindow.ui" line="2400"/>
         <source>Set DeltaT</source>
         <translation>Nastav DeltuT</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2393"/>
+        <location filename="mainwindow.ui" line="2415"/>
         <source>Show sidebar</source>
         <translation>Zobraz postraní okno</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2396"/>
+        <location filename="mainwindow.ui" line="2418"/>
         <source>Ctrl+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2404"/>
+        <location filename="mainwindow.ui" line="2426"/>
         <source>&amp;Selected object</source>
         <translation>&amp;Vybraný objekt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2407"/>
+        <location filename="mainwindow.ui" line="2429"/>
         <source>Go to selected object</source>
         <translation>Jdi na vybraný objekt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2412"/>
+        <location filename="mainwindow.ui" line="2434"/>
         <source>Y+</source>
         <translation>R+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2415"/>
+        <location filename="mainwindow.ui" line="2437"/>
         <source>Year+</source>
         <translation>Rok+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2420"/>
+        <location filename="mainwindow.ui" line="2442"/>
         <source>Y-</source>
         <translation>R-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2423"/>
+        <location filename="mainwindow.ui" line="2445"/>
         <source>Year-</source>
         <translation>Rok-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2428"/>
-        <location filename="mainwindow.ui" line="2504"/>
+        <location filename="mainwindow.ui" line="2450"/>
+        <location filename="mainwindow.ui" line="2526"/>
         <source>M+</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2431"/>
+        <location filename="mainwindow.ui" line="2453"/>
         <source>Month+</source>
         <translation>Měsíc+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2436"/>
-        <location filename="mainwindow.ui" line="2512"/>
+        <location filename="mainwindow.ui" line="2458"/>
+        <location filename="mainwindow.ui" line="2534"/>
         <source>M-</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2439"/>
+        <location filename="mainwindow.ui" line="2461"/>
         <source>Month-</source>
         <translation>Měsíc-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2444"/>
+        <location filename="mainwindow.ui" line="2466"/>
         <source>D+</source>
         <translation>D+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2447"/>
+        <location filename="mainwindow.ui" line="2469"/>
         <source>Day+</source>
         <translation>Den+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2452"/>
+        <location filename="mainwindow.ui" line="2474"/>
         <source>D-</source>
         <translation>D-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2455"/>
+        <location filename="mainwindow.ui" line="2477"/>
         <source>Day-</source>
         <translation>Den-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2464"/>
+        <location filename="mainwindow.ui" line="2486"/>
         <source>CT</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2467"/>
+        <location filename="mainwindow.ui" line="2489"/>
         <source>Set current local time</source>
         <translation>Nastav aktuální čas</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2472"/>
+        <location filename="mainwindow.ui" line="2494"/>
         <source>SD+</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2475"/>
+        <location filename="mainwindow.ui" line="2497"/>
         <source>Siderical day+</source>
         <translation>Siderický den+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2480"/>
+        <location filename="mainwindow.ui" line="2502"/>
         <source>SD-</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2483"/>
+        <location filename="mainwindow.ui" line="2505"/>
         <source>Siderical day-</source>
         <translation>Siderický den-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2488"/>
+        <location filename="mainwindow.ui" line="2510"/>
         <source>H+</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2491"/>
+        <location filename="mainwindow.ui" line="2513"/>
         <source>Hour+</source>
         <translation>Hodina+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2496"/>
+        <location filename="mainwindow.ui" line="2518"/>
         <source>H-</source>
         <translation>H-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2499"/>
+        <location filename="mainwindow.ui" line="2521"/>
         <source>Hour-</source>
         <translation>Hodina-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2507"/>
+        <location filename="mainwindow.ui" line="2529"/>
         <source>Minute+</source>
         <translation>Minuta+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2515"/>
+        <location filename="mainwindow.ui" line="2537"/>
         <source>Minute-</source>
         <translation>Minuta-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2520"/>
+        <location filename="mainwindow.ui" line="2542"/>
         <source>S+</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2523"/>
+        <location filename="mainwindow.ui" line="2545"/>
         <source>Second+</source>
         <translation>Sekunda+</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2528"/>
+        <location filename="mainwindow.ui" line="2550"/>
         <source>S-</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2531"/>
+        <location filename="mainwindow.ui" line="2553"/>
         <source>Second-</source>
         <translation>Sekundy-</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2536"/>
+        <location filename="mainwindow.ui" line="2558"/>
         <source>Star by &amp;proper name...</source>
         <translation>&amp;Hvězdu podle vlastního jména...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2539"/>
+        <location filename="mainwindow.ui" line="2561"/>
         <source>Search star by proper name</source>
         <translation>Hledání hvězdy podle jména</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2544"/>
+        <location filename="mainwindow.ui" line="2566"/>
         <source>&amp;DSO by common name...</source>
         <translation>&amp;DSO podle jména...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2547"/>
+        <location filename="mainwindow.ui" line="2569"/>
         <source>Search DSO by common name</source>
         <translation>Hledat DSO podle názvu</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2559"/>
+        <location filename="mainwindow.ui" line="2581"/>
         <source>Search object</source>
         <translation>Hledat objekt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2564"/>
+        <location filename="mainwindow.ui" line="2586"/>
         <source>N</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2567"/>
+        <location filename="mainwindow.ui" line="2589"/>
         <source>Look at north</source>
         <translation>Koukni na sever</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2572"/>
+        <location filename="mainwindow.ui" line="2594"/>
         <source>S</source>
         <translation>J</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2575"/>
+        <location filename="mainwindow.ui" line="2597"/>
         <source>Look at south</source>
         <translation>Koukni na jih</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2580"/>
+        <location filename="mainwindow.ui" line="2602"/>
         <source>E</source>
         <translation>V</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2583"/>
+        <location filename="mainwindow.ui" line="2605"/>
         <source>Look at east</source>
         <translation>Koukni na východ</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2588"/>
+        <location filename="mainwindow.ui" line="2610"/>
         <source>W</source>
         <translation>Z</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2591"/>
+        <location filename="mainwindow.ui" line="2613"/>
         <source>Look at west</source>
         <translation>Koukni na západ</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2596"/>
+        <location filename="mainwindow.ui" line="2618"/>
         <source>Z</source>
         <translation>Zn</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2599"/>
+        <location filename="mainwindow.ui" line="2621"/>
         <source>Look at zenith</source>
         <translation>Koukni na zenit</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2611"/>
+        <location filename="mainwindow.ui" line="2633"/>
         <source>Ecliptic coordinates</source>
         <translation>Režim ekliptiky</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2614"/>
-        <location filename="mainwindow.ui" line="2994"/>
+        <location filename="mainwindow.ui" line="2636"/>
+        <location filename="mainwindow.ui" line="3016"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2622"/>
+        <location filename="mainwindow.ui" line="2644"/>
         <source>Galactic coordinates</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2627"/>
+        <location filename="mainwindow.ui" line="2649"/>
         <source>Position...</source>
         <translation>Polohu...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2630"/>
+        <location filename="mainwindow.ui" line="2652"/>
         <source>Go to Position</source>
         <translation>Jdi na polohu</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2642"/>
-        <location filename="mainwindow.ui" line="2645"/>
+        <location filename="mainwindow.ui" line="2664"/>
+        <location filename="mainwindow.ui" line="2667"/>
         <source>Automatic grid</source>
         <translation>Automatická sí&apos;t</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2657"/>
+        <location filename="mainwindow.ui" line="2679"/>
         <source>Realtime</source>
         <translation>Realný čas</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2660"/>
+        <location filename="mainwindow.ui" line="2682"/>
         <source>Realtime On/Off</source>
         <translation>Realný čas Zap/Vyp</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2665"/>
+        <location filename="mainwindow.ui" line="2687"/>
         <source>Day &amp;&amp; Night...</source>
         <translation>Den a Noc...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2670"/>
+        <location filename="mainwindow.ui" line="2692"/>
         <source>Sun images...</source>
         <translation>Obrázky Slunce...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2675"/>
+        <location filename="mainwindow.ui" line="2697"/>
         <source>Planet visibility...</source>
         <translation>Viditelnost planet...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2680"/>
+        <location filename="mainwindow.ui" line="2702"/>
         <source>Moon &amp;&amp; Sun almanac...</source>
         <translation>Měsíční a Sluneční kalendář</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2685"/>
+        <location filename="mainwindow.ui" line="2707"/>
         <source>Setting...</source>
         <translation>Nastavení...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2699"/>
+        <location filename="mainwindow.ui" line="2721"/>
         <source>Connect device...</source>
         <translation>Připojit zařízení...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2710"/>
+        <location filename="mainwindow.ui" line="2732"/>
         <source>Standard cross</source>
         <translation>Standartní kríž</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2718"/>
+        <location filename="mainwindow.ui" line="2740"/>
         <source>Select...</source>
         <translation>Zvolit...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2723"/>
+        <location filename="mainwindow.ui" line="2745"/>
         <source>Select world location...</source>
         <translation>Výběr polohy pozorovatele...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2735"/>
+        <location filename="mainwindow.ui" line="2757"/>
         <source>Disconnect</source>
         <translation>Odpojení</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2747"/>
+        <location filename="mainwindow.ui" line="2769"/>
         <source>Find telescope</source>
         <translation>Najdi dalekohled</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2758"/>
+        <location filename="mainwindow.ui" line="2780"/>
         <source>Very fast (100ms)</source>
         <translation>Velmi rychle (100ms)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2769"/>
+        <location filename="mainwindow.ui" line="2791"/>
         <source>Fast (250ms)</source>
         <translation>Rychle (250ms)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2780"/>
+        <location filename="mainwindow.ui" line="2802"/>
         <source>Slow (500ms)</source>
         <translation>Pomalu (500ms)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2791"/>
+        <location filename="mainwindow.ui" line="2813"/>
         <source>Very slow (1000ms)</source>
         <translation>Velmi pomalu (1000ms)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2804"/>
+        <location filename="mainwindow.ui" line="2826"/>
         <source>Asteroids...</source>
         <translation>Asteroidy...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2809"/>
+        <location filename="mainwindow.ui" line="2831"/>
         <source>Asteroid...</source>
         <translation>Asteroidy...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2814"/>
+        <location filename="mainwindow.ui" line="2836"/>
         <source>Save time mark...</source>
         <translation>Uložení časové značky...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2819"/>
+        <location filename="mainwindow.ui" line="2841"/>
         <source>Restore time mark...</source>
         <translation>Obnovení časová značky...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2824"/>
+        <location filename="mainwindow.ui" line="2846"/>
         <source>Daily events...</source>
         <translation>Denní události...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2839"/>
+        <location filename="mainwindow.ui" line="2861"/>
         <source>Stars</source>
         <translation>Hvězdy</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2842"/>
+        <location filename="mainwindow.ui" line="2864"/>
         <source>Show/Hide Stars</source>
         <translation>Zobrazí/Skryje hvězdy</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2857"/>
+        <location filename="mainwindow.ui" line="2879"/>
         <source>DSO Shapes</source>
         <translation>Tvary DSO</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2860"/>
+        <location filename="mainwindow.ui" line="2882"/>
         <source>Show/Hide DSO Shapes</source>
         <translation>Zobrazí/Skryje obrysy DSO</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2875"/>
+        <location filename="mainwindow.ui" line="2897"/>
         <source>Constellation lines</source>
         <translation>Souhvězdí</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2878"/>
+        <location filename="mainwindow.ui" line="2900"/>
         <source>Show/Hide Constellation lines</source>
         <translation>Zobrazí/Skryje souhvězdí</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2893"/>
+        <location filename="mainwindow.ui" line="2915"/>
         <source>Constellation boundaries</source>
         <translation>Hranice souhvězdí</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2896"/>
+        <location filename="mainwindow.ui" line="2918"/>
         <source>Show/Hide Constellation boundaries</source>
         <translation>Zobrazí/Skryje hranice souhvězdí</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2911"/>
+        <location filename="mainwindow.ui" line="2933"/>
         <source>DSO</source>
         <translation>DSO</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2914"/>
+        <location filename="mainwindow.ui" line="2936"/>
         <source>Show/Hide DSO</source>
         <translation>Zobrazí/Skryje DSO</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2929"/>
+        <location filename="mainwindow.ui" line="2951"/>
         <source>Milkyway</source>
         <translation>Mléčná dráha</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2932"/>
+        <location filename="mainwindow.ui" line="2954"/>
         <source>Show/Hide Milkyway</source>
         <translation>Zobrazí/Skryje Mléčnou dráhu</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2947"/>
+        <location filename="mainwindow.ui" line="2969"/>
         <source>Planets, Sun &amp;&amp; Moon</source>
         <translation>Planety, Slunce a Měsíc</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2950"/>
+        <location filename="mainwindow.ui" line="2972"/>
         <source>Show/Hide Planets, Sun &amp; Moon</source>
         <translation>Zobrazí/Skryje Planety, Slunce a Měsíc</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2955"/>
+        <location filename="mainwindow.ui" line="2977"/>
         <source>Satellite daily events...</source>
         <translation>Denní události měsíců planet...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2973"/>
+        <location filename="mainwindow.ui" line="2995"/>
         <source>Show/Hide Grids</source>
         <translation>Zobrazí/Skryje souřadnicovou síť</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2983"/>
+        <location filename="mainwindow.ui" line="3005"/>
         <source>Star in &amp;Tycho catalogue...</source>
         <translation>Hvězdu v katalogu &amp;Tycho...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2986"/>
+        <location filename="mainwindow.ui" line="3008"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2991"/>
+        <location filename="mainwindow.ui" line="3013"/>
         <source>Search events...</source>
         <translation>Hledání události...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3009"/>
+        <location filename="mainwindow.ui" line="3031"/>
         <source>Asteroids</source>
         <translation>Asteroid</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3012"/>
+        <location filename="mainwindow.ui" line="3034"/>
         <source>Show/Hide Asteroids</source>
         <translation>Zobrazí/Skryje asteroidy</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3027"/>
+        <location filename="mainwindow.ui" line="3049"/>
         <source>Antialiasing</source>
         <translation>Vyhlazování</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3030"/>
+        <location filename="mainwindow.ui" line="3052"/>
         <source>Enable/Disable map antialiasing</source>
         <translation>Zapne/Vypne antialiasing mapy</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3045"/>
+        <location filename="mainwindow.ui" line="3067"/>
         <source>Real / Symbol planet rendering</source>
         <translation>Reálné / Symbolické zobrazení planet</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3048"/>
+        <location filename="mainwindow.ui" line="3070"/>
         <source>Real/ Symbol planet rendering</source>
         <translation>Reálné / Symbolické zobrazení planet</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3053"/>
+        <location filename="mainwindow.ui" line="3075"/>
         <source>Comets...</source>
         <translation>Komety...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3058"/>
+        <location filename="mainwindow.ui" line="3080"/>
         <source>Comet...</source>
         <translation>Kometa...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3063"/>
+        <location filename="mainwindow.ui" line="3085"/>
         <source>Object tracking...</source>
         <translation>Sledování objektů...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3072"/>
+        <location filename="mainwindow.ui" line="3094"/>
         <source>Telescope FOV...</source>
         <translation>Zorné pole dalekohledu...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3075"/>
+        <location filename="mainwindow.ui" line="3097"/>
         <source>Insert telescope FOV</source>
         <translation>Vloží do mapy zorné pole dalekohledu</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3090"/>
+        <location filename="mainwindow.ui" line="3112"/>
         <source>Legends</source>
         <translation>Legendy</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3093"/>
+        <location filename="mainwindow.ui" line="3115"/>
         <source>Show/Hide Legends</source>
         <translation>Zobrazí/Skryje legendy</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3108"/>
+        <location filename="mainwindow.ui" line="3130"/>
         <source>Comets</source>
         <translation>Komety</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3111"/>
+        <location filename="mainwindow.ui" line="3133"/>
         <source>Show/Hide Comets</source>
         <translation>Zobrazí/Skryje komety</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3116"/>
+        <location filename="mainwindow.ui" line="3138"/>
         <source>Double stars...</source>
         <translation>Dvojhvězdy...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3121"/>
+        <location filename="mainwindow.ui" line="3143"/>
         <source>Planets, Sun &amp;&amp; Moon...</source>
         <oldsource>Planets, Sun &amp; Moon...</oldsource>
         <translation>Planety, Slunce a Měsíc...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3124"/>
+        <location filename="mainwindow.ui" line="3146"/>
         <source>Planets, Sun  Moon</source>
         <translation>Planety, Slunce a Měsíc</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3139"/>
+        <location filename="mainwindow.ui" line="3161"/>
         <source>Labels</source>
         <translation>Popisky</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3142"/>
+        <location filename="mainwindow.ui" line="3164"/>
         <source>Show/Hide Labels</source>
         <translation>Zobrazí/Skryje popisky</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3151"/>
+        <location filename="mainwindow.ui" line="3173"/>
         <source>Telrad</source>
         <translation>Telrad</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3154"/>
+        <location filename="mainwindow.ui" line="3176"/>
         <source>Insert Telrad</source>
         <translation>Vloží hledáček Telrad</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3159"/>
+        <location filename="mainwindow.ui" line="3181"/>
         <source>Text...</source>
         <translation>Text...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3167"/>
+        <location filename="mainwindow.ui" line="3189"/>
         <source>Clear map...</source>
         <translation>Vyčisti mapu...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3181"/>
+        <location filename="mainwindow.ui" line="3203"/>
         <source>Frame field...</source>
         <translation>Rámeček zorneho pole...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3184"/>
+        <location filename="mainwindow.ui" line="3206"/>
         <source>Insert frame field</source>
         <translation>Vloží rámeček zorneho pole</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3192"/>
+        <location filename="mainwindow.ui" line="3214"/>
         <source>Find edited object</source>
         <translation>Najdi editovaný objekt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3200"/>
+        <location filename="mainwindow.ui" line="3222"/>
         <source>Center edited object</source>
         <translation>Centruj editovaný objekt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3216"/>
+        <location filename="mainwindow.ui" line="3246"/>
         <source>Show full screen</source>
         <translation>Zobraz na celou obrazovku</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3219"/>
+        <location filename="mainwindow.ui" line="3249"/>
         <source>Alt+F12</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3231"/>
+        <location filename="mainwindow.ui" line="3261"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3234"/>
+        <location filename="mainwindow.ui" line="3264"/>
         <source>Stop current operation</source>
         <translation>Zastaví dalekohled pokud se přesouvá</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3237"/>
+        <location filename="mainwindow.ui" line="3267"/>
         <source>Ctrl+X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3245"/>
+        <location filename="mainwindow.ui" line="3275"/>
         <source>Change style...</source>
         <translation>Změn styl...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3250"/>
+        <location filename="mainwindow.ui" line="3280"/>
         <source>Measure point</source>
         <translation>Meřící bod</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3253"/>
+        <location filename="mainwindow.ui" line="3283"/>
         <source>Ctrl+M</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3261"/>
+        <location filename="mainwindow.ui" line="3295"/>
         <source>Telescope window</source>
         <translation>Okno dalekohledu</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3270"/>
+        <location filename="mainwindow.ui" line="3304"/>
         <source>Circle...</source>
         <translation>Kruh...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3273"/>
+        <location filename="mainwindow.ui" line="3307"/>
         <source>Insert circle</source>
         <translation>Vložit kruh</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3278"/>
+        <location filename="mainwindow.ui" line="3312"/>
         <source>Ephemerid list...</source>
         <translation>Seznam efemerid...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3293"/>
+        <location filename="mainwindow.ui" line="3327"/>
         <source>Bilinear interpolation</source>
         <translation>Bilineární interpolace</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3296"/>
+        <location filename="mainwindow.ui" line="3330"/>
         <source>Enable/Disable bilinear interpolation</source>
         <translation>Zapne/Vypne bilineární interpolaci textur</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3301"/>
+        <location filename="mainwindow.ui" line="3335"/>
         <source>Polaris Hour Angle...</source>
         <translation>Hodinový úhel Polárky...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3309"/>
+        <location filename="mainwindow.ui" line="3343"/>
         <source>Deep Sky Objects...</source>
         <translation>Nehvězdné objekty...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3321"/>
-        <location filename="mainwindow.ui" line="3324"/>
+        <location filename="mainwindow.ui" line="3355"/>
+        <location filename="mainwindow.ui" line="3358"/>
         <source>Time-lapse</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3329"/>
+        <location filename="mainwindow.ui" line="3363"/>
         <source>Image gallery...</source>
         <translation>Obrazová galerie...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3334"/>
+        <location filename="mainwindow.ui" line="3368"/>
         <source>Set horizon...</source>
         <translation>Nastav horizont...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3339"/>
+        <location filename="mainwindow.ui" line="3373"/>
         <source>Keyboard reference...</source>
         <translation>Klávesové zkratky...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3342"/>
+        <location filename="mainwindow.ui" line="3376"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3347"/>
+        <location filename="mainwindow.ui" line="3381"/>
         <source>Change language...</source>
         <translation>Změna jazyka...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3356"/>
+        <location filename="mainwindow.ui" line="3390"/>
         <source>Reset magnitude</source>
         <translation>Resetuj jasnosti</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3359"/>
+        <location filename="mainwindow.ui" line="3393"/>
         <source>Reset magniture to current FOV.</source>
         <translation>Resetuje jasnosti na aktuální FOV</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3368"/>
+        <location filename="mainwindow.ui" line="3402"/>
         <source>Time-Lapse Preferences</source>
         <translation>Nastavení Time-Lapse</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3371"/>
+        <location filename="mainwindow.ui" line="3405"/>
         <source>Set time-lapse preferences</source>
         <translation>Nastavení Time-Lapse</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3380"/>
+        <location filename="mainwindow.ui" line="3414"/>
         <source>Show help...</source>
         <translation>Zobraz nápovědu...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3383"/>
+        <location filename="mainwindow.ui" line="3417"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3391"/>
+        <location filename="mainwindow.ui" line="3425"/>
         <source>Night mode</source>
         <translation>Noční režim zobrazení</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3394"/>
+        <location filename="mainwindow.ui" line="3428"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3399"/>
+        <location filename="mainwindow.ui" line="3433"/>
         <source>Solar system...</source>
         <translation>Sluneční systém...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3404"/>
+        <location filename="mainwindow.ui" line="3438"/>
         <source>&amp;Constellation...</source>
         <translation>&amp;Souhvězdí...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3419"/>
+        <location filename="mainwindow.ui" line="3453"/>
         <source>Open/Close time dialog</source>
         <translation>Otevři/Zavři časový dialog</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3422"/>
+        <location filename="mainwindow.ui" line="3456"/>
         <source>Ctrl+T</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3427"/>
+        <location filename="mainwindow.ui" line="3461"/>
         <source>List of drawings...</source>
         <translation>Seznam kreslení...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3439"/>
+        <location filename="mainwindow.ui" line="3473"/>
         <source>Lock FOV</source>
         <translation>Zamkni FOV</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3442"/>
+        <location filename="mainwindow.ui" line="3476"/>
         <source>Locking automatic changes of field of view.</source>
         <translation>Zamkne automatickou změnu zorného pole.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3447"/>
+        <location filename="mainwindow.ui" line="3481"/>
         <source>Planet altitude...</source>
         <translation>Výška planet...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3452"/>
+        <location filename="mainwindow.ui" line="3486"/>
         <source>Actual weather...</source>
         <translation>Aktuální počasí...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3464"/>
+        <location filename="mainwindow.ui" line="3498"/>
         <source>grid label</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3467"/>
+        <location filename="mainwindow.ui" line="3501"/>
         <source>Show / Hide grid labels</source>
         <translation>Zobrazí / skryje popisky sítě</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3479"/>
+        <location filename="mainwindow.ui" line="3513"/>
         <source>Drawings</source>
         <translation>Kreslení</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3482"/>
+        <location filename="mainwindow.ui" line="3516"/>
         <source>Show/Hide Drawings</source>
         <translation>Zobrazí/Skryje kreslení</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3487"/>
+        <location filename="mainwindow.ui" line="3521"/>
         <source>Tip of the day...</source>
         <translation>Tip dne...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3492"/>
+        <location filename="mainwindow.ui" line="3526"/>
         <source>Print preview...</source>
         <translation>Náhled tisku...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3497"/>
-        <location filename="mainwindow.ui" line="3670"/>
+        <location filename="mainwindow.ui" line="3531"/>
+        <location filename="mainwindow.ui" line="3704"/>
         <source>Custom DSO...</source>
         <translation>Vlastní DSO katalog...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3502"/>
+        <location filename="mainwindow.ui" line="3536"/>
         <source>Go to SkytechX home page</source>
         <translation>Jdi na domovskou stránku SkytechX</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3507"/>
+        <location filename="mainwindow.ui" line="3541"/>
         <source>Sunrise</source>
         <translation>Východ Slunce</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3512"/>
+        <location filename="mainwindow.ui" line="3546"/>
         <source>Sun transit</source>
         <translation>Přechod přes Sl. disk</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3517"/>
+        <location filename="mainwindow.ui" line="3551"/>
         <source>Sunset</source>
         <translation>Západ Slunce</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3522"/>
+        <location filename="mainwindow.ui" line="3556"/>
         <source>Moonrise</source>
         <translation>Vychod Měsíce</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3527"/>
+        <location filename="mainwindow.ui" line="3561"/>
         <source>Moon transit</source>
         <translation>Přechod Měsíce</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3532"/>
+        <location filename="mainwindow.ui" line="3566"/>
         <source>Moonset</source>
         <translation>Západ Měsíce</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3541"/>
-        <location filename="mainwindow.ui" line="3544"/>
+        <location filename="mainwindow.ui" line="3575"/>
+        <location filename="mainwindow.ui" line="3578"/>
         <source>Search a Sun</source>
         <translation>Hledat Slunce</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3553"/>
-        <location filename="mainwindow.ui" line="3556"/>
+        <location filename="mainwindow.ui" line="3587"/>
+        <location filename="mainwindow.ui" line="3590"/>
         <source>Search a Mercury</source>
         <translation>Hledat Merkur</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3565"/>
-        <location filename="mainwindow.ui" line="3568"/>
+        <location filename="mainwindow.ui" line="3599"/>
+        <location filename="mainwindow.ui" line="3602"/>
         <source>Search a Venus</source>
         <translation>Hledat Venuši</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3577"/>
-        <location filename="mainwindow.ui" line="3580"/>
+        <location filename="mainwindow.ui" line="3611"/>
+        <location filename="mainwindow.ui" line="3614"/>
         <source>Search a Mars</source>
         <translation>Hledat Mars</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3589"/>
-        <location filename="mainwindow.ui" line="3592"/>
+        <location filename="mainwindow.ui" line="3623"/>
+        <location filename="mainwindow.ui" line="3626"/>
         <source>Search a Jupiter</source>
         <translation>Hledat Jupiter</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3601"/>
-        <location filename="mainwindow.ui" line="3604"/>
+        <location filename="mainwindow.ui" line="3635"/>
+        <location filename="mainwindow.ui" line="3638"/>
         <source>Search a Saturn</source>
         <translation>Hledat Saturn</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3613"/>
-        <location filename="mainwindow.ui" line="3616"/>
+        <location filename="mainwindow.ui" line="3647"/>
+        <location filename="mainwindow.ui" line="3650"/>
         <source>Search a Uranus</source>
         <translation>Hledat Uran</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3625"/>
-        <location filename="mainwindow.ui" line="3628"/>
+        <location filename="mainwindow.ui" line="3659"/>
+        <location filename="mainwindow.ui" line="3662"/>
         <source>Search a Neptune</source>
         <translation>Hledat Neptun</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3637"/>
-        <location filename="mainwindow.ui" line="3640"/>
+        <location filename="mainwindow.ui" line="3671"/>
+        <location filename="mainwindow.ui" line="3674"/>
         <source>Search a Moon</source>
         <translation>Hledat Měsíc</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3645"/>
-        <location filename="mainwindow.ui" line="3650"/>
+        <location filename="mainwindow.ui" line="3679"/>
+        <location filename="mainwindow.ui" line="3684"/>
         <source>Satellite...</source>
         <translation>Satelity...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3662"/>
+        <location filename="mainwindow.ui" line="3696"/>
         <source>Satellite</source>
         <translation>Satelit</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3665"/>
+        <location filename="mainwindow.ui" line="3699"/>
         <source>Show/Hide Satellite</source>
         <translation>Zobrazí/Skryje satelity</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3673"/>
+        <location filename="mainwindow.ui" line="3707"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3681"/>
+        <location filename="mainwindow.ui" line="3715"/>
         <source>Atlas chart at epoch J2000.0</source>
         <translation>Reřim atlasu v epoše J2000.0</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3684"/>
-        <location filename="mainwindow.ui" line="3687"/>
+        <location filename="mainwindow.ui" line="3718"/>
+        <location filename="mainwindow.ui" line="3721"/>
         <source>Mean epoch J2000.0 otherwise true to date.</source>
         <translation>Střední epocha J2000.0 jinak k aktuálnímu datu.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3692"/>
+        <location filename="mainwindow.ui" line="3726"/>
         <source>Check new version...</source>
         <translation>Kontrola nové verze...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="161"/>
+        <location filename="mainwindow.cpp" line="162"/>
         <source>Sidebar</source>
         <translation>Postraní okno</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="181"/>
+        <location filename="mainwindow.cpp" line="182"/>
         <source>Time multiplicator</source>
         <translation>Násobič času</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="193"/>
+        <location filename="mainwindow.cpp" line="194"/>
         <source>Time-lapse multiplicator</source>
         <translation>Násobič Time-Lapse</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="219"/>
+        <location filename="mainwindow.cpp" line="220"/>
         <source>R.A./Dec. grid</source>
         <translation>Sí&apos;t R.A./Dek.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="228"/>
+        <location filename="mainwindow.cpp" line="229"/>
         <source>Alt/Azm. grid</source>
         <translation>Sí&apos;t Azm/Výška</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="237"/>
+        <location filename="mainwindow.cpp" line="238"/>
         <source>Ecliptical grid</source>
         <translation>Ekliptikární síť</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="327"/>
+        <location filename="mainwindow.cpp" line="329"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="328"/>
+        <location filename="mainwindow.cpp" line="330"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="329"/>
+        <location filename="mainwindow.cpp" line="331"/>
         <source>File Size</source>
         <translation>Velikost souboru</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="370"/>
-        <location filename="mainwindow.cpp" line="401"/>
+        <location filename="mainwindow.cpp" line="372"/>
+        <location filename="mainwindow.cpp" line="403"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="371"/>
+        <location filename="mainwindow.cpp" line="373"/>
         <source>Event</source>
         <translation>Událost</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="378"/>
+        <location filename="mainwindow.cpp" line="380"/>
         <source>Max. elongation of </source>
         <translation>Největší elongace </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="379"/>
+        <location filename="mainwindow.cpp" line="381"/>
         <source>Opposition of </source>
         <translation>Opozice </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="380"/>
+        <location filename="mainwindow.cpp" line="382"/>
         <source>Conjunction of </source>
         <translation>Konjukce </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="381"/>
+        <location filename="mainwindow.cpp" line="383"/>
         <source>Solar eclipse</source>
         <translation>Zatmění Slunce</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="382"/>
+        <location filename="mainwindow.cpp" line="384"/>
         <source>Transit of </source>
         <translation>Přechod </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="383"/>
+        <location filename="mainwindow.cpp" line="385"/>
         <source>Occultation of </source>
         <translation>Zákryt </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="384"/>
+        <location filename="mainwindow.cpp" line="386"/>
         <source>Lunar eclipse</source>
         <translation>Zatmění Měsíce</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="385"/>
+        <location filename="mainwindow.cpp" line="387"/>
         <source>Biggest Moon</source>
         <translation>Největší úplněk</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="387"/>
+        <location filename="mainwindow.cpp" line="389"/>
         <source>Show all events</source>
         <translation>Zobraz všechny události</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="391"/>
+        <location filename="mainwindow.cpp" line="393"/>
         <source>All events</source>
         <translation>Vše</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="392"/>
+        <location filename="mainwindow.cpp" line="394"/>
         <source>Not visible</source>
         <translation>Není vidět</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="393"/>
+        <location filename="mainwindow.cpp" line="395"/>
         <source>Partial visible</source>
         <translation>Částečně je vidět</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="394"/>
+        <location filename="mainwindow.cpp" line="396"/>
         <source>Full visisble</source>
         <translation>Plná viditelnost</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="403"/>
+        <location filename="mainwindow.cpp" line="405"/>
         <source>Desc.</source>
         <translation>Pozn.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="426"/>
+        <location filename="mainwindow.cpp" line="428"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="432"/>
+        <location filename="mainwindow.cpp" line="434"/>
         <source>Landing site</source>
         <translation>Místa přistání</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="438"/>
+        <location filename="mainwindow.cpp" line="440"/>
         <source>Crater</source>
         <translation>Krátery</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="444"/>
+        <location filename="mainwindow.cpp" line="446"/>
         <source>Montes</source>
         <translation>Pohoří</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="450"/>
+        <location filename="mainwindow.cpp" line="452"/>
         <source>Mons</source>
         <translation>Hory</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="456"/>
+        <location filename="mainwindow.cpp" line="458"/>
         <source>Rima</source>
         <translation>Brázdy</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="462"/>
+        <location filename="mainwindow.cpp" line="464"/>
         <source>Mare</source>
         <translation>Moře</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="468"/>
+        <location filename="mainwindow.cpp" line="470"/>
         <source>Vallis</source>
         <translation>Údolí</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="474"/>
+        <location filename="mainwindow.cpp" line="476"/>
         <source>Lacus</source>
         <translation>Jezera</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="480"/>
+        <location filename="mainwindow.cpp" line="482"/>
         <source>Sinus</source>
         <translation>Zálivy</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="495"/>
+        <location filename="mainwindow.cpp" line="497"/>
         <source>Set Time</source>
         <translation>Nastav čas</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="546"/>
+        <location filename="mainwindow.cpp" line="548"/>
         <source>Open help in default web browser.</source>
         <translation>Otevře nápovědu ve webovém prohlížeči.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="666"/>
+        <location filename="mainwindow.cpp" line="668"/>
         <source>   Location : </source>
         <translation> Poloha : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="705"/>
+        <location filename="mainwindow.cpp" line="707"/>
         <source>Rename </source>
         <translation>Přejmenovat </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="721"/>
+        <location filename="mainwindow.cpp" line="723"/>
         <source>Rename</source>
         <translation>Přejmenuj</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="740"/>
+        <location filename="mainwindow.cpp" line="742"/>
         <source>Cannot rename a file!!!</source>
         <translation>Soubor nelze přejmenovat!!!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1034"/>
+        <location filename="mainwindow.cpp" line="1036"/>
         <source> and </source>
         <translation> a </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1081"/>
+        <location filename="mainwindow.cpp" line="1083"/>
         <source>Max. west elongation is </source>
         <translation>Nejvetší západní elongace je </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1083"/>
+        <location filename="mainwindow.cpp" line="1085"/>
         <source>Max. east elongation is </source>
         <translation>Nejvetší východní elongace je </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1087"/>
+        <location filename="mainwindow.cpp" line="1089"/>
         <source>Size : %1&quot;  R = %2 AU</source>
         <translation>Vel : %1&quot;  R: %2 AU</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1091"/>
-        <location filename="mainwindow.cpp" line="1095"/>
+        <location filename="mainwindow.cpp" line="1093"/>
+        <location filename="mainwindow.cpp" line="1097"/>
         <source>Begin : </source>
         <translation>Začátek : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1091"/>
-        <location filename="mainwindow.cpp" line="1095"/>
+        <location filename="mainwindow.cpp" line="1093"/>
+        <location filename="mainwindow.cpp" line="1097"/>
         <source>, end : </source>
         <translation>, konec : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1099"/>
+        <location filename="mainwindow.cpp" line="1101"/>
         <source>Distance : %1</source>
         <translation>Vzdál. : %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1103"/>
+        <location filename="mainwindow.cpp" line="1105"/>
         <source>Moon distance : %1 E.radii</source>
         <translation>Vzdálenost Měsíce %1 E.radii</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1108"/>
+        <location filename="mainwindow.cpp" line="1110"/>
         <source>Partial penumbral lunar eclipse</source>
         <translation>Částečné polostínové zatmení Měsíce</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1111"/>
+        <location filename="mainwindow.cpp" line="1113"/>
         <source>Penumbral lunar eclipse</source>
         <translation>Polostínové zatmení Měsíce</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1114"/>
+        <location filename="mainwindow.cpp" line="1116"/>
         <source>Partial umbral lunar eclipse</source>
         <translation>Částečné zatmení Měsíce</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1117"/>
+        <location filename="mainwindow.cpp" line="1119"/>
         <source>Total lunar eclipse</source>
         <translation>Úplné zatmění Měsíce</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1124"/>
+        <location filename="mainwindow.cpp" line="1126"/>
         <source>Total solar eclipse. Dur : </source>
         <translation>Úplné zatmění Měsíce. Doba : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1125"/>
-        <location filename="mainwindow.cpp" line="1129"/>
-        <location filename="mainwindow.cpp" line="1132"/>
+        <location filename="mainwindow.cpp" line="1127"/>
+        <location filename="mainwindow.cpp" line="1131"/>
+        <location filename="mainwindow.cpp" line="1134"/>
         <source> Mag. %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1129"/>
+        <location filename="mainwindow.cpp" line="1131"/>
         <source>Partial solar eclipse</source>
         <translation>Částečné zatmění Slunce</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1131"/>
+        <location filename="mainwindow.cpp" line="1133"/>
         <source>Annular (ring) solar eclipse. Dur : </source>
         <translation>Prstencove zatmění Slunce. Doba : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1216"/>
-        <location filename="mainwindow.cpp" line="1287"/>
-        <location filename="mainwindow.cpp" line="1392"/>
+        <location filename="mainwindow.cpp" line="1218"/>
+        <location filename="mainwindow.cpp" line="1289"/>
+        <location filename="mainwindow.cpp" line="1394"/>
         <source>First contact</source>
         <translation>První kontakt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1232"/>
-        <location filename="mainwindow.cpp" line="1303"/>
+        <location filename="mainwindow.cpp" line="1234"/>
+        <location filename="mainwindow.cpp" line="1305"/>
         <source>First inner contact</source>
         <translation>První vnitřní kontakt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1245"/>
+        <location filename="mainwindow.cpp" line="1247"/>
         <source>Greatest transit</source>
         <translation>Největší přechod</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1259"/>
-        <location filename="mainwindow.cpp" line="1330"/>
+        <location filename="mainwindow.cpp" line="1261"/>
+        <location filename="mainwindow.cpp" line="1332"/>
         <source>Last inner contact</source>
         <translation>Poslední vnitřní kontakt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1272"/>
-        <location filename="mainwindow.cpp" line="1343"/>
-        <location filename="mainwindow.cpp" line="1396"/>
+        <location filename="mainwindow.cpp" line="1274"/>
+        <location filename="mainwindow.cpp" line="1345"/>
+        <location filename="mainwindow.cpp" line="1398"/>
         <source>Last contact</source>
         <translation>Poslední kontakt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1316"/>
+        <location filename="mainwindow.cpp" line="1318"/>
         <source>Greatest occultation</source>
         <translation>Největší zákryt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1357"/>
+        <location filename="mainwindow.cpp" line="1359"/>
         <source>P1 : Beginning of the penumbral eclipse</source>
         <translation>P1 : Začátek polostínového zatmění</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1358"/>
+        <location filename="mainwindow.cpp" line="1360"/>
         <source>U1 : Beginning of the partial eclipse</source>
         <translation>U1 : Začátek částečného zatmění</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1359"/>
+        <location filename="mainwindow.cpp" line="1361"/>
         <source>U2 : Beginning of the total eclipse</source>
         <translation>U2 : Začátek úplného zatmění</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1360"/>
-        <location filename="mainwindow.cpp" line="1394"/>
+        <location filename="mainwindow.cpp" line="1362"/>
+        <location filename="mainwindow.cpp" line="1396"/>
         <source>Greatest eclipse</source>
         <translation>Největší zatmění</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1361"/>
+        <location filename="mainwindow.cpp" line="1363"/>
         <source>U3 : End of the total eclipse</source>
         <translation>U2 : Konec úplného zatmění</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1362"/>
+        <location filename="mainwindow.cpp" line="1364"/>
         <source>U4 : End of the partial eclipse</source>
         <translation>U4 : Konec částečného zatmění</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1363"/>
+        <location filename="mainwindow.cpp" line="1365"/>
         <source>P2 : End of the penumbral eclipse</source>
         <translation>P2 : Konec polostínového zatmění</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1393"/>
+        <location filename="mainwindow.cpp" line="1395"/>
         <source>Second contact</source>
         <translation>Druhý kontakt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1395"/>
+        <location filename="mainwindow.cpp" line="1397"/>
         <source>Third contact</source>
         <translation>Třetí kontakt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1577"/>
-        <location filename="mainwindow.cpp" line="3402"/>
+        <location filename="mainwindow.cpp" line="1579"/>
+        <location filename="mainwindow.cpp" line="3413"/>
         <source>Total size : </source>
         <translation>Celková velikost : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1818"/>
+        <location filename="mainwindow.cpp" line="1821"/>
         <source>Save map to image</source>
         <translation>Ulož mapu do obrázku</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2045"/>
+        <location filename="mainwindow.cpp" line="2048"/>
         <source>Object &apos;%1&apos; not found!</source>
         <translation>Object %1 nebyl nalezen!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2721"/>
+        <location filename="mainwindow.cpp" line="2732"/>
         <source>You cannot change map setting in night mode!</source>
         <translation>Nemůžete měnit nastavení mapy během nočního zobrazení!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2797"/>
+        <location filename="mainwindow.cpp" line="2808"/>
         <source>Open a File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2805"/>
-        <location filename="mainwindow.cpp" line="3158"/>
-        <location filename="mainwindow.cpp" line="3192"/>
+        <location filename="mainwindow.cpp" line="2816"/>
+        <location filename="mainwindow.cpp" line="3169"/>
+        <location filename="mainwindow.cpp" line="3203"/>
         <source>Please wait...</source>
         <translation>Prosím čekejte...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2896"/>
+        <location filename="mainwindow.cpp" line="2907"/>
         <source>Disconnect current telescope?</source>
         <translation>Odpojit dalekohled?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3265"/>
+        <location filename="mainwindow.cpp" line="3276"/>
         <source>Telescope - </source>
         <translation>Dalekohled - </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3312"/>
+        <location filename="mainwindow.cpp" line="3323"/>
         <source>Location was changed! Result may by inaccurate!</source>
         <translation>Poloha pozorovatele byla změněna. Výsledek může být nepřesný!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3324"/>
+        <location filename="mainwindow.cpp" line="3335"/>
         <source>None</source>
         <translation>Žádná</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3326"/>
+        <location filename="mainwindow.cpp" line="3337"/>
         <source>Partial</source>
         <translation>Částečná</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3328"/>
+        <location filename="mainwindow.cpp" line="3339"/>
         <source>Full</source>
         <translation>Plná</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3390"/>
+        <location filename="mainwindow.cpp" line="3401"/>
         <source>Do you wand delete all images?</source>
         <translation>Chceš smazat všechny obrázky?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3699"/>
+        <location filename="mainwindow.cpp" line="3710"/>
         <source>Sun altitude : </source>
         <translation>Výška Slunce : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3702"/>
+        <location filename="mainwindow.cpp" line="3713"/>
         <source>Moon altitude : </source>
         <translation>Výška Měsíce : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3711"/>
+        <location filename="mainwindow.cpp" line="3722"/>
         <source>Object altitude : </source>
         <translation>Výška objektu : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3716"/>
+        <location filename="mainwindow.cpp" line="3727"/>
         <source>Altitude of the center conjunctions : </source>
         <translation>Výška středu konjunkce : </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3818"/>
+        <location filename="mainwindow.cpp" line="3829"/>
         <source>Maximal diameter : %1 Km</source>
         <translation>Maximální průměr : %1 Km</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3920"/>
+        <location filename="mainwindow.cpp" line="3931"/>
         <source>Clear all drawing on map?</source>
         <translation>Smazat všechno kreslení z mapy?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4344"/>
+        <location filename="mainwindow.cpp" line="4355"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4346"/>
+        <location filename="mainwindow.cpp" line="4357"/>
         <source>Skytech const. lines (*.lin)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4465"/>
+        <location filename="mainwindow.cpp" line="4476"/>
         <source>Do you want delete file </source>
         <translation>Chceš smazat soubor </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4590"/>
+        <location filename="mainwindow.cpp" line="4601"/>
         <source>You can append only deep sky objects!</source>
         <translation>Přidávat lze jenom nehvězdné objekty!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4626"/>
-        <location filename="mainwindow.cpp" line="4645"/>
-        <location filename="mainwindow.cpp" line="4664"/>
-        <location filename="mainwindow.cpp" line="4683"/>
-        <location filename="mainwindow.cpp" line="4702"/>
-        <location filename="mainwindow.cpp" line="4721"/>
+        <location filename="mainwindow.cpp" line="4637"/>
+        <location filename="mainwindow.cpp" line="4656"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4694"/>
+        <location filename="mainwindow.cpp" line="4713"/>
+        <location filename="mainwindow.cpp" line="4732"/>
         <source>Can not compute!</source>
         <translation>Nelze spočítat!</translation>
     </message>
@@ -8649,7 +8731,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="background.cpp" line="231"/>
         <location filename="core/skutils.cpp" line="441"/>
-        <location filename="skymap.cpp" line="862"/>
+        <location filename="skymap.cpp" line="909"/>
         <source>N</source>
         <translation>S</translation>
     </message>
@@ -8661,7 +8743,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="background.cpp" line="231"/>
         <location filename="core/skutils.cpp" line="423"/>
-        <location filename="skymap.cpp" line="868"/>
+        <location filename="skymap.cpp" line="915"/>
         <source>E</source>
         <translation>V</translation>
     </message>
@@ -8673,7 +8755,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="background.cpp" line="231"/>
         <location filename="core/skutils.cpp" line="441"/>
-        <location filename="skymap.cpp" line="864"/>
+        <location filename="skymap.cpp" line="911"/>
         <source>S</source>
         <translation>J</translation>
     </message>
@@ -8685,7 +8767,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="background.cpp" line="231"/>
         <location filename="core/skutils.cpp" line="423"/>
-        <location filename="skymap.cpp" line="866"/>
+        <location filename="skymap.cpp" line="913"/>
         <source>W</source>
         <translation>Z</translation>
     </message>
@@ -8697,7 +8779,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="casterdlg.cpp" line="420"/>
         <location filename="ccomdlg.cpp" line="510"/>
-        <location filename="csetting.cpp" line="1126"/>
+        <location filename="csetting.cpp" line="1145"/>
         <source>Save a File</source>
         <translation>Uložit soubor</translation>
     </message>
@@ -8710,52 +8792,52 @@ p, li { white-space: pre-wrap; }
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="899"/>
+        <location filename="castro.cpp" line="905"/>
         <source>Sun</source>
         <translation>Slunce</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="900"/>
+        <location filename="castro.cpp" line="906"/>
         <source>Mercury</source>
         <translation>Merkur</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="901"/>
+        <location filename="castro.cpp" line="907"/>
         <source>Venus</source>
         <translation>Venuše</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="902"/>
+        <location filename="castro.cpp" line="908"/>
         <source>Mars</source>
         <translation>Mars</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="903"/>
+        <location filename="castro.cpp" line="909"/>
         <source>Jupiter</source>
         <translation>Jupiter</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="904"/>
+        <location filename="castro.cpp" line="910"/>
         <source>Saturn</source>
         <translation>Saturn</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="905"/>
+        <location filename="castro.cpp" line="911"/>
         <source>Uranus</source>
         <translation>Uran</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="906"/>
+        <location filename="castro.cpp" line="912"/>
         <source>Neptune</source>
         <translation>Neptun</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="907"/>
+        <location filename="castro.cpp" line="913"/>
         <source>Moon</source>
         <translation>Měsíc</translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="913"/>
+        <location filename="castro.cpp" line="919"/>
         <location filename="mapobj.cpp" line="327"/>
         <source>Earth shadow</source>
         <translation>Zemský stín</translation>
@@ -8988,6 +9070,66 @@ ESC : Storno
         <location filename="smap.cpp" line="193"/>
         <source>Pg. %1, Vol %2</source>
         <translation>Str. %1, Svazek %2</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="711"/>
+        <source>Gal</source>
+        <translation>Gal</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="712"/>
+        <source>Neb</source>
+        <translation>Mlh</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="713"/>
+        <source>BNeb</source>
+        <translation>SMlh</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="714"/>
+        <source>DNeb</source>
+        <translation>TMlh</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="715"/>
+        <source>PNeb</source>
+        <translation>PMlh</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="716"/>
+        <source>OC</source>
+        <translation>OH</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="717"/>
+        <source>OCNeb</source>
+        <translation>OHMlh</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="718"/>
+        <source>GC</source>
+        <translation>KH</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="719"/>
+        <source>GalC</source>
+        <translation>GalC</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="720"/>
+        <source>Ast</source>
+        <translation>Ast</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="721"/>
+        <source>Qua</source>
+        <translation>Qua</translation>
+    </message>
+    <message>
+        <location filename="skymap.cpp" line="722"/>
+        <source>Unk</source>
+        <translation>Nez</translation>
     </message>
 </context>
 <context>

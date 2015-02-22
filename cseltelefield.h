@@ -20,7 +20,7 @@ class CSelTeleField;
 class CSelTeleField : public QDialog
 {
   Q_OBJECT
-  
+
 public:
   explicit CSelTeleField(QWidget *parent = 0);
   ~CSelTeleField();
@@ -33,13 +33,13 @@ public:
   double  m_outFR;
   double  m_outEP;
   QString m_name;
-  
+
 protected:
   void changeEvent(QEvent *e);
   void loadTeleItem(QString file, QList <teleParam_t> *list);
   void saveTeleItem(QString file, QListWidget *w);
   void calcParam(void);
-  
+
 private slots:
   void on_pushButton_6_clicked();
 
@@ -58,6 +58,10 @@ private slots:
   void on_pushButton_3_clicked();
 
   void on_pushButton_4_clicked();
+
+  void on_pushButton_7_clicked();
+
+  void on_pushButton_8_clicked();
 
 private:
   Ui::CSelTeleField *ui;

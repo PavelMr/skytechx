@@ -51,9 +51,6 @@ CSelTeleField::CSelTeleField(QWidget *parent) :
 CSelTeleField::~CSelTeleField()
 ///////////////////////////////
 {
-  saveTeleItem("data/telescope/telescope.dat", ui->listWidget);
-  saveTeleItem("data/telescope/eyepiece.dat", ui->listWidget_2);
-
   for (int i = 0; i < ui->listWidget->count(); i++)
   {
     teleParam_t *t = (teleParam_t *)ui->listWidget->item(i)->data(Qt::UserRole).toInt();
@@ -198,6 +195,9 @@ void CSelTeleField::on_pushButton_6_clicked()
     m_name = QString("%1°").arg(RAD2DEG(m_outFOV), 0, 'f', 2);
   else
     m_name = QString("%1'").arg(RAD2DEG(m_outFOV) * 60, 0, 'f', 1);
+
+  saveTeleItem("data/telescope/telescope.dat", ui->listWidget);
+  saveTeleItem("data/telescope/eyepiece.dat", ui->listWidget_2);
 
   done(DL_OK);
 }
@@ -367,4 +367,14 @@ void CSelTeleField::on_pushButton_4_clicked()
 
     calcParam();
   }
+}
+
+void CSelTeleField::on_pushButton_7_clicked()
+{
+  deleteItemA();
+}
+
+void CSelTeleField::on_pushButton_8_clicked()
+{
+  deleteItemB();
 }

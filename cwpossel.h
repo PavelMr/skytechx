@@ -85,6 +85,8 @@ private slots:
 
   void slotSelChange(QModelIndex &index);
 
+  void on_pushButton_9_clicked();
+
 private:
   Ui::CWPosSel *ui;
 };

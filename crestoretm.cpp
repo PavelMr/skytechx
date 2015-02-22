@@ -165,3 +165,8 @@ void CRestoreTM::on_pushButton_clicked()
 {
   done(DL_CANCEL);
 }
+
+void CRestoreTM::on_pushButton_3_clicked()
+{
+  slotDelete();
+}

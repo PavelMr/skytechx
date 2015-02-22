@@ -30,6 +30,8 @@ private slots:
 
   void slotDelete();
 
+  void on_pushButton_4_clicked();
+
 private:
   Ui::CDSOGaleryList *ui;
 };

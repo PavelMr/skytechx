@@ -54,23 +54,13 @@ CInsertFrmField::CInsertFrmField(QWidget *parent) :
 
 CInsertFrmField::~CInsertFrmField()
 {
-  SkFile f("data/telescope/device.dat");
-  QTextStream s(&f);
-
-  f.open(SkFile::WriteOnly | SkFile::Text);
-
   for (int i = 0; i < ui->comboBox->count(); i++)
   {
     deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(i).toInt();
-
-    if (f.isOpen() && dev != NULL)
-    {
-      s << dev->name + QString(" | ") << QString::number(dev->x, 'f', 2) +
-                       QString(" | ") << QString::number(dev->y, 'f', 2) + QString("\n");
-    }
-
     if (dev != NULL)
+    {
       delete dev;
+    }
   }
 
   delete ui;
@@ -173,6 +163,22 @@ void CInsertFrmField::on_pushButton_4_clicked()
   val4 = ui->barlow->value();
 
   lastIndex = ui->comboBox->currentIndex();
+
+  SkFile f("data/telescope/device.dat");
+  QTextStream s(&f);
+
+  f.open(SkFile::WriteOnly | SkFile::Text);
+
+  for (int i = 0; i < ui->comboBox->count(); i++)
+  {
+    deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(i).toInt();
+
+    if (f.isOpen() && dev != NULL)
+    {
+      s << dev->name + QString(" | ") << QString::number(dev->x, 'f', 2) +
+                       QString(" | ") << QString::number(dev->y, 'f', 2) + QString("\n");
+    }
+  }
 
   done(DL_OK);
 }
