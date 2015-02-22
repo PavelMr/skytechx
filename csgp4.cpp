@@ -58,23 +58,37 @@ bool CSGP4::loadTLEData(const QString &fileName)
         data[0] = data[0].mid(1);
       }
 
-      Tle tle = Tle(data[0].toStdString(), data[1].toStdString(), data[2].toStdString());
+      Tle *tle;
 
-      OrbitalElements elem = OrbitalElements(tle);
+      try
+      {
+         tle = new Tle(data[0].toStdString(), data[1].toStdString(), data[2].toStdString());
+      }
+
+      catch (SatelliteException &e)
+      {
+        qDebug() << "error1" << e.what() << data[0];
+        row = 0;
+        continue;
+      }
+
+      OrbitalElements elem = OrbitalElements(*tle);
 
       item.data[0] = data[0];
       item.data[1] = data[1];
       item.data[2] = data[2];
       item.used = used;
-      item.sgp4 = new SGP4(tle);
+      item.sgp4 = new SGP4(*tle);
       item.name = data[0].simplified();
       item.perigee = elem.Perigee();
       item.inclination = elem.Inclination();
       item.period = elem.Period();
-      item.epoch = tle.Epoch().ToJulian();
+      item.epoch = tle->Epoch().ToJulian();
 
       m_data.append(item);
       row = 0;
+
+      delete tle;
 
       //qDebug() << item.name << m_data.count() - 1 << elem.Epoch().ToString().data();
     }

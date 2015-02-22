@@ -507,7 +507,8 @@ bool comSave(QString fileName, QWidget *parent)
 
   if (fileName.isEmpty())
   {
-    fileName = QFileDialog::getSaveFileName(parent, QObject::tr("Save a File"), "data/catalogue/comets", "Comet file (*.cdf)");
+    fileName = QFileDialog::getSaveFileName(parent, QObject::tr("Save a File"),
+                                            QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/comets", "Comet file (*.cdf)");
     if (fileName.isEmpty())
       return(false);
   }
@@ -658,7 +659,8 @@ void CComDlg::on_pushButton_3_clicked()
 
   comClear();
 
-  QString name = QFileDialog::getOpenFileName(this, tr("Open a File"), "data/catalogue/comets", "Comets file (*.cdf)");
+  QString name = QFileDialog::getOpenFileName(this, tr("Open a File"),
+                                              QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/comets", "Comets file (*.cdf)");
 
   if (name.isEmpty())
   {

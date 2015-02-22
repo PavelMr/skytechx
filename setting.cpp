@@ -31,7 +31,7 @@ static double starMagnitudes[10][2] = {
 
 bool setRemove(QString name)
 {
-  SkFile f("data/profiles/" + name + ".dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/" + name + ".dat");
 
   return(f.remove());
 }
@@ -79,7 +79,7 @@ static void writeFont(const QString &key, font_t *font, QDataStream &ds)
 bool setSave(QString name, setting_t *set)
 //////////////////////////////////////////
 {
-  SkFile f("data/profiles/" + name + ".dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/" + name + ".dat");
   QDataStream ds(&f);
 
   qDebug() << "saving profile" << f.fileName();
@@ -313,7 +313,7 @@ bool setSave(QString name, setting_t *set)
 bool setLoad(QString name, setting_t *set)
 //////////////////////////////////////////
 {
-  SkFile f("data/profiles/" + name + ".dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/" + name + ".dat");
   QDataStream ds(&f);
   QMap <QString, QVariant> tMap;
 
@@ -601,7 +601,7 @@ bool setLoad(QString name, setting_t *set)
 bool setSave2(QString name, setting_t *set)
 //////////////////////////////////////////
 {
-  SkFile f("data/profiles/" + name + ".dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/" + name + ".dat");
 
   qDebug() << "saving profile" << f.fileName();
 
@@ -622,7 +622,7 @@ bool setSave2(QString name, setting_t *set)
 void setLoad2(QString name, setting_t *set)
 //////////////////////////////////////////
 {
-  SkFile f("data/profiles/" + name + ".dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/" + name + ".dat");
 
   qDebug() << "load profile" << f.fileName();
 

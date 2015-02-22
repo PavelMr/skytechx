@@ -13,8 +13,8 @@ CSelTeleField::CSelTeleField(QWidget *parent) :
   QList <teleParam_t> tTelescope;
   QList <teleParam_t> tEyepiece;
 
-  loadTeleItem("data/telescope/telescope.dat", &tTelescope);
-  loadTeleItem("data/telescope/eyepiece.dat", &tEyepiece);
+  loadTeleItem(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope/telescope.dat", &tTelescope);
+  loadTeleItem(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope/eyepiece.dat", &tEyepiece);
 
   for (int i = 0; i < tTelescope.count(); i++)
   {
@@ -196,8 +196,8 @@ void CSelTeleField::on_pushButton_6_clicked()
   else
     m_name = QString("%1'").arg(RAD2DEG(m_outFOV) * 60, 0, 'f', 1);
 
-  saveTeleItem("data/telescope/telescope.dat", ui->listWidget);
-  saveTeleItem("data/telescope/eyepiece.dat", ui->listWidget_2);
+  saveTeleItem(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope/telescope.dat", ui->listWidget);
+  saveTeleItem(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope/eyepiece.dat", ui->listWidget_2);
 
   done(DL_OK);
 }

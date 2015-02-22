@@ -154,7 +154,7 @@ void CLoading::run()
   emit sigProgress(8);
 
   qDebug() << "L9";
-  g_pSunTexture = new QImage("data/sun/sun_tex.png");
+  g_pSunTexture = new QImage(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/sun/sun_tex.png");
   if (g_pSunTexture->isNull())
   {
     delete g_pSunTexture;
@@ -164,7 +164,8 @@ void CLoading::run()
 
   qDebug() << "L10";
   g_pDb = new CDB(QSqlDatabase::addDatabase("QSQLITE", "sql_skytech"));
-  g_pDb->setDatabaseName("data/db/skytech.sql");
+  g_pDb->setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/db/skytech.sql");
+  qDebug() << QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/db/skytech.sql";
   if (g_pDb->open())
   {
     g_pDb->init();

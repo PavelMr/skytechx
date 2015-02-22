@@ -430,16 +430,16 @@ void CSetting::setValues()
   ui->doubleSpinBox_29->setValue(set.map.gsc.fromMag);
 
   QList<urlItem_t> strList;
-  CUrlFile::readFile("data/urls/comets.url", &strList);
+  CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/comets.url", &strList);
   fillAstComList(ui->treeWidgetComet, strList);
 
-  CUrlFile::readFile("data/urls/asteroids.url", &strList);
+  CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/asteroids.url", &strList);
   fillAstComList(ui->treeWidgetAsteroids, strList);
 
-  CUrlFile::readFile("data/urls/dss.url", &strList);
+  CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/dss.url", &strList);
   fillAstComList(ui->treeWidgetDSS, strList);
 
-  CUrlFile::readFile("data/urls/sun.url", &strList);
+  CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &strList);
   fillAstComList(ui->treeWidgetSun, strList);
 }
 
@@ -488,16 +488,16 @@ void CSetting::apply()
 
   QList<urlItem_t> strList;
   getAstComList(ui->treeWidgetComet, strList);
-  CUrlFile::writeFile("data/urls/comets.url", &strList);
+  CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/comets.url", &strList);
 
   getAstComList(ui->treeWidgetAsteroids, strList);
-  CUrlFile::writeFile("data/urls/asteroids.url", &strList);
+  CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/asteroids.url", &strList);
 
   getAstComList(ui->treeWidgetDSS, strList);
-  CUrlFile::writeFile("data/urls/dss.url", &strList);
+  CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/dss.url", &strList);
 
   getAstComList(ui->treeWidgetSun, strList);
-  CUrlFile::writeFile("data/urls/sun.url", &strList);
+  CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &strList);
 
   // stars
   g_skSet.map.star.propNamesFromFov = D2R(ui->doubleSpinBox->value());
@@ -696,7 +696,7 @@ void CSetting::fillProfiles()
 
   m->removeRows(0, m->rowCount());
 
-  QDir dir("data/profiles/", "*.dat");
+  QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/", "*.dat");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 
@@ -1143,7 +1143,7 @@ void CSetting::on_pushButton_29_clicked()
 /////////////////////////////////////////
 {
   QString fileName = QFileDialog::getSaveFileName(this, QObject::tr("Save a File"),
-                                                  "data/profiles/", "Skytech profile file (*.dat)");
+                                                  QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/", "Skytech profile file (*.dat)");
   if (fileName.isEmpty())
     return;
 
@@ -1419,9 +1419,10 @@ void CSetting::on_pushButton_47_clicked()
 {
   if (resetQuestion())
   {
-    copyFile("data/urls/default/comets.url", "data/urls/comets.url");
+    copyFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/default/comets.url",
+             QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/comets.url");
     QList<urlItem_t> strList;
-    CUrlFile::readFile("data/urls/comets.url", &strList);
+    CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/comets.url", &strList);
     fillAstComList(ui->treeWidgetComet, strList);
   }
 }
@@ -1430,9 +1431,10 @@ void CSetting::on_pushButton_48_clicked()
 {
   if (resetQuestion())
   {
-    copyFile("data/urls/default/asteroids.url", "data/urls/asteroids.url");
+    copyFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/default/asteroids.url",
+             QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/asteroids.url");
     QList<urlItem_t> strList;
-    CUrlFile::readFile("data/urls/asteroids.url", &strList);
+    CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/asteroids.url", &strList);
     fillAstComList(ui->treeWidgetAsteroids, strList);
   }
 }
@@ -1441,9 +1443,10 @@ void CSetting::on_pushButton_49_clicked()
 {
   if (resetQuestion())
   {
-    copyFile("data/urls/default/dss.url", "data/urls/dss.url");
+    copyFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/default/dss.url",
+             QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/dss.url");
     QList<urlItem_t> strList;
-    CUrlFile::readFile("data/urls/dss.url", &strList);
+    CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/dss.url", &strList);
     fillAstComList(ui->treeWidgetDSS, strList);
   }
 }
@@ -1452,9 +1455,10 @@ void CSetting::on_pushButton_46_clicked()
 {
   if (resetQuestion())
   {
-    copyFile("data/urls/default/sun.url", "data/urls/sun.url");
+    copyFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/default/sun.url",
+             QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url");
     QList<urlItem_t> strList;
-    CUrlFile::readFile("data/urls/sun.url", &strList);
+    CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &strList);
     fillAstComList(ui->treeWidgetSun, strList);
   }
 }

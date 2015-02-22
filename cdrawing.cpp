@@ -35,7 +35,7 @@ void deleteDrawing(drawing_t *draw)
 void drawingSave(void)
 //////////////////////
 {
-  SkFile f("data/drawing/drawing.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/drawing/drawing.dat");
   QDataStream s(&f);
 
   if (f.open(SkFile::WriteOnly))
@@ -76,7 +76,7 @@ void drawingSave(void)
 void drawingLoad(void)
 //////////////////////
 {
-  SkFile f("data/drawing/drawing.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/drawing/drawing.dat");
   QDataStream s(&f);
 
   m_tList.clear();

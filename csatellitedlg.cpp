@@ -107,7 +107,8 @@ void CSatelliteDlg::on_pushButton_4_clicked()
   sgp4.removeAll();
   fillList();
 
-  QString name = QFileDialog::getOpenFileName(this, tr("Open a File"), "data/catalogue/tle", "NORAD TLE files (*.tle)");
+  QString name = QFileDialog::getOpenFileName(this, tr("Open a File"), QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/tle",
+                                              "NORAD TLE files (*.tle)");
 
   if (name.isEmpty())
   {

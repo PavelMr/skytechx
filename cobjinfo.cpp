@@ -22,7 +22,7 @@ CObjInfo::~CObjInfo()
 /////////////////////
 {
   QString note = ui->textEdit->toPlainText();
-  QString str = "data/notes/" + m_infoItem.id + ".txt";
+  QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/notes/" + m_infoItem.id + ".txt";
 
   str = str.simplified();
   SkFile f(str);
@@ -85,7 +85,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
   //ui->textEdit->grabKeyboard();
 
   /// read note
-  QString str = "data/notes/" + m_infoItem.id + ".txt";
+  QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/notes/" + m_infoItem.id + ".txt";
   SkFile f(str);
   if (f.open(SkFile::ReadOnly | SkFile::Text))
   {

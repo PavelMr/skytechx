@@ -23,7 +23,7 @@ CInsertFrmField::CInsertFrmField(QWidget *parent) :
 
   ui->comboBox->addItem(tr("Custom"), 0);
 
-  SkFile f("data/telescope/device.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope/device.dat");
   if (f.open(SkFile::ReadOnly | SkFile::Text))
   {
     QString line;
@@ -164,7 +164,7 @@ void CInsertFrmField::on_pushButton_4_clicked()
 
   lastIndex = ui->comboBox->currentIndex();
 
-  SkFile f("data/telescope/device.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope/device.dat");
   QTextStream s(&f);
 
   f.open(SkFile::WriteOnly | SkFile::Text);

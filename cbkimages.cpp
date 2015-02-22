@@ -77,7 +77,7 @@ bool CBkImages::load(const QString name, int resizeTo)
 void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
 /////////////////////////////////////////////////////////////////////
 {
-  QDir dir("data/dssfits/", "*.fits");
+  QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/", "*.fits");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 

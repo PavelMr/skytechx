@@ -40,7 +40,7 @@ void CSaveTM::on_pushButton_2_clicked()
     return;
   }
 
-  SkFile f("data/timemarks/timemarks.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/timemarks/timemarks.dat");
   QTextStream s(&f);
 
   if (f.open(SkFile::WriteOnly | SkFile::Text | SkFile::Append))

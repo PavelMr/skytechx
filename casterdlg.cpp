@@ -417,7 +417,8 @@ bool astSave(QString fileName, QWidget *parent)
 
   if (fileName.isEmpty())
   {
-    fileName = QFileDialog::getSaveFileName(parent, QObject::tr("Save a File"), "data/catalogue/asteroids", "Asteroid file (*.adf)");
+    fileName = QFileDialog::getSaveFileName(parent, QObject::tr("Save a File"),
+                                            QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/asteroids", "Asteroid file (*.adf)");
     if (fileName.isEmpty())
       return(false);
   }
@@ -568,7 +569,8 @@ void CAsterDlg::on_pushButton_3_clicked()
 
   astClear();
 
-  QString name = QFileDialog::getOpenFileName(this, tr("Open a File"), "data/catalogue/asteroids", "Asteroid file (*.adf)");
+  QString name = QFileDialog::getOpenFileName(this, tr("Open a File"),
+                                              QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/asteroids", "Asteroid file (*.adf)");
 
   if (name.isEmpty())
   {

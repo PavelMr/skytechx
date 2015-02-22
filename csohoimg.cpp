@@ -16,7 +16,7 @@ CSohoImg::CSohoImg(QWidget *parent) :
   setWindowFlags(((windowFlags() | Qt::CustomizeWindowHint)
                                 & ~Qt::WindowCloseButtonHint) );
 
-  CUrlFile::readFile("data/urls/sun.url", &tListUrl);
+  CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &tListUrl);
 
   for (int i = 0; i < tListUrl.count(); i++)
     ui->comboBox->addItem(tListUrl[i].name);
@@ -116,7 +116,7 @@ void CSohoImg::slotDownFinished(QNetworkReply *reply)
     QPixmap pix;
 
     img = QImage::fromData(reply->readAll());
-    img.save("data/sun/sun_" + QString("%1").arg(m_hash, 0, 16) + ".jpg");
+    img.save(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/sun/sun_" + QString("%1").arg(m_hash, 0, 16) + ".jpg");
 
     if (img.isNull())
     {
@@ -157,7 +157,7 @@ void CSohoImg::on_comboBox_currentIndexChanged(int index)
 {
   m_hash = qHash(tListUrl[index].name);
 
-  QPixmap pix("data/sun/sun_" + QString("%1").arg(m_hash, 0, 16) + ".jpg");
+  QPixmap pix(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/sun/sun_" + QString("%1").arg(m_hash, 0, 16) + ".jpg");
 
   if (pix.isNull())
   {
@@ -225,7 +225,7 @@ void CSohoImg::on_pushButton_3_clicked()
               ((unsigned char*)&row[x])[3] = 0;
           }
         }
-        g_pSunTexture->save("data/sun/sun_tex.png", "PNG");
+        g_pSunTexture->save(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/sun/sun_tex.png", "PNG");
       }
       else
       {

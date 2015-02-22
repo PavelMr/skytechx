@@ -20,6 +20,8 @@ void CEarthTools::setCacheFolder(QString path)
   m_cacheFolder = path + "/" + "earthtools.cache";
   QString tmp = path + "/" + "earthtools.cache.tmp";
 
+  qDebug() << m_cacheFolder;
+
   SkFile f1(m_cacheFolder);
   f1.rename(tmp);
 
@@ -59,7 +61,6 @@ void CEarthTools::getHeight(double lon, double lat)
 ///////////////////////////////////////////////////
 {
   QUrl qurl("http://www.earthtools.org/height/" + QString::number(lat) + "/" + QString::number(lon));
-  //QUrl qurl("http://localhost:8080/earthtools/test.xml");
 
   m_downloadType = ETT_HEIGHT;
 
@@ -95,7 +96,6 @@ void CEarthTools::getTimeZone(double lon, double lat)
 /////////////////////////////////////////////////////
 {
   QUrl qurl("http://www.earthtools.org/timezone/" + QString::number(lat) + "/" + QString::number(lon));
-  //QUrl qurl("http://localhost:8080/earthtools/test2.xml");
 
   m_downloadType = ETT_TIMEZONE;
 

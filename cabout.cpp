@@ -24,7 +24,7 @@ CAbout::CAbout(QWidget *parent) :
 #endif
 
   ui->textBrowser_about->setOpenExternalLinks(true);
-  ui->textBrowser_about->setHtml(QString("<html><body><b>Skytech X</b><br>"
+  ui->textBrowser_about->setHtml(QString("<html><body><b>SkytechX</b><br>"
                                       "Version %1<br><br>"
                                       "Copyright (C) 2015, Pavel Mráz<br>"
                                       "Homepage : <a href=\"http://www.skytechx.eu\">www.skytechx.eu</a><br>"

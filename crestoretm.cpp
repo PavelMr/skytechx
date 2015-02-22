@@ -40,7 +40,7 @@ CRestoreTM::CRestoreTM(QWidget *parent) :
   ui->treeView->sortByColumn(0);
   ui->treeView->setSortingEnabled(true);
 
-  SkFile f("data/timemarks/timemarks.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/timemarks/timemarks.dat");
   QTextStream s(&f);
 
   int row = 0;
@@ -130,7 +130,7 @@ void CRestoreTM::on_pushButton_2_clicked()
 
   m_jd = e->jd;
 
-  SkFile f("data/timemarks/timemarks.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/timemarks/timemarks.dat");
   QTextStream s(&f);
 
   if (f.open(SkFile::WriteOnly | SkFile::Text))

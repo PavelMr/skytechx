@@ -17,7 +17,7 @@
 
 #include "Tle.h"
 
-#include <locale> 
+#include <locale>
 
 namespace
 {
@@ -85,7 +85,7 @@ void Tle::Initialize()
     {
         throw TleException("Invalid line beginning for line one");
     }
-        
+
     if (line_two_[0] != '2')
     {
         throw TleException("Invalid line beginning for line two");
@@ -145,7 +145,7 @@ void Tle::Initialize()
                 TLE2_LEN_MEANMOTION), 3, mean_motion_);
     ExtractULong(line_two_.substr(TLE2_COL_REVATEPOCH,
                 TLE2_LEN_REVATEPOCH), orbit_number_);
-    
+
     if (year < 57)
         year += 2000;
     else
@@ -154,7 +154,7 @@ void Tle::Initialize()
 }
 
 /**
- * Check 
+ * Check
  * @param str The string to check
  * @returns Whether true of the string has a valid length
  */
@@ -297,7 +297,7 @@ void Tle::ExtractDouble(const std::string& str, int point_pos, double& val)
         /*
          * integer part
          */
-        if (i < str.begin() + point_pos - 1)
+        if (point_pos >= 0 && i < str.begin() + point_pos - 1)
         {
             bool done = false;
 
@@ -333,7 +333,7 @@ void Tle::ExtractDouble(const std::string& str, int point_pos, double& val)
         /*
          * decimal point
          */
-        else if (i == str.begin() + point_pos - 1)
+        else if (point_pos >= 0 && i == str.begin() + point_pos - 1)
         {
             if (temp.length() == 0)
             {
@@ -368,7 +368,7 @@ void Tle::ExtractDouble(const std::string& str, int point_pos, double& val)
                 temp += '0';
                 temp += '.';
             }
-            
+
             /*
              * should be a digit
              */

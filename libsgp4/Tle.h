@@ -275,7 +275,7 @@ public:
     {
         return TLE_LEN_LINE_DATA;
     }
-    
+
     /**
      * Dump this object to a string
      * @returns string

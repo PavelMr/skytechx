@@ -570,7 +570,7 @@ CDSSDlg::CDSSDlg(QWidget *parent, double ra, double dec, double jd) :
 
   CUrlFile u;
 
-  u.readFile("data/urls/dss.url", &tUrl);
+  u.readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/dss.url", &tUrl);
 
   for (int i = 0; i < tUrl.count(); i++)
   {
@@ -647,14 +647,14 @@ void CDSSDlg::on_pushButton_3_clicked()
     {
       QFileDialog dlg(this);
 
-      m_file = dlg.getSaveFileName(this, tr("Save DSS File"), "data/dssfits/unnamed.fits", "FITS (*.fits)");
+      m_file = dlg.getSaveFileName(this, tr("Save DSS File"), QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/unnamed.fits", "FITS (*.fits)");
 
       if (m_file.isEmpty())
         return; // cancel
     }
     else
     {
-      m_file = getTempName("data/dssfits/", ".fits");
+      m_file = getTempName(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/", ".fits");
     }
 
     CDownload *d = new CDownload;

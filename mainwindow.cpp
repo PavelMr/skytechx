@@ -350,7 +350,7 @@ MainWindow::MainWindow(QWidget *parent) :
   // load events
   if (g_autoSave.events)
   {
-    SkFile f("data/events/events.dat");
+    SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/events/events.dat");
     if (f.open(SkFile::ReadOnly))
     {
       int count;
@@ -729,8 +729,8 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
           dlg.m_text += ".fits";
         }
 
-        QFile f("data/dssfits/" + item->text());
-        if (f.rename("data/dssfits/" + dlg.m_text))
+        QFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/" + item->text());
+        if (f.rename(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/" + dlg.m_text))
         {
           item->setText(dlg.m_text);
           int index = getCurDSS();
@@ -920,7 +920,7 @@ void MainWindow::saveAndExit()
 
   if (g_autoSave.events)
   { // save events
-    SkFile f("data/events/events.dat");
+    SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/events/events.dat");
     if (f.open(SkFile::WriteOnly))
     {
       int count = tEventList.count();
@@ -2806,7 +2806,7 @@ int CDSSOpenDialog::getSize()
 void MainWindow::on_pushButton_2_clicked()
 //////////////////////////////////////////
 {
-  CDSSOpenDialog dlg(this, tr("Open a File"), "data/dssfits", "DSS Fits file (*.fits)");
+  CDSSOpenDialog dlg(this, tr("Open a File"), QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/", "DSS Fits file (*.fits)");
   dlg.setAcceptMode(QFileDialog::AcceptOpen);
   dlg.setFileMode(QFileDialog::ExistingFiles);
 
@@ -4476,7 +4476,7 @@ void MainWindow::on_pushButton_15_clicked()
 
   if (msgBoxQuest(this, tr("Do you want delete file ") + item->text()) == QMessageBox::Yes)
   {
-    QFile f("data/dssfits/" + item->text());
+    QFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/" + item->text());
     f.remove();
 
     bkImg.deleteItem(index);

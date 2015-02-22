@@ -17,7 +17,7 @@ CDownloadMPC::CDownloadMPC(QWidget *parent, QList <asteroid_t> *tList) :
 
   CUrlFile u;
 
-  u.readFile("data/urls/asteroids.url", &tUrl);
+  u.readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/asteroids.url", &tUrl);
 
   for (int i = 0; i < tUrl.count(); i++)
   {
@@ -41,7 +41,7 @@ CDownloadMPC::CDownloadMPC(QWidget *parent, QList<comet_t> *tList) :
 
   CUrlFile u;
 
-  u.readFile("data/urls/comets.url", &tUrl);
+  u.readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/comets.url", &tUrl);
 
   for (int i = 0; i < tUrl.count(); i++)
   {
@@ -111,7 +111,7 @@ void CDownloadMPC::readData(bool last)
     {
       str += m_data[i];
     }
-  }  
+  }
 }
 
 ///////////////////////////////////////////
@@ -145,7 +145,7 @@ void CDownloadMPC::readMPCLine(QString str)
 void CDownloadMPC::readMPCLineComet(QString str)
 ////////////////////////////////////////////////
 {
-  comet_t a; 
+  comet_t a;
 
   if (str.length() < 102)
     return;
@@ -214,7 +214,7 @@ void CDownloadMPC::slotDownloadFinished(QNetworkReply *reply)
 {
   if (reply->error() == QNetworkReply::NoError)
   {
-    readData(true);   
+    readData(true);
     done(DL_OK);
   }
   else

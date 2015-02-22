@@ -15,11 +15,11 @@ CWPosSel::CWPosSel(QWidget *parent, mapView_t *view) :
   // TODO: zkusit si pamatovat velikost dialogu
   //resize(900, 300);
 
-  m_earthTools.setCacheFolder("cache");
+  m_earthTools.setCacheFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache");
   connect(&m_earthTools, SIGNAL(sigDone(bool,double,int)), this, SLOT(slotETDone(bool,double,int)));
   connect(&m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotLocationDone(QNetworkReply*)));
 
-  SkFile f("data/locations/locations.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations/locations.dat");
   if (f.open(SkFile::ReadOnly | SkFile::Text))
   {
     QString     str;
@@ -385,7 +385,7 @@ void CWPosSel::on_pushButton_2_clicked()
 void CWPosSel::saveLoc()
 ////////////////////////
 {
-  SkFile f("data/locations/locations.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations/locations.dat");
   QTextStream s(&f);
   if (f.open(SkFile::WriteOnly | SkFile::Text))
   {

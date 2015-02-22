@@ -14,7 +14,7 @@ CGetProfile::CGetProfile(QWidget *parent) :
   QStandardItemModel *m = new QStandardItemModel;
   ui->listView->setModel(m);
 
-  QDir dir("data/profiles/", "*.dat");
+  QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/", "*.dat");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 
@@ -37,7 +37,7 @@ CGetProfile::CGetProfile(QWidget *parent) :
     item->setText(fi.baseName());
     item->setData(fi.baseName());
 
-    m->appendRow(item);              
+    m->appendRow(item);
   }
 
   QModelIndex idx = m->index(0, 0);

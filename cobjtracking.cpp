@@ -11,7 +11,7 @@ QList <tracking_t> tTracking;
 void loadTracking(void)
 ///////////////////////
 {
-  SkFile f("data/tracking/tracking.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/tracking/tracking.dat");
   QDataStream s(&f);
 
   if (f.open(SkFile::ReadOnly))
@@ -59,7 +59,7 @@ void loadTracking(void)
 void saveTracking(void)
 ///////////////////////
 {
-  SkFile f("data/tracking/tracking.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/tracking/tracking.dat");
   QDataStream s(&f);
 
   if (f.open(SkFile::WriteOnly))
