@@ -244,22 +244,24 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
       p->setClipping(false);
     }
 
-    // TODO: lepsi align
-    QString str = lf->name;
-
-    if (par.bShowDiam && lf->type != LFT_LANDING_SITE)
+    if (1)
     {
-      str += " " + QString::number(lf->rad) + (" km");
+      QString str = lf->name;
+
+      if (par.bShowDiam && lf->type != LFT_LANDING_SITE)
+      {
+        str += " " + QString::number(lf->rad) + (" km");
+      }
+
+      int tw = fm.width(str);
+
+      setSetFontColor(FONT_LUNAR_FEATURES, p);
+
+      if (tw + 10 < qMin(r1, r2) * 2)
+        p->drawCText(sx, sy, str);
+      else
+        p->drawCText(sx, sy + qMax(r1, r2) + fm.height() - 5, str);
     }
-
-    int tw = fm.width(str);
-
-    setSetFontColor(FONT_LUNAR_FEATURES, p);
-
-    if (tw + 10 < qMin(r1, r2) * 2)
-      p->drawCText(sx, sy, str);
-    else
-      p->drawCText(sx, sy + qMax(r1, r2) + fm.height() - 5, str);
   }
 }
 

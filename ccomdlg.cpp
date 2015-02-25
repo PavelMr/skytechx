@@ -595,6 +595,17 @@ void CComDlg::updateDlg()
 
   if (tComets.count() > 0)
   {
+    minJD = __DBL_MAX__;
+    maxJD = __DBL_MIN__;
+
+    for (int i = 0; i < tComets.count(); i++)
+    {
+      comet_t *a = &tComets[i];
+
+      if (a->perihelionDate < minJD) minJD = a->perihelionDate;
+      if (a->perihelionDate > maxJD) maxJD = a->perihelionDate;
+    }
+
     ui->lineEdit_3->setText(QString("%1").arg(getStrDate(minJD, 0)));
     ui->lineEdit_4->setText(QString("%1").arg(getStrDate(maxJD, 0)));
 

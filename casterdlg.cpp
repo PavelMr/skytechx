@@ -505,6 +505,17 @@ void CAsterDlg::updateDlg()
 
   if (tAsteroids.count() > 0)
   {
+    minJD = __DBL_MAX__;
+    maxJD = __DBL_MIN__;
+
+    for (int i = 0; i < tAsteroids.count(); i++)
+    {
+      asteroid_t *a = &tAsteroids[i];
+
+      if (a->epoch < minJD) minJD = a->epoch;
+      if (a->epoch > maxJD) maxJD = a->epoch;
+    }
+
     ui->lineEdit_3->setText(QString("%1").arg(getStrDate(minJD, 0)));
     ui->lineEdit_4->setText(QString("%1").arg(getStrDate(maxJD, 0)));
 

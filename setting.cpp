@@ -131,6 +131,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.hor.color", set->map.hor.color, ds);
   writeVal("map.hor.alpha", set->map.hor.alpha, ds);
   writeVal("map.hor.cb_hor_show_alt_azm", set->map.hor.cb_hor_show_alt_azm, ds);
+  writeVal("map.hor.showDirections", set->map.hor.showDirections, ds);
 
   // dso
   writeVal("map.dsoColor_nebula", set->map.dsoColors[DSO_COL_NEBULA], ds);
@@ -387,6 +388,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.hor.color = readVal("map.hor.color", MRGB(48, 68, 48), tMap).toUInt();
   set->map.hor.alpha = readVal("map.hor.alpha", 200, tMap).toInt();
   set->map.hor.cb_hor_show_alt_azm = readVal("map.hor.cb_hor_show_alt_azm", true, tMap).toBool();
+  set->map.hor.showDirections = readVal("map.hor.showDirections", true, tMap).toBool();
 
   // dso
   set->map.dsoColors[DSO_COL_NEBULA] = readVal("map.dsoColor_nebula", MRGB(200, 200, 200), tMap).toUInt();

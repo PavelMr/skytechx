@@ -152,6 +152,7 @@ void renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
   }
 
   color.setAlpha(g_skSet.map.hor.alpha);
+  setSetFont(FONT_HORIZON, p);
 
   for (int d = 0; d < 360; d++)
   {
@@ -223,31 +224,8 @@ void renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
     setSetFontColor(FONT_HORIZON, p);
     p->drawRoundedRect(rc2, 5, 5);
 
-    setSetFontColor(FONT_HORIZON, p);
     p->drawText(rc, Qt::AlignCenter, text);
   };
-
-  int azm[] = {0, 45, 90, 135, 180, 225, 270, 315};
-  QString azmText[] = {QObject::tr("N"), QObject::tr("NE"), QObject::tr("E"), QObject::tr("SE"), QObject::tr("S"), QObject::tr("SW"), QObject::tr("W"), QObject::tr("NW")};
-  for (int i = 0; i < 8; i++)
-  {
-    radec_t aa;
-    radec_t rd;
-    SKPOINT pt1;
-    SKPOINT pt2;
-    double btm = altHorizon[(int)azm[i]];
-
-    aa.Ra = D2R(azm[i]);
-    aa.Dec = btm;
-    cAstro.convAA2RDRef(aa.Ra, aa.Dec, &rd.Ra, &rd.Dec);
-    trfRaDecToPointCorrectFromTo(&rd, &pt1, mapView->jd, JD2000);
-
-    aa.Dec = btm + D2R(1.5);
-    cAstro.convAA2RDRef(aa.Ra, aa.Dec, &rd.Ra, &rd.Dec);
-    trfRaDecToPointCorrectFromTo(&rd, &pt2, mapView->jd, JD2000);
-
-    drawText(&pt1, &pt2, azmText[i], p);
-  }
 
   for (int i = 0; i < bkNames.count(); i++)
   {
@@ -270,5 +248,29 @@ void renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
     drawText(&pt1, &pt2, bkNames[i].name, p);
   }
 
+  if (g_skSet.map.hor.showDirections)
+  {
+    int azm[] = {0, 45, 90, 135, 180, 225, 270, 315};
+    QString azmText[] = {QObject::tr("N"), QObject::tr("NE"), QObject::tr("E"), QObject::tr("SE"), QObject::tr("S"), QObject::tr("SW"), QObject::tr("W"), QObject::tr("NW")};
+    for (int i = 0; i < 8; i++)
+    {
+      radec_t aa;
+      radec_t rd;
+      SKPOINT pt1;
+      SKPOINT pt2;
+      double btm = altHorizon[(int)azm[i]];
+
+      aa.Ra = D2R(azm[i]);
+      aa.Dec = btm;
+      cAstro.convAA2RDRef(aa.Ra, aa.Dec, &rd.Ra, &rd.Dec);
+      trfRaDecToPointCorrectFromTo(&rd, &pt1, mapView->jd, JD2000);
+
+      aa.Dec = btm + D2R(1.5);
+      cAstro.convAA2RDRef(aa.Ra, aa.Dec, &rd.Ra, &rd.Dec);
+      trfRaDecToPointCorrectFromTo(&rd, &pt2, mapView->jd, JD2000);
+
+      drawText(&pt1, &pt2, azmText[i], p);
+    }
+  }
 }
 

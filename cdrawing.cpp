@@ -638,10 +638,6 @@ int CDrawing::drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bE
   p->setPen(QPen(QColor(g_skSet.map.drawing.color), 2));
   p->setBrush(Qt::NoBrush);
 
-  //trfProjectPointNoCheck(&pp[0]);
-  //trfProjectPointNoCheck(&pp[1]);
-  //trfProjectPointNoCheck(&pp[2]);
-  //trfProjectPointNoCheck(&pp[3]);
   double textAngle = CM_UNDEF;
   bool   showText = false;
 
@@ -650,7 +646,6 @@ int CDrawing::drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bE
   trfRaDecToPointNoCorrect(&drw->rd, &pt);
   if (SKPLANECheckFrustumToSphere(m_frustum, &pt.w, r2))
   {
-    //SKPOINT origPts[4] = {pp[0], pp[1], pp[2], pp[3]};
     SKPOINT newPts[4];
     QList <QPoint> bndBox;
 
@@ -702,6 +697,15 @@ int CDrawing::drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bE
     rc.setY(miny);
     rc.setRight(maxx);
     rc.setBottom(maxy);
+
+    trfRaDecToPointNoCorrect(&drw->rd, &pt);
+    if (trfProjectPoint(&pt) && qMax(rc.width(), rc.height()) > 50)
+    {
+      p->save();
+      p->setPen(QPen(QColor(g_skSet.map.drawing.color), 1, Qt::DotLine));
+      p->drawCross(pt.sx, pt.sy, 8);
+      p->restore();
+    }
 
     if (bEdited)
     {

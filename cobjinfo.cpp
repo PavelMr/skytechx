@@ -336,7 +336,10 @@ void CObjInfo::on_clb_tracking_clicked()
 {
   CObjTracking dlg(this, &m_infoItem, &m_map->m_mapView);
 
+  // TODO: udelat to ne takhle prasacky
+  setWindowOpacity(0);
   dlg.exec();
+  setWindowOpacity(1);
 }
 
 

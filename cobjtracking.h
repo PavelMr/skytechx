@@ -52,8 +52,11 @@ private slots:
 
   void on_pushButton_clicked();
 
+  void on_pushButton_3_clicked();
+
 private:
   Ui::CObjTracking *ui;
+  bool m_done;
 };
 
 void trackRender(mapView_t *view, CSkPainter *p);

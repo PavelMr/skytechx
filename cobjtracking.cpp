@@ -6,6 +6,7 @@
 #include "csgp4.h"
 
 QList <tracking_t> tTracking;
+extern CMapView    *pcMapView;
 
 ///////////////////////
 void loadTracking(void)
@@ -106,7 +107,9 @@ void deleteTracking(int type)
       tTracking.removeAt(i);
     }
     else
+    {
       i++;
+    }
   }
 }
 
@@ -233,11 +236,11 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
 ///////////////////////////////////////////////////////////////////////////////
 CObjTracking::CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view) :
   QDialog(parent),
-  ui(new Ui::CObjTracking)
+  ui(new Ui::CObjTracking),
+  m_done(true)
 ///////////////////////////////////////////////////////////////////////////////
 {
   ui->setupUi(this);
-  setFixedSize(size());
   setWindowTitle(tr("Track of ") + item->title);
 
   QDateTime dt;
@@ -266,6 +269,8 @@ CObjTracking::CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view) :
     //if (tTracking[i].objName)
   }
   */
+
+  move(pcMapView->mapToGlobal(QPoint(pcMapView->x(), pcMapView->y())));
 }
 
 /////////////////////////////
@@ -414,11 +419,13 @@ void CObjTracking::on_pushButton_2_clicked()
     return;
   }
 
-  //qDebug("c = %d", track.tPos.count());
-
   tTracking.append(track);
 
-  done(DL_OK);
+  if (m_done)
+  {
+    done(DL_OK);
+  }
+  m_done = true;
 }
 
 
@@ -428,4 +435,16 @@ void CObjTracking::on_pushButton_clicked()
 //////////////////////////////////////////
 {
   done(DL_CANCEL);
+}
+
+void CObjTracking::on_pushButton_3_clicked()
+{
+  m_done = false;
+  on_pushButton_2_clicked();
+  pcMapView->repaintMap();
+
+  if (!tTracking.isEmpty())
+  {
+    tTracking.removeLast();
+  }
 }

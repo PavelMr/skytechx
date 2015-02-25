@@ -31,7 +31,6 @@
 #include "csatevents.h"
 #include "ctychosearch.h"
 #include "ctracklist.h"
-#include "cobjtracking.h"
 #include "clfmodel.h"
 #include "cfontcolordlg.h"
 #include "clinecolordlg.h"
@@ -70,6 +69,7 @@
 #include "csatellitesearch.h"
 #include "csearchdsocat.h"
 #include "cversioncheck.h"
+#include "cobjtracking.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -1499,6 +1499,7 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool scroll)
   ui->pushButton->setEnabled(true);
   ui->pushButton_4->setEnabled(true);
   ui->pushButton_16->setEnabled(true);
+  ui->pushButton_17->setEnabled(true);
   ui->checkBox_5->setEnabled(true);
   ui->action_Last_search_object->setEnabled(true);
 
@@ -2233,6 +2234,7 @@ void MainWindow::removeQuickInfo(int type)
     ui->pushButton->setEnabled(false);
     ui->pushButton_4->setEnabled(false);
     ui->pushButton_16->setEnabled(false);
+    ui->pushButton_17->setEnabled(false);
     ui->checkBox_5->setEnabled(false);
     ui->action_Last_search_object->setEnabled(false);
   }
@@ -4790,7 +4792,7 @@ void MainWindow::slotSearchPlanetTriggered()
 
   CPlnSearch::findPlanet(id, &ui->widget->m_mapView, ra, dec, fov);
   ui->widget->centerMap(ra, dec, fov);
-  recenterHoldObject(ui->widget, false);
+  //recenterHoldObject(ui->widget, false);
 }
 
 void MainWindow::on_actionSatellite_triggered()
@@ -4838,4 +4840,24 @@ void MainWindow::on_actionEpoch_J2000_0_toggled(bool arg1)
 void MainWindow::on_actionCheck_new_version_triggered()
 {
   checkNewVersion(true);
+}
+
+void MainWindow::on_pushButton_17_clicked()
+{
+  ofiItem_t *info = getQuickInfo();
+
+  if (info->type != MO_PLANET &&
+      info->type != MO_SATELLITE &&
+      info->type != MO_COMET &&
+      info->type != MO_ASTER)
+  {
+    msgBoxError(this, tr("You cannot track static object!!!"));
+    return;
+  }
+
+  CObjTracking dlg(this, info, &ui->widget->m_mapView);
+
+  dlg.exec();
+
+  ui->widget->repaintMap();
 }

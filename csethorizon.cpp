@@ -24,7 +24,7 @@ CSetHorizon::CSetHorizon(QWidget *parent) :
   ui->treeView->setModel(m);
   ui->treeView->setRootIsDecorated(false);
 
-  QDir dir("data/horizons/", "*.hrz");
+  QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/horizons/", "*.hrz");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 

@@ -608,6 +608,7 @@ void mapObjContextMenu(CMapView *map)
         dlg.init(map, &map->m_mapView, &tObjTmp[idx]);
         dlg.exec();
         pcMainWnd->fillQuickInfo(&dlg.m_infoItem);
+        qDebug() << "ee";
     }
   }
 }
