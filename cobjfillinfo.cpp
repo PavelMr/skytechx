@@ -176,6 +176,236 @@ void CObjFillInfo::fillRTS(rts_t *rts, const mapView_t *view, ofiItem_t *item)
   addSeparator(item);
 }
 
+#define SAT_VIS_NONE     0  //   /*!< Unknown/undefined. */
+#define SAT_VIS_VISIBLE  1  //    /*!< Visible. */
+#define SAT_VIS_DAYLIGHT 2  //    /*!< Satellite is in daylight. */
+#define SAT_VIS_ECLIPSED 3  //    /*!< Satellite is eclipsed. */
+
+#define secday   8.6400E4        /* Seconds per day */
+#define de2ra    1.74532925E-2   /* Degrees to Radians */
+#define twopi    6.2831853071796 /* 2*Pi  */
+#define AU       1.49597870E8   /*Astronomical unit - kilometers (IAU 76)*/
+#define pio2     1.5707963267949 /* Pi/2 */
+#define xkmper   6.378135E3      /* Earth radius km */
+#define __sr__   6.96000E5      /*Solar radius - kilometers (IAU 76)*/
+
+/* Returns arg1 mod arg2 */
+double Modulus(double arg1, double arg2)
+{
+  int i;
+  double ret_val;
+
+  ret_val = arg1;
+  i = ret_val/arg2;
+  ret_val -= i*arg2;
+  if (ret_val < 0) ret_val += arg2;
+
+  return (ret_val);
+} /* modulus */
+
+double Radians(double arg)
+{
+  return( arg*de2ra );
+} /*Function Radians*/
+
+double Sqr(double arg)
+{
+  return( arg*arg );
+} /* Function Sqr */
+
+double Delta_ET(double year)
+{
+  /* Values determined using data from 1950-1991 in the 1990
+     Astronomical Almanac.  See DELTA_ET.WQ1 for details. */
+
+  double delta_et;
+
+  delta_et = 26.465 + 0.747622*(year - 1950) +
+             1.886913*sin(twopi*(year - 1975)/33);
+
+  return( delta_et );
+} /*Function Delta_ET*/
+
+int Sign(double arg)
+{
+  if( arg > 0 )
+    return( 1 );
+  else if( arg < 0 )
+    return( -1 );
+  else
+    return( 0 );
+} /* Function Sign*/
+
+/* Returns the arcsine of the argument */
+double ArcSin(double arg)
+{
+  if( fabs(arg) >= 1 )
+    return( Sign(arg)*pio2 );
+  else
+    return( atan(arg/sqrt(1-arg*arg)) );
+} /*Function ArcSin*/
+
+/* Calculates scalar magnitude of a vector_t argument */
+void Magnitude(double *v)
+{
+  v[3] = sqrt(Sqr(v[0]) + Sqr(v[1]) + Sqr(v[2]));
+} /*Procedure Magnitude*/
+
+/* Subtracts vector v2 from v1 to produce v3 */
+void Vec_Sub(double *v1, double *v2, double *v3)
+{
+  v3[0] = v1[0] - v2[0];
+  v3[1] = v1[1] - v2[1];
+  v3[2] = v1[2] - v2[2];
+
+  Magnitude(v3);
+} /*Procedure Vec_Sub*/
+
+
+void Calculate_Solar_Position(double _time, double *solar_vector)
+{
+  double mjd,year,T,M,L,e,C,O,Lsa,nu,R,eps;
+
+  mjd = _time - 2415020.0;
+  year = 1900 + mjd/365.25;
+  T = (mjd + Delta_ET(year)/secday)/36525.0;
+  M = Radians(Modulus(358.47583 + Modulus(35999.04975*T,360.0)
+          - (0.000150 + 0.0000033*T)*Sqr(T),360.0));
+  L = Radians(Modulus(279.69668 + Modulus(36000.76892*T,360.0)
+          + 0.0003025*Sqr(T),360.0));
+  e = 0.01675104 - (0.0000418 + 0.000000126*T)*T;
+  C = Radians((1.919460 - (0.004789 + 0.000014*T)*T)*sin(M)
+        + (0.020094 - 0.000100*T)*sin(2*M) + 0.000293*sin(3*M));
+  O = Radians(Modulus(259.18 - 1934.142*T,360.0));
+  Lsa = Modulus(L + C - Radians(0.00569 - 0.00479*sin(O)),twopi);
+  nu = Modulus(M + C,twopi);
+  R = 1.0000002*(1 - Sqr(e))/(1 + e*cos(nu));
+  eps = Radians(23.452294 - (0.0130125 + (0.00000164 -
+    0.000000503*T)*T)*T + 0.00256*cos(O));
+  //R = AU*R;
+  solar_vector[0] = R*cos(Lsa);
+  solar_vector[1] = R*sin(Lsa)*cos(eps);
+  solar_vector[2] = R*sin(Lsa)*sin(eps);
+  solar_vector[3] = R;
+} /*Procedure Calculate_Solar_Position*/
+
+/* Returns the dot product of two vectors */
+double Dot(double *v1, double *v2)
+{
+  return( v1[0]*v2[0] + v1[1]*v2[1] + v1[2]*v2[2]);
+}  /*Function Dot*/
+
+/* Returns orccosine of rgument */
+double ArcCos(double arg)
+{
+  return( pio2 - ArcSin(arg) );
+} /*Function ArcCos*/
+
+/* Calculates the angle between vectors v1 and v2 */
+double Angle(double  *v1, double *v2)
+{
+  Magnitude(v1);
+  Magnitude(v2);
+  return( ArcCos(Dot(v1,v2)/(v1[3]*v2[3])) );
+} /*Function Angle*/
+
+/* Multiplies the vector v1 by the scalar k to produce the vector v2 */
+void Scalar_Multiply(double k, double *v1, double *v2)
+{
+  v2[0] = k * v1[0];
+  v2[1] = k * v1[1];
+  v2[2] = k * v1[2];
+  v2[3] = fabs(k) * v1[3];
+} /*Procedure Scalar_Multiply*/
+
+/* Calculates stellite's eclipse status and depth */
+int Sat_Eclipsed(double *pos, double *sol, double *depth)
+{
+  double sd_sun, sd_earth, delta;
+  double Rho[4], earth[4];
+
+  /* Determine partial eclipse */
+  sd_earth = ArcSin(xkmper/pos[3]);
+  Vec_Sub(sol,pos, Rho);
+  sd_sun = ArcSin(__sr__ / Rho[3]);
+  Scalar_Multiply(-1,pos, earth);
+  delta = Angle(sol, earth);
+  *depth = sd_earth - sd_sun - delta;
+  if( sd_earth < sd_sun )
+    return( 0 );
+  else
+    if( *depth >= 0 )
+      return( 1 );
+    else
+      return( 0 );
+
+} /*Function Sat_Eclipsed*/
+
+static int vis(satellite_t *sat, const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
+{
+  bool sat_sun_status;
+  double  sun_el;
+  double  threshold;
+  double  eclipse_depth;
+  int visibility = SAT_VIS_NONE;
+  double zero_vector[4] = {0,0,0,0};
+  double obs_geodetic[4];
+
+  double solar_vector[4] = { zero_vector[0], zero_vector[1], zero_vector[2], zero_vector[3]};
+
+  /* Solar observed az and el vector  */
+  //obs_set_t solar_set;
+
+  /* FIXME: could be passed as parameter */
+  obs_geodetic[0] = view->geo.lon;
+  obs_geodetic[1] = view->geo.lat;
+  obs_geodetic[2] = view->geo.alt / 1000.0;// qth->alt / 1000.0;
+  obs_geodetic[4] = 0;  // theta
+
+  qDebug() << view->geo.alt;
+
+  Calculate_Solar_Position (view->jd, solar_vector);
+  //Calculate_Obs (jul_utc, &solar_vector, &zero_vector, &obs_geodetic, &solar_set);
+
+  orbit_t sun;
+  mapView_t newView = *view;
+
+  cAstro.setParam(&newView);
+  cAstro.calcPlanet(PT_SUN, &sun);
+
+  double wsat[4];
+  wsat[0] = sat->longitude;
+  wsat[1] = sat->latitude;
+  wsat[2] = sat->altitude;
+  wsat[3] = 0;
+
+  if (Sat_Eclipsed(wsat, solar_vector, &eclipse_depth))
+  {
+         /* satellite is eclipsed */
+         sat_sun_status = FALSE;
+     }
+     else {
+         /* satellite in sunlight => may be visible */
+         sat_sun_status = TRUE;
+     }
+
+  if (sat_sun_status)
+  {
+          sun_el = R2D(sun.lAlt);//solar_set.el);
+          threshold = -6;//(gdouble) sat_cfg_get_int (SAT_CFG_INT_PRED_TWILIGHT_THLD);
+
+          if (sun_el <= threshold && sat->elevation >= 0.0)
+              visibility = SAT_VIS_VISIBLE;
+          else
+              visibility = SAT_VIS_DAYLIGHT;
+      }
+      else
+          visibility = SAT_VIS_ECLIPSED;
+
+
+  return visibility;
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
@@ -554,6 +784,8 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   item->id = s.name;
   item->title = s.name;
   item->simbad = item->id;
+
+  addTextItem(item, "Visibility", QString::number(vis(&s, view, obj, item)));
 
   addLabelItem(item, txDateTime);
   addSeparator(item);

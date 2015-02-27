@@ -216,7 +216,6 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     if (!trfPointOnScr(sx, sy, radius))
       continue;
 
-    //double d = sqrt(POW2(out.x / scale) + POW2(out.y / scale)) * R90;
     double d = sqrt(POW2(out.x) + POW2(out.y)) * R90  / scale;
 
     double r1 = radius;
