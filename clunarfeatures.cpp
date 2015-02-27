@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "cconsole.h"
 #include "setting.h"
+#include "mapobj.h"
 
 // http://www.fourmilab.ch/earthview/lunarform/lunarform.html
 
@@ -215,7 +216,8 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     if (!trfPointOnScr(sx, sy, radius))
       continue;
 
-    double d = sqrt(POW2(out.x / scale) + POW2(out.y / scale)) * R90;
+    //double d = sqrt(POW2(out.x / scale) + POW2(out.y / scale)) * R90;
+    double d = sqrt(POW2(out.x) + POW2(out.y)) * R90  / scale;
 
     double r1 = radius;
     double r2 = radius * (cos(d) * 2);
@@ -265,6 +267,14 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
   }
 }
 
+static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
+{
+  // http://www.movable-type.co.uk/scripts/latlong.html
+
+  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
+  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &dec, double &fov)
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -280,7 +290,7 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
 
   cAstro.calcPlanet(PT_MOON, &o);
 
-  double angle = o.PA - trfGetAngleToNPole(o.lRD.Ra, o.lRD.Dec) + R180;
+  double angle = o.PA;// - trfGetAngleToNPole(o.lRD.Ra, o.lRD.Dec) + R180;
   SKMATRIXRotateY(&mY, R90 + R180 + o.cMer);
   SKMATRIXRotateX(&mX, R180 + o.cLat);
   SKMATRIXRotateZ(&mZ, -angle);
@@ -311,10 +321,13 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
 
       double rad = D2R(o.sx / 3600.0 / 2.);
 
-      //getRaDecOffset(o.lRD.Ra, o.lRD.Dec, out.x * rad, out.y * rad, ra, dec);
+      double ang = atan2(out.x, -out.y) + view->roll;
 
-      ra =  o.lRD.Ra -  out.x * rad;
-      dec = o.lRD.Dec - out.y * rad;
+      //getRaDecOffset(o.lRD.Ra, o.lRD.Dec, out.x * rad, out.y * rad, ra, dec);
+      calcAngularDistance(o.lRD.Ra, o.lRD.Dec, ang, sqrt(POW2(out.x) + POW2(out.y)) * rad, ra, dec);
+
+      //ra =  o.lRD.Ra -  out.x * rad;
+      //dec = o.lRD.Dec - out.y * rad;
 
       fov = D2R(0.006 * lf->rad);
       if (fov < D2R(0.2))
