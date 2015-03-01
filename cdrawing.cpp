@@ -87,6 +87,7 @@ void drawingLoad(void)
 
     s >> count;
 
+    // TODO: v 32 a 64bit se to lisi ve velikosti
     for (int i = 0; i < count; i++)
     {
       drawing_t t;
@@ -259,6 +260,10 @@ void CDrawing::drawObjects(CSkPainter *p)
 
       case DT_TELRAD:
         drawTelrad(out, p, &m_tList[i].rd, false);
+        break;
+
+      case DT_TEXT:
+        drawText(out, p, &m_tList[i], false);
         break;
 
       case DT_FRM_FIELD:
@@ -519,7 +524,8 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
     //p->drawText(QRect(pt.sx - 10000, pt.sy - 10000 + 5 + r + p->fontMetrics().height(), 20000, 20000), Qt::AlignCenter, text);
 
     setSetFontColor(FONT_DRAWING, p);
-    setSetFont(FONT_DRAWING, p);
+    p->setFont(drw->text_t.font);
+
     p->drawText(QRect(pt.sx, pt.sy, w, h), Qt::AlignCenter, drw->text_t.text);
 
     if (bEdited)

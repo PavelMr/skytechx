@@ -3924,6 +3924,8 @@ void MainWindow::on_actionText_triggered()
                      ui->widget->height() * 0.5, rd.Ra, rd.Dec);
     precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
     g_cDrawing.insertText(&rd, dlg.m_text, &dlg.m_font, dlg.m_align, dlg.m_bRect);
+
+    ui->widget->centerMap(CM_UNDEF, CM_UNDEF, getOptObjFov(5, 5));
   }
 }
 
