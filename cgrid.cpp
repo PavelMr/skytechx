@@ -5,8 +5,6 @@
 
 // TODO: udelat kruh pro absolutni viditelny obzor. ???? to nechapu
 
-#define IS_NEAR(v1, v2, d)   (qAbs(v1 - v2) <= d)
-
 extern bool g_showLabels;
 static int scrWidth;
 static int scrHeight;
@@ -165,6 +163,8 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   QColor col = g_skSet.map.grid[type].color;
+  QPen pen1 = QPen(col, 1);
+  QPen pen3 = QPen(col, 3);
 
   setSetFont(FONT_GRID, pPainter);
   trfGetScreenSize(scrWidth, scrHeight);
@@ -201,11 +201,11 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
       rd[1].Ra = x + D2R(10);
       rd[1].Dec = y;
 
-      rd[2].Ra = x + D2R(10);
+      rd[2].Ra = rd[1].Ra;
       rd[2].Dec = y + D2R(10);
 
       rd[3].Ra = x;
-      rd[3].Dec = y + D2R(10);
+      rd[3].Dec = rd[2].Dec;
 
       for (int i = 0; i < 4; i++)
         rdc[i] = rd[i];
@@ -214,7 +214,7 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
       {
         for (int i = 0; i < 3; i++)
         {
-         rd[i].Dec -= cAstro.getInvAtmRef(rd[i].Dec);
+         rd[i].Dec -= cAstro.getInvAtmRef(rd[i].Dec, 1);
         }
       }
 
@@ -223,15 +223,17 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
         trfRaDecToPointNoCorrect(&rd[i], &pt[i], mat);
       }
 
-      if (!SKPLANECheckFrustumToPolygon(trfGetFrustum(), pt, 4))
+      if (!SKPLANECheckFrustumToPolygon(trfGetFrustum(), pt, 3))
+      {
         continue;
+      }
 
       for (int i = 0; i < 4; i++)
         rd[i] = rdc[i];
 
       SKPOINT lnA, lnB;
-      radec_t srd[3];
-      SKPOINT spt[3];
+      radec_t srd[4];
+      SKPOINT spt[4];
 
       for (double sy = 0; sy < D2R(10); sy += spc)
       {
@@ -241,28 +243,36 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
           srd[0].Dec = rd[0].Dec + sy;
 
           srd[1].Ra = rd[0].Ra + sx + spc;
-          srd[1].Dec = rd[0].Dec + sy;
+          srd[1].Dec = srd[0].Dec;
 
-          srd[2].Ra = rd[0].Ra + sx;
+          srd[2].Ra = srd[0].Ra;
           srd[2].Dec = rd[0].Dec + sy + spc;
+
+          srd[3].Ra = rd[0].Ra + sx;
+          srd[3].Dec = srd[2].Dec;
 
           if (type == SMCT_ALT_AZM)
           {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-              srd[i].Dec -= cAstro.getInvAtmRef(srd[i].Dec);
+              srd[i].Dec -= cAstro.getInvAtmRef(srd[i].Dec, 3);
             }
           }
 
-          for (int i = 0; i < 3; i++)
+          for (int i = 0; i < 4; i++)
           {
             trfRaDecToPointNoCorrect(&srd[i], &spt[i], mat);
           }
 
+          if (!SKPLANECheckFrustumToPolygon(trfGetFrustum(), spt, 4))
+          {
+            continue;
+          }
+
           if (iy == 0 && sy == 0)
-            pPainter->setPen(QPen(col, 3));
+            pPainter->setPen(pen3);
           else
-            pPainter->setPen(QPen(col, 1));
+            pPainter->setPen(pen1);
 
           lnA = spt[0]; lnB = spt[1];
           if (!eqOnly || (eqOnly && (iy == 0 && sy == 0)))
