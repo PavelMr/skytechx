@@ -41,6 +41,8 @@
 #define LERP(f, mi, ma)        ((mi) + (f) * ((ma) - (mi)))
 #define CLAMP(v, mi, ma)       (((v) < (mi)) ? (mi) : ((v) > (ma)) ? (ma) : (v))
 
+#define IS_NEAR(v1, v2, d)    (qAbs((v1) - (v2)) <= d)
+
 // dat bacha na znaminko (musej ho mit vsechny param. stejny)
 #define RAD2DEG(x)         ((x) * RAD)
 #define DEG2RAD(x)         ((x) * INVRAD)

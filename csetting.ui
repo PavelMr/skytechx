@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -3432,6 +3432,327 @@
           </item>
          </layout>
         </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_16">
+      <attribute name="title">
+       <string>Gamepad</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_79">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_78">
+         <item>
+          <widget class="QCheckBox" name="cb_gamepad">
+           <property name="text">
+            <string>Enable gamepad/joystick</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_81">
+           <property name="text">
+            <string>Device</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <item>
+            <widget class="QComboBox" name="cb_device"/>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="1" column="0">
+            <widget class="QSpinBox" name="sb_period">
+             <property name="suffix">
+              <string> ms</string>
+             </property>
+             <property name="minimum">
+              <number>5</number>
+             </property>
+             <property name="maximum">
+              <number>500</number>
+             </property>
+             <property name="singleStep">
+              <number>5</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QDoubleSpinBox" name="sb_gp_speed">
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="minimum">
+              <double>0.100000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>5.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.250000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_92">
+             <property name="text">
+              <string>Polling period</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_93">
+             <property name="text">
+              <string>Dead zone</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_94">
+             <property name="text">
+              <string>Speed multiplier</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="sb_dead_zone">
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <double>90.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <property name="leftMargin">
+            <number>4</number>
+           </property>
+           <property name="topMargin">
+            <number>4</number>
+           </property>
+           <property name="rightMargin">
+            <number>4</number>
+           </property>
+           <property name="bottomMargin">
+            <number>4</number>
+           </property>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_88">
+             <property name="text">
+              <string>More stars</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="cb_more_stars"/>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLabel" name="label_89">
+             <property name="text">
+              <string>Less stars</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4">
+            <widget class="QComboBox" name="cb_less_stars"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_90">
+             <property name="text">
+              <string>More DSO</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QComboBox" name="cb_more_dso"/>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLabel" name="label_91">
+             <property name="text">
+              <string>Less DSO</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="4">
+            <widget class="QComboBox" name="cb_less_dso"/>
+           </item>
+           <item row="1" column="2">
+            <widget class="QComboBox" name="cb_up_2"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="QComboBox" name="cb_left_2"/>
+           </item>
+           <item row="3" column="2">
+            <widget class="QComboBox" name="cb_more_stars_2"/>
+           </item>
+           <item row="4" column="2">
+            <widget class="QComboBox" name="cb_more_dso_2"/>
+           </item>
+           <item row="2" column="2">
+            <widget class="QComboBox" name="cb_zoom_in_2"/>
+           </item>
+           <item row="1" column="4">
+            <widget class="QComboBox" name="cb_down"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="cb_up"/>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="label_82">
+             <property name="text">
+              <string>Move map down</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_83">
+             <property name="text">
+              <string>Move map right</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="cb_left"/>
+           </item>
+           <item row="0" column="4">
+            <widget class="QComboBox" name="cb_right"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_84">
+             <property name="text">
+              <string>Move map up</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_85">
+             <property name="text">
+              <string>Move map left</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_86">
+             <property name="text">
+              <string>Zoom in</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLabel" name="label_87">
+             <property name="text">
+              <string>Zoom out</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="cb_zoom_in"/>
+           </item>
+           <item row="2" column="4">
+            <widget class="QComboBox" name="cb_zoom_out"/>
+           </item>
+           <item row="0" column="5">
+            <widget class="QComboBox" name="cb_right_2"/>
+           </item>
+           <item row="1" column="5">
+            <widget class="QComboBox" name="cb_down_2"/>
+           </item>
+           <item row="2" column="5">
+            <widget class="QComboBox" name="cb_zoom_out_2"/>
+           </item>
+           <item row="3" column="5">
+            <widget class="QComboBox" name="cb_less_stars_2"/>
+           </item>
+           <item row="4" column="5">
+            <widget class="QComboBox" name="cb_less_dso_2"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

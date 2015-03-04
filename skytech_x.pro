@@ -15,7 +15,7 @@ Release:DEFINES  += QT_NO_DEBUG_OUTPUT
 
 Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11
 Debug:win32-g++ : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
-win32-g++ : LIBS += -lgomp -lpsapi
+win32-g++ : LIBS += -lgomp -lpsapi -lwinmm
 
 win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA
 win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
@@ -205,7 +205,8 @@ SOURCES += main.cpp\
     libsgp4/Vector.cpp \
     clog.cpp \
     csearchdsocat.cpp \
-    cversioncheck.cpp
+    cversioncheck.cpp \
+    cgamepad.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -376,7 +377,8 @@ HEADERS  += mainwindow.h \
     libsgp4/Vector.h \
     clog.h \
     csearchdsocat.h \
-    cversioncheck.h
+    cversioncheck.h \
+    cgamepad.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \

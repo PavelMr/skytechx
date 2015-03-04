@@ -95,7 +95,7 @@ class CAstro
     void convEcl2RD(double lon, double lat, double *ra, double *dec);
 
     double getAtmRef(double alt);
-    double getInvAtmRef(double alt);
+    double getInvAtmRef(double alt, int steps = 6);
 
     double calcAparentSize(double R, double d);
     double getNPA(double ra, double raD, double dec, double decD, double oRa, double oDec);

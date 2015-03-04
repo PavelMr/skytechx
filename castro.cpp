@@ -612,12 +612,12 @@ double CAstro::getAtmRef(double alt)
 
 ///////////////////////////////////////
 // calc inverse of atm. refraction
-double CAstro::getInvAtmRef(double alt)
+double CAstro::getInvAtmRef(double alt, int steps)
 ///////////////////////////////////////
 {
   double ref = 0;
 
-  for (int i = 0; i < 6; i++)
+  for (int i = 0; i < steps; i++)
   {
     ref = getAtmRef(alt - ref);
   }

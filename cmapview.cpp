@@ -90,6 +90,9 @@ CMapView::CMapView(QWidget *parent) :
   QSettings settings;
   pBmp = new QImage;
   pcMapView = this;
+  m_gamePad = NULL;
+
+  configureGamepad();
 
   m_demo = new CDemonstration();
   m_demo->setupPoints();
@@ -1977,5 +1980,205 @@ void CMapView::slotSlewingTimer()
   {
     slew = false;
     update();
+  }
+}
+
+static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
+{
+  // http://www.movable-type.co.uk/scripts/latlong.html
+
+  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
+  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
+}
+
+void CMapView::slotGamepadChange(const gamepad_t &state, double speedMul)
+{
+  double leftRight = state.left > 0 ? -state.left : state.right;
+  double upDown = state.up > 0 ? -state.up : state.down;
+  double zoom = state.zoomIn > 0 ? -state.zoomIn : state.zoomOut;
+  double starMag = state.starMagPlus > 0 ? state.starMagPlus : -state.starMagMinus;
+  double dsoMag = state.DSOMagPlus > 0 ? state.DSOMagPlus : -state.DSOMagMinus;
+
+  double x, y;
+  double angle = atan2(leftRight, -upDown);
+  double speed = speedMul * sqrt(POW2(leftRight) + POW2(upDown));
+  double mulY = speedMul * 0.05;
+
+
+  if (qAbs(m_mapView.y) > D2R(89.9))
+  {
+    calcAngularDistance(m_mapView.x, D2R(89.9), angle, m_mapView.fov * speed * 0.01, x, y);
+  }
+  else
+  {
+    calcAngularDistance(m_mapView.x, m_mapView.y, angle, m_mapView.fov * speed * 0.05, x, y);
+  }
+
+  addY(-upDown * mulY * m_mapView.fov);
+
+  m_mapView.x = x;
+
+  m_mapView.starMagAdd += starMag * 0.25;
+  m_mapView.dsoMagAdd += dsoMag * 0.25;
+
+  if (zoom < 0)
+  {
+    double step = (m_mapView.fov * 0.9) - m_mapView.fov;
+    m_mapView.fov += speedMul * step * fabs(zoom);
+  }
+  else
+  {
+    double step = m_mapView.fov - (m_mapView.fov * 1.1);
+    m_mapView.fov -= speedMul * step * fabs(zoom);
+  }
+
+  m_mapView.fov = CLAMP(m_mapView.fov, MIN_MAP_FOV, MAX_MAP_FOV);
+  rangeDbl(&m_mapView.x, R360);
+  m_mapView.y = CLAMP(m_mapView.y, -R90, R90);
+
+  repaintMap();
+}
+
+
+void CMapView::configureGamepad()
+{
+  gamepadConfig_t config;
+
+  loadGamepadConfig(config);
+  saveGamepadConfig(config);
+
+  if (m_gamePad)
+  {
+    delete m_gamePad;
+    m_gamePad = NULL;
+  }
+
+  if (!config.used)
+  {
+    return;
+  }
+
+  m_gamePad = new CGamepad(config.period, config.deadZone, config.speedMul, this);
+  if (m_gamePad->configure(config.device, config.config))
+  {
+    connect(m_gamePad, SIGNAL(sigChanged(const gamepad_t &, double)), this, SLOT(slotGamepadChange(const gamepad_t &, double)));
+  }
+}
+
+void CMapView::saveGamepadConfig(gamepadConfig_t &config)
+{
+  SkFile file(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/gamepad/config.dat");
+
+  if (file.open(SkFile::WriteOnly))
+  {
+    QDataStream ts(&file);
+
+    ts << config.used;
+    ts << config.device;
+    ts << config.period;
+    ts << config.deadZone;
+    ts << config.speedMul;
+
+    foreach (const gamepadControl_t &ctrl, config.config)
+    {
+      ts << ctrl.gamepad;
+      ts << ctrl.skytechControl;
+    }
+
+    file.close();
+  }
+}
+
+void CMapView::loadGamepadConfig(gamepadConfig_t &config)
+{
+  SkFile file(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/gamepad/config.dat");
+
+  if (file.open(SkFile::ReadOnly))
+  {
+    QDataStream ts(&file);
+
+    ts >> config.used;
+    ts >> config.device;
+    ts >> config.period;
+    ts >> config.deadZone;
+    ts >> config.speedMul;
+
+    while (!file.atEnd())
+    {
+      gamepadControl_t ctrl;
+
+      ts >> ctrl.gamepad;
+      ts >> ctrl.skytechControl;
+
+      config.config.append(ctrl);
+    }
+
+    file.close();
+  }
+  else
+  {
+    gamepadControl_t ctrl;
+
+    config.used = true;
+    config.device = 0;
+    config.period = 25;
+    config.deadZone = 0.15;
+    config.speedMul = 1.0;
+
+    ctrl.gamepad = GP_POV_LEFT;
+    ctrl.skytechControl = SKC_MOVE_LEFT;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = GP_POV_RIGHT;
+    ctrl.skytechControl = SKC_MOVE_RIGHT;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = GP_POV_UP;
+    ctrl.skytechControl = SKC_MOVE_UP;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = GP_POV_DOWN;
+    ctrl.skytechControl = SKC_MOVE_DOWN;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = GP_X_MINUS_AXIS;
+    ctrl.skytechControl = SKC_MOVE_LEFT;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = GP_X_PLUS_AXIS;
+    ctrl.skytechControl = SKC_MOVE_RIGHT;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = GP_Y_MINUS_AXIS;
+    ctrl.skytechControl = SKC_MOVE_UP;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = GP_Y_PLUS_AXIS;
+    ctrl.skytechControl = SKC_MOVE_DOWN;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = 0;
+    ctrl.skytechControl = SKC_ZOOM_IN;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = 1;
+    ctrl.skytechControl = SKC_ZOOM_OUT;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = 4;
+    ctrl.skytechControl = SKC_STAR_MAG_PLUS;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = 6;
+    ctrl.skytechControl = SKC_STAR_MAG_MINUS;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = 5;
+    ctrl.skytechControl = SKC_DSO_MAG_PLUS;
+    config.config.append(ctrl);
+
+    ctrl.gamepad = 7;
+    ctrl.skytechControl = SKC_DSO_MAG_MINUS;
+    config.config.append(ctrl);
   }
 }

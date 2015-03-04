@@ -28,6 +28,8 @@ protected:
    void setProfileLabel(void);
    void fillProfiles(void);
    bool resetQuestion();
+   void fillGamepad();
+   void applyGamepad();
 
 public slots:
    void onTreeWidgetCustomContextMenuRequested(const QPoint &pos);
@@ -159,6 +161,8 @@ private slots:
    void on_listView_doubleClicked(const QModelIndex &index);
 
    void on_pushButton_59_clicked();
+
+   void on_cb_device_currentIndexChanged(int index);
 
 private:
    Ui::CSetting *ui;

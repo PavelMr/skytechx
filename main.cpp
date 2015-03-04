@@ -101,6 +101,7 @@ int main(int argc, char *argv[])
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/db");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/horizons");
+  checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/gamepad");
 
   QSettings settings;
 

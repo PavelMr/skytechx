@@ -14,6 +14,7 @@
 #include "cucac4.h"
 #include "ctextsel.h"
 #include "mainwindow.h"
+#include "cgamepad.h"
 
 #include <QSettings>
 
@@ -22,6 +23,8 @@ static int currentRow = 0;
 extern bool g_showZoomBar;
 extern bool bAlternativeMouse;
 extern bool bParkTelescope;
+
+extern CMapView  *pcMapView;
 
 CSetting::CSetting(QWidget *parent) :
   QDialog(parent),
@@ -59,6 +62,8 @@ CSetting::CSetting(QWidget *parent) :
 
   ui->checkBox_13->setChecked(bAlternativeMouse);
   ui->checkBox_14->setChecked(bParkTelescope);
+
+  fillGamepad();
 
   connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
   connect(ui->horizontalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
@@ -486,6 +491,8 @@ void CSetting::apply()
 //////////////////////
 {
   g_skSet = set;
+
+  applyGamepad();
 
   QList<urlItem_t> strList;
   getAstComList(ui->treeWidgetComet, strList);
@@ -1417,6 +1424,164 @@ bool CSetting::resetQuestion()
   return false;
 }
 
+void CSetting::fillGamepad()
+{
+  gamepadConfig_t config;
+
+  pcMapView->loadGamepadConfig(config);
+
+  ui->cb_gamepad->setChecked(config.used);
+  ui->sb_period->setValue(config.period);
+  ui->sb_dead_zone->setValue(config.deadZone * 100.0);
+  ui->sb_gp_speed->setValue(config.speedMul);
+
+  ui->cb_device->clear();
+
+  for (int i = 0; i < 16; i++)
+  {
+    gamePadInfo_t info;
+
+    if (CGamepad::getDeviceInfo(i, &info))
+    {
+      ui->cb_device->addItem(info.name, i);
+      if (config.device == i)
+      {
+        ui->cb_device->setCurrentIndex(i);
+      }
+    }
+  }
+
+  QComboBox *cb[20] = {
+                        ui->cb_left,
+                        ui->cb_left_2,
+                        ui->cb_right,
+                        ui->cb_right_2,
+                        ui->cb_up,
+                        ui->cb_up_2,
+                        ui->cb_down,
+                        ui->cb_down_2,
+                        ui->cb_zoom_in,
+                        ui->cb_zoom_in_2,
+                        ui->cb_zoom_out,
+                        ui->cb_zoom_out_2,
+                        ui->cb_more_stars,
+                        ui->cb_more_stars_2,
+                        ui->cb_less_stars,
+                        ui->cb_less_stars_2,
+                        ui->cb_more_dso,
+                        ui->cb_more_dso_2,
+                        ui->cb_less_dso,
+                        ui->cb_less_dso_2
+                      };
+
+  struct {QString name; int id; } items[29] = {tr("None"), -1,
+                                               tr("X Axis -") , GP_X_MINUS_AXIS,
+                                               tr("X Axis +") , GP_X_PLUS_AXIS,
+                                               tr("Y Axis -") , GP_Y_MINUS_AXIS,
+                                               tr("Y Axis +") , GP_Y_PLUS_AXIS,
+                                               tr("Z Axis -") , GP_Z_MINUS_AXIS,
+                                               tr("Z Axis +") , GP_Z_PLUS_AXIS,
+                                               tr("R Axis -") , GP_R_MINUS_AXIS,
+                                               tr("R Axis +") , GP_R_PLUS_AXIS,
+                                               tr("POV Left")  , GP_POV_LEFT,
+                                               tr("POV Right") , GP_POV_RIGHT,
+                                               tr("POV Up")    , GP_POV_UP,
+                                               tr("POV Down")  , GP_POV_DOWN,
+                                               tr("Button 1"), 0,
+                                               tr("Button 2"), 1,
+                                               tr("Button 3"), 2,
+                                               tr("Button 4"), 3,
+                                               tr("Button 5"), 4,
+                                               tr("Button 6"), 5,
+                                               tr("Button 7"), 6,
+                                               tr("Button 8"), 7,
+                                               tr("Button 9"), 8,
+                                               tr("Button 10"), 9,
+                                               tr("Button 11"), 10,
+                                               tr("Button 12"), 11,
+                                               tr("Button 13"), 12,
+                                               tr("Button 14"), 13,
+                                               tr("Button 15"), 14,
+                                               tr("Button 16"), 15,
+                                             };
+
+  for (int i = 0; i < 20; i++)
+  {
+    cb[i]->clear();
+    for (int j = 0; j < 29; j++)
+    {
+      cb[i]->addItem(items[j].name, items[j].id);
+    }
+  }
+
+  for (int k = 0; k < config.config.count(); k++)
+  {
+    for (int i = 0; i < 20; i++)
+    {
+      if (config.config[k].skytechControl == i / 2)
+      {
+        int index = cb[i]->findData(config.config[k].gamepad);
+        if (cb[i]->currentIndex() == 0)
+        {
+          cb[i]->setCurrentIndex(index);
+          break;
+        }
+      }
+    }
+  }
+}
+
+void CSetting::applyGamepad()
+{
+  QComboBox *cb[20] = {
+                        ui->cb_left,
+                        ui->cb_left_2,
+                        ui->cb_right,
+                        ui->cb_right_2,
+                        ui->cb_up,
+                        ui->cb_up_2,
+                        ui->cb_down,
+                        ui->cb_down_2,
+                        ui->cb_zoom_in,
+                        ui->cb_zoom_in_2,
+                        ui->cb_zoom_out,
+                        ui->cb_zoom_out_2,
+                        ui->cb_more_stars,
+                        ui->cb_more_stars_2,
+                        ui->cb_less_stars,
+                        ui->cb_less_stars_2,
+                        ui->cb_more_dso,
+                        ui->cb_more_dso_2,
+                        ui->cb_less_dso,
+                        ui->cb_less_dso_2
+                      };
+
+  gamepadConfig_t config;
+
+  config.used = ui->cb_gamepad->isChecked();
+  config.period = ui->sb_period->value();
+  config.device = ui->cb_device->currentIndex();
+  config.deadZone = ui->sb_dead_zone->value() / 100.0;
+  config.speedMul = ui->sb_gp_speed->value();
+
+  qDebug() << config.deadZone;
+
+  for (int i = 0; i < 20; i++)
+  {
+    gamepadControl_t ctrl;
+
+    if (cb[i]->currentData().toInt() >= 0)
+    {
+      ctrl.gamepad = cb[i]->currentData().toInt();
+      ctrl.skytechControl = i / 2;
+      config.config.append(ctrl);
+    }
+  }
+
+  pcMapView->saveGamepadConfig(config);
+  pcMapView->configureGamepad();
+}
+
 void CSetting::on_pushButton_47_clicked()
 {
   if (resetQuestion())
@@ -1600,4 +1765,8 @@ void CSetting::on_pushButton_59_clicked()
     set.map.milkyWay.color = dlg.currentColor().rgb();
     ui->pushButton_59->setColor(dlg.currentColor());
   }
+}
+
+void CSetting::on_cb_device_currentIndexChanged(int index)
+{
 }

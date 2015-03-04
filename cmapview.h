@@ -9,6 +9,7 @@
 #include "jd.h"
 #include "czoombar.h"
 #include "cdemonstration.h"
+#include "cgamepad.h"
 
 #define SMCT_RA_DEC        0
 #define SMCT_ALT_AZM       1
@@ -96,6 +97,10 @@ public:
   void printMap(void);
   void printMapView(QPrinter *prn, const QString &profileName);
 
+  void configureGamepad();
+  void saveGamepadConfig(gamepadConfig_t &config);
+  void loadGamepadConfig(gamepadConfig_t &config);
+
   QImage *getImage();
 
   mapView_t m_mapView;
@@ -109,6 +114,8 @@ public:
   CDemonstration *m_demo;
   QTimer *slewingTimer;
   bool slewBlink;
+
+  CGamepad *m_gamePad;
 
   void enableShapeEditor(bool enable);
   void saveShape();
@@ -158,6 +165,7 @@ public slots:
   void slotTelePlugChange(double ra, double dec);
   void slotZoom(float zoom);
   void slotSlewingTimer();
+  void slotGamepadChange(const gamepad_t &state, double speedMul);
 };
 
 extern CMapView      *pcMapView;
