@@ -14,7 +14,7 @@ typedef struct
 
 
 class CScanRender
-{    
+{
   public:
     explicit CScanRender(void);
     void enableBillinearInt(bool enable);
@@ -29,6 +29,10 @@ class CScanRender
     void renderPolygonBI(QImage *dst, QImage *src);
 
     void renderPolygonAlpha(QImage *dst, QImage *src);
+    void renderPolygonAlphaBI(QImage *dst, QImage *src);
+    void renderPolygonAlphaNI(QImage *dst, QImage *src);
+
+
     void renderPolygonAlpha(QColor col, QImage *dst);
 
 protected:

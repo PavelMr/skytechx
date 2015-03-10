@@ -316,6 +316,7 @@ void CSetting::setValues()
   ui->pushButton_12->setFontColor(setFonts[FONT_HORIZON], set.fonst[FONT_HORIZON].color);
   ui->cb_hor_show_alt_azm->setChecked(g_skSet.map.hor.cb_hor_show_alt_azm);
   ui->checkBox_15->setChecked(g_skSet.map.hor.showDirections);
+  ui->checkBox_16->setChecked(set.map.hor.hideTextureWhenMove);
 
   // constellation
   ui->pushButton_13->setFontColor(setFonts[FONT_CONST], set.fonst[FONT_CONST].color);
@@ -590,6 +591,7 @@ void CSetting::apply()
   g_skSet.map.hor.alpha = ui->horizontalSlider_11->value();
   g_skSet.map.hor.cb_hor_show_alt_azm = ui->cb_hor_show_alt_azm->isChecked();
   g_skSet.map.hor.showDirections = ui->checkBox_15->isChecked();
+  g_skSet.map.hor.hideTextureWhenMove = ui->checkBox_16->isChecked();
 
   // background
   g_skSet.map.background.bStatic = ui->checkBox_4->isChecked();
@@ -1443,10 +1445,10 @@ void CSetting::fillGamepad()
 
     if (CGamepad::getDeviceInfo(i, &info))
     {
-      ui->cb_device->addItem(info.name, i);
+      ui->cb_device->addItem(info.name + " " + QString("ID:%1").arg(i), i);
       if (config.device == i)
       {
-        ui->cb_device->setCurrentIndex(i);
+        ui->cb_device->setCurrentIndex(ui->cb_device->count() - 1);
       }
     }
   }
@@ -1560,7 +1562,7 @@ void CSetting::applyGamepad()
 
   config.used = ui->cb_gamepad->isChecked();
   config.period = ui->sb_period->value();
-  config.device = ui->cb_device->currentIndex();
+  config.device = ui->cb_device->currentData().toInt();
   config.deadZone = ui->sb_dead_zone->value() / 100.0;
   config.speedMul = ui->sb_gp_speed->value();
 

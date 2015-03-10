@@ -4,21 +4,24 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network webkit webkitwidgets xml sql widgets printsupport
+QT       += core gui network webkit webkitwidgets xml sql widgets printsupport script
 
 CONFIG   += qxt
 CONFIG   += axcontainer
 CONFIG   += plugin
 CONFIG   += c++11
 
+DEFINES += NOMINMAX
+
 Release:DEFINES  += QT_NO_DEBUG_OUTPUT
 
 Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11
-Debug:win32-g++ : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
-win32-g++ : LIBS += -lgomp -lpsapi -lwinmm
+Debug:win32-g++   : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
+win32-g++         : LIBS += -lgomp -lpsapi -lwinmm
 
 win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA
 win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
+win32-msvc2013 :  LIBS += winmm.lib
 
 TARGET = skytech_x
 TEMPLATE = app

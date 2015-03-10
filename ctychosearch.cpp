@@ -114,7 +114,7 @@ void CTychoSearch::on_pushButton_2_clicked()
 void CTychoSearch::on_pushButton_4_clicked()
 ////////////////////////////////////////////
 {
-  if (!cTYC.findStar(this, TS_TYC, 0, 0, 0, 0, ui->spinBox_4->value(), ui->spinBox_5->value(), ui->spinBox_6->value(), 0, m_reg, m_index))
+  if (!cTYC.findStar(this, TS_TYC, 0, 0, 0, 0, ui->spinBox_5->value(), ui->spinBox_4->value(), ui->spinBox_6->value(), 0, m_reg, m_index))
   {
     notFound(ui->spinBox_4);
     return;

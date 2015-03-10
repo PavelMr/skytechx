@@ -38,6 +38,7 @@ extern bool g_showDSO;
 extern bool g_showSS;
 extern bool g_showMW;
 extern bool g_showGrids;
+extern bool g_showHorizon;
 extern bool g_showLegends;
 extern bool g_showLabels;
 extern bool g_showDrawings;
@@ -722,6 +723,7 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
                        DSOT_UNKNOWN, QObject::tr("Unk")
                       };
 
+  cDSO.setPainter(pPainter, pImg);
   for (int i = 0; i < 12; i++)
   {
     pt.sx = 370 + orc.x() + 10 + i * 32;
@@ -1090,7 +1092,10 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
   if (!g_skSet.map.hor.cb_hor_show_alt_azm || (g_skSet.map.hor.cb_hor_show_alt_azm && mapView->coordType == SMCT_ALT_AZM))
   {
-    renderHorizonBk(mapView, pPainter, pImg);
+    if (g_showHorizon)
+    {
+      renderHorizonBk(mapView, pPainter, pImg);
+    }
   }
 
   if (g_showDrawings)

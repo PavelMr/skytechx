@@ -127,6 +127,7 @@ typedef struct
   bool  showDirections;
   int   alpha;
   bool  cb_hor_show_alt_azm;
+  bool  hideTextureWhenMove;
 } horizon_t;
 
 typedef struct

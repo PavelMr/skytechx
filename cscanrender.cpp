@@ -297,12 +297,11 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
     quint32 *pDst = bits + (y * dw) + px1;
     for (int x = px1; x < px2; x++)
     {
-      QRgb rgbs = c;
       QRgb rgbd = *pDst;
 
-      *pDst = qRgb(LERP(a, qRed(rgbd), qRed(rgbs)),
-                   LERP(a, qGreen(rgbd), qGreen(rgbs)),
-                   LERP(a, qBlue(rgbd), qBlue(rgbs))
+      *pDst = qRgb(LERP(a, qRed(rgbd), qRed(c)),
+                   LERP(a, qGreen(rgbd), qGreen(c)),
+                   LERP(a, qBlue(rgbd), qBlue(c))
                   );
       pDst++;
     }
@@ -543,10 +542,163 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
   }
 }
 
-
-//////////////////////////////////////////////////////////////
 void CScanRender::renderPolygonAlpha(QImage *dst, QImage *src)
-//////////////////////////////////////////////////////////////
+{
+  if (bBilinear)
+    renderPolygonAlphaBI(dst, src);
+  else
+    renderPolygonAlphaNI(dst, src);
+}
+
+void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
+{
+  int w = dst->width();
+  int sw = src->width();
+  int sh = src->height();
+  float tsx = src->width() - 1;
+  float tsy = src->height() - 1;
+  const quint32 *bitsSrc = (quint32 *)src->constBits();
+  const uchar *bitsSrc8 = (uchar *)src->constBits();
+  quint32 *bitsDst = (quint32 *)dst->bits();
+  bkScan_t *scan = scLR;
+  bool bw = src->format() == QImage::Format_Indexed8;
+
+  #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
+  for (int y = plMinY; y <= plMaxY; y++)
+  {
+    if (scan[y].scan[0] > scan[y].scan[1])
+    {
+      qSwap(scan[y].scan[0], scan[y].scan[1]);
+      qSwap(scan[y].uv[0][0], scan[y].uv[1][0]);
+      qSwap(scan[y].uv[0][1], scan[y].uv[1][1]);
+    }
+
+    int px1 = scan[y].scan[0];
+    int px2 = scan[y].scan[1];
+
+    float dx = px2 - px1;
+    if (dx == 0)
+      continue;
+
+    float duv[2];
+    float uv[2];
+
+    duv[0] = (float)(scan[y].uv[1][0] - scan[y].uv[0][0]) / dx;
+    duv[1] = (float)(scan[y].uv[1][1] - scan[y].uv[0][1]) / dx;
+
+    uv[0] = scan[y].uv[0][0];
+    uv[1] = scan[y].uv[0][1];
+
+    if (px1 < 0)
+    {
+      float m = (float)-px1;
+
+      px1 = 0;
+      uv[0] += duv[0] * m;
+      uv[1] += duv[1] * m;
+    }
+
+    if (px2 >= w)
+      px2 = w - 1;
+
+    uv[0] *= tsx;
+    uv[1] *= tsy;
+
+    duv[0] *= tsx;
+    duv[1] *= tsy;
+
+    int size = sw * sh;
+
+    quint32 *pDst = bitsDst + (y * w) + px1;
+    if (bw)
+    {
+      /*
+      for (int x = px1; x <= px2; x++)
+      {
+        float x_diff = uv[0] - static_cast<int>(uv[0]);
+        float y_diff = uv[1] - static_cast<int>(uv[1]);
+        float x_1diff = 1 - x_diff;
+        float y_1diff = 1 - y_diff;
+
+        int index = ((int)uv[0] + ((int)uv[1] * sw));
+
+        uchar a = bitsSrc8[index];
+        uchar b = bitsSrc8[(index + 1) % size];
+        uchar c = bitsSrc8[(index + sw) % size];
+        uchar d = bitsSrc8[(index + sw + 1) % size];
+
+        int val = (a&0xff)*(x_1diff)*(y_1diff) + (b&0xff)*(x_diff)*(y_1diff) +
+                  (c&0xff)*(y_diff)*(x_1diff)   + (d&0xff)*(x_diff*y_diff);
+
+
+        *pDst = 0xff000000 |
+                ((((int)val)<<16)&0xff0000) |
+                ((((int)val)<<8)&0xff00) |
+                ((int)val) ;
+        pDst++;
+
+        uv[0] += duv[0];
+        uv[1] += duv[1];
+      }
+      */
+    }
+    else
+    {
+      for (int x = px1; x <= px2; x++)
+      {
+        float x_diff = uv[0] - static_cast<int>(uv[0]);
+        float y_diff = uv[1] - static_cast<int>(uv[1]);
+        float x_1diff = 1 - x_diff;
+        float y_1diff = 1 - y_diff;
+
+        int index = ((int)uv[0] + ((int)uv[1] * sw));
+
+        quint32 a = bitsSrc[index];
+        quint32 b = bitsSrc[(index + 1) % size];
+        quint32 c = bitsSrc[(index + sw) % size];
+        quint32 d = bitsSrc[(index + sw + 1) % size];
+
+        float x1y1 = x_1diff * y_1diff;
+        float xy = x_diff * y_diff;
+        float x1y = y_diff * x_1diff;
+        float xy1 = x_diff *y_1diff;
+
+        float alpha = 0.00390625f * (((a>>24)&0xff)*(x1y1) + ((b>>24)&0xff)*(xy1) +
+                     ((c>>24)&0xff)*(x1y) + ((d>>24)&0xff)*(xy));
+
+        if (alpha > 0.05)
+        {
+          // blue element
+          int blue = (a&0xff)*(x1y1) + (b&0xff)* (xy1) +
+                     (c&0xff)*(x1y)  + (d&0xff)*(xy);
+
+          // green element
+          int green = ((a>>8)&0xff)*(x1y1) + ((b>>8)&0xff)*(xy1) +
+                      ((c>>8)&0xff)*(x1y)  + ((d>>8)&0xff)*(xy);
+
+          // red element
+          int red = ((a>>16)&0xff)*(x1y1) + ((b>>16)&0xff)*(xy1) +
+                    ((c>>16)&0xff)*(x1y)  + ((d>>16)&0xff)*(xy);
+
+          *pDst = qRgb(LERP(alpha, qRed(*pDst),  red),
+                       LERP(alpha, qGreen(*pDst), green),
+                       LERP(alpha, qBlue(*pDst), blue)
+                       );
+        }
+
+        pDst++;
+
+        uv[0] += duv[0];
+        uv[1] += duv[1];
+      }
+    }
+  }
+}
+
+
+////////////////////////////////////////////////////////////////
+void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
+////////////////////////////////////////////////////////////////
 {
   int w = dst->width();
   int sw = src->width();

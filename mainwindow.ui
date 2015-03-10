@@ -474,6 +474,7 @@
     <addaction name="actionMilkyway"/>
     <addaction name="separator"/>
     <addaction name="actionGrids"/>
+    <addaction name="actionHorizon"/>
     <addaction name="separator"/>
     <addaction name="actionDrawings"/>
     <addaction name="actionLabels"/>
@@ -639,7 +640,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
+          <width>261</width>
           <height>368</height>
          </rect>
         </property>
@@ -2124,6 +2125,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="separator"/>
    <addaction name="actionMilkyway"/>
    <addaction name="separator"/>
+   <addaction name="actionHorizon"/>
    <addaction name="actionGrids"/>
    <addaction name="separator"/>
    <addaction name="actionDrawings"/>
@@ -3727,6 +3729,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionCheck_new_version">
    <property name="text">
     <string>Check new version...</string>
+   </property>
+  </action>
+  <action name="actionHorizon">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_horizon.png</normaloff>:/res/sh_horizon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Horizon</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide horizon</string>
    </property>
   </action>
  </widget>

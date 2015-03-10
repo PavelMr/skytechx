@@ -96,5 +96,6 @@
         <file>res/ico_tele_window.png</file>
         <file>res/slew_1.png</file>
         <file>res/slew_2.png</file>
+        <file>res/sh_horizon.png</file>
     </qresource>
 </RCC>

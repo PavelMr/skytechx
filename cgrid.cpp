@@ -223,7 +223,7 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
         trfRaDecToPointNoCorrect(&rd[i], &pt[i], mat);
       }
 
-      if (!SKPLANECheckFrustumToPolygon(trfGetFrustum(), pt, 3))
+      if (!SKPLANECheckFrustumToPolygon(trfGetFrustum(), pt, 4))
       {
         continue;
       }
@@ -255,7 +255,7 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
           {
             for (int i = 0; i < 4; i++)
             {
-              srd[i].Dec -= cAstro.getInvAtmRef(srd[i].Dec, 3);
+              srd[i].Dec -= cAstro.getInvAtmRef(srd[i].Dec, 4);
             }
           }
 

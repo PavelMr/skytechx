@@ -513,6 +513,8 @@ private slots:
 
   void on_pushButton_17_clicked();
 
+  void on_actionHorizon_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

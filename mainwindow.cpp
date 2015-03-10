@@ -83,6 +83,7 @@ bool g_showConstBnd = false;
 bool g_showSS = false;
 bool g_showMW = false;
 bool g_showGrids = false;
+bool g_showHorizon = false;
 bool g_showAsteroids = false;
 bool g_showComets = false;
 bool g_showSatellites = false;
@@ -144,7 +145,7 @@ MainWindow::MainWindow(QWidget *parent) :
   m_bRealTime = false;
   m_bRealTimeLapse = false;
   connect(&m_realTimer, SIGNAL(timeout()), this, SLOT(slotRealTime()));
-  connect(&m_realTimerLapse, SIGNAL(timeout()), this, SLOT(slotRealTimeLapse()));
+  connect(&m_realTimerLapse, SIGNAL(timeout()), this, SLOT(slotRealTimeLapse()));//, Qt::QueuedConnection);
 
   setCentralWidget(ui->widget);
   setFocus();
@@ -594,6 +595,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showSS = settings.value("show_ss", true).toBool();
   g_showMW = settings.value("show_mw", true).toBool();
   g_showGrids = settings.value("show_grids", true).toBool();
+  g_showHorizon = settings.value("show_horizon", true).toBool();
   g_showAsteroids = settings.value("show_asteroids", true).toBool();
   g_showComets = settings.value("show_comets", true).toBool();
   g_showSatellites = settings.value("show_satellites", true).toBool();
@@ -617,6 +619,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionLegends->setChecked(g_showLegends);
   ui->actionLabels->setChecked(g_showLabels);
   ui->actionGrids->setChecked(g_showGrids);
+  ui->actionHorizon->setChecked(g_showHorizon);
   ui->tb_grid->setEnabled(g_showGrids);
   ui->actionDrawings->setChecked(g_showDrawings);
 
@@ -885,6 +888,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_ss", g_showSS);
   settings.setValue("show_mw", g_showMW);
   settings.setValue("show_grids", g_showGrids);
+  settings.setValue("show_horizon", g_showHorizon);
   settings.setValue("show_asteroids", g_showAsteroids);
   settings.setValue("show_comets", g_showComets);
   settings.setValue("show_satellites", g_showSatellites);
@@ -3596,6 +3600,9 @@ void MainWindow::on_actionShow_all_triggered()
   ui->action_Asteroids1->setChecked(true);
   g_showAsteroids = true;
 
+  ui->actionHorizon->setChecked(true);
+  g_showHorizon = true;
+
   ui->actionComets_2->setChecked(true);
   g_showComets = true;
 
@@ -3966,6 +3973,9 @@ void MainWindow::on_actionHide_all_triggered()
 
   ui->action_Asteroids1->setChecked(false);
   g_showAsteroids = false;
+
+  ui->actionHorizon->setChecked(false);
+  g_showHorizon = false;
 
   ui->actionComets_2->setChecked(false);
   g_showComets = false;
@@ -4861,5 +4871,11 @@ void MainWindow::on_pushButton_17_clicked()
 
   dlg.exec();
 
+  ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionHorizon_triggered(bool checked)
+{
+  g_showHorizon = checked;
   ui->widget->repaintMap();
 }

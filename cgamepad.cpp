@@ -45,6 +45,7 @@ bool CGamepad::configure(int devId, QList<gamepadControl_t> &list)
   MMRESULT res = joyGetDevCaps(devId, &caps, sizeof(caps));
   if (res != JOYERR_NOERROR)
   {
+    qDebug() << "error" << m_devId;
     return false;
   }
 

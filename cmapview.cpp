@@ -31,6 +31,8 @@ double m_lastFOV;
 double m_lastRA;
 double m_lastDec;
 
+bool *g_bMouseMoveMap;
+
 extern bool g_developMode;
 extern bool g_showFps;
 extern bool g_lockFOV;
@@ -91,6 +93,8 @@ CMapView::CMapView(QWidget *parent) :
   pBmp = new QImage;
   pcMapView = this;
   m_gamePad = NULL;
+
+  g_bMouseMoveMap = &m_bMouseMoveMap;
 
   configureGamepad();
 

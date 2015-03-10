@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>802</width>
+    <width>868</width>
     <height>432</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -1726,7 +1726,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="8" column="0">
+               <item row="9" column="0">
                 <widget class="QCheckBox" name="cb_hor_show_alt_azm">
                  <property name="text">
                   <string>Show horizon only in Alt/Azm mode</string>
@@ -1737,6 +1737,13 @@
                 <widget class="QCheckBox" name="checkBox_15">
                  <property name="text">
                   <string>Show directions</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="0">
+                <widget class="QCheckBox" name="checkBox_16">
+                 <property name="text">
+                  <string>Hide texture when mouse move the map</string>
                  </property>
                 </widget>
                </item>

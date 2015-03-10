@@ -6,6 +6,11 @@
 #include "castro.h"
 #include "background.h"
 #include "setting.h"
+#include "cscanrender.h"
+
+#include <QScriptEngine>
+#include <QScriptValue>
+#include <QScriptValueIterator>
 
 typedef struct
 {
@@ -13,8 +18,18 @@ typedef struct
   QString name;
 } bkNames_t;
 
+extern bool *g_bMouseMoveMap;
+
+static bool               isTexture;
+static bool               isValid;
 static double             altHorizon[360];
 static QList <bkNames_t>  bkNames;
+static int                numRows = 0;
+static QList <QImage*>     images;
+
+static QImage  *bkTexture = NULL;
+static double   yBottom;
+static double   yTop;
 
 extern QString g_horizonName;
 
@@ -24,7 +39,23 @@ extern QString g_horizonName;
 void resetBackground(void)
 //////////////////////////
 {
+  if (bkTexture)
+  {
+    delete bkTexture;
+    bkTexture = NULL;
+  }
+
+  images.clear();
+  numRows = 0;
+  isTexture = false;
+
+  yBottom = -90;
+  yTop = 90;
+
   memset(altHorizon, 0, sizeof(altHorizon));
+  isValid = true;
+  isTexture = false;
+
   bkNames.clear();
 }
 
@@ -34,6 +65,9 @@ bool loadBackground(QString name)
 {
   QList <QPointF> pts;
   QFile f(name);
+  QScriptEngine eng;
+  QString code;
+  QFileInfo fi(name);
 
   resetBackground();
 
@@ -53,6 +87,12 @@ bool loadBackground(QString name)
 
       if (str.startsWith("#")) // comment
         continue;
+
+      if (str.startsWith("_"))
+      {
+        code += str;
+        continue;
+      }
 
       list = str.split(',');
 
@@ -80,10 +120,50 @@ bool loadBackground(QString name)
     return false;
   }
 
+  QScriptValue res = eng.evaluate(code);
+  if (res.isError())
+  {
+    return false;
+  }
+
+  QScriptValueIterator it(eng.globalObject());
+  while (it.hasNext())
+  {
+    it.next();
+
+    if (!it.name().compare("_texture"))
+    {
+      bkTexture = new QImage(fi.absolutePath() + "/" + it.value().toString());
+    }
+    else
+    if (!it.name().compare("_top"))
+    {
+      yTop = it.value().toVariant().toDouble();
+    }
+    else
+    if (!it.name().compare("_bottom"))
+    {
+      yBottom = it.value().toVariant().toDouble();
+    }
+  }
+
   if (!makeHorizon(&pts))
   {
-    resetBackground();
-    return false;
+    if (!bkTexture || bkTexture->isNull())
+    {
+      resetBackground();
+      return false;
+    }
+    isValid = false;
+  }
+  else
+  {
+    isValid = true;
+  }
+
+  if (bkTexture && !bkTexture->isNull())
+  {
+    isTexture = true;
   }
 
   return true;
@@ -137,6 +217,82 @@ bool makeHorizon(QList <QPointF> *list)
   return(true);
 }
 
+static void renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg)
+{
+  //qDebug() << images[39]->width() << images[39]->height() << images[39]->isNull();
+
+  SKMATRIX mat;
+  SKMATRIX gmx, gmy;
+  SKMATRIX precMat;
+
+  precessMatrix(mapView->jd, JD2000, &precMat);
+
+  SKMATRIXRotateX(&gmx, -cAstro.m_geoLat + R90);
+  SKMATRIXRotateY(&gmy, -cAstro.m_lst + R180);
+
+  mat = gmx * gmy * precMat;
+
+  double tw = 1 / 36.0;
+  double th = 1 / 18.0;
+  double ox;
+  double oy = 0;
+
+  SKPOINT pt[4];
+  radec_t rd[4];
+
+  for (double y = yTop; y > yBottom; y -= 10)
+  {
+    ox = 1;
+    for (double x = 0; x < 360; x += 10)
+    {
+      // vyradit bloky ktere maji alfa=0
+      // poprve a pak to jenom kontrolovat
+
+      rd[0].Ra = D2R(x);
+      rd[0].Dec = D2R(y);
+
+      rd[1].Ra = D2R(x) - D2R(10);
+      rd[1].Dec = D2R(y);
+
+      rd[2].Ra = rd[1].Ra;
+      rd[2].Dec = D2R(y) - D2R(10);
+
+      rd[3].Ra = D2R(x);
+      rd[3].Dec = rd[2].Dec;
+
+      for (int i = 0; i < 4; i++)
+      {
+        rd[i].Dec -= cAstro.getInvAtmRef(rd[i].Dec, 4);
+        trfRaDecToPointNoCorrect(&rd[i], &pt[i], &mat);
+      }
+
+      if (SKPLANECheckFrustumToPolygon(trfGetFrustum(), pt, 4))
+      {
+        for (int i = 0; i < 4; i++)
+        {
+          trfProjectPointNoCheck(&pt[i]);
+        }
+
+        scanRender.resetScanPoly(pImg->width(), pImg->height());
+        scanRender.scanLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy, ox, oy, ox + tw, oy);
+        scanRender.scanLine(pt[1].sx, pt[1].sy, pt[2].sx, pt[2].sy, ox + tw, oy, ox + tw, oy + th);
+        scanRender.scanLine(pt[2].sx, pt[2].sy, pt[3].sx, pt[3].sy, ox + tw, oy + th, ox, oy + th);
+        scanRender.scanLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy, ox, oy + th, ox, oy);
+        scanRender.renderPolygonAlpha(pImg, bkTexture);
+
+        /*
+        p->drawLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy);
+        p->drawLine(pt[1].sx, pt[1].sy, pt[2].sx, pt[2].sy);
+        p->drawLine(pt[2].sx, pt[2].sy, pt[3].sx, pt[3].sy);
+        p->drawLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy);
+        */
+      }
+      ox -= tw;
+    }
+    oy += th;
+  }
+}
+
 /////////////////////////////////////////////////////////////////////
 void renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
 /////////////////////////////////////////////////////////////////////
@@ -154,46 +310,57 @@ void renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
   color.setAlpha(g_skSet.map.hor.alpha);
   setSetFont(FONT_HORIZON, p);
 
-  for (int d = 0; d < 360; d++)
+  if (isValid)
   {
-    int     d1 = (d + 1) % 360;
-    radec_t aa[3];
-    SKPOINT pt[3];
-
-    aa[0].Ra = D2R(d);
-    aa[0].Dec = altHorizon[d];
-
-    aa[1].Ra = D2R(d + 1);
-    aa[1].Dec = altHorizon[d1];
-
-    aa[2].Ra = 0;
-    aa[2].Dec = D2R(-90);
-
-    for (int i = 0; i < 3; i++)
+    for (int d = 0; d < 360; d++)
     {
-      radec_t rd;
+      int     d1 = (d + 1) % 360;
+      radec_t aa[3];
+      SKPOINT pt[3];
 
-      cAstro.convAA2RDRef(aa[i].Ra, aa[i].Dec, &rd.Ra, &rd.Dec);
-      trfRaDecToPointCorrectFromTo(&rd, &pt[i], mapView->jd, JD2000);
-    }
+      aa[0].Ra = D2R(d);
+      aa[0].Dec = altHorizon[d];
 
-    if (SKPLANEClipPolygonToFrustum(trfGetFrustum(), pt, 3, newPts, newCount))
-    {
-      scanRender.resetScanPoly(pImg->width(), pImg->height());
+      aa[1].Ra = D2R(d + 1);
+      aa[1].Dec = altHorizon[d1];
 
-      for (int t = 0; t < newCount; t++)
-        trfProjectPointNoCheck(&newPts[t]);
+      aa[2].Ra = 0;
+      aa[2].Dec = D2R(-90);
 
-      for (int t = 0; t < newCount; t++)
+      for (int i = 0; i < 3; i++)
       {
-        int t1 = (t + 1) % newCount;
-        scanRender.scanLine(newPts[t].sx, newPts[t].sy, newPts[t1].sx, newPts[t1].sy);
+        radec_t rd;
+
+        cAstro.convAA2RDRef(aa[i].Ra, aa[i].Dec, &rd.Ra, &rd.Dec);
+        trfRaDecToPointCorrectFromTo(&rd, &pt[i], mapView->jd, JD2000);
       }
 
-      if (color.alpha() == 255)
-        scanRender.renderPolygon(color, pImg);
-      else
-        scanRender.renderPolygonAlpha(color, pImg);
+      if (SKPLANEClipPolygonToFrustum(trfGetFrustum(), pt, 3, newPts, newCount))
+      {
+        scanRender.resetScanPoly(pImg->width(), pImg->height());
+
+        for (int t = 0; t < newCount; t++)
+          trfProjectPointNoCheck(&newPts[t]);
+
+        for (int t = 0; t < newCount; t++)
+        {
+          int t1 = (t + 1) % newCount;
+          scanRender.scanLine(newPts[t].sx, newPts[t].sy, newPts[t1].sx, newPts[t1].sy);
+        }
+
+        if (color.alpha() == 255)
+          scanRender.renderPolygon(color, pImg);
+        else
+          scanRender.renderPolygonAlpha(color, pImg);
+      }
+    }
+  }
+
+  if (isTexture)
+  {
+    if (!g_skSet.map.hor.hideTextureWhenMove || !*g_bMouseMoveMap)
+    {
+      renderTexture(mapView, p, pImg);
     }
   }
 
