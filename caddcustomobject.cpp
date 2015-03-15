@@ -153,7 +153,7 @@ void CAddCustomObject::enableItems()
 
 void CAddCustomObject::load(QList <customCatalogue_t> *data)
 {
-  SkFile f("data/dso/custom.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dso/custom.dat");
 
   if (f.open(SkFile::ReadOnly | SkFile::Text))
   {
@@ -192,7 +192,7 @@ void CAddCustomObject::load(QList <customCatalogue_t> *data)
 
 void CAddCustomObject::save()
 {
-  SkFile f("data/dso/custom.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dso/custom.dat");
   QTextStream s(&f);
 
   if (f.open(SkFile::WriteOnly | SkFile::Text))

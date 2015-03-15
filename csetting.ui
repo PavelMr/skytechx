@@ -3503,6 +3503,12 @@
            </item>
            <item row="1" column="2">
             <widget class="QDoubleSpinBox" name="sb_gp_speed">
+             <property name="prefix">
+              <string/>
+             </property>
+             <property name="suffix">
+              <string>x</string>
+             </property>
              <property name="decimals">
               <number>1</number>
              </property>
@@ -3553,6 +3559,9 @@
            </item>
            <item row="1" column="1">
             <widget class="QDoubleSpinBox" name="sb_dead_zone">
+             <property name="suffix">
+              <string>%</string>
+             </property>
              <property name="decimals">
               <number>1</number>
              </property>

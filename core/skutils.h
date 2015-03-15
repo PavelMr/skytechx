@@ -3,6 +3,10 @@
 
 #include <QtCore>
 
+#include "skcore.h"
+
+SKPOINT max4Y(const SKPOINT &p1, const SKPOINT &p2, const SKPOINT &p3, const SKPOINT &p4);
+
 int max4(int v1, int v2, int v3, int v4);
 int min4(int v1, int v2, int v3, int v4);
 

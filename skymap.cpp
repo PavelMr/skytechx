@@ -31,6 +31,8 @@
 
 extern CMapView      *pcMapView;
 
+extern bool g_onPrinterBW;
+
 extern bool g_showStars;
 extern bool g_showConstLines;
 extern bool g_showConstBnd;
@@ -644,13 +646,27 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   orc = rc;
 
   pPainter->setOpacity(0.75);
-  pPainter->fillRect(rc, Qt::black);
+  if (g_onPrinterBW)
+  {
+    pPainter->fillRect(rc, Qt::white);
+  }
+  else
+  {
+    pPainter->fillRect(rc, Qt::black);
+  }
   pPainter->setOpacity(1);
 
   float c = mapView->starMag;
   int   x = 0;
 
-  pPainter->setPen(QColor(255, 255, 255));
+  if (g_onPrinterBW)
+  {
+    pPainter->setPen(Qt::black);
+  }
+  else
+  {
+    pPainter->setPen(Qt::white);
+  }
   pPainter->setFont(QFont("arial", 8));
 
   // draw stars
@@ -737,7 +753,14 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     dso.shape = 0xffff;
 
     cDSO.renderObj(&pt, &dso, mapView, false);
-    pPainter->setPen(Qt::white);
+    if (g_onPrinterBW)
+    {
+      pPainter->setPen(Qt::black);
+    }
+    else
+    {
+      pPainter->setPen(Qt::white);
+    }
     pPainter->renderText(pt.sx, pt.sy, 17, types[i].name, RT_BOTTOM);
   }
 

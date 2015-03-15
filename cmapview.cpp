@@ -31,6 +31,7 @@ double m_lastFOV;
 double m_lastRA;
 double m_lastDec;
 
+bool  g_onPrinterBW = false;
 bool *g_bMouseMoveMap;
 
 extern bool g_developMode;
@@ -1569,7 +1570,9 @@ void CMapView::printMapView(QPrinter *prn, const QString &profileName)
 
   m_mapView.starMag = getStarMagnitudeLevel() + m_mapView.starMagAdd;
   m_mapView.dsoMag = getDsoMagnitudeLevel() + m_mapView.dsoMagAdd;
+  g_onPrinterBW = bw;
   smRenderSkyMap(&m_mapView, &p1, img);
+  g_onPrinterBW = false;
 
   p1.end();
 

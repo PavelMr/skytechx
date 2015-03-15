@@ -24,12 +24,8 @@ static bool               isTexture;
 static bool               isValid;
 static double             altHorizon[360];
 static QList <bkNames_t>  bkNames;
-static int                numRows = 0;
-static QList <QImage*>     images;
 
 static QImage  *bkTexture = NULL;
-static double   yBottom;
-static double   yTop;
 
 extern QString g_horizonName;
 
@@ -44,13 +40,6 @@ void resetBackground(void)
     delete bkTexture;
     bkTexture = NULL;
   }
-
-  images.clear();
-  numRows = 0;
-  isTexture = false;
-
-  yBottom = -90;
-  yTop = 90;
 
   memset(altHorizon, 0, sizeof(altHorizon));
   isValid = true;
@@ -117,12 +106,14 @@ bool loadBackground(QString name)
   }
   else
   {
+    resetBackground();
     return false;
   }
 
   QScriptValue res = eng.evaluate(code);
   if (res.isError())
   {
+    resetBackground();
     return false;
   }
 
@@ -134,16 +125,6 @@ bool loadBackground(QString name)
     if (!it.name().compare("_texture"))
     {
       bkTexture = new QImage(fi.absolutePath() + "/" + it.value().toString());
-    }
-    else
-    if (!it.name().compare("_top"))
-    {
-      yTop = it.value().toVariant().toDouble();
-    }
-    else
-    if (!it.name().compare("_bottom"))
-    {
-      yBottom = it.value().toVariant().toDouble();
     }
   }
 
@@ -219,8 +200,6 @@ bool makeHorizon(QList <QPointF> *list)
 
 static void renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg)
 {
-  //qDebug() << images[39]->width() << images[39]->height() << images[39]->isNull();
-
   SKMATRIX mat;
   SKMATRIX gmx, gmy;
   SKMATRIX precMat;
@@ -240,24 +219,21 @@ static void renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg)
   SKPOINT pt[4];
   radec_t rd[4];
 
-  for (double y = yTop; y > yBottom; y -= 10)
+  for (int y = 9; y > -9; y--)
   {
     ox = 1;
-    for (double x = 0; x < 360; x += 10)
+    for (int x = 0; x < 36; x++, ox -= tw)
     {
-      // vyradit bloky ktere maji alfa=0
-      // poprve a pak to jenom kontrolovat
+      rd[0].Ra = D2R(x * 10);
+      rd[0].Dec = D2R(y * 10);
 
-      rd[0].Ra = D2R(x);
-      rd[0].Dec = D2R(y);
-
-      rd[1].Ra = D2R(x) - D2R(10);
-      rd[1].Dec = D2R(y);
+      rd[1].Ra = D2R(x * 10) - D2R(10);
+      rd[1].Dec = D2R(y * 10);
 
       rd[2].Ra = rd[1].Ra;
-      rd[2].Dec = D2R(y) - D2R(10);
+      rd[2].Dec = D2R(y * 10) - D2R(10);
 
-      rd[3].Ra = D2R(x);
+      rd[3].Ra = D2R(x * 10);
       rd[3].Dec = rd[2].Dec;
 
       for (int i = 0; i < 4; i++)
@@ -287,7 +263,6 @@ static void renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg)
         p->drawLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy);
         */
       }
-      ox -= tw;
     }
     oy += th;
   }

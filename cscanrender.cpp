@@ -666,7 +666,7 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
         float alpha = 0.00390625f * (((a>>24)&0xff)*(x1y1) + ((b>>24)&0xff)*(xy1) +
                      ((c>>24)&0xff)*(x1y) + ((d>>24)&0xff)*(xy));
 
-        if (alpha > 0.05)
+        if (alpha > 0.00390625f)
         {
           // blue element
           int blue = (a&0xff)*(x1y1) + (b&0xff)* (xy1) +
@@ -761,10 +761,13 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
       QRgb rgbd = *pDst;
       float a = qAlpha(*pSrc) * 0.00390625f;
 
-      *pDst = qRgb(LERP(a, qRed(rgbd), qRed(rgbs)),
-                   LERP(a, qGreen(rgbd), qGreen(rgbs)),
-                   LERP(a, qBlue(rgbd), qBlue(rgbs))
-                   );
+      if (a > 0.00390625f)
+      {
+        *pDst = qRgb(LERP(a, qRed(rgbd), qRed(rgbs)),
+                     LERP(a, qGreen(rgbd), qGreen(rgbs)),
+                     LERP(a, qBlue(rgbd), qBlue(rgbs))
+                     );
+      }
       pDst++;
 
       uv[0] += duv[0];

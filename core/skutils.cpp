@@ -3,6 +3,28 @@
 #include "skcore.h"
 #include "../jd.h"
 
+SKPOINT max4Y(const SKPOINT &p1, const SKPOINT &p2, const SKPOINT &p3, const SKPOINT &p4)
+{
+  SKPOINT newPt;
+
+  if (p1.sy > p2.sy)
+  {
+    newPt = p1;
+  }
+
+  if (p3.sy > newPt.sy)
+  {
+    newPt = p3;
+  }
+
+  if (p4.sy > newPt.sy)
+  {
+    newPt = p4;
+  }
+
+  return newPt;
+}
+
 ////////////////////////////////////////
 int min4(int v1, int v2, int v3, int v4)
 ////////////////////////////////////////
