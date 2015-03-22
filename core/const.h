@@ -38,6 +38,7 @@
 #define POW6(x)   ((x) * (x) * (x) * (x) * (x) * (x))
 #define POW7(x)   ((x) * (x) * (x) * (x) * (x) * (x) * (x))
 
+#define FRAC(f, from, to)      ((((f) - (from)) / (double)((to) - (from))))
 #define LERP(f, mi, ma)        ((mi) + (f) * ((ma) - (mi)))
 #define CLAMP(v, mi, ma)       (((v) < (mi)) ? (mi) : ((v) > (ma)) ? (ma) : (v))
 

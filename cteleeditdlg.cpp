@@ -9,7 +9,7 @@ CTeleEditDlg::CTeleEditDlg(QWidget *parent, bool bTele, double *par1, double *pa
   ui->setupUi(this);
 
   ui->lineEdit->setText(*name);
-  ui->spinBox->setValue(*par1);
+  ui->doubleSpinBox->setValue(*par1);
   ui->spinBox_2->setValue(*par2);
 
   m_name = name;
@@ -39,7 +39,7 @@ void CTeleEditDlg::on_pushButton_clicked()
 void CTeleEditDlg::on_pushButton_2_clicked()
 {
   *m_name = ui->lineEdit->text();
-  *m_par1 = ui->spinBox->value();
+  *m_par1 = ui->doubleSpinBox->value();
   *m_par2 = ui->spinBox_2->value();
 
   done(DL_OK);

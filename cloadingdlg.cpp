@@ -175,7 +175,7 @@ void CLoading::run()
 
   qDebug() << "L11";
   g_horizonName = set.value("horizon_file", "none").toString();
-  loadBackground(g_horizonName);
+  background.loadBackground(g_horizonName);
 
   emit sigProgress(11);
   cLunarFeatures.load("data/moon/moon.dat");

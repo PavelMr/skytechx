@@ -12,28 +12,25 @@
 #include <QScriptValue>
 #include <QScriptValueIterator>
 
-typedef struct
-{
-  double  azm;
-  QString name;
-} bkNames_t;
-
 extern bool *g_bMouseMoveMap;
-
-static bool               isTexture;
-static bool               isValid;
-static double             altHorizon[360];
-static QList <bkNames_t>  bkNames;
-
-static QImage  *bkTexture = NULL;
-
 extern QString g_horizonName;
+
+CBackground background;
 
 // TODO: nezobrazuje se spravne pri obs lat 90 a -90
 
-//////////////////////////
-void resetBackground(void)
-//////////////////////////
+
+CBackground::CBackground()
+{
+  bkTexture = NULL;
+}
+
+CBackground::~CBackground()
+{
+  resetBackground();
+}
+
+void CBackground::resetBackground(void)
 {
   if (bkTexture)
   {
@@ -45,12 +42,11 @@ void resetBackground(void)
   isValid = true;
   isTexture = false;
 
+  altMap.clear();
   bkNames.clear();
 }
 
-/////////////////////////////////
-bool loadBackground(QString name)
-/////////////////////////////////
+bool CBackground::loadBackground(QString name)
 {
   QList <QPointF> pts;
   QFile f(name);
@@ -101,6 +97,7 @@ bool loadBackground(QString name)
         QPoint p(list.at(0).toInt(), list.at(1).toFloat());
 
         pts.append(p);
+        altMap[list.at(0).toInt()] = list.at(1).toFloat();
       }
     }
   }
@@ -124,11 +121,25 @@ bool loadBackground(QString name)
 
     if (!it.name().compare("_texture"))
     {
-      bkTexture = new QImage(fi.absolutePath() + "/" + it.value().toString());
+      QString name = fi.absolutePath() + "/" + it.value().toString();
+      textureName = name;
+
+      qDebug() << "1" << name;
+
+      bkTexture = new QImage(name);
+
+      if (bkTexture->isNull())
+      {
+        name = it.value().toString();
+        bkTexture->load(name);
+        textureName = name;
+
+        qDebug() << "2" << name;
+      }
     }
   }
 
-  if (!makeHorizon(&pts))
+  if (!makeHorizon(&pts, altHorizon))
   {
     if (!bkTexture || bkTexture->isNull())
     {
@@ -147,58 +158,51 @@ bool loadBackground(QString name)
     isTexture = true;
   }
 
+  qDebug() << "tex" << textureName << isTexture;
+
   return true;
 }
 
-///////////////////////////////////////
-bool makeHorizon(QList <QPointF> *list)
-///////////////////////////////////////
+////////////////////////////////////////////////////
+bool CBackground::makeHorizon(QList <QPointF> *list, double *alt)
+////////////////////////////////////////////////////
 {
-  if (list->count() < 3)
+  if (list->count() < 2)
     return(false);
 
-  for (int d = 0; d < 360; d++)
+  // TODO: kontrola vzestupu azimutu
+
+  for (int i = 0; i < list->count(); i++)
   {
-    double dmin = list->at(0).x();
-    double dmax = list->at(0).x();
-    double amin = list->at(0).y();
-    double amax = list->at(0).y();
+    int from = list->at(i).x();
+    int to;
+    double y1 = list->at(i).y();
+    double y2;
 
-    for (int i = 0; i < list->count(); i++)
+    if (i + 1 >= list->count())
     {
-      if (d >= list->at(i).x())
-      {
-        dmin = list->at(i).x();
-        amin = list->at(i).y();
-
-        if (i + 1 < list->count())
-        {
-          dmax = list->at(i + 1).x();
-          amax = list->at(i + 1).y();
-        }
-        else
-        {
-          dmax = 360;
-          amax = list->at(0).y();
-        }
-      }
+      to = 360 + list->at(0).x();
+      y2 = list->at(0).y();
+    }
+    else
+    {
+      to = list->at(i + 1).x();
+      y2 = list->at(i + 1).y();
     }
 
-    double alpha;
+    for (int a = from; a < to; a++)
+    {
+      int azm = a % 360;
+      double f = FRAC(a, from, to);
 
-    if (dmax == dmin)
-      alpha = (d - dmin);
-    else
-      alpha = (d - dmin) / (dmax - dmin);
-    double h = (1.0 - alpha) * amin + alpha * amax;
-
-    altHorizon[d] = D2R(h);
+      alt[azm] = D2R(LERP(f, y1, y2));
+    }
   }
 
   return(true);
 }
 
-static void renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg)
+void CBackground::renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg)
 {
   SKMATRIX mat;
   SKMATRIX gmx, gmy;
@@ -269,7 +273,7 @@ static void renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg)
 }
 
 /////////////////////////////////////////////////////////////////////
-void renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
+void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
 /////////////////////////////////////////////////////////////////////
 {
   CScanRender scan;

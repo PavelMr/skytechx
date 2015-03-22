@@ -2,6 +2,7 @@
 #include "ui_csethorizon.h"
 #include "skcore.h"
 #include "background.h"
+#include "chorizoneditor.h"
 
 #include <QStandardItemModel>
 #include <QDir>
@@ -14,15 +15,41 @@ CSetHorizon::CSetHorizon(QWidget *parent) :
   ui(new Ui::CSetHorizon)
 {
   ui->setupUi(this);
-  bool isChecked = false;
 
   QStandardItemModel *m = new QStandardItemModel;
-
   m->setColumnCount(1);
   m->setHeaderData(0, Qt::Horizontal, tr("Name"));
 
   ui->treeView->setModel(m);
   ui->treeView->setRootIsDecorated(false);
+
+  refillList();
+}
+
+CSetHorizon::~CSetHorizon()
+{
+  delete ui;
+}
+
+void CSetHorizon::changeEvent(QEvent *e)
+{
+  QDialog::changeEvent(e);
+  switch (e->type()) {
+  case QEvent::LanguageChange:
+    ui->retranslateUi(this);
+    break;
+  default:
+    break;
+  }
+}
+
+void CSetHorizon::refillList()
+{
+  bool isChecked = false;
+
+  QStandardItemModel *m = (QStandardItemModel *)ui->treeView->model();
+
+  m->removeRows(0, m->rowCount());
 
   QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/horizons/", "*.hrz");
   dir.setFilter(QDir::Files);
@@ -74,24 +101,7 @@ CSetHorizon::CSetHorizon(QWidget *parent) :
     itemNone->setCheckState(Qt::Checked);
   }
 
-  connect(m, SIGNAL(dataChanged(QModelIndex, QModelIndex)), this, SLOT(slotDataChanged(QModelIndex, QModelIndex)));
-}
-
-CSetHorizon::~CSetHorizon()
-{
-  delete ui;
-}
-
-void CSetHorizon::changeEvent(QEvent *e)
-{
-  QDialog::changeEvent(e);
-  switch (e->type()) {
-  case QEvent::LanguageChange:
-    ui->retranslateUi(this);
-    break;
-  default:
-    break;
-  }
+  connect(ui->treeView->model(), SIGNAL(dataChanged(QModelIndex, QModelIndex)), this, SLOT(slotDataChanged(QModelIndex, QModelIndex)));
 }
 
 void CSetHorizon::slotDataChanged(QModelIndex i1, QModelIndex)
@@ -129,12 +139,12 @@ void CSetHorizon::on_pushButton_clicked()
       if (!item->data().toString().compare("flat") || !item->data().toString().compare("none"))
       {
         g_horizonName = item->data().toString();
-        resetBackground();
+        background.resetBackground();
         done(DL_OK);
         return;
       }
 
-      if (loadBackground(item->data().toString()))
+      if (background.loadBackground(item->data().toString()))
       {
         g_horizonName = item->data().toString();
         done(DL_OK);
@@ -142,11 +152,20 @@ void CSetHorizon::on_pushButton_clicked()
       }
       else
       {
-        msgBoxError(this, tr("Horozon file was found or invalid!"));
+        msgBoxError(this, tr("Horizon file was not found or is invalid!"));
         return;
       }
     }
   }
 
   Q_ASSERT(false);
+}
+
+void CSetHorizon::on_pushButton_3_clicked()
+{
+  CHorizonEditor dlg(this);
+
+  dlg.exec();
+
+  refillList();
 }

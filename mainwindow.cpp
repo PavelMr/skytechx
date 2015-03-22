@@ -70,6 +70,7 @@
 #include "csearchdsocat.h"
 #include "cversioncheck.h"
 #include "cobjtracking.h"
+#include "chorizoneditor.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>

@@ -2011,7 +2011,6 @@ void CMapView::slotGamepadChange(const gamepad_t &state, double speedMul)
   double speed = speedMul * sqrt(POW2(leftRight) + POW2(upDown));
   double mulY = speedMul * 0.05;
 
-
   if (qAbs(m_mapView.y) > D2R(89.9))
   {
     calcAngularDistance(m_mapView.x, D2R(89.9), angle, m_mapView.fov * speed * 0.01, x, y);
@@ -2126,7 +2125,7 @@ void CMapView::loadGamepadConfig(gamepadConfig_t &config)
   {
     gamepadControl_t ctrl;
 
-    config.used = true;
+    config.used = false;
     config.device = 0;
     config.period = 25;
     config.deadZone = 0.15;

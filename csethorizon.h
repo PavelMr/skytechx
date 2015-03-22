@@ -21,12 +21,14 @@ protected:
 
 private:
   Ui::CSetHorizon *ui;
+  void refillList();
 
 private slots:
   void slotDataChanged(QModelIndex i1, QModelIndex i2);
 
   void on_pushButton_2_clicked();
   void on_pushButton_clicked();
+  void on_pushButton_3_clicked();
 };
 
 #endif // CSETHORIZON_H

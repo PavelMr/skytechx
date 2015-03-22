@@ -1117,7 +1117,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   {
     if (g_showHorizon)
     {
-      renderHorizonBk(mapView, pPainter, pImg);
+      background.renderHorizonBk(mapView, pPainter, pImg);
     }
   }
 
