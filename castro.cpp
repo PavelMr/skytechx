@@ -371,9 +371,18 @@ void CAstro::setParam(mapView_t *view)
   m_geoTZ = view->geo.tz;
   m_geoPress = view->geo.press;
   m_useAtmRefraction = view->geo.useAtmRefraction;
-  m_geoTemp = view->geo.temp;
   m_jd = view->jd;
   m_deltaTAlg = view->deltaTAlg;
+
+  if (view->geo.tempType == 1)
+  {
+    m_geoTemp = FAHRENHEIT_TO_DEG(view->geo.temp);
+  }
+  else
+  {
+    m_geoTemp = view->geo.temp;
+  }
+
 
   if (view->deltaT != CM_UNDEF)
     m_deltaT = view->deltaT;

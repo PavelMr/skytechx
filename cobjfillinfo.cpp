@@ -130,11 +130,13 @@ void CObjFillInfo::fillAtlas(double ra, double dec, ofiItem_t *item)
   getHO2000(tmpStr, ra, dec);
   addTextItem(item, tr("Hvezdna obloha 2000.0"), tmpStr);
   getMilleniumStasAtlas(tmpStr, ra, dec);
-  addTextItem(item, tr("Milenium Star Atlas"), tmpStr);
+  addTextItem(item, tr("Millennium Star Atlas"), tmpStr);
   getStarAtlas2000(tmpStr, ra, dec);
   addTextItem(item, tr("Sky Atlas 2000.0"), tmpStr);
   getUranometriaAtlas2000(tmpStr, ra, dec);
   addTextItem(item, tr("Uranometria 2000"), tmpStr);
+  getInterstellarumDeepSkyAtlas(tmpStr, ra, dec);
+  addTextItem(item, tr("Interstellarum Deep Sky Atlas"), tmpStr);
 
   addSeparator(item);
 }

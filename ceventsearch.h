@@ -30,6 +30,8 @@
 #define EVLE_PARTIAL_UMBRA     2
 #define EVLE_FULL_UMBRA        3
 
+#define EVENT_HEADER_ID        0xE0000002
+
 typedef struct
 {
   int     type;      // EVT_cxx
@@ -37,6 +39,7 @@ typedef struct
   double  jd;        // jd at center of event
   int     id;        // object id
   quint64 geoHash;
+  QString locationName;
 
   union
   {
@@ -94,7 +97,7 @@ typedef struct
     {
       double R;
     } bigMoon_u;
-  };
+  } event_u;
 
 } event_t;
 

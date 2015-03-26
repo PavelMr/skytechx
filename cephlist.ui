@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Ephemerid list</string>
+   <string>Ephemeris list</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_8">
    <item>

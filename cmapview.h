@@ -32,6 +32,7 @@ typedef struct
   double sdlt;   // saving day light time    (in days)
   double tz;     // timezone + sdlt          (in days)
 
+  int    tempType;  // 0 - C , 1 - F
   double temp;
   double press;
   bool   useAtmRefraction;

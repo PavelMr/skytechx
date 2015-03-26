@@ -932,38 +932,39 @@ void searchEvent::CCommonEvent::run(void)
           {
             qDebug("lunar ecl. %f", tmpJD);
 
-            m_event.lunarEcl_u.p2 = m_event.lunarEcl_u.p3 = -1;
-            m_event.lunarEcl_u.u1 = m_event.lunarEcl_u.u2 = -1;
-            m_event.lunarEcl_u.u3 = m_event.lunarEcl_u.u4 = -1;
-            m_event.lunarEcl_u.type = EVLE_PARTIAL_PENUMBRA;
+            m_event.event_u.lunarEcl_u.p2 = m_event.event_u.lunarEcl_u.p3 = -1;
+            m_event.event_u.lunarEcl_u.u1 = m_event.event_u.lunarEcl_u.u2 = -1;
+            m_event.event_u.lunarEcl_u.u3 = m_event.event_u.lunarEcl_u.u4 = -1;
+            m_event.event_u.lunarEcl_u.type = EVLE_PARTIAL_PENUMBRA;
 
             findFirstLastContact(tmpJD - H2JD(5.0),
-                                &m_event.lunarEcl_u.p1, &m_event.lunarEcl_u.p4,
-                                &m_event.lunarEcl_u.p2, &m_event.lunarEcl_u.p3, true);
+                                &m_event.event_u.lunarEcl_u.p1, &m_event.event_u.lunarEcl_u.p4,
+                                &m_event.event_u.lunarEcl_u.p2, &m_event.event_u.lunarEcl_u.p3, true);
 
-            if (m_event.lunarEcl_u.p2 != -1 && m_event.lunarEcl_u.p3 != -1)
-              m_event.lunarEcl_u.type = EVLE_FULL_PENUMBRA;
+            if (m_event.event_u.lunarEcl_u.p2 != -1 && m_event.event_u.lunarEcl_u.p3 != -1)
+              m_event.event_u.lunarEcl_u.type = EVLE_FULL_PENUMBRA;
 
             if (s2 < DEG2RAD(((o0.sy + o1.sx) / 2.0) / 3600.0))
             {
-              m_event.lunarEcl_u.type = EVLE_PARTIAL_UMBRA;
+              m_event.event_u.lunarEcl_u.type = EVLE_PARTIAL_UMBRA;
               findFirstLastContact(tmpJD - H2JD(5.0),
-                                  &m_event.lunarEcl_u.u1, &m_event.lunarEcl_u.u4,
-                                  &m_event.lunarEcl_u.u2, &m_event.lunarEcl_u.u3, false);
-              if (m_event.lunarEcl_u.u2 != -1 && m_event.lunarEcl_u.u3 != -1)
-                m_event.lunarEcl_u.type = EVLE_FULL_UMBRA;
+                                  &m_event.event_u.lunarEcl_u.u1, &m_event.event_u.lunarEcl_u.u4,
+                                  &m_event.event_u.lunarEcl_u.u2, &m_event.event_u.lunarEcl_u.u3, false);
+              if (m_event.event_u.lunarEcl_u.u2 != -1 && m_event.event_u.lunarEcl_u.u3 != -1)
+                m_event.event_u.lunarEcl_u.type = EVLE_FULL_UMBRA;
             }
 
-            if (!totLEcl || (totLEcl && m_event.lunarEcl_u.type == EVLE_FULL_UMBRA))
+            if (!totLEcl || (totLEcl && m_event.event_u.lunarEcl_u.type == EVLE_FULL_UMBRA))
             {
               event_t *e = new event_t;
 
               memcpy(e, &m_event, sizeof(event_t));
 
               e->type = EVT_LUNARECL;
-              e->vis = getVisibility(e->type, &m_view, m_event.lunarEcl_u.p1, m_event.lunarEcl_u.p4);
+              e->vis = getVisibility(e->type, &m_view, m_event.event_u.lunarEcl_u.p1, m_event.event_u.lunarEcl_u.p4);
               e->jd = tmpJD;
               e->geoHash = CGeoHash::calculate(&m_view.geo);
+              e->locationName = m_view.geo.name;
 
               mutex.lock();
               tEventList.append(e);
@@ -977,14 +978,14 @@ void searchEvent::CCommonEvent::run(void)
           {
             qDebug("occ %f", tmpJD);
 
-            m_event.moonOcc_u.i1 = -1;
-            m_event.moonOcc_u.i2 = -1;
-            m_event.moonOcc_u.id = m_id1;
+            m_event.event_u.moonOcc_u.i1 = -1;
+            m_event.event_u.moonOcc_u.i2 = -1;
+            m_event.event_u.moonOcc_u.id = m_id1;
 
             // cas podle rychlosti mesice
             findFirstLastContact(tmpJD - H2JD(10.0),
-                                &m_event.moonOcc_u.c1, &m_event.moonOcc_u.c2,
-                                &m_event.moonOcc_u.i1, &m_event.moonOcc_u.i2);
+                                &m_event.event_u.moonOcc_u.c1, &m_event.event_u.moonOcc_u.c2,
+                                &m_event.event_u.moonOcc_u.i1, &m_event.event_u.moonOcc_u.i2);
 
             m_view.jd = tmpJD;
             cEphem.setParam(&m_view);
@@ -996,10 +997,11 @@ void searchEvent::CCommonEvent::run(void)
             memcpy(e, &m_event, sizeof(event_t));
 
             e->type = EVT_OCCULTATION;
-            e->vis = getVisibility(e->type, &m_view, m_event.moonOcc_u.c1, m_event.moonOcc_u.c2, m_id1);
+            e->vis = getVisibility(e->type, &m_view, m_event.event_u.moonOcc_u.c1, m_event.event_u.moonOcc_u.c2, m_id1);
             e->jd = tmpJD;
             e->id = m_id1;
             e->geoHash = CGeoHash::calculate(&m_view.geo);
+            e->locationName = m_view.geo.name;
 
             mutex.lock();
             tEventList.append(e);
@@ -1011,15 +1013,15 @@ void searchEvent::CCommonEvent::run(void)
           {
             qDebug("eclipse %f", tmpJD);
 
-            m_event.solarEcl_u.i1 = -1;
-            m_event.solarEcl_u.i2 = -1;
+            m_event.event_u.solarEcl_u.i1 = -1;
+            m_event.event_u.solarEcl_u.i2 = -1;
 
             findFirstLastContact(tmpJD - H2JD(3.5),
-                                &m_event.solarEcl_u.c1, &m_event.solarEcl_u.c2,
-                                &m_event.solarEcl_u.i1, &m_event.solarEcl_u.i2);
+                                &m_event.event_u.solarEcl_u.c1, &m_event.event_u.solarEcl_u.c2,
+                                &m_event.event_u.solarEcl_u.i1, &m_event.event_u.solarEcl_u.i2);
 
-            if ((m_event.solarEcl_u.i1 == -1 && m_event.solarEcl_u.i1 != -1) ||
-                (m_event.solarEcl_u.i1 != -1 && m_event.solarEcl_u.i1 == -1))
+            if ((m_event.event_u.solarEcl_u.i1 == -1 && m_event.event_u.solarEcl_u.i1 != -1) ||
+                (m_event.event_u.solarEcl_u.i1 != -1 && m_event.event_u.solarEcl_u.i1 == -1))
             {
               qDebug("CCommonEvent::run fail!!!!");
             }
@@ -1029,40 +1031,41 @@ void searchEvent::CCommonEvent::run(void)
             cEphem.calcPlanet(m_id0, &o0);
             cEphem.calcPlanet(m_id1, &o1);
 
-            if (m_event.solarEcl_u.i1 == -1 && m_event.solarEcl_u.i1 == -1)
+            if (m_event.event_u.solarEcl_u.i1 == -1 && m_event.event_u.solarEcl_u.i1 == -1)
             {
               // mag = (rs + rm - ?) / (2 rs)
               double rs = 1;
               double rm = o1.sx / o0.sx;
               double delta = 2 * RAD2DEG(s2) / (o0.sx / 3600.0);
               qDebug("delta = %f", delta);
-              m_event.solarEcl_u.mag = (rs + rm - delta) / (2 * rs);
-              m_event.solarEcl_u.type = EVE_PARTIAL;
+              m_event.event_u.solarEcl_u.mag = (rs + rm - delta) / (2 * rs);
+              m_event.event_u.solarEcl_u.type = EVE_PARTIAL;
             }
             else
             if (o0.sx <= o1.sx)
             {
-              m_event.solarEcl_u.type = EVE_FULL;
-              m_event.solarEcl_u.mag = o1.sx / o0.sy;
+              m_event.event_u.solarEcl_u.type = EVE_FULL;
+              m_event.event_u.solarEcl_u.mag = o1.sx / o0.sy;
             }
             else
             {
-              m_event.solarEcl_u.type = EVE_RING;
-              m_event.solarEcl_u.mag = o1.sx / o0.sy;
+              m_event.event_u.solarEcl_u.type = EVE_RING;
+              m_event.event_u.solarEcl_u.mag = o1.sx / o0.sy;
             }
 
-           if (!totSEcl || (totSEcl && m_event.solarEcl_u.mag >= 1.0))
+           if (!totSEcl || (totSEcl && m_event.event_u.solarEcl_u.mag >= 1.0))
             {
               event_t *e = new event_t;
 
-              qDebug("sol %d %f", totSEcl, m_event.solarEcl_u.mag);
+              qDebug("sol %d %f", totSEcl, m_event.event_u.solarEcl_u.mag);
 
               memcpy(e, &m_event, sizeof(event_t));
 
               e->type = EVT_SOLARECL;
-              e->vis = getVisibility(e->type, &m_view, m_event.solarEcl_u.c1, m_event.solarEcl_u.c2);
+              e->vis = getVisibility(e->type, &m_view, m_event.event_u.solarEcl_u.c1, m_event.event_u.solarEcl_u.c2);
               e->jd = tmpJD;
               e->geoHash = CGeoHash::calculate(&m_view.geo);
+              e->locationName = m_view.geo.name;
 
               mutex.lock();
               tEventList.append(e);
@@ -1077,13 +1080,13 @@ void searchEvent::CCommonEvent::run(void)
             { // je pred sluncem
               qDebug("transit %f", tmpJD);
 
-              m_event.sunTransit_u.i1 = -1;
-              m_event.sunTransit_u.i2 = -1;
-              m_event.sunTransit_u.id = m_id1;
+              m_event.event_u.sunTransit_u.i1 = -1;
+              m_event.event_u.sunTransit_u.i2 = -1;
+              m_event.event_u.sunTransit_u.id = m_id1;
 
               findFirstLastContact(tmpJD - H2JD(12.0),
-                                  &m_event.sunTransit_u.c1, &m_event.sunTransit_u.c2,
-                                  &m_event.sunTransit_u.i1, &m_event.sunTransit_u.i2);
+                                  &m_event.event_u.sunTransit_u.c1, &m_event.event_u.sunTransit_u.c2,
+                                  &m_event.event_u.sunTransit_u.i1, &m_event.event_u.sunTransit_u.i2);
 
               m_view.jd = tmpJD;
               cEphem.setParam(&m_view);
@@ -1095,9 +1098,10 @@ void searchEvent::CCommonEvent::run(void)
               memcpy(e, &m_event, sizeof(event_t));
 
               e->type = EVT_SUNTRANSIT;
-              e->vis = getVisibility(e->type, &m_view, m_event.sunTransit_u.c1, m_event.sunTransit_u.c2);
+              e->vis = getVisibility(e->type, &m_view, m_event.event_u.sunTransit_u.c1, m_event.event_u.sunTransit_u.c2);
               e->jd = tmpJD;
               e->geoHash = CGeoHash::calculate(&m_view.geo);
+              e->locationName = m_view.geo.name;
 
               mutex.lock();
               tEventList.append(e);
@@ -1171,8 +1175,9 @@ void searchEvent::CMaxElongation::run(void)
       e->vis = getVisibility(e->type, &m_view, m_view.jd, 0, m_id);
       e->id = m_id;
       e->jd = m_view.jd;
-      e->elongation_u.elong = o.elongation;
+      e->event_u.elongation_u.elong = o.elongation;
       e->geoHash = CGeoHash::calculate(&m_view.geo);
+      e->locationName = m_view.geo.name;
 
       tEventList.append(e);
       eventCount++;
@@ -1251,9 +1256,10 @@ void searchEvent::COpposition::run(void)
       e->vis = getVisibility(e->type, &m_view, m_view.jd, 0, m_id);
       e->id = m_id;
       e->jd = m_view.jd;
-      e->opposition_u.size = o.sx;
-      e->opposition_u.R = o.R;
+      e->event_u.opposition_u.size = o.sx;
+      e->event_u.opposition_u.R = o.R;
       e->geoHash = CGeoHash::calculate(&m_view.geo);
+      e->locationName = m_view.geo.name;
 
       tEventList.append(e);
       eventCount++;
@@ -1380,17 +1386,18 @@ void searchEvent::CConjuction::run(void)
             e->vis = vis;
             e->id = -1;
             e->jd = m_view.jd;
-            e->conjuction_u.dist = s2;
+            e->event_u.conjuction_u.dist = s2;
 
             int c = 0;
             foreach (int i, m_idList)
             {
-              e->conjuction_u.idList[c] = i;
+              e->event_u.conjuction_u.idList[c] = i;
               c++;
             }
 
-            e->conjuction_u.idCount = m_idList.count();
+            e->event_u.conjuction_u.idCount = m_idList.count();
             e->geoHash = CGeoHash::calculate(&m_view.geo);
+            e->locationName = m_view.geo.name;
 
             tEventList.append(e);
             eventCount++;
@@ -1515,7 +1522,8 @@ void CBigMoon::run()
       e->id = PT_MOON;
       e->jd = jd;
       e->geoHash = CGeoHash::calculate(&m_view.geo);
-      e->bigMoon_u.R = orbit.R;
+      e->locationName = m_view.geo.name;
+      e->event_u.bigMoon_u.R = orbit.R;
 
       //qDebug() << getStrDate(jd, 0) << orbit.R;
 

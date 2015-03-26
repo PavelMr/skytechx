@@ -73,11 +73,6 @@ bool CHorizonWidget::load(const QString &name)
   return true;
 }
 
-bool CHorizonWidget::save(const QString &name)
-{
-
-}
-
 void CHorizonWidget::removeTexture()
 {
   if (background.isTexture)

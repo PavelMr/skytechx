@@ -71,6 +71,7 @@
 #include "cversioncheck.h"
 #include "cobjtracking.h"
 #include "chorizoneditor.h"
+#include "csatelliteevent.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -355,29 +356,45 @@ MainWindow::MainWindow(QWidget *parent) :
     SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/events/events.dat");
     if (f.open(SkFile::ReadOnly))
     {
+      QDataStream ds(&f);
       int count;
+      uint id;
 
-      f.read((char *)&count, sizeof(int));
-      for (int i = 0; i < count; i++)
+      ds >> id;
+      ds >> count;
+      if (id == EVENT_HEADER_ID)
       {
-        event_t *e = new event_t;
+        for (int i = 0; i < count; i++)
+        {
+          event_t *e = new event_t;
 
-        f.read((char *)e, sizeof(event_t));
-        tEventList.append(e);
+          ds >> e->type;
+          ds >> e->vis;
+          ds >> e->jd;
+          ds >> e->id;
+          ds >> e->geoHash;
+          ds >> e->locationName;
+
+          f.read((char *)&e->event_u, sizeof(e->event_u));
+
+          tEventList.append(e);
+        }
       }
     }
   }
 
   QStandardItemModel *model;
-  model = new QStandardItemModel(0, 2);
+  model = new QStandardItemModel(0, 3);
 
   model->setHeaderData(0, Qt::Horizontal, tr("Date"));
   model->setHeaderData(1, Qt::Horizontal, tr("Event"));
+  model->setHeaderData(2, Qt::Horizontal, tr("Location"));
 
   ui->treeView_2->setModel(model);
   ui->treeView_2->setRootIsDecorated(false);
   ui->treeView_2->header()->resizeSection(0, 80);
   ui->treeView_2->header()->resizeSection(1, 100);
+  ui->treeView_2->header()->resizeSection(2, 0);
 
   m_evNames[EVT_ELONGATION] = tr("Max. elongation of ");
   m_evNames[EVT_OPPOSITION] = tr("Opposition of ");
@@ -666,7 +683,7 @@ void MainWindow::setTitle()
   }
   else
   {
-    tzName = " UTC+" + QString::number(24 * ui->widget->m_mapView.geo.tz, 'f', 1);
+    tzName = " UTC" + QString("%1").arg(ui->widget->m_mapView.geo.tz >= 0 ? "+" : "") + QString::number(24 * ui->widget->m_mapView.geo.tz, 'f', 1);
   }
 
   setWindowTitle(QString("Skytech X ") + SK_VERSION + QString(tr("   Location : ")) + ui->widget->m_mapView.geo.name + " " + tzName + " (" + QString(tr("Profile : ")) + g_setName + ")");
@@ -928,14 +945,25 @@ void MainWindow::saveAndExit()
     SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/events/events.dat");
     if (f.open(SkFile::WriteOnly))
     {
+      QDataStream ds(&f);
       int count = tEventList.count();
+      uint id = EVENT_HEADER_ID;
 
-      f.write((char *)&count, sizeof(int));
+      ds << id;
+      ds << count;
+
       for (int i = 0; i < count; i++)
       {
         event_t *e = tEventList[i];
 
-        f.write((char *)e, sizeof(event_t));
+        ds << e->type;
+        ds << e->vis;
+        ds << e->jd;
+        ds << e->id;
+        ds << e->geoHash;
+        ds << e->locationName;
+
+        f.write((char *)&e->event_u, sizeof(e->event_u));
       }
     }
   }
@@ -1023,20 +1051,20 @@ void MainWindow::refillEI()
           str = m_evNames[e->type];
         else
         if (e->type == EVT_SUNTRANSIT)
-          str = m_evNames[e->type] + cAstro.getName(e->sunTransit_u.id);
+          str = m_evNames[e->type] + cAstro.getName(e->event_u.sunTransit_u.id);
         else
         if (e->type == EVT_CONJUCTION)
         {
            str = m_evNames[e->type];
-           for (int j = 0; j < e->conjuction_u.idCount; j++)
+           for (int j = 0; j < e->event_u.conjuction_u.idCount; j++)
            {
-             str += cAstro.getName(e->conjuction_u.idList[j]);
-             if (j < e->conjuction_u.idCount - 2)
+             str += cAstro.getName(e->event_u.conjuction_u.idList[j]);
+             if (j < e->event_u.conjuction_u.idCount - 2)
              {
                str += ", ";
              }
              else
-             if (j < e->conjuction_u.idCount - 1)
+             if (j < e->event_u.conjuction_u.idCount - 1)
              {
                str += tr(" and ");
              }
@@ -1063,6 +1091,14 @@ void MainWindow::refillEI()
           item->setData(col, Qt::BackgroundColorRole);
         }
         model->setItem(j, 1, item);
+
+        item = new QStandardItem;
+        item->setText(e->locationName);
+        if (bLastSearch)
+        {
+          item->setData(col, Qt::BackgroundColorRole);
+        }
+        model->setItem(j, 2, item);
         j++;
       }
     }
@@ -1084,59 +1120,59 @@ QString MainWindow::getEventDesc(event_t *e)
   switch (e->type)
   {
      case EVT_ELONGATION:
-       if (e->elongation_u.elong < 0)
-         str = tr("Max. west elongation is ") + getStrDegDF(fabs(e->elongation_u.elong));
+       if (e->event_u.elongation_u.elong < 0)
+         str = tr("Max. west elongation is ") + getStrDegDF(fabs(e->event_u.elongation_u.elong));
        else
-         str = tr("Max. east elongation is ") + getStrDegDF(fabs(e->elongation_u.elong));
+         str = tr("Max. east elongation is ") + getStrDegDF(fabs(e->event_u.elongation_u.elong));
        break;
 
      case EVT_OPPOSITION:
-       str = QString(tr("Size : %1\"  R = %2 AU")).arg(e->opposition_u.size, 0, 'f', 2).arg(e->opposition_u.R, 0, 'f', 2);
+       str = QString(tr("Size : %1\"  R = %2 AU")).arg(e->event_u.opposition_u.size, 0, 'f', 2).arg(e->event_u.opposition_u.R, 0, 'f', 2);
        break;
 
      case EVT_SUNTRANSIT:
-       str = (tr("Begin : ") + getStrTime(e->sunTransit_u.c1, tz) + tr(", end : ") + getStrTime(e->sunTransit_u.c2, tz));
+       str = (tr("Begin : ") + getStrTime(e->event_u.sunTransit_u.c1, tz) + tr(", end : ") + getStrTime(e->event_u.sunTransit_u.c2, tz));
        break;
 
      case EVT_OCCULTATION:
-       str = (tr("Begin : ") + getStrTime(e->moonOcc_u.c1, tz) + tr(", end : ") + getStrTime(e->moonOcc_u.c2, tz));
+       str = (tr("Begin : ") + getStrTime(e->event_u.moonOcc_u.c1, tz) + tr(", end : ") + getStrTime(e->event_u.moonOcc_u.c2, tz));
        break;
 
      case EVT_CONJUCTION:
-       str = (QString(tr("Distance : %1")).arg(getStrDegDF(e->conjuction_u.dist)));
+       str = (QString(tr("Distance : %1")).arg(getStrDegDF(e->event_u.conjuction_u.dist)));
        break;
 
      case EVT_BIG_MOON:
-       str = QString(tr("Moon distance : %1 E.radii")).arg(e->bigMoon_u.R);
+       str = QString(tr("Moon distance : %1 E.radii")).arg(e->event_u.bigMoon_u.R);
        break;
 
      case EVT_LUNARECL:
-       if (e->lunarEcl_u.type == EVLE_PARTIAL_PENUMBRA)
+       if (e->event_u.lunarEcl_u.type == EVLE_PARTIAL_PENUMBRA)
          str = (tr("Partial penumbral lunar eclipse"));
        else
-       if (e->lunarEcl_u.type == EVLE_FULL_PENUMBRA)
+       if (e->event_u.lunarEcl_u.type == EVLE_FULL_PENUMBRA)
          str = (tr("Penumbral lunar eclipse"));
        else
-       if (e->lunarEcl_u.type == EVLE_PARTIAL_UMBRA)
+       if (e->event_u.lunarEcl_u.type == EVLE_PARTIAL_UMBRA)
          str = (tr("Partial umbral lunar eclipse"));
        else
-       if (e->lunarEcl_u.type == EVLE_FULL_UMBRA)
+       if (e->event_u.lunarEcl_u.type == EVLE_FULL_UMBRA)
          str = (tr("Total lunar eclipse"));
        break;
 
      case EVT_SOLARECL:
-       if (e->solarEcl_u.type == EVE_FULL)
+       if (e->event_u.solarEcl_u.type == EVE_FULL)
        {
-         qDebug() << (e->solarEcl_u.i2 - e->solarEcl_u.i1);
-         str = (tr("Total solar eclipse. Dur : ") + QString("%1").arg(getStrTime(0.5 + (e->solarEcl_u.i2 - e->solarEcl_u.i1) ,0)) +
-                                                    QString(tr(" Mag. %1")).arg(e->solarEcl_u.mag, 0, 'f', 3));
+         qDebug() << (e->event_u.solarEcl_u.i2 - e->event_u.solarEcl_u.i1);
+         str = (tr("Total solar eclipse. Dur : ") + QString("%1").arg(getStrTime(0.5 + (e->event_u.solarEcl_u.i2 - e->event_u.solarEcl_u.i1) ,0)) +
+                                                    QString(tr(" Mag. %1")).arg(e->event_u.solarEcl_u.mag, 0, 'f', 3));
        }
        else
-       if (e->solarEcl_u.type == EVE_PARTIAL)
-         str = (tr("Partial solar eclipse") + QString(tr(" Mag. %1")).arg(e->solarEcl_u.mag, 0, 'f', 3));
+       if (e->event_u.solarEcl_u.type == EVE_PARTIAL)
+         str = (tr("Partial solar eclipse") + QString(tr(" Mag. %1")).arg(e->event_u.solarEcl_u.mag, 0, 'f', 3));
        else
-         str = (tr("Annular (ring) solar eclipse. Dur : ") + QString("%1").arg(getStrTime(0.5 + (e->solarEcl_u.i2 - e->solarEcl_u.i1) ,0)) +
-                                                             QString(tr(" Mag. %1")).arg(e->solarEcl_u.mag, 0, 'f', 3));
+         str = (tr("Annular (ring) solar eclipse. Dur : ") + QString("%1").arg(getStrTime(0.5 + (e->event_u.solarEcl_u.i2 - e->event_u.solarEcl_u.i1) ,0)) +
+                                                             QString(tr(" Mag. %1")).arg(e->event_u.solarEcl_u.mag, 0, 'f', 3));
        break;
    }
   return(str);
@@ -1184,9 +1220,9 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
     a.setParam(&view);
     QList <radec_t> list;
 
-    for (int i = 0; i < e->conjuction_u.idCount; i++)
+    for (int i = 0; i < e->event_u.conjuction_u.idCount; i++)
     {
-      a.calcPlanet(e->conjuction_u.idList[i], &o);
+      a.calcPlanet(e->event_u.conjuction_u.idList[i], &o);
       list.append(o.lRD);
     }
 
@@ -1203,7 +1239,7 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
 
     //ra = atan2(sin(o0.lRD.Ra) + sin(o1.lRD.Ra), cos(o0.lRD.Ra) + cos(o1.lRD.Ra));
     //dec = atan2(sin(o0.lRD.Dec) + sin(o1.lRD.Dec), cos(o0.lRD.Dec) + cos(o1.lRD.Dec));
-    zoom = getOptObjFov(R2D(e->conjuction_u.dist / 2), R2D(e->conjuction_u.dist / 2) * 2);
+    zoom = getOptObjFov(R2D(e->event_u.conjuction_u.dist / 2), R2D(e->event_u.conjuction_u.dist / 2) * 2);
 
     tList = createEIRow(e, getStrDate(e->jd, tz), getStrTime(e->jd, tz), getEventDesc(e), jd, ra, dec, zoom);
     model->appendRow(tList);
@@ -1211,9 +1247,9 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
   else
   if (e->type == EVT_SUNTRANSIT)
   {
-    view.jd = e->sunTransit_u.c1;
+    view.jd = e->event_u.sunTransit_u.c1;
     a.setParam(&view);
-    a.calcPlanet(e->sunTransit_u.id, &o);
+    a.calcPlanet(e->event_u.sunTransit_u.id, &o);
 
     jd = view.jd;
     ra = o.lRD.Ra;
@@ -1225,11 +1261,11 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
 
     /////////////////////////////////////////
 
-    if (e->sunTransit_u.i1 != -1)
+    if (e->event_u.sunTransit_u.i1 != -1)
     {
-      view.jd = e->sunTransit_u.i1;
+      view.jd = e->event_u.sunTransit_u.i1;
       a.setParam(&view);
-      a.calcPlanet(e->sunTransit_u.id, &o);
+      a.calcPlanet(e->event_u.sunTransit_u.id, &o);
 
       jd = view.jd;
       ra = o.lRD.Ra;
@@ -1242,7 +1278,7 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
 
     view.jd = e->jd;
     a.setParam(&view);
-    a.calcPlanet(e->sunTransit_u.id, &o);
+    a.calcPlanet(e->event_u.sunTransit_u.id, &o);
 
     jd = view.jd;
     ra = o.lRD.Ra;
@@ -1252,11 +1288,11 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
     tList = createEIRow(e, getStrDate(jd, tz), getStrTime(jd, tz), tr("Greatest transit"), jd, ra, dec, zoom);
     model->appendRow(tList);
 
-    if (e->sunTransit_u.i2 != -1)
+    if (e->event_u.sunTransit_u.i2 != -1)
     {
-      view.jd = e->sunTransit_u.i2;
+      view.jd = e->event_u.sunTransit_u.i2;
       a.setParam(&view);
-      a.calcPlanet(e->sunTransit_u.id, &o);
+      a.calcPlanet(e->event_u.sunTransit_u.id, &o);
 
       jd = view.jd;
       ra = o.lRD.Ra;
@@ -1267,9 +1303,9 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
       model->appendRow(tList);
     }
 
-    view.jd = e->sunTransit_u.c2;
+    view.jd = e->event_u.sunTransit_u.c2;
     a.setParam(&view);
-    a.calcPlanet(e->sunTransit_u.id, &o);
+    a.calcPlanet(e->event_u.sunTransit_u.id, &o);
 
     jd = view.jd;
     ra = o.lRD.Ra;
@@ -1282,9 +1318,9 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
   else
   if (e->type == EVT_OCCULTATION)
   {
-    view.jd = e->moonOcc_u.c1;
+    view.jd = e->event_u.moonOcc_u.c1;
     a.setParam(&view);
-    a.calcPlanet(e->moonOcc_u.id, &o);
+    a.calcPlanet(e->event_u.moonOcc_u.id, &o);
 
     jd = view.jd;
     ra = o.lRD.Ra;
@@ -1296,11 +1332,11 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
 
     /////////////////////////////////////////
 
-    if (e->moonOcc_u.i1 != -1)
+    if (e->event_u.moonOcc_u.i1 != -1)
     {
-      view.jd = e->moonOcc_u.i1;
+      view.jd = e->event_u.moonOcc_u.i1;
       a.setParam(&view);
-      a.calcPlanet(e->moonOcc_u.id, &o);
+      a.calcPlanet(e->event_u.moonOcc_u.id, &o);
 
       jd = view.jd;
       ra = o.lRD.Ra;
@@ -1313,7 +1349,7 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
 
     view.jd = e->jd;
     a.setParam(&view);
-    a.calcPlanet(e->moonOcc_u.id, &o);
+    a.calcPlanet(e->event_u.moonOcc_u.id, &o);
 
     jd = view.jd;
     ra = o.lRD.Ra;
@@ -1323,11 +1359,11 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
     tList = createEIRow(e, getStrDate(jd, tz), getStrTime(jd, tz), tr("Greatest occultation"), jd, ra, dec, zoom);
     model->appendRow(tList);
 
-    if (e->moonOcc_u.i2 != -1)
+    if (e->event_u.moonOcc_u.i2 != -1)
     {
-      view.jd = e->moonOcc_u.i2;
+      view.jd = e->event_u.moonOcc_u.i2;
       a.setParam(&view);
-      a.calcPlanet(e->moonOcc_u.id, &o);
+      a.calcPlanet(e->event_u.moonOcc_u.id, &o);
 
       jd = view.jd;
       ra = o.lRD.Ra;
@@ -1338,9 +1374,9 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
       model->appendRow(tList);
     }
 
-    view.jd = e->moonOcc_u.c2;
+    view.jd = e->event_u.moonOcc_u.c2;
     a.setParam(&view);
-    a.calcPlanet(e->moonOcc_u.id, &o);
+    a.calcPlanet(e->event_u.moonOcc_u.id, &o);
 
     jd = view.jd;
     ra = o.lRD.Ra;
@@ -1353,13 +1389,13 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
   else
   if (e->type == EVT_LUNARECL)
   {
-    double jds[7] = {e->lunarEcl_u.p1,
-                     e->lunarEcl_u.u1,
-                     e->lunarEcl_u.u2,
+    double jds[7] = {e->event_u.lunarEcl_u.p1,
+                     e->event_u.lunarEcl_u.u1,
+                     e->event_u.lunarEcl_u.u2,
                      e->jd,
-                     e->lunarEcl_u.u3,
-                     e->lunarEcl_u.u4,
-                     e->lunarEcl_u.p4};
+                     e->event_u.lunarEcl_u.u3,
+                     e->event_u.lunarEcl_u.u4,
+                     e->event_u.lunarEcl_u.p4};
 
     QString names[7] = {tr("P1 : Beginning of the penumbral eclipse"),
                         tr("U1 : Beginning of the partial eclipse"),
@@ -1390,11 +1426,11 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
   else
   if (e->type == EVT_SOLARECL)
   {
-    double jds[5] = {e->solarEcl_u.c1,
-                     e->solarEcl_u.i1,
+    double jds[5] = {e->event_u.solarEcl_u.c1,
+                     e->event_u.solarEcl_u.i1,
                      e->jd,
-                     e->solarEcl_u.i2,
-                     e->solarEcl_u.c2};
+                     e->event_u.solarEcl_u.i2,
+                     e->event_u.solarEcl_u.c2};
 
     QString names[5] = {tr("First contact"),
                         tr("Second contact"),
@@ -4879,4 +4915,11 @@ void MainWindow::on_actionHorizon_triggered(bool checked)
 {
   g_showHorizon = checked;
   ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionSatellite_chart_triggered()
+{
+  CSatelliteEvent dlg(this, &ui->widget->m_mapView);
+
+  dlg.exec();
 }

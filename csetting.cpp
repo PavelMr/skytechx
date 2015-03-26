@@ -378,6 +378,7 @@ void CSetting::setValues()
   ui->doubleSpinBox_25->setValue(set.map.aster.plusMag);
   ui->doubleSpinBox_35->setValue(set.map.aster.maxMag);
 
+  ui->checkBox_17->setChecked(set.map.es.show);
   ui->pushButton_41->setColor(set.map.es.color);
   ui->pushButton_42->setFontColor(setFonts[FONT_EARTH_SHD], set.fonst[FONT_EARTH_SHD].color);
   ui->horizontalSlider_15->setValue(set.map.es.alpha);
@@ -614,6 +615,8 @@ void CSetting::apply()
   g_skSet.map.aster.plusMag = ui->doubleSpinBox_25->value();
   g_skSet.map.aster.maxMag = ui->doubleSpinBox_35->value();
 
+  // earth shadow
+  g_skSet.map.es.show = ui->checkBox_17->isChecked();
   g_skSet.map.es.alpha = ui->horizontalSlider_15->value();
 
   g_skSet.map.planet.jupGRSLon = ui->doubleSpinBox_32->value();

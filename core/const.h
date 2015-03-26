@@ -56,6 +56,8 @@
 #define SAFE_DELETE(p)     if (p) { delete p; p = NULL;}
 #define SAFE_FREE(p)       if (p) { free(p); p = NULL;}
 
+#define FAHRENHEIT_TO_DEG(f)   (((f) - 32.0) / 1.8)
+
 #define NEAR_PLANE_DIST    0.01
 #define PLANE_EPSILON      0.0001
 #define MAX_POLYGON_PTS    32

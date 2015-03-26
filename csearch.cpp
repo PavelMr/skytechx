@@ -22,6 +22,19 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
   str = str.simplified();
 
+  if (!str.compare("es", Qt::CaseInsensitive))
+  {
+    orbit_t o, m;
+
+    cAstro.calcPlanet(PT_MOON, &m);
+    cAstro.calcEarthShadow(&o, &m);
+
+    ra = o.lRD.Ra;
+    dec = o.lRD.Dec;
+    fov = getOptObjFov(o.sx / 3600.0, o.sy / 3600.0);
+    return(true);
+  }
+
   if (str.startsWith("HD", Qt::CaseInsensitive))
   {
     str = str.mid(2);
@@ -40,7 +53,6 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       fov = DMS2RAD(10, 0, 0);
       return true;
     }
-
   }
 
   if (str.startsWith("TYC", Qt::CaseInsensitive))

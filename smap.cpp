@@ -99,7 +99,59 @@ void getMilleniumStasAtlas(QString &str,double Ra,double Dec)
   str = QString(QObject::tr("Pg. %1-%2, Vol. %3")).arg(CART).arg(CART + 1).arg(vstr[VOL]);
 }
 
+void getInterstellarumDeepSkyAtlas(QString &str, double ra, double dec)
+{
+  double d = RAD2DEG(dec);
+  double r = 24 - (RAD2DEG(ra) / 15.0);
+  int s = 0;
 
+  if (d >= 82.5)
+  {
+    s = 1; // north pole
+  }
+  else
+  if (d <= -82.5)
+  {
+    s = 114; // south pole
+  }
+  else
+  if (d >= 67.5)
+  {
+    s = 2 + (r / 4);
+  }
+  else
+  if (d >= 52.5)
+  {
+    s = 8 + (r / 3);
+  }
+  else
+  if (d >= 37.5)
+  {
+    s = 16 + (r / 2);
+  }
+  else
+  if (d <= 52.5 && d >= -52.5)
+  {
+    s = 28 + (r / 2) + qAbs((int)((d - 52.5) / 15) + 1) * 12;
+  }
+  else
+  if (d <= -67.5)
+  {
+    s = 108 + (r / 4);
+  }
+  else
+  if (d <= -52.5)
+  {
+    s = 100 + (r / 3);
+  }
+  else
+  if (d <= -37.5)
+  {
+    s = 88 + (r / 2);
+  }
+
+  str = QString(QObject::tr("Pg. %1")).arg(s);
+}
 
 ////////////////////////////////////////////////////////
 void getStarAtlas2000(QString &str,double Ra,double Dec)

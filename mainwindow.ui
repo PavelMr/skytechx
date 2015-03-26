@@ -399,6 +399,13 @@
     <property name="title">
      <string>&amp;Observing</string>
     </property>
+    <widget class="QMenu" name="menuPlanet_satellite">
+     <property name="title">
+      <string>Planet satellite</string>
+     </property>
+     <addaction name="actionSatelitte_daily_events"/>
+     <addaction name="actionSatellite_chart"/>
+    </widget>
     <addaction name="actionSearch_events"/>
     <addaction name="actionDay_Night"/>
     <addaction name="actionDay_event"/>
@@ -406,11 +413,11 @@
     <addaction name="actionPlanet_visibility"/>
     <addaction name="actionPlanet_altitude"/>
     <addaction name="actionMoon_calendary"/>
-    <addaction name="actionSatelitte_daily_events"/>
     <addaction name="actionEphemeride_list"/>
     <addaction name="actionPolaris_Hour_Angle"/>
     <addaction name="actionSolar_system_2"/>
     <addaction name="actionActual_weather"/>
+    <addaction name="menuPlanet_satellite"/>
    </widget>
    <widget class="QMenu" name="menu_Telescope">
     <property name="title">
@@ -3314,7 +3321,10 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEphemeride_list">
    <property name="text">
-    <string>Ephemerid list...</string>
+    <string>Ephemeris list...</string>
+   </property>
+   <property name="toolTip">
+    <string>Ephemeris list</string>
    </property>
   </action>
   <action name="actionBilinear_interpolation">
@@ -3744,6 +3754,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Show/Hide horizon</string>
+   </property>
+  </action>
+  <action name="actionSatellite_chart">
+   <property name="text">
+    <string>Satellite chart...</string>
    </property>
   </action>
  </widget>

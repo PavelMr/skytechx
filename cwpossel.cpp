@@ -58,6 +58,9 @@ CWPosSel::CWPosSel(QWidget *parent, mapView_t *view) :
   ui->spinBox_8->setValue(view->geo.temp);
   ui->spinBox_9->setValue(view->geo.press);
   ui->checkBox->setChecked(!view->geo.useAtmRefraction);
+  ui->cb_tempType->addItem("C");
+  ui->cb_tempType->addItem("F");
+  ui->cb_tempType->setCurrentIndex(view->geo.tempType);
 
   location_t loc;
 
@@ -371,6 +374,7 @@ void CWPosSel::on_pushButton_2_clicked()
   m_view->geo.sdlt = ui->doubleSpinBox_4->value() / 24.0;
   m_view->geo.tz = m_view->geo.tzo + m_view->geo.sdlt;
 
+  m_view->geo.tempType = ui->cb_tempType->currentIndex();
   m_view->geo.temp = ui->spinBox_8->value();
   m_view->geo.press = ui->spinBox_9->value();
   m_view->geo.useAtmRefraction = !ui->checkBox->isChecked();

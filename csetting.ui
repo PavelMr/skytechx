@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>7</number>
+            <number>9</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2087,42 +2087,42 @@
                 <layout class="QVBoxLayout" name="verticalLayout_43">
                  <item>
                   <layout class="QFormLayout" name="formLayout_10">
-                   <item row="0" column="0">
+                   <item row="1" column="0">
                     <widget class="QLabel" name="label_53">
                      <property name="text">
                       <string>Color</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="1" column="0">
+                   <item row="2" column="0">
                     <widget class="CPushColorButton" name="pushButton_41">
                      <property name="text">
                       <string>PushButton</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="2" column="0">
+                   <item row="3" column="0">
                     <widget class="QLabel" name="label_55">
                      <property name="text">
                       <string>Label font &amp; color</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="3" column="0">
+                   <item row="4" column="0">
                     <widget class="CFontColorButton" name="pushButton_42">
                      <property name="text">
                       <string>PushButton</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="0">
+                   <item row="5" column="0">
                     <widget class="QLabel" name="label_54">
                      <property name="text">
                       <string>Phase opacity (alpha)</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="5" column="0">
+                   <item row="6" column="0">
                     <widget class="QSlider" name="horizontalSlider_15">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -2144,6 +2144,13 @@
                      </property>
                      <property name="tickPosition">
                       <enum>QSlider::TicksAbove</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="checkBox_17">
+                     <property name="text">
+                      <string>Show earth shadow</string>
                      </property>
                     </widget>
                    </item>

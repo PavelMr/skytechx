@@ -881,65 +881,68 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 
   // draw earth shadow
 
-  orbit_t es;
-  SKPOINT pt;
-
-  cAstro.calcEarthShadow(&es, &o[PT_MOON]);
-
-  double ra = es.lRD.Ra;
-  double dec = es.lRD.Dec;
-
-  precess(&ra, &dec, mapView->jd, JD2000);
-
-  trfRaDecToPointCorrectFromTo(&es.lRD, &pt, mapView->jd, JD2000);
-  if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, 0.5 * D2R(es.sx / 3600.0)))
+  if (g_skSet.map.es.show)
   {
-    trfProjectPointNoCheck(&pt);
-    double rot = R2D(trfGetAngleToNPole(ra, dec));
+    orbit_t es;
+    SKPOINT pt;
 
-    int r1 = trfGetArcSecToPix(es.sx);
-    int r2 = trfGetArcSecToPix(es.sy);
+    cAstro.calcEarthShadow(&es, &o[PT_MOON]);
 
-    pPainter->save();
-    pPainter->translate(pt.sx, pt.sy);
-    pPainter->rotate(rot);
+    double ra = es.lRD.Ra;
+    double dec = es.lRD.Dec;
 
-    pPainter->setPen(g_skSet.map.es.color);
-    pPainter->setBrush(QColor(0,0,0, g_skSet.map.es.alpha));
+    precess(&ra, &dec, mapView->jd, JD2000);
 
-    pPainter->drawEllipse(QPoint(0, 0), r1, r1);
-    pPainter->drawEllipse(QPoint(0, 0), r2, r2);
+    trfRaDecToPointCorrectFromTo(&es.lRD, &pt, mapView->jd, JD2000);
+    if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, 0.5 * D2R(es.sx / 3600.0)))
+    {
+      trfProjectPointNoCheck(&pt);
+      double rot = R2D(trfGetAngleToNPole(ra, dec));
 
-    pPainter->setPen(QPen(QColor(g_skSet.map.es.color), 1, Qt::DotLine));
-    pPainter->drawCross(0, 0, r1);
-    pPainter->drawCrossX(0, 0, r1 * 0.7071067811865475);
+      int r1 = trfGetArcSecToPix(es.sx);
+      int r2 = trfGetArcSecToPix(es.sy);
 
-    QTransform tr;
+      pPainter->save();
+      pPainter->translate(pt.sx, pt.sy);
+      pPainter->rotate(rot);
 
-    tr.translate(pt.sx, pt.sy);
-    tr.rotate(rot);
+      pPainter->setPen(g_skSet.map.es.color);
+      pPainter->setBrush(QColor(0,0,0, g_skSet.map.es.alpha));
 
-    pPainter->restore();
+      pPainter->drawEllipse(QPoint(0, 0), r1, r1);
+      pPainter->drawEllipse(QPoint(0, 0), r2, r2);
 
-    pPainter->setPen(g_skSet.map.es.color);
-    pPainter->setBrush(QColor(0, 0, 0, g_skSet.map.es.alpha));
+      pPainter->setPen(QPen(QColor(g_skSet.map.es.color), 1, Qt::DotLine));
+      pPainter->drawCross(0, 0, r1);
+      pPainter->drawCrossX(0, 0, r1 * 0.7071067811865475);
 
-    int fs = 10;
-    QPoint p;
+      QTransform tr;
 
-    setSetFont(FONT_EARTH_SHD, pPainter);
-    setSetFontColor(FONT_EARTH_SHD, pPainter);
+      tr.translate(pt.sx, pt.sy);
+      tr.rotate(rot);
 
-    p = tr.map(QPoint(0, r1 + fs));
-    pPainter->drawCText(p.x(), p.y(), QObject::tr("N"));
-    p = tr.map(QPoint(0, -r1 - fs));
-    pPainter->drawCText(p.x(), p.y(), QObject::tr("S"));
-    p = tr.map(QPoint(-r1 - fs, 0));
-    pPainter->drawCText(p.x(), p.y(), QObject::tr("W"));
-    p = tr.map(QPoint(r1 + fs, 0));
-    pPainter->drawCText(p.x(), p.y(), QObject::tr("E"));
+      pPainter->restore();
 
-    addMapObj(pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
+      pPainter->setPen(g_skSet.map.es.color);
+      pPainter->setBrush(QColor(0, 0, 0, g_skSet.map.es.alpha));
+
+      int fs = 10;
+      QPoint p;
+
+      setSetFont(FONT_EARTH_SHD, pPainter);
+      setSetFontColor(FONT_EARTH_SHD, pPainter);
+
+      p = tr.map(QPoint(0, r1 + fs));
+      pPainter->drawCText(p.x(), p.y(), QObject::tr("N"));
+      p = tr.map(QPoint(0, -r1 - fs));
+      pPainter->drawCText(p.x(), p.y(), QObject::tr("S"));
+      p = tr.map(QPoint(-r1 - fs, 0));
+      pPainter->drawCText(p.x(), p.y(), QObject::tr("W"));
+      p = tr.map(QPoint(r1 + fs, 0));
+      pPainter->drawCText(p.x(), p.y(), QObject::tr("E"));
+
+      addMapObj(pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
+    }
   }
 
 }

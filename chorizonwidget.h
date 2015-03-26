@@ -22,7 +22,6 @@ public:
   void setEditor(QPlainTextEdit *editor) { m_editor = editor; updateData(); }
   void setCurrentText(const QString &text) { m_currentText = text; }
   bool load(const QString &name);
-  bool save(const QString &name);
   void removeTexture();
   void setTexture(const QString &name);
 

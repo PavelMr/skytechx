@@ -173,6 +173,7 @@ CMapView::CMapView(QWidget *parent) :
   m_mapView.geo.tzo = settings.value("geo/tzo", 1 / 24.0).toDouble();
   m_mapView.geo.sdlt = settings.value("geo/sdlt", 0).toDouble();
   m_mapView.geo.temp = settings.value("geo/temp", 15).toDouble();
+  m_mapView.geo.tempType = settings.value("geo/tempType", 0).toInt();
   m_mapView.geo.press = settings.value("geo/press", 1013).toDouble();
   m_mapView.geo.useAtmRefraction = settings.value("geo/useAtmRef", true).toBool();
   m_mapView.geo.name = settings.value("geo/name", "Unnamed").toString();
@@ -1002,6 +1003,7 @@ void CMapView::saveSetting()
   settings.setValue("geo/tzo", m_mapView.geo.tzo);
   settings.setValue("geo/sdlt", m_mapView.geo.sdlt);
   settings.setValue("geo/temp", m_mapView.geo.temp);
+  settings.setValue("geo/tempType", m_mapView.geo.tempType);
   settings.setValue("geo/useAtmRef", m_mapView.geo.useAtmRefraction);
   settings.setValue("geo/press", m_mapView.geo.press);
   settings.setValue("geo/name", m_mapView.geo.name);

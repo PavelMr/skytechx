@@ -110,6 +110,7 @@ bool setSave(QString name, setting_t *set)
   writeFont("font.satellite", &set->fonst[FONT_SATELLITE], ds);
 
   // earth shadow
+  writeVal("map.es.show", set->map.es.show, ds);
   writeVal("map.es.color", set->map.es.color, ds);
   writeVal("map.es.alpha", set->map.es.alpha, ds);
 
@@ -372,6 +373,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.satellite.size = readVal("map.satellite.size", 1, tMap).toDouble();
 
   // earth shadow
+  set->map.es.show = readVal("map.es.show", true, tMap).toBool();
   set->map.es.color = readVal("map.es.color", MRGB(0, 200, 0), tMap).toUInt();
   set->map.es.alpha = readVal("map.es.alpha", 128, tMap).toFloat();
 

@@ -179,6 +179,7 @@ typedef struct
 
 typedef struct
 {
+  bool  show;
   QRgb  color;
   float alpha;
 } setES_t;
