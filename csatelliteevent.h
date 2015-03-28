@@ -102,6 +102,8 @@ public:
 private slots:
   void on_comboBox_currentIndexChanged(int index);
 
+  void on_pushButton_3_clicked();
+
 private:
   Ui::CSatelliteEvent *ui;
   mapView_t m_view;

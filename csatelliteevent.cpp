@@ -17,6 +17,8 @@ CSatelliteChartWidget::CSatelliteChartWidget(QWidget *parent, QLabel *label) :
   m_label(label)
 {
   setMouseTracking(true);
+  setAttribute(Qt::WA_OpaquePaintEvent, true);
+  setAttribute(Qt::WA_NoSystemBackground, true);
 }
 
 void CSatelliteChartWidget::setData(const mapView_t *view, int planet)
@@ -59,40 +61,37 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
 
   p.setRenderHint(QPainter::Antialiasing);
 
+  double jd2 = m_jd + m_view.geo.tz;
   double dy = height() / m_yScale;
-  int row = 0;
-  double jd = m_jd - 0.5 + m_view.geo.tz;
-  double frac = 1 - ((jd) - (int)jd);
-  int y = 0;
+  double y = -(jd2 - (floor(jd2 + 0.5) - 0.5)) * dy;
+  int mod = (int)(jd2 - 0.5);
+
   p.setPen(Qt::black);
   p.setFont(QFont("Arial", 11, QFont::Bold));
 
-  //qDebug() << frac << jd;
-
   for (double i = 0; i <= height() + dy; i += dy)
   {
-    QRectF rc = QRectF(0, y, width(), dy * frac);
+    QRectF rc = QRectF(0, y, width(), dy);
 
-    if (((int)(jd) % 2) == 0)
+    if ((mod % 2) == 0)
     {
-      p.fillRect(QRect(0, y - dy * (1 - frac), width(), dy), Qt::darkGray);
+      p.fillRect(rc, Qt::darkGray);
     }
     else
     {
-      p.fillRect(QRect(0, y - dy * (1 - frac), width(), dy), Qt::gray);
+      p.fillRect(rc, Qt::gray);
     }
 
-    if (rc.height() > 48)
+    if (rc.height() > 35)
     {
-      double jd2 = jd + 0.5;
       p.drawText(rc.adjusted(10, 10, -10, -10), Qt::AlignLeft | Qt::AlignVCenter, getStrDate(jd2, m_view.geo.tz));
     }
 
-    y += dy * frac;
-    row++;
-    jd += 1;
-    frac = 1;
+    mod++;
+    y += dy;
+    jd2++;
   }
+
 
   //p.fillRect(rect(), Qt::darkGray);
 
@@ -106,8 +105,8 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
   for (int j = 0; j < m_satCount; j++)
   {
     int cc = 0;
-    p.setPen(QPen(colors[m_planet - PT_MARS][j], 2));
     int y = 0;
+    p.setPen(QPen(colors[m_planet - PT_MARS][j], 2));
     for (int i = 0; i < m_data[j].count() - 1; i++)
     {
       chart_t &p1 = m_data[j][i];
@@ -135,9 +134,6 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
       y++;
     }
   }
-
-  //p.setPen(Qt::white);
-  //p.drawText(10, 10, QString::number(m_xScale));
 }
 
 void CSatelliteChartWidget::resizeEvent(QResizeEvent *e)
@@ -180,8 +176,15 @@ void CSatelliteChartWidget::mouseMoveEvent(QMouseEvent *e)
 
   if (m_satCount)
   {
-    double jd = m_data[0][e->pos().y()].jd;
-    m_label->setText(getStrDate(jd, m_view.geo.tz) + " " + getStrTime(jd, m_view.geo.tz));
+    if (rect().contains(e->pos()))
+    {
+      double jd = m_data[0][e->pos().y()].jd;
+      m_label->setText(getStrDate(jd, m_view.geo.tz) + " " + getStrTime(jd, m_view.geo.tz));
+    }
+    else
+    {
+      m_label->setText(tr("N/A"));
+    }
   }
 }
 
@@ -288,4 +291,9 @@ void CSatelliteEvent::on_comboBox_currentIndexChanged(int index)
       label[i]->setText(temp.arg(colors[index][i].name(), sat.sat[i].name));
     }
   }
+}
+
+void CSatelliteEvent::on_pushButton_3_clicked()
+{
+  done(DL_OK);
 }

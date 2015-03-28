@@ -740,6 +740,8 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
                       };
 
   cDSO.setPainter(pPainter, pImg);
+  int oldSize = cDSO.getMinSize();
+  cDSO.setMinSize(6);
   for (int i = 0; i < 12; i++)
   {
     pt.sx = 370 + orc.x() + 10 + i * 32;
@@ -763,6 +765,7 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     }
     pPainter->renderText(pt.sx, pt.sy, 17, types[i].name, RT_BOTTOM);
   }
+  cDSO.setMinSize(oldSize);
 
   pPainter->setPen(QColor(48, 48, 48));
   pPainter->setBrush(Qt::NoBrush);

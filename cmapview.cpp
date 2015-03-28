@@ -231,11 +231,6 @@ void CMapView::wheelEvent(QWheelEvent *e)
   if (e->modifiers() & Qt::ShiftModifier)
     mul = 0.1;
 
-  // TODO: neni to linearni (dopredu a dozadu neda tu samou hodnotu)
-  //else
-  //if (e->modifiers() & Qt::ControlModifier)
-  //  mul = 2;
-
   if (e->delta() > 0)
     addFov(1, 0.5 * mul);
   else
@@ -1348,7 +1343,7 @@ void CMapView::updateStatusBar(void)
     pcMainWnd->statusBar->setItem(SB_SM_CONST,QString("%1").arg(constGetName(constWhatConstel(ra, dec, epoch), 1)));
     pcMainWnd->statusBar->setItem(SB_SM_RA,   QString(tr("R.A. : %1")).arg(getStrRA(ra)));
     pcMainWnd->statusBar->setItem(SB_SM_DEC,  QString(tr("Dec. : %1")).arg(getStrDeg(dec)));
-    pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : %1")).arg(getStrDeg(m_mapView.fov)));
+    pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : %1")).arg(getStrDegNoSign(m_mapView.fov)));
     pcMainWnd->statusBar->setItem(SB_SM_MAGS, QString(tr("Star : %1 mag. / DSO %2 mag.")).arg(m_mapView.starMag, 0, 'f', 1).arg(m_mapView.dsoMag, 0, 'f', 1));
 
     pcMainWnd->statusBar->setItem(SB_SM_ALT,   QString(tr("Alt. : %1")).arg(getStrDeg(alt)));
@@ -1764,6 +1759,7 @@ void CMapView::paintEvent(QPaintEvent *)
 
     double fov = calcNewPos(&rc, &x, &y);
 
+    p.setFont(QFont("arial",  11, QFont::Bold));
     p.setBrush(Qt::NoBrush);
 
     if (fov != 0)
@@ -1776,11 +1772,13 @@ void CMapView::paintEvent(QPaintEvent *)
     }
 
     p.setCompositionMode(QPainter::CompositionMode_Difference);
-    p.drawRect(QRect(m_zoomPoint, m_lastMousePos));
+    p.drawRect(rc);
     int mm = qMin(m_lastMousePos.x() - m_zoomPoint.x(), m_lastMousePos.y() - m_zoomPoint.y());
     int size = qMax((int)(mm * 0.05f), 5);
     p.setPen(QPen(QColor(255, 255, 255), 1, Qt::SolidLine));
     p.drawCross(m_zoomPoint + (m_lastMousePos - m_zoomPoint) * 0.5, size);
+    rc = rc.normalized().adjusted(5, 5, -5, -5);
+    p.drawText(rc, Qt::AlignLeft | Qt::AlignTop, tr("FOV : ") + getStrDegNoSign(fov));
 
     p.setCompositionMode(QPainter::CompositionMode_SourceOver);
   }

@@ -3,9 +3,6 @@
 #include "setting.h"
 #include "cconsole.h"
 
-#define MIN_DSO_SIZE  4
-
-
 // FIXME: zrusit duplikaty
 // M47, IC 5146 =Sh2-125
 
@@ -21,6 +18,7 @@ CDso::CDso()
 ////////////
 {
   dsoHead.numDso = 0;
+  m_minSize = MIN_DSO_SIZE;
 }
 
 /////////////
@@ -584,10 +582,10 @@ void CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bo
   int sy = trfGetArcSecToPix(pDso->sy);
   int s = qMax(sx, sy);
 
-  s = qMax(s, MIN_DSO_SIZE);
+  s = qMax(s, m_minSize);
   pPainter->drawRect(QRect(pt->sx - s, pt->sy - s, s * 2, s * 2));
 
-  if (s > MIN_DSO_SIZE && g_showLabels)
+  if (s > m_minSize && g_showLabels)
   {
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
@@ -606,11 +604,11 @@ void CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
-  int  s = qMax(sx, MIN_DSO_SIZE);
+  int  s = qMax(sx, m_minSize);
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
 
-  if (s > MIN_DSO_SIZE && g_showLabels)
+  if (s > m_minSize && g_showLabels)
   {
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
@@ -629,12 +627,12 @@ void CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
-  int  s = qMax(sx, MIN_DSO_SIZE);
+  int  s = qMax(sx, m_minSize);
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
   pPainter->drawCross(pt->sx, pt->sy, s);
 
-  if (s > MIN_DSO_SIZE && g_showLabels)
+  if (s > m_minSize && g_showLabels)
   {
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
@@ -653,12 +651,12 @@ void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
-  int  s = qMax(sx, MIN_DSO_SIZE);
+  int  s = qMax(sx, m_minSize);
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy),(int)(s * 0.8f), (int)(s * 0.8f));
 
-  if (s > MIN_DSO_SIZE && g_showLabels)
+  if (s > m_minSize && g_showLabels)
   {
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
@@ -674,7 +672,7 @@ void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
 void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t * /*mapView*/, bool addToList)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 {
-  int sz = MIN_DSO_SIZE - 1;
+  int sz = m_minSize - 1;
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
@@ -738,11 +736,11 @@ void CDso::renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
-  int  s = qMax(sx, MIN_DSO_SIZE);
+  int  s = qMax(sx, m_minSize);
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
 
-  if (s > MIN_DSO_SIZE && g_showLabels)
+  if (s > m_minSize && g_showLabels)
   {
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
@@ -761,12 +759,12 @@ void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
-  int  s = qMax(sx, MIN_DSO_SIZE);
+  int  s = qMax(sx, m_minSize);
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
   pPainter->drawHalfCross(pt->sx, pt->sy, s, s / 2);
 
-  if (s > MIN_DSO_SIZE && g_showLabels)
+  if (s > m_minSize && g_showLabels)
   {
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
@@ -785,11 +783,11 @@ void CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, boo
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
-  int  s = qMax(sx, MIN_DSO_SIZE);
+  int  s = qMax(sx, m_minSize);
 
   pPainter->drawCross(pt->sx, pt->sy, s);
 
-  if (s > MIN_DSO_SIZE && g_showLabels)
+  if (s > m_minSize && g_showLabels)
   {
     setSetFontColor(FONT_DSO, pPainter);
     pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));

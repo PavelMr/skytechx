@@ -13,6 +13,7 @@
 #define NUM_DSO_SEG_X    48
 
 #define DSO_SEG_SIZE     7.5
+#define MIN_DSO_SIZE     4
 
 typedef struct
 {
@@ -66,6 +67,8 @@ class CDso : public QObject
     void renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
     void renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
     void renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    int  getMinSize() { return(m_minSize); }
+    void setMinSize(int size) { m_minSize = size; }
 
     //TODO: dat nazvy do QStringList *dsoNames;
     dsoHeader_t        dsoHead;
@@ -86,6 +89,7 @@ protected:
     CSkPainter      *pPainter;
     QImage          *pImg;
     int              m_fntHeight;
+    int              m_minSize;
 
     QPen             m_pen;
 
