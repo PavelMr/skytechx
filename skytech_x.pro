@@ -212,7 +212,8 @@ SOURCES += main.cpp\
     cgamepad.cpp \
     chorizoneditor.cpp \
     chorizonwidget.cpp \
-    csatelliteevent.cpp
+    csatelliteevent.cpp \
+    creleseinfo.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -387,7 +388,8 @@ HEADERS  += mainwindow.h \
     cgamepad.h \
     chorizoneditor.h \
     chorizonwidget.h \
-    csatelliteevent.h
+    csatelliteevent.h \
+    creleseinfo.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -461,7 +463,8 @@ FORMS    += mainwindow.ui \
     csearchdsocat.ui \
     cversioncheck.ui \
     chorizoneditor.ui \
-    csatelliteevent.ui
+    csatelliteevent.ui \
+    creleseinfo.ui
 
 
 RESOURCES += \

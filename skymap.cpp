@@ -144,7 +144,6 @@ static void smRenderPPMXLStars(mapView_t *mapView, CSkPainter *pPainter, int reg
     return;
   }
 
-  // TODO: paralerizaci (dat mozna pryc???)
   if (mapView->fov < g_skSet.map.ppmxl.fromFOV && mapView->starMag >= g_skSet.map.ppmxl.fromMag)
   {
     ppmxlCache_t *data;
@@ -152,6 +151,7 @@ static void smRenderPPMXLStars(mapView_t *mapView, CSkPainter *pPainter, int reg
     data = cPPMXL.getRegion(region);
     if (data != NULL)
     {
+      // TODO: paralerizaci (dat mozna pryc???)
       #pragma omp parallel for shared(data)
       for (int j = 0; j < data->count; j++)
       {
@@ -205,7 +205,6 @@ static void smRenderGSCStars(mapView_t *mapView, CSkPainter *pPainter, int regio
     h = &cGSC.gscRegion[region].h;
     g = cGSC.gscRegion[region].gsc;
 
-    //int reg = -1;
     int id = -1;
 
     for (int j = 0; j < h->nobj; j++)
@@ -226,7 +225,6 @@ static void smRenderGSCStars(mapView_t *mapView, CSkPainter *pPainter, int regio
           int r = cStarRenderer.renderStar(&pt, 0, g[j].pMag, pPainter);
           addMapObj(pt.sx, pt.sy, MO_GSCSTAR, MO_CIRCLE, r + 4, region, j, g[j].pMag);
         }
-        //reg = g[j].reg;
         id = g[j].id;
       }
     }
@@ -804,8 +802,6 @@ static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o
     }
   }
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////
 static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)

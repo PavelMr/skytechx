@@ -33,13 +33,12 @@ CDso::~CDso()
   tShapeList.clear();
 
   free(dso);
-  //free(dsoNames);
   free(dsoClass);
   free(dsoCats);
 }
 
 ////////////////////////////////////////////////////////
-static int dsoSort1(const void *elem1, const void *elem2)
+static int dsoSort(const void *elem1, const void *elem2)
 ////////////////////////////////////////////////////////
 {
   dso_t *p1 = (dso_t *)elem1;
@@ -107,8 +106,7 @@ void CDso::load()
   //addAddon("data/catalogue/dso/test.dso");
 
   // sort dso by size
-  qsort(dso, dsoHead.numDso, sizeof(dso_t), dsoSort1);
-  //qSort(dso.begin(), dso.end(), dsoSort);
+  qsort(dso, dsoHead.numDso, sizeof(dso_t), dsoSort);
 
   createSectors();
 

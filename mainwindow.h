@@ -517,6 +517,8 @@ private slots:
 
   void on_actionSatellite_chart_triggered();
 
+  void on_actionRelease_notes_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

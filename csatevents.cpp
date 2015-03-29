@@ -40,6 +40,7 @@ void CSatEvents::solve(double jd, int pln)
   bool   first = true;
   bool   transit[MAX_XYZ_SATS];
   bool   throwShd[MAX_XYZ_SATS];
+  bool   hidden[MAX_XYZ_SATS];
   double lastSep1[MAX_XYZ_SATS];
   double lastSep2[MAX_XYZ_SATS];
   double tz = m_view.geo.tz;
@@ -79,6 +80,7 @@ void CSatEvents::solve(double jd, int pln)
         double s = sqrt(POW2(sat.sat[i].x) + POW2(sat.sat[i].y)) * o.sx;
 
         transit[i] = sat.sat[i].isTransit;
+        hidden[i] = sat.sat[i].isHidden;
         throwShd[i] = sat.sat[i].throwShadow;
         lastSep1[i] = lastSep2[i] = s;
       }
@@ -123,6 +125,25 @@ void CSatEvents::solve(double jd, int pln)
           item->setText(QString(tr("Begin transit of %1")).arg(sat.sat[i].name));
         else
           item->setText(QString(tr("End of transit %1")).arg(sat.sat[i].name));
+        m->setItem(row, 1, item);
+
+        row++;
+      }
+
+      if (hidden[i] != sat.sat[i].isHidden)
+      {
+        hidden[i] = sat.sat[i].isHidden;
+
+        item = new QStandardItem;
+        item->setText(getStrTime(j, tz, true));
+        item->setData(j);
+        m->setItem(row, 0, item);
+
+        item = new QStandardItem;
+        if (hidden[i])
+          item->setText(QString(tr("Begin occultation of %1")).arg(sat.sat[i].name));
+        else
+          item->setText(QString(tr("End of occultation %1")).arg(sat.sat[i].name));
         m->setItem(row, 1, item);
 
         row++;

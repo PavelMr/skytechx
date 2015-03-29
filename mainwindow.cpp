@@ -72,6 +72,7 @@
 #include "cobjtracking.h"
 #include "chorizoneditor.h"
 #include "csatelliteevent.h"
+#include "creleseinfo.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -4920,6 +4921,13 @@ void MainWindow::on_actionHorizon_triggered(bool checked)
 void MainWindow::on_actionSatellite_chart_triggered()
 {
   CSatelliteEvent dlg(this, &ui->widget->m_mapView);
+
+  dlg.exec();
+}
+
+void MainWindow::on_actionRelease_notes_triggered()
+{
+  CReleseInfo dlg(this);
 
   dlg.exec();
 }

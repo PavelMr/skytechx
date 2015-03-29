@@ -314,6 +314,7 @@
     <addaction name="separator"/>
     <addaction name="actionGo_to_SkytechX_home_page"/>
     <addaction name="actionCheck_new_version"/>
+    <addaction name="actionRelease_notes"/>
     <addaction name="separator"/>
     <addaction name="action_About"/>
    </widget>
@@ -797,7 +798,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>308</width>
+          <width>331</width>
           <height>509</height>
          </rect>
         </property>
@@ -1212,7 +1213,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>212</width>
+          <width>257</width>
           <height>524</height>
          </rect>
         </property>
@@ -1452,7 +1453,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>327</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1742,8 +1743,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>101</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1890,8 +1891,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>468</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3759,6 +3760,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionSatellite_chart">
    <property name="text">
     <string>Satellite chart...</string>
+   </property>
+  </action>
+  <action name="actionRelease_notes">
+   <property name="text">
+    <string>Release notes...</string>
    </property>
   </action>
  </widget>
