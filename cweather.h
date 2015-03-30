@@ -28,8 +28,11 @@ private slots:
 
   void on_pushButton_clicked();
 
+  void on_pushButton_3_clicked();
+
 private:
   Ui::CWeather *ui;
+  QNetworkReply *m_reply;
   QNetworkAccessManager m_manager;
   QString m_json;
   QString m_error;

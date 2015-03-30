@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>868</width>
-    <height>432</height>
+    <width>878</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -3600,80 +3600,16 @@
            <property name="bottomMargin">
             <number>4</number>
            </property>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_88">
-             <property name="text">
-              <string>More stars</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QComboBox" name="cb_more_stars"/>
-           </item>
-           <item row="3" column="3">
-            <widget class="QLabel" name="label_89">
-             <property name="text">
-              <string>Less stars</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="4">
-            <widget class="QComboBox" name="cb_less_stars"/>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_90">
-             <property name="text">
-              <string>More DSO</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QComboBox" name="cb_more_dso"/>
-           </item>
-           <item row="4" column="3">
-            <widget class="QLabel" name="label_91">
-             <property name="text">
-              <string>Less DSO</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="4">
-            <widget class="QComboBox" name="cb_less_dso"/>
-           </item>
-           <item row="1" column="2">
-            <widget class="QComboBox" name="cb_up_2"/>
-           </item>
-           <item row="0" column="2">
-            <widget class="QComboBox" name="cb_left_2"/>
-           </item>
            <item row="3" column="2">
-            <widget class="QComboBox" name="cb_more_stars_2"/>
-           </item>
-           <item row="4" column="2">
-            <widget class="QComboBox" name="cb_more_dso_2"/>
-           </item>
-           <item row="2" column="2">
             <widget class="QComboBox" name="cb_zoom_in_2"/>
            </item>
-           <item row="1" column="4">
-            <widget class="QComboBox" name="cb_down"/>
+           <item row="2" column="2">
+            <widget class="QComboBox" name="cb_up_2"/>
            </item>
-           <item row="1" column="1">
-            <widget class="QComboBox" name="cb_up"/>
+           <item row="5" column="2">
+            <widget class="QComboBox" name="cb_more_dso_2"/>
            </item>
-           <item row="1" column="3">
+           <item row="2" column="3">
             <widget class="QLabel" name="label_82">
              <property name="text">
               <string>Move map down</string>
@@ -3683,7 +3619,62 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="3">
+           <item row="1" column="1">
+            <widget class="QComboBox" name="cb_left"/>
+           </item>
+           <item row="4" column="1">
+            <widget class="QComboBox" name="cb_more_stars"/>
+           </item>
+           <item row="5" column="3">
+            <widget class="QLabel" name="label_91">
+             <property name="text">
+              <string>Less DSO</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_90">
+             <property name="text">
+              <string>More DSO</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QComboBox" name="cb_left_2"/>
+           </item>
+           <item row="4" column="4">
+            <widget class="QComboBox" name="cb_less_stars"/>
+           </item>
+           <item row="4" column="2">
+            <widget class="QComboBox" name="cb_more_stars_2"/>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLabel" name="label_89">
+             <property name="text">
+              <string>Less stars</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_88">
+             <property name="text">
+              <string>More stars</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
             <widget class="QLabel" name="label_83">
              <property name="text">
               <string>Move map right</string>
@@ -3693,33 +3684,22 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QComboBox" name="cb_left"/>
+           <item row="5" column="4">
+            <widget class="QComboBox" name="cb_less_dso"/>
            </item>
-           <item row="0" column="4">
-            <widget class="QComboBox" name="cb_right"/>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="cb_up"/>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_84">
-             <property name="text">
-              <string>Move map up</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
+           <item row="5" column="1">
+            <widget class="QComboBox" name="cb_more_dso"/>
            </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_85">
-             <property name="text">
-              <string>Move map left</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
+           <item row="2" column="4">
+            <widget class="QComboBox" name="cb_down"/>
            </item>
-           <item row="2" column="0">
+           <item row="4" column="5">
+            <widget class="QComboBox" name="cb_less_stars_2"/>
+           </item>
+           <item row="3" column="0">
             <widget class="QLabel" name="label_86">
              <property name="text">
               <string>Zoom in</string>
@@ -3729,7 +3709,32 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="3">
+           <item row="3" column="4">
+            <widget class="QComboBox" name="cb_zoom_out"/>
+           </item>
+           <item row="1" column="5">
+            <widget class="QComboBox" name="cb_right_2"/>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="cb_zoom_in"/>
+           </item>
+           <item row="1" column="4">
+            <widget class="QComboBox" name="cb_right"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_85">
+             <property name="text">
+              <string>Move map left</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="5">
+            <widget class="QComboBox" name="cb_less_dso_2"/>
+           </item>
+           <item row="3" column="3">
             <widget class="QLabel" name="label_87">
              <property name="text">
               <string>Zoom out</string>
@@ -3739,26 +3744,49 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QComboBox" name="cb_zoom_in"/>
-           </item>
-           <item row="2" column="4">
-            <widget class="QComboBox" name="cb_zoom_out"/>
-           </item>
-           <item row="0" column="5">
-            <widget class="QComboBox" name="cb_right_2"/>
-           </item>
-           <item row="1" column="5">
+           <item row="2" column="5">
             <widget class="QComboBox" name="cb_down_2"/>
            </item>
-           <item row="2" column="5">
-            <widget class="QComboBox" name="cb_zoom_out_2"/>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_84">
+             <property name="text">
+              <string>Move map up</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
            </item>
            <item row="3" column="5">
-            <widget class="QComboBox" name="cb_less_stars_2"/>
+            <widget class="QComboBox" name="cb_zoom_out_2"/>
            </item>
-           <item row="4" column="5">
-            <widget class="QComboBox" name="cb_less_dso_2"/>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_95">
+             <property name="text">
+              <string>Primary</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_96">
+             <property name="text">
+              <string>Primary</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_97">
+             <property name="text">
+              <string>Alternative</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLabel" name="label_98">
+             <property name="text">
+              <string>Alternative</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>

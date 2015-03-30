@@ -32,6 +32,7 @@ CGalery::CGalery(QWidget *parent, const QString &id, const QString &name) :
 
   connect(&m_load, SIGNAL(sigLoad(QPixmap,QString,QString,bool)), m_area, SLOT(slotLoad(QPixmap, QString, QString, bool)));
   connect(this, SIGNAL(sigLoad(QPixmap, QString, QString, bool)), m_area, SLOT(slotLoad(QPixmap, QString, QString, bool)));
+  connect(this, SIGNAL(sigDelete()), m_area, SLOT(slotDeleteItem()));
 
   m_load.m_id = id;
   m_load.start();
@@ -250,4 +251,9 @@ void CGalery::on_pushButton_2_clicked()
 void CGalery::on_pushButton_clicked()
 {
   done(DL_OK);
+}
+
+void CGalery::on_pushButton_3_clicked()
+{
+  sigDelete();
 }

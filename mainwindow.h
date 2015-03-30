@@ -70,6 +70,7 @@ public:
   void setToolbarIconSize();
 
   void checkNewVersion(bool forced);
+
 protected:
 
   void changeEvent(QEvent *e);

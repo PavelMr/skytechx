@@ -18,7 +18,8 @@
 
 CWeather::CWeather(QWidget *parent, mapView_t *view) :
   QDialog(parent),
-  ui(new Ui::CWeather)
+  ui(new Ui::CWeather),
+  m_reply(NULL)
 {
   ui->setupUi(this);
   setWindowTitle(windowTitle() + " - openweathermap.org");
@@ -148,18 +149,20 @@ void CWeather::getData()
   //QUrl qurl("http://localhost/json/data.json");
   QUrl qurl(QString("http://api.openweathermap.org/data/2.5/weather?lat=%1&lon=%2&mode=json").arg(m_lat).arg(m_lon));
 
+  qDebug() << qurl.host();
+
   QNetworkRequest request(qurl);
-  QNetworkReply *reply = m_manager.get(request);
+  m_reply = m_manager.get(request);
 
   ui->pushButton->setEnabled(false);
-
-  Q_UNUSED(reply);
+  ui->pushButton_3->setEnabled(true);
 }
 
 void CWeather::slotDownloadFinished(QNetworkReply *reply)
 {
   m_json = "";
 
+  ui->pushButton_3->setEnabled(false);
   ui->pushButton->setEnabled(true);
   qDebug() << "error" << reply->error();
 
@@ -188,4 +191,13 @@ void CWeather::on_pushButton_2_clicked()
 void CWeather::on_pushButton_clicked()
 {
   getData();
+}
+
+void CWeather::on_pushButton_3_clicked()
+{
+  if (m_reply)
+  {
+    m_reply->abort();
+    m_reply->deleteLater();
+  }
 }

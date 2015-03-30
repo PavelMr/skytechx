@@ -213,7 +213,8 @@ SOURCES += main.cpp\
     chorizoneditor.cpp \
     chorizonwidget.cpp \
     csatelliteevent.cpp \
-    creleseinfo.cpp
+    creleseinfo.cpp \
+    suntexture.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -389,7 +390,8 @@ HEADERS  += mainwindow.h \
     chorizoneditor.h \
     chorizonwidget.h \
     csatelliteevent.h \
-    creleseinfo.h
+    creleseinfo.h \
+    suntexture.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \

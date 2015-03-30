@@ -4132,9 +4132,13 @@ void MainWindow::on_actionShow_full_screen_triggered(bool checked)
   else
   {
     if (m_isNormal)
+    {
       showNormal();
+    }
     else
+    {
       showMaximized();
+    }
   }
 }
 
