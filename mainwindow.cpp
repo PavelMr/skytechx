@@ -73,6 +73,7 @@
 #include "chorizoneditor.h"
 #include "csatelliteevent.h"
 #include "creleseinfo.h"
+#include "csatprediction.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -4932,6 +4933,13 @@ void MainWindow::on_actionSatellite_chart_triggered()
 void MainWindow::on_actionRelease_notes_triggered()
 {
   CReleseInfo dlg(this);
+
+  dlg.exec();
+}
+
+void MainWindow::on_actionSatellite_prediction_triggered()
+{
+  CSatPrediction dlg(this, &ui->widget->m_mapView);
 
   dlg.exec();
 }

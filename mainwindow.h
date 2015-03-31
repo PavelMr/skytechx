@@ -520,6 +520,8 @@ private slots:
 
   void on_actionRelease_notes_triggered();
 
+  void on_actionSatellite_prediction_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
