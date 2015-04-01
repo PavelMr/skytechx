@@ -854,8 +854,12 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy)
   convRD2AARef(orbit->lRD.Ra, orbit->lRD.Dec, &orbit->lAzm, &orbit->lAlt);
 
   orbit->elongation = acos((m_sunOrbit.r * m_sunOrbit.r + orbit->R * orbit->R - orbit->r * orbit->r) / (2 * m_sunOrbit.r * orbit->R));
-  if (orbit->hLon > m_sunOrbit.hLon + MPI || (orbit->hLon > m_sunOrbit.hLon - MPI && orbit->hLon < m_sunOrbit.hLon))
+
+  if (m_sunOrbit.hLon > orbit->hLon + M_PI ||
+     (m_sunOrbit.hLon > orbit->hLon - M_PI && m_sunOrbit.hLon < orbit->hLon))
+  {
     orbit->elongation = -orbit->elongation;
+  }
 
   orbit->FV = acos((orbit->r * orbit->r + orbit->R * orbit->R - POW2(m_sunOrbit.r)) / (2 * orbit->r * orbit->R));
   orbit->phase = (1 + cos(orbit->FV)) / 2.0;
@@ -1022,10 +1026,6 @@ void CAstro::solveMoon(orbit_t *o)
   ye = yg * cos(m_eclObl) - zg * sin(m_eclObl);
   ze = yg * sin(m_eclObl) + zg * cos(m_eclObl);
 
-  //Ra  = atan2(ye,xe);
-  //Dec = atan2(ze,sqrt(xe*xe+ye*ye));
-  //rangeDbl(&Ra, MPI2);
-
   o->gRD.Ra  = atan2(ye,xe);
   o->gRD.Dec = atan2(ze,sqrt(xe*xe+ye*ye));
 
@@ -1047,8 +1047,12 @@ void CAstro::solveMoon(orbit_t *o)
   o->hLat = latecl;
 
   o->elongation = acos(cos(m_sunOrbit.hLon - lonecl) * cos(latecl));
-  if (m_sunOrbit.hLon - lonecl < 0)
+
+  if (m_sunOrbit.hLon > lonecl + M_PI ||
+     (m_sunOrbit.hLon > lonecl - M_PI && m_sunOrbit.hLon < lonecl))
+  {
     o->elongation = -o->elongation;
+  }
 
   o->FV = MPI - fabs(o->elongation);
   o->phase = (1 + cos(o->FV)) / 2;

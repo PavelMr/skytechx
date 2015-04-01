@@ -15,6 +15,35 @@
 #include "casterdlg.h"
 #include "ccomdlg.h"
 
+
+namespace Ui {
+class CLoadingDlg;
+}
+
+class CLoadingDlg : public QDialog
+{
+  Q_OBJECT
+
+public:
+  explicit CLoadingDlg(QWidget *parent = 0);
+  ~CLoadingDlg();
+
+protected:
+  void changeEvent(QEvent *e);
+  void paintEvent(QPaintEvent *);
+  void reject() {}
+
+private:
+  void sigProgress(int val);
+  Ui::CLoadingDlg *ui;
+  QPixmap *m_logo;
+
+public slots:
+  void slotLoad();
+};
+
+#if 0
+
 class CWaitLogo;
 
 class CLoading : public QThread
@@ -60,5 +89,7 @@ public slots:
   void slotEnd(void);
   void slotProgress(int val);
 };
+
+#endif
 
 #endif // CLOADINGDLG_H

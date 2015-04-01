@@ -17,9 +17,9 @@ CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
 
   ui->comboBox->setCurrentIndex(0);
 
-  setWindowTitle(windowTitle() + " " + getStrDate(view->jd, view->geo.tz));
   m_view = *view;
-  calculate(view->jd);
+  m_jd = view->jd;
+  calculate(m_jd);
 }
 
 CPlanetAltitude::~CPlanetAltitude()
@@ -121,9 +121,12 @@ void CPlanetAltitude::calculate(double jd)
   m_step = JD1SEC * 60 * 30; // 10 min
   CAstro ast;
 
-  jd = (floor(jd + 0.5)) - m_view.geo.tz;
+  for (int p = 0; p < PT_PLANET_COUNT; p++)
+  {
+    m_list[p].clear();
+  }
 
-  qDebug() << getStrDate(jd, m_view.geo.tz) << getStrTime(jd, m_view.geo.tz);
+  jd = (floor(jd + 0.5)) - m_view.geo.tz;
 
   for (double i = 0; i <= 1 + m_step; i += m_step)
   {
@@ -138,7 +141,7 @@ void CPlanetAltitude::calculate(double jd)
       m_list[p].append(o.lAlt);
     }
   }
-  qDebug() << getStrDate(jd, m_view.geo.tz) << getStrTime(jd, m_view.geo.tz);
+  setWindowTitle(tr("Planet altitude") + " " + getStrDate(jd, m_view.geo.tz));
 }
 
 void CPlanetAltitude::on_comboBox_currentIndexChanged(int)
@@ -149,4 +152,25 @@ void CPlanetAltitude::on_comboBox_currentIndexChanged(int)
 void CPlanetAltitude::on_pushButton_clicked()
 {
   done(DL_OK);
+}
+
+void CPlanetAltitude::on_pushButton_2_clicked()
+{
+  m_jd--;
+  calculate(m_jd);
+  update();
+}
+
+void CPlanetAltitude::on_pushButton_3_clicked()
+{
+  m_jd++;
+  calculate(m_jd);
+  update();
+}
+
+void CPlanetAltitude::on_pushButton_4_clicked()
+{
+  m_jd = jdGetCurrentJD();
+  calculate(m_jd);
+  update();
 }

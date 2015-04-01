@@ -32,6 +32,7 @@ CDayNight::~CDayNight()
   delete m_day;
   delete m_night;
   delete m_img;
+  delete m_shade;
 
   delete ui;
 }

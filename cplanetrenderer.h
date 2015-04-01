@@ -44,6 +44,7 @@ public:
   int renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t *o, sat_t *sat, bool bIsShadow, mapView_t *view);
 
 protected:
+  bool m_init;
   void renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, bool isPreview = false);
 
   mesh_t *createSphere(int detail);

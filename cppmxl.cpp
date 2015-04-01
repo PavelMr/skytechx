@@ -29,7 +29,7 @@ CPPMXL::CPPMXL()
 CPPMXL::~CPPMXL()
 /////////////////
 {
-  delete pCache;
+  delete[] pCache;
 }
 
 

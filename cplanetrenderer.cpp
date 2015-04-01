@@ -16,33 +16,37 @@ extern bool g_bilinearInt;
 CPlanetRenderer::CPlanetRenderer()
 //////////////////////////////////
 {
+  m_init = false;
 }
 
 ///////////////////////////////////
 CPlanetRenderer::~CPlanetRenderer()
 ///////////////////////////////////
 {
-  delete m_satRing;
-  delete m_bmp[PT_SUN];
-  delete m_bmp[PT_MERCURY];
-  delete m_bmp[PT_VENUS];
-  delete m_bmp[PT_MARS];
-  delete m_bmp[PT_JUPITER];
-  delete m_bmp[PT_SATURN];
-  delete m_bmp[PT_URANUS];
-  delete m_bmp[PT_NEPTUNE];
-  delete m_bmp[PT_MOON];
-
-  for (int i = 0; i < 4; i++)
+  if (m_init)
   {
-    free(m_sphere[i]->faces);
-    free(m_sphere[i]->vertices);
+    delete m_satRing;
+    delete m_bmp[PT_SUN];
+    delete m_bmp[PT_MERCURY];
+    delete m_bmp[PT_VENUS];
+    delete m_bmp[PT_MARS];
+    delete m_bmp[PT_JUPITER];
+    delete m_bmp[PT_SATURN];
+    delete m_bmp[PT_URANUS];
+    delete m_bmp[PT_NEPTUNE];
+    delete m_bmp[PT_MOON];
 
-    free(m_ring[i]->faces);
-    free(m_ring[i]->vertices);
+    for (int i = 0; i < 4; i++)
+    {
+      free(m_sphere[i]->faces);
+      free(m_sphere[i]->vertices);
 
-    delete m_sphere[i];
-    delete m_ring[i];
+      free(m_ring[i]->faces);
+      free(m_ring[i]->vertices);
+
+      delete m_sphere[i];
+      delete m_ring[i];
+    }
   }
 }
 
@@ -77,6 +81,8 @@ void CPlanetRenderer::load()
 
   delete satRing;
   delete satRing_a;
+
+  m_init = true;
 }
 
 
