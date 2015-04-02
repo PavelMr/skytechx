@@ -35,7 +35,6 @@ void CPlanetAltitude::paintEvent(QPaintEvent *)
   int count = m_list[0].count();
   double deltax = width / (double)(count - 1);
 
-  p.save();
   p.translate(ui->frame->pos());
   p.setClipRect(0, 0, width, height);
   p.setRenderHint(QPainter::Antialiasing);
@@ -109,11 +108,15 @@ void CPlanetAltitude::paintEvent(QPaintEvent *)
     p.drawLine(x, height - 22, x, 0);
   }
 
+  p.setOpacity(0.5);
+  p.fillRect(0, height / 2.0 , width, height / 2.0, Qt::black);
+  p.setOpacity(1);
+
   p.drawText(0, height / 4, 20, 20, Qt::AlignCenter, "45°");
   p.drawText(0, height / 2, 20, 20, Qt::AlignCenter, "0°");
   p.drawText(0, height / 2 + height / 4, 20, 20, Qt::AlignCenter, "-45°");
 
-  p.restore();
+
 }
 
 void CPlanetAltitude::calculate(double jd)

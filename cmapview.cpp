@@ -1621,7 +1621,6 @@ void CMapView::printMapView(QPrinter *prn, const QString &profileName)
   }
 }
 
-
 ////////////////////////////////////////
 void CMapView::repaintMap(bool bRepaint)
 ////////////////////////////////////////

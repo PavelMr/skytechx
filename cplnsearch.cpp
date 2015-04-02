@@ -18,6 +18,7 @@ CPlnSearch::CPlnSearch(QWidget *parent) :
   ui->widget->addRow(cAstro.getName(PT_SATURN), PT_SATURN);
   ui->widget->addRow(cAstro.getName(PT_URANUS), PT_URANUS);
   ui->widget->addRow(cAstro.getName(PT_NEPTUNE), PT_NEPTUNE);
+  ui->widget->addRow(cAstro.getName(PT_EARTH_SHADOW), PT_EARTH_SHADOW);
 
   connect(ui->widget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotDblClk(QModelIndex)));
 }
@@ -36,7 +37,20 @@ void CPlnSearch::on_pushButton_2_clicked()
 
   int p = ui->widget->getCustomData(i).toInt();
 
-  orbit_t o;
+  orbit_t o, m;
+
+  if (p == PT_EARTH_SHADOW)
+  {
+    cAstro.calcPlanet(PT_MOON, &m);
+    cAstro.calcEarthShadow(&o, &m);
+
+    m_ra = o.lRD.Ra;
+    m_dec = o.lRD.Dec;
+    m_fov = getOptObjFov(o.sx / 3600., o.sy / 3600.);
+
+    done(DL_OK);
+    return;
+  }
 
   cAstro.calcPlanet(p, &o);
 
@@ -49,10 +63,22 @@ void CPlnSearch::on_pushButton_2_clicked()
 
 void CPlnSearch::findPlanet(int id, mapView_t *view, double &ra, double &dec, double &fov)
 {
-  orbit_t o;
+  orbit_t o, m;
   CAstro ast;
 
   ast.setParam(view);
+
+  if (id == PT_EARTH_SHADOW)
+  {
+    cAstro.calcPlanet(PT_MOON, &m);
+    cAstro.calcEarthShadow(&o, &m);
+
+    ra = o.lRD.Ra;
+    dec = o.lRD.Dec;
+    fov = getOptObjFov(o.sx / 3600., o.sy / 3600.);
+
+    return;
+  }
 
   ast.calcPlanet(id, &o);
 
