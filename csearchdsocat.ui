@@ -23,7 +23,7 @@
       <widget class="CSearchWidget" name="widget" native="true"/>
      </item>
      <item>
-      <widget class="CSimpleList" name="treeView"/>
+      <widget class="CSimpleList" name="treeView" native="true"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -45,6 +45,9 @@
          <property name="text">
           <string>OK</string>
          </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -62,14 +65,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CSimpleList</class>
-   <extends>QTreeView</extends>
-   <header>csimplelist.h</header>
-  </customwidget>
-  <customwidget>
    <class>CSearchWidget</class>
    <extends>QWidget</extends>
    <header>csearchwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CSimpleList</class>
+   <extends>QWidget</extends>
+   <header location="global">csimplelist.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

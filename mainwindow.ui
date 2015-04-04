@@ -316,6 +316,7 @@
     <addaction name="actionCheck_new_version"/>
     <addaction name="actionRelease_notes"/>
     <addaction name="separator"/>
+    <addaction name="actionDonation"/>
     <addaction name="action_About"/>
    </widget>
    <widget class="QMenu" name="menu_Chart">
@@ -475,6 +476,7 @@
     <addaction name="actionConstellation_boundaries"/>
     <addaction name="separator"/>
     <addaction name="actionSolar_system"/>
+    <addaction name="actionShow_Hide_shading_planet"/>
     <addaction name="action_Asteroids1"/>
     <addaction name="actionComets_2"/>
     <addaction name="actionSatellite_3"/>
@@ -499,6 +501,7 @@
     <addaction name="actionTelrad"/>
     <addaction name="actionFrame_field"/>
     <addaction name="actionCircle"/>
+    <addaction name="actionText_2"/>
     <addaction name="separator"/>
     <addaction name="actionFind_edited_object"/>
     <addaction name="actionCenter_edited_object"/>
@@ -798,7 +801,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>331</width>
+          <width>308</width>
           <height>509</height>
          </rect>
         </property>
@@ -1213,7 +1216,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>257</width>
+          <width>212</width>
           <height>524</height>
          </rect>
         </property>
@@ -1453,7 +1456,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>368</height>
+          <height>327</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1743,8 +1746,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>101</width>
-          <height>368</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1891,8 +1894,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
-          <height>368</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2072,7 +2075,7 @@ p, li { white-space: pre-wrap; }
     <string>Drawing</string>
    </property>
    <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonTextBesideIcon</enum>
+    <enum>Qt::ToolButtonIconOnly</enum>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -2084,6 +2087,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionTelrad"/>
    <addaction name="actionFrame_field"/>
    <addaction name="actionCircle"/>
+   <addaction name="actionText_2"/>
   </widget>
   <widget class="QToolBar" name="tb_planets">
    <property name="windowTitle">
@@ -2127,6 +2131,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionConstellation_boundaries"/>
    <addaction name="separator"/>
    <addaction name="actionSolar_system"/>
+   <addaction name="actionShow_Hide_shading_planet"/>
    <addaction name="action_Asteroids1"/>
    <addaction name="actionComets_2"/>
    <addaction name="actionSatellite_3"/>
@@ -3765,6 +3770,42 @@ p, li { white-space: pre-wrap; }
   <action name="actionRelease_notes">
    <property name="text">
     <string>Release notes...</string>
+   </property>
+  </action>
+  <action name="actionShow_Hide_shading_planet">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_phase.png</normaloff>:/res/ico_phase.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show/Hide planet phase</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide planet phase</string>
+   </property>
+  </action>
+  <action name="actionDonation">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/paypal.png</normaloff>:/res/paypal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Donation...</string>
+   </property>
+  </action>
+  <action name="actionText_2">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_text.png</normaloff>:/res/ico_text.png</iconset>
+   </property>
+   <property name="text">
+    <string>Text...</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert text</string>
    </property>
   </action>
  </widget>

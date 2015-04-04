@@ -97,5 +97,9 @@
         <file>res/slew_1.png</file>
         <file>res/slew_2.png</file>
         <file>res/sh_horizon.png</file>
+        <file>res/ico_phase.png</file>
+        <file>res/paypal.png</file>
+        <file>res/donate.png</file>
+        <file>res/ico_text.png</file>
     </qresource>
 </RCC>

@@ -55,6 +55,9 @@
        <property name="text">
         <string>Go to galery</string>
        </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>

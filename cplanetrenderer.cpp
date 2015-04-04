@@ -11,6 +11,7 @@ extern QImage *g_pSunTexture;
 extern bool g_planetReal;
 extern bool g_showLabels;
 extern bool g_bilinearInt;
+extern bool g_showSP;
 
 //////////////////////////////////
 CPlanetRenderer::CPlanetRenderer()
@@ -641,6 +642,11 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
+  if (!g_showSP)
+  {
+    return;
+  }
+
   int side = 1;
   float scale = 1.001f;
   int   maxSize = qMax(rx, ry);

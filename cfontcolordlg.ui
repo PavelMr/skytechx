@@ -164,6 +164,9 @@
    <property name="text">
     <string>OK</string>
    </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">

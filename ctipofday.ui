@@ -51,8 +51,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-</string>
+    <string notr="true"/>
    </property>
   </widget>
   <widget class="QCheckBox" name="checkBox">
@@ -79,6 +78,9 @@
    </property>
    <property name="text">
     <string>Close</string>
+   </property>
+   <property name="default">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">

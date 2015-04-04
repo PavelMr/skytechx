@@ -115,8 +115,6 @@
               </layout>
              </item>
             </layout>
-            <zorder>groupBox_3</zorder>
-            <zorder>gridLayoutWidget</zorder>
            </widget>
           </item>
          </layout>
@@ -389,6 +387,9 @@
       <widget class="QPushButton" name="pushButton_3">
        <property name="text">
         <string>OK</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

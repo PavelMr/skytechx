@@ -50,6 +50,7 @@ CDrawingList::CDrawingList(QWidget *parent) :
 
       case DT_TEXT:
         item->setText(tr("Text"));
+        item1->setText(draw->text_t.text);
         break;
 
       case DT_FRM_FIELD:

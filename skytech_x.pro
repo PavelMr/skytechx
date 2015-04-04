@@ -214,7 +214,8 @@ SOURCES += main.cpp\
     chorizonwidget.cpp \
     csatelliteevent.cpp \
     creleseinfo.cpp \
-    suntexture.cpp
+    suntexture.cpp \
+    cdonation.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -391,7 +392,8 @@ HEADERS  += mainwindow.h \
     chorizonwidget.h \
     csatelliteevent.h \
     creleseinfo.h \
-    suntexture.h
+    suntexture.h \
+    cdonation.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -466,7 +468,8 @@ FORMS    += mainwindow.ui \
     cversioncheck.ui \
     chorizoneditor.ui \
     csatelliteevent.ui \
-    creleseinfo.ui
+    creleseinfo.ui \
+    cdonation.ui
 
 
 RESOURCES += \

@@ -520,6 +520,12 @@ private slots:
 
   void on_actionRelease_notes_triggered();
 
+  void on_actionShow_Hide_shading_planet_triggered(bool checked);
+
+  void on_actionDonation_triggered();
+
+  void on_actionText_2_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

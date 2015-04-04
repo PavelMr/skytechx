@@ -3,6 +3,7 @@
 #include "setting.h"
 #include "skcore.h"
 
+#define DRAWING_VERSION   "VER2.0"
 #define ROT_MARGIN        10
 
 CDrawing g_cDrawing; // TODO: nepouzivat globalne promene s QObject kvuli tr();
@@ -42,6 +43,7 @@ void drawingSave(void)
   {
     int count = m_tList.count();
 
+    s << QString(DRAWING_VERSION);
     s << count;
 
     for (int i = 0; i < count; i++)
@@ -84,10 +86,18 @@ void drawingLoad(void)
   if (f.open(SkFile::ReadOnly))
   {
     int count;
+    QString version;
+
+    s >> version;
+
+    if (version.compare(DRAWING_VERSION))
+    {
+      return;
+    }
 
     s >> count;
 
-    // TODO: v 32 a 64bit se to lisi ve velikosti
+    // NOTE: v 32 a 64bit se to lisi ve velikosti
     for (int i = 0; i < count; i++)
     {
       drawing_t t;
@@ -497,59 +507,54 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
 //////////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt;
-  int     w, h;
-  QFontMetrics mt(drw->text_t.font);
+  QRect rc;
 
   if (bEdited)
   {
     m_drawing.onScr = false;
   }
 
-  w = mt.width(drw->text_t.text);
-  h = mt.height();
-
   trfRaDecToPointNoCorrect(&drw->rd, &pt);
   if (SKPLANECheckFrustumToSphere(m_frustum, &pt.w, 0))
-  //if (trfPointOnScr(pt.sx, pt.sy))
   {
     p->setPen(QPen(QColor(g_skSet.map.drawing.color), 2));
     p->setBrush(Qt::NoBrush);
 
     trfProjectPointNoCheck(&pt);
-    //p->drawEllipse(QPoint(pt.sx, pt.sy), r, r);
-
-    //p->setPen(QPen(QColor(255, 255, 255), 1, Qt::DotLine));
-    //p->drawHalfCross(pt.sx, pt.sy, r, r * 0.2);
-    //p->drawCross(pt.sx, pt.sy, r * 0.1);
-    //p->drawText(QRect(pt.sx - 10000, pt.sy - 10000 + 5 + r + p->fontMetrics().height(), 20000, 20000), Qt::AlignCenter, text);
 
     setSetFontColor(FONT_DRAWING, p);
     p->setFont(drw->text_t.font);
 
-    p->drawText(QRect(pt.sx, pt.sy, w, h), Qt::AlignCenter, drw->text_t.text);
+    rc = p->renderText(pt.sx, pt.sy, 0, drw->text_t.text, drw->text_t.align, false);
+    p->renderText(pt.sx, pt.sy, 0, drw->text_t.text, drw->text_t.align);
 
     if (bEdited)
     {
       p->setPen(QPen(QColor(g_skSet.map.drawing.color), 1, Qt::DotLine));
-      p->drawRect(pt.sx, pt.sy, w, h);
+      p->drawRect(rc);
+      p->drawCross(pt.sx, pt.sy, rc.height() * 2);
 
       m_drawing.onScr = true;
-      m_drawing.rect = QRect(pt.sx, pt.sy, w, h);
+      m_drawing.rect = rc;
     }
     else
     {
       if (drw->text_t.bRect)
       {
         p->setPen(QPen(QColor(g_skSet.map.drawing.color), 1));
-        p->drawRect(pt.sx, pt.sy, w, h);
+        p->drawRect(rc.adjusted(-5, -5, 5, 5));
       }
     }
 
     ptOut.setX(pt.sx);
     ptOut.setY(pt.sy);
   }
+  else
+  {
+    return 0;
+  }
 
-  return(w);
+  return(rc.width());
 }
 
 void CDrawing::calcFrmField(CSkPainter *p, drawing_t *drw)

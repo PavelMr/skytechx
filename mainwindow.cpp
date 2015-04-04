@@ -73,6 +73,7 @@
 #include "chorizoneditor.h"
 #include "csatelliteevent.h"
 #include "creleseinfo.h"
+#include "cdonation.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -84,6 +85,7 @@ bool g_showStars = false;
 bool g_showConstLines = false;
 bool g_showConstBnd = false;
 bool g_showSS = false;
+bool g_showSP = false;
 bool g_showMW = false;
 bool g_showGrids = false;
 bool g_showHorizon = false;
@@ -613,6 +615,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showConstBnd = settings.value("show_const_bnd", true).toBool();
   g_showSS = settings.value("show_ss", true).toBool();
   g_showMW = settings.value("show_mw", true).toBool();
+  g_showSP = settings.value("show_sp", true).toBool();
   g_showGrids = settings.value("show_grids", true).toBool();
   g_showHorizon = settings.value("show_horizon", true).toBool();
   g_showAsteroids = settings.value("show_asteroids", true).toBool();
@@ -631,6 +634,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->checkBox->setEnabled(g_showDSOShapes);
   ui->actionDSO_Shapes->setEnabled(g_showDSO);
   ui->actionMilkyway->setChecked(g_showMW);
+  ui->actionShow_Hide_shading_planet->setChecked(g_showSP);
   ui->actionSolar_system->setChecked(g_showSS);
   ui->action_Asteroids1->setChecked(g_showAsteroids);
   ui->actionComets_2->setChecked(g_showComets);
@@ -906,6 +910,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_const_bnd", g_showConstBnd);
   settings.setValue("show_ss", g_showSS);
   settings.setValue("show_mw", g_showMW);
+  settings.setValue("show_sp", g_showSP);
   settings.setValue("show_grids", g_showGrids);
   settings.setValue("show_horizon", g_showHorizon);
   settings.setValue("show_asteroids", g_showAsteroids);
@@ -3632,6 +3637,9 @@ void MainWindow::on_actionShow_all_triggered()
   ui->actionMilkyway->setChecked(true);
   g_showMW = true;
 
+  ui->actionShow_Hide_shading_planet->setChecked(true);
+  g_showSP = true;
+
   ui->actionSolar_system->setChecked(true);
   g_showSS = true;
 
@@ -4005,6 +4013,9 @@ void MainWindow::on_actionHide_all_triggered()
 
   ui->actionMilkyway->setChecked(false);
   g_showMW = false;
+
+  ui->actionShow_Hide_shading_planet->setChecked(false);
+  g_showSP = false;
 
   ui->actionSolar_system->setChecked(false);
   g_showSS = false;
@@ -4934,4 +4945,22 @@ void MainWindow::on_actionRelease_notes_triggered()
   CReleseInfo dlg(this);
 
   dlg.exec();
+}
+
+void MainWindow::on_actionShow_Hide_shading_planet_triggered(bool checked)
+{
+  g_showSP = checked;
+  ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionDonation_triggered()
+{
+  CDonation dlg(this);
+
+  dlg.exec();
+}
+
+void MainWindow::on_actionText_2_triggered()
+{
+  on_actionText_triggered();
 }

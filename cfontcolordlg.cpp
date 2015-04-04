@@ -8,6 +8,8 @@ CFontColorDlg::CFontColorDlg(QWidget *parent, QFont *font, bool bSetColor, QColo
 {
   ui->setupUi(this);
 
+  qDebug() << font->pixelSize();
+
   ui->fontComboBox->setCurrentFont(*font);
   ui->spinBox->setValue(font->pixelSize());
   ui->checkBox->setChecked(font->bold());

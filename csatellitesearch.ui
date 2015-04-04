@@ -20,7 +20,7 @@
       <widget class="CSearchWidget" name="widget" native="true"/>
      </item>
      <item>
-      <widget class="CSimpleList" name="listView"/>
+      <widget class="CSimpleList" name="listView" native="true"/>
      </item>
     </layout>
    </item>
@@ -30,6 +30,9 @@
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>OK</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -66,8 +69,9 @@
   </customwidget>
   <customwidget>
    <class>CSimpleList</class>
-   <extends>QTreeView</extends>
-   <header>csimplelist.h</header>
+   <extends>QWidget</extends>
+   <header location="global">csimplelist.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

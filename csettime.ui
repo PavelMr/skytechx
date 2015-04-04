@@ -213,7 +213,6 @@
         </item>
        </layout>
        <zorder>pushButton_3</zorder>
-       <zorder>pushButton_3</zorder>
        <zorder>pushButton_4</zorder>
        <zorder>verticalSpacer</zorder>
       </widget>
@@ -239,6 +238,9 @@
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>OK</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
