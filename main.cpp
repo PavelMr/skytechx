@@ -83,6 +83,14 @@ int main(int argc, char *argv[])
 
   QApplication a(argc, argv);
 
+  QSharedMemory sharedMemory("The SkytechX (PMR)");
+
+  if (!sharedMemory.create(1) && sharedMemory.error() == QSharedMemory::AlreadyExists)
+  {
+    msgBoxError(NULL, QObject::tr("SkytechX already running!"));
+    return 1;
+  }
+
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/timemarks");
