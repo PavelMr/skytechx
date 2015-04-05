@@ -1544,6 +1544,10 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool scroll)
   ui->lv_quickInfo->fillInfo(item);
   ui->lv_quickInfo->setCurrentIndex(model->index(scrollTo, 0, QModelIndex()));
 
+  ui->pushButton_19->setEnabled(!IS_NEAR(item->riseJD, CM_UNDEF, 0.01));
+  ui->pushButton_20->setEnabled(!IS_NEAR(item->transitJD, CM_UNDEF, 0.01));
+  ui->pushButton_21->setEnabled(!IS_NEAR(item->setJD, CM_UNDEF, 0.01));
+
   ui->pushButton->setEnabled(true);
   ui->pushButton_4->setEnabled(true);
   ui->pushButton_16->setEnabled(true);
@@ -2283,6 +2287,9 @@ void MainWindow::removeQuickInfo(int type)
     ui->pushButton_4->setEnabled(false);
     ui->pushButton_16->setEnabled(false);
     ui->pushButton_17->setEnabled(false);
+    ui->pushButton_19->setEnabled(false);
+    ui->pushButton_20->setEnabled(false);
+    ui->pushButton_21->setEnabled(false);
     ui->checkBox_5->setEnabled(false);
     ui->action_Last_search_object->setEnabled(false);
   }
@@ -4977,4 +4984,28 @@ void MainWindow::on_actionDSS_Manager_triggered()
 void MainWindow::on_pushButton_18_clicked()
 {
   on_actionDSS_Manager_triggered();
+}
+
+void MainWindow::on_pushButton_19_clicked()
+{
+  ofiItem_t *item = getQuickInfo();
+
+  ui->widget->m_mapView.jd = item->riseJD;
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_20_clicked()
+{
+  ofiItem_t *item = getQuickInfo();
+
+  ui->widget->m_mapView.jd = item->transitJD;
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_21_clicked()
+{
+  ofiItem_t *item = getQuickInfo();
+
+  ui->widget->m_mapView.jd = item->setJD;
+  repaintMap();
 }

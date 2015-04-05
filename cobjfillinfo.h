@@ -30,6 +30,7 @@ typedef struct
   double                  riseJD;
   double                  transitJD;
   double                  setJD;
+  int                     rtsType;
 
   double                  jd;
 

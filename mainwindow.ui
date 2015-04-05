@@ -642,7 +642,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -652,8 +652,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>261</width>
-          <height>368</height>
+          <width>274</width>
+          <height>351</height>
          </rect>
         </property>
         <attribute name="label">
@@ -724,7 +724,7 @@
            <property name="bottomMargin">
             <number>2</number>
            </property>
-           <item row="0" column="0">
+           <item row="1" column="0">
             <widget class="QCheckBox" name="checkBox_5">
              <property name="enabled">
               <bool>false</bool>
@@ -736,6 +736,40 @@
               <string>Autoupdate</string>
              </property>
             </widget>
+           </item>
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QPushButton" name="pushButton_19">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Set time to rise</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_20">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Set time to transit</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_21">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Set time to set</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
@@ -753,23 +787,13 @@
            <property name="bottomMargin">
             <number>2</number>
            </property>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="pushButton_16">
+           <item row="2" column="2">
+            <widget class="QPushButton" name="pushButton_17">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>Add to list...</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QPushButton" name="pushButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Go to information dialog...</string>
+              <string>Tracking object path...</string>
              </property>
             </widget>
            </item>
@@ -783,13 +807,23 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
-            <widget class="QPushButton" name="pushButton_17">
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>Tracking object path...</string>
+              <string>Go to information dialog...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QPushButton" name="pushButton_16">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Add to list...</string>
              </property>
             </widget>
            </item>

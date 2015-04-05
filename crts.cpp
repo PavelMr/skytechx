@@ -15,6 +15,7 @@ CRts::CRts()
 {
   m_bLow = false;
   m_limit = JD1SEC;
+  ast = &cAstro;
 }
 
 ///////////////////////
@@ -23,6 +24,7 @@ void CRts::setLowPrec()
 {
   m_bLow = true;
   m_limit = JD1SEC * 30;
+  ast = &cAstro;
 }
 
 
@@ -35,7 +37,7 @@ double CRts::getRTSRaDecFromPtr(radec_t *rd, int ptr, int type, double jd)
    case   MO_PLANET :
                     { // ptr = planet id
                       orbit_t o;
-                      ast.calcPlanet(ptr, &o);
+                      ast->calcPlanet(ptr, &o);
                       rd->Ra = o.lRD.Ra;
                       rd->Dec = o.lRD.Dec;
                       if (ptr == PT_SUN || ptr == PT_MOON)
@@ -95,17 +97,17 @@ void CRts::calcOrbitRTS(rts_t *rts, int ptr, int type, const mapView_t *view)
 
   // transit
   v.jd = jd;
-  ast.setParam(&v);
+  ast->setParam(&v);
   r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
-  ast.convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt);
+  ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt);
 
   int cnt = 0;
   while (1)
   {
     v.jd = jd;
-    ast.setParam(&v);
+    ast->setParam(&v);
     r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
-    ast.convRD2AARef(rd.Ra, rd.Dec, &azm, &alt);
+    ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt);
 
     if (azm >= R180 && lAzm <= R180)
     {
@@ -140,18 +142,18 @@ void CRts::calcOrbitRTS(rts_t *rts, int ptr, int type, const mapView_t *view)
   jd = curDay;
   add = RTS_IADD;
   v.jd = jd;
-  ast.setParam(&v);
+  ast->setParam(&v);
   r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
-  ast.convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt, r);
+  ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt, r);
   //lAlt += r;
 
   cnt = 0;
   while (1)
   {
     v.jd = jd;
-    ast.setParam(&v);
+    ast->setParam(&v);
     r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
-    ast.convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
+    ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
 
     if (alt > 0 && lAlt < 0)
    {
@@ -181,17 +183,17 @@ void CRts::calcOrbitRTS(rts_t *rts, int ptr, int type, const mapView_t *view)
   jd = curDay;
   add = RTS_IADD;
   v.jd = jd;
-  ast.setParam(&v);
+  ast->setParam(&v);
   r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
-  ast.convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt, r);
+  ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt, r);
 
   cnt = 0;
   while (1)
   {
     v.jd = jd;
-    ast.setParam(&v);
+    ast->setParam(&v);
     r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
-    ast.convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
+    ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
 
     if (alt < 0 && lAlt > 0)
    {
@@ -245,15 +247,15 @@ void CRts::calcFixed(rts_t *rts, double ra, double dec, const mapView_t *view)
 
   // transit
   v.jd = jd;
-  ast.setParam(&v);
-  ast.convRD2AARef(ra, dec, &lAzm, &lAlt);
+  ast->setParam(&v);
+  ast->convRD2AARef(ra, dec, &lAzm, &lAlt);
 
   int cnt = 0;
   while (1)
   {
     v.jd = jd;
-    ast.setParam(&v);
-    ast.convRD2AARef(ra, dec, &azm, &alt);
+    ast->setParam(&v);
+    ast->convRD2AARef(ra, dec, &azm, &alt);
 
     if (azm >= R180 && lAzm <= R180)
     {
@@ -287,15 +289,15 @@ void CRts::calcFixed(rts_t *rts, double ra, double dec, const mapView_t *view)
   jd = curDay;
   add = RTS_IADD;
   v.jd = jd;
-  ast.setParam(&v);
-  ast.convRD2AARef(ra, dec, &lAzm, &lAlt);
+  ast->setParam(&v);
+  ast->convRD2AARef(ra, dec, &lAzm, &lAlt);
 
   cnt = 0;
   while (1)
   {
     v.jd = jd;
-    ast.setParam(&v);
-    ast.convRD2AARef(ra, dec, &azm, &alt);
+    ast->setParam(&v);
+    ast->convRD2AARef(ra, dec, &azm, &alt);
 
     if (alt > 0 && lAlt < 0)
    {
@@ -326,15 +328,15 @@ void CRts::calcFixed(rts_t *rts, double ra, double dec, const mapView_t *view)
   jd = curDay;
   add = RTS_IADD;
   v.jd = jd;
-  ast.setParam(&v);
-  ast.convRD2AARef(ra, dec, &lAzm, &lAlt);
+  ast->setParam(&v);
+  ast->convRD2AARef(ra, dec, &lAzm, &lAlt);
 
   cnt = 0;
   while (1)
   {
     v.jd = jd;
-    ast.setParam(&v);
-    ast.convRD2AARef(ra, dec, &azm, &alt);
+    ast->setParam(&v);
+    ast->convRD2AARef(ra, dec, &azm, &alt);
 
     if (alt < 0 && lAlt > 0)
    {
@@ -420,17 +422,17 @@ bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *
   radec_t rd;
 
   view->jd = jd;
-  ast.setParam(view);
+  ast->setParam(view);
   double r = getRTSRaDecFromPtr(&rd, PT_SUN, MO_PLANET, jd);
-  ast.convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt, r);
+  ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt, r);
 
   cnt = 0;
   while (1)
   {
     view->jd = jd;
-    ast.setParam(view);
+    ast->setParam(view);
     r = getRTSRaDecFromPtr(&rd, PT_SUN, MO_PLANET, jd);
-    ast.convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
+    ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
     if ((alt > atAlt && lAlt < atAlt) || (alt < atAlt && lAlt > atAlt))
     {
       jd -= add;

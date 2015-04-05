@@ -152,27 +152,51 @@ void CObjFillInfo::fillRTS(rts_t *rts, const mapView_t *view, ofiItem_t *item)
   {
     case RTS_ERR:
       addTextItem(item, tr("Rise/Set solve ERROR!!!"), tr("N/A"), true);
+      item->rtsType = RTS_ERR;
       break;
 
     case RTS_CIRC:
       {
         addTextItem(item, tr("Object is circumpolar."), "");
         addTextItem(item, tr("Transit"), getStrTime(rts->transit, tz) + " " + tr("Alt : ") + getStrDegDF(rts->tAlt));
+        item->rtsType = RTS_CIRC;
+        item->riseJD = CM_UNDEF;
+        item->setJD = CM_UNDEF;
+        item->transitJD = rts->transit;
       }
       break;
 
     case RTS_NONV:
       addTextItem(item, tr("Object is never visible!"), "");
       addTextItem(item, tr("Transit"), getStrTime(rts->transit, tz) + " " + tr("Alt : ") + getStrDegDF(rts->tAlt));
+      item->rtsType = RTS_NONV;
+      item->riseJD = CM_UNDEF;
+      item->setJD = CM_UNDEF;
+      item->transitJD = CM_UNDEF;
       break;
 
     case RTS_DONE:
+      item->rtsType = RTS_DONE;
+      item->riseJD = CM_UNDEF;
+      item->setJD = CM_UNDEF;
+      item->transitJD = CM_UNDEF;
+
       if ((rts->rts & RTS_T_RISE) == RTS_T_RISE)
+      {
         addTextItem(item, tr("Rise"), getStrTime(rts->rise, tz) + " " + tr("Azm : ") + getStrDegDF(rts->rAzm));
+        item->riseJD = rts->rise;
+      }
       if ((rts->rts & RTS_T_TRANSIT) == RTS_T_TRANSIT)
+      {
         addTextItem(item, tr("Transit"), getStrTime(rts->transit, tz) + " " + tr("Alt : ") + getStrDegDF(rts->tAlt));
+        item->transitJD = rts->transit;
+      }
       if ((rts->rts & RTS_T_SET) == RTS_T_SET)
+      {
         addTextItem(item, tr("Set"), getStrTime(rts->set, tz) + " " + tr("Azm : ") + getStrDegDF(rts->sAzm));
+        item->setJD = rts->set;
+      }
+
       break;
   }
   addSeparator(item);
