@@ -462,6 +462,7 @@
     <addaction name="actionCustom_DSO"/>
     <addaction name="separator"/>
     <addaction name="actionDeep_sky_galery"/>
+    <addaction name="actionDSS_Manager"/>
    </widget>
    <widget class="QMenu" name="menuSho_w">
     <property name="title">
@@ -641,7 +642,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -801,7 +802,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>308</width>
+          <width>331</width>
           <height>509</height>
          </rect>
         </property>
@@ -822,6 +823,13 @@
             <widget class="QPushButton" name="pushButton_3">
              <property name="text">
               <string>Load all images on screen</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_18">
+             <property name="text">
+              <string>Manager...</string>
              </property>
             </widget>
            </item>
@@ -1216,7 +1224,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>212</width>
+          <width>257</width>
           <height>524</height>
          </rect>
         </property>
@@ -1456,7 +1464,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>327</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1746,8 +1754,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>101</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1894,8 +1902,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>468</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3806,6 +3814,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Insert text</string>
+   </property>
+  </action>
+  <action name="actionDSS_Manager">
+   <property name="text">
+    <string>DSS Manager...</string>
    </property>
   </action>
  </widget>

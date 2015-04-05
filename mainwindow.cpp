@@ -74,6 +74,7 @@
 #include "csatelliteevent.h"
 #include "creleseinfo.h"
 #include "cdonation.h"
+#include "cdssmanager.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -4963,4 +4964,17 @@ void MainWindow::on_actionDonation_triggered()
 void MainWindow::on_actionText_2_triggered()
 {
   on_actionText_triggered();
+}
+
+void MainWindow::on_actionDSS_Manager_triggered()
+{
+  CDSSManager dlg(this);
+
+  dlg.exec();
+  ui->widget->repaintMap();
+}
+
+void MainWindow::on_pushButton_18_clicked()
+{
+  on_actionDSS_Manager_triggered();
 }

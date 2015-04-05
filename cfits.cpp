@@ -126,6 +126,9 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
   int sx = getValue("NAXIS1=").toInt();
   int sy = getValue("NAXIS2=").toInt();
 
+  m_xSize = sx;
+  m_ySize = sy;
+
   if (bitpix != 16)
   {
     qDebug("FITS invalid BITPIX != 16");

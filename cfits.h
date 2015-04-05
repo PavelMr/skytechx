@@ -41,6 +41,8 @@ public:
     radec_t m_cor[4];
     radec_t cen_rd;
     QString m_name;
+    int     m_xSize;
+    int     m_ySize;
     bool    m_inverted;
     int     m_brightness;
     int     m_contrast;

@@ -36,6 +36,14 @@ bool CBkImages::load(const QString name, int resizeTo)
   bkImgItem_t i;
   bool memOk;
 
+  for (int i = 0; i < m_tImgList.count(); i++)
+  {
+    if (!m_tImgList[i].filePath.compare(fi.filePath(), Qt::CaseInsensitive))
+    {
+      return true; // already loaded
+    }
+  }
+
   if (!fi.suffix().compare("fits", Qt::CaseInsensitive))
   {
     CFits *f = new CFits;
