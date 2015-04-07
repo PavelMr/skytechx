@@ -42,8 +42,6 @@ CObjInfo::~CObjInfo()
     }
   }
 
-  //ui->textEdit->releaseKeyboard();
-
   delete ui;
 }
 
@@ -56,6 +54,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
 
   m_map = map;
 
+  ui->pushButton_3->setEnabled(false);
   ui->clb_slew->setEnabled(g_pTelePlugin && (g_pTelePlugin->getAttributes() & TPI_CAN_SLEW));
   ui->clb_sync->setEnabled(g_pTelePlugin && (g_pTelePlugin->getAttributes() & TPI_CAN_SYNC));
   ui->clb_tracking->setEnabled(obj->type == MO_PLANET ||
@@ -75,14 +74,10 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
                                 obj->type == MO_PLN_SAT ||
                                 obj->type == MO_SATELLITE);
 
-  /*
-  ui->clb_rise->setEnabled(false);
-  ui->clb_set->setEnabled(false);
-  ui->clb_transit->setEnabled(false);
-  */
+  ui->pushButton_3->setEnabled(obj->type == MO_ASTER);
+
 
   info.fillInfo(view, obj, &m_infoItem);
-  //ui->textEdit->grabKeyboard();
 
   /// read note
   QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/notes/" + m_infoItem.id + ".txt";
@@ -423,5 +418,35 @@ void CObjInfo::on_tabWidget_currentChanged(int)
 {
   m_pixmapWidget->setPixmap(getPlanetPixmap(m_pixmapWidget->width(), m_pixmapWidget->height()));
 }
+
+
+
+void CObjInfo::on_pushButton_3_clicked()
+{
+  QString str = m_infoItem.simbad;;
+
+  str = str.remove(QRegExp("\\((.*)\\)")).simplified();
+
+  QUrl url(QString("http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=%1;orb=0;cov=0;log=0;cad=0#top").arg(str));
+  QDesktopServices::openUrl(url);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

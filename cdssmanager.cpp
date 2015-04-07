@@ -109,8 +109,6 @@ void CDSSManager::updateGui()
 
 void CDSSManager::on_pushButton_2_clicked()
 {
-  QStandardItemModel *model = (QStandardItemModel *)ui->treeView->model();
-
   QModelIndexList il = ui->treeView->selectionModel()->selectedIndexes();
   if (il.count() == 0)
   {

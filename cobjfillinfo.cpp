@@ -9,6 +9,8 @@
 #include "cucac4.h"
 #include "csgp4.h"
 
+#define FILEREGEXP   QRegExp("\\W")
+
 static QString gscMB[19][3] = {{"IIIaJ","GG395","SERC-J/EJ"},    //0
                                {"IIaD","W12","Pal Quick-V"},     //1
                                {"","",""},                       //2
@@ -232,7 +234,7 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
 
   QString str = item->title;
 
-  str = str.remove(QRegExp("/\\?%*:|\"<>. "));
+  str = str.remove(FILEREGEXP);
   item->id = "pln_sat_" + str;
 
   addLabelItem(item, txObjType);
@@ -298,7 +300,7 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   QString str = a->name;
 
-  str = str.remove(QRegExp("/\\?%*:|\"<>. "));
+  str = str.remove(FILEREGEXP);
   item->id = "ast_" + str;
 
   addLabelItem(item, txDateTime);
@@ -358,9 +360,6 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   rts_t  rts;
   cRts.calcOrbitRTS(&rts, obj->par2, MO_ASTER, view);
   fillRTS(&rts, view, item);
-
-  // TODO rise set transit button
-  //item->riseJD = rts.rise;
 
   ra  = a->orbit.gRD.Ra;
   dec = a->orbit.gRD.Dec;
@@ -426,8 +425,8 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   QString str = a->name;
 
-  str = str.remove(QRegExp("/\\?%*:|\"<>. "));
-  item->id = "ast_" + str;
+  str = str.remove(FILEREGEXP);
+  item->id = "com_" + str;
 
   addLabelItem(item, txDateTime);
   addSeparator(item);
@@ -561,6 +560,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
 void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
 {
+  QString str;
   satellite_t s;
   radec_t rd;
   double ra2000, dec2000;
@@ -577,7 +577,11 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   item->radec.Ra = ra2000;
   item->radec.Dec = dec2000;
   item->zoomFov = getOptObjFov(0, 0, D2R(2.5));
-  item->id = s.name;
+
+  str = s.name;
+  str = str.remove(FILEREGEXP);
+  item->id = "esat_" + str;
+
   item->title = s.name;
   item->simbad = item->id;
 
