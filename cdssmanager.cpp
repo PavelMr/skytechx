@@ -117,7 +117,8 @@ void CDSSManager::on_pushButton_2_clicked()
     return;
   }
 
-  QStandardItem *item = model->itemFromIndex(il.at(0));
+  QModelIndex index = m_proxy->mapToSource(il.at(0));
+  QStandardItem *item = m_model->item(index.row(), 0);
 
   bkImg.load(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/" + item->text());
 }
