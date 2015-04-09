@@ -488,6 +488,7 @@
     <addaction name="actionHorizon"/>
     <addaction name="separator"/>
     <addaction name="actionDrawings"/>
+    <addaction name="actionObject_tracking_2"/>
     <addaction name="actionLabels"/>
     <addaction name="actionLegends"/>
     <addaction name="separator"/>
@@ -653,7 +654,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>351</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2184,6 +2185,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionGrids"/>
    <addaction name="separator"/>
    <addaction name="actionDrawings"/>
+   <addaction name="actionObject_tracking_2"/>
    <addaction name="actionLabels"/>
    <addaction name="actionLegends"/>
   </widget>
@@ -3853,6 +3855,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionDSS_Manager">
    <property name="text">
     <string>DSS Manager...</string>
+   </property>
+  </action>
+  <action name="actionObject_tracking_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_obj_tracking.png</normaloff>:/res/ico_obj_tracking.png</iconset>
+   </property>
+   <property name="text">
+    <string>Object tracking</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Object tracking</string>
    </property>
   </action>
  </widget>

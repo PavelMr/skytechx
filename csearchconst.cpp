@@ -12,7 +12,7 @@ CSearchConst::CSearchConst(QWidget *parent) :
 
   for (int i = 0; i < 88; i++)
   {
-    QString name = constGetName(i, 1);
+    QString name = constGetName(i, 1, true);
 
     ui->listWidget->addItem(name);
   }

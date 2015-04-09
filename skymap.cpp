@@ -44,6 +44,7 @@ extern bool g_showHorizon;
 extern bool g_showLegends;
 extern bool g_showLabels;
 extern bool g_showDrawings;
+extern bool g_showObjTracking;
 
 extern bool g_showAsteroids;
 extern bool g_showComets;
@@ -1092,7 +1093,10 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     constRenderConstellationNames(pPainter, mapView);
   }
 
-  trackRender(mapView, pPainter);
+  if (g_showObjTracking)
+  {
+    trackRender(mapView, pPainter);
+  }
 
   // TODO: sort by distance
   if (g_showAsteroids)

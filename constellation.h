@@ -26,7 +26,8 @@ int constWhatConstel(double Ra, double Dec, double epoch);
 bool constFind(QString name, double &ra, double &dec, double &fov, double jd);
 QList <constelLine_t> *constGetLinesList(void);
 
-QString constGetName(int index, int type);
+void loadConstelNonLatinNames(const QString &name);
+QString constGetName(int index, int type, bool addNonLatin = false);
 
 extern QList <constelLine_t> tConstLines;
 

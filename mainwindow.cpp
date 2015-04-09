@@ -96,6 +96,7 @@ bool g_showSatellites = false;
 bool g_showLegends = false;
 bool g_showLabels = false;
 bool g_showDrawings = false;
+bool g_showObjTracking = false;
 
 bool g_bilinearInt = false;
 bool g_showZoomBar = true;
@@ -625,6 +626,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showLegends = settings.value("show_legends", true).toBool();
   g_showLabels = settings.value("show_labels", true).toBool();
   g_showDrawings = settings.value("show_drawings", true).toBool();
+  g_showObjTracking = settings.value("show_obj_tracking", true).toBool();
 
   ui->actionStars->setChecked(g_showStars);
   ui->actionConstellation_lines->setChecked(g_showConstLines);
@@ -646,6 +648,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionHorizon->setChecked(g_showHorizon);
   ui->tb_grid->setEnabled(g_showGrids);
   ui->actionDrawings->setChecked(g_showDrawings);
+  ui->actionObject_tracking_2->setChecked(g_showObjTracking);
 
   setTitle();
 }
@@ -920,6 +923,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_legends", g_showLegends);
   settings.setValue("show_labels", g_showLabels);
   settings.setValue("show_drawings", g_showDrawings);
+  settings.setValue("show_obj_tracking", g_showObjTracking);
 
   settings.setValue("mainWindowGeometry", saveGeometry());
   settings.setValue("mainWindowState", saveState());
@@ -3672,6 +3676,9 @@ void MainWindow::on_actionShow_all_triggered()
   ui->actionDrawings->setChecked(true);
   g_showDrawings = true;
 
+  ui->actionObject_tracking_2->setChecked(true);
+  g_showObjTracking = true;
+
   ui->actionGrids->setChecked(true);
   ui->tb_grid->setEnabled(true);
   g_showGrids = true;
@@ -4048,6 +4055,9 @@ void MainWindow::on_actionHide_all_triggered()
 
   ui->actionDrawings->setChecked(false);
   g_showDrawings = false;
+
+  ui->actionObject_tracking_2->setChecked(false);
+  g_showObjTracking = false;
 
   ui->actionGrids->setChecked(false);
   ui->tb_grid->setEnabled(false);
@@ -4864,6 +4874,12 @@ void MainWindow::slotSearchPlanetTriggered()
   }
 
   CPlnSearch::findPlanet(id, &ui->widget->m_mapView, ra, dec, fov);
+
+  if (QApplication::keyboardModifiers() & Qt::ShiftModifier)
+  {
+    fov = CM_UNDEF;
+  }
+
   ui->widget->centerMap(ra, dec, fov);
   //recenterHoldObject(ui->widget, false);
 }
@@ -5008,4 +5024,10 @@ void MainWindow::on_pushButton_21_clicked()
 
   ui->widget->m_mapView.jd = item->setJD;
   repaintMap();
+}
+
+void MainWindow::on_actionObject_tracking_2_triggered(bool checked)
+{
+  g_showObjTracking = checked;
+  ui->widget->repaintMap();
 }

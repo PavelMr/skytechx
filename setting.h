@@ -119,6 +119,7 @@ typedef struct
   penStyle_t sec;
   penStyle_t bnd;
   QString   linesFile;
+  QString   language;
 } const_t;
 
 typedef struct

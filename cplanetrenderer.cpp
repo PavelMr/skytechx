@@ -551,6 +551,8 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   if (maxSize < minSize)
   {
     pPainter->drawEllipse(QPoint(pt->sx, pt->sy), minSize, minSize);
+    pPainter->setBrush(Qt::NoBrush);
+    pPainter->drawEllipse(QPoint(pt->sx, pt->sy), (int)(minSize * 1.5), (int)(minSize * 1.5));
 
     if (g_showLabels)
     {

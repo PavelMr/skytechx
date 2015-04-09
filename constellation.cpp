@@ -28,6 +28,8 @@ QList <constelLine_t> tConstLines;
 static qint32 numConstelNBnd = 0;
 static constBndLines_t *constelNBnd;
 
+static bool    nonLatinLoaded = false;
+static QString constelNonLatinNames[88];
 static QString constel2nd[88];
 static QString constelLongNames[88];
 static QString constelShort[88];
@@ -78,18 +80,34 @@ bool constFind(QString name, double &ra, double &dec, double &fov, double jd)
 
 /////////////////////////////////////////
 // 0 - desc, 1- long 2 - 2nd long
-QString constGetName(int index, int type)
+QString constGetName(int index, int type, bool addNonLatin)
 /////////////////////////////////////////
 {
-  switch (type)
+  if (addNonLatin && nonLatinLoaded)
   {
-    case 0:
-      return(constelShort[index]);
-    case 1:
-      return(constelLongNames[index]);
-    case 2:
-      return(constel2nd[index]);
+    switch (type)
+    {
+      case 0:
+        return(constelShort[index] + " - " + constelNonLatinNames[index]);
+      case 1:
+        return(constelLongNames[index] + " - " + constelNonLatinNames[index]);
+      case 2:
+        return(constel2nd[index] + " - " + constelNonLatinNames[index]);
+    }
   }
+  else
+  {
+    switch (type)
+    {
+      case 0:
+        return(constelShort[index]);
+      case 1:
+        return(constelLongNames[index]);
+      case 2:
+        return(constel2nd[index]);
+    }
+  }
+
   return(0);
 }
 
@@ -182,6 +200,43 @@ static void constLoadNames(void)
   }
 }
 
+void loadConstelNonLatinNames(const QString &name)
+{
+  nonLatinLoaded = false;
+
+  if (name.isEmpty())
+  {
+    return;
+  }
+
+  SkFile f(name);
+  if (f.open(SkFile::ReadOnly | SkFile::Text))
+  {
+    int         i = 0;
+    QString     str;
+
+    do
+    {
+      str = f.readLine();
+      if (str.isEmpty())
+        break;
+
+      if (i >= 88)
+      {
+        qDebug("loadConstelNonLatinNames fail! (too many constellations)");
+        msgBoxError(NULL, "Invalid constellation count!!!");
+        QApplication::exit(1);
+      }
+
+      constelNonLatinNames[i] = str.simplified();
+
+      i++;
+    } while(1);
+
+    f.close();
+    nonLatinLoaded = true;
+  }
+}
 
 /////////////////////////////////
 void constLinesLoad(QString name)
@@ -342,22 +397,24 @@ void constRenderConstellationNames(CSkPainter *p, mapView_t *view)
         continue;
       tList.append(con);
 
+      QString text =  nonLatinLoaded ? constelNonLatinNames[con] : constelShort[con];
+
       switch (i)
       {
         case 0:
-          p->drawTextLR(m, m, constelShort[con]);
+          p->drawTextLR(m, m, text);
           break;
 
         case 1:
-          p->drawTextLL(w - m, m, constelShort[con]);
+          p->drawTextLL(w - m, m, text);
           break;
 
         case 2:
-          p->drawTextUL(w - m, h - m, constelShort[con]);
+          p->drawTextUL(w - m, h - m, text);
           break;
 
         case 3:
-          p->drawTextUR(m, h - m, constelShort[con]);
+          p->drawTextUR(m, h - m, text);
           break;
       }
     }
@@ -372,7 +429,7 @@ void constRenderConstellationNames(CSkPainter *p, mapView_t *view)
       trfRaDecToPointNoCorrect(&constelRD[i], &pt);
       if (trfProjectPoint(&pt))
       {
-        p->drawCText(pt.sx, pt.sy, constelShort[i]);
+        p->drawCText(pt.sx, pt.sy, nonLatinLoaded ? constelNonLatinNames[i] : constelShort[i]);
       }
     }
   }

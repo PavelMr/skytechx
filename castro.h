@@ -116,7 +116,7 @@ class CAstro
     double getAtmRef(double alt);
     double getInvAtmRef(double alt, int steps = 6);
 
-    double calcAparentSize(double R, double d);
+    static double calcAparentSize(double R, double d);
     double getNPA(double ra, double raD, double dec, double decD, double oRa, double oDec);
     void   calcParallax(orbit_t *o);
     double getRaDec_NP(double val, double delta);

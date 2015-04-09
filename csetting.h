@@ -30,6 +30,7 @@ protected:
    bool resetQuestion();
    void fillGamepad();
    void applyGamepad();
+   void fillConstNames();
 
 public slots:
    void onTreeWidgetCustomContextMenuRequested(const QPoint &pos);

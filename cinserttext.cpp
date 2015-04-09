@@ -68,7 +68,10 @@ void CInsertText::on_pushButton_3_clicked()
     m_align = RT_CENTER;
 
   if (m_text.isEmpty())
+  {
+    ui->lineEdit->setFocus();
     return;
+  }
 
   lastFont = m_font;
   lastText = m_text;

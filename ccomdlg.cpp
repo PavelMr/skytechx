@@ -240,10 +240,24 @@ static bool comSolve2(comet_t *a, double jdt)
 
   a->orbit.phase = 1;
 
-  cAstro.calcParallax(&a->orbit);
+  #pragma omp critical
+  {
+    cAstro.calcParallax(&a->orbit);
+    cAstro.convRD2AARef(a->orbit.lRD.Ra, a->orbit.lRD.Dec,
+                       &a->orbit.lAzm, &a->orbit.lAlt);
+  }
 
-  cAstro.convRD2AARef(a->orbit.lRD.Ra, a->orbit.lRD.Dec,
-                     &a->orbit.lAzm, &a->orbit.lAlt);
+  /*
+  //mhelio = H + K * log10(r)
+  //log10(Lo) = -0.0075*mhelio2 - 0.19*mhelio + 2.10
+  //L = Lo * (1 - 10-4r) * (1 - 10-2r)
+
+  double m = a->H + a->G * log10(a->orbit.r);
+  double lo = pow(10, -0.0075 * m * m - 0.19 * m + 2.10);
+  double L =  lo * (1 - pow(10, -4 * a->orbit.r)) * (1 - pow(10, -2 * a->orbit.r));
+
+  qDebug() << a->name << L * 1000000 << R2D(CAstro::calcAparentSize(a->orbit.R, L));
+  */
 
   return(true);
 }

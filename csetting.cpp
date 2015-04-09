@@ -15,6 +15,7 @@
 #include "ctextsel.h"
 #include "mainwindow.h"
 #include "cgamepad.h"
+#include "skcore.h"
 
 #include <QSettings>
 
@@ -339,6 +340,8 @@ void CSetting::setValues()
     }
   }
 
+  fillConstNames();
+
   // background
   ui->checkBox_4->setChecked(set.map.background.bStatic);
   ui->checkBox_5->setChecked(set.map.background.useAltAzmOnly);
@@ -600,7 +603,11 @@ void CSetting::apply()
 
   //constellations
   g_skSet.map.constellation.linesFile = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toString();
+  g_skSet.map.constellation.language = ui->cb_con_names->currentData().toString();
   constLinesLoad(g_skSet.map.constellation.linesFile);
+  loadConstelNonLatinNames("data/constellation/" + g_skSet.map.constellation.language);
+
+  qDebug() << g_skSet.map.constellation.language;
 
   // solar system
   g_skSet.map.planet.phaseAlpha = ui->horizontalSlider_12->value();
@@ -1339,7 +1346,6 @@ void CSetting::on_pushButton_32_clicked()
     return;
 
   QStandardItem *item = model->itemFromIndex(il.at(0));
-  int index = item->row();
 
   QString file = item->data().toString();
   model->removeRow(il.at(0).row());
@@ -1587,6 +1593,33 @@ void CSetting::applyGamepad()
   pcMapView->configureGamepad();
 }
 
+void CSetting::fillConstNames()
+{
+  QDir dir("data/constellation/", "*.dat");
+  dir.setFilter(QDir::Files);
+  QFileInfoList list = dir.entryInfoList();
+
+  qDebug() << "set" << set.map.constellation.language;
+
+  ui->cb_con_names->addItem(tr("Latin"), "");
+
+  for (int i = 0; i < list.count(); i++)
+  {
+    QString str = list[i].baseName();
+    int index = str.indexOf("_");
+
+    if (index != -1)
+    {
+      str = str.left(index);
+      str[0] = str[0].toUpper();
+    }
+
+    ui->cb_con_names->addItem(str, list[i].fileName());
+  }
+
+  ui->cb_con_names->setCurrentIndex(ui->cb_con_names->findData(set.map.constellation.language));
+}
+
 void CSetting::on_pushButton_47_clicked()
 {
   if (resetQuestion())
@@ -1772,6 +1805,6 @@ void CSetting::on_pushButton_59_clicked()
   }
 }
 
-void CSetting::on_cb_device_currentIndexChanged(int index)
+void CSetting::on_cb_device_currentIndexChanged(int /*index*/)
 {
 }

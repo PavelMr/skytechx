@@ -536,6 +536,8 @@ private slots:
 
   void on_pushButton_21_clicked();
 
+  void on_actionObject_tracking_2_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

@@ -101,5 +101,6 @@
         <file>res/paypal.png</file>
         <file>res/donate.png</file>
         <file>res/ico_text.png</file>
+        <file>res/ico_obj_tracking.png</file>
     </qresource>
 </RCC>

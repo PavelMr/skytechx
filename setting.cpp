@@ -243,6 +243,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.constellation.bnd.width", set->map.constellation.bnd.width, ds);
 
   writeVal("map.constellation.linesFile", set->map.constellation.linesFile, ds);
+  writeVal("map.constellation.language", set->map.constellation.language, ds);
 
   // measure point
   writeVal("map.measurePoint.color", set->map.measurePoint.color, ds);
@@ -529,6 +530,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.constellation.bnd.width = readVal("map.constellation.bnd.width", 1, tMap).toInt();
 
   set->map.constellation.linesFile = readVal("map.constellation.linesFile", "data/constellation/default.lin", tMap).toString();
+  set->map.constellation.language = readVal("map.constellation.language", "", tMap).toString();
 
   // measure point
   set->map.measurePoint.color = readVal("map.measurePoint.color", MRGB(255, 255, 255), tMap).toUInt();

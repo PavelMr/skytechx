@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>9</number>
+            <number>6</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1589,71 +1589,84 @@
             <layout class="QVBoxLayout" name="verticalLayout_33">
              <item>
               <layout class="QFormLayout" name="formLayout_3">
-               <item row="0" column="0">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <item row="2" column="0">
                 <widget class="QLabel" name="label_16">
                  <property name="text">
                   <string>Constellation font &amp; color</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
+               <item row="2" column="1">
+                <widget class="QLabel" name="label_99">
+                 <property name="text">
+                  <string>Constelation names</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
                 <widget class="CFontColorButton" name="pushButton_13">
                  <property name="text">
                   <string>PushButton</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
+               <item row="3" column="1">
+                <widget class="QComboBox" name="cb_con_names"/>
+               </item>
+               <item row="4" column="0">
                 <widget class="QLabel" name="label_17">
                  <property name="text">
                   <string>Main lines color &amp; style</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
-                <widget class="CPushColorButton" name="pushButton_14">
-                 <property name="text">
-                  <string>PushButton</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_18">
-                 <property name="text">
-                  <string>Secondary lines color &amp; style</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="CPushColorButton" name="pushButton_15">
-                 <property name="text">
-                  <string>PushButton</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="label_19">
-                 <property name="text">
-                  <string>Boundary lines color &amp; style</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="0">
-                <widget class="CPushColorButton" name="pushButton_16">
-                 <property name="text">
-                  <string>PushButton</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="0">
+               <item row="4" column="1">
                 <widget class="QLabel" name="label_52">
                  <property name="text">
                   <string>Constellation lines style</string>
                  </property>
                 </widget>
                </item>
-               <item row="9" column="0">
+               <item row="5" column="0">
+                <widget class="CPushColorButton" name="pushButton_14">
+                 <property name="text">
+                  <string>PushButton</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
                 <widget class="QComboBox" name="comboBox_2"/>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_18">
+                 <property name="text">
+                  <string>Secondary lines color &amp; style</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="CPushColorButton" name="pushButton_15">
+                 <property name="text">
+                  <string>PushButton</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="0">
+                <widget class="QLabel" name="label_19">
+                 <property name="text">
+                  <string>Boundary lines color &amp; style</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="0">
+                <widget class="CPushColorButton" name="pushButton_16">
+                 <property name="text">
+                  <string>PushButton</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>

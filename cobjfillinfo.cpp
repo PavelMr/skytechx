@@ -786,9 +786,8 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
 {
   ucac4Star_t s;
-  ucac4Region_t *z;
 
-  z = cUcac4.getStar(s, obj->par1, obj->par2);
+  cUcac4.getStar(s, obj->par1, obj->par2);
 
   item->radec.Ra = s.rd.Ra;
   item->radec.Dec = s.rd.Dec;

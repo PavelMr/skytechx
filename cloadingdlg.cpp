@@ -13,6 +13,7 @@
 #include "cplanetrenderer.h"
 #include "csgp4.h"
 #include "csatellitedlg.h"
+#include "constellation.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
@@ -80,6 +81,8 @@ void CLoadingDlg::slotLoad()
 
   cStarRenderer.open(g_skSet.map.starBitmapName);
   cPlanetRenderer.load();
+
+  loadConstelNonLatinNames("data/constellation/" + g_skSet.map.constellation.language);
 
   qDebug() << "L1";
   constLoad();
