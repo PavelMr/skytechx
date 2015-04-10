@@ -63,8 +63,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>20</y>
+       <x>50</x>
+       <y>10</y>
        <width>331</width>
        <height>171</height>
       </rect>
@@ -578,6 +578,7 @@
    <addaction name="action_zoom_20"/>
    <addaction name="action_zoom_45"/>
    <addaction name="action_zoom_90"/>
+   <addaction name="actionLook_backward"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget">
    <property name="minimumSize">
@@ -643,7 +644,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -3870,6 +3871,18 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Show/Hide Object tracking</string>
+   </property>
+  </action>
+  <action name="actionLook_backward">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_b180.png</normaloff>:/res/ico_b180.png</iconset>
+   </property>
+   <property name="text">
+    <string>Look backward</string>
+   </property>
+   <property name="toolTip">
+    <string>Look backward</string>
    </property>
   </action>
  </widget>

@@ -538,6 +538,8 @@ private slots:
 
   void on_actionObject_tracking_2_triggered(bool checked);
 
+  void on_actionLook_backward_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

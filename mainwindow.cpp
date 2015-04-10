@@ -5031,3 +5031,11 @@ void MainWindow::on_actionObject_tracking_2_triggered(bool checked)
   g_showObjTracking = checked;
   ui->widget->repaintMap();
 }
+
+void MainWindow::on_actionLook_backward_triggered()
+{
+  ui->widget->m_mapView.x += R180;
+  rangeDbl(&ui->widget->m_mapView.x, R360);
+  ui->widget->m_mapView.y = -ui->widget->m_mapView.y;
+  repaintMap();
+}
