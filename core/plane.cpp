@@ -4,6 +4,10 @@
 #include "vecmath.h"
 #include "const.h"
 
+#define FRUSTUM_COUNT   m_numFrustums
+
+extern int m_numFrustums;
+
 enum
 {
     polygonInterior = 1,
@@ -21,7 +25,7 @@ SKPLANE *SKPLANEFromPoint(SKPLANE *out, SKVECTOR *a, SKVECTOR *b, SKVECTOR *c)
   SKVecSub(&d1, b, a);
   SKVecSub(&d2, c, a);
 
-  SKVecCross(&normal, &d1, &d2);  
+  SKVecCross(&normal, &d1, &d2);
   SKVecNormalize(&normal, &normal);
 
   out->dist = -(a->x * normal.x +
@@ -39,7 +43,7 @@ SKPLANE *SKPLANEFromPoint(SKPLANE *out, SKVECTOR *a, SKVECTOR *b, SKVECTOR *c)
 bool SKPLANECheckFrustumToPoint(SKPLANE *frustum, SKVECTOR *point)
 //////////////////////////////////////////////////////////////////
 {
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < FRUSTUM_COUNT; i++)
   {
     double dist = point->x * frustum[i].x +
                   point->y * frustum[i].y +
@@ -57,7 +61,7 @@ bool SKPLANECheckFrustumToSphere(SKPLANE *frustum, SKVECTOR *point, double radiu
   // angle to size
   radius = tan(radius);
 
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < FRUSTUM_COUNT; i++)
   {
     double dist = point->x * frustum[i].x +
                   point->y * frustum[i].y +
@@ -91,7 +95,7 @@ void SKPLANELineIntersect(SKPLANE *plane, SKVECTOR *from, SKVECTOR *to, SKVECTOR
 bool SKPLANECheckFrustumToPolygon(SKPLANE *frustum, SKPOINT *pts, int count, double offset)
 ///////////////////////////////////////////////////////////////////////////////////////////
 {
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < FRUSTUM_COUNT; i++)
   {
     int p;
     for (p = 0; p < count; p++)
@@ -113,7 +117,7 @@ bool SKPLANECheckFrustumToPolygon(SKPLANE *frustum, SKPOINT *pts, int count, dou
 bool SKPLANECheckFrustumToLine(SKPLANE *frustum, SKVECTOR *p1, SKVECTOR *p2, bool clip)
 ///////////////////////////////////////////////////////////////////////////////////////
 {
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < FRUSTUM_COUNT; i++)
   {
     double dist1 = p1->x * frustum[i].x +
                    p1->y * frustum[i].y +
@@ -159,7 +163,7 @@ void SKPLANEClipPolygonToPlane(SKPLANE *plane, SKPOINT *in, int countIn, SKPOINT
 {
   int location[MAX_POLYGON_PTS];
   int positive = 0;
-  int negative = 0;  
+  int negative = 0;
 
   for (int a = 0; a < countIn; a++)
   {

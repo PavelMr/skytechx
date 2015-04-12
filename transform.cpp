@@ -32,6 +32,8 @@ static double m_jd;
 
 static mapView_t currentMapView;
 
+int m_numFrustums;
+
 //////////////////
 void trfSave(void)
 //////////////////
@@ -99,6 +101,7 @@ void trfSetTransform(SKMATRIX *trans, SKMATRIX *proj, SKMATRIX *view, SKMATRIX *
   SKPLANEFromPoint(&m_frustum[2], &vecFrustum[2], &vecFrustum[3], &vecFrustum[6]); // Top
   SKPLANEFromPoint(&m_frustum[3], &vecFrustum[1], &vecFrustum[0], &vecFrustum[4]); // Bottom
   SKPLANEFromPoint(&m_frustum[4], &vecFrustum[0], &vecFrustum[1], &vecFrustum[2]); // near
+  m_numFrustums = 5;
 }
 
 void trfGetScreenSize(int &width, int &height)
@@ -120,6 +123,61 @@ SKMATRIX *trfGetTranfMatrix(void)
 /////////////////////////////////
 {
   return(&m_matTransf);
+}
+
+void rtfCreateOrthoView(double w, double h, double nearPlane, double farPlane, double scale, const QVector3D &translate, double yaw, double pitch)
+{
+  SKMATRIX fMatTransf;
+  SKMATRIX yawMat, pitchMat, transMat;
+
+  scrx2 = w / 2.0;
+  scry2 = h / 2.0;
+
+  scrx = w;
+  scry = h;
+
+  bFlipX = false;
+  bFlipY = false;
+
+  SKMATRIXOrtho(&m_matProj, w, h, nearPlane, farPlane);
+  SKMATRIXRotateZ(&yawMat, yaw);
+  SKMATRIXRotateX(&pitchMat, pitch);
+  SKMATRIXTranslate(&transMat, translate.x(), translate.y(), translate.z());
+
+  m_matView = yawMat * pitchMat * transMat;
+
+  fMatTransf = m_matView * m_matProj;// pak to trochu zvetsit // fproj;
+
+  SKMATRIX scaleMat;
+
+  SKMATRIXScale(&scaleMat, scale, scale, scale);
+  m_matTransf = m_matView * scaleMat * m_matProj;
+
+  SKMATRIX invMat;
+  SKVECTOR vecFrustum[8];
+
+  SKMATRIXInverse(&invMat, &fMatTransf);
+
+  vecFrustum[0] = SKVECTOR(-1.0f, -1.0f, 0.0f); // xyz
+  vecFrustum[1] = SKVECTOR( 1.0f, -1.0f, 0.0f); // Xyz
+  vecFrustum[2] = SKVECTOR(-1.0f, 1.0f, 0.0f); // xYz
+  vecFrustum[3] = SKVECTOR( 1.0f, 1.0f, 0.0f); // XYz
+  vecFrustum[4] = SKVECTOR(-1.0f, -1.0f, 1.0f); // xyZ
+  vecFrustum[5] = SKVECTOR( 1.0f, -1.0f, 1.0f); // XyZ
+  vecFrustum[6] = SKVECTOR(-1.0f, 1.0f, 1.0f); // xYZ
+  vecFrustum[7] = SKVECTOR( 1.0f, 1.0f, 1.0f); // XYZ
+
+  for( int i = 0; i < 8; i++)
+  {
+    SKVECTransform(&vecFrustum[i], &vecFrustum[i], &invMat);
+  }
+
+  SKPLANEFromPoint(&m_frustum[0], &vecFrustum[2], &vecFrustum[6], &vecFrustum[4]); // Left
+  SKPLANEFromPoint(&m_frustum[1], &vecFrustum[7], &vecFrustum[3], &vecFrustum[5]); // Right
+  SKPLANEFromPoint(&m_frustum[2], &vecFrustum[2], &vecFrustum[3], &vecFrustum[6]); // Top
+  SKPLANEFromPoint(&m_frustum[3], &vecFrustum[1], &vecFrustum[0], &vecFrustum[4]); // Bottom
+  //SKPLANEFromPoint(&m_frustum[4], &vecFrustum[0], &vecFrustum[1], &vecFrustum[2]); // near
+  m_numFrustums = 4;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -256,7 +314,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
   SKPLANEFromPoint(&m_frustum[2], &vecFrustum[2], &vecFrustum[3], &vecFrustum[6]); // Top
   SKPLANEFromPoint(&m_frustum[3], &vecFrustum[1], &vecFrustum[0], &vecFrustum[4]); // Bottom
   SKPLANEFromPoint(&m_frustum[4], &vecFrustum[0], &vecFrustum[1], &vecFrustum[2]); // near
-
+  m_numFrustums = 4;
 }
 
 

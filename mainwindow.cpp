@@ -75,6 +75,7 @@
 #include "creleseinfo.h"
 #include "cdonation.h"
 #include "cdssmanager.h"
+#include "c3dsolar.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -5038,4 +5039,11 @@ void MainWindow::on_actionLook_backward_triggered()
   rangeDbl(&ui->widget->m_mapView.x, R360);
   ui->widget->m_mapView.y = -ui->widget->m_mapView.y;
   repaintMap();
+}
+
+void MainWindow::on_action3D_Solar_system_triggered()
+{
+  C3DSolar dlg(&ui->widget->m_mapView, this);
+
+  dlg.exec();
 }

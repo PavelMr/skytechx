@@ -55,6 +55,7 @@ SKMATRIX *SKMATRIXInverse(SKMATRIX *dst, SKMATRIX *mat);
 SKMATRIX *SKMATRIXScale(SKMATRIX *dst, double x, double y, double z);
 
 SKMATRIX *SKMATRIXProjection(SKMATRIX *out, double fovH, double aspect, double nearPlane, double farPlane);
+SKMATRIX *SKMATRIXOrtho(SKMATRIX *out, double w, double h, double nearPlane, double farPlane);
 
 
 #endif // SKMATRIX_H

@@ -9,7 +9,7 @@
 ///////////////////////////////////////
 SKMATRIX *SKMATRIXIdentity(SKMATRIX *m)
 ///////////////////////////////////////
-{  
+{
   m->m_11 = 1.0; m->m_12 = 0.0; m->m_13 = 0.0; m->m_14 = 0.0;
   m->m_21 = 0.0; m->m_22 = 1.0; m->m_23 = 0.0; m->m_24 = 0.0;
   m->m_31 = 0.0; m->m_32 = 0.0; m->m_33 = 1.0; m->m_34 = 0.0;
@@ -245,5 +245,36 @@ SKMATRIX *SKMATRIXInverse(SKMATRIX *dst, SKMATRIX *mat)
 
   return(dst);
 }
+
+
+SKMATRIX *SKMATRIXOrtho(SKMATRIX *out, double w, double h, double nearPlane, double farPlane)
+{
+  SKMATRIXIdentity(out);
+
+  out->m_11 =  2 / w;
+  out->m_22 =  2 / h;
+  //out->m_33 =  1  / (farPlane / nearPlane);
+  //out->m_43 =  -nearPlane / (farPlane / nearPlane);
+  out->m_33 =  1  / (nearPlane / farPlane);
+  out->m_43 =  nearPlane / (nearPlane / farPlane);
+  out->m_44 =  1;
+
+  return out;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

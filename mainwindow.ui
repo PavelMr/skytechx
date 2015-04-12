@@ -420,6 +420,7 @@
     <addaction name="actionSolar_system_2"/>
     <addaction name="actionActual_weather"/>
     <addaction name="menuPlanet_satellite"/>
+    <addaction name="action3D_Solar_system"/>
    </widget>
    <widget class="QMenu" name="menu_Telescope">
     <property name="title">
@@ -3883,6 +3884,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Look backward</string>
+   </property>
+  </action>
+  <action name="action3D_Solar_system">
+   <property name="text">
+    <string>3D Solar system...</string>
    </property>
   </action>
  </widget>

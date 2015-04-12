@@ -540,6 +540,8 @@ private slots:
 
   void on_actionLook_backward_triggered();
 
+  void on_action3D_Solar_system_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

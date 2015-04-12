@@ -216,7 +216,9 @@ SOURCES += main.cpp\
     creleseinfo.cpp \
     suntexture.cpp \
     cdonation.cpp \
-    cdssmanager.cpp
+    cdssmanager.cpp \
+    c3dsolar.cpp \
+    c3dsolarwidget.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -395,7 +397,9 @@ HEADERS  += mainwindow.h \
     creleseinfo.h \
     suntexture.h \
     cdonation.h \
-    cdssmanager.h
+    cdssmanager.h \
+    c3dsolar.h \
+    c3dsolarwidget.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -472,7 +476,8 @@ FORMS    += mainwindow.ui \
     csatelliteevent.ui \
     creleseinfo.ui \
     cdonation.ui \
-    cdssmanager.ui
+    cdssmanager.ui \
+    c3dsolar.ui
 
 
 RESOURCES += \
