@@ -418,9 +418,9 @@
     <addaction name="actionEphemeride_list"/>
     <addaction name="actionPolaris_Hour_Angle"/>
     <addaction name="actionSolar_system_2"/>
+    <addaction name="action3D_Solar_system"/>
     <addaction name="actionActual_weather"/>
     <addaction name="menuPlanet_satellite"/>
-    <addaction name="action3D_Solar_system"/>
    </widget>
    <widget class="QMenu" name="menu_Telescope">
     <property name="title">

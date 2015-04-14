@@ -153,7 +153,7 @@ static void astSolve2(asteroid_t *a, double jdt)
     double n = a->node;
     double p = a->peri;
 
-    // heliocentric pos J2000.0
+    // heliocentric pos J2000.0 ecl.
     double rh[3];
     rh[0] = r * ( cos(n) * cos(v + p) - sin(n) * sin(v + p) * cos(a->inc));
     rh[1] = r * ( sin(n) * cos(v + p) + cos(n) * sin(v + p) * cos(a->inc));

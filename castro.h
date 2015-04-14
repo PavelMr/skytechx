@@ -127,8 +127,8 @@ class CAstro
     void sunEphemerid_Fast(orbit_t *o);
 
     void   calcEarthShadow(orbit_t *orbit, orbit_t *moon);
-    void   calcPlanet(int planet, orbit_t *orbit, bool bSunCopy = true);
-    double getEclObl(double jd);
+    void   calcPlanet(int planet, orbit_t *orbit, bool bSunCopy = true, bool all = true);
+    static double getEclObl(double jd);
     double getPolarisHourAngle(); // v 0..1
 
     double m_geoLon;

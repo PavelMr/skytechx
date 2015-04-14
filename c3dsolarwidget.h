@@ -18,7 +18,9 @@ public:
   void setView(mapView_t *view, bool genOrbit = false);
   void generateComet(int index, double time, double period);
   void setShowHeight(bool show);
+  void setShowEclipticPlane(bool show);
   void setViewParam(double yaw = CM_UNDEF, double pitch = CM_UNDEF, double x = CM_UNDEF, double y = CM_UNDEF, double z = CM_UNDEF);
+  void removeOrbit();
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -33,6 +35,7 @@ protected:
 
   void generateOrbits();
 
+  bool      m_showEclipticPlane;
   bool      m_showHeight;
   mapView_t m_view;
   double    m_scale;

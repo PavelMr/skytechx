@@ -11,8 +11,15 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent) :
   m_view = *view;
   m_jd = m_view.jd;
 
-  setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
-  showMaximized();
+  setWindowFlags(Qt::Window);
+
+  QTimer *timer = new QTimer(this);
+
+  connect(timer, SIGNAL(timeout()), this, SLOT(slotTimer()));
+  timer->start(25);
+
+  ui->frame->setShowHeight(ui->checkBox->isChecked());
+  ui->frame->setShowEclipticPlane(ui->checkBox_2->isChecked());
 
   for (int i = 0; i < tComets.count(); i++)
   {
@@ -104,12 +111,23 @@ void C3DSolar::on_pushButton_7_clicked()
 
 void C3DSolar::on_pushButton_8_clicked()
 {
+  if (ui->comboBox->currentIndex() == -1)
+  {
+    return;
+  }
   int index = ui->comboBox->currentData().toInt();
   ui->frame->generateComet(index, ui->spinBox->value(), ui->spinBox_2->value());
 }
 
 void C3DSolar::updateData()
 {
+  QDateTime dt;
+
+  jdConvertJDTo_DateTime(m_jd, &dt);
+
+  ui->dateEdit->blockSignals(true);
+  ui->dateEdit->setDateTime(dt);
+  ui->dateEdit->blockSignals(false);
   ui->label_4->setText(getStrDate(m_jd, m_view.geo.tz));
 }
 
@@ -121,4 +139,75 @@ void C3DSolar::on_pushButton_9_clicked()
 void C3DSolar::on_pushButton_10_clicked()
 {
   ui->frame->setViewParam(CM_UNDEF, CM_UNDEF, 0, 0, 0);
+}
+
+void C3DSolar::on_dateEdit_dateChanged(const QDate &date)
+{
+  QDateTime dt(date, QTime(12, 0, 0));
+
+  m_jd = jdGetJDFrom_DateTime(&dt);
+  m_view.jd = m_jd;
+  ui->frame->setView(&m_view);
+  updateData();
+}
+
+void C3DSolar::on_pushButton_11_clicked()
+{
+  m_jd = jdGetCurrentJD();
+  m_view.jd = m_jd;
+  ui->frame->setView(&m_view);
+  updateData();
+}
+
+
+void C3DSolar::on_horizontalSlider_sliderReleased()
+{
+  ui->horizontalSlider->setValue(0);
+}
+
+void C3DSolar::slotTimer()
+{
+  QEasingCurve curve(QEasingCurve::InCubic);
+  m_jd += (ui->horizontalSlider->value() > 0 ? +1 : -1) * curve.valueForProgress(qAbs(ui->horizontalSlider->value()) / 100.0) * 50.0;
+  m_view.jd = m_jd;
+  ui->frame->setView(&m_view);
+  updateData();
+}
+
+
+void C3DSolar::on_pushButton_clicked()
+{
+  done(DL_CANCEL);
+}
+
+void C3DSolar::on_pushButton_12_clicked()
+{
+  if (ui->comboBox->currentIndex() == -1)
+  {
+    return;
+  }
+  int index = ui->comboBox->currentData().toInt();
+
+  comet_t *a = &tComets[index];
+
+  if (a->e < 0.99)
+  {
+    double aa = a->q / (1.0 - a->e);
+    double P = 1.00004024 * pow(aa, 1.5);
+    ui->spinBox->setValue(P * 365.25 * 0.5 * 1.02);
+  }
+  else
+  {
+    msgBoxError(this, tr("Commet is not periodical!"));
+  }
+}
+
+void C3DSolar::on_pushButton_13_clicked()
+{
+  ui->frame->removeOrbit();
+}
+
+void C3DSolar::on_checkBox_2_toggled(bool checked)
+{
+  ui->frame->setShowEclipticPlane(checked);
 }

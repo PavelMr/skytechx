@@ -38,6 +38,22 @@ private slots:
 
   void on_pushButton_10_clicked();
 
+  void on_dateEdit_dateChanged(const QDate &date);
+
+  void on_pushButton_11_clicked();
+
+  void on_horizontalSlider_sliderReleased();
+
+  void slotTimer();
+
+  void on_pushButton_clicked();
+
+  void on_pushButton_12_clicked();
+
+  void on_pushButton_13_clicked();
+
+  void on_checkBox_2_toggled(bool checked);
+
 private:
   Ui::C3DSolar *ui;
   double m_jd;

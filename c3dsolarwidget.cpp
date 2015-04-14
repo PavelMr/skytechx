@@ -33,7 +33,7 @@ void C3DSolarWidget::setView(mapView_t *view, bool genOrbit)
   static double lastJD = -1;
   m_view = *view;
 
-  if (genOrbit || qAbs(m_view.jd - lastJD) > 365)
+  if (genOrbit || qAbs(m_view.jd - lastJD) > 365 * 2)
   {
     generateOrbits();
     lastJD = m_view.jd;
@@ -78,6 +78,12 @@ void C3DSolarWidget::setShowHeight(bool show)
   update();
 }
 
+void C3DSolarWidget::setShowEclipticPlane(bool show)
+{
+  m_showEclipticPlane = show;
+  update();
+}
+
 void C3DSolarWidget::setViewParam(double yaw, double pitch, double x, double y, double z)
 {
   if (!IS_UNDEF(yaw))
@@ -108,9 +114,16 @@ void C3DSolarWidget::setViewParam(double yaw, double pitch, double x, double y, 
   update();
 }
 
+void C3DSolarWidget::removeOrbit()
+{
+  m_index = -1;
+  objList.clear();
+  update();
+}
+
 void C3DSolarWidget::generateOrbits()
 {
-  double steps[8] = {8, 3, 6, 10, 15, 20, 30, 40};
+  double steps[8] = {8, 1, 4, 10, 20, 25, 30, 40};
 
   for (int i = PT_SUN; i <= PT_NEPTUNE; i++)
   {
@@ -125,7 +138,7 @@ void C3DSolarWidget::generateOrbits()
     orbit_t o;
 
     ast.setParam(&view);
-    ast.calcPlanet(i, &o);
+    ast.calcPlanet(i, &o, true, false);
 
     double last = o.hLon;
     double total = 0;
@@ -137,7 +150,7 @@ void C3DSolarWidget::generateOrbits()
 
     do
     {
-      view.jd += steps[i] / 4.0;
+      view.jd += steps[i] * 1.0;
       ast.setParam(&view);
       ast.calcPlanet(i, &o);
 
@@ -180,16 +193,6 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
   double minSize = 3;
   SKPOINT p1, p2;
 
-  p.setPen(Qt::white);
-  if (m_pitch > R90)
-  {
-    p.renderText(5, 5, 5, tr("Looking from top"), RT_BOTTOM_RIGHT);
-  }
-  else
-  {
-    p.renderText(5, 5, 5, tr("Looking from bottom"), RT_BOTTOM_RIGHT);
-  }
-
   // sun
   p1.w.x = 0;
   p1.w.y = 0;
@@ -209,11 +212,11 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
   }
 
   // axis
-  p1.w.x = -50;
+  p1.w.x = -40;
   p1.w.y = 0;
   p1.w.z = 0;
 
-  p2.w.x = 50;
+  p2.w.x = 40;
   p2.w.y = 0;
   p2.w.z = 0;
 
@@ -224,11 +227,11 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
   }
 
   p1.w.x = 0;
-  p1.w.y = -50;
+  p1.w.y = -40;
   p1.w.z = 0;
 
   p2.w.x = 0;
-  p2.w.y = 50;
+  p2.w.y = 40;
   p2.w.z = 0;
 
   if (trfProjectLine(&p1, &p2))
@@ -253,8 +256,45 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     p.renderText(p2.sx, p2.sy, 5, tr("SEP"), RT_BOTTOM);
   }
 
+  double from = 40;
+  double step = 1;
+
+  if (m_showEclipticPlane)
+  {
+    p.setPen(QPen(Qt::gray, 0.25, Qt::DotLine));
+    for (double d = -from; d < from; d += step)
+    {
+      p1.w.x = -from;
+      p1.w.y = d;
+      p1.w.z = 0;
+
+      p2.w.x = from;
+      p2.w.y = d;
+      p2.w.z = 0;
+
+      if (trfProjectLine(&p1, &p2))
+      {
+        p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+      }
+
+      p1.w.x = d;
+      p1.w.y = -from;
+      p1.w.z = 0;
+
+      p2.w.x = d;
+      p2.w.y = from;
+      p2.w.z = 0;
+
+      if (trfProjectLine(&p1, &p2))
+      {
+        p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+      }
+    }
+  }
+
   for (int i = PT_SUN; i <= PT_NEPTUNE; i++)
   {
+    p.setPen(QPen(Qt::white, 0.75));
     for (int j = 0; j < ptsList[i].count(); j++)
     {
       QVector3D pt1 = ptsList[i][j];
@@ -270,7 +310,6 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
       if (trfProjectLine(&p1, &p2))
       {
-        p.setPen(QPen(Qt::gray, 0.5));
         p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
       }
     }
@@ -389,37 +428,22 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
         }
       }
     }
-
-    if (0)
-    {
-      if (!(j % 30))
-      {
-        p1.w.x = pt1.x();
-        p1.w.y = pt1.y();
-        p1.w.z = pt1.z();
-
-        p2.w.x = 0;
-        p2.w.y = 0;
-        p2.w.z = 0;
-
-        if (trfProjectLine(&p1, &p2))
-        {
-          p.setPen(QPen(Qt::darkGreen, 0.5));
-          p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
-        }
-      }
-    }
   }
+
+  double rr = 0, RR = 0;
 
   if (m_index >= 0)
   {
     comet_t *com = &tComets[m_index];
 
-    ast.setParam(&m_view);
+    cAstro.setParam(&m_view);
     if (!comSolve(com, m_view.jd))
     {
       return;
     }
+
+    rr = com->orbit.r;
+    RR = com->orbit.R;
 
     QVector3D pos(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
 
@@ -468,6 +492,22 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       p.setPen(Qt::white);
       p.renderText(p1.sx, p1.sy, r, com->name, RT_BOTTOM_RIGHT);
     }
+  }
+
+  p.setPen(Qt::white);
+  if (m_pitch > R90)
+  {
+    p.renderText(5, 5, 5, tr("Looking from top"), RT_BOTTOM_RIGHT);
+  }
+  else
+  {
+    p.renderText(5, 5, 5, tr("Looking from bottom"), RT_BOTTOM_RIGHT);
+  }
+
+  if (m_index >= 0)
+  {
+    p.renderText(5, 25, 5, tr("Distance from Sun : %1 AU").arg(rr, 0, 'f', 8), RT_BOTTOM_RIGHT);
+    p.renderText(5, 42, 5, tr("Distance from Earth : %1 AU").arg(RR, 0, 'f', 8), RT_BOTTOM_RIGHT);
   }
 }
 

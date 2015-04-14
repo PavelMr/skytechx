@@ -146,7 +146,7 @@ void rtfCreateOrthoView(double w, double h, double nearPlane, double farPlane, d
 
   m_matView = yawMat * pitchMat * transMat;
 
-  fMatTransf = m_matView * m_matProj;// pak to trochu zvetsit // fproj;
+  fMatTransf = m_matView * m_matProj;
 
   SKMATRIX scaleMat;
 

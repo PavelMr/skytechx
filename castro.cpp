@@ -756,10 +756,10 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
   convRD2AANoRef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 }
 
-
-//////////////////////////////////////////////////////////////////
-void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy)
-//////////////////////////////////////////////////////////////////
+// TODO: udelat to i bez light corr.
+////////////////////////////////////////////////////////////////////////////
+void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
+////////////////////////////////////////////////////////////////////////////
 {
   double data[6];
 
@@ -849,6 +849,11 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy)
   rangeDbl(&orbit->gRD.Ra, MPI2);
   rangeDbl(&orbit->lRD.Ra, MPI2);
   rangeDbl(&orbit->hLon, MPI2);
+
+  if (!all)
+  {
+    return;
+  }
 
   calcParallax(orbit);
   convRD2AARef(orbit->lRD.Ra, orbit->lRD.Dec, &orbit->lAzm, &orbit->lAlt);
