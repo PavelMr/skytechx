@@ -19,7 +19,8 @@ public:
   void generateComet(int index, double time, double period);
   void setShowHeight(bool show);
   void setShowEclipticPlane(bool show);
-  void setViewParam(double yaw = CM_UNDEF, double pitch = CM_UNDEF, double x = CM_UNDEF, double y = CM_UNDEF, double z = CM_UNDEF);
+  void setLockAt(int index);
+  void setViewParam(double yaw = CM_UNDEF, double pitch = CM_UNDEF, double x = CM_UNDEF, double y = CM_UNDEF, double z = CM_UNDEF, bool updateView = true);
   void removeOrbit();
 
 protected:
@@ -35,6 +36,7 @@ protected:
 
   void generateOrbits();
 
+  int       m_lockAt;
   bool      m_showEclipticPlane;
   bool      m_showHeight;
   mapView_t m_view;
@@ -46,7 +48,6 @@ protected:
   double    m_yaw;
   double    m_pitch;
   int       m_index;
-signals:
 
 public slots:
 

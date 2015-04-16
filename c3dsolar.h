@@ -54,6 +54,8 @@ private slots:
 
   void on_checkBox_2_toggled(bool checked);
 
+  void on_comboBox_2_currentIndexChanged(int index);
+
 private:
   Ui::C3DSolar *ui;
   double m_jd;

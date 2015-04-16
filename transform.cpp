@@ -125,7 +125,7 @@ SKMATRIX *trfGetTranfMatrix(void)
   return(&m_matTransf);
 }
 
-void rtfCreateOrthoView(double w, double h, double nearPlane, double farPlane, double scale, const QVector3D &translate, double yaw, double pitch)
+void rtfCreateOrthoView(double w, double h, double nearPlane, double farPlane, double scale, const QVector3D &translate, double yaw, double pitch, bool lookAt)
 {
   SKMATRIX fMatTransf;
   SKMATRIX yawMat, pitchMat, transMat;
@@ -144,7 +144,14 @@ void rtfCreateOrthoView(double w, double h, double nearPlane, double farPlane, d
   SKMATRIXRotateX(&pitchMat, pitch);
   SKMATRIXTranslate(&transMat, translate.x(), translate.y(), translate.z());
 
-  m_matView = yawMat * pitchMat * transMat;
+  if (!lookAt)
+  {
+    m_matView = yawMat * pitchMat * transMat;
+  }
+  else
+  {
+    m_matView = transMat * yawMat * pitchMat;
+  }
 
   fMatTransf = m_matView * m_matProj;
 

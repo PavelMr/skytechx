@@ -18,6 +18,18 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent) :
   connect(timer, SIGNAL(timeout()), this, SLOT(slotTimer()));
   timer->start(25);
 
+  ui->comboBox_2->addItem(tr("None"), -1);
+  ui->comboBox_2->addItem(tr("Comet"), -2);
+  ui->comboBox_2->addItem(tr("Sun"), PT_SUN);
+  ui->comboBox_2->addItem(tr("Mercury"), PT_MERCURY);
+  ui->comboBox_2->addItem(tr("Venus"), PT_VENUS);
+  ui->comboBox_2->addItem(tr("Earth"), 20);
+  ui->comboBox_2->addItem(tr("Mars"), PT_MARS);
+  ui->comboBox_2->addItem(tr("Jupiter"), PT_JUPITER);
+  ui->comboBox_2->addItem(tr("Saturn"), PT_SATURN);
+  ui->comboBox_2->addItem(tr("Uranus"), PT_URANUS);
+  ui->comboBox_2->addItem(tr("Neptune"), PT_NEPTUNE);
+
   ui->frame->setShowHeight(ui->checkBox->isChecked());
   ui->frame->setShowEclipticPlane(ui->checkBox_2->isChecked());
 
@@ -210,4 +222,10 @@ void C3DSolar::on_pushButton_13_clicked()
 void C3DSolar::on_checkBox_2_toggled(bool checked)
 {
   ui->frame->setShowEclipticPlane(checked);
+}
+
+void C3DSolar::on_comboBox_2_currentIndexChanged(int /*index*/)
+{
+  int data = ui->comboBox_2->currentData().toInt();
+  ui->frame->setLockAt(data);
 }

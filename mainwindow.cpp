@@ -207,6 +207,29 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->tb_time->addWidget(m_timeLapseMul);
 
+  QAction *action[14] = {
+                          ui->actionYPlus,
+                          ui->actionYMinus,
+                          ui->actionMPlus,
+                          ui->actionMMinus,
+                          ui->actionDPlus,
+                          ui->actionDMinus,
+                          ui->actionSDPlus,
+                          ui->actionSDMinus,
+                          ui->actionHPlus,
+                          ui->actionHMinus,
+                          ui->actionMinPlus,
+                          ui->actionMinMinus,
+                          ui->actionSPlus,
+                          ui->actionSMinus,
+                        };
+
+  for (int i = 0; i < 14; i++)
+  {
+    QToolButton *button = dynamic_cast<QToolButton*>(ui->tb_time->widgetForAction(action[i]));
+    button->setAutoRepeat(true);
+  }
+
   m_search = new CLineEditComp;
   m_search->setFixedWidth(150);
   m_search->setMaxCompleterWords(100);

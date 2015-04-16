@@ -7,7 +7,7 @@
 
 
 void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h);
-void rtfCreateOrthoView(double w, double h, double nearPlane, double farPlane, double scale, const QVector3D &translate, double yaw, double pitch);
+void rtfCreateOrthoView(double w, double h, double nearPlane, double farPlane, double scale, const QVector3D &translate, double yaw, double pitch, bool lookAt = false);
 
 void trfRaDecToPointNoCorrect(const radec_t *rd, SKPOINT *p);
 void trfRaDecToPointNoCorrect(radec_t *rd, SKPOINT *p, SKMATRIX *mat);

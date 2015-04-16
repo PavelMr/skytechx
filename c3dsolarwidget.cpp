@@ -15,6 +15,7 @@ C3DSolarWidget::C3DSolarWidget(QWidget *parent) :
   setMouseTracking(true);
 
   objList.clear();
+  m_lockAt = -1;
   m_index = -1;
   m_yaw = 0;
   m_pitch = D2R(135);
@@ -84,7 +85,17 @@ void C3DSolarWidget::setShowEclipticPlane(bool show)
   update();
 }
 
-void C3DSolarWidget::setViewParam(double yaw, double pitch, double x, double y, double z)
+void C3DSolarWidget::setLockAt(int index)
+{
+  if (index == -1)
+  { // free cam
+    setViewParam(CM_UNDEF, CM_UNDEF, 0, 0, 0, true);
+  }
+  m_lockAt = index;
+  update();
+}
+
+void C3DSolarWidget::setViewParam(double yaw, double pitch, double x, double y, double z, bool updateView)
 {
   if (!IS_UNDEF(yaw))
   {
@@ -111,7 +122,10 @@ void C3DSolarWidget::setViewParam(double yaw, double pitch, double x, double y, 
     m_translate.setZ(z);
   }
 
-  update();
+  if (updateView)
+  {
+    update();
+  }
 }
 
 void C3DSolarWidget::removeOrbit()
@@ -185,7 +199,49 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
   p.setFont(QFont("arial", 12));
 
-  setup();
+  if (m_lockAt == -2 && m_index >= 0)
+  { // look at current object
+    comet_t *com = &tComets[m_index];
+
+    cAstro.setParam(&m_view);
+    if (comSolve(com, m_view.jd))
+    {
+      QVector3D pos(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
+      setViewParam(CM_UNDEF, CM_UNDEF, -pos.x(), -pos.y(), -pos.z(), false);
+    }
+
+    rtfCreateOrthoView(width(), height(), 0.005, 10500, m_scale, m_translate, m_yaw, m_pitch, true);
+  }
+  else
+  if (m_lockAt >= PT_SUN)
+  {
+    orbit_t o;
+    ast.setParam(&m_view);
+
+    if (m_lockAt != 20 && m_lockAt != PT_SUN)
+    {
+      ast.calcPlanet(m_lockAt, &o);
+      setViewParam(CM_UNDEF, CM_UNDEF, -o.hRect[0], -o.hRect[1], -o.hRect[2], false);
+      rtfCreateOrthoView(width(), height(), 0.005, 10500, m_scale, m_translate, m_yaw, m_pitch, true);
+    }
+    else
+    if (m_lockAt == PT_SUN)
+    {
+      setViewParam(CM_UNDEF, CM_UNDEF, 0, 0, 0, false);
+      rtfCreateOrthoView(width(), height(), 0.005, 10500, m_scale, m_translate, m_yaw, m_pitch);
+    }
+    else
+    { // earth
+      ast.calcPlanet(PT_SUN, &o);
+
+      setViewParam(CM_UNDEF, CM_UNDEF, -o.eRect[0], -o.eRect[1], -o.eRect[2], false);
+      rtfCreateOrthoView(width(), height(), 0.005, 10500, m_scale, m_translate, m_yaw, m_pitch, true);
+    }
+  }
+  else
+  {
+    rtfCreateOrthoView(width(), height(), 0.005, 10500, m_scale, m_translate, m_yaw, m_pitch);
+  }
 
   p.setRenderHint(QPainter::Antialiasing, true);
   p.fillRect(rect(), Qt::black);
@@ -577,7 +633,3 @@ void C3DSolarWidget::mouseReleaseEvent(QMouseEvent *e)
 }
 
 
-void C3DSolarWidget::setup()
-{
-  rtfCreateOrthoView(width(), height(), 0.005, 10500, m_scale, m_translate, m_yaw, m_pitch);
-}
