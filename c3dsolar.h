@@ -14,7 +14,7 @@ class C3DSolar : public QDialog
   Q_OBJECT
 
 public:
-  explicit C3DSolar(mapView_t *view, QWidget *parent = 0);
+  explicit C3DSolar(mapView_t *view, QWidget *parent = 0, bool isComet = true, int index = -1);
   ~C3DSolar();
 
 private slots:

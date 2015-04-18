@@ -1776,10 +1776,17 @@ void CMapView::paintEvent(QPaintEvent *)
     int size = qMax((int)(mm * 0.05f), 5);
     p.setPen(QPen(QColor(255, 255, 255), 1, Qt::SolidLine));
     p.drawCross(m_zoomPoint + (m_lastMousePos - m_zoomPoint) * 0.5, size);
-    rc = rc.normalized().adjusted(5, 5, -5, -5);
-    p.drawText(rc, Qt::AlignLeft | Qt::AlignTop, tr("FOV : ") + getStrDegNoSign(fov));
-
+    QRect rc3 = rc;
     p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p.setPen(Qt::white);
+    QString str = tr("FOV : ") + getStrDegNoSign(fov);
+    rc = p.renderText(rc.left(), rc.top(), 0, str, RT_BOTTOM_RIGHT, false);
+    QRect rc2 = rc.translated(5, 5);
+    rc2.adjust(-3, -3, 0, 0);
+    p.setClipRect(rc3);
+    p.fillRect(rc2, Qt::black);
+    p.renderText(rc2.left(), rc2.top(), 3, str, RT_BOTTOM_RIGHT);
+    p.setClipping(false);
   }
 
   if (g_dssUse)

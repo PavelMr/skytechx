@@ -2,7 +2,7 @@
 #include "ui_c3dsolar.h"
 #include "ccomdlg.h"
 
-C3DSolar::C3DSolar(mapView_t *view, QWidget *parent) :
+C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
   QDialog(parent),
   ui(new Ui::C3DSolar)
 {
@@ -41,6 +41,16 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent) :
     }
   }
   updateData();
+
+  if (isComet && index >= 0)
+  {
+    int idx = ui->comboBox->findData(index);
+    if (idx >= 0)
+    {
+      ui->comboBox->setCurrentIndex(idx);
+      ui->frame->generateComet(index, ui->spinBox->value(), ui->spinBox_2->value());
+    }
+  }
 }
 
 C3DSolar::~C3DSolar()
@@ -210,7 +220,7 @@ void C3DSolar::on_pushButton_12_clicked()
   }
   else
   {
-    msgBoxError(this, tr("Commet is not periodical!"));
+    msgBoxError(this, tr("Comet is not periodical!"));
   }
 }
 

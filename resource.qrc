@@ -103,5 +103,6 @@
         <file>res/ico_text.png</file>
         <file>res/ico_obj_tracking.png</file>
         <file>res/ico_b180.png</file>
+        <file>res/ico_release_obj.png</file>
     </qresource>
 </RCC>

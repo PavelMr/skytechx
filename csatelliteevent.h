@@ -11,6 +11,7 @@
 
 class CSatelliteChartWidget : public QWidget
 {
+  Q_OBJECT
 public:
   CSatelliteChartWidget(QWidget *parent, QLabel *label);
   void setData(const mapView_t *view, int planet);

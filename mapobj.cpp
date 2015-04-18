@@ -10,6 +10,7 @@
 #include "Usno2A.h"
 #include "cucac4.h"
 #include "csgp4.h"
+#include "c3dsolar.h"
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
@@ -35,7 +36,10 @@ void releaseHoldObject(int type)
     return;
 
   if (g_HoldObject.objType == type || type == -1)
+  {
     g_bHoldObject = false;
+    pcMainWnd->enableReleaseObject(false);
+  }
 }
 
 ///////////////////////////////////////////////////
@@ -287,6 +291,7 @@ void mapObjContextMenu(CMapView *map)
   int index = 0;
   int lastType = -1;
   bool isHoldObjFirst = false;
+  int cometIndex = -1;
 
   foreach(o, tObjTmp)
   {
@@ -401,6 +406,14 @@ void mapObjContextMenu(CMapView *map)
           g_HoldObject.objType = MO_COMET;
           isHoldObjFirst =  true;
         }
+
+        if (cometIndex == -1)
+        { // only first comet in menu
+          strSuf.append(QObject::tr("  Show comet ") + a->name + QObject::tr(" in 3D"));
+          strIdx.append(-8);
+          cometIndex = o.par1;
+        }
+
         break;
       }
 
@@ -574,12 +587,14 @@ void mapObjContextMenu(CMapView *map)
       case -4:
       {
         g_bHoldObject = true;
+        pcMainWnd->enableReleaseObject(true);
         return;
       }
 
       case -5:
       {
         g_bHoldObject = false;
+        pcMainWnd->enableReleaseObject(false);
         return;
       }
 
@@ -599,6 +614,16 @@ void mapObjContextMenu(CMapView *map)
           double d = R2D(dec);
           g_pTelePlugin->syncTo(r, d);
         }
+        return;
+      }
+
+      case -8:
+      {
+        C3DSolar dlg(&pcMapView->m_mapView, pcMainWnd, true, cometIndex);
+
+        dlg.exec();
+
+        pcMainWnd->repaintMap();
         return;
       }
 

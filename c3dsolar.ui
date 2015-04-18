@@ -104,6 +104,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_8">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string>Generate orbit</string>
          </property>

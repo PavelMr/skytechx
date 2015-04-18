@@ -579,6 +579,9 @@
    <addaction name="action_zoom_20"/>
    <addaction name="action_zoom_45"/>
    <addaction name="action_zoom_90"/>
+   <addaction name="separator"/>
+   <addaction name="actionRelease_object"/>
+   <addaction name="separator"/>
    <addaction name="actionLook_backward"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget">
@@ -3889,6 +3892,18 @@ p, li { white-space: pre-wrap; }
   <action name="action3D_Solar_system">
    <property name="text">
     <string>3D Solar system...</string>
+   </property>
+  </action>
+  <action name="actionRelease_object">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_release_obj.png</normaloff>:/res/ico_release_obj.png</iconset>
+   </property>
+   <property name="text">
+    <string>Release object</string>
    </property>
   </action>
  </widget>

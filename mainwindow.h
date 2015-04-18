@@ -71,6 +71,8 @@ public:
 
   void checkNewVersion(bool forced);
 
+  void enableReleaseObject(bool enable);
+
 protected:
 
   void changeEvent(QEvent *e);
@@ -541,6 +543,8 @@ private slots:
   void on_actionLook_backward_triggered();
 
   void on_action3D_Solar_system_triggered();
+
+  void on_actionRelease_object_triggered();
 
 private:
   Ui::MainWindow *ui;

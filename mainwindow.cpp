@@ -112,6 +112,7 @@ bool g_quickInfoForced;
 
 QString g_horizonName = "none";
 
+extern bool g_bHoldObject;
 extern bool bParkTelescope;
 extern bool g_developMode;
 extern QApplication *g_pApp;
@@ -5069,4 +5070,17 @@ void MainWindow::on_action3D_Solar_system_triggered()
   C3DSolar dlg(&ui->widget->m_mapView, this);
 
   dlg.exec();
+  repaintMap();
+}
+
+void MainWindow::on_actionRelease_object_triggered()
+{
+  g_bHoldObject = false;
+  enableReleaseObject(false);
+  repaintMap();
+}
+
+void MainWindow::enableReleaseObject(bool enable)
+{
+  ui->actionRelease_object->setEnabled(enable);
 }
