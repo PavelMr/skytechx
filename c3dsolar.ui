@@ -36,6 +36,16 @@
         <widget class="QComboBox" name="comboBox"/>
        </item>
        <item>
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Select asteroid</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_3"/>
+       </item>
+       <item>
         <widget class="Line" name="line_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -139,7 +149,7 @@
        <item>
         <widget class="QCheckBox" name="checkBox">
          <property name="text">
-          <string>Show comet height</string>
+          <string>Show object height</string>
          </property>
         </widget>
        </item>

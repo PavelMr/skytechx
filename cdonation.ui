@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>350</width>
-    <height>300</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -40,6 +40,9 @@
         <font>
          <pointsize>10</pointsize>
         </font>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

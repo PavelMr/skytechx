@@ -48,7 +48,7 @@ private slots:
 
 public slots:
     void slotThreadDone(void);
-    void slotProgress(int val, int id);
+    void slotProgress(int val, int id, int founded);
 
 private:
     Ui::CEventProgDlg *ui;

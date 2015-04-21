@@ -292,6 +292,7 @@ void mapObjContextMenu(CMapView *map)
   int lastType = -1;
   bool isHoldObjFirst = false;
   int cometIndex = -1;
+  int astIndex = -1;
 
   foreach(o, tObjTmp)
   {
@@ -387,6 +388,14 @@ void mapObjContextMenu(CMapView *map)
           g_HoldObject.objType = MO_ASTER;
           isHoldObjFirst =  true;
         }
+
+        if (astIndex == -1)
+        { // only first asteroid in menu
+          strSuf.append(QObject::tr("  Show asteroid ") + a->name + QObject::tr(" in 3D"));
+          strIdx.append(-9);
+          astIndex = o.par1;
+        }
+
         break;
       }
 
@@ -620,6 +629,16 @@ void mapObjContextMenu(CMapView *map)
       case -8:
       {
         C3DSolar dlg(&pcMapView->m_mapView, pcMainWnd, true, cometIndex);
+
+        dlg.exec();
+
+        pcMainWnd->repaintMap();
+        return;
+      }
+
+      case -9:
+      {
+        C3DSolar dlg(&pcMapView->m_mapView, pcMainWnd, false, astIndex);
 
         dlg.exec();
 

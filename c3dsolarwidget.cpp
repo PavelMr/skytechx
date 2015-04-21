@@ -2,6 +2,7 @@
 #include "cskpainter.h"
 #include "transform.h"
 #include "ccomdlg.h"
+#include "casterdlg.h"
 
 static QList <QVector3D> ptsList[8];
 static QList <QVector3D> objList;
@@ -42,7 +43,7 @@ void C3DSolarWidget::setView(mapView_t *view, bool genOrbit)
   update();
 }
 
-void C3DSolarWidget::generateComet(int index, double time, double period)
+void C3DSolarWidget::generateComet(int index, double time, double period, bool isComet)
 {
   double oldJD = m_view.jd;
   double jdt = m_view.jd;
@@ -50,19 +51,36 @@ void C3DSolarWidget::generateComet(int index, double time, double period)
 
   objList.clear();
 
+  m_isComet = isComet;
+
   for (double jd = jdt - time; jd <= jdt + time; jd += per)
   {
-    CAstro ast;
-    comet_t *com = &tComets[index];
+    QVector3D pos;
 
-    m_view.jd = jd;
-    ast.setParam(&m_view);
-    if (!comSolve(com, jd))
+    if (isComet)
     {
-      break;
-    }
+      comet_t *com = &tComets[index];
 
-    QVector3D pos(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
+      m_view.jd = jd;
+      cAstro.setParam(&m_view);
+
+      if (!comSolve(com, jd))
+      {
+        break;
+      }
+
+      pos = QVector3D(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
+    }
+    else
+    {
+      asteroid_t *com = &tAsteroids[index];
+
+      m_view.jd = jd;
+      cAstro.setParam(&m_view);
+      astSolve(com, jd);
+
+      pos = QVector3D(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
+    }
 
     objList.append(pos);
   }
@@ -201,11 +219,24 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
   if (m_lockAt == -2 && m_index >= 0)
   { // look at current object
-    comet_t *com = &tComets[m_index];
 
-    cAstro.setParam(&m_view);
-    if (comSolve(com, m_view.jd))
+    if (m_isComet)
     {
+      comet_t *com = &tComets[m_index];
+      cAstro.setParam(&m_view);
+      if (comSolve(com, m_view.jd))
+      {
+        QVector3D pos(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
+
+        setViewParam(CM_UNDEF, CM_UNDEF, -pos.x(), -pos.y(), -pos.z(), false);
+      }
+    }
+    else
+    {
+      asteroid_t *com = &tAsteroids[m_index];
+      cAstro.setParam(&m_view);
+      astSolve(com, m_view.jd);
+
       QVector3D pos(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
       setViewParam(CM_UNDEF, CM_UNDEF, -pos.x(), -pos.y(), -pos.z(), false);
     }
@@ -490,18 +521,34 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
   if (m_index >= 0)
   {
-    comet_t *com = &tComets[m_index];
+    QVector3D pos;
+    QString name;
 
-    cAstro.setParam(&m_view);
-    if (!comSolve(com, m_view.jd))
+    if (m_isComet)
     {
-      return;
+      comet_t *com = &tComets[m_index];
+
+      cAstro.setParam(&m_view);
+      if (!comSolve(com, m_view.jd))
+      {
+        return;
+      }
+      pos = QVector3D(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
+      rr = com->orbit.r;
+      RR = com->orbit.R;
+      name = com->name;
     }
+    else
+    {
+      asteroid_t *com = &tAsteroids[m_index];
 
-    rr = com->orbit.r;
-    RR = com->orbit.R;
-
-    QVector3D pos(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
+      cAstro.setParam(&m_view);
+      astSolve(com, m_view.jd);
+      pos = QVector3D(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
+      rr = com->orbit.r;
+      RR = com->orbit.R;
+      name = com->name;
+    }
 
     p1.w.x = pos.x();
     p1.w.y = pos.y();
@@ -516,37 +563,40 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       p.setBrush(Qt::white);
       p.drawEllipse(QPointF(p1.sx, p1.sy), r, r);
 
-      QVector3D vec = -pos.normalized();
-
-      p2.w.x = (pos.x() - vec.x()) * tail;
-      p2.w.y = (pos.y() - vec.y()) * tail;
-      p2.w.z = (pos.z() - vec.z()) * tail;
-
-      if (trfProjectLine(&p1, &p2))
+      if (m_isComet)
       {
-        p.setPen(QPen(Qt::white, 0.5));
-        p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
-      }
+        QVector3D vec = -pos.normalized();
 
-      for (int i = 0; i < 4; i++)
-      {
-        QVector3D vec2 = vec + cometTail[i];
-
-        vec2.normalize();
-
-        p2.w.x = (pos.x() - vec2.x()) * tail;
-        p2.w.y = (pos.y() - vec2.y()) * tail;
-        p2.w.z = (pos.z() - vec2.z()) * tail;
+        p2.w.x = (pos.x() - vec.x()) * tail;
+        p2.w.y = (pos.y() - vec.y()) * tail;
+        p2.w.z = (pos.z() - vec.z()) * tail;
 
         if (trfProjectLine(&p1, &p2))
         {
           p.setPen(QPen(Qt::white, 0.5));
           p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
         }
+
+        for (int i = 0; i < 4; i++)
+        {
+          QVector3D vec2 = vec + cometTail[i];
+
+          vec2.normalize();
+
+          p2.w.x = (pos.x() - vec2.x()) * tail;
+          p2.w.y = (pos.y() - vec2.y()) * tail;
+          p2.w.z = (pos.z() - vec2.z()) * tail;
+
+          if (trfProjectLine(&p1, &p2))
+          {
+            p.setPen(QPen(Qt::white, 0.5));
+            p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+          }
+        }
       }
 
       p.setPen(Qt::white);
-      p.renderText(p1.sx, p1.sy, r, com->name, RT_BOTTOM_RIGHT);
+      p.renderText(p1.sx, p1.sy, r, name, RT_BOTTOM_RIGHT);
     }
   }
 

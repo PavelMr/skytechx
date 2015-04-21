@@ -56,6 +56,10 @@ private slots:
 
   void on_comboBox_2_currentIndexChanged(int index);
 
+  void on_comboBox_currentIndexChanged(int index);
+
+  void on_comboBox_3_currentIndexChanged(int index);
+
 private:
   Ui::C3DSolar *ui;
   double m_jd;

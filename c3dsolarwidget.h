@@ -16,7 +16,7 @@ class C3DSolarWidget : public QWidget
 public:
   explicit C3DSolarWidget(QWidget *parent = 0);
   void setView(mapView_t *view, bool genOrbit = false);
-  void generateComet(int index, double time, double period);
+  void generateComet(int index, double time, double period, bool isComet);
   void setShowHeight(bool show);
   void setShowEclipticPlane(bool show);
   void setLockAt(int index);
@@ -36,6 +36,7 @@ protected:
 
   void generateOrbits();
 
+  bool      m_isComet;
   int       m_lockAt;
   bool      m_showEclipticPlane;
   bool      m_showHeight;

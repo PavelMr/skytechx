@@ -648,7 +648,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -659,7 +659,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>368</height>
+          <height>183</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1263,7 +1263,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-156</y>
           <width>257</width>
           <height>524</height>
          </rect>
@@ -1390,6 +1390,12 @@
          </item>
          <item row="14" column="0" colspan="2">
           <widget class="QLabel" name="label_9">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text">
             <string>Current event : </string>
            </property>
@@ -1504,7 +1510,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>368</height>
+          <height>327</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1794,8 +1800,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>101</width>
-          <height>368</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1942,8 +1948,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
-          <height>368</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">

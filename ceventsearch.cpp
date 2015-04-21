@@ -456,7 +456,7 @@ void CEventSearch::on_pushButton_2_clicked()
   for (int i = 0; i < tThread.count(); i++)
   {
     connect(tThread[i], SIGNAL(sigDone()), &dlg, SLOT(slotThreadDone()));
-    connect(tThread[i], SIGNAL(sigProgress(int,int)), &dlg, SLOT(slotProgress(int,int)));
+    connect(tThread[i], SIGNAL(sigProgress(int,int,int)), &dlg, SLOT(slotProgress(int,int,int)));
     tThread[i]->start();
   }
 
@@ -1124,7 +1124,7 @@ void searchEvent::CCommonEvent::run(void)
       break;
 
     if ((count % 10) == 0)
-      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), m_id1);
+      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), m_id1, eventCount);
     count++;
   }
 
@@ -1155,7 +1155,7 @@ void searchEvent::CMaxElongation::run(void)
   while (true)
   {
     if ((count % 10) == 0)
-      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), m_id);
+      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), m_id, eventCount);
 
     if (m_end)
       break; // forced quit
@@ -1232,7 +1232,7 @@ void searchEvent::COpposition::run(void)
   while (true)
   {
     if ((count % 10) == 0)
-      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), m_id);
+      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), m_id, eventCount);
 
     if (m_end)
       break; // forced quit
@@ -1418,7 +1418,7 @@ void searchEvent::CConjuction::run(void)
       break;
 
     if ((count % 10) == 0)
-      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), m_idList.at(0));
+      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), m_idList.at(0), eventCount);
     count++;
   }
   emit sigDone();
@@ -1498,7 +1498,7 @@ void CBigMoon::run()
   {
     if ((count % 10) == 0)
     {
-      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), PT_MOON);
+      sigProgress(GET_PERC(m_jdFrom, m_jdTo, m_view.jd), PT_MOON, eventCount);
     }
 
     if (m_end)

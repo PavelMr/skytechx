@@ -1,6 +1,7 @@
 #include "c3dsolar.h"
 #include "ui_c3dsolar.h"
 #include "ccomdlg.h"
+#include "casterdlg.h"
 
 C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
   QDialog(parent),
@@ -19,7 +20,7 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
   timer->start(25);
 
   ui->comboBox_2->addItem(tr("None"), -1);
-  ui->comboBox_2->addItem(tr("Comet"), -2);
+  ui->comboBox_2->addItem(tr("Comet/Asteroid"), -2);
   ui->comboBox_2->addItem(tr("Sun"), PT_SUN);
   ui->comboBox_2->addItem(tr("Mercury"), PT_MERCURY);
   ui->comboBox_2->addItem(tr("Venus"), PT_VENUS);
@@ -33,6 +34,7 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
   ui->frame->setShowHeight(ui->checkBox->isChecked());
   ui->frame->setShowEclipticPlane(ui->checkBox_2->isChecked());
 
+  ui->comboBox->addItem(tr("None"), -1);
   for (int i = 0; i < tComets.count(); i++)
   {
     if (tComets[i].selected)
@@ -40,6 +42,16 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
       ui->comboBox->addItem(tComets[i].name, i);
     }
   }
+
+  ui->comboBox_3->addItem(tr("None"), -1);
+  for (int i = 0; i < tAsteroids.count(); i++)
+  {
+    if (tAsteroids[i].selected)
+    {
+      ui->comboBox_3->addItem(tAsteroids[i].name, i);
+    }
+  }
+
   updateData();
 
   if (isComet && index >= 0)
@@ -48,7 +60,16 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
     if (idx >= 0)
     {
       ui->comboBox->setCurrentIndex(idx);
-      ui->frame->generateComet(index, ui->spinBox->value(), ui->spinBox_2->value());
+      ui->frame->generateComet(index, ui->spinBox->value(), ui->spinBox_2->value(), true);
+    }
+  }
+  if (!isComet && index >= 0)
+  {
+    int idx = ui->comboBox_3->findData(index);
+    if (idx >= 0)
+    {
+      ui->comboBox_3->setCurrentIndex(idx);
+      ui->frame->generateComet(index, ui->spinBox->value(), ui->spinBox_2->value(), false);
     }
   }
 }
@@ -133,12 +154,27 @@ void C3DSolar::on_pushButton_7_clicked()
 
 void C3DSolar::on_pushButton_8_clicked()
 {
+  bool isComet = true;
+
   if (ui->comboBox->currentIndex() == -1)
   {
     return;
   }
   int index = ui->comboBox->currentData().toInt();
-  ui->frame->generateComet(index, ui->spinBox->value(), ui->spinBox_2->value());
+  if (index == -1)
+  {
+    if (ui->comboBox_3->currentIndex() == -1)
+    {
+      return;
+    }
+    index = ui->comboBox_3->currentData().toInt();
+    if (index == -1)
+    {
+      return;
+    }
+    isComet = false;
+  }
+  ui->frame->generateComet(index, ui->spinBox->value(), ui->spinBox_2->value(), isComet);
 }
 
 void C3DSolar::updateData()
@@ -204,23 +240,48 @@ void C3DSolar::on_pushButton_clicked()
 
 void C3DSolar::on_pushButton_12_clicked()
 {
+  bool isComet = true;
   if (ui->comboBox->currentIndex() == -1)
   {
     return;
   }
   int index = ui->comboBox->currentData().toInt();
-
-  comet_t *a = &tComets[index];
-
-  if (a->e < 0.99)
+  if (index == -1)
   {
-    double aa = a->q / (1.0 - a->e);
-    double P = 1.00004024 * pow(aa, 1.5);
-    ui->spinBox->setValue(P * 365.25 * 0.5 * 1.02);
+    isComet = false;
+
+    if (ui->comboBox_3->currentIndex() == -1)
+    {
+      return;
+    }
+    index = ui->comboBox_3->currentData().toInt();
+    if (index == -1)
+    {
+      return;
+    }
+  }
+
+  if (isComet)
+  {
+    comet_t *a = &tComets[index];
+
+    if (a->e < 0.99)
+    {
+      double aa = a->q / (1.0 - a->e);
+      double P = 1.00004024 * pow(aa, 1.5);
+      ui->spinBox->setValue(P * 365.25 * 0.5 * 1.02);
+    }
+    else
+    {
+      msgBoxError(this, tr("Comet is not periodical!"));
+    }
   }
   else
   {
-    msgBoxError(this, tr("Comet is not periodical!"));
+    asteroid_t *a = &tAsteroids[index];
+
+    double P = 365.256898326 * pow(a->a, 1.5);
+    ui->spinBox->setValue(P * 0.5 * 1.02);
   }
 }
 
@@ -238,4 +299,26 @@ void C3DSolar::on_comboBox_2_currentIndexChanged(int /*index*/)
 {
   int data = ui->comboBox_2->currentData().toInt();
   ui->frame->setLockAt(data);
+}
+
+void C3DSolar::on_comboBox_currentIndexChanged(int)
+{
+  if (ui->comboBox_3->signalsBlocked())
+  {
+    return;
+  }
+  ui->comboBox->blockSignals(true);
+  ui->comboBox_3->setCurrentIndex(0);
+  ui->comboBox->blockSignals(false);
+}
+
+void C3DSolar::on_comboBox_3_currentIndexChanged(int)
+{
+  if (ui->comboBox->signalsBlocked())
+  {
+    return;
+  }
+  ui->comboBox_3->blockSignals(true);
+  ui->comboBox->setCurrentIndex(0);
+  ui->comboBox_3->blockSignals(false);
 }

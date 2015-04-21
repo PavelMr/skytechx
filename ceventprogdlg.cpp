@@ -16,6 +16,7 @@ CEventProgDlg::CEventProgDlg(QWidget *parent) :
     movie->setBackgroundColor(QColor(255, 0, 0));
     ui->label->setMovie(movie);
     movie->start();
+    ui->label_2->setText(tr("Events found : ") + QString::number(0));
 }
 
 CEventProgDlg::~CEventProgDlg()
@@ -41,7 +42,7 @@ void CEventProgDlg::setMaxThreads(int count)
   m_count = count;
 }
 
-void CEventProgDlg::slotProgress(int val, int id)
+void CEventProgDlg::slotProgress(int val, int id, int founded)
 {
   tMap[id] = val;
   int min = 9999;
@@ -53,6 +54,7 @@ void CEventProgDlg::slotProgress(int val, int id)
       min = i.value();
   }
 
+  ui->label_2->setText(tr("Events found : ") + QString::number(founded));
   ui->progressBar->setValue(min);
 }
 

@@ -147,7 +147,7 @@ namespace searchEvent
 
   signals:
     void sigDone(void);
-    void sigProgress(int per, int id);
+    void sigProgress(int per, int id, int founded);
   };
 
 
@@ -165,7 +165,7 @@ namespace searchEvent
 
   signals:
     void sigDone(void);
-    void sigProgress(int per, int id);
+    void sigProgress(int per, int id, int founded);
   };
 
   class CBigMoon : public CEventThread
@@ -181,7 +181,7 @@ namespace searchEvent
 
   signals:
     void sigDone(void);
-    void sigProgress(int per, int id);
+    void sigProgress(int per, int id, int founded);
   };
 
   class CConjuction : public CEventThread
@@ -199,7 +199,7 @@ namespace searchEvent
 
   signals:
     void sigDone(void);
-    void sigProgress(int per, int id);
+    void sigProgress(int per, int id, int founded);
   };
 
   class CCommonEvent : public CEventThread
@@ -221,7 +221,7 @@ namespace searchEvent
 
   signals:
     void sigDone(void);
-    void sigProgress(int per, int id);
+    void sigProgress(int per, int id, int founded);
   };
 
 }
