@@ -1,6 +1,12 @@
 #include "cimagemanip.h"
 #include "skcore.h"
 
+#include <cuda_runtime.h>
+#include <cuda.h>
+
+extern "C" void cuAutoAdjust(unsigned char *s, unsigned char *d, int count, int *autoTable, bool invert);
+extern "C" void cuProcessImage(unsigned char *s, unsigned char *d, int count, int *contrastTable, int *gammaTable, bool invert, float brightness);
+
 static int contrastTable[256];
 static int gammaTable[256];
 static int autoTable[256];
@@ -45,7 +51,7 @@ void CImageManip::process(QImage *src, QImage *dst, imageParam_t *par)
   {
     autoAdjust(src, dst, par);
     return;
-  }  
+  }
 
   float con = (par->contrast / 100.0);
   float gamma = par->gamma / 150.0;
@@ -57,57 +63,111 @@ void CImageManip::process(QImage *src, QImage *dst, imageParam_t *par)
   createContrastsTable(con, contrastTable);
   createGammasTable(gamma, gammaTable);
 
-  if (bw)
+  if (0)
   {
-    uchar *s = (uchar *)src->bits();
-    uchar *d = (uchar *)dst->bits();
-
-    #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, val, rgb)
-    for (y = 0; y < src->height(); y++)
+    if (bw)
     {
-      int index = src->width() * y;
-      for (x = 0; x < src->width(); x++)
+      uchar *s = (uchar *)src->bits();
+      uchar *d = (uchar *)dst->bits();
+
+      #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, val, rgb)
+      for (y = 0; y < src->height(); y++)
       {
-        val = s[x + index];
+        int index = src->width() * y;
+        for (x = 0; x < src->width(); x++)
+        {
+          val = s[x + index];
 
-        val += par->brightness;
-        val = CLAMP(val, 0, 255);
+          val += par->brightness;
+          val = CLAMP(val, 0, 255);
 
-        val = contrastTable[val];
-        val = gammaTable[val];
+          val = contrastTable[val];
+          val = gammaTable[val];
 
-        val = par->invert ? 255 - val : val;
+          val = par->invert ? 255 - val : val;
 
-        d[x + index] = val;
+          d[x + index] = val;
+        }
+      }
+    }
+    else
+    {
+      QRgb *s = (QRgb *)src->bits();
+      QRgb *d = (QRgb *)dst->bits();
+
+      #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, val, rgb)
+      for (y = 0; y < src->height(); y++)
+      {
+        int index = src->width() * y;
+        for (x = 0; x < src->width(); x++)
+        {
+          rgb = s[x + index];
+          val = rgb & 0xff;
+
+          val += par->brightness;
+          val = CLAMP(val, 0, 255);
+
+          val = contrastTable[val];
+          val = gammaTable[val];
+
+          val = par->invert ? 255 - val : val;
+
+          d[x + index] = (255 << 24) | (val << 16) | (val << 8) | val;
+        }
       }
     }
   }
   else
-  {
-    QRgb *s = (QRgb *)src->bits();
-    QRgb *d = (QRgb *)dst->bits();
+  { // CUDA
+    bool bw = src->format() == QImage::Format_Indexed8;
+    int maxv;
+    int minv;
 
-    #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, val, rgb)
-    for (y = 0; y < src->height(); y++)
+    getMinMax(src, minv, maxv);
+
+    SK_DEBUG_TIMER_START(0);
+
+    float delta = 256 / (float)(maxv - minv);
+
+    createAutosTable(minv, delta, autoTable);
+
+    if (bw)
     {
-      int index = src->width() * y;
-      for (x = 0; x < src->width(); x++)
-      {
-        rgb = s[x + index];
-        val = rgb & 0xff;
+      uchar *s = (uchar *)src->bits();
+      uchar *d = (uchar *)dst->bits();
+      int *contrastTable_d;
+      int *gammaTable_d;
+      int count = src->byteCount();
 
-        val += par->brightness;
-        val = CLAMP(val, 0, 255);
+      uchar *s_d = (uchar *)src->bits();
+      uchar *d_d = (uchar *)dst->bits();
 
-        val = contrastTable[val];
-        val = gammaTable[val];
+      cudaMalloc(&contrastTable_d, 256 * sizeof(int));
+      cudaMalloc(&gammaTable_d, 256 * sizeof(int));
+      cudaMalloc(&s_d, count);
+      cudaMalloc(&d_d, count);
 
-        val = par->invert ? 255 - val : val;
+      cudaMemcpy(s_d, s, count, cudaMemcpyHostToDevice);
+      cudaMemcpy(contrastTable_d, contrastTable, 256 * sizeof(int), cudaMemcpyHostToDevice);
+      cudaMemcpy(gammaTable_d, gammaTable, 256 * sizeof(int), cudaMemcpyHostToDevice);
 
-        d[x + index] = (255 << 24) | (val << 16) | (val << 8) | val;
-      }
+      cuProcessImage(s_d, d_d, count, contrastTable_d, gammaTable_d, par->invert, par->brightness);
+
+      cudaMemcpy(d, d_d, count, cudaMemcpyDeviceToHost);
+
+      cudaFree(s_d);
+      cudaFree(d_d);
+      cudaFree(contrastTable_d);
+      cudaFree(gammaTable_d);
     }
+    else
+    {
+
+    }
+
+    SK_DEBUG_TIMER_STOP(0);
   }
+
 }
 
 //////////////////////////////////////////////////////////////
@@ -116,7 +176,7 @@ void CImageManip::getMinMax(QImage *src, int &minv, int &maxv)
 {
   bool bw = src->format() == QImage::Format_Indexed8;
   minv = 255;
-  maxv = 0;  
+  maxv = 0;
 
   int histogram[256];
 
@@ -167,68 +227,118 @@ void CImageManip::getMinMax(QImage *src, int &minv, int &maxv)
 void CImageManip::autoAdjust(QImage *src, QImage *dst, imageParam_t *par)
 /////////////////////////////////////////////////////////////////////////
 {
-  bool bw = src->format() == QImage::Format_Indexed8;
-  int maxv;
-  int minv;
 
-  getMinMax(src, minv, maxv);    
-
-  int val;
-  QRgb rgb;
-  int x, y;
-
-  SK_DEBUG_TIMER_START(0);
-
-  float delta = 256 / (float)(maxv - minv);
-
-  createAutosTable(minv, delta, autoTable);
-
-  if (bw)
+  if (0)
   {
-    uchar *s = (uchar *)src->bits();
-    uchar *d = (uchar *)dst->bits();
+    bool bw = src->format() == QImage::Format_Indexed8;
+    int maxv;
+    int minv;
 
-    #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val, rgb)
-    for (y = 0; y < src->height(); y++)
+    getMinMax(src, minv, maxv);
+
+    int val;
+    QRgb rgb;
+    int x, y;
+
+    SK_DEBUG_TIMER_START(0);
+
+    float delta = 256 / (float)(maxv - minv);
+
+    createAutosTable(minv, delta, autoTable);
+
+    if (bw)
     {
-      int index = src->width() * y;
-      for (x = 0; x < src->width(); x++)
+      uchar *s = (uchar *)src->bits();
+      uchar *d = (uchar *)dst->bits();
+
+      #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val, rgb)
+      for (y = 0; y < src->height(); y++)
       {
-        val = s[x + index];
+        int index = src->width() * y;
+        for (x = 0; x < src->width(); x++)
+        {
+          val = s[x + index];
 
-        val = autoTable[val];
+          val = autoTable[val];
 
-        if (par->invert)
-          val = 255 - val;
+          if (par->invert)
+            val = 255 - val;
 
-        d[x + index] = val;
+          d[x + index] = val;
+        }
       }
     }
+    else
+    {
+      QRgb *s = (QRgb *)src->bits();
+      QRgb *d = (QRgb *)dst->bits();
+
+      #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val, rgb)
+      for (y = 0; y < src->height(); y++)
+      {
+        int index = src->width() * y;
+        for (x = 0; x < src->width(); x++)
+        {
+          rgb = s[x + index];
+          val = rgb & 0xff;
+
+          val = autoTable[val];
+
+          if (par->invert)
+            val = 255 - val;
+
+          d[x + index] = (255 << 24) | (val << 16) | (val << 8) | val;
+        }
+      }
+    }
+
+    SK_DEBUG_TIMER_STOP(0);
   }
   else
-  {
-    QRgb *s = (QRgb *)src->bits();
-    QRgb *d = (QRgb *)dst->bits();
+  { // CUDA
+    bool bw = src->format() == QImage::Format_Indexed8;
+    int maxv;
+    int minv;
 
-    #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val, rgb)
-    for (y = 0; y < src->height(); y++)
+    getMinMax(src, minv, maxv);
+
+    SK_DEBUG_TIMER_START(0);
+
+    float delta = 256 / (float)(maxv - minv);
+
+    createAutosTable(minv, delta, autoTable);
+
+    if (bw)
     {
-      int index = src->width() * y;
-      for (x = 0; x < src->width(); x++)
-      {
-        rgb = s[x + index];
-        val = rgb & 0xff;
+      uchar *s = (uchar *)src->bits();
+      uchar *d = (uchar *)dst->bits();
+      int *autoTable_d;
+      int count = src->byteCount();
 
-        val = autoTable[val];
+      uchar *s_d = (uchar *)src->bits();
+      uchar *d_d = (uchar *)dst->bits();
 
-        if (par->invert)
-          val = 255 - val;
+      cudaMalloc(&autoTable_d, 256 * sizeof(int));
+      cudaMalloc(&s_d, count);
+      cudaMalloc(&d_d, count);
 
-        d[x + index] = (255 << 24) | (val << 16) | (val << 8) | val;
-      }
+      cudaMemcpy(s_d, s, count, cudaMemcpyHostToDevice);
+      cudaMemcpy(autoTable_d, autoTable, 256 * sizeof(int), cudaMemcpyHostToDevice);
+
+      cuAutoAdjust(s_d, d_d, count, autoTable_d, par->invert);
+
+      cudaMemcpy(d, d_d, count, cudaMemcpyDeviceToHost);
+
+      cudaFree(s_d);
+      cudaFree(d_d);
+      cudaFree(autoTable_d);
     }
-  }
+    else
+    {
 
-  SK_DEBUG_TIMER_STOP(0);
+    }
+
+    SK_DEBUG_TIMER_STOP(0);
+  }
 }
 

@@ -26,14 +26,66 @@ win32-msvc2013 :  LIBS += winmm.lib
 TARGET = skytech_x
 TEMPLATE = app
 
+# CUDA 7.0
+
+CUDA_SOURCES = cuda/gpu.cu
+
+MSVCRT_LINK_FLAG_DEBUG   = "/MDd /LTCG"
+MSVCRT_LINK_FLAG_RELEASE = "/MD /LTCG"
+
+CUDA_SDK = "c:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v7.0"   # Path to cuda SDK install
+CUDA_DIR = "c:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v7.0"   # Path to cuda toolkit install
+
+SYSTEM_NAME = x64         # Depending on your system either 'Win32', 'x64', or 'Win64'
+SYSTEM_TYPE = 64          # '32' or '64', depending on your system
+CUDA_ARCH = sm_30         # Type of CUDA architecture, for example 'compute_10', 'compute_11', 'sm_10'
+
+# add cuda include paths
+INCLUDEPATH += $$CUDA_DIR/include
+
+LIBS += -l$$CUDA_DIR/lib/x64/cuda
+LIBS += -l$$CUDA_DIR/lib/x64/cudart
+
+#CONFIG(debug)
+#{
+#  CUDA_OBJECTS_DIR = debug/
+#
+#  CUDA_INC = $$join(INCLUDEPATH,'" -I"','-I"','"')
+#
+#  # Debug mode
+#  cuda_d.input = CUDA_SOURCES
+#  cuda_d.output = $$CUDA_OBJECTS_DIR/${QMAKE_FILE_BASE}.obj
+#  cuda_d.commands = $$CUDA_DIR/bin/nvcc -D_DEBUG $$NVCC_OPTIONS $$CUDA_INC $$NVCC_LIBS --machine $$SYSTEM_TYPE -Xcompiler $$MSVCRT_LINK_FLAG_DEBUG -arch=$$CUDA_ARCH -c -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
+#  cuda_d.dependency_type = TYPE_C
+#  QMAKE_EXTRA_COMPILERS += cuda_d
+#}
+
+CONFIG(release)
+{
+  #release
+
+  CUDA_OBJECTS_DIR = release/
+
+  CUDA_INC = $$join(INCLUDEPATH,'" -I"','-I"','"')
+
+  # Release mode
+  cuda_r.input = CUDA_SOURCES
+  cuda_r.output = $$CUDA_OBJECTS_DIR/${QMAKE_FILE_BASE}.obj
+  cuda_r.commands = $$CUDA_DIR/bin/nvcc $$NVCC_OPTIONS $$CUDA_INC $$NVCC_LIBS --machine $$SYSTEM_TYPE -Xcompiler $$MSVCRT_LINK_FLAG_RELEASE -arch=$$CUDA_ARCH -c -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
+  cuda_r.dependency_type = TYPE_C
+  QMAKE_EXTRA_COMPILERS += cuda_r
+}
+
+
 #Release: build_nr.commands = $$PWD/build_inc.bat
 #Release: build_nr.depends = FORCE
 #Release: QMAKE_EXTRA_TARGETS += build_nr
 #Release: PRE_TARGETDEPS += build_nr
 
-INCLUDEPATH = core \
+INCLUDEPATH += core \
               de404 \
               libsgp4 \
+              cuda \
               $$PWD \
 
 
@@ -218,7 +270,8 @@ SOURCES += main.cpp\
     cdonation.cpp \
     cdssmanager.cpp \
     c3dsolar.cpp \
-    c3dsolarwidget.cpp
+    c3dsolarwidget.cpp \
+    cuda/gpu.cu
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \

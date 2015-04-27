@@ -223,6 +223,8 @@ void CScanRender::scanLine(int x1, int y1, int x2, int y2, float u1, float v1, f
   }
 }
 
+//#include <cuda_runtime.h>
+//#include <cuda.h>
 
 ////////////////////////////////////////////////////////
 void CScanRender::renderPolygon(QColor col, QImage *dst)
@@ -324,6 +326,29 @@ void CScanRender::renderPolygon(QImage *dst, QImage *src)
 void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
 ///////////////////////////////////////////////////////////
 {
+  /*
+  const quint32 *bitsSrc = (quint32 *)src->constBits();
+  quint32 *bitsDst = (quint32 *)dst->bits();
+
+  quint32 *src_d;
+  quint32 *dst_d;
+
+  cudaMalloc(&src_d, src->byteCount());
+  cudaMalloc(&dst_d, dst->byteCount());
+
+  //cudaMemcpy(src_d, bitsSrc, src->byteCount(), cudaMemcpyHostToDevice);
+  //cudaMemcpy(dst_d, bitsDst, dst->byteCount(), cudaMemcpyHostToDevice);
+
+  //cuProcessImage(s_d, d_d, count, contrastTable_d, gammaTable_d, par->invert, par->brightness);
+
+  cudaMemcpy(dst_d, bitsDst, dst->byteCount(), cudaMemcpyDeviceToHost);
+
+  cudaFree(src_d);
+  cudaFree(dst_d);
+  */
+
+
+
   int w = dst->width();
   int sw = src->width();
   float tsx = src->width() - 1;
