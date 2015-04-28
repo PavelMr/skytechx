@@ -97,5 +97,10 @@ void CHorizonEditor::on_pushButton_2_clicked()
 
 void CHorizonEditor::on_pushButton_3_clicked()
 {
+  if (msgBoxQuest(this, tr("Do you wish save to file?")))
+  {
+    on_pushButton_2_clicked();
+  }
+
   done(DL_OK);
 }
