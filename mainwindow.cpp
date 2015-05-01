@@ -117,6 +117,7 @@ extern bool bParkTelescope;
 extern bool g_developMode;
 extern QApplication *g_pApp;
 
+
 ////////////////////////////////////////////
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -142,10 +143,31 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->dockTime->hide();
   ui->dockTele->hide();
   ui->dockTimeDialog->hide();
+  ui->dockFilter->hide();
 
   ui->dockTime->setFloating(true);
   ui->dockTele->setFloating(true);
   ui->dockTimeDialog->setFloating(true);
+  ui->dockFilter->setFloating(true);
+
+  ui->comboBox_3->addItem(tr("Custom"));
+  ui->comboBox_3->addItem(tr("None"));
+  ui->comboBox_3->addItem(tr("Blur"));
+  ui->comboBox_3->addItem(tr("Sharpen"));
+  ui->comboBox_3->addItem(tr("Edge detect"));
+  ui->comboBox_3->addItem(tr("Emboss"));
+
+  m_noChangeFilterIndex = false;
+
+  connect(ui->spinBox_f00, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
+  connect(ui->spinBox_f01, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
+  connect(ui->spinBox_f02, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
+  connect(ui->spinBox_f10, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
+  connect(ui->spinBox_f11, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
+  connect(ui->spinBox_f12, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
+  connect(ui->spinBox_f20, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
+  connect(ui->spinBox_f21, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
+  connect(ui->spinBox_f22, SIGNAL(valueChanged(int)), this, SLOT(slotFilterChanged()));
 
   m_pcDSSProg = ui->dss_prog;
 
@@ -1726,6 +1748,7 @@ void MainWindow::checkDSS()
   ui->checkBox_inv->setEnabled(m->rowCount() > 0);
   ui->cb_showDSS_FN->setEnabled(m->rowCount() > 0);
   ui->checkBox_aa->setEnabled(m->rowCount() > 0);
+  ui->tb_filter->setEnabled(m->rowCount() > 0);
 
   int i = getCurDSS();
 
@@ -1736,6 +1759,15 @@ void MainWindow::checkDSS()
     ui->horizontalSlider_gm->setValue(bkImg.m_tImgList[i].param.gamma);
     ui->checkBox_inv->setChecked(bkImg.m_tImgList[i].param.invert);
     ui->checkBox_aa->setChecked(bkImg.m_tImgList[i].param.autoAdjust);
+    ui->spinBox_f00->setValue(bkImg.m_tImgList[i].param.matrix[0][0]);
+    ui->spinBox_f01->setValue(bkImg.m_tImgList[i].param.matrix[0][1]);
+    ui->spinBox_f02->setValue(bkImg.m_tImgList[i].param.matrix[0][2]);
+    ui->spinBox_f10->setValue(bkImg.m_tImgList[i].param.matrix[1][0]);
+    ui->spinBox_f11->setValue(bkImg.m_tImgList[i].param.matrix[1][1]);
+    ui->spinBox_f12->setValue(bkImg.m_tImgList[i].param.matrix[1][2]);
+    ui->spinBox_f20->setValue(bkImg.m_tImgList[i].param.matrix[2][0]);
+    ui->spinBox_f21->setValue(bkImg.m_tImgList[i].param.matrix[2][1]);
+    ui->spinBox_f22->setValue(bkImg.m_tImgList[i].param.matrix[2][2]);
   }
 
   if (m->rowCount() > 0)
@@ -3236,6 +3268,9 @@ void MainWindow::on_pushButton_dss_reset_clicked()
   bkImg.m_tImgList[index].param.brightness = 0;
   bkImg.m_tImgList[index].param.contrast = 100;
   bkImg.m_tImgList[index].param.gamma = 150;
+  bkImg.m_tImgList[index].param.useMatrix = false;
+  memset(bkImg.m_tImgList[index].param.matrix, 0, sizeof(bkImg.m_tImgList[index].param.matrix));
+  bkImg.m_tImgList[index].param.matrix[1][1] = 1;
 
   checkDSS();
 
@@ -3267,6 +3302,9 @@ void MainWindow::on_pushButton_dss_reset_all_clicked()
     bkImg.m_tImgList[index].param.brightness = 0;
     bkImg.m_tImgList[index].param.contrast = 100;
     bkImg.m_tImgList[index].param.gamma = 150;
+    bkImg.m_tImgList[index].param.useMatrix = false;
+    memset(bkImg.m_tImgList[index].param.matrix, 0, sizeof(bkImg.m_tImgList[index].param.matrix));
+    bkImg.m_tImgList[index].param.matrix[1][1] = 1;
 
     dlg.setValue(index);
     QApplication::processEvents();
@@ -3307,6 +3345,14 @@ void MainWindow::on_pushButton_dss_all_clicked()
     QApplication::processEvents();
 
     CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+
+    qDebug() << index <<  f->getOriginalImage()->width();
+
+    MEMORYSTATUSEX ex;
+
+    ex.dwLength = sizeof(MEMORYSTATUSEX);
+    GlobalMemoryStatusEx(&ex);
+
     CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
   }
 
@@ -3331,13 +3377,6 @@ void MainWindow::slotDrawingChange(bool bEdited, bool isEmpty)
   ui->actionCenter_edited_object->setEnabled(bEdited);
   ui->actionClear_map->setEnabled(!isEmpty);
 }
-
-double FNrange (double x) {
-    double b = x / (2 * MPI);
-    double a = (2 * MPI) * (b - (long)(b));
-    if (a < 0) a = (2 * MPI) + a;
-    return a;
-};
 
 
 /////////////////////////////////
@@ -4220,6 +4259,11 @@ void MainWindow::slotDownloadError(QString str)
   msgBoxError(this, str);
 }
 
+void MainWindow::slotDockBarFilter(bool vis)
+{
+
+}
+
 ///////////////////////////////////////////////////
 void MainWindow::on_actionMeasure_point_triggered()
 ///////////////////////////////////////////////////
@@ -5083,4 +5127,185 @@ void MainWindow::on_actionRelease_object_triggered()
 void MainWindow::enableReleaseObject(bool enable)
 {
   ui->actionRelease_object->setEnabled(enable);
+}
+
+void MainWindow::on_tb_filter_clicked()
+{
+  if (ui->dockFilter->isVisible())
+  {
+    ui->dockFilter->setVisible(false);
+  }
+  else
+  {
+    ui->dockFilter->setVisible(true);
+  }
+}
+
+// apply filter
+void MainWindow::on_pushButton_22_clicked()
+{
+  int i = getCurDSS();
+  double delta = 0.1;
+
+  if (bkImg.m_tImgList[i].param.autoAdjust)
+  {
+    msgBoxError(this, tr("Can't do that. Auto adjust is used!!!"));
+    return;
+  }
+
+  bkImg.m_tImgList[i].param.matrix[0][0] = ui->spinBox_f00->value();
+  bkImg.m_tImgList[i].param.matrix[0][1] = ui->spinBox_f01->value();
+  bkImg.m_tImgList[i].param.matrix[0][2] = ui->spinBox_f02->value();
+
+  bkImg.m_tImgList[i].param.matrix[1][0] = ui->spinBox_f10->value();
+  bkImg.m_tImgList[i].param.matrix[1][1] = ui->spinBox_f11->value();
+  bkImg.m_tImgList[i].param.matrix[1][2] = ui->spinBox_f12->value();
+
+  bkImg.m_tImgList[i].param.matrix[2][0] = ui->spinBox_f20->value();
+  bkImg.m_tImgList[i].param.matrix[2][1] = ui->spinBox_f21->value();
+  bkImg.m_tImgList[i].param.matrix[2][2] = ui->spinBox_f22->value();
+
+  if (IS_NEAR(ui->spinBox_f00->value(), 0, delta) &&
+      IS_NEAR(ui->spinBox_f01->value(), 0, delta) &&
+      IS_NEAR(ui->spinBox_f02->value(), 0, delta) &&
+      IS_NEAR(ui->spinBox_f10->value(), 0, delta) &&
+      IS_NEAR(ui->spinBox_f11->value(), 1, delta) &&
+      IS_NEAR(ui->spinBox_f12->value(), 0, delta) &&
+      IS_NEAR(ui->spinBox_f20->value(), 0, delta) &&
+      IS_NEAR(ui->spinBox_f21->value(), 0, delta) &&
+      IS_NEAR(ui->spinBox_f22->value(), 0, delta))
+  {
+    bkImg.m_tImgList[i].param.useMatrix = false;
+  }
+  else
+  {
+    bkImg.m_tImgList[i].param.useMatrix = true;
+  }
+
+  CFits *f = (CFits *)bkImg.m_tImgList[i].ptr;
+
+  CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[i].param);
+  ui->widget->repaintMap();
+}
+
+void MainWindow::slotFilterChanged()
+{
+  QSpinBox *sb = dynamic_cast<QSpinBox*>(sender());
+  int i = getCurDSS();
+
+  if (sb == ui->spinBox_f00)
+  {
+    bkImg.m_tImgList[i].param.matrix[0][0] = sb->value();
+  }
+  else
+  if (sb == ui->spinBox_f01)
+  {
+    bkImg.m_tImgList[i].param.matrix[0][1] = sb->value();
+  }
+  else
+  if (sb == ui->spinBox_f02)
+  {
+    bkImg.m_tImgList[i].param.matrix[0][2] = sb->value();
+  }
+  else
+  if (sb == ui->spinBox_f10)
+  {
+    bkImg.m_tImgList[i].param.matrix[1][0] = sb->value();
+  }
+  else
+  if (sb == ui->spinBox_f11)
+  {
+    bkImg.m_tImgList[i].param.matrix[1][1] = sb->value();
+  }
+  else
+  if (sb == ui->spinBox_f12)
+  {
+    bkImg.m_tImgList[i].param.matrix[1][2] = sb->value();
+  }
+  else
+  if (sb == ui->spinBox_f20)
+  {
+    bkImg.m_tImgList[i].param.matrix[2][0] = sb->value();
+  }
+  else
+  if (sb == ui->spinBox_f21)
+  {
+    bkImg.m_tImgList[i].param.matrix[2][1] = sb->value();
+  }
+  else
+  if (sb == ui->spinBox_f22)
+  {
+    bkImg.m_tImgList[i].param.matrix[2][2] = sb->value();
+  }
+
+  if (!m_noChangeFilterIndex)
+  {
+    ui->comboBox_3->setCurrentIndex(0);
+  }
+}
+
+void MainWindow::on_comboBox_3_currentIndexChanged(int index)
+{
+  double (*ptr)[3];
+  double blur[3][3] = {{ 1, 2, 1},
+                       { 2, 4, 2},
+                       { 1, 2, 1}};
+
+  double sharpen[3][3] = {{ 0, -1,  0},
+                          {-1,  5, -1},
+                          { 0, -1,  0}};
+
+  double edge[3][3] = {{ 0,  1,  0},
+                       { 1, -4,  1},
+                       { 0,  1,  0}};
+
+  double none[3][3] = {{ 0,  0,  0},
+                       { 0,  1,  0},
+                       { 0,  0,  0}};
+
+  double emboss[3][3] = {{ -2, -1,  0},
+                         { -1,  1,  1},
+                         {  0,  1,  2}};
+
+  switch (index)
+  {
+    case 1:
+      ptr = none;
+      break;
+
+    case 2:
+      ptr = blur;
+      break;
+
+    case 3:
+      ptr = sharpen;
+      break;
+
+    case 4:
+      ptr = edge;
+      break;
+
+    case 5:
+      ptr = emboss;
+      break;
+
+    default:
+      return;
+  }
+
+  m_noChangeFilterIndex = true;
+
+  ui->spinBox_f00->setValue(ptr[0][0]);
+  ui->spinBox_f01->setValue(ptr[0][1]);
+  ui->spinBox_f02->setValue(ptr[0][2]);
+
+  ui->spinBox_f10->setValue(ptr[1][0]);
+  ui->spinBox_f11->setValue(ptr[1][1]);
+  ui->spinBox_f12->setValue(ptr[1][2]);
+
+  ui->spinBox_f20->setValue(ptr[2][0]);
+  ui->spinBox_f21->setValue(ptr[2][1]);
+  ui->spinBox_f22->setValue(ptr[2][2]);
+
+  m_noChangeFilterIndex = false;
 }

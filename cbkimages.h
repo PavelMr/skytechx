@@ -28,6 +28,8 @@
 
 typedef struct
 {
+  double matrix[3][3];
+  bool   useMatrix;
   float  brightness;
   float  contrast;
   float  gamma;

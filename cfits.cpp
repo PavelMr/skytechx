@@ -200,6 +200,10 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
   m_pix = new QImage(sx, sy, QImage::Format_Indexed8);
   if (m_pix == NULL || m_pix->isNull())
   {
+    if (m_pix)
+    {
+      delete m_pix;
+    }
     memOk = false;
     return false;
   }
@@ -220,12 +224,11 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
     uchar *dst = (uchar *)m_pix->bits() + (y * m_pix->width());
     for (int x = 0; x < sx; x++)
     {
-      uchar c1, c2;
+      uchar data[2];
 
-      f.read((char *)&c1, 1);
-      f.read((char *)&c2, 1);
+      f.read((char *)data, 2);
 
-      int val = (((c2 | (c1 << 8)))) >> 8;
+      int val = (((data[1] | (data[0] << 8)))) >> 8;
 
       if (val < 0)
         val = 0;

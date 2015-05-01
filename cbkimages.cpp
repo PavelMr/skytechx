@@ -69,6 +69,9 @@ bool CBkImages::load(const QString name, int resizeTo)
     i.param.gamma = 150;
     i.param.invert = false;
     i.param.autoAdjust = false;
+    i.param.useMatrix = false;
+    memset(i.param.matrix, 0, sizeof(i.param.matrix));
+    i.param.matrix[1][1] = 1;
 
     m_totalSize += i.byteSize;
 
@@ -154,6 +157,9 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
           i.param.gamma = 150;
           i.param.invert = false;
           i.param.autoAdjust = false;
+          i.param.useMatrix = false;
+          memset(i.param.matrix, 0, sizeof(i.param.matrix));
+          i.param.matrix[1][1] = 1;
 
           m_totalSize += i.byteSize;
 

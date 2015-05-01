@@ -164,9 +164,6 @@ int main(int argc, char *argv[])
   qDebug("octreedepth=%d", g_ocTreeDepth);
   qDebug("numthreads=%d", omp_get_max_threads());
 
-  //pcDebug->write("%s", qPrintable(a.libraryPaths().at(0)));
-  //pcDebug->write("%s", qPrintable(a.libraryPaths().at(1)));
-
   loadQSSStyle();
 
   slog.write("loading dlg");
@@ -177,9 +174,18 @@ int main(int argc, char *argv[])
   MainWindow w;
   w.show();
 
-  int ret = a.exec();
+  int ret;
 
-  slog.write("end");
+  try
+  {
+    ret = a.exec();
+  }
+
+  catch (std::bad_alloc &exc)
+  {
+    msgBoxError(NULL, exc.what());
+    qDebug() << "ERROR" << exc.what();
+  }
 
   return ret;
 }

@@ -221,10 +221,10 @@ void CDayNight::updateMap()
 
   for (int y = 0; y < m_img->height(); y++)
   {
-    QRgb *pb = (QRgb *)b.bits() + (int)qy * b.width();
+    const QRgb *pb = (QRgb *)b.bits() + (int)qy * b.width();
     QRgb *data = (QRgb *)m_img->bits() + y * m_img->width();
-    QRgb *day = (QRgb *)m_day->bits() + y * m_day->width();
-    QRgb *night = (QRgb *)m_night->bits() + y * m_night->width();
+    const QRgb *day = (QRgb *)m_day->bits() + y * m_day->width();
+    const QRgb *night = (QRgb *)m_night->bits() + y * m_night->width();
     qx = 0;
     for (int x = 0; x < m_img->width(); x++)
     {

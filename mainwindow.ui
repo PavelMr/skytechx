@@ -41,7 +41,7 @@
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>421</width>
+      <width>671</width>
       <height>481</height>
      </rect>
     </property>
@@ -242,7 +242,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>30</x>
        <y>190</y>
        <width>211</width>
        <height>81</height>
@@ -274,6 +274,201 @@
       <string>Time dialog</string>
      </property>
      <widget class="QWidget" name="dockWidgetContents_5"/>
+    </widget>
+    <widget class="QDockWidget" name="dockFilter">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>220</y>
+       <width>172</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>10</width>
+       <height>10</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="floating">
+      <bool>false</bool>
+     </property>
+     <property name="features">
+      <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
+     </property>
+     <property name="allowedAreas">
+      <set>Qt::NoDockWidgetArea</set>
+     </property>
+     <property name="windowTitle">
+      <string>Filter</string>
+     </property>
+     <widget class="QWidget" name="dockWidgetContents_10">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <property name="spacing">
+            <number>3</number>
+           </property>
+           <item row="1" column="2">
+            <widget class="QSpinBox" name="spinBox_f02">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QSpinBox" name="spinBox_f00">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QSpinBox" name="spinBox_f10">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QSpinBox" name="spinBox_f22">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QSpinBox" name="spinBox_f20">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="spinBox_f11">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="spinBox_f21">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QSpinBox" name="spinBox_f12">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="spinBox_f01">
+             <property name="minimum">
+              <number>-32</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="3">
+            <widget class="QComboBox" name="comboBox_3"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_22">
+             <property name="font">
+              <font>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Apply</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -648,7 +843,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -659,7 +854,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>183</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -841,9 +1036,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-143</y>
           <width>331</width>
-          <height>509</height>
+          <height>511</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1252,6 +1447,25 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QToolButton" name="tb_filter">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Set filter</string>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="popupMode">
+              <enum>QToolButton::InstantPopup</enum>
+             </property>
+             <property name="arrowType">
+              <enum>Qt::NoArrow</enum>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
@@ -1263,7 +1477,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-156</y>
+          <y>0</y>
           <width>257</width>
           <height>524</height>
          </rect>
@@ -1510,7 +1724,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>327</height>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1800,8 +2014,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>101</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1948,8 +2162,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>468</width>
+          <height>368</height>
          </rect>
         </property>
         <attribute name="label">

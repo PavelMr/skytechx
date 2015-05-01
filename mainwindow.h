@@ -91,6 +91,7 @@ protected:
 
   int getCurDSS(void);
 
+  bool            m_noChangeFilterIndex;
   bool            m_checkVerForced;
   QString         m_evNames[8];
   QSpinBox       *m_timeMul;
@@ -546,18 +547,26 @@ private slots:
 
   void on_actionRelease_object_triggered();
 
+  void on_tb_filter_clicked();
+
+  void on_pushButton_22_clicked();
+
+  void on_comboBox_3_currentIndexChanged(int index);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
 
   void setTitle();
 public slots:
+  void slotFilterChanged();
   void slotOpenWebHelp();
   void slotPrintPreview(QPrinter*);
   void slotDsoCenter();
   void slotStatusBarDoubleClick(int id);
   void onTreeViewDSSContextMenuRequested(QPoint pt);
   void slotDownloadError(QString str);
+  void slotDockBarFilter(bool vis);
   void slotDockBarVis(bool vis);
   void slotTimeVis(bool vis);
   void slotTeleVis(bool vis);

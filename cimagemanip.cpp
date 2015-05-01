@@ -36,7 +36,7 @@ CImageManip::CImageManip()
 }
 
 //////////////////////////////////////////////////////////////////////
-void CImageManip::process(QImage *src, QImage *dst, imageParam_t *par)
+void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
 //////////////////////////////////////////////////////////////////////
 {
   bool bw = src->format() == QImage::Format_Indexed8;
@@ -45,7 +45,7 @@ void CImageManip::process(QImage *src, QImage *dst, imageParam_t *par)
   {
     autoAdjust(src, dst, par);
     return;
-  }  
+  }
 
   float con = (par->contrast / 100.0);
   float gamma = par->gamma / 150.0;
@@ -59,10 +59,10 @@ void CImageManip::process(QImage *src, QImage *dst, imageParam_t *par)
 
   if (bw)
   {
-    uchar *s = (uchar *)src->bits();
+    const uchar *s = (uchar *)src->bits();
     uchar *d = (uchar *)dst->bits();
 
-    #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, val, rgb)
+    #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, val)
     for (y = 0; y < src->height(); y++)
     {
       int index = src->width() * y;
@@ -84,7 +84,7 @@ void CImageManip::process(QImage *src, QImage *dst, imageParam_t *par)
   }
   else
   {
-    QRgb *s = (QRgb *)src->bits();
+    const QRgb *s = (QRgb *)src->bits();
     QRgb *d = (QRgb *)dst->bits();
 
     #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, val, rgb)
@@ -108,15 +108,58 @@ void CImageManip::process(QImage *src, QImage *dst, imageParam_t *par)
       }
     }
   }
+
+  if (par->useMatrix)
+  {
+    double summ = 0;
+
+    for (int fy = 0; fy < 3; fy++)
+    {
+      for (int fx = 0; fx < 3; fx++)
+      {
+        summ += par->matrix[fy][fx];
+      }
+    }
+
+    #define OFFSET(x, y) ((x) + ((y) * src->width()))
+
+    if (bw)
+    {
+      QImage tmp(*dst);
+
+      const uchar *s = (uchar *)tmp.bits();
+      uchar *d = (uchar *)dst->bits();
+
+      #pragma omp parallel for shared(s, d, par) private (x, y, val)
+      for (y = 1; y < src->height() - 1; y++)
+      {
+        int index = src->width() * y;
+        for (x = 1; x < src->width() - 1; x++)
+        {
+          int total = 0;
+          for (int fy = -1; fy <= 1; fy++)
+          {
+            for (int fx = -1; fx <= 1; fx++)
+            {
+              val = s[OFFSET(x + fx, y + fy)];
+              total += val * par->matrix[fy + 1][fx + 1];
+            }
+          }
+          d[x + index] = val = CLAMP(total / summ, 0, 255);
+        }
+      }
+    }
+  }
+
 }
 
-//////////////////////////////////////////////////////////////
-void CImageManip::getMinMax(QImage *src, int &minv, int &maxv)
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv)
+////////////////////////////////////////////////////////////////////
 {
   bool bw = src->format() == QImage::Format_Indexed8;
   minv = 255;
-  maxv = 0;  
+  maxv = 0;
 
   int histogram[256];
 
@@ -124,7 +167,8 @@ void CImageManip::getMinMax(QImage *src, int &minv, int &maxv)
 
   if (bw)
   {
-    uchar *p = (uchar *)src->bits();
+    const uchar *p = (uchar *)src->bits();
+
     for (int i = 0; i < src->width() * src->height(); i++, p++)
     {
       int val = *p;
@@ -137,7 +181,7 @@ void CImageManip::getMinMax(QImage *src, int &minv, int &maxv)
   }
   else
   {
-    QRgb *p = (QRgb *)src->bits();
+    const QRgb *p = (QRgb *)src->bits();
     for (int i = 0; i < src->width() * src->height(); i++, p++)
     {
       QRgb rgb = *p;
@@ -164,14 +208,14 @@ void CImageManip::getMinMax(QImage *src, int &minv, int &maxv)
 }
 
 /////////////////////////////////////////////////////////////////////////
-void CImageManip::autoAdjust(QImage *src, QImage *dst, imageParam_t *par)
+void CImageManip::autoAdjust(const QImage *src, QImage *dst, imageParam_t *par)
 /////////////////////////////////////////////////////////////////////////
 {
   bool bw = src->format() == QImage::Format_Indexed8;
   int maxv;
   int minv;
 
-  getMinMax(src, minv, maxv);    
+  getMinMax(src, minv, maxv);
 
   int val;
   QRgb rgb;
@@ -185,10 +229,11 @@ void CImageManip::autoAdjust(QImage *src, QImage *dst, imageParam_t *par)
 
   if (bw)
   {
-    uchar *s = (uchar *)src->bits();
+    const uchar *s = (uchar *)src->bits();
+
     uchar *d = (uchar *)dst->bits();
 
-    #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val, rgb)
+    #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val)
     for (y = 0; y < src->height(); y++)
     {
       int index = src->width() * y;
@@ -207,7 +252,7 @@ void CImageManip::autoAdjust(QImage *src, QImage *dst, imageParam_t *par)
   }
   else
   {
-    QRgb *s = (QRgb *)src->bits();
+    const QRgb *s = (QRgb *)src->bits();
     QRgb *d = (QRgb *)dst->bits();
 
     #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val, rgb)
