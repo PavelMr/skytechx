@@ -15,15 +15,13 @@ public:
   void sort();
   void removeAll();
   void removeAt(int index);
-  void setSelectionIndex(int index);
+  void setSelectionIndex(int i);
   int getSelectionIndex();
   QVariant getCustomData(int index);
   QVariant getCustomData(const QModelIndex &index);
   int count() { return m_model->rowCount(); }
   void setTextAt(int index, const QString &text);
   QSortFilterProxyModel *getModel() { return m_proxy; }
-
-signals:
 
 public slots:
 

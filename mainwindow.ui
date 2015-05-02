@@ -295,8 +295,8 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>10</width>
-       <height>10</height>
+       <width>172</width>
+       <height>181</height>
       </size>
      </property>
      <property name="font">
@@ -696,6 +696,7 @@
      <string>Drawing</string>
     </property>
     <addaction name="actionTelescope_FOV"/>
+    <addaction name="actionBinocular"/>
     <addaction name="actionTelrad"/>
     <addaction name="actionFrame_field"/>
     <addaction name="actionCircle"/>
@@ -1036,7 +1037,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-143</y>
+          <y>0</y>
           <width>331</width>
           <height>511</height>
          </rect>
@@ -2352,6 +2353,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </attribute>
    <addaction name="actionTelescope_FOV"/>
+   <addaction name="actionBinocular"/>
    <addaction name="actionTelrad"/>
    <addaction name="actionFrame_field"/>
    <addaction name="actionCircle"/>
@@ -4124,6 +4126,15 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Release object</string>
+   </property>
+  </action>
+  <action name="actionBinocular">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_bino.png</normaloff>:/res/ico_bino.png</iconset>
+   </property>
+   <property name="text">
+    <string>Binocular FOV...</string>
    </property>
   </action>
  </widget>

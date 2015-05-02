@@ -68,7 +68,9 @@ void drawingSave(void)
       s << t.text_t.text;
       s << t.text_t.align;
       s << t.text_t.bRect;
-      s << t.text_t.font;
+
+      //s << t.text_t.font;
+
     }
   }
 }

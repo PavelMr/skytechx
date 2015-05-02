@@ -9,7 +9,6 @@ CSimpleList::CSimpleList(QWidget *parent) :
   m_proxy = new QSortFilterProxyModel(this);
   m_proxy->setSourceModel(m_model);
   setModel(m_proxy);
-
 }
 
 void CSimpleList::addRow(const QString &text, const QVariant &data)
@@ -62,12 +61,9 @@ void CSimpleList::removeAt(int index)
   m_model->removeRows(index, 1);
 }
 
-void CSimpleList::setSelectionIndex(int index)
+void CSimpleList::setSelectionIndex(int i)
 {
-  QModelIndex idx;
-
-  idx = m_model->index(index, 0);
-  setCurrentIndex(idx);
+  setCurrentIndex(model()->index(i, 0));
 }
 
 int CSimpleList::getSelectionIndex()

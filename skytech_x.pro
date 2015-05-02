@@ -218,7 +218,9 @@ SOURCES += main.cpp\
     cdonation.cpp \
     cdssmanager.cpp \
     c3dsolar.cpp \
-    c3dsolarwidget.cpp
+    c3dsolarwidget.cpp \
+    cbinocular.cpp \
+    cbinocularedit.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -399,7 +401,9 @@ HEADERS  += mainwindow.h \
     cdonation.h \
     cdssmanager.h \
     c3dsolar.h \
-    c3dsolarwidget.h
+    c3dsolarwidget.h \
+    cbinocular.h \
+    cbinocularedit.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -477,7 +481,9 @@ FORMS    += mainwindow.ui \
     creleseinfo.ui \
     cdonation.ui \
     cdssmanager.ui \
-    c3dsolar.ui
+    c3dsolar.ui \
+    cbinocular.ui \
+    cbinocularedit.ui
 
 
 RESOURCES += \

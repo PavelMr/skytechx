@@ -76,6 +76,7 @@
 #include "cdonation.h"
 #include "cdssmanager.h"
 #include "c3dsolar.h"
+#include "cbinocular.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -5308,4 +5309,21 @@ void MainWindow::on_comboBox_3_currentIndexChanged(int index)
   ui->spinBox_f22->setValue(ptr[2][2]);
 
   m_noChangeFilterIndex = false;
+}
+
+void MainWindow::on_actionBinocular_triggered()
+{
+  CBinocular dlg(this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    radec_t rd;
+
+    trfConvScrPtToXY(ui->widget->width() * 0.5,
+                     ui->widget->height() * 0.5, rd.Ra, rd.Dec);
+    precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
+    g_cDrawing.insertTelescope(&rd, dlg.m_fov, dlg.m_text);
+
+    ui->widget->centerMap(CM_UNDEF, CM_UNDEF, getOptObjFov(R2D(dlg.m_fov), R2D(dlg.m_fov)));
+  }
 }

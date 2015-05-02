@@ -553,6 +553,8 @@ private slots:
 
   void on_comboBox_3_currentIndexChanged(int index);
 
+  void on_actionBinocular_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

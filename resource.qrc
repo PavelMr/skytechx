@@ -105,5 +105,6 @@
         <file>res/ico_b180.png</file>
         <file>res/ico_release_obj.png</file>
         <file>res/wait.gif</file>
+        <file>res/ico_bino.png</file>
     </qresource>
 </RCC>
