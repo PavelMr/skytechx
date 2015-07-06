@@ -220,7 +220,8 @@ SOURCES += main.cpp\
     c3dsolar.cpp \
     c3dsolarwidget.cpp \
     cbinocular.cpp \
-    cbinocularedit.cpp
+    cbinocularedit.cpp \
+    skmapcontrol.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -403,7 +404,8 @@ HEADERS  += mainwindow.h \
     c3dsolar.h \
     c3dsolarwidget.h \
     cbinocular.h \
-    cbinocularedit.h
+    cbinocularedit.h \
+    skmapcontrol.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \

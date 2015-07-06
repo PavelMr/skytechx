@@ -92,7 +92,6 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
     jd2++;
   }
 
-
   //p.fillRect(rect(), Qt::darkGray);
 
   int cx = width() / 2;

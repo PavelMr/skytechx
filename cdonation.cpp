@@ -12,7 +12,7 @@ CDonation::CDonation(QWidget *parent) :
   ui->setupUi(this);
 
   ui->textEdit->setText(tr("<font size=\"4\"><u><b>Support development</b></u><br><br>If you like this software I would welcome your PayPal contribution to support further"
-                           "development. "
+                           " development. "
                            "Just use \"Donate\" button. The payment e-Mail is 'skytechx@seznam.cz'."));
 }
 

@@ -2,6 +2,7 @@
 
 #include <QtCore>
 #include <omp.h>
+
 #include "skcore.h"
 #include "build.h"
 

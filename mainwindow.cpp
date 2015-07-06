@@ -5327,3 +5327,8 @@ void MainWindow::on_actionBinocular_triggered()
     ui->widget->centerMap(CM_UNDEF, CM_UNDEF, getOptObjFov(R2D(dlg.m_fov), R2D(dlg.m_fov)));
   }
 }
+
+void MainWindow::on_pushButton_23_clicked()
+{
+  on_actionSearch_events_triggered();
+}

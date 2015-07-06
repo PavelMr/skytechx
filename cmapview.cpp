@@ -104,7 +104,9 @@ CMapView::CMapView(QWidget *parent) :
   connect(m_demo, SIGNAL(sigAnimChanged(curvePoint_t&)), this, SLOT(slotAnimChanged(curvePoint_t&)));
   //m_demo->start();
 
-  m_zoom = new CZoomBar(this);
+
+  m_zoom = new SkMapControl(this);
+  connect(m_zoom, SIGNAL(sigChange(QVector2D,double,double)), this, SLOT(slotMapControl(QVector2D,double,double)));
 
   slewBlink = false;
   slewingTimer = new QTimer(this);
@@ -112,8 +114,6 @@ CMapView::CMapView(QWidget *parent) :
   connect(slewingTimer, SIGNAL(timeout()), this, SLOT(slotSlewingTimer()));
 
   //setToolTip("");
-
-  connect(m_zoom, SIGNAL(sigZoom(float)), this, SLOT(slotZoom(float)));
 
   cur_rotate = QCursor(QPixmap(":/res/cur_rotate.png"));
 
@@ -217,7 +217,8 @@ void CMapView::resizeEvent(QResizeEvent *e)
 
   m_bInit = true;
 
-  m_zoom->setObjAlign(2);
+  m_zoom->resize(90, 250);
+  m_zoom->move(width() - m_zoom->width() - 10, height() - m_zoom->height() - 10);
 
   repaintMap();
 }
@@ -1201,10 +1202,20 @@ void CMapView::slotTelePlugChange(double ra, double dec)
   repaintMap();
 }
 
-///////////////////////////////////
-void CMapView::slotZoom(float zoom)
-///////////////////////////////////
+void CMapView::slotMapControl(QVector2D map, double rotate, double zoom)
 {
+  addX(-map.x() * 0.1);
+  addY(-map.y() * 0.1);
+
+  if (rotate < 50)
+  {
+    m_mapView.roll += CLAMP(0.25 * rotate, -R90, R90);
+  }
+  else
+  {
+    m_mapView.roll = 0;
+  }
+
   if (zoom < 0)
   {
     double step = (m_mapView.fov * 0.9) - m_mapView.fov;

@@ -16,6 +16,10 @@ CSetHorizon::CSetHorizon(QWidget *parent) :
 {
   ui->setupUi(this);
 
+#if 1
+  ui->pushButton_3->hide();
+#endif
+
   QStandardItemModel *m = new QStandardItemModel;
   m->setColumnCount(1);
   m->setHeaderData(0, Qt::Horizontal, tr("Name"));

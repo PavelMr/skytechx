@@ -61,7 +61,7 @@ void CPlanetRenderer::load()
   m_ring[0] = createRing(10);
   m_ring[1] = createRing(20);
   m_ring[2] = createRing(30);
-  m_ring[3] = createRing(60);
+  m_ring[3] = createRing(40);
 
   m_bmp[PT_SUN] = new QImage("data/planets/sun.jpg");
   m_bmp[PT_MERCURY] = new QImage("data/planets/mercury.jpg");

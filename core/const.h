@@ -41,6 +41,7 @@
 #define FRAC(f, from, to)      ((((f) - (from)) / (double)((to) - (from))))
 #define LERP(f, mi, ma)        ((mi) + (f) * ((ma) - (mi)))
 #define CLAMP(v, mi, ma)       (((v) < (mi)) ? (mi) : ((v) > (ma)) ? (ma) : (v))
+#define SIGN(x)                ((x) >= 0 ? 1.0 : -1.0)
 
 #define IS_NEAR(v1, v2, d)    (qAbs((v1) - (v2)) <= d)
 

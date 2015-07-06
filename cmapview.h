@@ -10,6 +10,7 @@
 #include "czoombar.h"
 #include "cdemonstration.h"
 #include "cgamepad.h"
+#include "skmapcontrol.h"
 
 #define SMCT_RA_DEC        0
 #define SMCT_ALT_AZM       1
@@ -110,7 +111,8 @@ public:
   radec_t   m_lastTeleRaDec;
   bool      m_bCustomTele;
   double    m_customTeleRad;
-  CZoomBar *m_zoom;
+  //CZoomBar *m_zoom;
+  SkMapControl *m_zoom;
 
   CDemonstration *m_demo;
   QTimer *slewingTimer;
@@ -164,7 +166,8 @@ public slots:
   void slotCheckedFlipX(bool checked);
   void slotCheckedFlipY(bool checked);
   void slotTelePlugChange(double ra, double dec);
-  void slotZoom(float zoom);
+  //void slotZoom(float zoom);
+  void slotMapControl(QVector2D map, double rotate, double zoom);
   void slotSlewingTimer();
   void slotGamepadChange(const gamepad_t &state, double speedMul);
 };

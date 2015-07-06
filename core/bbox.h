@@ -78,14 +78,14 @@ typedef struct BBox
       return(true);
     }
 
-    bool intersect(BBox other)
+    bool intersect(BBox &other)
     {
       return (mins[0] < other.maxs[0]) && (maxs[0] > other.mins[0]) &&
              (mins[1] < other.maxs[1]) && (maxs[1] > other.mins[1]) &&
              (mins[2] < other.maxs[2]) && (maxs[2] > other.mins[2]);
     }
 
-    bool intersect2d(BBox other)
+    bool intersect2d(BBox &other)
     {
       return (mins[0] < other.maxs[0]) && (maxs[0] > other.mins[0]) &&
              (mins[2] < other.maxs[2]) && (maxs[2] > other.mins[2]);

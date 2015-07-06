@@ -14,6 +14,7 @@
 #include "csgp4.h"
 #include "csatellitedlg.h"
 #include "constellation.h"
+#include "build.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
@@ -32,6 +33,7 @@ CLoadingDlg::CLoadingDlg(QWidget *parent) :
 
   setWindowFlags(Qt::Popup);
   setFixedSize(size());
+  ui->label_3->setText(SK_VERSION);
 
   ui->progressBar->setRange(0, 15);
 

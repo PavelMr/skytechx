@@ -18,6 +18,7 @@ CReleseInfo::CReleseInfo(QWidget *parent) :
   if (f.open(QFile::Text | QFile::ReadOnly))
   {
     QTextStream ts(&f);
+    ts.setCodec("UTF-8");
 
     int cnt = 0;
     while (!ts.atEnd())

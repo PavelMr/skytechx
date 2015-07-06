@@ -39,6 +39,8 @@ void drawingSave(void)
   SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/drawing/drawing.dat");
   QDataStream s(&f);
 
+  s.setFloatingPointPrecision(QDataStream::SinglePrecision);
+
   if (f.open(SkFile::WriteOnly))
   {
     int count = m_tList.count();
@@ -69,8 +71,7 @@ void drawingSave(void)
       s << t.text_t.align;
       s << t.text_t.bRect;
 
-      //s << t.text_t.font;
-
+      s << t.text_t.font;
     }
   }
 }
@@ -82,6 +83,8 @@ void drawingLoad(void)
 {
   SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/drawing/drawing.dat");
   QDataStream s(&f);
+
+  s.setFloatingPointPrecision(QDataStream::SinglePrecision);
 
   m_tList.clear();
 
@@ -99,7 +102,7 @@ void drawingLoad(void)
 
     s >> count;
 
-    // NOTE: v 32 a 64bit se to lisi ve velikosti
+    // NOTE: v 32 a 64bit se to lisi ve velikosti (QFont)
     for (int i = 0; i < count; i++)
     {
       drawing_t t;
