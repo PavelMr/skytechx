@@ -50,7 +50,7 @@ void drawingSave(void)
 
     for (int i = 0; i < count; i++)
     {
-      drawing_t t = m_tList.at(i);
+      drawing_t t = m_tList[i];
 
       s << t.type;
       s << t.show;

@@ -152,12 +152,18 @@ void C3DSolar::on_pushButton_7_clicked()
   updateData();
 }
 
+void C3DSolar::showError()
+{
+  msgBoxError(this, tr("Nothing to show!"));
+}
+
 void C3DSolar::on_pushButton_8_clicked()
 {
   bool isComet = true;
 
   if (ui->comboBox->currentIndex() == -1)
   {
+    showError();
     return;
   }
   int index = ui->comboBox->currentData().toInt();
@@ -165,11 +171,13 @@ void C3DSolar::on_pushButton_8_clicked()
   {
     if (ui->comboBox_3->currentIndex() == -1)
     {
+      showError();
       return;
     }
     index = ui->comboBox_3->currentData().toInt();
     if (index == -1)
     {
+      showError();
       return;
     }
     isComet = false;

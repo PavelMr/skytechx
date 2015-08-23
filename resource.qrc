@@ -106,5 +106,16 @@
         <file>res/ico_release_obj.png</file>
         <file>res/wait.gif</file>
         <file>res/ico_bino.png</file>
+        <file>res/ep_j2000.png</file>
+        <file>res/arrow_up.png</file>
+        <file>res/arrow_down.png</file>
+        <file>res/arrow_left.png</file>
+        <file>res/arrow_right.png</file>
+        <file>res/minus.png</file>
+        <file>res/plus.png</file>
+        <file>res/reset_icon.png</file>
+        <file>res/rotate_left.png</file>
+        <file>res/rotate_right.png</file>
+        <file>res/center_ico.png</file>
     </qresource>
 </RCC>

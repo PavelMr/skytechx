@@ -82,6 +82,7 @@
 #include <QPrinter>
 
 // show/hide drawing
+bool g_showCenterScreen = false;
 bool g_showDSOShapes = false;
 bool g_showDSO = false;
 bool g_showStars = false;
@@ -609,8 +610,8 @@ MainWindow::MainWindow(QWidget *parent) :
   {
     ui->page_2->hide();
     ui->page_3->hide();
-    ui->toolBox->removeItem(4);
-    ui->toolBox->removeItem(4);
+    ui->toolBox->removeItem(5);
+    ui->toolBox->removeItem(5);
   }
 
   QAction *openWebHelp = new QAction(QIcon(":/res/ico_web_help.png"), "web", this);
@@ -675,6 +676,9 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showLabels = settings.value("show_labels", true).toBool();
   g_showDrawings = settings.value("show_drawings", true).toBool();
   g_showObjTracking = settings.value("show_obj_tracking", true).toBool();
+  g_showCenterScreen = settings.value("show_center_of_screen", false).toBool();
+
+  ui->actionCenter_of_screen->setChecked(g_showCenterScreen);
 
   ui->actionStars->setChecked(g_showStars);
   ui->actionConstellation_lines->setChecked(g_showConstLines);
@@ -698,6 +702,16 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionDrawings->setChecked(g_showDrawings);
   ui->actionObject_tracking_2->setChecked(g_showObjTracking);
 
+  int mapAutoRptInterval = 5;
+  ui->pushButton_28->setAutoRepeatInterval(mapAutoRptInterval);
+  ui->pushButton_29->setAutoRepeatInterval(mapAutoRptInterval);
+  ui->pushButton_27->setAutoRepeatInterval(mapAutoRptInterval);
+  ui->pushButton_25->setAutoRepeatInterval(mapAutoRptInterval);
+  ui->pushButton_24->setAutoRepeatInterval(mapAutoRptInterval);
+  ui->pushButton_26->setAutoRepeatInterval(mapAutoRptInterval);
+  ui->pushButton_31->setAutoRepeatInterval(mapAutoRptInterval);
+  ui->pushButton_32->setAutoRepeatInterval(mapAutoRptInterval);
+
   setTitle();
 }
 
@@ -718,6 +732,8 @@ void MainWindow::setToolbarIconSize()
   ui->tb_drawing->setIconSize(QSize(size, size));
   ui->tb_planets->setIconSize(QSize(size, size));
   ui->tb_show->setIconSize(QSize(size, size));
+  ui->tb_map->setIconSize(QSize(size, size));
+  ui->tb_window->setIconSize(QSize(size, size));
 }
 
 void MainWindow::checkNewVersion(bool forced)
@@ -972,6 +988,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_labels", g_showLabels);
   settings.setValue("show_drawings", g_showDrawings);
   settings.setValue("show_obj_tracking", g_showObjTracking);
+  settings.setValue("show_center_of_screen", g_showCenterScreen);
 
   settings.setValue("mainWindowGeometry", saveGeometry());
   settings.setValue("mainWindowState", saveState());
@@ -1970,7 +1987,7 @@ void MainWindow::on_actionAtlas_mode_Pole_Up_triggered()
   ui->actionHorizon_mode_Zenith_up->setChecked(false);
   ui->actionEcliptic->setChecked(false);
   ui->actionGalactic_coordinates->setChecked(false);
-  ui->tb_alt_azm->setEnabled(false);
+  //ui->tb_alt_azm->setEnabled(false);
 }
 
 ////////////////////////////////////////////////////////////
@@ -1986,7 +2003,7 @@ void MainWindow::on_actionHorizon_mode_Zenith_up_triggered()
   ui->actionHorizon_mode_Zenith_up->setChecked(true);
   ui->actionEcliptic->setChecked(false);
   ui->actionGalactic_coordinates->setChecked(false);
-  ui->tb_alt_azm->setEnabled(true);
+  //ui->tb_alt_azm->setEnabled(true);
 }
 
 
@@ -2003,7 +2020,7 @@ void MainWindow::on_actionEcliptic_triggered()
   ui->actionHorizon_mode_Zenith_up->setChecked(false);
   ui->actionEcliptic->setChecked(true);
   ui->actionGalactic_coordinates->setChecked(false);
-  ui->tb_alt_azm->setEnabled(false);
+  //ui->tb_alt_azm->setEnabled(false);
 }
 
 //////////////////////////////////////////////////////////
@@ -2019,7 +2036,7 @@ void MainWindow::on_actionGalactic_coordinates_triggered()
   ui->actionHorizon_mode_Zenith_up->setChecked(false);
   ui->actionEcliptic->setChecked(false);
   ui->actionGalactic_coordinates->setChecked(true);
-  ui->tb_alt_azm->setEnabled(false);
+  //ui->tb_alt_azm->setEnabled(false);
 }
 
 
@@ -5331,4 +5348,69 @@ void MainWindow::on_actionBinocular_triggered()
 void MainWindow::on_pushButton_23_clicked()
 {
   on_actionSearch_events_triggered();
+}
+
+void MainWindow::on_pushButton_28_clicked()
+{
+  ui->widget->addFov(1, ui->dbsb_mul->value());
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_29_clicked()
+{
+  ui->widget->addFov(-1, ui->dbsb_mul->value());
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_27_clicked()
+{
+  ui->widget->addY(1, ui->dbsb_mul->value());
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_25_clicked()
+{
+  ui->widget->addY(-1, ui->dbsb_mul->value());
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_24_clicked()
+{
+  ui->widget->addX(1, ui->dbsb_mul->value());
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_26_clicked()
+{
+  ui->widget->addX(-1, ui->dbsb_mul->value());
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_30_clicked()
+{
+    ui->dbsb_mul->setValue(1);
+}
+
+void MainWindow::on_pushButton_31_clicked()
+{
+  ui->widget->m_mapView.roll += D2R(5) * ui->dbsb_mul->value();
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_32_clicked()
+{
+  ui->widget->m_mapView.roll -= D2R(5) * ui->dbsb_mul->value();
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_33_clicked()
+{
+  ui->widget->m_mapView.roll = 0;
+  repaintMap();
+}
+
+void MainWindow::on_actionCenter_of_screen_triggered(bool checked)
+{
+  g_showCenterScreen = checked;
+  repaintMap();
 }

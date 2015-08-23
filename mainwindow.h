@@ -557,6 +557,28 @@ private slots:
 
   void on_pushButton_23_clicked();
 
+  void on_pushButton_28_clicked();
+
+  void on_pushButton_29_clicked();
+
+  void on_pushButton_27_clicked();
+
+  void on_pushButton_25_clicked();
+
+  void on_pushButton_24_clicked();
+
+  void on_pushButton_26_clicked();
+
+  void on_pushButton_30_clicked();
+
+  void on_pushButton_31_clicked();
+
+  void on_pushButton_32_clicked();
+
+  void on_pushButton_33_clicked();
+
+  void on_actionCenter_of_screen_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

@@ -65,6 +65,7 @@ private:
   double m_jd;
   mapView_t m_view;
   void updateData();
+  void showError();
 };
 
 #endif // C3DSOLAR_H

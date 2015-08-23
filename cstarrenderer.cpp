@@ -1,6 +1,8 @@
 #include "cstarrenderer.h"
 #include "csetting.h"
 
+#include <QDebug>
+
 CStarRenderer   cStarRenderer;
 
 CStarRenderer::CStarRenderer()
@@ -130,10 +132,26 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
 ///////////////////////////////////////////////////////////////////////////
 {
   int s = getStarSize(mag);
+
+  /*
+  QEasingCurve crv(QEasingCurve::OutCubic);
+
+  double a = FRAC(mag, 0, maxMag);
+  //qDebug() << mag << a;
+
+  double size = 10.2 - LERP(crv.valueForProgress(a), 0, 10);
+
+  p->setPen(Qt::NoPen);
+  p->setBrush(Qt::white);
+  p->drawEllipse(QPointF(pt->sx, pt->sy), size, size);
+  */
+
+
   int r = pRadius[s];
 
   p->drawPixmap(QPoint(pt->sx - r, pt->sy - r), *pImg,
                 QRect((spt * starSize) + (starSize >> 1) - r, (s * starSize) + (starSize >> 1) - r, r << 1, r << 1));
+
 
   return((numStars - s) >> 1);
 }

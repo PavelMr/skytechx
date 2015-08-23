@@ -1028,6 +1028,70 @@ static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
   }
 }
 
+/*
+void rrr(void)
+{
+  double width = 2 << 12;
+  double height = width / 2;
+
+  QImage *pix = new QImage((int)width, (int)height, QImage::Format_ARGB32_Premultiplied);
+  qDebug() << pix->isNull();
+
+  pix->fill(QColor(0, 0, 0));
+  QPainter pPainter;
+
+  pPainter.begin(pix);
+  pPainter.setRenderHint(QPainter::Antialiasing, true);
+
+  g_skSet.map.star.starSizeFactor = -4.5;
+  cStarRenderer.setMaxMag(20);
+
+  pPainter.setCompositionMode(QPainter::CompositionMode_Plus);
+
+  for (int region = 0; region < NUM_GSC_REGS; region++)
+  //for (int region = 0; region < 1000; region++)
+  if (true)
+  {
+    ucac4Region_t *ucacRegion;
+    SKPOINT        pt;
+
+    ucacRegion = cUcac4.loadGSCRegion(region);
+
+    if (ucacRegion == NULL)
+    {
+      continue;
+    }
+
+    QEasingCurve cc(QEasingCurve::OutCubic);
+
+    int i = 0;
+    foreach (const ucac4Star_t &star, ucacRegion->stars)
+    {
+      if (star.mag <= 20)
+      {
+       double sx = star.rd.Ra / R360 * width;
+       double sy = height - ((star.rd.Dec + R90) / R180) * height;
+
+       //cStarRenderer.renderStar(&pt, 0, star.mag, &pPainter);
+
+       int mm = 255 - (cc.valueForProgress(((star.mag + 2) / 20.0))) * 240;
+
+       pPainter.setPen(QColor(mm, mm, mm));
+       pPainter.drawPoint(QPointF(sx, sy));
+
+
+      }
+      i++;
+    }
+  }
+
+  pPainter.end();
+  pix->save("bitmap.png", 0, 10);
+
+  exit(0);
+}
+*/
+
 ///////////////////////////////////////////////////////////////////////////
 bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////
@@ -1051,6 +1115,11 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   cAstro.setParam(mapView);
 
   trfCreateMatrixView(&cAstro, mapView, width, height);
+
+  /*
+  rrr();
+  return true;
+  */
 
   cStarRenderer.setMaxMag(mapView->starMag);
   smRenderBackground(mapView, pPainter, pImg);

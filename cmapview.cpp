@@ -45,6 +45,8 @@ QElapsedTimer  timer;
 CMapView      *pcMapView;
 QString        helpText;
 
+extern bool    g_showCenterScreen;
+
 extern bool    g_quickInfoForced;
 extern bool    g_bHoldObject;
 extern double  g_dssRa;
@@ -951,9 +953,15 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
     repaintMap();
   }
 
-  if (key == Qt::Key_Space)
+  if (key == Qt::Key_Space && !(QApplication::keyboardModifiers() & Qt::ShiftModifier))
   { // move measure point
     trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), m_measurePoint.Ra, m_measurePoint.Dec);
+    repaintMap(false);
+  }
+
+  if (key == Qt::Key_Space && QApplication::keyboardModifiers() & Qt::ShiftModifier)
+  { // move measure point
+    trfConvScrPtToXY(width() / 2, height() / 2, m_measurePoint.Ra, m_measurePoint.Dec);
     repaintMap(false);
   }
 
@@ -1770,6 +1778,20 @@ void CMapView::paintEvent(QPaintEvent *)
     double fov = calcNewPos(&rc, &x, &y);
 
     p.setFont(QFont("arial",  11, QFont::Bold));
+
+    int mm = qMin(m_lastMousePos.x() - m_zoomPoint.x(), m_lastMousePos.y() - m_zoomPoint.y());
+    int size = qMax((int)(mm * 0.05f), 5);
+    p.setPen(QPen(QColor(255, 255, 255), 1, Qt::SolidLine));
+    p.drawCross(m_zoomPoint + (m_lastMousePos - m_zoomPoint) * 0.5, size);
+    //QRect rc3 = rc;
+    p.setPen(Qt::white);
+    QString str = tr("FOV : ") + getStrDegNoSign(fov);
+    rc = p.renderText(rc.left(), rc.top(), 0, str, RT_TOP_RIGHT, false);
+    QRect rc2 = rc.translated(0, 0);
+    rc2.adjust(-2, -2, 2, 2);
+    p.fillRect(rc2, Qt::black);
+    p.drawText(rc2, Qt::AlignCenter, str);
+
     p.setBrush(Qt::NoBrush);
 
     if (fov != 0)
@@ -1781,23 +1803,10 @@ void CMapView::paintEvent(QPaintEvent *)
       p.setPen(QPen(QColor(255, 0, 0), 3, Qt::DotLine));
     }
 
+    QRect rc3(m_zoomPoint, m_lastMousePos);
     p.setCompositionMode(QPainter::CompositionMode_Difference);
-    p.drawRect(rc);
-    int mm = qMin(m_lastMousePos.x() - m_zoomPoint.x(), m_lastMousePos.y() - m_zoomPoint.y());
-    int size = qMax((int)(mm * 0.05f), 5);
-    p.setPen(QPen(QColor(255, 255, 255), 1, Qt::SolidLine));
-    p.drawCross(m_zoomPoint + (m_lastMousePos - m_zoomPoint) * 0.5, size);
-    QRect rc3 = rc;
+    p.drawRect(rc3);
     p.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    p.setPen(Qt::white);
-    QString str = tr("FOV : ") + getStrDegNoSign(fov);
-    rc = p.renderText(rc.left(), rc.top(), 0, str, RT_BOTTOM_RIGHT, false);
-    QRect rc2 = rc.translated(5, 5);
-    rc2.adjust(-3, -3, 0, 0);
-    p.setClipRect(rc3);
-    p.fillRect(rc2, Qt::black);
-    p.renderText(rc2.left(), rc2.top(), 3, str, RT_BOTTOM_RIGHT);
-    p.setClipping(false);
   }
 
   if (g_dssUse)
@@ -1870,9 +1879,18 @@ void CMapView::paintEvent(QPaintEvent *)
       p.setPen(QPen(QBrush(g_skSet.map.measurePoint.color), g_skSet.map.measurePoint.width, (Qt::PenStyle)g_skSet.map.measurePoint.style));
       p.drawCross(pt.sx, pt.sy, 10);
     }
-
   }
+
   g_cDrawing.drawEditedObject(&p);
+
+  if (g_showCenterScreen)
+  {
+    p.setPen(QPen(QColor(g_skSet.map.drawing.color), 1, Qt::DotLine));
+    p.setOpacity(0.5);
+    p.drawLine(0, height() / 2, width(), height() / 2);
+    p.drawLine(width() / 2, 0, width() / 2, height());
+    p.setOpacity(1);
+  }
 
 
   if (bDevelopMode)

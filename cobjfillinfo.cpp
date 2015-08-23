@@ -219,6 +219,11 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   orbit_t  pl;
   orbit_t  s;
 
+  item->riseJD = CM_UNDEF;
+  item->setJD = CM_UNDEF;
+  item->transitJD = CM_UNDEF;
+  item->rtsType = RTS_ERR;
+
   cAstro.calcPlanet(obj->par1, &pl);
   cAstro.calcPlanet(PT_SUN, &s);
   cSatXYZ.solve(view->jd, obj->par1, &pl, &s, &sat);
@@ -584,6 +589,11 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
 
   item->title = s.name;
   item->simbad = item->id;
+
+  item->riseJD = CM_UNDEF;
+  item->setJD = CM_UNDEF;
+  item->transitJD = CM_UNDEF;
+  item->rtsType = RTS_ERR;
 
   addLabelItem(item, txDateTime);
   addSeparator(item);
