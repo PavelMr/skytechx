@@ -148,10 +148,11 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
 
 
   int r = pRadius[s];
+  int size = r << 1;
 
-  p->drawPixmap(QPoint(pt->sx - r, pt->sy - r), *pImg,
-                QRect((spt * starSize) + (starSize >> 1) - r, (s * starSize) + (starSize >> 1) - r, r << 1, r << 1));
-
+  p->drawPixmap(QRectF(pt->sx - r, pt->sy - r, -1, -1), *pImg,
+                QRect((spt * starSize) + (starSize >> 1) - r, (s * starSize) + (starSize >> 1) - r, size, size));
+  // todo: dat kazkou hvezdu do qpixmap
 
   return((numStars - s) >> 1);
 }

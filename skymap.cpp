@@ -81,15 +81,18 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
     int i = 0;
     foreach (const ucac4Star_t &star, ucacRegion->stars)
     {
-      if (star.mag <= mapView->starMag && (star.mag >= g_skSet.map.ucac4.fromMag))
+      if (star.mag <= mapView->starMag)
       {
-        trfRaDecToPointNoCorrect(&star.rd, &pt);
-        if (trfProjectPoint(&pt))
+        if ((star.mag >= g_skSet.map.ucac4.fromMag))
         {
-          int r = cStarRenderer.renderStar(&pt, 0, star.mag, pPainter);
-          addMapObj(pt.sx, pt.sy, MO_UCAC4, MO_CIRCLE, r + 4, region, i, star.mag);
+          trfRaDecToPointNoCorrect(&star.rd, &pt);
+          if (trfProjectPoint(&pt))
+          {
+            int r = cStarRenderer.renderStar(&pt, 0, star.mag, pPainter);
+            addMapObj(pt.sx, pt.sy, MO_UCAC4, MO_CIRCLE, r + 4, region, i, star.mag);
+          }
         }
-      }
+      } else return;
       i++;
     }
   }

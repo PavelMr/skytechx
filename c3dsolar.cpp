@@ -3,6 +3,15 @@
 #include "ccomdlg.h"
 #include "casterdlg.h"
 
+static int g_quiet = true;
+static int g_cb = 0;
+static int g_cb2 = 0;
+static int g_cb3 = 0;
+static bool g_cbx = false;
+static bool g_cbx2 = true;
+static int g_sb = 500;
+static int g_sb2 = 1;
+
 C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
   QDialog(parent),
   ui(new Ui::C3DSolar)
@@ -72,10 +81,36 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
       ui->frame->generateComet(index, ui->spinBox->value(), ui->spinBox_2->value(), false);
     }
   }
+
+  g_quiet = true;
+
+  ui->comboBox->setCurrentIndex(g_cb);
+  ui->comboBox_2->setCurrentIndex(g_cb2);
+  ui->comboBox_3->setCurrentIndex(g_cb3);
+  ui->checkBox->setChecked(g_cbx);
+  ui->checkBox_2->setChecked(g_cbx2);
+  ui->spinBox->setValue(g_sb);
+  ui->spinBox_2->setValue(g_sb2);
+
+  on_pushButton_8_clicked();
+
+  g_quiet = false;
+}
+
+void C3DSolar::saveAll()
+{
+  g_cb = ui->comboBox->currentIndex();
+  g_cb2 = ui->comboBox_2->currentIndex();
+  g_cb3 = ui->comboBox_3->currentIndex();
+  g_cbx = ui->checkBox->isChecked();
+  g_cbx2 = ui->checkBox_2->isChecked();
+  g_sb = ui->spinBox->value();
+  g_sb2 = ui->spinBox_2->value();
 }
 
 C3DSolar::~C3DSolar()
 {
+  saveAll();
   delete ui;
 }
 
@@ -154,7 +189,10 @@ void C3DSolar::on_pushButton_7_clicked()
 
 void C3DSolar::showError()
 {
-  msgBoxError(this, tr("Nothing to show!"));
+  if (!g_quiet)
+  {
+    msgBoxError(this, tr("Nothing to show!"));
+  }
 }
 
 void C3DSolar::on_pushButton_8_clicked()

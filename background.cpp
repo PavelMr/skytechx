@@ -124,8 +124,6 @@ bool CBackground::loadBackground(QString name)
       QString name = fi.absolutePath() + "/" + it.value().toString();
       textureName = name;
 
-      qDebug() << "1" << name;
-
       bkTexture = new QImage(name);
 
       if (bkTexture->isNull())
@@ -133,8 +131,6 @@ bool CBackground::loadBackground(QString name)
         name = it.value().toString();
         bkTexture->load(name);
         textureName = name;
-
-        qDebug() << "2" << name;
       }
     }
   }
@@ -158,7 +154,7 @@ bool CBackground::loadBackground(QString name)
     isTexture = true;
   }
 
-  qDebug() << "tex" << textureName << isTexture;
+  //qDebug() << "tex" << textureName << isTexture;
 
   return true;
 }

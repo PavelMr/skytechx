@@ -101,11 +101,7 @@ bool CUsno2A::searchStar(int zone, int number, usnoStar_t *star)
 
   getUSNOStar(star, data);
 
-
-
-  qDebug() << star->id << zone << R2D(star->rd.Dec);
-
-
+  //qDebug() << star->id << zone << R2D(star->rd.Dec);
 
   return true;
 }

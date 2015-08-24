@@ -75,6 +75,11 @@ ucac4Region_t *CUCAC4::getStar(ucac4Star_t &s, int reg, int index)
   return region;
 }
 
+static bool ucacCompare(ucac4Star_t a , ucac4Star_t b)
+{
+  return a.mag < b.mag;
+}
+
 ucac4Region_t *CUCAC4::loadGSCRegion(int region)
 {
   if (m_folder.isEmpty())
@@ -248,6 +253,7 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
     regionPtr->bUsed = true;
     regionPtr->region = region;
     regionPtr->timer = QDateTime::currentMSecsSinceEpoch() / 1000.0;
+    qSort(regionPtr->stars.begin(), regionPtr->stars.end(), ucacCompare);
     return regionPtr;
   }
   else
