@@ -64,6 +64,9 @@ protected:
    double ppo_coef[6];
    double amd_x_coeff[20];
    double amd_y_coeff[20];
+
+private:
+   void readHeader(QFile &f);
 };
 
 #endif // CFITS_H

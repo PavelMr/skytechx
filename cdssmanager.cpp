@@ -2,6 +2,7 @@
 #include "ui_cdssmanager.h"
 #include "cfits.h"
 #include "cbkimages.h"
+#include "cimagemanip.h"
 
 #include <QDir>
 
@@ -76,6 +77,7 @@ void CDSSManager::fillList()
       double size = anSep(f->m_cor[0].Ra, f->m_cor[0].Dec, f->m_cor[2].Ra, f->m_cor[2].Dec);
 
       item1->setText(f->m_name);
+      item1->setData(fi.filePath());
 
       item2->setData((qlonglong)fi.size());
       item2->setText(QString("%1 MB").arg(fi.size() / 1024.0 / 1024.0, 0, 'f', 2));
@@ -149,3 +151,4 @@ void CDSSManager::on_pushButton_clicked()
 {
   done(0);
 }
+

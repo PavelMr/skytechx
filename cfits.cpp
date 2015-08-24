@@ -64,35 +64,21 @@ QImage *CFits::getOriginalImage(void)
   return(m_ori);
 }
 
-///////////////////////////////////////////////////////////////////
-bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
-///////////////////////////////////////////////////////////////////
+
+void CFits::readHeader(QFile &f)
 {
-  SkFile f(file);
   char chTmp[512];
-  memOk = true;
-
-  QFileInfo fi(file);
-
-  m_name = fi.fileName();
-
-  if (!f.open(SkFile::ReadOnly))
-    return(false);
-
-  f.read((char *)chTmp, 6);
-  if (strncmp("SIMPLE", chTmp, 6))
-    return(false); // neni to FITS
-
-  f.seek(0);
+  QString line;
 
   do
   {
     fitsItem_t item;
 
     f.read((char *)chTmp, 80);
+    line = QString(chTmp);
 
-    item.name = QString(chTmp).mid(0, 10);
-    item.value = QString(chTmp).mid(10, 70);
+    item.name = line.mid(0, 10);
+    item.value = line.mid(10, 70);
 
     item.name = item.name.simplified().remove(' ');
     item.value = item.value.simplified();
@@ -115,6 +101,31 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
 
     tFitsMap[item.name] = item.value;
   } while (true);
+}
+
+///////////////////////////////////////////////////////////////////
+bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
+///////////////////////////////////////////////////////////////////
+{
+  SkFile f(file);
+  memOk = true;
+
+  QFileInfo fi(file);
+
+  m_name = fi.fileName();
+
+  if (!f.open(SkFile::ReadOnly))
+    return(false);
+
+  char chTmp[6];
+
+  f.read((char *)chTmp, 6);
+  if (strncmp("SIMPLE", chTmp, 6))
+    return(false); // neni to FITS
+
+  f.seek(0);
+
+  readHeader(f);
 
   if (getValue("NAXIS=").toInt() != 2)
   {
