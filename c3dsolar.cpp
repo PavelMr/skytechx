@@ -3,6 +3,8 @@
 #include "ccomdlg.h"
 #include "casterdlg.h"
 
+bool g_comAstChanged = false;
+
 static int g_quiet = true;
 static int g_cb = 0;
 static int g_cb2 = 0;
@@ -84,8 +86,19 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
 
   g_quiet = true;
 
-  ui->comboBox->setCurrentIndex(g_cb);
-  ui->comboBox_2->setCurrentIndex(g_cb2);
+  if (!g_comAstChanged)
+  {
+    ui->comboBox->setCurrentIndex(g_cb);
+    ui->comboBox_2->setCurrentIndex(g_cb2);
+  }
+  else
+  {
+    ui->comboBox->setCurrentIndex(0);
+    ui->comboBox_2->setCurrentIndex(0);
+  }
+
+  g_comAstChanged = false;
+
   ui->comboBox_3->setCurrentIndex(g_cb3);
   ui->checkBox->setChecked(g_cbx);
   ui->checkBox_2->setChecked(g_cbx2);

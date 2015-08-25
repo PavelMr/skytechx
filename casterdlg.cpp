@@ -7,6 +7,8 @@
 #include "cobjtracking.h"
 #include "setting.h"
 
+extern bool g_comAstChanged;
+
 // TODO: priste udelat list view rychlejsi (je to pomaly pri hodne polozkach)
 
 /////////////////////////////////////////////////////////
@@ -577,6 +579,7 @@ void CAsterDlg::on_pushButton_3_clicked()
   deleteTracking(MO_ASTER);
   releaseHoldObject(MO_ASTER);
   pcMainWnd->removeQuickInfo(MO_ASTER);
+  g_comAstChanged = true;
 
   astClear();
 
@@ -635,6 +638,7 @@ void CAsterDlg::on_pushButton_8_clicked()
   deleteTracking(MO_ASTER);
   releaseHoldObject(MO_ASTER);
   pcMainWnd->removeQuickInfo(MO_ASTER);
+  g_comAstChanged = true;
 
   done(DL_OK);
 }
@@ -680,6 +684,7 @@ void CAsterDlg::on_pushButton_7_clicked()
   deleteTracking(MO_ASTER);
   releaseHoldObject(MO_ASTER);
   pcMainWnd->removeQuickInfo(MO_ASTER);
+  g_comAstChanged = true;
 
   astClear();
 

@@ -7,78 +7,75 @@ CStarRenderer   cStarRenderer;
 
 CStarRenderer::CStarRenderer()
 {
-  pImg = NULL;
-  pRadius = NULL;
 }
 
 CStarRenderer::~CStarRenderer()
 {
-  SAFE_DELETE(pImg);
-  SAFE_FREE(pRadius);
 }
 
 //////////////////////////////////////////
 bool CStarRenderer::open(QString filename)
 //////////////////////////////////////////
 {
-  SAFE_DELETE(pImg);
-  SAFE_FREE(pRadius);
+  for (int sp = 0; sp < 8; sp++)
+  {
+    pStars[sp].clear();
+  }
 
-  pImg = new QPixmap;
+  QPixmap pImg;
 
-  if (!pImg->load(filename))
+  if (!pImg.load(filename))
   {
     qDebug("CStarRenderer::open(%s) failed!", filename.toLatin1().data());
     return(false);
   }
 
-  if ((pImg->width() % 8) != 0)
+  if ((pImg.width() % 8) != 0)
   {
     qDebug("CStarRenderer::open() starSize (width) is invalid!");
     return(false);
   }
-  starSize = pImg->width() / 8;
+  starSize = pImg.width() / 8;
 
-  if ((pImg->height() % starSize) != 0)
+  if ((pImg.height() % starSize) != 0)
   {
     qDebug("CStarRenderer::open() starSize (height) is invalid!");
     return(false);
   }
-  numStars = pImg->height() / starSize;
-
-  pRadius = (int *)malloc(sizeof(int) * numStars);
-  int c = starSize / 2;
+  numStars = pImg.height() / starSize;
 
   // calc. minimum star radius
-  for (int i = 0; i < numStars; i++)
+  for (int sp = 0; sp < 8; sp++)
   {
-    QPixmap tmp = pImg->copy(0, starSize * i, starSize, starSize);
-    QImage  img = tmp.toImage();
-
-    int minX = +9999;
-    int maxX = -9999;
-    int minY = +9999;
-    int maxY = -9999;
-
-    for (int y = 0; y < starSize; y++)
+    for (int i = 0; i < numStars; i++)
     {
-      for (int x = 0; x < starSize; x++)
-      {
-        QRgb val = img.pixel(x, y);
-        int alpha = qAlpha(val);
+      QPixmap tmp = pImg.copy(starSize * sp, starSize * i, starSize * sp + starSize, starSize);
+      QImage  img = tmp.toImage();
 
-        if (alpha > 0)
+      int minX = +9999;
+      int maxX = -9999;
+      int minY = +9999;
+      int maxY = -9999;
+
+      for (int y = 0; y < starSize; y++)
+      {
+        for (int x = 0; x < starSize; x++)
         {
-          if (x < minX) minX = x;
-          if (x > maxX) maxX = x;
-          if (y < minY) minY = y;
-          if (y > maxY) maxY = y;
+          QRgb val = img.pixel(x, y);
+          int alpha = qAlpha(val);
+
+          if (alpha > 0)
+          {
+            if (x < minX) minX = x;
+            if (x > maxX) maxX = x;
+            if (y < minY) minY = y;
+            if (y > maxY) maxY = y;
+          }
         }
       }
+
+      pStars[sp].append(QPixmap::fromImage(img.copy(minX - 1, minY - 1, maxX - minX + 2, maxY - minY + 2)));
     }
-    int x = 1 + qAbs(qMax(minX - c, maxX - c));
-    int y = 1 + qAbs(qMax(minY - c, maxY - c));
-    pRadius[i] = qMax(x, y);
   }
 
   return(true);
@@ -119,42 +116,17 @@ int CStarRenderer::getStarSize(float mag)
   return(r);
 }
 
-///////////////////////////////////////////
-int CStarRenderer::getStarRadius(float mag)
-///////////////////////////////////////////
-{
-  return((numStars - getStarSize(mag)) >> 1);
-}
 
-
-// return star size in px /////////////////////////////////////////////////
+// return star radius in px ///////////////////////////////////////////////
 int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
 ///////////////////////////////////////////////////////////////////////////
 {
   int s = getStarSize(mag);
 
-  /*
-  QEasingCurve crv(QEasingCurve::OutCubic);
+  p->drawPixmap(pt->sx - (pStars[spt][s].width() >> 1),
+                pt->sy - (pStars[spt][s].height() >> 1), pStars[spt][s]);
 
-  double a = FRAC(mag, 0, maxMag);
-  //qDebug() << mag << a;
-
-  double size = 10.2 - LERP(crv.valueForProgress(a), 0, 10);
-
-  p->setPen(Qt::NoPen);
-  p->setBrush(Qt::white);
-  p->drawEllipse(QPointF(pt->sx, pt->sy), size, size);
-  */
-
-
-  int r = pRadius[s];
-  int size = r << 1;
-
-  p->drawPixmap(QRectF(pt->sx - r, pt->sy - r, -1, -1), *pImg,
-                QRect((spt * starSize) + (starSize >> 1) - r, (s * starSize) + (starSize >> 1) - r, size, size));
-  // todo: dat kazkou hvezdu do qpixmap
-
-  return((numStars - s) >> 1);
+  return(pStars[spt][s].width() >> 1);
 }
 
 
@@ -180,24 +152,4 @@ QPixmap CStarRenderer::getExampleStar(void)
   return(pix);
 }
 
-///////////////////////////////////////////
-QPixmap CStarRenderer::getExampleStars(void)
-///////////////////////////////////////////
-{
-  QPixmap pix(20 * 8, 20); // TODO: dodelat to (je to takovy divny)
-  pix.fill(QColor(128, 128, 128));
-  QPainter p(&pix);
-  SKPOINT  pt;
-
-  pt.sx = 10;
-  pt.sy = 10;
-
-  for (int i = 0; i < 8; i++)
-  {
-    renderStar(&pt, i, 2, &p);
-    pt.sx += 20;
-  }
-
-  return(pix);
-}
 

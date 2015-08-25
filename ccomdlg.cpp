@@ -7,6 +7,7 @@
 #include "cobjtracking.h"
 #include "setting.h"
 
+extern bool g_comAstChanged;
 
 /////////////////////////////////////////////////////////
 extern MainWindow *pcMainWnd;
@@ -681,6 +682,7 @@ void CComDlg::on_pushButton_3_clicked()
   deleteTracking(MO_COMET);
   releaseHoldObject(MO_COMET);
   pcMainWnd->removeQuickInfo(MO_COMET);
+  g_comAstChanged = true;
 
   comClear();
 
@@ -739,6 +741,7 @@ void CComDlg::on_pushButton_8_clicked()
   deleteTracking(MO_COMET);
   releaseHoldObject(MO_COMET);
   pcMainWnd->removeQuickInfo(MO_COMET);
+  g_comAstChanged = true;
 
   done(DL_OK);
 }
@@ -778,6 +781,7 @@ void CComDlg::on_pushButton_7_clicked()
   deleteTracking(MO_COMET);
   releaseHoldObject(MO_COMET);
   pcMainWnd->removeQuickInfo(MO_COMET);
+  g_comAstChanged = true;
 
   comClear();
 
@@ -840,6 +844,7 @@ void CComDlg::on_pushButton_4_clicked()
   deleteTracking(MO_COMET);
   releaseHoldObject(MO_COMET);
   pcMainWnd->removeQuickInfo(MO_COMET);
+  g_comAstChanged = true;
 
   comClear();
   fillList();

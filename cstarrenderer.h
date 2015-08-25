@@ -14,15 +14,12 @@ public:
     bool open(QString filename);
     int  renderStar(SKPOINT *pt, int spt, float mag, QPainter *p);
     int  getStarSize(float mag);
-    int  getStarRadius(float mag);
     void setMaxMag(float mMag);
     QPixmap getExampleStar(void);
-    QPixmap getExampleStars();
 
 protected:
-    QPixmap *pImg;
+    QList <QPixmap> pStars[8];
     float    maxMag;
-    int     *pRadius;
     int      numStars;
     int      starSize;
 };
