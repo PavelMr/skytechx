@@ -79,13 +79,12 @@ int main(int argc, char *argv[])
 
   QCoreApplication::setOrganizationDomain("Frostware");
   QCoreApplication::setOrganizationName("PMR");
-  QCoreApplication::setApplicationName("SkytechX");
+  QCoreApplication::setApplicationName("SkytechX_beta_103");
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   QApplication a(argc, argv);
 
   QSharedMemory sharedMemory("The SkytechX (PMR)");
-
   if (!sharedMemory.create(1) && sharedMemory.error() == QSharedMemory::AlreadyExists)
   {
     msgBoxError(NULL, QObject::tr("SkytechX already running!"));
@@ -175,7 +174,7 @@ int main(int argc, char *argv[])
   MainWindow w;
   w.show();
 
-  int ret;
+  int ret = 1;
 
   try
   {

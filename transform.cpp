@@ -322,6 +322,10 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
   SKPLANEFromPoint(&m_frustum[3], &vecFrustum[1], &vecFrustum[0], &vecFrustum[4]); // Bottom
   SKPLANEFromPoint(&m_frustum[4], &vecFrustum[0], &vecFrustum[1], &vecFrustum[2]); // near
   m_numFrustums = 5;
+
+  //for (int i = 0; i < 5; i++)
+//    qDebug() << m_frustum[i].x << m_frustum[i].y << m_frustum[i].z << m_frustum[i].dist;
+
 }
 
 

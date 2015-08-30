@@ -23,9 +23,10 @@
 #include "build_inc.h"
 
 #define _BUILD_NO_       DEF_BUILD_NO
-#define SK_VERSION       "v1.03"
+#define SK_VERSION       "v1.03 - Beta"
 #define SKYTECH_WEB      "http://www.skytechx.eu"
 
 // pri nove verzi odstranit SK_DEBUG_IN_RELEASE v debug.h a definovat QT_NO_DEBUG_OUTPUT
+// upravit QCoreApplication::setApplicationName
 
 #endif
