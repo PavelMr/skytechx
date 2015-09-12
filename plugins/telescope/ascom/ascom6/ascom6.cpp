@@ -273,9 +273,9 @@ bool CAscom6::disconnectDev(bool park)
   if (m_device == NULL)
     return(true);
 
-  m_device->setProperty("Tracking", "0");
   if (park)
   {
+    m_device->setProperty("Tracking", "0");
     m_device->dynamicCall("Park()");
   }
   m_device->setProperty("Connected", "0");
