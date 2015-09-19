@@ -869,7 +869,7 @@ void MainWindow::slotCheckFirstTime()
     on_actionSelect_world_location_triggered();
   }
 
-  if (0) // BETA //set.value("check_version", true).toBool())
+  if (set.value("check_version", true).toBool())
   {
     checkNewVersion(false);
   }
@@ -1736,15 +1736,8 @@ void MainWindow::slotVersionFinished(QNetworkReply *reply)
 
   if (version.compare(SK_VERSION) || m_checkVerForced)
   {
-    if (1) // BETA
-    {
-      msgBoxInfo(this, "Not available in Beta!!!");
-    }
-    else
-    {
-      CVersionCheck dlg(this, version, reply->error(), reply->errorString());
-      dlg.exec();
-    }
+    CVersionCheck dlg(this, version, reply->error(), reply->errorString());
+    dlg.exec();
   }
 
   reply->deleteLater();
