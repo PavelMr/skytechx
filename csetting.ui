@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1692,28 +1692,28 @@
                <property name="fieldGrowthPolicy">
                 <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                </property>
-               <item row="0" column="0">
+               <item row="1" column="0">
                 <widget class="QLabel" name="label_14">
                  <property name="text">
                   <string>Horizon color</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
+               <item row="2" column="0">
                 <widget class="CPushColorButton" name="pushButton_11">
                  <property name="text">
                   <string>PushButton</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
+               <item row="3" column="0">
                 <widget class="QLabel" name="label_13">
                  <property name="text">
                   <string>Horizon opacity (alpha)</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
+               <item row="5" column="0">
                 <widget class="QSlider" name="horizontalSlider_11">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1738,38 +1738,45 @@
                  </property>
                 </widget>
                </item>
-               <item row="5" column="0">
+               <item row="6" column="0">
                 <widget class="QLabel" name="label_15">
                  <property name="text">
                   <string>Horizon font &amp; color</string>
                  </property>
                 </widget>
                </item>
-               <item row="6" column="0">
+               <item row="7" column="0">
                 <widget class="CFontColorButton" name="pushButton_12">
                  <property name="text">
                   <string>PushButton</string>
                  </property>
                 </widget>
                </item>
-               <item row="9" column="0">
+               <item row="10" column="0">
                 <widget class="QCheckBox" name="cb_hor_show_alt_azm">
                  <property name="text">
                   <string>Show horizon only in Alt/Azm mode</string>
                  </property>
                 </widget>
                </item>
-               <item row="7" column="0">
+               <item row="8" column="0">
                 <widget class="QCheckBox" name="checkBox_15">
                  <property name="text">
                   <string>Show directions</string>
                  </property>
                 </widget>
                </item>
-               <item row="10" column="0">
+               <item row="11" column="0">
                 <widget class="QCheckBox" name="checkBox_16">
                  <property name="text">
                   <string>Hide texture when mouse move the map</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QPushButton" name="pushButton_60">
+                 <property name="text">
+                  <string>Set horizon type</string>
                  </property>
                 </widget>
                </item>

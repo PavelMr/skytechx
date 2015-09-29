@@ -16,6 +16,7 @@
 #include "mainwindow.h"
 #include "cgamepad.h"
 #include "skcore.h"
+#include "csethorizon.h"
 
 #include <QSettings>
 
@@ -27,6 +28,10 @@ extern bool bParkTelescope;
 
 extern CMapView  *pcMapView;
 
+extern QString g_horizonName;
+
+static QString g_horizonNameOld;
+
 CSetting::CSetting(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::CSetting)
@@ -34,6 +39,7 @@ CSetting::CSetting(QWidget *parent) :
   ui->setupUi(this);
 
   set = g_skSet;
+  g_horizonNameOld = g_horizonName;
 
   // autosave
   ui->checkBox_7->setChecked(g_autoSave.tracking);
@@ -1670,6 +1676,7 @@ void CSetting::on_pushButton_46_clicked()
 
 void CSetting::on_pushButton_3_clicked()
 {
+  g_horizonName = g_horizonNameOld;
   done(DL_CANCEL);
 }
 
@@ -1807,4 +1814,12 @@ void CSetting::on_pushButton_59_clicked()
 
 void CSetting::on_cb_device_currentIndexChanged(int /*index*/)
 {
+}
+
+void CSetting::on_pushButton_60_clicked()
+{
+  CSetHorizon dlg(this);
+
+  dlg.exec();
+  //ui->widget->repaintMap();
 }

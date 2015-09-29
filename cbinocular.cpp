@@ -198,7 +198,7 @@ void CBinocular::on_pushButton_2_clicked()
 
 void CBinocular::on_listWidget_doubleClicked(const QModelIndex &)
 {
-  on_pushButton_2_clicked();
+  on_pushButton_3_clicked();
 }
 
 void CBinocular::on_pushButton_4_clicked()

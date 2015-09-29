@@ -41,6 +41,14 @@ void CLineEditComp::addWord(QString word)
   }
 }
 
+void CLineEditComp::addWords(QStringList words)
+{
+  foreach (QString word, words)
+  {
+    addWord(word);
+  }
+}
+
 
 void CLineEditComp::keyPressEvent(QKeyEvent *e)
 {
@@ -96,6 +104,7 @@ void CLineEditComp::slotTextEdited(QString str)
 
       setText(it);
       setSelection(it.count(), -(it.count() - pos));
+      return;
     }
   }
 }

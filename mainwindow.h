@@ -579,6 +579,8 @@ private slots:
 
   void on_actionCenter_of_screen_triggered(bool checked);
 
+  void on_actionFinder_FOV_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

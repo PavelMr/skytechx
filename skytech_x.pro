@@ -221,7 +221,9 @@ SOURCES += main.cpp\
     c3dsolarwidget.cpp \
     cbinocular.cpp \
     cbinocularedit.cpp \
-    skmapcontrol.cpp
+    skmapcontrol.cpp \
+    cinsertfinder.cpp \
+    cfinderedit.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -405,7 +407,9 @@ HEADERS  += mainwindow.h \
     c3dsolarwidget.h \
     cbinocular.h \
     cbinocularedit.h \
-    skmapcontrol.h
+    skmapcontrol.h \
+    cinsertfinder.h \
+    cfinderedit.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -485,7 +489,9 @@ FORMS    += mainwindow.ui \
     cdssmanager.ui \
     c3dsolar.ui \
     cbinocular.ui \
-    cbinocularedit.ui
+    cbinocularedit.ui \
+    cinsertfinder.ui \
+    cfinderedit.ui
 
 
 RESOURCES += \

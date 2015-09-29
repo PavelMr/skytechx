@@ -77,6 +77,8 @@
 #include "cdssmanager.h"
 #include "c3dsolar.h"
 #include "cbinocular.h"
+#include "cdso.h"
+#include "cinsertfinder.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -257,7 +259,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   m_search = new CLineEditComp;
   m_search->setFixedWidth(150);
-  m_search->setMaxCompleterWords(100);
+  m_search->setMaxCompleterWords(1000);
+  m_search->addWords(cDSO.getCommonNameList());
   ui->tb_search->insertWidget(ui->actionSearch, m_search);
   m_search->setToolTip(tr("Search"));
   connect(m_search, SIGNAL(returnPressed()), this, SLOT(slotSearchDone()));
@@ -4397,11 +4400,6 @@ void MainWindow::on_actionDeep_sky_galery_triggered()
 
 void MainWindow::on_actionSet_horizon_triggered()
 {
-  // TODO: menu dat nekam asi lepe
-  CSetHorizon dlg(this);
-
-  dlg.exec();
-  ui->widget->repaintMap();
 }
 
 void MainWindow::on_actionKeyboard_reference_triggered()
@@ -5331,6 +5329,23 @@ void MainWindow::on_comboBox_3_currentIndexChanged(int index)
 void MainWindow::on_actionBinocular_triggered()
 {
   CBinocular dlg(this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    radec_t rd;
+
+    trfConvScrPtToXY(ui->widget->width() * 0.5,
+                     ui->widget->height() * 0.5, rd.Ra, rd.Dec);
+    precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
+    g_cDrawing.insertTelescope(&rd, dlg.m_fov, dlg.m_text);
+
+    ui->widget->centerMap(CM_UNDEF, CM_UNDEF, getOptObjFov(R2D(dlg.m_fov), R2D(dlg.m_fov)));
+  }
+}
+
+void MainWindow::on_actionFinder_FOV_triggered()
+{
+  CInsertFinder dlg(this);
 
   if (dlg.exec() == DL_OK)
   {

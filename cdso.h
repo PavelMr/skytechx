@@ -69,6 +69,7 @@ class CDso : public QObject
     QString getCatalogue(int index);
     QString getClass(dso_t *pDso);
 
+    QStringList getCommonNameList();
     QString getCommonName(dso_t *pDso);
     QStringList getNameList(dso_t *pDso);
     QString getName(dso_t *pDso);

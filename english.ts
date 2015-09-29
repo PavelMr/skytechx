@@ -8903,7 +8903,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="3454"/>
         <source>Setting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Settings...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3468"/>

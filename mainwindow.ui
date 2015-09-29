@@ -522,7 +522,6 @@
     <addaction name="actionHorizon_mode_Zenith_up"/>
     <addaction name="actionEcliptic"/>
     <addaction name="separator"/>
-    <addaction name="actionSet_horizon"/>
     <addaction name="separator"/>
     <addaction name="actionEpoch_J2000_0"/>
    </widget>
@@ -697,6 +696,7 @@
     </property>
     <addaction name="actionTelescope_FOV"/>
     <addaction name="actionBinocular"/>
+    <addaction name="actionFinder_FOV"/>
     <addaction name="actionTelrad"/>
     <addaction name="actionFrame_field"/>
     <addaction name="actionCircle"/>
@@ -1064,7 +1064,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-152</y>
+          <y>0</y>
           <width>331</width>
           <height>669</height>
          </rect>
@@ -2871,6 +2871,7 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <addaction name="actionTelescope_FOV"/>
    <addaction name="actionBinocular"/>
+   <addaction name="actionFinder_FOV"/>
    <addaction name="actionTelrad"/>
    <addaction name="actionFrame_field"/>
    <addaction name="actionCircle"/>
@@ -4661,6 +4662,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Binocular FOV...</string>
    </property>
+   <property name="toolTip">
+    <string>Insert binocular FOV</string>
+   </property>
   </action>
   <action name="actionCenter_of_screen">
    <property name="checkable">
@@ -4672,6 +4676,18 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Center of screen</string>
+   </property>
+  </action>
+  <action name="actionFinder_FOV">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_finder.png</normaloff>:/res/ico_finder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Finderscope FOV...</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert finderscope FOV</string>
    </property>
   </action>
  </widget>

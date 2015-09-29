@@ -11,6 +11,7 @@ public:
   explicit CLineEditComp(QWidget *parent = 0);
   void setMaxCompleterWords(int nMax = 100);
   void addWord(QString word);
+  void addWords(QStringList words);
 
 protected:
   void keyPressEvent(QKeyEvent *e);
@@ -18,12 +19,12 @@ protected:
   int         m_max;
   QStringList m_list;
   bool        m_back;
-  
+
 signals:
-  
+
 public slots:
   void slotTextEdited(QString str);
-  
+
 };
 
 #endif // CLINEEDITCOMP_H

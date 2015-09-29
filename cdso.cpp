@@ -274,6 +274,18 @@ QString CDso::getClass(dso_t *pDso)
   return(str);
 }
 
+QStringList CDso::getCommonNameList()
+{
+  QStringList list;
+
+  for (int i = 0; i < tDsoCommonNames.count(); i++)
+  {
+    list.append(tDsoCommonNames[i].commonName);
+  }
+
+  return list;
+}
+
 
 /////////////////////////////////////////////
 QString CDso::getTypeName(int type, bool &ok)

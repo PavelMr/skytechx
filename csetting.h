@@ -165,6 +165,8 @@ private slots:
 
    void on_cb_device_currentIndexChanged(int index);
 
+   void on_pushButton_60_clicked();
+
 private:
    Ui::CSetting *ui;
    void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList);

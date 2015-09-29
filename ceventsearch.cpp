@@ -545,7 +545,7 @@ void CEventSearch::on_pushButton_2_clicked()
     str = tr("No event found!");
   else
   {
-    str = QString(tr("%1 event(s) found!")).arg(eventCount);
+    str = QString(tr("%1 event(s) found!\nThe results are shown in the sidebar tab 'Event information'")).arg(eventCount);
   }
 
   msgBoxInfo(this, str);
