@@ -10,7 +10,7 @@ CSelTelePlug::CSelTelePlug(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  QDir dir("data/plugins/telescope/", "*.dll");
+  QDir dir("../data/plugins/telescope/", "*.dll");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 

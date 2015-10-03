@@ -26,7 +26,7 @@ bool CSatXYZ::init()
 
   for (int i = 0; i < 8; i++)
   {
-    SkFile f("data/posxyz/" + names[i]);
+    SkFile f("../data/posxyz/" + names[i]);
 
     if (f.open(SkFile::ReadOnly))
     {

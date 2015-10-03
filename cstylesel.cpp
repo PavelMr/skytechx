@@ -12,7 +12,7 @@ void loadQSSStyle(void)
   QString path;
   QSettings set;
 
-  path = set.value("qss_style", "data/styles/normal.qss").toString();
+  path = set.value("qss_style", "../data/styles/normal.qss").toString();
   g_pApp->setStyleSheet(readAllFile(path));
 }
 
@@ -22,7 +22,7 @@ CStyleSel::CStyleSel(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  QDir dir("data/styles/", "*.qss");
+  QDir dir("../data/styles/", "*.qss");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 

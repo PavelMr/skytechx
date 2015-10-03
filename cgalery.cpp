@@ -195,7 +195,7 @@ void CGalLoader::run()
 void CGalery::on_pushButton_2_clicked()
 ///////////////////////////////////////
 {
-  QFileDialog dlg(this, tr("Open a File"), "data/", "All Image Files (*.jpg;*.bmp;*.png);;JPG file (*.jpg);;BMP file (*.bmp);;PNG file (*.png)");
+  QFileDialog dlg(this, tr("Open a File"), "../data/", "All Image Files (*.jpg;*.bmp;*.png);;JPG file (*.jpg);;BMP file (*.bmp);;PNG file (*.png)");
 
   dlg.setAcceptMode(QFileDialog::AcceptOpen);
   dlg.setFileMode(QFileDialog::ExistingFiles);

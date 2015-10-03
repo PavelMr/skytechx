@@ -138,7 +138,7 @@ void CGSCReg::loadRegions(void)
 {
   int count;
 
-  SkFile f("data/common/gscregions.dat");
+  SkFile f("../data/common/gscregions.dat");
 
   f.open(SkFile::ReadOnly);
 

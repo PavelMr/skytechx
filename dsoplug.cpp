@@ -12,7 +12,7 @@ static QList <CDSOPluginInterface *> dsoPlugins;
 void loadDSOPlugins()
 /////////////////////
 {
-  QDir dir("data/plugins/dso/", "*.dll");
+  QDir dir("../data/plugins/dso/", "*.dll");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
   QString errorString = QApplication::translate("loadDSOPlugin", "Plugin load failure!\n");
@@ -33,7 +33,7 @@ void loadDSOPlugins()
 
       if (plg != NULL)
       {
-        plg->init("data/plugins/dso/");
+        plg->init("../data/plugins/dso/");
         dsoPlugins.append(plg);
         qDebug("plugin load ok!");
       }

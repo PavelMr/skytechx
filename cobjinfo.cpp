@@ -22,7 +22,7 @@ CObjInfo::~CObjInfo()
 /////////////////////
 {
   QString note = ui->textEdit->toPlainText();
-  QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/notes/" + m_infoItem.id + ".txt";
+  QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "../data/notes/" + m_infoItem.id + ".txt";
 
   str = str.simplified();
   SkFile f(str);
@@ -80,7 +80,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
   info.fillInfo(view, obj, &m_infoItem);
 
   /// read note
-  QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/notes/" + m_infoItem.id + ".txt";
+  QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "../data/notes/" + m_infoItem.id + ".txt";
   SkFile f(str);
   if (f.open(SkFile::ReadOnly | SkFile::Text))
   {
@@ -111,7 +111,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
 
     CXMLSimpleMapParser parser;
 
-    parser.begin(readAllFile("data/planets/" + CAstro::getFileName(m_infoItem.par1) + ".xml"));
+    parser.begin(readAllFile("../data/planets/" + CAstro::getFileName(m_infoItem.par1) + ".xml"));
 
     addPhysicalInfo(&parser, "Equator_radius", tr("Equator radius"));
     addPhysicalInfo(&parser, "Semi_major_axis", tr("Semi-major axis"));

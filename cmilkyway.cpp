@@ -13,7 +13,7 @@ CMilkyWay::CMilkyWay()
 void CMilkyWay::load(void)
 //////////////////////////
 {
-  shape.load("data/milkyway/milkyway.dat");
+  shape.load("../data/milkyway/milkyway.dat");
 }
 
 

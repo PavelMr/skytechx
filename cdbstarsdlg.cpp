@@ -23,7 +23,7 @@ CDbStarsDlg::CDbStarsDlg(QWidget *parent) :
   m_model->setHeaderData(5, Qt::Horizontal, tr("P.A."));
   m_model->setHeaderData(6, Qt::Horizontal, tr("Desc."));
 
-  SkFile f("data/double_stars/double_stars.dat");
+  SkFile f("../data/double_stars/double_stars.dat");
 
   if (f.open(SkFile::ReadOnly | SkFile::Text))
   {

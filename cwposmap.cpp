@@ -9,8 +9,8 @@ CWPosMap::CWPosMap(QWidget *parent, double lon, double lat, QList<QPointF> &list
 {
   ui->setupUi(this);
   setFixedSize(size());
-  //m_pix = new QPixmap("data/maps/earth_day.jpg");
-  m_pix = new QPixmap("data/maps/earthmap4k.jpg");
+  //m_pix = new QPixmap("../data/maps/earth_day.jpg");
+  m_pix = new QPixmap("../data/maps/earthmap4k.jpg");
   m_lon = CM_UNDEF;
   m_oldLon = lon;
   m_oldLat = lat;

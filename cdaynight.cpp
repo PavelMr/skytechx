@@ -17,8 +17,8 @@ CDayNight::CDayNight(QWidget *parent, mapView_t *view) :
 
   m_jd = m_view.jd;
 
-  m_day = new QImage("data/maps/earth_day.jpg");
-  m_night = new QImage("data/maps/earth_night.jpg");
+  m_day = new QImage("../data/maps/earth_day.jpg");
+  m_night = new QImage("../data/maps/earth_night.jpg");
   m_img = new QImage(m_day->width(), m_day->height(), QImage::Format_ARGB32_Premultiplied);
   m_shade = new QImage(SHD_X, SHD_Y, QImage::Format_ARGB32_Premultiplied);
 

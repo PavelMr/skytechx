@@ -633,7 +633,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   connect(openWebHelp, SIGNAL(triggered()), this, SLOT(slotOpenWebHelp()));
 
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));
+  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/main.htm"));
 
   if (g_autoSave.mapPosition)
   {
@@ -4407,7 +4407,7 @@ void MainWindow::on_actionKeyboard_reference_triggered()
   on_actionShow_sidebar_toggled(true);
 
   ui->toolBox->setCurrentWidget(ui->page_4);
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/keyboard.htm"));
+  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/keyboard.htm"));
 }
 
 void MainWindow::on_checkBox_5_clicked(bool checked)
@@ -4458,7 +4458,7 @@ void MainWindow::on_actionShow_help_triggered()
   on_actionShow_sidebar_toggled(true);
 
   ui->toolBox->setCurrentWidget(ui->page_4);
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/help/main.htm"));
+  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/main.htm"));
 }
 
 // select all L.F.
@@ -4524,7 +4524,7 @@ void MainWindow::on_lv_quickInfo_customContextMenuRequested(const QPoint &pos)
 void MainWindow::on_pushButton_8_clicked()
 {
   QString name = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                    "data/constellation/untitled.lin",
+                                    "../data/constellation/untitled.lin",
                                     tr("Skytech const. lines (*.lin)"));
   if (name.isEmpty())
     return;

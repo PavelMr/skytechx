@@ -703,7 +703,7 @@ void CAstro::calcEarthShadow(orbit_t *orbit, orbit_t *moon)
 ///////////////////////////////////////////////////////////
 {
   double ERAD = 6378138.12;
-  double erad = ERAD * 1.02; /* earth equitorial radius, m + atm */
+  double erad = ERAD * 1.0161; /* earth equitorial radius, m + atm */
   double SRAD = 696342000;
 
   double mr;

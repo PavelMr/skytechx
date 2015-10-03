@@ -680,7 +680,7 @@ QString getTempName(const QString &path, const QString &ext)
 {
   QString file;
   QFile f;
-  int i = 0;
+  static int i = 0;
 
   do
   {

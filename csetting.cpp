@@ -154,7 +154,7 @@ void CSetting::setValues()
 
   CStarRenderer sr;
 
-  QDir dir("data/stars/bitmaps/", "*.png");
+  QDir dir("../data/stars/bitmaps/", "*.png");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
   ui->comboBox->clear();
@@ -333,7 +333,7 @@ void CSetting::setValues()
 
   ui->pushButton_53->setColor(set.map.measurePoint.color);
 
-  QDir dir2("data/constellation/", "*.lin");
+  QDir dir2("../data/constellation/", "*.lin");
   dir2.setFilter(QDir::Files);
   QFileInfoList list2 = dir2.entryInfoList();
 
@@ -476,6 +476,9 @@ void CSetting::getAstComList(QTreeWidget* list, QList<urlItem_t>& strList)
   }
 }
 
+// "C:/Users/Pavel/AppData/Local/PMR/SkytechX/data/profiles/default.dat"
+// "C:/Users/Pavel/AppData/Local/PMR/SkytechX/data/profiles/default.dat"
+
 void CSetting::fillAstComList(QTreeWidget* list, const QList<urlItem_t>& strList)
 {
   list->clear();
@@ -607,11 +610,13 @@ void CSetting::apply()
   g_skSet.map.background.bStatic = ui->checkBox_4->isChecked();
   g_skSet.map.background.useAltAzmOnly = ui->checkBox_5->isChecked();
 
+  qDebug() << "config" << g_skSet.map.background.staticColor;
+
   //constellations
   g_skSet.map.constellation.linesFile = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toString();
   g_skSet.map.constellation.language = ui->cb_con_names->currentData().toString();
   constLinesLoad(g_skSet.map.constellation.linesFile);
-  loadConstelNonLatinNames("data/constellation/" + g_skSet.map.constellation.language);
+  loadConstelNonLatinNames("../data/constellation/" + g_skSet.map.constellation.language);
 
   qDebug() << g_skSet.map.constellation.language;
 
@@ -1601,7 +1606,7 @@ void CSetting::applyGamepad()
 
 void CSetting::fillConstNames()
 {
-  QDir dir("data/constellation/", "*.dat");
+  QDir dir("../data/constellation/", "*.dat");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 

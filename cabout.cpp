@@ -44,7 +44,7 @@ CAbout::CAbout(QWidget *parent) :
 
 
 
-  ui->textEdit_license->setText(readAllFile("data/gnu/gnu2.txt"));
+  ui->textEdit_license->setText(readAllFile("../data/gnu/gnu2.txt"));
 
   ui->textEdit_source->append(tr("<b>Main DSO catalogue</b><br>"));
   int i = 0;

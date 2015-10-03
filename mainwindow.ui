@@ -850,7 +850,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -861,7 +861,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>341</height>
+          <height>183</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1536,7 +1536,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>257</width>
+          <width>397</width>
           <height>520</height>
          </rect>
         </property>
@@ -1635,6 +1635,26 @@
            </item>
            <item>
             <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_15">
+             <property name="text">
+              <string>Double click show event information</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_7">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -1802,8 +1822,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>341</height>
+          <width>190</width>
+          <height>266</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2239,7 +2259,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>341</height>
+          <height>327</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2429,7 +2449,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>237</width>
+          <width>157</width>
           <height>431</height>
          </rect>
         </property>
@@ -2532,8 +2552,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>341</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2680,8 +2700,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
-          <height>341</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">

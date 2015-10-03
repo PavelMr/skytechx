@@ -9,7 +9,7 @@
 #include "skcore.h"
 #include "cgscreg.h"
 
-#define FN_GSCMAINFILE  "data/stars/gsc/gsc12.dat"
+#define FN_GSCMAINFILE  "../data/stars/gsc/gsc12.dat"
 
 #ifndef BYTE
 #define BYTE unsigned char

@@ -141,7 +141,7 @@ static void constLoadBoundaries(void)
 /////////////////////////////////////
 {
   // read constelation boundaries ra/dec
-  SkFile f("data/constellation/constel.def");
+  SkFile f("../data/constellation/constel.def");
   if (f.open(SkFile::ReadOnly))
   {
     int tmp;
@@ -160,7 +160,7 @@ static void constLoadNames(void)
 ////////////////////////////////
 {
   // read constelation names
-  SkFile f("data/constellation/constel.nam");
+  SkFile f("../data/constellation/constel.nam");
   if (f.open(SkFile::ReadOnly | SkFile::Text))
   {
     int         i = 0;

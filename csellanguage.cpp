@@ -13,7 +13,7 @@ CSelLanguage::CSelLanguage(QWidget *parent) :
   QSettings settings;
   QString current = settings.value("language").toString();
 
-  QDir dir("languages/", "*.qm");
+  QDir dir("../languages/", "*.qm");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 

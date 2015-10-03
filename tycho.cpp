@@ -69,7 +69,7 @@ QString CTycho::getGreekChar(int i)
 bool CTycho::load()
 ///////////////////
 {
-  SkFile f("data/stars/tycho/tycho2.dat");
+  SkFile f("../data/stars/tycho/tycho2.dat");
 
   if (!f.open(SkFile::ReadOnly))
   {

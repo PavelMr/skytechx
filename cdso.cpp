@@ -58,7 +58,7 @@ static int dsoSort(const void *elem1, const void *elem2)
 void CDso::load()
 /////////////////
 {
-  SkFile pf("data/dso/dso.dat");
+  SkFile pf("../data/dso/dso.dat");
 
   if (!pf.open(SkFile::ReadOnly))
     return;
@@ -416,7 +416,7 @@ void CDso::loadShapes()
 ///////////////////////
 {
   int idx = 0;
-  QDir dir("data/dso/shapes/", "*.dat");
+  QDir dir("../data/dso/shapes/", "*.dat");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();
 

@@ -63,18 +63,18 @@ void CPlanetRenderer::load()
   m_ring[2] = createRing(30);
   m_ring[3] = createRing(40);
 
-  m_bmp[PT_SUN] = new QImage("data/planets/sun.jpg");
-  m_bmp[PT_MERCURY] = new QImage("data/planets/mercury.jpg");
-  m_bmp[PT_VENUS] = new QImage("data/planets/venus.jpg");
-  m_bmp[PT_MARS] = new QImage("data/planets/mars.jpg");
-  m_bmp[PT_JUPITER] = new QImage("data/planets/jupiter.jpg");
-  m_bmp[PT_SATURN] = new QImage("data/planets/saturn.jpg");
-  m_bmp[PT_URANUS] = new QImage("data/planets/uranus.jpg");
-  m_bmp[PT_NEPTUNE] = new QImage("data/planets/neptune.jpg");
-  m_bmp[PT_MOON] = new QImage("data/planets/moon8k.jpg");
+  m_bmp[PT_SUN] = new QImage("../data/planets/sun.jpg");
+  m_bmp[PT_MERCURY] = new QImage("../data/planets/mercury.jpg");
+  m_bmp[PT_VENUS] = new QImage("../data/planets/venus.jpg");
+  m_bmp[PT_MARS] = new QImage("../data/planets/mars.jpg");
+  m_bmp[PT_JUPITER] = new QImage("../data/planets/jupiter.jpg");
+  m_bmp[PT_SATURN] = new QImage("../data/planets/saturn.jpg");
+  m_bmp[PT_URANUS] = new QImage("../data/planets/uranus.jpg");
+  m_bmp[PT_NEPTUNE] = new QImage("../data/planets/neptune.jpg");
+  m_bmp[PT_MOON] = new QImage("../data/planets/moon8k.jpg");
 
-  QImage *satRing_a = new QImage("data/planets/saturn_ring_alpha.jpg");
-  QImage *satRing = new QImage("data/planets/saturn_ring.jpg");
+  QImage *satRing_a = new QImage("../data/planets/saturn_ring_alpha.jpg");
+  QImage *satRing = new QImage("../data/planets/saturn_ring.jpg");
 
   satRing->setAlphaChannel(*satRing_a);
 

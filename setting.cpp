@@ -224,6 +224,10 @@ bool setSave(QString name, setting_t *set)
   // background
   writeVal("map.background.bStatic", set->map.background.bStatic, ds);
   writeVal("map.background.staticColor", set->map.background.staticColor, ds);
+
+  qDebug() << "write" << set->map.background.staticColor;
+  qDebug() << g_skSet.map.constellation.language;
+
   writeVal("map.background.dynamicColor0", set->map.background.dynamicColor[0], ds);
   writeVal("map.background.dynamicColor1", set->map.background.dynamicColor[1], ds);
   writeVal("map.background.dynamicColor2", set->map.background.dynamicColor[2], ds);
@@ -386,7 +390,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.star.namePriority = readVal("map.star.namePriority", false, tMap).toBool();
   set->map.star.useSpectralTp = readVal("map.star.useSpectralTp", true, tMap).toBool();
   set->map.star.starSizeFactor = readVal("map.star.starSizeFactor", -0.5, tMap).toDouble();
-  set->map.starBitmapName = readVal("map.starBitmapName", "data/stars/bitmaps/stars2.png", tMap).toString();
+  set->map.starBitmapName = readVal("map.starBitmapName", "../data/stars/bitmaps/stars2.png", tMap).toString();
 
   // horizon
   set->map.hor.color = readVal("map.hor.color", MRGB(48, 68, 48), tMap).toUInt();
@@ -511,6 +515,9 @@ bool setLoad(QString name, setting_t *set)
   // background
   set->map.background.bStatic = readVal("map.background.bStatic", false, tMap).toBool();
   set->map.background.staticColor = readVal("map.background.staticColor", MRGB(10, 10, 20), tMap).toUInt();
+
+  qDebug() << "read" << set->map.background.staticColor;
+
   set->map.background.dynamicColor[0] = readVal("map.background.dynamicColor0", MRGB(22, 22, 22), tMap).toUInt();
   set->map.background.dynamicColor[1] = readVal("map.background.dynamicColor1", MRGB(62, 64, 80), tMap).toUInt();
   set->map.background.dynamicColor[2] = readVal("map.background.dynamicColor2", MRGB(64, 64, 120), tMap).toUInt();
@@ -529,7 +536,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.constellation.bnd.style = readVal("map.constellation.bnd.style", (int)Qt::DotLine, tMap).toInt();
   set->map.constellation.bnd.width = readVal("map.constellation.bnd.width", 1, tMap).toInt();
 
-  set->map.constellation.linesFile = readVal("map.constellation.linesFile", "data/constellation/default.lin", tMap).toString();
+  set->map.constellation.linesFile = readVal("map.constellation.linesFile", "../data/constellation/default.lin", tMap).toString();
   set->map.constellation.language = readVal("map.constellation.language", "", tMap).toString();
 
   // measure point
@@ -597,7 +604,7 @@ bool setLoad(QString name, setting_t *set)
 
   setCreateFonts();
 
-  if (name.isEmpty())
+  if (name.isEmpty() && !SkFile::exists(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/profiles/default.dat"))
   {
     setSave("default", set);
   }
@@ -760,7 +767,7 @@ void setNightConfig(void)
   skSetTmp = g_skSet;
 
   qssStyle = g_pApp->styleSheet();
-  g_pApp->setStyleSheet(readAllFile("data/styles/night.qss"));
+  g_pApp->setStyleSheet(readAllFile("../data/styles/night.qss"));
 
   for (int i = 0; i < FONT_COUNT; i++)
   {
@@ -770,7 +777,7 @@ void setNightConfig(void)
   // earth shadow
   g_skSet.map.es.color = dred;
 
-  g_skSet.map.starBitmapName = "data/stars/bitmaps/night.png";
+  g_skSet.map.starBitmapName = "../data/stars/bitmaps/night.png";
   cStarRenderer.open(g_skSet.map.starBitmapName);
 
   // horizon
@@ -854,7 +861,7 @@ void setPrintConfig(void)
   // earth shadow
   g_skSet.map.es.color = dred;
 
-  g_skSet.map.starBitmapName = "data/stars/bitmaps/print.png";
+  g_skSet.map.starBitmapName = "../data/stars/bitmaps/print.png";
   g_skSet.map.star.starSizeFactor = 0;
   cStarRenderer.open(g_skSet.map.starBitmapName);
 

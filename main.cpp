@@ -30,7 +30,7 @@ QApplication *g_pApp = NULL;
 QString loadNightStyle(void)
 ////////////////////////////
 {
-  QString str = readAllFile("data/styles/night.qss");
+  QString str = readAllFile("../data/styles/night.qss");
 
   return(str);
 }
@@ -39,7 +39,9 @@ QString loadNightStyle(void)
 QString loadNormalStyle(void)
 /////////////////////////////
 {
-  QString str = readAllFile("data/styles/normal.qss");
+  QString str = readAllFile("../data/styles/normal.qss");
+
+  qDebug() << str;
 
   return(str);
 }
