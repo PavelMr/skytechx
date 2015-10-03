@@ -10,6 +10,7 @@
 #define  ETT_NONE        0
 #define  ETT_HEIGHT      1
 #define  ETT_TIMEZONE    2
+#define  ETT_DST         3
 
 class CEarthTools : public QObject
 {
@@ -20,6 +21,7 @@ public:
   void setCacheFolder(QString path);
   void getHeight(double lon, double lat);
   void getTimeZone(double lon, double lat);
+  void getDST(double lon, double lat);
 
 protected:
   QNetworkAccessManager m_manager;
@@ -28,10 +30,11 @@ protected:
 
   double parseHeight(const QByteArray data, bool &ok);
   double parseTimeZone(const QByteArray data, bool &ok);
-  
+  double parseDST(const QByteArray data, bool &ok);
+
 signals:
   void sigDone(bool ok, double value, int ett);
-  
+
 public slots:
   void slotDownloadFinished(QNetworkReply*reply);
 };

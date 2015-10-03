@@ -87,6 +87,8 @@ private slots:
 
   void on_pushButton_9_clicked();
 
+  void on_pushButton_10_clicked();
+
 private:
   Ui::CWPosSel *ui;
 };

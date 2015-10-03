@@ -6,6 +6,7 @@
 
 QT       += core gui network webkit webkitwidgets xml sql widgets printsupport script
 
+CONFIG   += openssl-linked
 CONFIG   += qxt
 CONFIG   += axcontainer
 CONFIG   += plugin
@@ -20,8 +21,9 @@ Debug:win32-g++   : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
 win32-g++         : LIBS += -lgomp -lpsapi -lwinmm
 
 win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA
-win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
 win32-msvc2013 :  LIBS += winmm.lib
+Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
+Debug:win32-msvc2013   :  QMAKE_LFLAGS += /INCREMENTAL:NO
 
 TARGET = skytech_x
 TEMPLATE = app

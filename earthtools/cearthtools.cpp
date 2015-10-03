@@ -60,7 +60,7 @@ void CEarthTools::setCacheFolder(QString path)
 void CEarthTools::getHeight(double lon, double lat)
 ///////////////////////////////////////////////////
 {
-  QUrl qurl("http://www.earthtools.org/height/" + QString::number(lat) + "/" + QString::number(lon));
+  QUrl qurl("https://maps.googleapis.com/maps/api/elevation/xml?locations=" + QString::number(lat) + "," + QString::number(lon));
 
   m_downloadType = ETT_HEIGHT;
 
@@ -85,9 +85,15 @@ void CEarthTools::getHeight(double lon, double lat)
     }
   }
 
-  QNetworkRequest request(qurl);
+  QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+  config.setProtocol(QSsl::TlsV1_1);
+
+  QNetworkRequest request;
+  request.setSslConfiguration(config);
+  request.setUrl(qurl);
 
   m_manager.get(request);
+
 }
 
 
@@ -95,7 +101,8 @@ void CEarthTools::getHeight(double lon, double lat)
 void CEarthTools::getTimeZone(double lon, double lat)
 /////////////////////////////////////////////////////
 {
-  QUrl qurl("http://www.earthtools.org/timezone/" + QString::number(lat) + "/" + QString::number(lon));
+  QUrl qurl("https://maps.googleapis.com/maps/api/timezone/xml?location=" +
+            QString::number(lat) + "," + QString::number(lon) + "&timestamp=" + QString::number(QDateTime::currentMSecsSinceEpoch() / 1000));
 
   m_downloadType = ETT_TIMEZONE;
 
@@ -120,7 +127,50 @@ void CEarthTools::getTimeZone(double lon, double lat)
     }
   }
 
-  QNetworkRequest request(qurl);
+  QSslConfiguration config(QSslConfiguration::defaultConfiguration());
+  config.setProtocol(QSsl::SslV3);
+
+  QNetworkRequest request;
+  request.setSslConfiguration(config);
+  request.setUrl(qurl);
+
+  m_manager.get(request);
+}
+
+void CEarthTools::getDST(double lon, double lat)
+{
+  QUrl qurl("https://maps.googleapis.com/maps/api/timezone/xml?location=" +
+            QString::number(lat) + "," + QString::number(lon) + "&timestamp=" + QString::number(QDateTime::currentMSecsSinceEpoch() / 1000));
+
+  m_downloadType = ETT_DST;
+
+  SkFile f(m_cacheFolder);
+  if (f.open(SkFile::ReadOnly | SkFile::Text))
+  {
+    while (!f.atEnd())
+    {
+      QString line = f.readLine();
+      QStringList list;
+
+      list = line.split("|");
+
+      if (list.count() == 4)
+      {
+        if (!qurl.toString().compare(list.at(1)) && list.at(0).toInt() == ETT_DST)
+        {
+          emit sigDone(true, list.at(2).toDouble(), ETT_DST);
+          return;
+        }
+      }
+    }
+  }
+
+  QSslConfiguration config(QSslConfiguration::defaultConfiguration());
+  config.setProtocol(QSsl::SslV3);
+
+  QNetworkRequest request;
+  request.setSslConfiguration(config);
+  request.setUrl(qurl);
 
   m_manager.get(request);
 }
@@ -147,6 +197,16 @@ double CEarthTools::parseTimeZone(const QByteArray data, bool &ok)
   return(val);
 }
 
+/////////////////////////////////////////////////////////////
+double CEarthTools::parseDST(const QByteArray data, bool &ok)
+/////////////////////////////////////////////////////////////
+{
+  CParse p;
+  double val = p.parse(ok, data, ETT_DST);
+
+  return(val);
+}
+
 ////////////////////////////////////////////////////////////
 void CEarthTools::slotDownloadFinished(QNetworkReply *reply)
 ////////////////////////////////////////////////////////////
@@ -169,7 +229,13 @@ void CEarthTools::slotDownloadFinished(QNetworkReply *reply)
      case ETT_TIMEZONE:
         val = parseTimeZone(xml, ok);
         break;
+
+     case ETT_DST:
+       val = parseDST(xml, ok);
+       break;
     }
+
+    qDebug() << xml;
 
     if (ok)
     {

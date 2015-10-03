@@ -244,7 +244,7 @@
                <item row="0" column="2">
                 <widget class="QPushButton" name="pushButton_6">
                  <property name="toolTip">
-                  <string>Get from 'www.earthtools.org'</string>
+                  <string>Get from 'Google API'</string>
                  </property>
                  <property name="text">
                   <string>Get...</string>
@@ -343,7 +343,7 @@
           <item row="1" column="0">
            <widget class="QPushButton" name="pushButton_7">
             <property name="toolTip">
-             <string>Get from 'www.earthtools.org'</string>
+             <string>Get from 'Google API'</string>
             </property>
             <property name="text">
              <string>Get...</string>
@@ -417,7 +417,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="0" column="2">
            <spacer name="horizontalSpacer_6">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -442,6 +442,16 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_10">
+            <property name="toolTip">
+             <string>Get from 'Google API' (Current DST)</string>
+            </property>
+            <property name="text">
+             <string>Get...</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

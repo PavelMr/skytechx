@@ -38,7 +38,7 @@ bool CParse::startElement(const QString &, const QString &, const QString &qName
 {
   if (m_type == ETT_HEIGHT)
   {
-    if (!qName.compare("meters", Qt::CaseInsensitive))
+    if (!qName.compare("elevation", Qt::CaseInsensitive))
     {
       m_block = true;
       m_ok = true;
@@ -47,7 +47,16 @@ bool CParse::startElement(const QString &, const QString &, const QString &qName
   else
   if (m_type == ETT_TIMEZONE)
   {
-    if (!qName.compare("offset", Qt::CaseInsensitive))
+    if (!qName.compare("raw_offset", Qt::CaseInsensitive))
+    {
+      m_block = true;
+      m_ok = true;
+    }
+  }
+  else
+  if (m_type == ETT_DST)
+  {
+    if (!qName.compare("dst_offset", Qt::CaseInsensitive))
     {
       m_block = true;
       m_ok = true;

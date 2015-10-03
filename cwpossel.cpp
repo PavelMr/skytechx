@@ -589,7 +589,7 @@ void CWPosSel::slotETDone(bool ok, double val, int type)
   {
     if (ok)
     {
-      ui->doubleSpinBox_3->setValue(fabs(val));
+      ui->doubleSpinBox_3->setValue(fabs(val) / 3600.0);
       if (val < 0)
         ui->radioButton_5->setChecked(true);
       else
@@ -598,6 +598,18 @@ void CWPosSel::slotETDone(bool ok, double val, int type)
     else
     {
       msgBoxError(this, tr("Cannot get time zone!!!"));
+    }
+  }
+  else
+  if (type == ETT_DST)
+  {
+    if (ok)
+    {
+      ui->doubleSpinBox_4->setValue(fabs(val) / 3600.0);
+    }
+    else
+    {
+      msgBoxError(this, tr("Cannot get DST!!!"));
     }
   }
 }
@@ -636,4 +648,16 @@ void CWPosSel::slotSelChange(QModelIndex &index)
 void CWPosSel::on_pushButton_9_clicked()
 {
   slotDeleteItem();
+}
+
+void CWPosSel::on_pushButton_10_clicked()
+{
+  setDisabled(true);
+  setCursor(Qt::WaitCursor);
+
+  location_t loc;
+
+  getData(&loc);
+
+  m_earthTools.getDST(loc.lon, loc.lat);
 }
