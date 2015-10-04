@@ -19,6 +19,8 @@ public:
   ~CRestoreTM();
 
   double m_jd;
+  double m_ra;
+  double m_dec;
 
 protected:
   void changeEvent(QEvent *e);

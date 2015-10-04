@@ -3593,7 +3593,15 @@ void MainWindow::on_actionAsteroid_triggered()
 void MainWindow::on_actionSave_time_mark_triggered()
 ////////////////////////////////////////////////////
 {
-  CSaveTM dlg(this, ui->widget->m_mapView.jd);
+  radec_t rd;
+  double ra, dec;
+
+  trfConvScrPtToXY(ui->widget->width() / 2.0, ui->widget->height() / 2.0, ra, dec);
+
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  CSaveTM dlg(this, ui->widget->m_mapView.jd, rd);
 
   dlg.exec();
 }
@@ -3614,6 +3622,10 @@ void MainWindow::on_actionRestore_time_mark_triggered()
   if (dlg.exec() == DL_OK)
   {
     ui->widget->m_mapView.jd = dlg.m_jd;
+    if (dlg.m_ra > CM_UNDEF)
+    {
+      ui->widget->centerMap(dlg.m_ra, dlg.m_dec);
+    }
     ui->widget->repaintMap();
   }
 }

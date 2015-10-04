@@ -5,12 +5,14 @@ typedef struct
 {
   double  jd;
   QString desc;
+  double  ra;
+  double  dec;
 } item_t;
 
 class CTimeMarkItem : public QStandardItem
 {
 protected:
-  bool	operator< ( const QStandardItem & other ) const
+  bool operator< ( const QStandardItem & other ) const
   {
     item_t *i1 = (item_t *)data().toInt();
     item_t *i2 = (item_t *)other.data().toInt();
@@ -18,10 +20,19 @@ protected:
     double jd1 = i1->jd;
     double jd2 = i2->jd;
 
-    if (jd1 > jd2)
-      return(true);
+    return (jd1 < jd2);
+  }
+};
 
-    return(false);
+class CTimeMarkItemRD : public QStandardItem
+{
+protected:
+  bool operator< ( const QStandardItem & other ) const
+  {
+    double a = data().toDouble();
+    double b = other.data().toDouble();
+
+    return a < b;
   }
 };
 
@@ -32,10 +43,12 @@ CRestoreTM::CRestoreTM(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  QStandardItemModel *m = new QStandardItemModel(0, 2);
+  QStandardItemModel *m = new QStandardItemModel(0, 4);
 
   m->setHeaderData(0, Qt::Horizontal, QObject::tr("Date/Time"));
   m->setHeaderData(1, Qt::Horizontal, QObject::tr("Desc."));
+  m->setHeaderData(2, Qt::Horizontal, QObject::tr("R.A."));
+  m->setHeaderData(3, Qt::Horizontal, QObject::tr("Dec."));
 
   ui->treeView->sortByColumn(0);
   ui->treeView->setSortingEnabled(true);
@@ -53,7 +66,7 @@ CRestoreTM::CRestoreTM(QWidget *parent) :
       QString line = s.readLine();
 
       list = line.split(';');
-      if (list.count() == 2)
+      if (list.count() == 2 || list.count() == 4)
       {
         item_t *i = new item_t;
 
@@ -62,13 +75,38 @@ CRestoreTM::CRestoreTM(QWidget *parent) :
 
         CTimeMarkItem *i0 = new CTimeMarkItem;
         QStandardItem *i1 = new QStandardItem;
+        CTimeMarkItemRD *i2 = new CTimeMarkItemRD;
+        CTimeMarkItemRD *i3 = new CTimeMarkItemRD;
 
         i0->setText(getStrDate(i->jd, 0) + " " + getStrTime(i->jd, 0));
         i0->setData((int)i);
         i1->setText(i->desc);
 
+        if (list.count() == 4)
+        {
+          i->ra = D2R(list.at(2).toDouble());
+          i->dec = D2R(list.at(3).toDouble());
+
+          i2->setText(getStrRA(i->ra));
+          i2->setData(i->ra);
+          i3->setText(getStrDeg(i->dec));
+          i3->setData(i->dec);
+        }
+        else
+        {
+          i->ra = CM_UNDEF;
+          i->dec = CM_UNDEF;
+
+          i2->setText(tr("N/A"));
+          i2->setData(CM_UNDEF);
+          i3->setText(tr("N/A"));
+          i3->setData(CM_UNDEF);
+        }
+
         m->setItem(row, 0, i0);
         m->setItem(row, 1, i1);
+        m->setItem(row, 2, i2);
+        m->setItem(row, 3, i3);
 
         row++;
       }
@@ -129,6 +167,8 @@ void CRestoreTM::on_pushButton_2_clicked()
   item_t *e = (item_t *)item->data().toInt();
 
   m_jd = e->jd;
+  m_ra = e->ra;
+  m_dec = e->dec;
 
   SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/timemarks/timemarks.dat");
   QTextStream s(&f);
@@ -140,7 +180,14 @@ void CRestoreTM::on_pushButton_2_clicked()
       QStandardItem *item = model->item(i, 0);
       item_t *e = (item_t *)item->data().toInt();
 
-      s << e->desc << ";" << QString::number(e->jd, 'f', 8) << "\n";
+      s << e->desc << ";" << QString::number(e->jd, 'f', 8);
+
+      if (e->ra > CM_UNDEF)
+      {
+        s << ";" << R2D(e->ra) << ";" << R2D(e->dec);
+      }
+
+      s << "\n";
 
       delete e;
     }
