@@ -85,7 +85,13 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
       {
         if ((star.mag >= g_skSet.map.ucac4.fromMag))
         {
-          trfRaDecToPointNoCorrect(&star.rd, &pt);
+          radec_t rd;
+
+          double yr = (mapView->jd - JD2000) / 356.25;
+          rd.Ra = star.rd.Ra + (D2R(star.rdPm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
+          rd.Dec = star.rd.Dec + D2R(star.rdPm[1] / 10000.0 / 3600.0) * yr;
+
+          trfRaDecToPointNoCorrect(&rd, &pt);
           if (trfProjectPoint(&pt))
           {
             int r = cStarRenderer.renderStar(&pt, 0, star.mag, pPainter);
@@ -240,6 +246,8 @@ static void smRenderGSCStars(mapView_t *mapView, CSkPainter *pPainter, int regio
 static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
+
+  //return;
   tychoRegion2_t *tycReg = cTYC.getRegion(region);
 
   for (int j = 0; j < tycReg->region.numStars; j++)

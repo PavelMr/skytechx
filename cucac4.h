@@ -43,6 +43,7 @@ typedef struct
 typedef struct
 {
   radec_t        rd;
+  short          rdPm[2]; // mas/year
   float          mag;
   unsigned short zone;
   unsigned int   number;

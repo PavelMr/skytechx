@@ -43,6 +43,8 @@ bool CUCAC4::searchStar(int zone, int number, ucac4Star_t *star)
 
   star->rd.Ra = D2R(ucacStar.ra / 3600. / 1000.0);
   star->rd.Dec = D2R((ucacStar.spd / 3600. / 1000.0) - 90.0);
+  star->rdPm[0] = ucacStar.pm_ra;
+  star->rdPm[1] = ucacStar.pm_dec;
   star->mag = ucacStar.mag2 / 1000.0;
   star->number = number;
   star->zone = zone;
@@ -237,6 +239,8 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
         {
           skStar.rd.Ra = D2R(star.ra / 3600. / 1000.0);
           skStar.rd.Dec = D2R((star.spd / 3600. / 1000.0) - 90.0);
+          skStar.rdPm[0] = star.pm_ra;
+          skStar.rdPm[1] = star.pm_dec;
           skStar.mag = star.mag2 / 1000.0;
           skStar.number = ucac4Index;
           skStar.zone = z;
