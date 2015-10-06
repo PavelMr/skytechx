@@ -5,6 +5,8 @@
 
 #include <QString>
 
+#define UCAC4_NO_PM        32767
+
 #pragma pack(1)
 
 typedef struct

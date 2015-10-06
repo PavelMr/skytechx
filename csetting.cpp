@@ -98,6 +98,7 @@ CSetting::CSetting(QWidget *parent) :
   connect(ui->treeWidgetAsteroids, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
   connect(ui->treeWidgetSun, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
   connect(ui->treeWidgetDSS, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
+  connect(ui->treeWidgetSat, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
 
   ui->listWidget_2->addItem(tr("Stars"));
   ui->listWidget_2->addItem(tr("Stars magnitude"));
@@ -151,6 +152,9 @@ void CSetting::setValues()
   ui->pushButton_6->setFontColor(setFonts[FONT_STAR_FLAMS], set.fonst[FONT_STAR_FLAMS].color);
 
   ui->doubleSpinBox_30->setValue(set.map.star.starSizeFactor);
+
+  ui->cb_properMotion->setChecked(set.map.star.showProperMotion);
+  ui->sb_pmYears->setValue(set.map.star.properMotionYearVec);
 
   CStarRenderer sr;
 
@@ -458,6 +462,9 @@ void CSetting::setValues()
 
   CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &strList);
   fillAstComList(ui->treeWidgetSun, strList);
+
+  CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url", &strList);
+  fillAstComList(ui->treeWidgetSat, strList);
 }
 
 void CSetting::getAstComList(QTreeWidget* list, QList<urlItem_t>& strList)
@@ -521,6 +528,9 @@ void CSetting::apply()
   getAstComList(ui->treeWidgetSun, strList);
   CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &strList);
 
+  getAstComList(ui->treeWidgetSat, strList);
+  CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url", &strList);
+
   // stars
   g_skSet.map.star.propNamesFromFov = D2R(ui->doubleSpinBox->value());
   g_skSet.map.star.bayerFromFov = D2R(ui->doubleSpinBox_2->value());
@@ -534,6 +544,9 @@ void CSetting::apply()
 
   g_skSet.map.starBitmapName = ui->comboBox->itemData(ui->comboBox->currentIndex()).toString();
   cStarRenderer.open(g_skSet.map.starBitmapName);
+
+  g_skSet.map.star.showProperMotion = ui->cb_properMotion->isChecked();
+  g_skSet.map.star.properMotionYearVec = ui->sb_pmYears->value();
 
   // star mag.
   g_skSet.map.starRange[0].mag = ui->horizontalSlider->value() / 10.;
@@ -1386,6 +1399,10 @@ void CSetting::onTreeWidgetCustomContextMenuRequested(const QPoint &pos)
       widget = ui->treeWidgetSun;
       break;
 
+    case 4:
+      widget = ui->treeWidgetSat;
+      break;
+
     default:
       Q_ASSERT(false);
   }
@@ -1827,4 +1844,16 @@ void CSetting::on_pushButton_60_clicked()
 
   dlg.exec();
   //ui->widget->repaintMap();
+}
+
+void CSetting::on_pushButton_61_clicked()
+{
+  if (resetQuestion())
+  {
+    copyFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/default/art_sat.url",
+             QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url");
+    QList<urlItem_t> strList;
+    CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url", &strList);
+    fillAstComList(ui->treeWidgetSat, strList);
+  }
 }

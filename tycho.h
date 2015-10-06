@@ -9,7 +9,7 @@
 #define TYC_MAG_TO_SHORT(m)      (((m) * 1000) + 10000)
 #define TYC_SHORT_TO_MAG(m)      (((m) - 10000) / (float)1000.0)
 
-#pragma pack(4)
+#pragma pack(1)
 
 typedef struct
 {
@@ -46,7 +46,9 @@ typedef struct
 typedef struct
 {
   short     tyc1, tyc2;
-  short     tyc3, dummy;
+  short     tyc3;
+  short     pmRa;
+  short     pmDec;
   long      supIndex;        // bayer flam. etc.  .. -1 no supp.
   short     BTmag, VTmag;
   radec_t   rd;

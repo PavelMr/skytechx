@@ -79,6 +79,7 @@
 #include "cbinocular.h"
 #include "cdso.h"
 #include "cinsertfinder.h"
+#include "dssheaderdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -798,19 +799,25 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
 
   QModelIndex index = ui->treeView->indexAt(pos);
   QStandardItemModel *m = (QStandardItemModel *)ui->treeView->model();
+  QAction *ren;
+  QAction *info;
 
   if (index.isValid())
   {
-    QAction *ren = new QAction(tr("Rename ") + index.model()->index(index.row(), 0).data().toString(), this);
+    ren = new QAction(tr("Rename ") + index.model()->index(index.row(), 0).data().toString(), this);
     ren->setData(index);
     actions.append(ren);
+
+    info = new QAction(tr("Show FITS header"), this);
+    info->setData(index);
+    actions.append(info);
   }
 
   if (actions.count() > 0)
   {
     QAction *selected = QMenu::exec(actions, ui->treeView->mapToGlobal(pos));
 
-    if (selected)
+    if (selected == ren)
     {
       QModelIndex index = selected->data().toModelIndex();
 
@@ -839,6 +846,17 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
           msgBoxError(this, tr("Cannot rename a file!!!"));
         }
       }
+    }
+    else
+    if (selected == info)
+    {
+      int index = getCurDSS();
+
+      CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+
+      DSSHeaderDialog  dlg(this, f->getHeader());
+
+      dlg.exec();
     }
   }
   ui->widget->repaintMap();

@@ -111,6 +111,8 @@ typedef struct
   bool   useSpectralTp;
   double flamsFromFov;
   double starSizeFactor;
+  double properMotionYearVec;
+  bool   showProperMotion;
 } setStar_t;
 
 typedef struct

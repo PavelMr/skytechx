@@ -225,7 +225,9 @@ SOURCES += main.cpp\
     cbinocularedit.cpp \
     skmapcontrol.cpp \
     cinsertfinder.cpp \
-    cfinderedit.cpp
+    cfinderedit.cpp \
+    dssheaderdialog.cpp \
+    cdownloadfile.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -411,7 +413,9 @@ HEADERS  += mainwindow.h \
     cbinocularedit.h \
     skmapcontrol.h \
     cinsertfinder.h \
-    cfinderedit.h
+    cfinderedit.h \
+    dssheaderdialog.h \
+    cdownloadfile.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -493,7 +497,9 @@ FORMS    += mainwindow.ui \
     cbinocular.ui \
     cbinocularedit.ui \
     cinsertfinder.ui \
-    cfinderedit.ui
+    cfinderedit.ui \
+    dssheaderdialog.ui \
+    cdownloadfile.ui
 
 
 RESOURCES += \

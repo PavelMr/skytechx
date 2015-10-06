@@ -33,6 +33,8 @@ private slots:
 
   void slotSelChange(QModelIndex &index);
 
+  void on_pushButton_6_clicked();
+
 private:
   Ui::CSatelliteDlg *ui;
   void fillList();

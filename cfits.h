@@ -36,6 +36,7 @@ public:
     QString getValue(QString name, QString defVal = "");
     QImage *getImage(void);
     QImage *getOriginalImage();
+    QMap <QString, QString> getHeader() {  return tFitsMap; }
     double  m_ra;
     double  m_dec;
     radec_t m_cor[4];

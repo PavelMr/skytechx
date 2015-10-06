@@ -85,15 +85,28 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
       {
         if ((star.mag >= g_skSet.map.ucac4.fromMag))
         {
-          radec_t rd;
-
-          double yr = (mapView->jd - JD2000) / 356.25;
-          rd.Ra = star.rd.Ra + (D2R(star.rdPm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
-          rd.Dec = star.rd.Dec + D2R(star.rdPm[1] / 10000.0 / 3600.0) * yr;
-
-          trfRaDecToPointNoCorrect(&rd, &pt);
+          trfRaDecToPointNoCorrect(&star.rd, &pt);
           if (trfProjectPoint(&pt))
           {
+            if (g_skSet.map.star.showProperMotion)
+            {
+              radec_t rd;
+              SKPOINT p1;
+              SKPOINT p2;
+
+              double yr = g_skSet.map.star.properMotionYearVec;
+              rd.Ra = star.rd.Ra + (D2R(star.rdPm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
+              rd.Dec = star.rd.Dec + D2R(star.rdPm[1] / 10000.0 / 3600.0) * yr;
+
+              trfRaDecToPointNoCorrect(&star.rd, &p1);
+              trfRaDecToPointNoCorrect(&rd, &p2);
+              if (trfProjectLine(&p1, &p2))
+              {
+                pPainter->setPen(g_skSet.map.drawing.color);
+                pPainter->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+              }
+            }
+
             int r = cStarRenderer.renderStar(&pt, 0, star.mag, pPainter);
             addMapObj(pt.sx, pt.sy, MO_UCAC4, MO_CIRCLE, r + 4, region, i, star.mag);
           }
@@ -246,8 +259,6 @@ static void smRenderGSCStars(mapView_t *mapView, CSkPainter *pPainter, int regio
 static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
-
-  //return;
   tychoRegion2_t *tycReg = cTYC.getRegion(region);
 
   for (int j = 0; j < tycReg->region.numStars; j++)
@@ -290,6 +301,25 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
       else
       {
         sp = 0;
+      }
+
+      if (g_skSet.map.star.showProperMotion)
+      {
+        radec_t rd;
+        SKPOINT p1;
+        SKPOINT p2;
+
+        double yr = g_skSet.map.star.properMotionYearVec;
+        rd.Ra = s->rd.Ra + (D2R(s->pmRa / 1000.0 / 3600.0) * yr * cos(s->rd.Dec));
+        rd.Dec = s->rd.Dec + D2R(s->pmDec / 1000.0 / 3600.0) * yr;
+
+        trfRaDecToPointNoCorrect(&s->rd, &p1);
+        trfRaDecToPointNoCorrect(&rd, &p2);
+        if (trfProjectLine(&p1, &p2))
+        {
+          pPainter->setPen(g_skSet.map.drawing.color);
+          pPainter->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+        }
       }
 
       int r = 3 + cStarRenderer.renderStar(&pt, sp, mag, pPainter);
@@ -336,11 +366,6 @@ static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
 /////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt[2];
-
-  if (region != 584)
-  {
-    return;
-  }
 
   gscRegion_t *reg = cGSCReg.getRegion(region);
 

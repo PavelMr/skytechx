@@ -272,7 +272,7 @@ static void constLoadBoundLines(void)
 /////////////////////////////////////
 {
   // read constellation boundaries
-  SkFile f("data\\constellation\\constel.bnd");
+  SkFile f("../data/constellation/constel.bnd");
   if (f.open(SkFile::ReadOnly))
   {
     f.read((char *)&numConstelNBnd, sizeof(qint32));

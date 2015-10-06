@@ -3,6 +3,7 @@
 #include "mapobj.h"
 #include "cobjtracking.h"
 #include "mainwindow.h"
+#include "cdownloadfile.h"
 
 #include "skcore.h"
 
@@ -252,4 +253,40 @@ void CSatelliteDlg::slotSelChange(QModelIndex &index)
 {
   ui->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
   ui->listView->scrollTo(index);
+}
+
+void CSatelliteDlg::on_pushButton_6_clicked()
+{
+  if (sgp4.count() != 0)
+  {
+    if (msgBoxQuest(this, m_cSaveQuest) == QMessageBox::Yes)
+    {
+      if (!save(curSatelliteCatName))
+      {
+        return;
+      }
+    }
+  }
+
+  deleteTracking(MO_SATELLITE);
+  releaseHoldObject(MO_SATELLITE);
+  pcMainWnd->removeQuickInfo(MO_SATELLITE);
+
+  curSatelliteCatName = "";
+  sgp4.removeAll();
+  fillList();
+
+  CDownloadFile dlg(this, QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url");
+
+  if (dlg.exec() == DL_OK)
+  {
+    if (dlg.m_filePath.isEmpty())
+    {
+      return;
+    }
+
+    sgp4.loadTLEData(dlg.m_filePath);
+    curSatelliteCatName = dlg.m_filePath;
+    fillList();
+  }
 }
