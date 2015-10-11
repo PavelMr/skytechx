@@ -425,7 +425,7 @@ bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *
   ast->setParam(view);
   double r;
   r = getRTSRaDecFromPtr(&rd, PT_SUN, MO_PLANET, jd);
-  if (!center) r = 0;
+  if (center) r = 0;
   ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt, r);
 
   cnt = 0;
@@ -434,7 +434,7 @@ bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *
     view->jd = jd;
     ast->setParam(view);
     r = getRTSRaDecFromPtr(&rd, PT_SUN, MO_PLANET, jd);
-    if (!center) r = 0;
+    if (center) r = 0;
     ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
     if ((alt > atAlt && lAlt < atAlt) || (alt < atAlt && lAlt > atAlt))
     {
