@@ -198,6 +198,7 @@ CMapView::CMapView(QWidget *parent) :
 
   m_bCustomTele = false;
 
+  m_zoomLens = false;
   m_bInit = false;
 }
 
@@ -711,6 +712,13 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
 {
   double mul = 1;
 
+  if (key == Qt::Key_Z)
+  {
+    m_zoomLens = true;
+    repaintMap();
+    return;
+  }
+
   if (QApplication::keyboardModifiers() & Qt::ShiftModifier)
   {
     mul = 0.1;
@@ -990,9 +998,16 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
   tryShowToolTip(m_lastMousePos, key == Qt::Key_Control);
 }
 
-void CMapView::keyReleaseEvent(int key, Qt::KeyboardModifiers modf)
+void CMapView::keyReleaseEvent(int key, Qt::KeyboardModifiers)
 {
   tryShowToolTip(m_lastMousePos, false);
+
+  if (key == Qt::Key_Z)
+  {
+    m_zoomLens = false;
+    repaintMap();
+    return;
+  }
 }
 
 ////////////////////////////
@@ -1755,6 +1770,30 @@ void CMapView::paintEvent(QPaintEvent *)
   }
 
   p.drawImage(0, 0, *pBmp);
+
+  if (m_zoomLens)
+  {
+    double scale = 3;
+    int radius = 150;
+    QPoint pos = mapFromGlobal(cursor().pos());
+    QRect rect = QRect(pos.x() - radius, pos.y() - radius, radius * 2, radius * 2);
+
+    QPainterPath path;
+
+    path.addEllipse(rect);
+
+    p.setClipPath(path);
+
+    p.drawImage(rect,
+                *pBmp, QRect(pos.x() - radius / scale,
+                             pos.y() - radius / scale,
+                             2 * radius / scale, 2 * radius / scale), Qt::OrderedDither);
+    p.setClipping(false);
+    p.setBrush(Qt::NoBrush);
+    p.setPen(QPen(QColor(g_skSet.map.drawing.color), 3));
+    p.drawEllipse(rect);
+  }
+
   g_cDrawing.setView(&m_mapView);
 
   ofiItem_t *info = pcMainWnd->getQuickInfo();

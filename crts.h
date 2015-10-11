@@ -50,7 +50,7 @@ public:
     void calcTwilight(daylight_t *rts, mapView_t *view);
 
 protected:
-    bool calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool bSwap = false);
+    bool calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool center);
     bool isNotRTS(double dec, rts_t *rts, const mapView_t *view);
   double getRTSRaDecFromPtr(radec_t *rd, int ptr, int type, double jd);
 

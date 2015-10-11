@@ -147,6 +147,7 @@ protected:
   double    m_lastDsoMag;
   bool      m_magLock;
 
+  bool      m_zoomLens;
   bool      m_bClick;
   bool      m_drawing;
   bool      m_bZoomByMouse;

@@ -376,17 +376,17 @@ void CRts::calcTwilight(daylight_t *rts, mapView_t *view)
 
   memset(rts, 0, sizeof(daylight_t));
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-18), &jd, &v))
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-18), &jd, &v, true))
   {
     rts->beginAstroTw = jd;
   }
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-12), &jd, &v))
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-12), &jd, &v, true))
   {
     rts->beginNauticalTw = jd;
   }
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-6), &jd, &v))
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-6), &jd, &v, true))
   {
     rts->beginCivilTw = jd;
   }
@@ -410,9 +410,9 @@ void CRts::calcTwilight(daylight_t *rts, mapView_t *view)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////
-bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool)
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool center)
+//////////////////////////////////////////////////////////////////////////////////////////////////
 {
   double  jd = start;
   double  add = RTS_IADD;
@@ -423,7 +423,9 @@ bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *
 
   view->jd = jd;
   ast->setParam(view);
-  double r = getRTSRaDecFromPtr(&rd, PT_SUN, MO_PLANET, jd);
+  double r;
+  r = getRTSRaDecFromPtr(&rd, PT_SUN, MO_PLANET, jd);
+  if (!center) r = 0;
   ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt, r);
 
   cnt = 0;
@@ -432,6 +434,7 @@ bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *
     view->jd = jd;
     ast->setParam(view);
     r = getRTSRaDecFromPtr(&rd, PT_SUN, MO_PLANET, jd);
+    if (!center) r = 0;
     ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
     if ((alt > atAlt && lAlt < atAlt) || (alt < atAlt && lAlt > atAlt))
     {

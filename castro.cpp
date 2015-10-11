@@ -797,6 +797,15 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
     {
       solveSun(orbit);
 
+      orbit->sRectJ2000[0] = data[3];
+      orbit->sRectJ2000[1] = data[4];
+      orbit->sRectJ2000[2] = data[5];
+
+      if (bSunCopy)
+      {
+        return;
+      }
+
       lt = orbit->light;
 
       de404(planet, m_deltaT + m_jd - lt, data);
