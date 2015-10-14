@@ -1976,8 +1976,16 @@ void MainWindow::on_actionExport_map_to_image_triggered()
 
   save.getSize(w, h, q);
 
-  img->scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).save(name, qPrintable(fi.suffix()), q);
+  QImage newImage = img->scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
+  if (!newImage.isNull())
+  {
+    newImage.save(name, qPrintable(fi.suffix()), q);
+  }
+  else
+  {
+    msgBoxError(this, tr("Cannot create image!"));
+  }
 }
 
 ///////////////////////////////////////////

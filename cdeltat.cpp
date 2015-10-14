@@ -13,7 +13,7 @@ CDeltaT::CDeltaT(QWidget *parent, mapView_t *view) :
   m_view = *view;
 
   ui->comboBox->blockSignals(true);
-  ui->comboBox->addItem("Table (0..2013) (Out off table use E&M (2006))");
+  ui->comboBox->addItem("Table (0..2017) (Out off table use E&M (2006))");
   ui->comboBox->addItem("Morrison & Stephenson (1982)");
   ui->comboBox->addItem("Espenak (1987, 1989)");
   ui->comboBox->addItem("Espenak & Meeus (2006)*");

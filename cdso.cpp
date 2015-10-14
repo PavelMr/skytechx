@@ -162,7 +162,7 @@ QString CDso::getCommonName(dso_t *pDso)
 void CDso::loadNames(void)
 //////////////////////////
 {
-  SkFile f("data/dso/names.dat");
+  SkFile f("../data/dso/names.dat");
   if (f.open(SkFile::ReadOnly | SkFile::Text))
   {
     QString str;

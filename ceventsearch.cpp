@@ -443,7 +443,7 @@ void CEventSearch::on_pushButton_2_clicked()
     tThread.clear();
 
     if (evType == 2)
-      msgBoxError(this, tr("You must select two objects only!"));
+      msgBoxError(this, tr("You must select least two objects!"));
     else
       msgBoxError(this, tr("No object is selected!"));
     return;
@@ -641,7 +641,7 @@ bool CEventSearch::conjuction(void)
 
   tThread.append(t);
 
-  return(true);
+  return(idList.count() >= 2);
 }
 
 bool CEventSearch::biggestMoon()
