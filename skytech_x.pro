@@ -35,6 +35,7 @@ TEMPLATE = app
 
 INCLUDEPATH = core \
               de404 \
+              jplephem \
               libsgp4 \
               $$PWD \
 
@@ -227,7 +228,8 @@ SOURCES += main.cpp\
     cinsertfinder.cpp \
     cfinderedit.cpp \
     dssheaderdialog.cpp \
-    cdownloadfile.cpp
+    cdownloadfile.cpp \
+    jplephem/jpl_eph.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -415,7 +417,9 @@ HEADERS  += mainwindow.h \
     cinsertfinder.h \
     cfinderedit.h \
     dssheaderdialog.h \
-    cdownloadfile.h
+    cdownloadfile.h \
+    jplephem/jpl_eph.h \
+    jplephem/jpl_int.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \

@@ -1,5 +1,6 @@
 #include "castro.h"
 #include "plantbl.h"
+#include "jpl_eph.h"
 
 extern double xxx;
 extern double yyy;
@@ -94,7 +95,7 @@ double CAstro::deltaTTable(double jd)
   double y = jdGetYearFromJD(jd);
   double dT;
 
-  if (y < 0 || y > 2013)
+  if (y < 0 || y > 2017)
   {
     qDebug("calcDeltaT: error1 %f %f", jd, y);
     return(CM_UNDEF);
@@ -761,12 +762,40 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
   convRD2AANoRef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 }
 
+void xyzToSph(double x, double y, double z, double &l, double &b, double &r)
+{
+  double rho = x * x + y * y;
+
+  if (rho > 0)
+  {
+    l = atan2(y, x);
+    rangeDbl(&l, 2 * M_PI);
+    b = atan2(z, sqrt(rho));
+    r = sqrt(rho + z * z);
+  }
+  else
+  {
+    l = 0.0;
+    if (z == 0.0)
+    {
+      b = 0.0;
+    }
+    else
+    {
+      b = (z > 0.0) ? M_PI / 2. : -M_PI / 2.;
+    }
+    r = fabs(z);
+  }
+}
+
+
 // TODO: udelat to i bez light corr.
 ////////////////////////////////////////////////////////////////////////////
 void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
 ////////////////////////////////////////////////////////////////////////////
 {
   double data[6];
+  double dataPlan[6];
 
   if (planet == PT_SUN && bSunCopy)
   {
@@ -778,19 +807,83 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
   orbit->englishName = getFileName(planet);
   orbit->type = planet;
 
-  // DE404
+  char nams[400][6];
+  double vals[400];
+  int    err;
+  double et[2];
+
+  int type;
+
+  switch (planet)
+  {
+    case PT_SUN:
+      type = 3;
+      break;
+    case PT_MERCURY:
+      type = 1;
+      break;
+    case PT_VENUS:
+      type = 2;
+      break;
+    case PT_MARS:
+      type = 4;
+      break;
+    case PT_JUPITER:
+      type = 5;
+      break;
+    case PT_SATURN:
+      type = 6;
+      break;
+    case PT_URANUS:
+      type = 7;
+      break;
+    case PT_NEPTUNE:
+      type = 8;
+      break;
+    case PT_MOON:
+      type = 13;
+      break;
+  }
+
   double lt = 0; // light time
   for (int i = 0; i < 2; i++)
   {
     if (planet != PT_MOON)
     {
-      de404(planet, m_deltaT + m_jd - lt, data);
+      void *ephem = jpl_init_ephemeris("../jplephem/lnxp1600p2200.405", nams, vals);
+
+      double jd = m_deltaT + m_jd - lt;
+
+      et[0] = (double)(floorl(jd));
+      et[1] = (double)(jd - floorl(jd));
+
+      err = jpl_pleph(ephem, et, type, 12, data, false);
+
+      jpl_close_ephemeris(ephem);
+
+      de404(planet, m_deltaT + m_jd - lt, dataPlan);
 
       orbit->ephemType = EPT_DE404;
 
-      orbit->hLon = data[0];
-      orbit->hLat = data[1];
-      orbit->r = data[2];
+      precessRect(data, JD2000, m_jd);
+
+      double xe = data[0];
+      double ye = data[1] * cos(m_eclObl) - data[2] * sin(m_eclObl);
+      double ze = data[1] * sin(m_eclObl) + data[2] * cos(m_eclObl);
+
+      qDebug() << planet << type << "--------------";
+      qDebug() << data[0] << data[1] << data[2];
+
+      xyzToSph(xe, ye, ze, data[0], data[1], data[2]);
+
+
+      qDebug() << xe << ye << ze;
+      qDebug() << data[0] << data[1] << data[2];
+      qDebug() << dataPlan[0] << dataPlan[1] << dataPlan[2];
+
+      orbit->hLon = dataPlan[0];
+      orbit->hLat = dataPlan[1];
+      orbit->r = dataPlan[2];
     }
     else
     { // solve moon

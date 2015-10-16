@@ -128,7 +128,7 @@ void precess(radec_t *src, radec_t *dst, double jdFrom, double jdTo)
 /////////////////////////////////////////////////////////////////
 void precess(double *ra, double *dec, double jdFrom, double jdTo)
 /////////////////////////////////////////////////////////////////
-{  
+{
   SKMATRIX mat;
 
   precessMatrix(jdFrom, jdTo, &mat);
@@ -152,28 +152,37 @@ void precess(double *ra, double *dec, double jdFrom, double jdTo)
 void precessRect(double *r, double jdFrom, double jdTo)
 ///////////////////////////////////////////////////////
 {
-  double ra, dec;
+  SKMATRIX mat;
 
-  ra  = atan2(r[1], r[0]);
-  dec = atan2(r[2], sqrt(r[0] * r[0] + r[1] * r[1]));
+  precessMatrix(jdFrom, jdTo, &mat);
 
-  precess_hiprec(jdFrom, jdTo, &ra, &dec);
+  double tmp[3];
 
-  double cDec = cos(dec);
+  tmp[0] = r[0] * mat.m_11 +
+           r[1] * mat.m_21 +
+           r[2] * mat.m_31;
 
-  r[0] = cDec * cos(ra);
-  r[1] = cDec * sin(ra);
-  r[2] = sin(dec);  
+  tmp[1] = r[0] * mat.m_12 +
+           r[1] * mat.m_22 +
+           r[2] * mat.m_32;
+
+  tmp[2] = r[0] * mat.m_13 +
+           r[1] * mat.m_23 +
+           r[2] * mat.m_33;
+
+  r[0] = tmp[0];
+  r[1] = tmp[1];
+  r[2] = tmp[2];
 }
 
 
 ///////////////////////////////////////////////////////////
 void precessMatrix(double jdFrom, double jdTo, SKMATRIX *m)
 ///////////////////////////////////////////////////////////
-{  
+{
   static SKMATRIX lastMat;
   static double lastFrom = -1;
-  static double lastTo = -1;    
+  static double lastTo = -1;
 
   if (jdFrom == lastFrom &&
       jdTo == lastTo)
