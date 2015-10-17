@@ -784,7 +784,7 @@
    <property name="minimumSize">
     <size>
      <width>262</width>
-     <height>315</height>
+     <height>342</height>
     </size>
    </property>
    <property name="font">
@@ -850,7 +850,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>4</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -860,8 +860,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>274</width>
-          <height>183</height>
+          <width>278</width>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1536,7 +1536,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>451</width>
+          <width>397</width>
           <height>520</height>
          </rect>
         </property>
@@ -1822,8 +1822,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>266</height>
+          <width>278</width>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2253,6 +2253,100 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="page_6">
+        <attribute name="label">
+         <string>Date/Time</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_10">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>Map time</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTimeEdit" name="timeEdit"/>
+           </item>
+           <item>
+            <widget class="QCalendarWidget" name="calendarWidget">
+             <property name="gridVisible">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="label_17">
+               <property name="text">
+                <string>Backward</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_18">
+               <property name="text">
+                <string>Time</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>Forward</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QSlider" name="horizontalSlider">
+             <property name="minimum">
+              <number>-100</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="singleStep">
+              <number>0</number>
+             </property>
+             <property name="pageStep">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TicksAbove</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
        <widget class="QWidget" name="page_moon">
         <property name="geometry">
          <rect>
@@ -2449,7 +2543,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>157</width>
+          <width>261</width>
           <height>431</height>
          </rect>
         </property>
@@ -2552,8 +2646,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>278</width>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2700,8 +2794,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>278</width>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">

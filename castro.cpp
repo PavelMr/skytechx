@@ -96,7 +96,7 @@ double CAstro::deltaTTable(double jd)
 
   if (y < 0 || y > 2013)
   {
-    qDebug("calcDeltaT: error1 %f %f", jd, y);
+    //qDebug("calcDeltaT: error1 %f %f", jd, y);
     return(CM_UNDEF);
   }
 

@@ -614,8 +614,8 @@ MainWindow::MainWindow(QWidget *parent) :
   {
     ui->page_2->hide();
     ui->page_3->hide();
-    ui->toolBox->removeItem(5);
-    ui->toolBox->removeItem(5);
+    ui->toolBox->removeItem(6);
+    ui->toolBox->removeItem(6);
   }
 
   QAction *openWebHelp = new QAction(QIcon(":/res/ico_web_help.png"), "web", this);
@@ -715,6 +715,14 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->pushButton_26->setAutoRepeatInterval(mapAutoRptInterval);
   ui->pushButton_31->setAutoRepeatInterval(mapAutoRptInterval);
   ui->pushButton_32->setAutoRepeatInterval(mapAutoRptInterval);
+
+  ui->calendarWidget->setLocale(QLocale::system());
+  ui->calendarWidget->setMinimumDate(QDate(1,1,1));
+  ui->calendarWidget->setMaximumDate(QDate(3000,1,1));
+
+  QTimer *timer = new QTimer(this);
+  connect(timer, SIGNAL(timeout()), this, SLOT(slotTimeSliderUpdate()));
+  timer->start(15);
 
   setTitle();
 }
@@ -894,6 +902,24 @@ void MainWindow::slotCheckFirstTime()
   {
     checkNewVersion(false);
   }
+}
+
+void MainWindow::slotTimeSliderUpdate()
+{
+  if (ui->horizontalSlider->value() == 0)
+  {
+    return;
+  }
+
+  QEasingCurve curve(QEasingCurve::InCubic);
+  ui->widget->m_mapView.jd += (ui->horizontalSlider->value() > 0 ? +1 : -1) * curve.valueForProgress(qAbs(ui->horizontalSlider->value()) / 100.0) * 0.5;
+  repaintMap();
+}
+
+void MainWindow::slotCalendaryUpdate()
+{
+  //ui->widget->m_mapView.jd +=
+  repaintMap();
 }
 
 /////////////////////////
@@ -4617,6 +4643,18 @@ void MainWindow::on_actionTime_dialog_triggered(bool checked)
 
 void MainWindow::timeDialogUpdate()
 {
+  QDateTime tm;
+
+  jdConvertJDTo_DateTime(ui->widget->m_mapView.jd + ui->widget->m_mapView.geo.tz, &tm);
+
+  ui->calendarWidget->blockSignals(true);
+  ui->calendarWidget->setSelectedDate(tm.date());
+  ui->calendarWidget->blockSignals(false);
+
+  ui->timeEdit->blockSignals(true);
+  ui->timeEdit->setTime(tm.time());
+  ui->timeEdit->blockSignals(false);
+
   m_timeDialog->updateTime(&ui->widget->m_mapView);
 }
 
@@ -5465,5 +5503,24 @@ void MainWindow::on_pushButton_33_clicked()
 void MainWindow::on_actionCenter_of_screen_triggered(bool checked)
 {
   g_showCenterScreen = checked;
+  repaintMap();
+}
+
+void MainWindow::on_horizontalSlider_sliderReleased()
+{
+  ui->horizontalSlider->setValue(0);
+}
+
+void MainWindow::on_timeEdit_timeChanged(const QTime &/*time*/)
+{
+  on_calendarWidget_selectionChanged();
+}
+
+void MainWindow::on_calendarWidget_selectionChanged()
+{
+  QDateTime dt = QDateTime(ui->calendarWidget->selectedDate(), ui->timeEdit->time(), Qt::UTC);
+
+  double jd = jdGetJDFrom_DateTime(&dt) - ui->widget->m_mapView.geo.tz;
+  ui->widget->m_mapView.jd = jd;
   repaintMap();
 }

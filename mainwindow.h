@@ -581,6 +581,12 @@ private slots:
 
   void on_actionFinder_FOV_triggered();
 
+  void on_horizontalSlider_sliderReleased();
+
+  void on_timeEdit_timeChanged(const QTime &time);
+
+  void on_calendarWidget_selectionChanged();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
@@ -614,6 +620,8 @@ public slots:
   void slotDrawingChange(bool bEdited, bool isEmpty);
   void slotTimeUpdate(void);
   void slotCheckFirstTime();
+  void slotTimeSliderUpdate();
+  void slotCalendaryUpdate();
 
 signals:
   void sigMagLock(bool checked);

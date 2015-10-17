@@ -48,10 +48,10 @@ void CEarthMapView::paintEvent(QPaintEvent *)
 
   p.translate(width() / 2.0, height() / 2.0);
   p.scale(m_scale, m_scale);
-  p.drawPixmap(-m_cx, -m_cy, *m_pixmap);
+  p.drawPixmap(QPointF(-m_cx, -m_cy), *m_pixmap);
 
   int ox, oy;
-  int nx, ny;  
+  int nx, ny;
 
   coord2Screen(m_oldLon, m_oldLat, ox, oy);
 
@@ -79,7 +79,7 @@ void CEarthMapView::paintEvent(QPaintEvent *)
   p.setOpacity(0.5);
   for (int i = 0; i < m_list.count(); i++)
   {
-    coord2Screen(m_list[i].x(), m_list[i].y(), ox, oy);    
+    coord2Screen(m_list[i].x(), m_list[i].y(), ox, oy);
     p.drawCross(ox, oy, 1);
   }
 }
@@ -195,7 +195,7 @@ void CEarthMapView::coord2Screen(double lon, double lat, int &x, int &y)
   double cx = 0.5 * (double)m_pixmap->width();
   double cy = 0.5 * (double)m_pixmap->height();
 
-  QPoint pt = t.map(QPoint(cx + cx * (lon / 180.0), cy + cy * (lat / -90.0)));
+  QPointF pt = t.map(QPointF(cx + cx * (lon / 180.0), cy + cy * (lat / -90.0)));
 
   x = pt.x();
   y = pt.y();
@@ -215,7 +215,7 @@ void CEarthMapView::screen2Coord(int x, int y, double &lon, double &lat)
   double cx = 0.5 * (double)m_pixmap->width();
   double cy = 0.5 * (double)m_pixmap->height();
 
-  QPoint pt = t.map(QPoint(x, y));
+  QPointF pt = t.map(QPointF(x, y));
 
   lon = (pt.x() - cx) / cx * 180.0;
   lat = (pt.y() - cy) / cy * -90.0;
