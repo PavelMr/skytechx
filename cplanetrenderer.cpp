@@ -644,7 +644,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
-  if (!g_showSP)
+  if (!g_showSP) // TODO: u kalendare ne
   {
     return;
   }
@@ -655,7 +655,6 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
   p->setPen(Qt::NoPen);
   p->setBrush(QColor(0, 0, 0));
   p->setOpacity(g_skSet.map.planet.phaseAlpha / 255.f);
-
 
   if (maxSize < 100)
     scale = 1.04f;
@@ -683,15 +682,20 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
   sunAng = R270 - sunAng;
   sunAng += R180;
 
-  if (!rotate)
-    sunAng = 0;
-
   if (view->flipX)
     sunAng = R180 - sunAng;
   if (view->flipY)
     sunAng = R180 - sunAng;
   if (view->flipY)
     sunAng += R180;
+
+  if (!rotate)
+  {
+    if (sunAng < 0)
+      sunAng = 0;
+    else
+      sunAng = R180;
+  }
 
    static QPoint pp[1024];
    int num = 0;

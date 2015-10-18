@@ -80,6 +80,7 @@
 #include "cdso.h"
 #include "cinsertfinder.h"
 #include "dssheaderdialog.h"
+#include "moonlessnightsdlg.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -5523,4 +5524,16 @@ void MainWindow::on_calendarWidget_selectionChanged()
   double jd = jdGetJDFrom_DateTime(&dt) - ui->widget->m_mapView.geo.tz;
   ui->widget->m_mapView.jd = jd;
   repaintMap();
+}
+
+void MainWindow::on_actionMoonless_nights_triggered()
+{
+  MoonlessNightsDlg dlg(this, &ui->widget->m_mapView);
+
+  if (dlg.exec() == DL_OK)
+  {
+    //mapView_t *v = &ui->widget->m_mapView;
+    ui->widget->m_mapView.jd = dlg.m_jd;
+    repaintMap();
+  }
 }

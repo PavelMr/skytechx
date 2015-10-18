@@ -587,6 +587,8 @@ private slots:
 
   void on_calendarWidget_selectionChanged();
 
+  void on_actionMoonless_nights_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

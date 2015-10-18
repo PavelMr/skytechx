@@ -227,7 +227,8 @@ SOURCES += main.cpp\
     cinsertfinder.cpp \
     cfinderedit.cpp \
     dssheaderdialog.cpp \
-    cdownloadfile.cpp
+    cdownloadfile.cpp \
+    moonlessnightsdlg.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -415,7 +416,8 @@ HEADERS  += mainwindow.h \
     cinsertfinder.h \
     cfinderedit.h \
     dssheaderdialog.h \
-    cdownloadfile.h
+    cdownloadfile.h \
+    moonlessnightsdlg.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
@@ -499,7 +501,8 @@ FORMS    += mainwindow.ui \
     cinsertfinder.ui \
     cfinderedit.ui \
     dssheaderdialog.ui \
-    cdownloadfile.ui
+    cdownloadfile.ui \
+    moonlessnightsdlg.ui
 
 
 RESOURCES += \

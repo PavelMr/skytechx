@@ -10,7 +10,7 @@ class CSimpleList : public QListView
   Q_OBJECT
 public:
   explicit CSimpleList(QWidget *parent = 0);
-  void addRow(const QString &text, const QVariant &data);
+  void addRow(const QString &text, const QVariant &data = 0);
   int findText(int from, const QString &text, bool partialy = false);
   void sort();
   void removeAll();
