@@ -1441,16 +1441,26 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addLabelItem(item, tr("Apparent view"));
   addSeparator(item);
 
-  if (o.sx == o.sy)
-    diam = QString("%1\"").arg(o.sx, 0, 'f', 2);
-  else
-    diam = QString("%1\" x %2\"").arg(o.sx, 0, 'f', 2).arg(o.sy, 0, 'f', 2);
-
-  addTextItem(item, tr("Apparent diameter"), diam);
-
-  if (o.sx == o.sy)
+  if (o.type != PT_SUN && o.type != PT_MOON)
   {
-    QString str  = QString("%1\"").arg(o.sx * 0.5, 0, 'f', 2);
+    if (o.sx == o.sy)
+      diam = QString("%1\"").arg(o.sx, 0, 'f', 2);
+    else
+      diam = QString("%1\" x %2\"").arg(o.sx, 0, 'f', 2).arg(o.sy, 0, 'f', 2);
+
+    addTextItem(item, tr("Apparent diameter"), diam);
+
+    if (o.sx == o.sy)
+    {
+      QString str  = QString("%1\"").arg(o.sx * 0.5, 0, 'f', 2);
+      addTextItem(item, tr("Apparent radius"), str);
+    }
+  }
+  else
+  {
+    QString str  = QString("%1\'").arg(o.sx / 60., 0, 'f', 2);
+    addTextItem(item, tr("Apparent diameter"), str);
+    str  = QString("%1\'").arg(o.sx / 120., 0, 'f', 2);
     addTextItem(item, tr("Apparent radius"), str);
   }
 

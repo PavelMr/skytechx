@@ -171,6 +171,7 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
 
   p->setFont(setFonts[FONT_LUNAR_FEATURES]);
   p->setBrush(Qt::NoBrush);
+  //p->setBrush(QColor(200, 100, 100, 64));
 
   QFontMetrics  fm(p->font());
 
