@@ -32,39 +32,41 @@ void CRts::setLowPrec()
 double CRts::getRTSRaDecFromPtr(radec_t *rd, int ptr, int type, double jd)
 //////////////////////////////////////////////////////////////////////////
 {
- switch (type)
+  switch (type)
   {
-   case   MO_PLANET :
-                    { // ptr = planet id
-                      orbit_t o;
-                      ast->calcPlanet(ptr, &o);
-                      rd->Ra = o.lRD.Ra;
-                      rd->Dec = o.lRD.Dec;
-                      if (ptr == PT_SUN || ptr == PT_MOON)
-                        return(DMS2RAD(0, 0, o.sy / 2));
-                      return(0);
-                    }
-                    break;
+    case MO_PLANET :
+    { // ptr = planet id
+      orbit_t o;
+      ast->calcPlanet(ptr, &o);
+      rd->Ra = o.lRD.Ra;
+      rd->Dec = o.lRD.Dec;
+      if (ptr == PT_SUN || ptr == PT_MOON)
+        return(DMS2RAD(0, 0, o.sy / 2));
+      return(0);
+    }
+    break;
 
-   case MO_ASTER : {// ptr = *asteroid_t
-                     asteroid_t c,*o = (asteroid_t *)ptr;
-                     c = *o;
-                     astSolve(&c, jd);
-                     rd->Ra = c.orbit.lRD.Ra;
-                     rd->Dec = c.orbit.lRD.Dec;
-                     return(0);
-                    }
-                    break;
+    case MO_ASTER :
+    {// ptr = *asteroid_t
+      asteroid_t c,*o = (asteroid_t *)ptr;
+      c = *o;
+      astSolve(&c, jd);
+      rd->Ra = c.orbit.lRD.Ra;
+      rd->Dec = c.orbit.lRD.Dec;
+      return(0);
+    }
+    break;
 
-   case MO_COMET : {// ptr = *comet_t
-                     comet_t c,*o = (comet_t *)ptr;
-                     c = *o;
-                     comSolve(&c, jd);
-                     rd->Ra = c.orbit.lRD.Ra;
-                     rd->Dec = c.orbit.lRD.Dec;
-                     return(0);
-                   }
-                   break;
+    case MO_COMET :
+    {// ptr = *comet_t
+     comet_t c,*o = (comet_t *)ptr;
+     c = *o;
+     comSolve(&c, jd);
+     rd->Ra = c.orbit.lRD.Ra;
+     rd->Dec = c.orbit.lRD.Dec;
+     return(0);
+    }
+    break;
   }
 
   //pcDebug->writeError("Unable to solve RTS (%d)\n", type);

@@ -851,7 +851,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>5</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -933,19 +933,6 @@
            <property name="bottomMargin">
             <number>2</number>
            </property>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="checkBox_5">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="toolTip">
-              <string>Update with actual map time.</string>
-             </property>
-             <property name="text">
-              <string>Autoupdate</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
@@ -989,6 +976,33 @@
              </item>
             </layout>
            </item>
+           <item row="2" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
+             <item>
+              <widget class="QCheckBox" name="checkBox_5">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Update with actual map time.</string>
+               </property>
+               <property name="text">
+                <string>Autoupdate</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_34">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Hold object</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
           </layout>
          </item>
          <item row="3" column="0">
@@ -1005,19 +1019,6 @@
            <property name="bottomMargin">
             <number>2</number>
            </property>
-           <item row="2" column="2">
-            <widget class="QPushButton" name="pushButton_17">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="toolTip">
-              <string>Open dialog with object tracking</string>
-             </property>
-             <property name="text">
-              <string>Tracking object path...</string>
-             </property>
-            </widget>
-           </item>
            <item row="2" column="0">
             <widget class="QPushButton" name="pushButton_4">
              <property name="enabled">
@@ -1028,6 +1029,19 @@
              </property>
              <property name="text">
               <string>Go to object</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_16">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Add this object to custom DSO catalogue</string>
+             </property>
+             <property name="text">
+              <string>Add to list...</string>
              </property>
             </widget>
            </item>
@@ -1044,16 +1058,16 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="pushButton_16">
+           <item row="2" column="1">
+            <widget class="QPushButton" name="pushButton_17">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="toolTip">
-              <string>Add this object to custom DSO catalogue</string>
+              <string>Open dialog with object tracking</string>
              </property>
              <property name="text">
-              <string>Add to list...</string>
+              <string>Tracking object path...</string>
              </property>
             </widget>
            </item>
@@ -3058,6 +3072,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionLegends"/>
    <addaction name="separator"/>
    <addaction name="actionCenter_of_screen"/>
+   <addaction name="actionShow_Hide_lunar_features"/>
   </widget>
   <widget class="QToolBar" name="tb_map">
    <property name="windowTitle">
@@ -4822,6 +4837,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionMoonless_nights">
    <property name="text">
     <string>Moonless nights...</string>
+   </property>
+  </action>
+  <action name="actionShow_Hide_lunar_features">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_pfeatures.png</normaloff>:/res/ico_pfeatures.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show/Hide lunar features</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide lunar features</string>
    </property>
   </action>
  </widget>

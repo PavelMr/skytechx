@@ -27,6 +27,14 @@ bool          g_bHoldObject = false;
 holdObject_t  g_HoldObject;
 
 
+void holdObject(int type, int id, const QString &name)
+{
+  g_bHoldObject = true;
+  g_HoldObject.objName = name;
+  g_HoldObject.objIdx = id;
+  g_HoldObject.objType = type;
+}
+
 ////////////////////////////////
 // -1 = remove any
 void releaseHoldObject(int type)

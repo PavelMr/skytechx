@@ -589,6 +589,8 @@ private slots:
 
   void on_actionMoonless_nights_triggered();
 
+  void on_pushButton_34_clicked();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

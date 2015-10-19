@@ -200,6 +200,10 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->dockWidget->setWindowTitle(tr("Sidebar"));
   ui->lv_quickInfo->init(ui->toolBox);
 
+  ui->actionShow_Hide_lunar_features->setChecked(true);
+  connect(ui->checkBox_4, SIGNAL(toggled(bool)), ui->actionShow_Hide_lunar_features, SLOT(setChecked(bool)));
+  connect(ui->actionShow_Hide_lunar_features, SIGNAL(toggled(bool)), ui->checkBox_4, SLOT(setChecked(bool)));
+
   connect(this, SIGNAL(sigMagLock(bool)), ui->widget, SLOT(slotCheckedMagLevLock(bool)));
   ui->actionStar_mag_lock->setChecked(false);
   emit sigMagLock(false);
@@ -1669,6 +1673,7 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool scroll)
   ui->pushButton_4->setEnabled(true);
   ui->pushButton_16->setEnabled(true);
   ui->pushButton_17->setEnabled(true);
+  ui->pushButton_34->setEnabled(true);
   ui->checkBox_5->setEnabled(true);
   ui->action_Last_search_object->setEnabled(true);
 
@@ -2425,6 +2430,7 @@ void MainWindow::removeQuickInfo(int type)
     ui->pushButton_19->setEnabled(false);
     ui->pushButton_20->setEnabled(false);
     ui->pushButton_21->setEnabled(false);
+    ui->pushButton_34->setEnabled(false);
     ui->checkBox_5->setEnabled(false);
     ui->action_Last_search_object->setEnabled(false);
   }
@@ -5536,4 +5542,23 @@ void MainWindow::on_actionMoonless_nights_triggered()
     ui->widget->m_mapView.jd = dlg.m_jd;
     repaintMap();
   }
+}
+
+void MainWindow::on_pushButton_34_clicked()
+{
+  ofiItem_t *info = getQuickInfo();
+
+  if (info->type != MO_PLANET &&
+      info->type != MO_SATELLITE &&
+      info->type != MO_COMET &&
+      info->type != MO_ASTER)
+  {
+    msgBoxError(this, tr("You cannot hold static object!!!"));
+    return;
+  }
+
+  releaseHoldObject(-1);
+  holdObject(info->type, info->par1, info->title);
+  repaintMap();
+  enableReleaseObject(true);
 }

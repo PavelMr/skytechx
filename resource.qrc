@@ -118,5 +118,6 @@
         <file>res/rotate_right.png</file>
         <file>res/center_ico.png</file>
         <file>res/ico_finder.png</file>
+        <file>res/ico_pfeatures.png</file>
     </qresource>
 </RCC>

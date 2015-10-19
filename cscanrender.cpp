@@ -423,7 +423,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
   bkScan_t *scan = scLR;
   bool bw = src->format() == QImage::Format_Indexed8;
 
-  // #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
+  //#pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])
@@ -516,17 +516,22 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
         quint32 c = bitsSrc[(index + sw) % size];
         quint32 d = bitsSrc[(index + sw + 1) % size];
 
+        float xy1 = x_1diff * y_1diff;
+        float xy2 = x_diff * y_1diff;
+        float xy = x_diff * y_diff;
+        float yx1 = y_diff * x_1diff;
+
         // blue element
-        int blue = (a&0xff)*(x_1diff)*(y_1diff) + (b&0xff)*(x_diff)*(y_1diff) +
-                   (c&0xff)*(y_diff)*(x_1diff)   + (d&0xff)*(x_diff*y_diff);
+        int blue = (a&0xff)*(xy1) + (b&0xff)*(xy2) +
+                   (c&0xff)*(yx1)  + (d&0xff)*(xy);
 
         // green element
-        int green = ((a>>8)&0xff)*(x_1diff)*(y_1diff) + ((b>>8)&0xff)*(x_diff)*(y_1diff) +
-                    ((c>>8)&0xff)*(y_diff)*(x_1diff)   + ((d>>8)&0xff)*(x_diff*y_diff);
+        int green = ((a>>8)&0xff)*(xy1) + ((b>>8)&0xff)*(xy2) +
+                    ((c>>8)&0xff)*(yx1)  + ((d>>8)&0xff)*(xy);
 
         // red element
-        int red = ((a>>16)&0xff)*(x_1diff)*(y_1diff) + ((b>>16)&0xff)*(x_diff)*(y_1diff) +
-                  ((c>>16)&0xff)*(y_diff)*(x_1diff)   + ((d>>16)&0xff)*(x_diff*y_diff);
+        int red = ((a>>16)&0xff)*(xy1) + ((b>>16)&0xff)*(xy2) +
+                  ((c>>16)&0xff)*(yx1)  + ((d>>16)&0xff)*(xy);
 
         // ????: pretypovani to zrychly
         *pDst = 0xff000000 |
