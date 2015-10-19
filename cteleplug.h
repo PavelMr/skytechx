@@ -10,5 +10,6 @@ bool tpLoadDriver(QString libName);
 void tpUnloadDriver(void);
 
 extern CTelePluginInterface *g_pTelePlugin;
+extern QPluginLoader        *tpLoader;
 
 #endif // CTELEPLUG_H

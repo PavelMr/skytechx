@@ -831,6 +831,7 @@ static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o
         {
           setSetFontColor(FONT_PLN_SAT, p);
           p->setFont(setFonts[FONT_PLN_SAT]);
+
           p->drawText(QRect(pt.sx + r + 5, pt.sy + r + 5, 10000, 10000),
                       Qt::AlignTop | Qt::AlignLeft, QString("%1").arg(sat->sat[i].name));
         }

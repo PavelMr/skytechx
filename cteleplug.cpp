@@ -4,7 +4,7 @@
 extern bool bParkTelescope;
 
 CTelePluginInterface   *g_pTelePlugin = NULL;
-static QPluginLoader   *tpLoader = NULL;
+QPluginLoader          *tpLoader = NULL;
 
 ////////////////////////////////////////
 QString tpGetDriverName(QString libName)

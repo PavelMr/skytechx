@@ -785,7 +785,7 @@
    <property name="minimumSize">
     <size>
      <width>262</width>
-     <height>342</height>
+     <height>353</height>
     </size>
    </property>
    <property name="font">
@@ -851,7 +851,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -862,7 +862,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>314</height>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1838,7 +1838,7 @@
           <x>0</x>
           <y>0</y>
           <width>254</width>
-          <height>314</height>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2274,7 +2274,7 @@
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>314</height>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2670,7 +2670,7 @@
           <x>0</x>
           <y>0</y>
           <width>254</width>
-          <height>314</height>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2818,7 +2818,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>314</height>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">

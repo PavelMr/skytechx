@@ -958,6 +958,20 @@ void MainWindow::resizeEvent(QResizeEvent *)
 void MainWindow::keyPressEvent(QKeyEvent *e)
 ////////////////////////////////////////////
 {
+  if (e->key() == Qt::Key_Down && (e->modifiers() & Qt::ControlModifier))
+  {
+    int i = ui->toolBox->currentIndex() + 1;
+    ui->toolBox->setCurrentIndex(i);
+    return;
+  }
+
+  if (e->key() == Qt::Key_Up && (e->modifiers() & Qt::ControlModifier))
+  {
+    int i = ui->toolBox->currentIndex() - 1;
+    ui->toolBox->setCurrentIndex(i);
+    return;
+  }
+
   if (!ui->widget->hasFocus())
     return;
 
@@ -3477,7 +3491,7 @@ void MainWindow::slotTimeUpdate()
   {
     double azm, alt;
 
-    if (g_pTelePlugin != NULL)
+    if (g_pTelePlugin && tpLoader->isLoaded())
     {
       ui->dockTele->setWindowTitle(tr("Telescope - ") + g_pTelePlugin->getTelescope());
       ui->dockTele->setEnabled(true);

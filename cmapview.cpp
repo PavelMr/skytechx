@@ -2015,15 +2015,19 @@ void CMapView::paintEvent(QPaintEvent *)
 
   if (!helpText.isEmpty())
   { //show help
+    if (helpText.endsWith("\n"))
+    {
+      helpText.chop(1);
+    }
     p.setFont(QFont("Arial", 12, QFont::Bold));
     QFontMetrics fm(p.font());
 
     QRect rc;
 
-    rc = fm.boundingRect(0, 0, 2000, 2000, Qt::AlignLeft, helpText);
+    rc = fm.boundingRect(0, 0, 2000, 2, Qt::AlignLeft | Qt::AlignVCenter, helpText);
+
+    rc.adjust(-10, -10, 10, 10);
     rc.moveTo(10, 10);
-    rc.adjust(0, 0, 10, 10);
-    rc.adjust(-5, -5, 5, 5);
 
     p.setBrush(Qt::black);
     p.setPen(Qt::white);
@@ -2031,9 +2035,8 @@ void CMapView::paintEvent(QPaintEvent *)
     p.drawRoundedRect(rc, 3, 3);
     p.setOpacity(1);
 
-    //rc.adjust(-5, -5, 5, 5);
-    rc.moveTo(15, 15);
-    p.drawText(rc, Qt::AlignLeft, helpText);
+    rc.moveTo(17, 10);
+    p.drawText(rc, Qt::AlignLeft | Qt::AlignVCenter, helpText);
   }
 }
 
