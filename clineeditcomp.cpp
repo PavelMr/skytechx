@@ -85,6 +85,11 @@ void CLineEditComp::keyPressEvent(QKeyEvent *e)
   }
 }
 
+static bool sort(const QString &s1, const QString &s2)
+{
+  return s1.length() > s2.length();
+}
+
 ///////////////////////////////////////////////
 void CLineEditComp::slotTextEdited(QString str)
 ///////////////////////////////////////////////
@@ -95,16 +100,31 @@ void CLineEditComp::slotTextEdited(QString str)
     return;
   }
 
+  if (m_list.isEmpty())
+  {
+    return;
+  }
+
+  QStringList list;
+
   QString it;
   foreach(it, m_list)
   {
     if (it.startsWith(str, Qt::CaseInsensitive))
     {
-      int pos = str.count();
-
-      setText(it);
-      setSelection(it.count(), -(it.count() - pos));
-      return;
+      list.append(it);
     }
   }
+
+  if (list.isEmpty())
+  {
+    return;
+  }
+
+  qSort(list.begin(), list.end(), sort);
+
+  QString s = list.last();
+  int pos = str.count();
+  setText(s);
+  setSelection(s.count(), -(s.count() - pos));
 }
