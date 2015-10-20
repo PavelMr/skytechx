@@ -862,7 +862,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>311</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1838,7 +1838,7 @@
           <x>0</x>
           <y>0</y>
           <width>254</width>
-          <height>311</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2274,7 +2274,7 @@
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>311</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2670,7 +2670,7 @@
           <x>0</x>
           <y>0</y>
           <width>254</width>
-          <height>311</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2818,7 +2818,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>311</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2926,6 +2926,7 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionSearch_help"/>
    <addaction name="actionSearch"/>
   </widget>
   <widget class="QToolBar" name="tb_alt_azm">
@@ -4852,6 +4853,18 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Show/Hide lunar features</string>
+   </property>
+  </action>
+  <action name="actionSearch_help">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_help.png</normaloff>:/res/ico_help.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search help</string>
+   </property>
+   <property name="toolTip">
+    <string>Open search help</string>
    </property>
   </action>
  </widget>

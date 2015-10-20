@@ -261,9 +261,14 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
       setSetFontColor(FONT_LUNAR_FEATURES, p);
 
       if (tw + 10 < qMin(r1, r2) * 2)
+      {
         p->drawCText(sx, sy, str);
+      }
       else
-        p->drawCText(sx, sy + qMax(r1, r2) + fm.height() - 5, str);
+      {
+        float h = (r1 * r2) / sqrt(POW2(r1) * POW2(cos(ang)) + POW2(r2) * POW2(sin(ang)));
+        p->drawCText(sx, sy + h + fm.height(), str);
+      }
     }
   }
 }
@@ -287,7 +292,7 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
   SKMATRIX     mat;
   SKMATRIX     mX, mY, mZ, mS;
 
-  return false;
+  //return false;
 
   cAstro.calcPlanet(PT_MOON, &o);
 
@@ -305,15 +310,13 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
 
     if (!str.compare(lf->name, Qt::CaseInsensitive))
     {
-      //double radius = (lf->rad / mkm);// * scale;
-
       SKVECTOR out;
       SKVECTOR in;
 
       double clat = cos(lf->lat);
-      in.x = clat * cos(-lf->lon);// * scale;
-      in.y =        sin(lf->lat);// * scale;
-      in.z = clat * sin(-lf->lon);// * scale;
+      in.x = clat * cos(-lf->lon);
+      in.y =        sin(lf->lat);
+      in.z = clat * sin(-lf->lon);
 
       SKVECTransform3(&out, &in, &mat);
 
@@ -321,16 +324,14 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
         return(false);
 
       double rad = D2R(o.sx / 3600.0 / 2.);
+      double vec[2];
 
-      double ang = atan2(out.x, -out.y) + view->roll;
+      vec[0] = (view->flipX ? -1 : 1) * out.x;
+      vec[1] = (view->flipY ? -1 : 1) * out.y;
 
-      //getRaDecOffset(o.lRD.Ra, o.lRD.Dec, out.x * rad, out.y * rad, ra, dec);
+      double ang = atan2(vec[0], -vec[1]);
       calcAngularDistance(o.lRD.Ra, o.lRD.Dec, ang, sqrt(POW2(out.x) + POW2(out.y)) * rad, ra, dec);
-
-      //ra =  o.lRD.Ra -  out.x * rad;
-      //dec = o.lRD.Dec - out.y * rad;
-
-      fov = D2R(0.006 * lf->rad);
+      fov = D2R(0.001 * lf->rad);
       if (fov < D2R(0.2))
       {
         fov = D2R(0.2);
@@ -340,7 +341,6 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
       {
         fov = D2R(1);
       }
-
 
       return(true);
     }

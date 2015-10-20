@@ -119,5 +119,6 @@
         <file>res/center_ico.png</file>
         <file>res/ico_finder.png</file>
         <file>res/ico_pfeatures.png</file>
+        <file>res/ico_help.png</file>
     </qresource>
 </RCC>

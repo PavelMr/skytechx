@@ -5576,3 +5576,9 @@ void MainWindow::on_pushButton_34_clicked()
   repaintMap();
   enableReleaseObject(true);
 }
+
+void MainWindow::on_actionSearch_help_triggered()
+{
+  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/edit_search.htm"));
+  ui->toolBox->setCurrentWidget(ui->page_4);
+}
