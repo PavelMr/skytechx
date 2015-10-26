@@ -102,7 +102,7 @@ void drawingLoad(void)
 
     s >> count;
 
-    // NOTE: v 32 a 64bit se to lisi ve velikosti (QFont)
+    // NOTE: v 32 a 64bit se to lisi ve velikosti (QFont) vyzkouset
     for (int i = 0; i < count; i++)
     {
       drawing_t t;

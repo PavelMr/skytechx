@@ -956,6 +956,16 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       QTransform tr;
 
       tr.translate(pt.sx, pt.sy);
+
+      /*
+      int sx = 1;
+      int sy = 1;
+
+      if (mapView->flipX) sx = -1;
+      if (mapView->flipY) sy = -1;
+
+      tr.scale(sx, sy); // FIXME: neukazuje to spravne
+      */
       tr.rotate(rot);
 
       pPainter->restore();
@@ -969,14 +979,15 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       setSetFont(FONT_EARTH_SHD, pPainter);
       setSetFontColor(FONT_EARTH_SHD, pPainter);
 
+
       p = tr.map(QPoint(0, r1 + fs));
       pPainter->drawCText(p.x(), p.y(), QObject::tr("N"));
       p = tr.map(QPoint(0, -r1 - fs));
-      pPainter->drawCText(p.x(), p.y(), QObject::tr("S"));
+      //pPainter->drawCText(p.x(), p.y(), QObject::tr("S"));
       p = tr.map(QPoint(-r1 - fs, 0));
-      pPainter->drawCText(p.x(), p.y(), QObject::tr("W"));
-      p = tr.map(QPoint(r1 + fs, 0));
       pPainter->drawCText(p.x(), p.y(), QObject::tr("E"));
+      p = tr.map(QPoint(r1 + fs, 0));
+      //pPainter->drawCText(p.x(), p.y(), QObject::tr("W"));
 
       addMapObj(pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
     }

@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -2009,7 +2009,65 @@
                      </item>
                     </layout>
                    </item>
-                   <item row="1" column="0">
+                   <item row="0" column="1">
+                    <widget class="QGroupBox" name="groupBox_6">
+                     <property name="title">
+                      <string>Lunar features</string>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_45">
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_18">
+                        <item>
+                         <layout class="QVBoxLayout" name="verticalLayout_44">
+                          <item>
+                           <widget class="QLabel" name="label_67">
+                            <property name="text">
+                             <string>Pen color</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="CPushColorButton" name="pushButton_52">
+                            <property name="text">
+                             <string>PushButton</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="label_66">
+                            <property name="text">
+                             <string>Label font &amp; color</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="CFontColorButton" name="pushButton_51">
+                            <property name="text">
+                             <string>PushButton</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item>
+                         <spacer name="horizontalSpacer_10">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
                     <widget class="QGroupBox" name="groupBox_4">
                      <property name="title">
                       <string>Planet satellites</string>
@@ -2081,63 +2139,53 @@
                      </layout>
                     </widget>
                    </item>
-                   <item row="0" column="1">
-                    <widget class="QGroupBox" name="groupBox_6">
-                     <property name="title">
-                      <string>Lunar features</string>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_45">
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_18">
+                   <item row="1" column="0">
+                    <layout class="QVBoxLayout" name="verticalLayout_81">
+                     <item>
+                      <widget class="QGroupBox" name="groupBox_13">
+                       <property name="title">
+                        <string>Moon texture (Restart required)</string>
+                       </property>
+                       <layout class="QVBoxLayout" name="verticalLayout_82">
                         <item>
-                         <layout class="QVBoxLayout" name="verticalLayout_44">
+                         <widget class="QRadioButton" name="radioButton_3">
+                          <property name="text">
+                           <string>Default texture</string>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QRadioButton" name="radioButton_4">
+                          <property name="text">
+                           <string>Custom texture</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <layout class="QHBoxLayout" name="horizontalLayout_26">
                           <item>
-                           <widget class="QLabel" name="label_67">
-                            <property name="text">
-                             <string>Pen color</string>
+                           <widget class="QLineEdit" name="lineEdit">
+                            <property name="readOnly">
+                             <bool>true</bool>
                             </property>
                            </widget>
                           </item>
                           <item>
-                           <widget class="CPushColorButton" name="pushButton_52">
+                           <widget class="QToolButton" name="toolButton">
                             <property name="text">
-                             <string>PushButton</string>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QLabel" name="label_66">
-                            <property name="text">
-                             <string>Label font &amp; color</string>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="CFontColorButton" name="pushButton_51">
-                            <property name="text">
-                             <string>PushButton</string>
+                             <string>...</string>
                             </property>
                            </widget>
                           </item>
                          </layout>
                         </item>
-                        <item>
-                         <spacer name="horizontalSpacer_10">
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="sizeHint" stdset="0">
-                           <size>
-                            <width>40</width>
-                            <height>20</height>
-                           </size>
-                          </property>
-                         </spacer>
-                        </item>
                        </layout>
-                      </item>
-                     </layout>
-                    </widget>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
                  </item>

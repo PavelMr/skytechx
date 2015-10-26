@@ -14,7 +14,7 @@ CONFIG   += c++11
 
 DEFINES += NOMINMAX
 
-Release:DEFINES  += QT_NO_DEBUG_OUTPUT
+Release:DEFINES  += QT_NO_DEBUG_OUTPUT QT_FATAL_WARNINGS
 
 Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11
 Debug:win32-g++   : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp

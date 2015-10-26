@@ -106,44 +106,6 @@ void CLunarFeatures::load(QString name)
 }
 
 
-void getRaDecOffset(double ra, double dec, double offx, double offy, double &outRa, double &outDec)
-{
-  // FIXME: nefunguje to spravne
-  SKMATRIX  mat1;
-  SKMATRIX  mat2;
-  SKMATRIX  mat;
-
-  SKMATRIX  mX, mY;
-  SKMATRIX  mX2, mY2;
-
-  SKMATRIXRotateY(&mY, offy);
-  SKMATRIXRotateZ(&mX, offx);
-
-  mat1 = mY * mX;
-
-  SKMATRIXRotateY(&mY2, -ra);
-  SKMATRIXRotateZ(&mX2, dec);
-
-  mat2 = mY2 * mX2;
-
-  mat = mat1 * mat2;
-
-  SKVECTOR out;
-  SKVECTOR in;
-
-  double clat = cos(0.);
-
-  in.x = clat * cos(0.);
-  in.y =        sin(0.);
-  in.z = clat * sin(0.);
-
-
-  SKVECTransform3(&out, &in, &mat);
-
-  outRa  = atan2(out.y, out.x);
-  outDec = atan2(out.z, sqrt(POW2(out.x) + POW2(out.y)));
-}
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, mapView_t *view)
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +179,6 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     if (!trfPointOnScr(sx, sy, radius))
       continue;
 
-    //double d = sqrt(POW2(out.x / scale) + POW2(out.y / scale)) * R90;
     double d = sqrt(POW2(out.x) + POW2(out.y)) * R90  / scale;
 
     double r1 = radius;
@@ -267,6 +228,11 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
       else
       {
         float h = (r1 * r2) / sqrt(POW2(r1) * POW2(cos(ang)) + POW2(r2) * POW2(sin(ang)));
+
+        if (lf->type == LFT_LANDING_SITE)
+        {
+          h = 0;
+        }
         p->drawCText(sx, sy + h + fm.height(), str);
       }
     }

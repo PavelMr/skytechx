@@ -114,6 +114,9 @@ int main(int argc, char *argv[])
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/gamepad");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dso");
 
+  //char *p = (char *)12;
+  //*p = 1;
+
   QSettings settings;
 
   g_pApp = &a;

@@ -396,6 +396,17 @@ void CSetting::setValues()
   ui->pushButton_42->setFontColor(setFonts[FONT_EARTH_SHD], set.fonst[FONT_EARTH_SHD].color);
   ui->horizontalSlider_15->setValue(set.map.es.alpha);
 
+  if (!set.map.planet.useCustomMoonTexture)
+  {
+    ui->radioButton_3->setChecked(true);
+  }
+  else
+  {
+    ui->radioButton_4->setChecked(true);
+  }
+
+  ui->lineEdit->setText(set.map.planet.moonImage);
+
   // milky way
   ui->checkBox_6->setChecked(set.map.milkyWay.bShow);
   ui->horizontalSlider_13->setValue(set.map.milkyWay.light);
@@ -645,6 +656,9 @@ void CSetting::apply()
   g_skSet.map.aster.radius = ui->spinBox_4->value();
   g_skSet.map.aster.plusMag = ui->doubleSpinBox_25->value();
   g_skSet.map.aster.maxMag = ui->doubleSpinBox_35->value();
+
+  g_skSet.map.planet.useCustomMoonTexture = ui->radioButton_4->isChecked();
+  g_skSet.map.planet.moonImage = ui->lineEdit->text();
 
   // earth shadow
   g_skSet.map.es.show = ui->checkBox_17->isChecked();
@@ -1855,5 +1869,16 @@ void CSetting::on_pushButton_61_clicked()
     QList<urlItem_t> strList;
     CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url", &strList);
     fillAstComList(ui->treeWidgetSat, strList);
+  }
+}
+
+void CSetting::on_toolButton_clicked()
+{
+  QString fileName = QFileDialog::getOpenFileName(this, tr("Select file"), "", "Images (*.png *.jpg)");
+
+  if (!fileName.isEmpty())
+  {
+    ui->lineEdit->setText(fileName);
+    ui->radioButton_4->setChecked(true);
   }
 }

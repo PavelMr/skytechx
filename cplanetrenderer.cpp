@@ -51,12 +51,12 @@ CPlanetRenderer::~CPlanetRenderer()
   }
 }
 
-void CPlanetRenderer::load()
+bool CPlanetRenderer::load()
 {
-  m_sphere[0] = createSphere(10);
-  m_sphere[1] = createSphere(20);
-  m_sphere[2] = createSphere(30);
-  m_sphere[3] = createSphere(40);
+  m_sphere[0] = createSphere(5);
+  m_sphere[1] = createSphere(10);
+  m_sphere[2] = createSphere(20);
+  m_sphere[3] = createSphere(50);
 
   m_ring[0] = createRing(10);
   m_ring[1] = createRing(20);
@@ -71,7 +71,22 @@ void CPlanetRenderer::load()
   m_bmp[PT_SATURN] = new QImage("../data/planets/saturn.jpg");
   m_bmp[PT_URANUS] = new QImage("../data/planets/uranus.jpg");
   m_bmp[PT_NEPTUNE] = new QImage("../data/planets/neptune.jpg");
-  m_bmp[PT_MOON] = new QImage("../data/planets/moon8k.jpg");
+
+  if (g_skSet.map.planet.useCustomMoonTexture)
+  {
+    m_bmp[PT_MOON] = new QImage(g_skSet.map.planet.moonImage);
+
+    if (m_bmp[PT_MOON]->isNull())
+    {
+      delete m_bmp[PT_MOON];
+      m_bmp[PT_MOON] = new QImage(256, 256, QImage::Format_ARGB32_Premultiplied);
+      m_bmp[PT_MOON]->fill(0xff0000ff);
+    }
+  }
+  else
+  {
+    m_bmp[PT_MOON] = new QImage("../data/planets/moon8k.jpg");
+  }
 
   QImage *satRing_a = new QImage("../data/planets/saturn_ring_alpha.jpg");
   QImage *satRing = new QImage("../data/planets/saturn_ring.jpg");
@@ -84,6 +99,8 @@ void CPlanetRenderer::load()
   delete satRing_a;
 
   m_init = true;
+
+  return true;
 }
 
 
@@ -92,18 +109,20 @@ mesh_t *CPlanetRenderer::createSphere(int detail)
 /////////////////////////////////////////////////
 {
   mesh_t *mesh = new mesh_t;
+  int detailx = detail;
+  int detaily = detail;
 
-  float R = 1./(float)(detail - 1);
-  float S = 1./(float)(detail - 1);
+  float R = 1./(float)(detailx - 1);
+  float S = 1./(float)(detaily - 1);
   int r, s;
 
-  mesh->numVertices = detail * detail;
+  mesh->numVertices = detailx * detaily;
   mesh->vertices = (vertex_t *)malloc(sizeof(vertex_t) * mesh->numVertices);
 
   int t = 0;
-  for(r = 0; r < detail; r++)
+  for(r = 0; r < detaily; r++)
   {
-    for(s = 0; s < detail; s++)
+    for(s = 0; s < detailx; s++)
     {
       float const y = sin( -MPI_2 + MPI * r * R );
       float const z = cos(2 * MPI * s * S) * sin( MPI * r * R );
@@ -118,18 +137,18 @@ mesh_t *CPlanetRenderer::createSphere(int detail)
     }
   }
 
-  mesh->numFaces = (detail - 1) * (detail - 1);
+  mesh->numFaces = (detailx - 1) * (detaily - 1);
   mesh->faces = (face_t *)malloc(sizeof(face_t) * mesh->numFaces);
 
   int i = 0;
-  for(r = 0; r < detail - 1; r++)
+  for(r = 0; r < detaily - 1; r++)
   {
-    for(s = 0; s < detail - 1; s++)
+    for(s = 0; s < detailx - 1; s++)
     {
-      mesh->faces[i].vertices[0] = r * detail + s;
-      mesh->faces[i].vertices[1] = r * detail + (s+1);
-      mesh->faces[i].vertices[2] = (r+1) * detail + (s+1);
-      mesh->faces[i].vertices[3] = (r+1) * detail + s;
+      mesh->faces[i].vertices[0] = r * detaily + s;
+      mesh->faces[i].vertices[1] = r * detailx + (s+1);
+      mesh->faces[i].vertices[2] = (r+1) * detailx + (s+1);
+      mesh->faces[i].vertices[3] = (r+1) * detaily + s;
       i++;
     }
   }
@@ -487,6 +506,13 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
                           mesh->vertices[f0].uv[1]);
 
       scanRender.renderPolygon(pImg, m_bmp[o->type]);
+      /*
+      pPainter->drawLine(mesh->vertices[f0].sp[0], mesh->vertices[f0].sp[1],
+                         mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1]);
+
+      pPainter->drawLine(mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1],
+                         mesh->vertices[f2].sp[0], mesh->vertices[f2].sp[1]);
+      */
     }
 
     if (o->type == PT_SATURN)
@@ -644,7 +670,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
-  if (!g_showSP) // TODO: u kalendare ne
+  if (!g_showSP) // TODO: u kalendare to nedelat
   {
     return;
   }

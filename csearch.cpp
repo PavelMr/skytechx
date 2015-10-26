@@ -313,7 +313,6 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
   QApplication::processEvents();
 
-  // lunar features : TODO: dodelat
   if (cLunarFeatures.search(str, mapView, ra, dec, fov))
   {
     return(true);

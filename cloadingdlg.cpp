@@ -82,7 +82,11 @@ void CLoadingDlg::slotLoad()
   setLoad(g_setName);
 
   cStarRenderer.open(g_skSet.map.starBitmapName);
-  cPlanetRenderer.load();
+  if (!cPlanetRenderer.load())
+  {
+    qDebug() << g_skSet.map.planet.moonImage;
+    qFatal("Cannot find moon image!!!");
+  }
 
   loadConstelNonLatinNames("../data/constellation/" + g_skSet.map.constellation.language);
 

@@ -266,6 +266,8 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.planet.plnRad", set->map.planet.plnRad, ds);
   writeVal("map.planet.satRad", set->map.planet.satRad, ds);
   writeVal("map.planet.jupGRSLon", set->map.planet.jupGRSLon, ds);
+  writeVal("map.planet.moonImage", set->map.planet.moonImage, ds);
+  writeVal("map.planet.useCustomMoonTexture", set->map.planet.useCustomMoonTexture, ds);
 
   // comet & aster.
   writeVal("map.comet.color", set->map.comet.color, ds);
@@ -558,6 +560,8 @@ bool setLoad(QString name, setting_t *set)
   set->map.planet.plnRad = readVal("map.planet.plnRad", 5, tMap).toInt();
   set->map.planet.satRad = readVal("map.planet.satRad", 3, tMap).toInt();
   set->map.planet.jupGRSLon = readVal("map.planet.jupGRSLon", 168.0, tMap).toDouble();
+  set->map.planet.moonImage = readVal("map.planet.moonImage", "", tMap).toString();
+  set->map.planet.useCustomMoonTexture = readVal("map.planet.useCustomMoonTexture", false, tMap).toBool();
 
   // aster & comets
   set->map.comet.color = readVal("map.comet.color", MRGB(255, 255, 255), tMap).toUInt();

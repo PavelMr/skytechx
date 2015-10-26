@@ -92,6 +92,8 @@ typedef struct
   int   plnRad;
   int   satRad;
   double jupGRSLon;
+  QString moonImage;
+  bool    useCustomMoonTexture;
 } planet_t;
 
 typedef struct
