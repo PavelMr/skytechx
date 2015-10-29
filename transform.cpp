@@ -3,6 +3,7 @@
 #include "jd.h"
 #include "castro.h"
 
+static SKMATRIX m_matTransfNoPrecess;
 static SKMATRIX m_matTransf;
 static SKMATRIX m_matProj;
 static SKMATRIX m_matView;
@@ -30,6 +31,7 @@ static SKPLANE  m_frustumSave[5];
 
 static double m_jd;
 
+static double mapEpoch;
 static mapView_t currentMapView;
 
 int m_numFrustums;
@@ -208,7 +210,6 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
 
   currentMapView = *mapView;
 
-  double mapEpoch;
   if (mapView->epochJ2000 && currentMapView.coordType == SMCT_RA_DEC)
   {
     mapEpoch = JD2000;
@@ -243,6 +244,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     view = (precMat) * (my * mx * mz);
     mat = view * scale * proj;
 
+    m_matTransfNoPrecess = m_matViewNoPrec * scale * proj;
     m_matTransf = mat;
     m_matView = view;
     m_matProj = proj;
@@ -389,8 +391,8 @@ void trfProjectLineNoCheck(SKPOINT *p1, SKPOINT *p2)
 
     SKVECTransform(&out, &p[i]->w, &m_matTransf);
 
-    p[i]->sx = (int)(out.x * scrx2 + scrx2);
-    p[i]->sy = (int)(out.y * scry2 + scry2);
+    p[i]->sx = (int)(out.x * scrx2 + scrx2 + 0.5);
+    p[i]->sy = (int)(out.y * scry2 + scry2 + 0.5);
   }
 }
 
@@ -431,8 +433,8 @@ bool trfProjectLine(SKPOINT *p1, SKPOINT *p2)
 
     SKVECTransform(&out, &p[i]->w, &m_matTransf);
 
-    p[i]->sx = (int)(out.x * scrx2 + scrx2);
-    p[i]->sy = (int)(out.y * scry2 + scry2);
+    p[i]->sx = (int)(out.x * scrx2 + scrx2 + 0.5);
+    p[i]->sy = (int)(out.y * scry2 + scry2 + 0.5);
   }
 
   return(true);
@@ -454,16 +456,16 @@ bool trfProjectLineGetClip(SKPOINT *p1, SKPOINT *p2, bool &bClipped, int &sx, in
   {
     SKVECTransform(&out, &ptc, &m_matTransf);
 
-    sx = (int)(out.x * scrx2 + scrx2);
-    sy = (int)(out.y * scry2 + scry2);
+    sx = (int)(out.x * scrx2 + scrx2 + 0.5);
+    sy = (int)(out.y * scry2 + scry2 + 0.5);
   }
 
   for (int i = 0; i < 2; i++)
   {
     SKVECTransform(&out, &p[i]->w, &m_matTransf);
 
-    p[i]->sx = (int)(out.x * scrx2 + scrx2);
-    p[i]->sy = (int)(out.y * scry2 + scry2);
+    p[i]->sx = (int)(out.x * scrx2 + scrx2 + 0.5);
+    p[i]->sy = (int)(out.y * scry2 + scry2 + 0.5);
   }
 
   return(true);
@@ -496,8 +498,8 @@ bool trfProjectPoint(SKPOINT *p)
 
   SKVECTransform(&out, &p->w, &m_matTransf);
 
-  p->sx = (int)(out.x * scrx2 + scrx2);
-  p->sy = (int)(out.y * scry2 + scry2);
+  p->sx = (int)(out.x * scrx2 + scrx2 + 0.5);
+  p->sy = (int)(out.y * scry2 + scry2 + 0.5);
 
   return(true);
 }
@@ -510,8 +512,8 @@ void trfProjectPointNoCheck(SKPOINT *p)
 
   SKVECTransform(&out, &p->w, &m_matTransf);
 
-  p->sx = (int)(out.x * scrx2 + scrx2);
-  p->sy = (int)(out.y * scry2 + scry2);
+  p->sx = (int)(out.x * scrx2 + scrx2 + 0.5);
+  p->sy = (int)(out.y * scry2 + scry2 + 0.5);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -522,8 +524,8 @@ void trfProjectPointNoCheckDbl(SKPOINT *p, double &x, double &y)
 
   SKVECTransform(&out, &p->w, &m_matTransf);
 
-  x = out.x * scrx2 + scrx2;
-  y = out.y * scry2 + scry2;
+  x = out.x * scrx2 + scrx2 + 0.5;
+  y = out.y * scry2 + scry2 + 0.5;
 }
 
 
@@ -580,47 +582,131 @@ void trfConvScrPtToXY(double sx, double sy, double &x, double &y)
 double trfGetAngleDegFlipped(double ang)
 ////////////////////////////////////////
 {
-  if (bFlipX)
-    ang = R180 - ang;
+  //if ((bFlipX && bFlipY) || (!bFlipX && !bFlipY))
+    //return ang;
 
-  if (bFlipY)
-    ang = R180 - ang;
+  ang *= bFlipX ? -1 : 1;
+  ang *= bFlipY ? -1 : 1;
+  //ang = -ang + R90;
 
-  return(ang);
+  return ang;
 }
 
-
-////////////////////////////////////////////////
-double trfGetAngleToNPole(double ra, double dec)
-////////////////////////////////////////////////
+static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
 {
-  // TODO: kontrola !!!!!!!!!!!! (planety a galaxie)
+  // http://www.movable-type.co.uk/scripts/latlong.html
+
+  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
+  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
+}
+
+extern QPainter *ppp;
+
+double trfGetAngleToEast(double ra, double dec, double epoch)
+{
   double a;
   radec_t rd;
   SKPOINT p1,p2;
   SKVECTOR t1, t2;
 
+  precess(&ra, &dec, epoch, mapEpoch);
+
   rd.Ra = ra;
   rd.Dec = dec;
 
-  trfRaDecToPointNoCorrect(&rd, &p1);
-  rd.Ra = 0;
-  if (dec >= 0)
-    rd.Dec = R90;
-  else
-    rd.Dec = -R90;
-  trfRaDecToPointNoCorrect(&rd, &p2);
+  trfRaDecToPointCorrectFromTo(&rd, &p1, mapEpoch, JD2000);
 
-  SKVECTransform3(&t1, &p1.w, &m_matView);
-  SKVECTransform3(&t2, &p2.w, &m_matView);
+  calcAngularDistance(ra, dec, -R90, 0.1, ra, dec);
 
-  a = atan2(t1.y - t2.y, t1.x - t2.x) + R180 - R90;
-  if (dec <= 0)
-    a += R180;
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  trfRaDecToPointCorrectFromTo(&rd, &p2, mapEpoch, JD2000);
+
+  trfProjectLineNoCheck(&p1, &p2);
+  a = atan2(p1.sy - p2.sy, p1.sx - p2.sx) + R90;
+
+  if (ppp)
+  {
+    ppp->setPen(Qt::green);
+    ppp->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+  }
 
   rangeDbl(&a, R360);
-
   return(a);
+}
+
+
+////////////////////////////////////////////////
+double trfGetAngleToNPole(double ra, double dec, double epoch)
+////////////////////////////////////////////////
+{
+  double a;
+  radec_t rd;
+  SKPOINT p1,p2;
+  SKVECTOR t1, t2;
+
+  precess(&ra, &dec, epoch, mapEpoch);
+
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  trfRaDecToPointCorrectFromTo(&rd, &p1, mapEpoch, JD2000);
+
+  calcAngularDistance(ra, dec, 0, 0.1, ra, dec);
+
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  trfRaDecToPointCorrectFromTo(&rd, &p2, mapEpoch, JD2000);
+
+  trfProjectLineNoCheck(&p1, &p2);
+  a = atan2(p1.sy - p2.sy, p1.sx - p2.sx) + R90;
+
+  if (ppp)
+  {
+    ppp->setPen(Qt::red);
+    ppp->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+  }
+
+  rangeDbl(&a, R360);
+  return(a);
+
+/*
+  double a;
+  radec_t rd;
+  SKPOINT p1,p2;
+  SKVECTOR t1, t2;
+
+  if (!currentMapView.epochJ2000)
+  {
+    precess(&ra, &dec, JD2000, epoch);
+  }
+
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  trfRaDecToPointCorrectFromTo(&rd, &p1, mapEpoch, JD2000);
+
+  calcAngularDistance(ra, dec, 0, 0.1, ra, dec);
+
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  trfRaDecToPointCorrectFromTo(&rd, &p2, mapEpoch, JD2000);
+
+  trfProjectLineNoCheck(&p1, &p2);
+  a = atan2(p1.sy - p2.sy, p1.sx - p2.sx) + R90;
+
+  if (ppp)
+  {
+    ppp->setPen(Qt::red);
+    ppp->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+  }
+
+  rangeDbl(&a, R360);
+  return(a);
+  */
 }
 
 

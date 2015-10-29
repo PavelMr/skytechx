@@ -15,6 +15,7 @@
 #include "csatellitedlg.h"
 #include "constellation.h"
 #include "build.h"
+#include "clog.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
@@ -91,40 +92,49 @@ void CLoadingDlg::slotLoad()
   loadConstelNonLatinNames("../data/constellation/" + g_skSet.map.constellation.language);
 
   qDebug() << "L1";
+  slog.write("L1");
   constLoad();
   sigProgress(1);
 
   qDebug() << "L2";
+  slog.write("L2");
   cDSO.load();
   sigProgress(2);
 
   qDebug() << "L3";
+  slog.write("L3");
   cGSCReg.loadRegions();
   sigProgress(3);
 
   qDebug() << "L4";
+  slog.write("L4");
   cTYC.load();
   sigProgress(4);
 
   qDebug() << "L5";
+  slog.write("L5");
   cMilkyWay.load();
   sigProgress(5);
 
   qDebug() << "L6";
+  slog.write("L6");
   cSatXYZ.init();
   sigProgress(6);
 
   qDebug() << "L7";
+  slog.write("L7");
   curAsteroidCatName = set.value("asteroid_file", "").toString();
   astLoad(curAsteroidCatName);
   sigProgress(7);
 
   qDebug() << "L8";
+  slog.write("L8");
   curCometCatName = set.value("comet_file", "").toString();
   comLoad(curCometCatName);
   sigProgress(8);
 
   qDebug() << "L9";
+  slog.write("L9");
   g_pSunTexture = new QImage(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/sun/sun_tex.png");
   if (g_pSunTexture->isNull())
   {
@@ -134,6 +144,7 @@ void CLoadingDlg::slotLoad()
   sigProgress(9);
 
   qDebug() << "L10";
+  slog.write("L10");
   g_pDb = new CDB(QSqlDatabase::addDatabase("QSQLITE", "sql_skytech"));
   g_pDb->setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/db/skytech.sql");
   qDebug() << QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/db/skytech.sql";
@@ -145,12 +156,15 @@ void CLoadingDlg::slotLoad()
   sigProgress(10);
 
   qDebug() << "L11";
+  slog.write("L11");
   g_horizonName = set.value("horizon_file", "none").toString();
   background.loadBackground(g_horizonName);
 
+  slog.write("L12");
   sigProgress(11);
   cLunarFeatures.load("../data/moon/moon.dat");
 
+  slog.write("L13");
   sigProgress(12);
   loadTracking();
 

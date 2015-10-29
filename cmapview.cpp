@@ -1357,6 +1357,10 @@ void CMapView::updateStatusBar(void)
   double ra, dec;
   double azm, alt;
   double epoch;
+  double raOrig;
+  double decOrig;
+
+  //qDebug() << "----";
 
   trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), ra, dec);
 
@@ -1370,6 +1374,14 @@ void CMapView::updateStatusBar(void)
   else
   {
     epoch = m_mapView.jd;
+  }
+
+  raOrig = ra;
+  decOrig = dec;
+
+  if (!m_mapView.epochJ2000)
+  {
+    precess(&raOrig, &decOrig, m_mapView.jd, JD2000);
   }
 
   if (pcMainWnd->statusBar)
@@ -1393,7 +1405,9 @@ void CMapView::updateStatusBar(void)
 
     double sep = anSep(m_measurePoint.Ra, m_measurePoint.Dec, ra, dec);
     double ang = RAD2DEG(trfGetPosAngle(ra, dec, m_measurePoint.Ra, m_measurePoint.Dec));
-    pcMainWnd->statusBar->setItem(SB_SM_MEASURE, QString(tr("Sep : %1 / PA : %2°")).arg(getStrDegNoSign(sep)).arg(ang, 0, 'f', 2));
+    //pcMainWnd->statusBar->setItem(SB_SM_MEASURE, QString(tr("Sep : %1 / PA : %2°")).arg(getStrDegNoSign(sep)).arg(ang, 0, 'f', 2));
+    pcMainWnd->statusBar->setItem(SB_SM_MEASURE, QString(tr("PA : %1°")).arg(R2D(trfGetAngleToNPole(raOrig, decOrig))));
+    //qDebug() << "2" << R2D(trfGetAngleToNPole(raOrig, decOrig)) << raOrig << decOrig;
   }
 
   if (bDevelopMode)
@@ -1749,6 +1763,8 @@ QImage *CMapView::getImage(void)
   return(pBmp);
 }
 
+QPainter *ppp;
+
 ////////////////////////////////////////
 void CMapView::paintEvent(QPaintEvent *)
 ////////////////////////////////////////
@@ -1770,6 +1786,141 @@ void CMapView::paintEvent(QPaintEvent *)
   }
 
   p.drawImage(0, 0, *pBmp);
+
+  /*
+  double a;
+
+  SKVECTOR t1, t2;
+  */
+
+  //precess(&ra, &dec, epoch, JD2000);
+
+
+  radec_t rd;
+  SKPOINT p1,p2;
+  /*
+  double ra, dec;
+  trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), ra, dec);
+  //precess(&ra, &dec, m_mapView.jd, JD2000);
+
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  //if (!m_mapView.epochJ2000)
+    trfRaDecToPointCorrectFromTo(&rd, &p1, m_mapView.jd, JD2000);
+  //else
+    //trfRaDecToPointNoCorrect(&rd, &p1);
+
+  rd.Ra = 0;
+  rd.Dec = R90;
+
+  if (!m_mapView.epochJ2000)
+    trfRaDecToPointCorrectFromTo(&rd, &p2, m_mapView.jd, JD2000);
+  else
+    trfRaDecToPointNoCorrect(&rd, &p2);
+
+  trfProjectLine(&p1, &p2);
+  p.setPen(Qt::white);
+  p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+  */
+
+/*
+  double ra, dec;
+  trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), ra, dec);
+  //precess(&ra, &dec, JD2000, m_mapView.jd);
+  precess(&ra, &dec, m_mapView.jd, JD2000);
+
+  //ra = 0;
+  //dec = 0;
+
+  ppp = &p;
+
+  p.setPen(Qt::yellow);
+
+  //float angle1 = R2D(trfGetAngleToEast(ra, dec));//, m_mapView.jd));
+  float angle2 = R2D(trfGetAngleToNPole(ra, dec, m_mapView.jd));//, m_mapView.jd));
+
+  ppp = 0;
+*/
+
+
+
+  //qDebug() << "1" << angle << ra << dec;
+  double ra, dec;
+
+  trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), ra, dec);
+
+  precess(&ra, &dec, m_mapView.jd, JD2000);
+
+  ppp = &p;
+
+  float angle1 = R2D(trfGetAngleToEast(ra, dec));//m_mapView.jd));
+  float angle2 = R2D(trfGetAngleToNPole(ra, dec));//, m_mapView.jd));
+
+  ppp = 0;
+
+  /*
+
+  SKPOINT pp;
+  //radec_t rd;
+
+  if (!m_mapView.epochJ2000)
+  {
+    //precess(&ra, &dec, JD2000, m_mapView.jd);
+  }
+
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  trfRaDecToPointCorrectFromTo(&rd, &pp, m_mapView.jd, JD2000);
+  //trfRaDecToPointNoCorrect(&rd, &pp);
+  trfProjectPoint(&pp);
+
+  p.save();
+  p.translate(pp.sx, pp.sy);
+  p.rotate(angle1);
+  p.setPen(Qt::white);
+  p.drawLine(0, 0, 0, 300);
+  //p.drawEllipse(QPoint(0, 0), 10, 100);
+  p.restore();
+
+  p.save();
+  p.translate(pp.sx, pp.sy);
+  p.rotate(angle2);
+  p.setPen(Qt::yellow);
+  p.drawLine(0, 0, 0, 300);
+  //p.drawEllipse(QPoint(0, 0), 10, 100);
+  p.restore();
+
+  //qDebug() << angle1 << angle2;
+  */
+
+
+
+/*
+
+  //radec_t rd;
+  SKPOINT p1,p2;
+  SKVECTOR t1, t2;
+
+  rd.Ra = ra;
+  rd.Dec = dec;
+
+  trfRaDecToPointNoCorrect(&rd, &p1);
+  if (dec >= 0)
+    rd.Dec = R90;
+  else
+    rd.Dec = -R90;
+  trfRaDecToPointNoCorrect(&rd, &p2);
+
+  //SKVECTransform3(&t1, &p1.w, &m_matView);
+  //SKVECTransform3(&t2, &p2.w, &m_matView);
+
+  trfProjectLine(&p1, &p2);
+  p.setPen(Qt::white);
+  p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+  */
+
 
   if (m_zoomLens)
   {

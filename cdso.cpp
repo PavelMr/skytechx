@@ -677,13 +677,18 @@ void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
   }
 }
 
+extern QPainter *ppp;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t * /*mapView*/, bool addToList)
+void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t *mapView, bool addToList)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 {
   int sz = m_minSize - 1;
   pPainter->setPen(m_pen);
+
+  //if (pDso->nameOffs != 32214)
+    //return;
 
   int sx = trfGetArcSecToPix(pDso->sx);
   int sy = trfGetArcSecToPix(pDso->sy);
@@ -702,23 +707,21 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
   double ra = pDso->rd.Ra;
   double dec = pDso->rd.Dec;
 
-  //precess(&ra, &dec, mapView->jd, JD2000);
+  double ang = (float)trfGetAngleToNPole(ra, dec); // TODO: precese
 
-  //pDso->pa = 0;
-
-  float ang = (float)trfGetAngleToNPole(ra, dec); // TODO: precese
   if (pDso->pa != NO_DSO_PA)
   {
-    ang = R90 - (D2R(pDso->pa) - ang);
+    if (mapView->flipX + mapView->flipY == 1)
+      ang = (D2R(pDso->pa) + ang);
+    else
+      ang = -(D2R(pDso->pa) - ang);
   }
-
-  ang = trfGetAngleDegFlipped(ang);
 
   pPainter->save();
   pPainter->translate(pt->sx, pt->sy);
   pPainter->rotate(R2D(ang));
-
-  pPainter->drawEllipse(QPoint(0, 0), sx, sy);
+  pPainter->drawEllipse(QPoint(0, 0), sy, sx);
+  pPainter->drawLine(QPoint(0, 0), QPoint(0, sy));
 
   pPainter->restore();
 

@@ -33,7 +33,8 @@ void trfRestore(void);
 void trfSave(void);
 
 int trfGetArcSecToPix(float size);
-double trfGetAngleToNPole(double ra, double dec);
+double trfGetAngleToNPole(double ra, double dec, double epoch = JD2000);
+double trfGetAngleToEast(double ra, double dec, double epoch = JD2000);
 double trfGetAngleDegFlipped(double ang);
 void trfRotate2dPt(float *tx,float *ty,float cx,float cy,float s,float c);
 double trfGetPosAngle(double R1,double D1,double R2,double D2);

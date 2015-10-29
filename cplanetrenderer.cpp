@@ -592,7 +592,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
   m = sy * 1.2;
 
-  float angle = o->PA - trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec);
+  float angle = o->PA + trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, mapView->jd);
   float angle2 = trfGetAngleDegFlipped(angle);
 
   if (o->type == PT_SATURN)
