@@ -339,12 +339,20 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
         p->setBrush(QColor(g_skSet.map.comet.color));
         p->setPen(g_skSet.map.comet.color);
 
-        float ang = (float)trfGetAngleToNPole(a->orbit.lRD.Ra, a->orbit.lRD.Dec);
-        ang = trfGetAngleDegFlipped(ang);
+        float ang = (float)trfGetAngleToNPole(a->orbit.lRD.Ra, a->orbit.lRD.Dec, view->jd);
+
+        if (view->flipX + view->flipY == 1)
+        {
+          ang = R2D(R180 - sunAng + ang);
+        }
+        else
+        {
+          ang = R2D(R180 + sunAng + ang);
+        }
 
         p->save();
         p->translate(pt.sx, pt.sy);
-        p->rotate(R2D(R180 + sunAng + ang));
+        p->rotate(ang);
 
         p->drawEllipse(QPoint(0, 0), size, size);
         p->drawLine(0, 0, -offsetX, -offsetY);

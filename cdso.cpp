@@ -707,7 +707,7 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
   double ra = pDso->rd.Ra;
   double dec = pDso->rd.Dec;
 
-  double ang = (float)trfGetAngleToNPole(ra, dec); // TODO: precese
+  double ang = (float)trfGetAngleToNPole(ra, dec);
 
   if (pDso->pa != NO_DSO_PA)
   {

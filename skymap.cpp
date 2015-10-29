@@ -841,6 +841,8 @@ static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o
   }
 }
 
+extern QPainter *ppp;
+
 ///////////////////////////////////////////////////////////////////////////////////
 static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////////////
@@ -933,8 +935,16 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     trfRaDecToPointCorrectFromTo(&es.lRD, &pt, mapView->jd, JD2000);
     if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, 0.5 * D2R(es.sx / 3600.0)))
     {
+      ppp = pPainter;
       trfProjectPointNoCheck(&pt);
-      double rot = R2D(trfGetAngleToNPole(ra, dec));
+      double rot = 180 + R2D(trfGetAngleToNPole(ra, dec));
+
+      if (mapView->flipX + mapView->flipY == 1)
+      {
+
+      }
+
+      ppp = 0;
 
       int r1 = trfGetArcSecToPix(es.sx);
       int r2 = trfGetArcSecToPix(es.sy);
@@ -953,22 +963,12 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       pPainter->drawCross(0, 0, r1);
       pPainter->drawCrossX(0, 0, r1 * 0.7071067811865475);
 
+      pPainter->restore();
+
       QTransform tr;
 
       tr.translate(pt.sx, pt.sy);
-
-      /*
-      int sx = 1;
-      int sy = 1;
-
-      if (mapView->flipX) sx = -1;
-      if (mapView->flipY) sy = -1;
-
-      tr.scale(sx, sy); // FIXME: neukazuje to spravne
-      */
       tr.rotate(rot);
-
-      pPainter->restore();
 
       pPainter->setPen(g_skSet.map.es.color);
       pPainter->setBrush(QColor(0, 0, 0, g_skSet.map.es.alpha));
@@ -979,15 +979,35 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       setSetFont(FONT_EARTH_SHD, pPainter);
       setSetFontColor(FONT_EARTH_SHD, pPainter);
 
+      QString labels[4] = {QObject::tr("S"),
+                           QObject::tr("N"),
+                           QObject::tr("E"),
+                           QObject::tr("W")};
+      int idx[4];
+
+      if (mapView->flipX + mapView->flipY == 1)
+      {
+        idx[0] = 0;
+        idx[1] = 1;
+        idx[2] = 3;
+        idx[3] = 2;
+      }
+      else
+      {
+        idx[0] = 0;
+        idx[1] = 1;
+        idx[2] = 2;
+        idx[3] = 3;
+      }
 
       p = tr.map(QPoint(0, r1 + fs));
-      pPainter->drawCText(p.x(), p.y(), QObject::tr("N"));
+      pPainter->drawCText(p.x(), p.y(), labels[idx[0]]);
       p = tr.map(QPoint(0, -r1 - fs));
-      //pPainter->drawCText(p.x(), p.y(), QObject::tr("S"));
+      pPainter->drawCText(p.x(), p.y(), labels[idx[1]]);
       p = tr.map(QPoint(-r1 - fs, 0));
-      pPainter->drawCText(p.x(), p.y(), QObject::tr("E"));
+      pPainter->drawCText(p.x(), p.y(), labels[idx[2]]);
       p = tr.map(QPoint(r1 + fs, 0));
-      //pPainter->drawCText(p.x(), p.y(), QObject::tr("W"));
+      pPainter->drawCText(p.x(), p.y(), labels[idx[3]]);
 
       addMapObj(pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
     }
