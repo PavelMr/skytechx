@@ -13,6 +13,8 @@ extern bool g_showLabels;
 extern bool g_bilinearInt;
 extern bool g_showSP;
 
+extern QPainter *ppp;
+
 //////////////////////////////////
 CPlanetRenderer::CPlanetRenderer()
 //////////////////////////////////
@@ -592,32 +594,44 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
   m = sy * 1.2;
 
-  float angle = o->PA + trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, mapView->jd);
-  float angle2 = trfGetAngleDegFlipped(angle);
+  float angle = trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, mapView->jd);
+
+  if (mapView->flipX + mapView->flipY == 1)
+    angle = R180 - angle - o->PA;
+  else
+    angle = angle - o->PA;
+
+  angle = trfGetAngleDegFlipped(angle);
 
   if (o->type == PT_SATURN)
   { // draw saturn ring back side
     QPainterPath path;
+    float angle2 = angle;
+
+    if (mapView->flipX + mapView->flipY == 1)
+    {
+      angle2 = R180 + angle2;
+    }
 
     path.addEllipse(QPoint(0, 0), ro, (int)(ro * sin(o->cLat)));
     path.addEllipse(QPoint(0, 0), ri, (int)(ri * sin(o->cLat)));
 
     pPainter->save();
     pPainter->translate(QPoint(pt->sx, pt->sy));
-    pPainter->scale(mapView->flipX ? -1 : 1, mapView->flipY ? -1 : 1);
-    pPainter->rotate(360 - R2D(angle2));
+    pPainter->rotate(R2D(angle2));
     if (o->cLat > 0)
-      pPainter->setClipRect(QRect(-10000, 0, 20000, 10000));
+      pPainter->setClipRect(QRect(-10000, -2, 20000, 10000));
     else
-      pPainter->setClipRect(QRect(-10000, 0, 20000, -10000));
+      pPainter->setClipRect(QRect(-10000, 2, 20000, -10000));
     pPainter->drawPath(path);
     pPainter->setClipping(false);
     pPainter->restore();
   }
 
+
   pPainter->save();
   pPainter->translate(QPoint(pt->sx, pt->sy));
-  pPainter->rotate(360 - R2D(angle2));
+  pPainter->rotate(R2D(angle));
   pPainter->drawLine(0, -m, 0, m);
   pPainter->drawEllipse(QPoint(0, 0), sx, sy);
   pPainter->restore();
@@ -625,18 +639,23 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   if (o->type == PT_SATURN)
   { // draw saturn ring front side
     QPainterPath path;
+    float angle2 = angle;
+
+    if (mapView->flipX + mapView->flipY == 1)
+    {
+      angle2 = R180 + angle2;
+    }
 
     path.addEllipse(QPoint(0, 0), ro, (int)(ro * sin(o->cLat)));
     path.addEllipse(QPoint(0, 0), ri, (int)(ri * sin(o->cLat)));
 
     pPainter->save();
     pPainter->translate(QPoint(pt->sx, pt->sy));
-    pPainter->scale(mapView->flipX ? -1 : 1, mapView->flipY ? -1 : 1);
-    pPainter->rotate(360 - R2D(angle2));
+    pPainter->rotate(R2D(angle2));
     if (o->cLat > 0)
-      pPainter->setClipRect(QRect(-10000, 0, 20000, -10000));
+      pPainter->setClipRect(QRect(-10000, 2, 20000, -10000));
     else
-      pPainter->setClipRect(QRect(-10000, 0, 20000, 10000));
+      pPainter->setClipRect(QRect(-10000, -2, 20000, 10000));
     pPainter->drawPath(path);
     pPainter->setClipping(false);
     pPainter->restore();
@@ -665,6 +684,13 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   return(maxSize);
 }
 
+static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
+{
+  // http://www.movable-type.co.uk/scripts/latlong.html
+
+  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
+  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate)
@@ -700,20 +726,20 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
   ph *= rx;
 
   // angle to sun
-  double sunAng = atan2(cos(sun->lRD.Dec) * sin(sun->lRD.Ra - o->lRD.Ra), sin(sun->lRD.Dec) * cos(o->lRD.Dec) - cos(sun->lRD.Dec) * sin(o->lRD.Dec) * cos(sun->lRD.Ra - o->lRD.Ra));
-  sunAng -= trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec);
-  rangeDbl(&sunAng, R360);
+  double sa = -trfGetPosAngle(o->lRD.Ra, o->lRD.Dec, sun->lRD.Ra, sun->lRD.Dec);
 
-  sunAng += side * MPI;
-  sunAng = R270 - sunAng;
-  sunAng += R180;
+  rangeDbl(&sa, R360);
+
+  // angle to NP
+  double na = trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, view->jd) - R180;
+  double sunAng;
 
   if (view->flipX)
-    sunAng = R180 - sunAng;
+    sa *= -1;
   if (view->flipY)
-    sunAng = R180 - sunAng;
-  if (view->flipY)
-    sunAng += R180;
+    sa *= -1;
+
+  sunAng = sa + na - R270 + R180;
 
   if (!rotate)
   {
@@ -784,8 +810,15 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
     fy = pt->sy - c * ry;
     trfRotate2dPt(&fx,&fy,pt->sx,pt->sy,qs,qc);
   }
+
+  p->save();
+  p->translate(0, 0);
+  //p->translate(pt->sx, pt->sy);
+  p->translate(0, 0);
+  p->scale(1, 1);
   p->drawPolygon(pp, num);
   p->setOpacity(1);
+  p->restore();
 
   //qDebug("num = %d", num);
 

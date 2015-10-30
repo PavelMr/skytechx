@@ -502,7 +502,8 @@ void CDso::setPainter(CSkPainter *p, QImage *img)
 QStringList CDso::getNameList(dso_t *pDso)
 //////////////////////////////////////////
 {
-  return namesMap[pDso->nameOffs];
+  //return QStringList() << "ABCD1";
+  namesMap[pDso->nameOffs];
 }
 
 //////////////////////////////////
@@ -516,6 +517,8 @@ QString CDso::getName(dso_t *pDso)
 QString CDso::getName(dso_t *pDso, int idx)
 ///////////////////////////////////////////
 {
+  //return "ABCD2";
+
   QStringList *list = &namesMap[pDso->nameOffs];
   if (idx >= list->count())
   {
@@ -529,6 +532,8 @@ QString CDso::getName(dso_t *pDso, int idx)
 QStringList CDso::getNameInt(dso_t *pDso)
 /////////////////////////////////////////
 {
+  //return QStringList() << "ABCD3";
+
   char *p = dsoNames + pDso->nameOffs;
   QString str = QString(p);
 
