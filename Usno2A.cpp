@@ -263,7 +263,7 @@ bool CUsno2A::readZoneFile(usnoZone_t * pZone,
   float  fRa;
   int    i1, i2;
   ulong  last = -1;
-  ulong  from = 0;
+  //ulong  from = 0;
   int    count = 0;
   bool   bFound = false;
 
@@ -300,7 +300,7 @@ bool CUsno2A::readZoneFile(usnoZone_t * pZone,
     {
       if (fRa > raMax)
       {
-        from = last;
+        //from = last;
         break;
       }
     }

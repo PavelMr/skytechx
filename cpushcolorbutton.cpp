@@ -15,7 +15,6 @@ void CPushColorButton::setColor(QColor color)
 void CPushColorButton::paintEvent(QPaintEvent *e)
 {
   QPainter p(this);
-  QRect    rc = rect();
   QPixmap  pix(24, 24);
 
   pix.fill(m_color);

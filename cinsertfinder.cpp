@@ -89,7 +89,7 @@ void CInsertFinder::save()
   }
 }
 
-void CInsertFinder::slotIndexChanged(QModelIndex current, QModelIndex prev)
+void CInsertFinder::slotIndexChanged(QModelIndex current, QModelIndex /*prev*/)
 {
   int currentRow = current.row();
 

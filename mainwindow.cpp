@@ -4365,7 +4365,7 @@ void MainWindow::slotDownloadError(QString str)
   msgBoxError(this, str);
 }
 
-void MainWindow::slotDockBarFilter(bool vis)
+void MainWindow::slotDockBarFilter(bool /*vis*/)
 {
 
 }

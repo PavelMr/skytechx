@@ -360,7 +360,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
   }
 }
 
-
+#if 0
 /////////////////////////////////////////////////////////////////////////////
 static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
 /////////////////////////////////////////////////////////////////////////////
@@ -413,7 +413,7 @@ static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
   if (trfProjectLine(&pt[0], &pt[1]))
     pPainter->drawLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy);
 }
-
+#endif
 
 
 /////////////////////////////////////////////////////////////////////////////

@@ -460,7 +460,6 @@ void CEventSearch::on_pushButton_2_clicked()
     tThread[i]->start();
   }
 
-  int firstIndex = tEventList.count();
   eventCount = 0;
 
   qDebug("start");
@@ -521,22 +520,6 @@ void CEventSearch::on_pushButton_2_clicked()
 
 
   qDebug("end = %d ms", tt.elapsed());
-
-  /*
-  // save list
-  SkFile f("events/default.dat");
-
-  if (f.open(SkFile::WriteOnly))
-  {
-    int cnt = tEventList.count();
-    f.write((char *)&cnt, sizeof(int));
-    for (int i = 0; i < tEventList.count(); i++)
-    {
-      f.write((char *)tEventList[i], sizeof(event_t));
-    }
-    f.close();
-  }
-  */
 
   // show info
   QString str;

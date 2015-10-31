@@ -65,6 +65,7 @@ double unpackMPCDate2(QString str)
   return(jdGetJDFrom_DateTime(&t));
 }
 
+#if 0
 /////////////////////////////////////
 static QString packMPCDate(double jd)
 /////////////////////////////////////
@@ -96,6 +97,7 @@ static QString packMPCDate(double jd)
 
   return(str);
 }
+#endif
 
 static void solveCometElliptic(comet_t *com, double dt, double &r, double &v)
 {
@@ -194,10 +196,9 @@ static bool comSolve2(comet_t *a, double jdt)
     rh[2] = r * ( sin(v + p) * sin(a->i));
 
     // helio eqt. J2000.0
-    double ea1 = cAstro.getEclObl(JD2000);
-    a->orbit.hRect[0] = rh[0];//rh[0];
-    a->orbit.hRect[1] = rh[1];//rh[1] * cos(ea1) - rh[2] * sin(ea1);
-    a->orbit.hRect[2] = rh[2];//rh[1] * sin(ea1) + rh[2] * cos(ea1);
+    a->orbit.hRect[0] = rh[0];
+    a->orbit.hRect[1] = rh[1];
+    a->orbit.hRect[2] = rh[2];
 
     a->orbit.hLon = atan2(rh[1], rh[0]);
     a->orbit.hLat = atan2(rh[2], sqrt(rh[0] * rh[0] + rh[1] * rh[1]));

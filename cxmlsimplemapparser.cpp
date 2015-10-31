@@ -39,7 +39,7 @@ bool CXMLSimpleMapParser::characters(const QString &str)
   return true;
 }
 
-bool CXMLSimpleMapParser::endElement(const QString & namespaceURI, const QString & localName, const QString & qName)
+bool CXMLSimpleMapParser::endElement(const QString & /*namespaceURI*/, const QString & /*localName*/, const QString & qName)
 {
   if (!m_char.simplified().isEmpty())
   {
@@ -50,7 +50,7 @@ bool CXMLSimpleMapParser::endElement(const QString & namespaceURI, const QString
   return true;
 }
 
-bool CXMLSimpleMapParser::startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &attributes)
+bool CXMLSimpleMapParser::startElement(const QString &/*namespaceURI*/, const QString &/*localName*/, const QString &/*qName*/, const QXmlAttributes &/*attributes*/)
 {
   return true;
 }

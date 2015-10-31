@@ -364,7 +364,7 @@ void CPlanetRenderer::renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *, m
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, double ang, bool isPreview)
+int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, double /*ang*/, bool isPreview)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   int lev;
@@ -722,14 +722,6 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   return(maxSize);
 }
 
-static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
-{
-  // http://www.movable-type.co.uk/scripts/latlong.html
-
-  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
-  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -739,7 +731,6 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
     return;
   }
 
-  int side = 1;
   float scale = 1.001f;
   int   maxSize = qMax(rx, ry);
   p->setPen(Qt::NoPen);

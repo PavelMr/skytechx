@@ -503,7 +503,7 @@ QStringList CDso::getNameList(dso_t *pDso)
 //////////////////////////////////////////
 {
   //return QStringList() << "ABCD1";
-  namesMap[pDso->nameOffs];
+  return namesMap[pDso->nameOffs];
 }
 
 //////////////////////////////////

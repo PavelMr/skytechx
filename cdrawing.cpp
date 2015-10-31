@@ -562,7 +562,7 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
   return(rc.width());
 }
 
-void CDrawing::calcFrmField(CSkPainter *p, drawing_t *drw)
+void CDrawing::calcFrmField(CSkPainter */*p*/, drawing_t *drw)
 {
   radec_t rd[4];
   SKMATRIX matRot;
@@ -617,7 +617,7 @@ void calcAngularDistance(double ra, double dec, double angle, double distance, d
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
-int CDrawing::drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited)
+int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, bool bEdited)
 //////////////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt;

@@ -6,7 +6,7 @@ CLineColorDlg::CLineColorDlg(QWidget *parent, QPen *pen) :
   QDialog(parent),
   ui(new Ui::CLineColorDlg)
 {
-  ui->setupUi(this);  
+  ui->setupUi(this);
 
   m_pen = *pen;
   ui->spinBox->setValue(m_pen.width());
@@ -31,6 +31,9 @@ CLineColorDlg::CLineColorDlg(QWidget *parent, QPen *pen) :
 
     case Qt::DashDotDotLine:
       ui->radioButton_5->setChecked(true);
+      break;
+
+    default:
       break;
   }
 }

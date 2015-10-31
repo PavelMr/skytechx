@@ -83,7 +83,7 @@ bool CShape::load(QString name)
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-int CShape::render(QPainter *p, QImage *img, mapView_t *, QColor *colList, QRect &rc)
+int CShape::render(QPainter */*p*/, QImage *img, mapView_t *, QColor *colList, QRect &rc)
 /////////////////////////////////////////////////////////////////////////////////////
 {
   QColor col;

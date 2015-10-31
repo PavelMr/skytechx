@@ -3,9 +3,9 @@
 
 CGamepad::CGamepad(int period, double deadZone, double speedMul, QObject *parent) :
   QObject(parent) ,
-  m_ok(false),
+  m_deadZone(deadZone),
   m_speedMul(speedMul),
-  m_deadZone(deadZone)
+  m_ok(false)
 {
   m_timer = new QTimer(this);
   connect(m_timer, SIGNAL(timeout()), this, SLOT(slotTimeout()));
