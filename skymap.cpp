@@ -841,8 +841,6 @@ static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o
   }
 }
 
-extern QPainter *ppp;
-
 ///////////////////////////////////////////////////////////////////////////////////
 static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////////////
@@ -935,16 +933,8 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     trfRaDecToPointCorrectFromTo(&es.lRD, &pt, mapView->jd, JD2000);
     if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, 0.5 * D2R(es.sx / 3600.0)))
     {
-      ppp = pPainter;
       trfProjectPointNoCheck(&pt);
       double rot = 180 + R2D(trfGetAngleToNPole(ra, dec));
-
-      if (mapView->flipX + mapView->flipY == 1)
-      {
-
-      }
-
-      ppp = 0;
 
       int r1 = trfGetArcSecToPix(es.sx);
       int r2 = trfGetArcSecToPix(es.sy);

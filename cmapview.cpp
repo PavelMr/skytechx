@@ -1759,7 +1759,6 @@ QImage *CMapView::getImage(void)
   return(pBmp);
 }
 
-QPainter *ppp;
 
 ////////////////////////////////////////
 void CMapView::paintEvent(QPaintEvent *)

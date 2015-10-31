@@ -78,7 +78,6 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         return true;
       }
     }
-    return false;
   }
 
   if (str.startsWith("UCAC4", Qt::CaseInsensitive))
@@ -283,6 +282,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
     if (QString(a->name).contains(reg))
     {
+      qDebug() << a->name << reg;
       astSolve(a, mapView->jd);
       ra = a->orbit.lRD.Ra;
       dec = a->orbit.lRD.Dec;

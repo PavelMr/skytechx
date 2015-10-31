@@ -81,7 +81,7 @@ bool CPlanetRenderer::load()
     if (m_bmp[PT_MOON]->isNull())
     {
       delete m_bmp[PT_MOON];
-      m_bmp[PT_MOON] = new QImage(256, 256, QImage::Format_ARGB32_Premultiplied);
+      m_bmp[PT_MOON] = new QImage(32, 32, QImage::Format_ARGB32_Premultiplied);
       m_bmp[PT_MOON]->fill(0xff0000ff);
     }
   }
@@ -389,12 +389,22 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     lev = 3;
 
   mesh_t *mesh = m_sphere[lev];
-
+  /*
   float angle = o->PA - trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec) + R180;
   float angle2 = trfGetAngleDegFlipped(angle);
 
   if (ang != CM_UNDEF)
     angle = angle2 = ang;
+    */
+
+  float angle = trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, mapView->jd);
+
+  if (mapView->flipX + mapView->flipY == 1)
+    angle = R180 - angle - o->PA;
+  else
+    angle = angle - o->PA;
+
+  angle = trfGetAngleDegFlipped(angle);
 
   int m = sy * 1.2;
 
@@ -402,7 +412,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   { // draw axis
     pPainter->save();
     pPainter->translate(QPoint(pt->sx, pt->sy));
-    pPainter->rotate(360 - R2D(angle2));
+    pPainter->rotate(R2D(angle));
     pPainter->setPen(g_skSet.map.planet.penColor);
     pPainter->drawLine(0, -m, 0, m);
     pPainter->restore();
@@ -410,10 +420,22 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
   if (g_pSunTexture && o->type == PT_SUN)
   {
+    double angs = angle + R180;
+
+    if (mapView->flipX)
+    {
+      angs += R180;
+    }
+
+    if (mapView->flipX + mapView->flipY == 1)
+    {
+      angs = -angs;
+    }
+
     pPainter->save();
     pPainter->translate(QPoint(pt->sx, pt->sy));
     pPainter->scale(mapView->flipX ? -1 : 1, mapView->flipY ? -1 : 1);
-    pPainter->rotate(RAD2DEG(R360 - angle));
+    pPainter->rotate(R2D(angs));
     bool prev = pPainter->testRenderHint(QPainter::SmoothPixmapTransform);
     pPainter->setRenderHint(QPainter::SmoothPixmapTransform, g_bilinearInt);
     pPainter->drawImage(QRect(-sx, -sx, sx * 2, sx * 2), *g_pSunTexture);
@@ -424,14 +446,30 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   {
     if (o->type == PT_JUPITER)
     {
-      SKMATRIXRotateY(&matY, -o->cMer + g_skSet.map.planet.jupGRSLon);
+      SKMATRIXRotateY(&matY, -o->cMer + D2R(g_skSet.map.planet.jupGRSLon));
     }
     else
     {
       SKMATRIXRotateY(&matY, -o->cMer);
     }
+
+    double angp;
+
+    if (mapView->flipX + mapView->flipY == 1)
+    {
+      angp = (R360 - o->PA) - (trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, mapView->jd) - R180);
+    }
+    else
+    {
+      angp = (R360 - o->PA) + (trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, mapView->jd) - R180);
+    }
+
+    if (mapView->flipY)
+      angp = R180 + angp;
+
+
     SKMATRIXRotateX(&matX, o->cLat);
-    SKMATRIXRotateZ(&matZ, -angle);
+    SKMATRIXRotateZ(&matZ, angp);
     SKMATRIXScale(&matScale, mapView->flipX ? -1 : 1, mapView->flipY ? -1 : 1, 1);
 
     mat = matY * matX * matZ * matScale;
@@ -508,13 +546,13 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
                           mesh->vertices[f0].uv[1]);
 
       scanRender.renderPolygon(pImg, m_bmp[o->type]);
-      /*
-      pPainter->drawLine(mesh->vertices[f0].sp[0], mesh->vertices[f0].sp[1],
-                         mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1]);
 
-      pPainter->drawLine(mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1],
-                         mesh->vertices[f2].sp[0], mesh->vertices[f2].sp[1]);
-      */
+      //pPainter->drawLine(mesh->vertices[f0].sp[0], mesh->vertices[f0].sp[1],
+      //                   mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1]);
+
+      //pPainter->drawLine(mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1],
+      //                   mesh->vertices[f2].sp[0], mesh->vertices[f2].sp[1]);
+
     }
 
     if (o->type == PT_SATURN)

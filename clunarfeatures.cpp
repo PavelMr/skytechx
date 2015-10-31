@@ -123,7 +123,22 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
   lunarItem_t item;
   lunarItem_t *lf;
 
-  double angle = moon->PA - trfGetAngleToNPole(moon->lRD.Ra, moon->lRD.Dec) + R180;
+  double angle;
+
+  if (view->flipX + view->flipY == 1)
+  {
+    angle = moon->PA + trfGetAngleToNPole(moon->lRD.Ra, moon->lRD.Dec, view->jd) + R180;
+  }
+  else
+  {
+    angle = moon->PA - trfGetAngleToNPole(moon->lRD.Ra, moon->lRD.Dec, view->jd) + R180;
+  }
+
+  if (view->flipY)
+  {
+    angle = angle + R180;
+  }
+
   SKMATRIXRotateY(&mY, R90 + R180 + moon->cMer);
   SKMATRIXRotateX(&mX, R180 + moon->cLat);
   SKMATRIXRotateZ(&mZ, -angle);
@@ -258,11 +273,10 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
   SKMATRIX     mat;
   SKMATRIX     mX, mY, mZ, mS;
 
-  //return false;
-
   cAstro.calcPlanet(PT_MOON, &o);
 
-  double angle = o.PA;// - trfGetAngleToNPole(o.lRD.Ra, o.lRD.Dec) + R180;
+  double angle = o.PA;
+
   SKMATRIXRotateY(&mY, R90 + R180 + o.cMer);
   SKMATRIXRotateX(&mX, R180 + o.cLat);
   SKMATRIXRotateZ(&mZ, -angle);

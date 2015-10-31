@@ -1970,75 +1970,75 @@ int CMLibration::dargs (double J, struct plantbl *plan)
   T = (J - JD2000) / 36525.0;
   T2 = T * T;
 
-  
+
   w = mods3600 (129596581.038354 * T + 1287104.76154);
   w += ((((((((
-		1.62e-20 * T
-		- 1.0390e-17) * T
-	      - 3.83508e-15) * T
-	     + 4.237343e-13) * T
-	    + 8.8555011e-11) * T
-	   - 4.77258489e-8) * T
-	  - 1.1297037031e-5) * T
-	 + 1.4732069041e-4) * T
-	- 0.552891801772) * T2;
+    1.62e-20 * T
+    - 1.0390e-17) * T
+        - 3.83508e-15) * T
+       + 4.237343e-13) * T
+      + 8.8555011e-11) * T
+     - 4.77258489e-8) * T
+    - 1.1297037031e-5) * T
+   + 1.4732069041e-4) * T
+  - 0.552891801772) * T2;
   sscc (10, STR * w, plan->max_harmonic[10]);
 
-  
+
   w = mods3600 ((1739527263.0983 - 2.079419901760e-01) * T + 335779.55755);
   w = w + ((-9.646018347184e-06 * T2	/* F, t^4 */
-	    - 1.138215912580e-03) * T	/* F, t^3 */
-	   - 1.312045233711e+01) * T;	/* F, t^2 */
+      - 1.138215912580e-03) * T	/* F, t^3 */
+     - 1.312045233711e+01) * T;	/* F, t^2 */
   sscc (11, STR * w, plan->max_harmonic[11]);
 
-  
+
   w = mods3600 ((1717915923.4728 - 2.035946368532e-01) * T + 485868.28096);
   w = w + ((-3.421689790404e-04 * T2	/* l, t^4 */
-	    + 4.768357585780e-02) * T	/* l, t^3 */
-	   + 3.146734198839e+01) * T;	/* l, t^2 */
+      + 4.768357585780e-02) * T	/* l, t^3 */
+     + 3.146734198839e+01) * T;	/* l, t^2 */
   sscc (9, STR * w, plan->max_harmonic[9]);
 
-  
+
   w = mods3600 ((1602961601.4603 + 3.962893294503e-01) * T + 1072260.73512);
   w = w + ((-2.905334122698e-04 * T2	/* D, t^4 */
-	    - 5.834100476561e-03) * T	/* D, t^3 */
-	   - 6.847070905410e+00) * T;	/* D, t^2 */
+      - 5.834100476561e-03) * T	/* D, t^3 */
+     - 6.847070905410e+00) * T;	/* D, t^2 */
   sscc (12, STR * w, plan->max_harmonic[12]);
 
-  
+
   w = mods3600 ((1732564372.83264 - 6.784914260953e-01) * T + 785939.95571);
   w = w + ((-8.466472828815e-05 * T2	/* L, t^4 */
-	    + 5.722859298199e-03) * T	/* L, t^3 */
-	   - 5.663161722088e+00) * T;	/* L, t^2 */
+      + 5.722859298199e-03) * T	/* L, t^3 */
+     - 5.663161722088e+00) * T;	/* L, t^2 */
   sscc (13, STR * w, plan->max_harmonic[13]);
 
-  
 
-  
+
+
   w = mods3600 (210664136.4335482 * T + 655127.283046);
   w += ((((((((
-		-9.36e-023 * T
-		- 1.95e-20) * T
-	      + 6.097e-18) * T
-	     + 4.43201e-15) * T
-	    + 2.509418e-13) * T
-	   - 3.0622898e-10) * T
-	  - 2.26602516e-9) * T
-	 - 1.4244812531e-5) * T
-	+ 0.005871373088) * T2;
+    -9.36e-023 * T
+    - 1.95e-20) * T
+        + 6.097e-18) * T
+       + 4.43201e-15) * T
+      + 2.509418e-13) * T
+     - 3.0622898e-10) * T
+    - 2.26602516e-9) * T
+   - 1.4244812531e-5) * T
+  + 0.005871373088) * T2;
   sscc (1, STR * w, plan->max_harmonic[1]);
 
   /* Earth.  */
   w = mods3600 (129597742.26669231 * T + 361679.214649);
   w += ((((((((-1.16e-22 * T
-	       + 2.976e-19) * T
-	      + 2.8460e-17) * T
-	     - 1.08402e-14) * T
-	    - 1.226182e-12) * T
-	   + 1.7228268e-10) * T
-	  + 1.515912254e-7) * T
-	 + 8.863982531e-6) * T
-	- 2.0199859001e-2) * T2;
+         + 2.976e-19) * T
+        + 2.8460e-17) * T
+       - 1.08402e-14) * T
+      - 1.226182e-12) * T
+     + 1.7228268e-10) * T
+    + 1.515912254e-7) * T
+   + 8.863982531e-6) * T
+  - 2.0199859001e-2) * T2;
   sscc (2, STR * w, plan->max_harmonic[2]);
 
   /* Mars.  */
@@ -2069,7 +2069,7 @@ double CMLibration::gplan (double J, struct plantbl *plan)
   SCHAR *p;
   int *pl;
 
-  //papa(J);     
+  //papa(J);
 
   dargs(J, plan);
   /* Point to start of table of arguments. */
@@ -2081,65 +2081,65 @@ double CMLibration::gplan (double J, struct plantbl *plan)
   for (;;)
     {
       /* Find sine and cosine of argument for this term in the series.
-	 The argument has the form J_1 L_1 + J_2 L_2 + ...
-	 where J_i are integers and L_i are mean elements.  */
+   The argument has the form J_1 L_1 + J_2 L_2 + ...
+   where J_i are integers and L_i are mean elements.  */
 
       /* Number of periodic arguments. */
       np = *p++;
       if (np < 0)
-	break;
+  break;
       if (np == 0)
-	{
-	  /* If no periodic arguments, it is a polynomial term.
-	     Evaluate A_n T^n + A_n-1 T^n-1 + ... + A_0.  */
-	  nt = *p++;
-	  cu = *pl++;
-	  for (ip = 0; ip < nt; ip++)
-	    cu = cu * T + *pl++;
-	  sl += cu;
-	  continue;
-	}
+  {
+    /* If no periodic arguments, it is a polynomial term.
+       Evaluate A_n T^n + A_n-1 T^n-1 + ... + A_0.  */
+    nt = *p++;
+    cu = *pl++;
+    for (ip = 0; ip < nt; ip++)
+      cu = cu * T + *pl++;
+    sl += cu;
+    continue;
+  }
       k1 = 0;
       cv = 0.0;
       sv = 0.0;
       for (ip = 0; ip < np; ip++)
-	{
-	  /* What harmonic.  */
-	  j = *p++;
-	  /* Which planet.  */
-	  m = *p++ - 1;
-	  if (j)
-	    {
-	      k = j;
-	      if (j < 0)
-		k = -k;
-	      k -= 1;
-	      /* sin(k*angle) for planet m.  */
-	      su = ss[m][k];
-	      if (j < 0)
-		su = -su;
-	      /* cos(k*angle) for planet m.  */
-	      cu = cc[m][k];
-	      if (k1 == 0)
-		{
-		  /* Set sine and cosine of first angle. */
-		  sv = su;
-		  cv = cu;
-		  k1 = 1;
-		}
-	      else
-		{
-		  /* Combine angles by trigonometry.  */
-		  t = su * cv + cu * sv;
-		  cv = cu * cv - su * sv;
-		  sv = t;
-		}
-	    }
-	}
+  {
+    /* What harmonic.  */
+    j = *p++;
+    /* Which planet.  */
+    m = *p++ - 1;
+    if (j)
+      {
+        k = j;
+        if (j < 0)
+    k = -k;
+        k -= 1;
+        /* sin(k*angle) for planet m.  */
+        su = ss[m][k];
+        if (j < 0)
+    su = -su;
+        /* cos(k*angle) for planet m.  */
+        cu = cc[m][k];
+        if (k1 == 0)
+    {
+      /* Set sine and cosine of first angle. */
+      sv = su;
+      cv = cu;
+      k1 = 1;
+    }
+        else
+    {
+      /* Combine angles by trigonometry.  */
+      t = su * cv + cu * sv;
+      cv = cu * cv - su * sv;
+      sv = t;
+    }
+      }
+  }
       /* Now cv = cos(arg), sv = sin(arg).
-	 Evaluate
-	 cu = (C_n T^n + C_n-1 T^n-1 + ... + C_0) cos(arg)
-	 su = (S_n T^n + S_n-1 T^n-1 + ... + S_0) sin(arg).  */
+   Evaluate
+   cu = (C_n T^n + C_n-1 T^n-1 + ... + C_0) cos(arg)
+   su = (S_n T^n + S_n-1 T^n-1 + ... + S_0) sin(arg).  */
 
       /* Highest power of T.  */
       nt = *p++;
@@ -2147,10 +2147,10 @@ double CMLibration::gplan (double J, struct plantbl *plan)
       cu = *pl++;
       su = *pl++;
       for (ip = 0; ip < nt; ip++)
-	{
-	  cu = cu * T + *pl++;
-	  su = su * T + *pl++;
-	}
+  {
+    cu = cu * T + *pl++;
+    su = su * T + *pl++;
+  }
       sl += cu * cv + su * sv;
     }
   return (plan->trunclvl * sl);
@@ -2161,13 +2161,13 @@ double CMLibration::gplan (double J, struct plantbl *plan)
 //////////////////////////////////////////////////////
 void mLibration(double JD,double *llatp,double *llonp)
 //////////////////////////////////////////////////////
-{ 
+{
   double lon, lat;	/* arc seconds */
   CMLibration ml;
 
   lon = ml.gplan(JD, &liblon);
   lat = ml.gplan(JD, &liblat);
 
-  *llonp = DEG2RAD(lon/3600.0);
-  *llatp = DEG2RAD(lat/3600.0);
+  *llonp = -DEG2RAD(lon/3600.0);
+  *llatp =  DEG2RAD(lat/3600.0);
 }

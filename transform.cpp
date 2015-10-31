@@ -600,7 +600,6 @@ static void calcAngularDistance(double ra, double dec, double angle, double dist
   raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
 }
 
-extern QPainter *ppp;
 
 double trfGetAngleToEast(double ra, double dec, double epoch)
 {
@@ -625,12 +624,6 @@ double trfGetAngleToEast(double ra, double dec, double epoch)
 
   trfProjectLineNoCheck(&p1, &p2);
   a = atan2(p1.sy - p2.sy, p1.sx - p2.sx) + R90;
-
-  if (ppp)
-  {
-    ppp->setPen(Qt::green);
-    ppp->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
-  }
 
   rangeDbl(&a, R360);
   return(a);
@@ -663,50 +656,8 @@ double trfGetAngleToNPole(double ra, double dec, double epoch)
   trfProjectLineNoCheck(&p1, &p2);
   a = atan2(p1.sy - p2.sy, p1.sx - p2.sx) + R90;
 
-  if (ppp)
-  {
-    ppp->setPen(Qt::red);
-    ppp->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
-  }
-
   rangeDbl(&a, R360);
   return(a);
-
-/*
-  double a;
-  radec_t rd;
-  SKPOINT p1,p2;
-  SKVECTOR t1, t2;
-
-  if (!currentMapView.epochJ2000)
-  {
-    precess(&ra, &dec, JD2000, epoch);
-  }
-
-  rd.Ra = ra;
-  rd.Dec = dec;
-
-  trfRaDecToPointCorrectFromTo(&rd, &p1, mapEpoch, JD2000);
-
-  calcAngularDistance(ra, dec, 0, 0.1, ra, dec);
-
-  rd.Ra = ra;
-  rd.Dec = dec;
-
-  trfRaDecToPointCorrectFromTo(&rd, &p2, mapEpoch, JD2000);
-
-  trfProjectLineNoCheck(&p1, &p2);
-  a = atan2(p1.sy - p2.sy, p1.sx - p2.sx) + R90;
-
-  if (ppp)
-  {
-    ppp->setPen(Qt::red);
-    ppp->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
-  }
-
-  rangeDbl(&a, R360);
-  return(a);
-  */
 }
 
 
