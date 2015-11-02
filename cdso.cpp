@@ -602,7 +602,7 @@ void CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bo
   }
   if (addToList)
   {
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_RECT, s, (int)pDso, 0, pDso->DSO_MAG);
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_RECT, s, (qint64)pDso, 0, pDso->DSO_MAG);
   }
 }
 
@@ -625,7 +625,7 @@ void CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
   }
   if (addToList)
   {
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (qint64)pDso, 0, pDso->DSO_MAG);
   }
 }
 
@@ -649,7 +649,7 @@ void CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
   }
   if (addToList)
   {
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (qint64)pDso, 0, pDso->DSO_MAG);
   }
 }
 
@@ -673,7 +673,7 @@ void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
   }
   if (addToList)
   {
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (qint64)pDso, 0, pDso->DSO_MAG);
   }
 }
 
@@ -694,7 +694,7 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
     pPainter->drawEllipse(QPoint(pt->sx, pt->sy), sz * 2, sz);
     if (addToList)
     {
-      addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, sz, (int)pDso, 0, pDso->DSO_MAG);
+      addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, sz, (qint64)pDso, 0, pDso->DSO_MAG);
     }
     return;
   }
@@ -734,7 +734,7 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
   }
   if (addToList)
   {
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (qint64)pDso, 0, pDso->DSO_MAG);
   }
 }
 
@@ -757,7 +757,7 @@ void CDso::renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
   }
   if (addToList)
   {
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (qint64)pDso, 0, pDso->DSO_MAG);
   }
 }
 
@@ -781,7 +781,7 @@ void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
   }
   if (addToList)
   {
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (qint64)pDso, 0, pDso->DSO_MAG);
   }
 }
 
@@ -804,7 +804,7 @@ void CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, boo
   }
   if (addToList)
   {
-    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (int)pDso, 0, pDso->DSO_MAG);
+    addMapObj(pt->sx, pt->sy, MO_DSO, MO_CIRCLE, s, (qint64)pDso, 0, pDso->DSO_MAG);
   }
 }
 
@@ -831,7 +831,7 @@ void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool
     }
     if (addToList)
     {
-      addMapObj(rc.center().x(), rc.center().y(), MO_DSO, MO_RECT, rc.width() / 2, (int)dso, 0, dso->DSO_MAG);
+      addMapObj(rc.center().x(), rc.center().y(), MO_DSO, MO_RECT, rc.width() / 2, (qint64)dso, 0, dso->DSO_MAG);
     }
   }
 }

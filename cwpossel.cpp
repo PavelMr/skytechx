@@ -47,7 +47,7 @@ CWPosSel::CWPosSel(QWidget *parent, mapView_t *view) :
       m_tList.append(loc);
 
       QListWidgetItem *w = new QListWidgetItem(loc->name, NULL, 1);
-      w->setData(Qt::UserRole, (int)loc);
+      w->setData(Qt::UserRole, (qint64)loc);
       ui->listWidget->addItem(w);
     } while (1);
     f.close();
@@ -467,7 +467,7 @@ void CWPosSel::on_pushButton_4_clicked()
     m_tList.append(loc);
 
     QListWidgetItem *w = new QListWidgetItem(dlg.m_text, NULL, 1);
-    w->setData(Qt::UserRole, (int)loc);
+    w->setData(Qt::UserRole, (qint64)loc);
     ui->listWidget->addItem(w);
     ui->listWidget->setCurrentItem(w);
   }
@@ -482,7 +482,7 @@ void CWPosSel::on_pushButton_5_clicked()
   if (ti == NULL)
     return;
 
-  location_t *t = (location_t *)ti->data(Qt::UserRole).toInt();
+  location_t *t = (location_t *)ti->data(Qt::UserRole).toLongLong();
 
   CTextSel dlg(this, tr("Enter a location name"), 64, t->name);
 
@@ -500,7 +500,7 @@ void CWPosSel::on_pushButton_5_clicked()
 void CWPosSel::on_listWidget_doubleClicked(const QModelIndex &index)
 ////////////////////////////////////////////////////////////////////
 {
-  location_t *loc = (location_t *)index.data(Qt::UserRole).toInt();
+  location_t *loc = (location_t *)index.data(Qt::UserRole).toLongLong();
 
   setData(loc);
 }
@@ -514,7 +514,7 @@ void CWPosSel::slotDeleteItem()
   if (ti == NULL)
     return;
 
-  location_t *t = (location_t *)ti->data(Qt::UserRole).toInt();
+  location_t *t = (location_t *)ti->data(Qt::UserRole).toLongLong();
 
   m_tList.removeOne(t);
 

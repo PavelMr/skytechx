@@ -11,11 +11,11 @@ CDlgSrchStarName::CDlgSrchStarName(QWidget *parent) :
   for (int i = 0; i < cTYC.tNames.count(); i++)
   {
     int offs = cTYC.tNames[i]->supIndex;
-    QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);    
+    QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);
     tychoStar_t *tycho = (tychoStar_t *)cTYC.tNames[i];
 
-    ui->treeView->addRow(name, cTYC.getVisMag(tycho), (int)cTYC.tNames[i]);
-  }    
+    ui->treeView->addRow(name, cTYC.getVisMag(tycho), (qint64)cTYC.tNames[i]);
+  }
 
   ui->treeView->setHeaderSize(180, 60);
 }
@@ -48,7 +48,7 @@ void CDlgSrchStarName::on_pushButton_clicked()
     return;
   }
 
-  m_tycho = (tychoStar_t *)data.toInt();
+  m_tycho = (tychoStar_t *)data.toLongLong();
 
   done(DL_OK);
 }

@@ -58,7 +58,7 @@ CDrawingList::CDrawingList(QWidget *parent) :
         item1->setText(QString("%1' x %2'").arg(R2D(draw->frmField_t.x * 60), 0, 'f', 2).arg(R2D(draw->frmField_t.y * 60), 0, 'f', 2));
         break;
     }
-    item->setData((int)draw);
+    item->setData((qint64)draw);
     m_model->setItem(i, 0, item);
     m_model->setItem(i, 1, item1);
   }
@@ -96,7 +96,7 @@ void CDrawingList::on_pushButton_2_clicked()
   if (il.count() == 0)
     return;
 
-  drawing_t *draw = (drawing_t *)il.at(0).data(Qt::UserRole + 1).toInt();
+  drawing_t *draw = (drawing_t *)il.at(0).data(Qt::UserRole + 1).toLongLong();
 
   m_ra = draw->rd.Ra;
   m_dec = draw->rd.Dec;
@@ -111,7 +111,7 @@ void CDrawingList::slotDelete()
   if (il.count() == 0)
     return;
 
-  drawing_t *draw = (drawing_t *)il.at(0).data(Qt::UserRole + 1).toInt();
+  drawing_t *draw = (drawing_t *)il.at(0).data(Qt::UserRole + 1).toLongLong();
 
   deleteDrawing(draw);
 
@@ -131,7 +131,7 @@ void CDrawingList::on_pushButton_clicked()
   {
     QStandardItem *item = model->item(i);
 
-    drawing_t *draw = (drawing_t *)item->data(Qt::UserRole + 1).toInt();
+    drawing_t *draw = (drawing_t *)item->data(Qt::UserRole + 1).toLongLong();
 
     draw->show = item->checkState() ==  Qt::Checked ? true : false;
   }

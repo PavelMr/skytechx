@@ -18,7 +18,7 @@ static QList <mapObj_t> tObj;
 
 typedef struct
 {
-  int      objIdx;
+  qint64   objIdx;
   int      objType;  // MO_xxx
   QString  objName;
 } holdObject_t;
@@ -111,7 +111,7 @@ void mapObjReset(void)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-void addMapObj(int x, int y, int type, int selType, int size, int par1, int par2, double mag)
+void addMapObj(int x, int y, int type, int selType, int size, qint64 par1, qint64 par2, double mag)
 /////////////////////////////////////////////////////////////////////////////////////////////
 {
   mapObj_t o;

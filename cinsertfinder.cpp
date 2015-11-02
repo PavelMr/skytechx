@@ -29,7 +29,7 @@ CInsertFinder::~CInsertFinder()
 {
   for (int i = 0; i < ui->listWidget->count(); i++)
   {
-    finderScope_t *f = (finderScope_t *)ui->listWidget->getCustomData(i).toInt();
+    finderScope_t *f = (finderScope_t *)ui->listWidget->getCustomData(i).toLongLong();
 
     delete f;
   }
@@ -67,7 +67,7 @@ void CInsertFinder::load()
       b->fov = list[1].toDouble();
       b->magnification = list[2].toDouble();
 
-      ui->listWidget->addRow(list[0], (int)b);
+      ui->listWidget->addRow(list[0], (qint64)b);
     } while (1);
   }
 }
@@ -82,7 +82,7 @@ void CInsertFinder::save()
 
     for (int i = 0; i < ui->listWidget->count(); i++)
     {
-      finderScope_t *b = (finderScope_t *)ui->listWidget->getCustomData(i).toInt();
+      finderScope_t *b = (finderScope_t *)ui->listWidget->getCustomData(i).toLongLong();
 
       ts << b->name << "|"  << b->fov << "|" << b->magnification << "\n";
     }
@@ -100,7 +100,7 @@ void CInsertFinder::slotIndexChanged(QModelIndex current, QModelIndex prev)
     return;
   }
 
-  finderScope_t *b = (finderScope_t *)ui->listWidget->getCustomData(currentRow).toInt();
+  finderScope_t *b = (finderScope_t *)ui->listWidget->getCustomData(currentRow).toLongLong();
 
   ui->label_p1->setText(QString("%1°").arg(b->fov, 0, 'f', 2));
   ui->label_p2->setText(QString("%1x").arg(b->magnification, 0, 'f', 2));
@@ -115,7 +115,7 @@ void CInsertFinder::deleteItem()
     return;
   }
 
-  finderScope_t *f = (finderScope_t *)ui->listWidget->getCustomData(i).toInt();
+  finderScope_t *f = (finderScope_t *)ui->listWidget->getCustomData(i).toLongLong();
 
   delete f;
   ui->listWidget->removeAt(i);
@@ -130,7 +130,7 @@ void CInsertFinder::on_pushButton_2_clicked()
     return;
   }
 
-  finderScope_t *f = (finderScope_t *)ui->listWidget->getCustomData(currentRow).toInt();
+  finderScope_t *f = (finderScope_t *)ui->listWidget->getCustomData(currentRow).toLongLong();
 
   m_text = f->name;
   m_fov = D2R(f->fov);
@@ -167,7 +167,7 @@ void CInsertFinder::on_pushButton_3_clicked()
     b->fov = dlg.m_fov;
     b->magnification = dlg.m_mag;
 
-    ui->listWidget->addRow(b->name, (int)b);
+    ui->listWidget->addRow(b->name, (qint64)b);
   }
 }
 
@@ -180,7 +180,7 @@ void CInsertFinder::on_pushButton_5_clicked()
     return;
   }
 
-  finderScope_t *b = (finderScope_t *)ui->listWidget->getCustomData(i).toInt();
+  finderScope_t *b = (finderScope_t *)ui->listWidget->getCustomData(i).toLongLong();
   CFinderEdit dlg(this, false, b->name, b->magnification, b->fov);
 
   if (dlg.exec() == DL_OK)

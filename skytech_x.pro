@@ -19,8 +19,12 @@ Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11
 Debug:win32-g++   : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
 win32-g++         : LIBS += -lgomp -lpsapi -lwinmm
 
-win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA
-win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
+Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA /FAcs
+Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG /MAP
+
+Debug:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA
+Debug:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
+
 win32-msvc2013 :  LIBS += winmm.lib
 
 TARGET = skytech_x

@@ -1157,7 +1157,7 @@ void MainWindow::refillEI()
         {
           item->setData(col, Qt::BackgroundColorRole);
         }
-        item->setData((int)e);
+        item->setData((qint64)e);
         model->setItem(j, 0, item);
 
         if (lastRow == i)
@@ -1571,7 +1571,7 @@ QList<QStandardItem *> MainWindow::createEIRow(event_t *e, QString c1, QString c
   item0->setData(ra, Qt::UserRole + 2);
   item0->setData(dec, Qt::UserRole + 3);
   item0->setData(zoom, Qt::UserRole + 4);
-  item0->setData((int)e, Qt::UserRole + 5);
+  item0->setData((qint64)e, Qt::UserRole + 5);
 
   item1->setText(c2);
   item2->setText(c3);
@@ -3460,7 +3460,7 @@ void MainWindow::slotSelectionChangedEI(const QItemSelection &, const QItemSelec
     return;
   }
   QStandardItem *item = model->itemFromIndex(il.at(0));
-  event_t *e = (event_t *)item->data().toInt();
+  event_t *e = (event_t *)item->data().toLongLong();
 
   // TODO: nefunguje to pri ukonceni programu
   //qDebug() << e->geoHash << ui->widget->m_mapView.geo.hash;
@@ -3499,7 +3499,7 @@ void MainWindow::slotDeleteEI()
     return;
 
   QStandardItem *item = model->itemFromIndex(il.at(0));
-  event_t *e = (event_t *)item->data().toInt();
+  event_t *e = (event_t *)item->data().toLongLong();
 
   model->removeRow(item->row());
   tEventList.removeAll(e);
@@ -3823,7 +3823,7 @@ void MainWindow::on_treeView_2_doubleClicked(const QModelIndex &index)
   QStandardItem *item = model->item(index.row(), 0);
   QStandardItem *item1 = model->item(index.row(), 1);
 
-  event_t *e = (event_t *)item->data().toInt();
+  event_t *e = (event_t *)item->data().toLongLong();
 
   /*
   if (e->geoHash != ui->widget->m_mapView.geo.hash)
@@ -3848,7 +3848,7 @@ void MainWindow::on_treeView_3_clicked(const QModelIndex &index)
   double ra = item->data(Qt::UserRole + 2).toDouble();
   double dec = item->data(Qt::UserRole + 3).toDouble();
   double zoom = item->data(Qt::UserRole + 4).toDouble();
-  event_t *e = (event_t *)item->data(Qt::UserRole + 5).toInt();
+  event_t *e = (event_t *)item->data(Qt::UserRole + 5).toLongLong();
 
   ui->textEdit->setText("");
 

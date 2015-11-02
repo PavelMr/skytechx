@@ -30,18 +30,18 @@
 
 typedef struct
 {
-  int   x;
-  int   y;
-  int   type;
-  int   selType;
-  int   size;
-  int   par1;
-  int   par2;
-  float mag;
+  int     x;
+  int     y;
+  int     type;
+  int     selType;
+  int     size;
+  qint64  par1;
+  qint64  par2;
+  float   mag;
 } mapObj_t;
 
 void mapObjReset(void);
-void addMapObj(int x, int y, int type, int selType, int size, int par1, int par2, double mag = 255);
+void addMapObj(int x, int y, int type, int selType, int size, qint64 par1, qint64 par2, double mag = 255);
 void mapObjContextMenu(CMapView *map);
 bool mapObjSnap(int x, int y, radec_t *rd);
 bool mapObjSearch(int x, int y, mapObj_t *obj);

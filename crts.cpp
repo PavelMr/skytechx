@@ -29,7 +29,7 @@ void CRts::setLowPrec()
 
 
 // return size of object /////////////////////////////////////////////////
-double CRts::getRTSRaDecFromPtr(radec_t *rd, int ptr, int type, double jd)
+double CRts::getRTSRaDecFromPtr(radec_t *rd, qint64 ptr, int type, double jd)
 //////////////////////////////////////////////////////////////////////////
 {
  switch (type)
@@ -72,7 +72,7 @@ double CRts::getRTSRaDecFromPtr(radec_t *rd, int ptr, int type, double jd)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void CRts::calcOrbitRTS(rts_t *rts, int ptr, int type, const mapView_t *view)
+void CRts::calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view)
 /////////////////////////////////////////////////////////////////////////////
 {
   mapView_t v;

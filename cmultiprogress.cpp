@@ -14,7 +14,7 @@ void CMultiProgress::paintEvent(QPaintEvent *)
   p.fillRect(rect(), QColor(255, 255, 255));
 
   QList <int> tList;
-  QMap <int, int>::iterator i;
+  QMap <qint64, int>::iterator i;
   for (i = tMap.begin(); i != tMap.end(); ++i)
   {
     tList.append(i.value());
@@ -34,17 +34,17 @@ void CMultiProgress::paintEvent(QPaintEvent *)
       col = QColor(64, 64, 200);
 
     p.fillRect(0, 0, tList[i] * delta, height(), col);
-  }  
+  }
 
   p.setBrush(Qt::NoBrush);
   p.setPen(QColor(32, 32, 32));
-  p.drawRect(rect());    
+  p.drawRect(rect());
 }
 
 
 
 // value 0..100
-void CMultiProgress::setProgressValue(int id, int value)
+void CMultiProgress::setProgressValue(qint64 id, int value)
 {
   if (value <= 0)
   {

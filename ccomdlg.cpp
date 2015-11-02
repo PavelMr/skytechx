@@ -376,7 +376,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
             p->drawTextLR(pt.sx + size + 1, pt.sy + size + 1, a->name);
           }
         }
-        addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, size + 2, i, (int)a, a->orbit.mag);
+        addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, size + 2, i, (qint64)a, a->orbit.mag);
       }
     }
   }
