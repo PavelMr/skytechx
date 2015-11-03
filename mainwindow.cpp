@@ -79,6 +79,7 @@
 #include "cbinocular.h"
 #include "cdso.h"
 #include "cinsertfinder.h"
+#include "xmlattrparser.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -741,7 +742,7 @@ void MainWindow::setToolbarIconSize()
 
 void MainWindow::checkNewVersion(bool forced)
 {
-  QUrl qurl(QString(SKYTECH_WEB) + "/version/lastversion.dat");
+  QUrl qurl(QString(SKYTECH_WEB) + "/version/lastversion.xml");
 
   QNetworkRequest request(qurl);
 
@@ -1726,20 +1727,59 @@ int MainWindow::getCurDSS()
 
 void MainWindow::slotVersionFinished(QNetworkReply *reply)
 {
-  QString version;
+  QString xml;
 
   if (reply->error() == QNetworkReply::NoError)
   {
-    version = reply->readAll().simplified();
+    xml = reply->readAll().simplified();
   }
   else
   {
     qDebug() << "error" << reply->errorString();
   }
 
-  if (version.compare(SK_VERSION) || m_checkVerForced)
+  XmlAttrParser parser;
+  int buildID = 0;
+  QString verName;
+
+  if (reply->error() == QNetworkReply::NoError)
   {
-    CVersionCheck dlg(this, version, reply->error(), reply->errorString());
+    bool ok = parser.begin(xml);
+
+    if (!ok)
+    {
+      msgBoxError(this, tr("Cannot parse version file!!!"));
+    }
+    else
+    {
+      QList <XmlAttrItem> ll = parser.getList();
+
+      for (int i = 0; i < ll.count(); i++)
+      {
+        if (ll[i].m_element == "version")
+        {
+          for (int j = 0; j < ll[i].m_attr.count(); j++)
+          {
+            if (ll[i].m_attr[j].name == "name")
+            {
+              verName = ll[i].m_attr[j].value;
+            }
+            else
+            if (ll[i].m_attr[j].name == "build_id")
+            {
+              buildID = ll[i].m_attr[j].value.toInt();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  qDebug() << verName << buildID;
+
+  if (_BUILD_NO_ != buildID || m_checkVerForced)
+  {
+    CVersionCheck dlg(this, verName, buildID, reply->error(), reply->errorString());
     dlg.exec();
   }
 

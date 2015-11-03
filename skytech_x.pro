@@ -227,7 +227,8 @@ SOURCES += main.cpp\
     cbinocularedit.cpp \
     skmapcontrol.cpp \
     cinsertfinder.cpp \
-    cfinderedit.cpp
+    cfinderedit.cpp \
+    xmlattrparser.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -413,7 +414,8 @@ HEADERS  += mainwindow.h \
     cbinocularedit.h \
     skmapcontrol.h \
     cinsertfinder.h \
-    cfinderedit.h
+    cfinderedit.h \
+    xmlattrparser.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
