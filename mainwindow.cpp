@@ -5579,6 +5579,8 @@ void MainWindow::on_pushButton_34_clicked()
 
 void MainWindow::on_actionSearch_help_triggered()
 {
+  on_actionShow_sidebar_toggled(true);
+
   ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/edit_search.htm"));
   ui->toolBox->setCurrentWidget(ui->page_4);
 }

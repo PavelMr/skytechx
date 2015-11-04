@@ -89,7 +89,6 @@ typedef struct
 
   double  cLat, cMer;
   double  jupSysIMer;
-  double  jupSysIIMer;
   double  PA;             // angle to north
   double  elongation;
   double  FV;

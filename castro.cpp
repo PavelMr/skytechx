@@ -1190,7 +1190,7 @@ double CAstro::solveMarsMer(orbit_t *pMars, double jd)
 void CAstro::solveJupiterMer(orbit_t *o, double jd)
 ///////////////////////////////////////////////////
 {
-  double d = jd - 2433282.5;
+  double d = (jd + m_deltaT) - 2433282.5;
 
   double W1 = 17.710 + 877.90003539 * d;
   double W2 = 16.838 + 870.27003539 * d;
@@ -1201,22 +1201,32 @@ void CAstro::solveJupiterMer(orbit_t *o, double jd)
   double POLE_RA;
   double POLE_DEC;
 
-  POLE_RA = getRaDec_NP(DEG2RAD(268.05), -DEG2RAD(0.009));
-  POLE_DEC = getRaDec_NP(DEG2RAD(64.49), DEG2RAD(0.003));
+  POLE_RA = getRaDec_NP(DEG2RAD(268.056595), -DEG2RAD(0.006499));
+  POLE_DEC = getRaDec_NP(DEG2RAD(64.4953), DEG2RAD(0.00241));
 
-  double l = atan2(sin(POLE_DEC) * cos(o->gRD.Dec) * cos(POLE_RA - o->gRD.Ra) - sin(o->gRD.Dec) * cos(POLE_DEC),
-                   cos(o->gRD.Dec) * sin(POLE_RA - o->gRD.Ra));
+  double l0 = m_sunOrbit.hLon - R180;
+  double l = R2D(atan2(sin(POLE_DEC) * cos(o->gRD.Dec) * cos(POLE_RA - o->gRD.Ra) - sin(o->gRD.Dec) * cos(POLE_DEC),
+                   cos(o->gRD.Dec) * sin(POLE_RA - o->gRD.Ra)));
 
-  double w1 = W1 - RAD2DEG(l) - 5.07033 * o->R;
-  double w2 = W2 - RAD2DEG(l) - 5.02626 * o->R;
+  double geometricw1 = W1 - l - 5.07033 * o->R;
+  double geometricw2 = W2 - l - 5.02626 * o->R;
 
-  rangeDbl(&w1, 360);
-  rangeDbl(&w2, 360);
+  double C = 57.2958 * (2 * o->r * o->R + m_sunOrbit.r * m_sunOrbit.r - o->r * o->r - o->R * o->R) / (4 * o->r * o->R);
 
-  o->jupSysIMer = DEG2RAD(w1);
-  o->jupSysIIMer = DEG2RAD(w2);
+  rangeDbl(&l0, R360);
+  if (o->hLon - l0 < 0)
+  {
+    C = -C;
+  }
 
-  o->cMer = o->jupSysIIMer;
+  geometricw1 += C;
+  geometricw2 += C;
+
+  rangeDbl(&geometricw1, 360);
+  rangeDbl(&geometricw2, 360);
+
+  o->cMer = D2R(geometricw2);
+  o->jupSysIMer = D2R(geometricw1);
 }
 
 
@@ -1292,7 +1302,7 @@ void CAstro::solveJupiter(orbit_t *orbit)
   orbit->cLat = getPlnCentalLat(orbit, getRaDec_NP(DEG2RAD(268.05), -DEG2RAD(0.009)), getRaDec_NP(DEG2RAD(64.49), DEG2RAD(0.003)));
   orbit->poleRa  = getRaDec_NP(DEG2RAD(268.05), -DEG2RAD(0.009));
   orbit->poleDec = getRaDec_NP(DEG2RAD(64.49), DEG2RAD(0.003));
-  solveJupiterMer(orbit, m_jd + orbit->light);
+  solveJupiterMer(orbit, m_jd);
 }
 
 
