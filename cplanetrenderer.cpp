@@ -448,6 +448,10 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     {
       SKMATRIXRotateY(&matY, -o->cMer + D2R(g_skSet.map.planet.jupGRSLon));
     }
+    if (o->type == PT_MOON)
+    {
+      SKMATRIXRotateY(&matY, o->cMer);
+    }
     else
     {
       SKMATRIXRotateY(&matY, -o->cMer);

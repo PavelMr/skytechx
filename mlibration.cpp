@@ -2168,6 +2168,6 @@ void mLibration(double JD,double *llatp,double *llonp)
   lon = ml.gplan(JD, &liblon);
   lat = ml.gplan(JD, &liblat);
 
-  *llonp = -DEG2RAD(lon/3600.0);
-  *llatp =  DEG2RAD(lat/3600.0);
+  *llonp = DEG2RAD(lon/3600.0);
+  *llatp = DEG2RAD(lat/3600.0);
 }
