@@ -233,7 +233,8 @@ SOURCES += main.cpp\
     cdownloadfile.cpp \
     moonlessnightsdlg.cpp \
     systemsettings.cpp \
-    xmlattrparser.cpp
+    xmlattrparser.cpp \
+    nutation.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -424,7 +425,8 @@ HEADERS  += mainwindow.h \
     cdownloadfile.h \
     moonlessnightsdlg.h \
     systemsettings.h \
-    xmlattrparser.h
+    xmlattrparser.h \
+    nutation.h
 
 
 FORMS    += mainwindow.ui \

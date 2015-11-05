@@ -1,8 +1,6 @@
 #include "castro.h"
 #include "plantbl.h"
-
-extern double xxx;
-extern double yyy;
+#include "nutation.h"
 
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
@@ -386,9 +384,9 @@ double CAstro::getPolarisHourAngle()
   return (m_lst - polarisRA) / M_PI / 2 + 0.5;
 }
 
+// Pickering (2002)
 double CAstro::getAirmass(double alt)
-{ // Pickering (2002)
-
+{
   double dalt = R2D(alt);
   double airmass = 1 / sin(D2R((dalt + 244 / (165 + 47 * pow(dalt, 1.1)))));
 
@@ -870,9 +868,11 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
     double yg = yh + ys;
     double zg = zh + zs;
 
+    double obl = m_eclObl;
+
     double xe = xg;
-    double ye = yg * cos(m_eclObl) - zg * sin(m_eclObl);
-    double ze = yg * sin(m_eclObl) + zg * cos(m_eclObl);
+    double ye = yg * cos(obl) - zg * sin(obl);
+    double ze = yg * sin(obl) + zg * cos(obl);
 
     orbit->hRect[0] = xh;
     orbit->hRect[1] = yh;
@@ -1037,26 +1037,23 @@ double CAstro::getNPA(double ra, double raD, double dec, double decD, double oRa
   return(PA);
 }
 
-
 //////////////////////////////////
 void CAstro::solveMoon(orbit_t *o)
 //////////////////////////////////
 {
   double lonecl,latecl,r,xh,yh,zh,xg,yg,zg,xe,ye,ze;
-  double pol[4];
 
   double lam, bet, rho;
 
-  moon(m_deltaT + m_jd, &lam, &bet, &rho);
-  pol[0] = lam;
-  pol[1] = bet;
-  pol[2] = rho;
+  moon(m_deltaT + m_jd, &lam, &bet, &rho); // light time is counted
+
+  lam += nutationInLongitude(m_jd);
 
   o->ephemType = EPT_DE404;
 
-  lonecl = pol[0];
-  latecl = pol[1];
-  r = pol[2] / Rearth;
+  lonecl = lam;
+  latecl = bet;
+  r = rho / Rearth;
 
   o->hLat = latecl;
   o->hLon = lonecl;
@@ -1067,13 +1064,15 @@ void CAstro::solveMoon(orbit_t *o)
   yh = r * sin(lonecl) * cos(latecl);
   zh = r               * sin(latecl);
 
-  xg=xh;
-  yg=yh;
-  zg=zh;
+  xg = xh;
+  yg = yh;
+  zg = zh;
+
+  double obl = m_eclObl + nutationInObliquity(m_jd);
 
   xe = xg;
-  ye = yg * cos(m_eclObl) - zg * sin(m_eclObl);
-  ze = yg * sin(m_eclObl) + zg * cos(m_eclObl);
+  ye = yg * cos(obl) - zg * sin(obl);
+  ze = yg * sin(obl) + zg * cos(obl);
 
   o->gRD.Ra  = atan2(ye,xe);
   o->gRD.Dec = atan2(ze,sqrt(xe*xe+ye*ye));

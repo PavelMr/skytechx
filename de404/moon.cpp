@@ -3445,7 +3445,7 @@ void CMoon::moon (double mj, double *lam, double *bet, double *rho)
   {
     /* retard for light time */
     moon_fast (mj, lam, bet, &hp, &msp, &mdp);
-    *rho = EarthRadius/AUKM/sin(hp);
+    *rho = EarthRadius / AUKM / sin(hp);
     dt = *rho * 5.7755183e-3;       /* speed of light in a.u/day */
     gecmoon(mj + MJD0 - dt, &moonlr, &moonlat, pobj);
 
