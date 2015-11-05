@@ -6,16 +6,17 @@ CLog slog;
 
 CLog::CLog()
 {
-  m_pLog = fopen("log.dat", "wt");
+  //m_pLog = fopen("log.dat", "wt");
 }
 
 CLog::~CLog()
 {
-  fclose(m_pLog);
+  //fclose(m_pLog);
 }
 
 void CLog::write(const char *msg, ...)
 {
+  return;
 
   char temp[1024];
   va_list va;

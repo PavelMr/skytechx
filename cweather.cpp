@@ -1,6 +1,7 @@
 #include "cweather.h"
 #include "ui_cweather.h"
 #include "skcore.h"
+#include "systemsettings.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -147,9 +148,9 @@ void CWeather::updateInfo()
 void CWeather::getData()
 {
   //QUrl qurl("http://localhost/json/data.json");
-  QUrl qurl(QString("http://api.openweathermap.org/data/2.5/weather?lat=%1&lon=%2&mode=json&appid=531062b376b5a9a122961a16381bbdab").arg(m_lat).arg(m_lon));
+  QUrl qurl(QString("http://api.openweathermap.org/data/2.5/weather?lat=%1&lon=%2&mode=json&appid=%3").arg(m_lat).arg(m_lon).arg(g_systemSettings->m_weatherAppId));
 
-  qDebug() << qurl.host();
+  qDebug() << qurl;
 
   QNetworkRequest request(qurl);
   m_reply = m_manager.get(request);

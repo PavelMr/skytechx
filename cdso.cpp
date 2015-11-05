@@ -517,7 +517,6 @@ QString CDso::getName(dso_t *pDso)
 QString CDso::getName(dso_t *pDso, int idx)
 ///////////////////////////////////////////
 {
-  //return "ABCD2";
 
   QStringList *list = &namesMap[pDso->nameOffs];
   if (idx >= list->count())
@@ -682,8 +681,6 @@ void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
   }
 }
 
-extern QPainter *ppp;
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t *mapView, bool addToList)
@@ -736,7 +733,6 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
     float uy = sx * sin( - ang);
     float vy = sy * sin( - ang + MPI/2);
     int y = sqrt(uy*uy + vy*vy);
-
     pPainter->drawCText(pt->sx, pt->sy + y + m_fntHeight, getName(pDso));
   }
   if (addToList)

@@ -97,7 +97,7 @@ class CDso : public QObject
     char            *dsoClass;
     char            *dsoCats;
 
-    QHash <int, QStringList> namesMap;
+    QMap <int, QStringList> namesMap;
 
     QList <dsoLabel_t> tLabels;
     QList <CShape *>   tShapeList;

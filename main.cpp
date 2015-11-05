@@ -12,6 +12,7 @@
 #include "Usno2A.h"
 #include "cconsole.h"
 #include "clog.h"
+#include "systemsettings.h"
 
 // TODO: list
 /*
@@ -75,8 +76,6 @@ int main(int argc, char *argv[])
      //_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
    #endif
 
-  slog.write("start");
-
   QCoreApplication::addLibraryPath("plugins");
 
   QCoreApplication::setOrganizationDomain("Frostware");
@@ -113,6 +112,9 @@ int main(int argc, char *argv[])
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/horizons");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/gamepad");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dso");
+
+  g_systemSettings = new SystemSettings("../skytechx.cfg");
+  g_systemSettings->readAll();
 
   //char *p = (char *)12;
   //*p = 1;
@@ -171,7 +173,6 @@ int main(int argc, char *argv[])
 
   loadQSSStyle();
 
-  slog.write("loading dlg");
   CLoadingDlg *dlg = new CLoadingDlg;
   dlg->exec();
   delete dlg;

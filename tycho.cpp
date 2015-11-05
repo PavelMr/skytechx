@@ -2,7 +2,6 @@
 #include "jd.h"
 #include "constellation.h"
 #include "cgscreg.h"
-#include "clog.h"
 
 CTycho cTYC;
 
@@ -75,7 +74,7 @@ bool CTycho::load()
   if (!f.open(SkFile::ReadOnly))
   {
     // fatal error
-    slog.write("tycho not found!");
+    return false;
   }
 
   f.read((char *)&m_head, sizeof(m_head));
@@ -86,13 +85,11 @@ bool CTycho::load()
       m_head.id[3] != '2')
   {
     // fatal error
-    slog.write("not tyc");
+    return false;
   }
 
   m_region = (tychoRegion2_t *)malloc(m_head.regCount * sizeof(tychoRegion2_t));
   pSupplement = (tychoSupp_t *)malloc(m_head.numSupplements * sizeof(tychoSupp_t));
-
-  slog.write("T1");
 
   qint64 pos = f.pos();
 
@@ -101,10 +98,6 @@ bool CTycho::load()
 
   f.seek(m_head.offNames);
   m_names = f.read(m_head.numNames);
-
-  slog.write("T2");
-
-  slog.write("%d %d %d", m_head.regCount, m_head.numStars, m_head.offSupplements);
 
   f.seek(pos);
   int maxhd = 0;
@@ -119,8 +112,6 @@ bool CTycho::load()
     m_region[i].stars = (tychoStar_t *)malloc(reg.numStars * sizeof(tychoStar_t));
 
     f.read((char *)m_region[i].stars, sizeof(tychoStar_t) * reg.numStars);
-
-    slog.write(" r %d", reg.numStars);
 
     for (int j = 0; j < reg.numStars; j++)
     {
@@ -143,8 +134,6 @@ bool CTycho::load()
       }
     }
   }
-
-  //qDebug("%d", maxhd);
 
   f.close();
 

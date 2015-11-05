@@ -777,6 +777,7 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   cDSO.setPainter(pPainter, pImg);
   int oldSize = cDSO.getMinSize();
   cDSO.setMinSize(6);
+
   for (int i = 0; i < 12; i++)
   {
     pt.sx = 370 + orc.x() + 10 + i * 32;
@@ -1173,11 +1174,6 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   cAstro.setParam(mapView);
 
   trfCreateMatrixView(&cAstro, mapView, width, height);
-
-  /*
-  rrr();
-  return true;
-  */
 
   cStarRenderer.setMaxMag(mapView->starMag);
   smRenderBackground(mapView, pPainter, pImg);

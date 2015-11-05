@@ -228,7 +228,8 @@ SOURCES += main.cpp\
     cfinderedit.cpp \
     dssheaderdialog.cpp \
     cdownloadfile.cpp \
-    moonlessnightsdlg.cpp
+    moonlessnightsdlg.cpp \
+    systemsettings.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -417,7 +418,8 @@ HEADERS  += mainwindow.h \
     cfinderedit.h \
     dssheaderdialog.h \
     cdownloadfile.h \
-    moonlessnightsdlg.h
+    moonlessnightsdlg.h \
+    systemsettings.h
 
 FORMS    += mainwindow.ui \
     cabout.ui \
