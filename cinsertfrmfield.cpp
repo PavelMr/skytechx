@@ -42,7 +42,7 @@ CInsertFrmField::CInsertFrmField(QWidget *parent) :
         dev->x = list.at(1).toDouble();
         dev->y = list.at(2).toDouble();
 
-        ui->comboBox->addItem(dev->name, (int)dev);
+        ui->comboBox->addItem(dev->name, (qint64)dev);
       }
     }
   }
@@ -56,7 +56,7 @@ CInsertFrmField::~CInsertFrmField()
 {
   for (int i = 0; i < ui->comboBox->count(); i++)
   {
-    deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(i).toInt();
+    deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(i).toLongLong();
     if (dev != NULL)
     {
       delete dev;
@@ -94,7 +94,7 @@ void CInsertFrmField::on_pushButton_2_clicked()
 void CInsertFrmField::on_comboBox_currentIndexChanged(int index)
 ////////////////////////////////////////////////////////////////
 {
-  deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(index).toInt();
+  deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(index).toLongLong();
 
   ui->pushButton_3->setEnabled(index != 0);
   ui->pushButton_5->setEnabled(index != 0);
@@ -171,7 +171,7 @@ void CInsertFrmField::on_pushButton_4_clicked()
 
   for (int i = 0; i < ui->comboBox->count(); i++)
   {
-    deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(i).toInt();
+    deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(i).toLongLong();
 
     if (f.isOpen() && dev != NULL)
     {
@@ -187,7 +187,7 @@ void CInsertFrmField::on_pushButton_4_clicked()
 void CInsertFrmField::on_pushButton_3_clicked()
 ///////////////////////////////////////////////
 {
-  deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
+  deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(ui->comboBox->currentIndex()).toLongLong();
   ui->comboBox->removeItem(ui->comboBox->currentIndex());
   delete dev;
 }
@@ -207,7 +207,7 @@ void CInsertFrmField::on_pushButton_clicked()
     dev->x = dlg.m_x;
     dev->y = dlg.m_y;
 
-    ui->comboBox->addItem(dev->name, (int)dev);
+    ui->comboBox->addItem(dev->name, (qint64)dev);
     ui->comboBox->setCurrentIndex(ui->comboBox->count() - 1);
   }
 }
@@ -218,7 +218,7 @@ void CInsertFrmField::on_pushButton_5_clicked()
 ///////////////////////////////////////////////
 {
   int           idx = ui->comboBox->currentIndex();
-  deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(idx).toInt();
+  deviceItem_t *dev = (deviceItem_t *)ui->comboBox->itemData(idx).toLongLong();
 
   CFrmEdit dlg(this, dev->name, dev->x, dev->y);
 

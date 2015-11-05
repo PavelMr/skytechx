@@ -12,12 +12,12 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *);
-    QMap <int, int> tMap;
+    QMap <qint64, int> tMap;
 
 signals:
 
 public slots:
-  void setProgressValue(int id, int value); // 0.100
+  void setProgressValue(qint64 id, int value); // 0.100
 
 };
 

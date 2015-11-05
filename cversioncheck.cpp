@@ -1,11 +1,13 @@
 #include "cversioncheck.h"
 #include "ui_cversioncheck.h"
 #include "build.h"
+#include "skcore.h"
 
 #include <QDesktopServices>
 #include <QSettings>
 
-CVersionCheck::CVersionCheck(QWidget *parent, const QString &newVersion, QNetworkReply::NetworkError error, const QString &errorString) :
+
+CVersionCheck::CVersionCheck(QWidget *parent, const QString &newVersion, int buildID, QNetworkReply::NetworkError error, const QString &errorString) :
   QDialog(parent),
   ui(new Ui::CVersionCheck)
 {
@@ -19,7 +21,7 @@ CVersionCheck::CVersionCheck(QWidget *parent, const QString &newVersion, QNetwor
     ui->label_3->setText(errorString);
   }
   else
-  if (0 == newVersion.compare(SK_VERSION))
+  if (_BUILD_NO_ == buildID)
   {
     ui->label_3->setText(tr("SkytechX is up to date."));
   }

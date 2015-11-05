@@ -17,8 +17,8 @@ typedef struct
 typedef struct
 {
   int                     type;      // MO_xxx
-  int                     par1;
-  int                     par2;
+  qint64                  par1;
+  qint64                  par2;
 
   QString                 id;        // gallery/note id name
   QString                 simbad;    // simbad  id

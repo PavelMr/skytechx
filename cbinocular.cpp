@@ -29,7 +29,7 @@ CBinocular::~CBinocular()
 {
   for (int i = 0; i < ui->listWidget->count(); i++)
   {
-    binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(i).toInt();
+    binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(i).toLongLong();
 
     delete b;
   }
@@ -50,7 +50,7 @@ void CBinocular::slotIndexChanged(QModelIndex current, QModelIndex /*prev*/)
     return;
   }
 
-  binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(currentRow).toInt();
+  binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(currentRow).toLongLong();
 
   double area = 2 * MPI * POW2(b->diameter * 0.5);
   double D = 2 * sqrt(area / MPI);
@@ -93,7 +93,7 @@ void CBinocular::load()
       b->fov = list[2].toDouble();
       b->magnification = list[3].toDouble();
 
-      ui->listWidget->addRow(list[0], (int)b);
+      ui->listWidget->addRow(list[0], (qint64)b);
     } while (1);
   }
 }
@@ -108,7 +108,7 @@ void CBinocular::save()
 
     for (int i = 0; i < ui->listWidget->count(); i++)
     {
-      binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(i).toInt();
+      binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(i).toLongLong();
 
       ts << b->name << "|" << b->diameter << "|" << b->fov << "|" << b->magnification << "\n";
     }
@@ -125,7 +125,7 @@ void CBinocular::on_pushButton_3_clicked()
     return;
   }
 
-  binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(currentRow).toInt();
+  binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(currentRow).toLongLong();
 
   m_text = b->name;
   m_fov = D2R(b->fov);
@@ -144,7 +144,7 @@ void CBinocular::deleteItem()
     return;
   }
 
-  binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(i).toInt();
+  binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(i).toLongLong();
 
   delete b;
   ui->listWidget->removeAt(i);
@@ -168,7 +168,7 @@ void CBinocular::on_pushButton_clicked()
     b->fov = dlg.m_fov;
     b->magnification = dlg.m_mag;
 
-    ui->listWidget->addRow(b->name, (int)b);
+    ui->listWidget->addRow(b->name, (qint64)b);
   }
 }
 
@@ -181,7 +181,7 @@ void CBinocular::on_pushButton_2_clicked()
     return;
   }
 
-  binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(i).toInt();
+  binocular_t *b = (binocular_t *)ui->listWidget->getCustomData(i).toLongLong();
   CBinocularEdit dlg(this, false, b->name, b->diameter, b->magnification, b->fov);
 
   if (dlg.exec() == DL_OK)

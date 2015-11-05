@@ -13,7 +13,7 @@ class CVersionCheck : public QDialog
   Q_OBJECT
 
 public:
-  explicit CVersionCheck(QWidget *parent, const QString &newVersion, QNetworkReply::NetworkError error, const QString &errorString);
+  explicit CVersionCheck(QWidget *parent, const QString &newVersion, int buildID, QNetworkReply::NetworkError error, const QString &errorString);
   ~CVersionCheck();
 
 private slots:

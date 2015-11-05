@@ -51,7 +51,7 @@ void CSatelliteSearch::on_pushButton_clicked()
   cAstro.setParam(m_mapView);
   cAstro.convAA2RDRef(s.azimuth, s.elevation, &rd.Ra, &rd.Dec);
 
-  qDebug() << index << s.elevation << s.azimuth;
+  //qDebug() << index << s.elevation << s.azimuth;
 
   m_ra = rd.Ra;
   m_dec = rd.Dec;

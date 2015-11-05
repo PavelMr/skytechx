@@ -67,7 +67,7 @@ CDbStarsDlg::CDbStarsDlg(QWidget *parent) :
 
         QStandardItem *item = new QStandardItem;
         item->setText(dbl.name);
-        item->setData((int)&tList[i]);
+        item->setData((qint64)&tList[i]);
         m_model->setItem(i, 0, item);
 
         int con = constWhatConstel(t1->rd.Ra, t1->rd.Dec, JD2000);
@@ -154,7 +154,7 @@ void CDbStarsDlg::on_pushButton_2_clicked()
 
   QModelIndex index = m_proxy->mapToSource(il.at(0));
   QStandardItem *item = m_model->item(index.row(), 0);
-  dblStar_t *dbl = (dblStar_t *)item->data().toInt();
+  dblStar_t *dbl = (dblStar_t *)item->data().toLongLong();
 
   m_rd = dbl->rd;
   m_fov = dbl->sep * 20;

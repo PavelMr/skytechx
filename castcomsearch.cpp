@@ -22,7 +22,7 @@ CAstComSearch::CAstComSearch(QWidget *parent, double jd, bool isComet) :
 
       astSolve(a, jd);
 
-      ui->treeView->addRow(a->name, a->orbit.mag, (int)a);
+      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a);
     }
   }
   else
@@ -38,7 +38,7 @@ CAstComSearch::CAstComSearch(QWidget *parent, double jd, bool isComet) :
 
       comSolve(a, jd);
 
-      ui->treeView->addRow(a->name, a->orbit.mag, (int)a);
+      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a);
     }
   }
 
@@ -91,14 +91,14 @@ void CAstComSearch::on_pushButton_clicked()
 
   if (!m_bComet)
   {
-    asteroid_t *a = (asteroid_t *)data.toInt();
+    asteroid_t *a = (asteroid_t *)data.toLongLong();
     m_fov = DEG2RAD(AST_ZOOM);
     m_rd.Ra = a->orbit.lRD.Ra;
     m_rd.Dec = a->orbit.lRD.Dec;
   }
   else
   {
-    comet_t *a = (comet_t *)data.toInt();
+    comet_t *a = (comet_t *)data.toLongLong();
     m_fov = DEG2RAD(COM_ZOOM);
     m_rd.Ra = a->orbit.lRD.Ra;
     m_rd.Dec = a->orbit.lRD.Dec;

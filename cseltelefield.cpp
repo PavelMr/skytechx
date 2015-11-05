@@ -22,7 +22,7 @@ CSelTeleField::CSelTeleField(QWidget *parent) :
 
     *t = tTelescope[i];
     QListWidgetItem *item = new QListWidgetItem(tTelescope[i].name);
-    item->setData(Qt::UserRole, (int)t);
+    item->setData(Qt::UserRole, (qint64)t);
     ui->listWidget->addItem(item);
   }
 
@@ -32,7 +32,7 @@ CSelTeleField::CSelTeleField(QWidget *parent) :
 
     *t = tEyepiece[i];
     QListWidgetItem *item = new QListWidgetItem(tEyepiece[i].name);
-    item->setData(Qt::UserRole, (int)t);
+    item->setData(Qt::UserRole, (qint64)t);
     ui->listWidget_2->addItem(item);
   }
 
@@ -53,12 +53,12 @@ CSelTeleField::~CSelTeleField()
 {
   for (int i = 0; i < ui->listWidget->count(); i++)
   {
-    teleParam_t *t = (teleParam_t *)ui->listWidget->item(i)->data(Qt::UserRole).toInt();
+    teleParam_t *t = (teleParam_t *)ui->listWidget->item(i)->data(Qt::UserRole).toLongLong();
     delete t;
   }
   for (int i = 0; i < ui->listWidget_2->count(); i++)
   {
-    teleParam_t *t = (teleParam_t *)ui->listWidget_2->item(i)->data(Qt::UserRole).toInt();
+    teleParam_t *t = (teleParam_t *)ui->listWidget_2->item(i)->data(Qt::UserRole).toLongLong();
     delete t;
   }
 
@@ -129,7 +129,7 @@ void CSelTeleField::saveTeleItem(QString file, QListWidget *w)
 
   for (int i = 0; i < w->count(); i++)
   {
-    teleParam_t *t = (teleParam_t *)w->item(i)->data(Qt::UserRole).toInt();
+    teleParam_t *t = (teleParam_t *)w->item(i)->data(Qt::UserRole).toLongLong();
 
     s << t->name << "|" << t->par1 << "|" << t->par2 << "\n";
   }
@@ -159,8 +159,8 @@ void CSelTeleField::calcParam()
     return;
   }
 
-  t = (teleParam_t *)ti->data(Qt::UserRole).toInt();
-  e = (teleParam_t *)ei->data(Qt::UserRole).toInt();
+  t = (teleParam_t *)ti->data(Qt::UserRole).toLongLong();
+  e = (teleParam_t *)ei->data(Qt::UserRole).toLongLong();
 
   m_outBP = ui->doubleSpinBox->value();
   m_outFOV = atan(DEG2RAD(e->par2 / 2.0f) / (m_outBP * t->par2 / e->par1)) * 2.0f;
@@ -239,7 +239,7 @@ void CSelTeleField::deleteItemA()
   if (ti == NULL)
     return;
 
-  teleParam_t *t = (teleParam_t *)ti->data(Qt::UserRole).toInt();
+  teleParam_t *t = (teleParam_t *)ti->data(Qt::UserRole).toLongLong();
 
   delete t;
   delete ti;
@@ -253,7 +253,7 @@ void CSelTeleField::deleteItemB()
   if (ti == NULL)
     return;
 
-  teleParam_t *t = (teleParam_t *)ti->data(Qt::UserRole).toInt();
+  teleParam_t *t = (teleParam_t *)ti->data(Qt::UserRole).toLongLong();
 
   delete t;
   delete ti;
@@ -268,7 +268,7 @@ void CSelTeleField::on_pushButton_2_clicked()
   if (ti == NULL)
     return;
 
-  teleParam_t *t = (teleParam_t *)ti->data(Qt::UserRole).toInt();
+  teleParam_t *t = (teleParam_t *)ti->data(Qt::UserRole).toLongLong();
 
   double  dia = t->par1;
   double  focl = t->par2;
@@ -307,7 +307,7 @@ void CSelTeleField::on_pushButton_clicked()
     t->par2 = focl;
 
     QListWidgetItem *item = new QListWidgetItem(t->name);
-    item->setData(Qt::UserRole, (int)t);
+    item->setData(Qt::UserRole, (qint64)t);
     ui->listWidget->addItem(item);
 
     calcParam();
@@ -334,7 +334,7 @@ void CSelTeleField::on_pushButton_3_clicked()
     t->par2 = fov;
 
     QListWidgetItem *item = new QListWidgetItem(t->name);
-    item->setData(Qt::UserRole, (int)t);
+    item->setData(Qt::UserRole, (qint64)t);
     ui->listWidget_2->addItem(item);
 
     calcParam();
@@ -349,7 +349,7 @@ void CSelTeleField::on_pushButton_4_clicked()
   if (ti == NULL)
     return;
 
-  teleParam_t *t = (teleParam_t *)ti->data(Qt::UserRole).toInt();
+  teleParam_t *t = (teleParam_t *)ti->data(Qt::UserRole).toLongLong();
 
   double  focl = t->par1;
   double  fov = t->par2;

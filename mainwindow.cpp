@@ -81,6 +81,7 @@
 #include "cinsertfinder.h"
 #include "dssheaderdialog.h"
 #include "moonlessnightsdlg.h"
+#include "xmlattrparser.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -755,7 +756,7 @@ void MainWindow::setToolbarIconSize()
 
 void MainWindow::checkNewVersion(bool forced)
 {
-  QUrl qurl(QString(SKYTECH_WEB) + "/version/lastversion.dat");
+  QUrl qurl(QString(SKYTECH_WEB) + "/version/lastversion.xml");
 
   QNetworkRequest request(qurl);
 
@@ -1025,8 +1026,6 @@ void MainWindow::saveAndExit()
 
   if (ui->actionShow_full_screen->isChecked())
   {
-    qDebug() << m_isNormal;
-
     if (m_isNormal)
        showNormal();
     else
@@ -1222,7 +1221,7 @@ void MainWindow::refillEI()
         {
           item->setData(col, Qt::BackgroundColorRole);
         }
-        item->setData((int)e);
+        item->setData((qint64)e);
         model->setItem(j, 0, item);
 
         if (lastRow == i)
@@ -1636,7 +1635,7 @@ QList<QStandardItem *> MainWindow::createEIRow(event_t *e, QString c1, QString c
   item0->setData(ra, Qt::UserRole + 2);
   item0->setData(dec, Qt::UserRole + 3);
   item0->setData(zoom, Qt::UserRole + 4);
-  item0->setData((int)e, Qt::UserRole + 5);
+  item0->setData((qint64)e, Qt::UserRole + 5);
 
   item1->setText(c2);
   item2->setText(c3);
@@ -1792,20 +1791,59 @@ int MainWindow::getCurDSS()
 
 void MainWindow::slotVersionFinished(QNetworkReply *reply)
 {
-  QString version;
+  QString xml;
 
   if (reply->error() == QNetworkReply::NoError)
   {
-    version = reply->readAll().simplified();
+    xml = reply->readAll().simplified();
   }
   else
   {
     qDebug() << "error" << reply->errorString();
   }
 
-  if (version.compare(SK_VERSION) || m_checkVerForced)
+  XmlAttrParser parser;
+  int buildID = 0;
+  QString verName;
+
+  if (reply->error() == QNetworkReply::NoError)
   {
-    CVersionCheck dlg(this, version, reply->error(), reply->errorString());
+    bool ok = parser.begin(xml);
+
+    if (!ok)
+    {
+      msgBoxError(this, tr("Cannot parse version file!!!"));
+    }
+    else
+    {
+      QList <XmlAttrItem> ll = parser.getList();
+
+      for (int i = 0; i < ll.count(); i++)
+      {
+        if (ll[i].m_element == "version")
+        {
+          for (int j = 0; j < ll[i].m_attr.count(); j++)
+          {
+            if (ll[i].m_attr[j].name == "name")
+            {
+              verName = ll[i].m_attr[j].value;
+            }
+            else
+            if (ll[i].m_attr[j].name == "build_id")
+            {
+              buildID = ll[i].m_attr[j].value.toInt();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  qDebug() << verName << buildID;
+
+  if (_BUILD_NO_ != buildID || m_checkVerForced)
+  {
+    CVersionCheck dlg(this, verName, buildID, reply->error(), reply->errorString());
     dlg.exec();
   }
 
@@ -3535,7 +3573,7 @@ void MainWindow::slotSelectionChangedEI(const QItemSelection &, const QItemSelec
     return;
   }
   QStandardItem *item = model->itemFromIndex(il.at(0));
-  event_t *e = (event_t *)item->data().toInt();
+  event_t *e = (event_t *)item->data().toLongLong();
 
   // TODO: nefunguje to pri ukonceni programu
   //qDebug() << e->geoHash << ui->widget->m_mapView.geo.hash;
@@ -3574,7 +3612,7 @@ void MainWindow::slotDeleteEI()
     return;
 
   QStandardItem *item = model->itemFromIndex(il.at(0));
-  event_t *e = (event_t *)item->data().toInt();
+  event_t *e = (event_t *)item->data().toLongLong();
 
   model->removeRow(item->row());
   tEventList.removeAll(e);
@@ -3910,7 +3948,7 @@ void MainWindow::on_treeView_2_doubleClicked(const QModelIndex &index)
   QStandardItem *item = model->item(index.row(), 0);
   QStandardItem *item1 = model->item(index.row(), 1);
 
-  event_t *e = (event_t *)item->data().toInt();
+  event_t *e = (event_t *)item->data().toLongLong();
 
   /*
   if (e->geoHash != ui->widget->m_mapView.geo.hash)
@@ -3935,7 +3973,7 @@ void MainWindow::on_treeView_3_clicked(const QModelIndex &index)
   double ra = item->data(Qt::UserRole + 2).toDouble();
   double dec = item->data(Qt::UserRole + 3).toDouble();
   double zoom = item->data(Qt::UserRole + 4).toDouble();
-  event_t *e = (event_t *)item->data(Qt::UserRole + 5).toInt();
+  event_t *e = (event_t *)item->data(Qt::UserRole + 5).toLongLong();
 
   ui->textEdit->setText("");
 

@@ -26,7 +26,7 @@ void CDownload::begin(QString url, QString fileName)
 
   connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(slotProgress(qint64,qint64)));
   connect(&manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotDownloadFinished(QNetworkReply*)));
-  connect(this, SIGNAL(sigProgress(int,int)), pcMainWnd->m_pcDSSProg, SLOT(setProgressValue(int,int)));
+  connect(this, SIGNAL(sigProgress(qint64,int)), pcMainWnd->m_pcDSSProg, SLOT(setProgressValue(qint64,int)));
   connect(this, SIGNAL(sigError(QString)), pcMainWnd, SLOT(slotDownloadError(QString)));
 
   pcMainWnd->setToolBoxPage(1);
@@ -39,7 +39,7 @@ void CDownload::slotProgress(qint64 recv ,qint64 total)
   //qDebug() << "recv : " << recv << " / " << total;
   if (recv == 0 || total == 0)
   {
-    emit sigProgress((int)this, 0);
+    emit sigProgress((qint64)this, 0);
     return;
   }
 
@@ -50,7 +50,7 @@ void CDownload::slotProgress(qint64 recv ,qint64 total)
   if (recv == total)
     p = 0;
 
-  emit sigProgress((int)this, p);
+  emit sigProgress((qint64)this, p);
 }
 
 //////////////////////////////////////////////////////////

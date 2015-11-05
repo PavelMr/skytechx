@@ -517,7 +517,12 @@ void CMapView::tryShowToolTip(const QPoint &pos, bool isPressed)
     label->show();
   }
 
-  QString toolTip = checkObjOnMap(pos);
+  QString toolTip;
+
+  if (isPressed)
+  {
+    toolTip = checkObjOnMap(pos);
+  }
 
   if (!toolTip.isEmpty() && isPressed)
   {

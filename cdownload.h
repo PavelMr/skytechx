@@ -40,7 +40,7 @@ protected:
 
 signals:
   void sigFinished(void);
-  void sigProgress(int id, int val);
+  void sigProgress(qint64 id, int val);
   void sigError(QString str);
 
 public slots:

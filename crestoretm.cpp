@@ -14,8 +14,8 @@ class CTimeMarkItem : public QStandardItem
 protected:
   bool operator< ( const QStandardItem & other ) const
   {
-    item_t *i1 = (item_t *)data().toInt();
-    item_t *i2 = (item_t *)other.data().toInt();
+    item_t *i1 = (item_t *)data().toLongLong();
+    item_t *i2 = (item_t *)other.data().toLongLong();
 
     double jd1 = i1->jd;
     double jd2 = i2->jd;
@@ -79,7 +79,7 @@ CRestoreTM::CRestoreTM(QWidget *parent) :
         CTimeMarkItemRD *i3 = new CTimeMarkItemRD;
 
         i0->setText(getStrDate(i->jd, 0) + " " + getStrTime(i->jd, 0));
-        i0->setData((int)i);
+        i0->setData((qint64)i);
         i1->setText(i->desc);
 
         if (list.count() == 4)
@@ -148,7 +148,7 @@ void CRestoreTM::slotDelete()
     return;
 
   QStandardItem *item = model->itemFromIndex(il.at(0));
-  item_t *e = (item_t *)item->data().toInt();
+  item_t *e = (item_t *)item->data().toLongLong();
   delete e;
   model->removeRow(il.at(0).row());
 }
@@ -164,7 +164,7 @@ void CRestoreTM::on_pushButton_2_clicked()
     return;
 
   QStandardItem *item = model->itemFromIndex(il.at(0));
-  item_t *e = (item_t *)item->data().toInt();
+  item_t *e = (item_t *)item->data().toLongLong();
 
   m_jd = e->jd;
   m_ra = e->ra;
@@ -178,7 +178,7 @@ void CRestoreTM::on_pushButton_2_clicked()
     for (int i = 0; i < model->rowCount(); i++)
     {
       QStandardItem *item = model->item(i, 0);
-      item_t *e = (item_t *)item->data().toInt();
+      item_t *e = (item_t *)item->data().toLongLong();
 
       s << e->desc << ";" << QString::number(e->jd, 'f', 8);
 
