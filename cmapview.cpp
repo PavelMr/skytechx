@@ -1390,6 +1390,16 @@ void CMapView::updateStatusBar(void)
     pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : %1")).arg(getStrDegNoSign(m_mapView.fov)));
     pcMainWnd->statusBar->setItem(SB_SM_MAGS, QString(tr("Star : %1 mag. / DSO %2 mag.")).arg(m_mapView.starMag, 0, 'f', 1).arg(m_mapView.dsoMag, 0, 'f', 1));
 
+    double airmass = CAstro::getAirmass(alt);
+
+    if (alt > 0)
+    {
+      pcMainWnd->statusBar->setItem(SB_SM_AIRMASS,   QString(tr("Airmass : %1")).arg(airmass, 0, 'f', 3));
+    }
+    else
+    {
+      pcMainWnd->statusBar->setItem(SB_SM_AIRMASS,   QString(tr("Airmass : N/A")));
+    }
     pcMainWnd->statusBar->setItem(SB_SM_ALT,   QString(tr("Alt. : %1")).arg(getStrDeg(alt)));
     pcMainWnd->statusBar->setItem(SB_SM_AZM,  QString(tr("Azm. : %1")).arg(getStrDeg(azm)));
 

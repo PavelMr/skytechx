@@ -130,6 +130,8 @@ class CAstro
     static double getEclObl(double jd);
     double getPolarisHourAngle(); // v 0..1
 
+    static double getAirmass(double alt);
+
     double m_geoLon;
     double m_geoLat;
     double m_geoAlt;

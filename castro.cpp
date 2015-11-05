@@ -386,6 +386,15 @@ double CAstro::getPolarisHourAngle()
   return (m_lst - polarisRA) / M_PI / 2 + 0.5;
 }
 
+double CAstro::getAirmass(double alt)
+{ // Pickering (2002)
+
+  double dalt = R2D(alt);
+  double airmass = 1 / sin(D2R((dalt + 244 / (165 + 47 * pow(dalt, 1.1)))));
+
+  return airmass;
+}
+
 
 //////////////////////////////////////
 void CAstro::setParam(mapView_t *view)

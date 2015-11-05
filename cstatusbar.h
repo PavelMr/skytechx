@@ -17,6 +17,7 @@
 #define SB_SM_MEASURE   8
 #define SB_SM_ALT       9
 #define SB_SM_AZM      10
+#define SB_SM_AIRMASS  11
 
 class CSBLabel : public QLabel
 {

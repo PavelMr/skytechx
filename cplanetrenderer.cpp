@@ -13,8 +13,6 @@ extern bool g_showLabels;
 extern bool g_bilinearInt;
 extern bool g_showSP;
 
-extern QPainter *ppp;
-
 //////////////////////////////////
 CPlanetRenderer::CPlanetRenderer()
 //////////////////////////////////
@@ -669,7 +667,6 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     pPainter->setClipping(false);
     pPainter->restore();
   }
-
 
   pPainter->save();
   pPainter->translate(QPoint(pt->sx, pt->sy));
