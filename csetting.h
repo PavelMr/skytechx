@@ -171,6 +171,14 @@ private slots:
 
    void on_toolButton_clicked();
 
+   void on_pushButton_63_clicked();
+
+   void on_pushButton_62_clicked();
+
+   void on_pushButton_64_clicked();
+
+   void on_pushButton_65_clicked();
+
 private:
    Ui::CSetting *ui;
    void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList);

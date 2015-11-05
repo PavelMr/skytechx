@@ -1390,8 +1390,24 @@ void CMapView::updateStatusBar(void)
     pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : %1")).arg(getStrDegNoSign(m_mapView.fov)));
     pcMainWnd->statusBar->setItem(SB_SM_MAGS, QString(tr("Star : %1 mag. / DSO %2 mag.")).arg(m_mapView.starMag, 0, 'f', 1).arg(m_mapView.dsoMag, 0, 'f', 1));
 
-    double airmass = CAstro::getAirmass(alt);
+    QString mode;
+    switch (m_mapView.coordType)
+    {
+      case SMCT_RA_DEC:
+        mode = tr("Eqt");
+        break;
 
+      case SMCT_ALT_AZM:
+        mode = tr("Hor");
+        break;
+
+      case SMCT_ECL:
+        mode = tr("Ecl");
+        break;
+    }
+    pcMainWnd->statusBar->setItem(SB_SM_MODE,  QString(tr("%1")).arg(mode));
+
+    double airmass = CAstro::getAirmass(alt);
     if (alt > 0)
     {
       pcMainWnd->statusBar->setItem(SB_SM_AIRMASS,   QString(tr("Airmass : %1")).arg(airmass, 0, 'f', 3));

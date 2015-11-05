@@ -5,19 +5,19 @@
 #include <QtWidgets>
 #include <QMouseEvent>
 
-#define SB_SEP          0
-
-#define SB_SM_RA        1
-#define SB_SM_DEC       2
-#define SB_SM_FOV       3
-#define SB_SM_MAGS      4
-#define SB_SM_CONST     5
-#define SB_SM_DATE      6
-#define SB_SM_TIME      7
-#define SB_SM_MEASURE   8
-#define SB_SM_ALT       9
-#define SB_SM_AZM      10
-#define SB_SM_AIRMASS  11
+#define SB_SM_RA        0
+#define SB_SM_DEC       1
+#define SB_SM_FOV       2
+#define SB_SM_MAGS      3
+#define SB_SM_CONST     4
+#define SB_SM_DATE      5
+#define SB_SM_TIME      6
+#define SB_SM_MEASURE   7
+#define SB_SM_ALT       8
+#define SB_SM_AZM       9
+#define SB_SM_AIRMASS  10
+#define SB_SM_MODE     11
+#define SB_SM_COUNT    12
 
 class CSBLabel : public QLabel
 {
@@ -41,6 +41,12 @@ typedef struct
   int        id;
 } sbItem_t;
 
+typedef struct
+{
+  int id;
+  int width;
+} statusBarItem_t;
+
 class CStatusBar : public QObject
 {
   Q_OBJECT
@@ -48,7 +54,13 @@ public:
     CStatusBar(QStatusBar *pBar);
     void setItem(int id, QString str);
     void createSkyMapBar(void);
+    void saveStatusBar();
+    void restoreStatusBar();
+    bool getUsedItem(int index, QString &label, int &id);
+    bool getAvailableItem(int id, QString &label);
+    QString getLabel(int id);
 
+    bool isUsed(int id);
 signals:
   void sigDoubleClicked(int id);
 
@@ -56,6 +68,7 @@ public slots:
   void slotDoubleClicked(int id);
 
 protected:
+   void addItem(int id);
    void deleteStatusBar(void);
    QWidget *createItem(int id, const QString &tooltip, int width = 0, Qt::Alignment align = Qt::AlignHCenter);
 

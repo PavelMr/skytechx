@@ -17,6 +17,7 @@
 #include "cgamepad.h"
 #include "skcore.h"
 #include "csethorizon.h"
+#include "cstatusbar.h"
 
 #include <QSettings>
 
@@ -99,6 +100,43 @@ CSetting::CSetting(QWidget *parent) :
   connect(ui->treeWidgetSun, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
   connect(ui->treeWidgetDSS, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
   connect(ui->treeWidgetSat, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
+
+  // status bar
+  bool ok;
+  int  index = 0;
+  do
+  {
+    QString text;
+    int     id;
+
+    ok = pcMainWnd->statusBar->getUsedItem(index, text, id);
+
+    if (ok)
+    {
+      QListWidgetItem *item = new QListWidgetItem;
+
+      item->setText(text);
+      item->setData(Qt::UserRole + 1, id);
+
+      ui->tv_statusBar->addItem(item);
+    }
+    index++;
+  } while (ok);
+
+  for (int i = 0; i < SB_SM_COUNT; i++)
+  {
+    QString text;
+
+    if (pcMainWnd->statusBar->getAvailableItem(i, text))
+    {
+      QListWidgetItem *item = new QListWidgetItem;
+
+      item->setText(text);
+      item->setData(Qt::UserRole + 1, i);
+
+      ui->tv_statusBarUnused->addItem(item);
+    }
+  } while (ok);
 
   ui->listWidget_2->addItem(tr("Stars"));
   ui->listWidget_2->addItem(tr("Stars magnitude"));
@@ -707,6 +745,22 @@ void CSetting::apply()
   g_skSet.map.gsc.show = ui->showGSCCheckBox->isChecked();
   g_skSet.map.gsc.fromFOV = D2R(ui->doubleSpinBox_28->value());
   g_skSet.map.gsc.fromMag = ui->doubleSpinBox_29->value();
+
+  // status bar
+  QSettings set;
+  QByteArray data;
+  QDataStream ds(&data, QIODevice::WriteOnly);
+
+  ds << (qint32)ui->tv_statusBar->count();
+
+  for (int i = 0; i < ui->tv_statusBar->count(); i++)
+  {
+    ds << ui->tv_statusBar->item(i)->data(Qt::UserRole + 1).toInt();
+  }
+  set.setValue("status_bar", data);
+
+  pcMainWnd->statusBar->createSkyMapBar();
+  pcMainWnd->statusBar->saveStatusBar();
 
   setCreateFonts();
   pcMapView->repaintMap(true);
@@ -1881,4 +1935,72 @@ void CSetting::on_toolButton_clicked()
     ui->lineEdit->setText(fileName);
     ui->radioButton_4->setChecked(true);
   }
+}
+
+void CSetting::on_pushButton_63_clicked()
+{ // up
+  int currentRow = ui->tv_statusBar->currentRow();
+
+  if ((currentRow > ui->tv_statusBar->count() - 1) || currentRow < 0)
+  {
+    return;
+  }
+
+  QListWidgetItem *currentItem = ui->tv_statusBar->takeItem(currentRow);
+
+  ui->tv_statusBar->insertItem(currentRow - 1, currentItem);
+  if (currentRow - 1 > 0)
+  {
+    ui->tv_statusBar->setCurrentRow(currentRow - 1);
+  }
+  else
+  {
+    ui->tv_statusBar->setCurrentRow(0);
+  }
+}
+
+void CSetting::on_pushButton_62_clicked()
+{ // down
+  int currentRow = ui->tv_statusBar->currentRow();
+
+  if ((currentRow > ui->tv_statusBar->count() - 1) || currentRow < 0)
+  {
+    return;
+  }
+
+  QListWidgetItem *currentItem = ui->tv_statusBar->takeItem(currentRow);
+
+  ui->tv_statusBar->insertItem(currentRow + 1, currentItem);
+  if (currentRow + 1 < ui->tv_statusBar->count())
+  {
+    ui->tv_statusBar->setCurrentRow(currentRow + 1);
+  }
+  else
+  {
+    ui->tv_statusBar->setCurrentRow(currentRow);
+  }
+}
+
+void CSetting::on_pushButton_64_clicked()
+{ // left
+  int currentRow = ui->tv_statusBarUnused->currentRow();
+
+  if (currentRow == -1)
+  {
+    return;
+  }
+  QListWidgetItem *currentItem = ui->tv_statusBarUnused->takeItem(currentRow);
+  ui->tv_statusBar->addItem(currentItem);
+}
+
+void CSetting::on_pushButton_65_clicked()
+{ // right
+  int currentRow = ui->tv_statusBar->currentRow();
+
+  if (currentRow == -1)
+  {
+    return;
+  }
+  QListWidgetItem *currentItem = ui->tv_statusBar->takeItem(currentRow);
+  ui->tv_statusBarUnused->addItem(currentItem);
 }

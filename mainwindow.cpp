@@ -1035,6 +1035,8 @@ void MainWindow::saveAndExit()
     QApplication::processEvents(); // tohle je tu kvuli saveGeometry (aby se to okno prekreslilo)
   }
 
+  statusBar->saveStatusBar();
+
   QSettings settings;
 
   settings.setValue("show_dso_shapes", g_showDSOShapes);
