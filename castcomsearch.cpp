@@ -22,7 +22,7 @@ CAstComSearch::CAstComSearch(QWidget *parent, double jd, bool isComet) :
 
       astSolve(a, jd);
 
-      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a);
+      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a, a->orbit.lAlt > 0);
     }
   }
   else
@@ -38,7 +38,7 @@ CAstComSearch::CAstComSearch(QWidget *parent, double jd, bool isComet) :
 
       comSolve(a, jd);
 
-      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a);
+      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a, a->orbit.lAlt > 0);
     }
   }
 

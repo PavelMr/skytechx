@@ -19,6 +19,7 @@ CSearchDSOCat::CSearchDSOCat(QWidget *parent) :
 
   fillList();
 
+  ui->treeView->getModel()->setHeaderData(0, Qt::Horizontal, tr("Name"));
   ui->widget->setModel(ui->treeView->getModel(), 0);
   connect(ui->widget, SIGNAL(sigSetSelection(QModelIndex&)), this, SLOT(slotSelChange(QModelIndex&)));
 }

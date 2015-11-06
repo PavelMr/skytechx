@@ -67,6 +67,8 @@ static bool getCommandParamValue(const QString command, const QString& param, co
   return true;
 }
 
+#include "nutation.h"
+
 ////////////////////////////////
 int main(int argc, char *argv[])
 ////////////////////////////////
@@ -84,6 +86,15 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   QApplication a(argc, argv);
+
+
+  // REMOVE
+  /*
+  for (double j = JD2000; j < JD2000 + 365 * 10; j+=50)
+  {
+    qDebug() << j << R2D(nutationInLongitude(j)) * 3600.0;
+  }
+  */
 
   QSharedMemory sharedMemory("The SkytechX (PMR)");
   if (!sharedMemory.create(1) && sharedMemory.error() == QSharedMemory::AlreadyExists)

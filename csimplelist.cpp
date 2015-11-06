@@ -11,12 +11,17 @@ CSimpleList::CSimpleList(QWidget *parent) :
   setModel(m_proxy);
 }
 
-void CSimpleList::addRow(const QString &text, const QVariant &data)
+void CSimpleList::addRow(const QString &text, const QVariant &data, bool boldFont)
 {
   QStandardItem *item = new QStandardItem;
 
   item->setText(text);
   item->setData(data);
+
+  QFont fnt = item->font();
+  fnt.setBold(boldFont);
+
+  item->setFont(fnt);
 
   m_model->appendRow(item);
 }

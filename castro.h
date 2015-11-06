@@ -103,7 +103,7 @@ class CAstro
   public:
     CAstro();
 
-    void setParam(mapView_t *view);
+    void setParam(const mapView_t *view);
 
     void convRD2AANoRef(double ra, double dec, double *azm, double *alt);
     void convRD2AARef(double ra, double dec, double *azm, double *alt, double r = 0);

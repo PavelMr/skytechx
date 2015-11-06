@@ -13,7 +13,12 @@ CSatelliteSearch::CSatelliteSearch(mapView_t *view, QWidget *parent) :
 
   for (int i = 0; i < sgp4.count(); i++)
   {
-    ui->listView->addRow(sgp4.getName(i), i);
+    satellite_t s;
+
+    if (sgp4.solve(i, m_mapView, &s))
+    {
+      ui->listView->addRow(sgp4.getName(i), i, s.elevation > 0); // TODO: kontrola atm. refrakce u satelitu (teplota, atm. tlak)
+    }
   }
 
   ui->widget->setModel(ui->listView->getModel(), 0);

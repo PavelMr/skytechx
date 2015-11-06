@@ -2727,7 +2727,7 @@ void MainWindow::on_actionSMinus_triggered()
 void MainWindow::on_actionStar_by_proper_name_triggered()
 /////////////////////////////////////////////////////////
 {
-  CDlgSrchStarName dlg(this);
+  CDlgSrchStarName dlg(this, &ui->widget->m_mapView);
 
   if (dlg.exec())
   {

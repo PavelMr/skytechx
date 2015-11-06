@@ -22,6 +22,7 @@
 
 #include "skcore.h"
 #include "tycho.h"
+#include "cmapview.h"
 
 class CLWI_SStars: public QListWidgetItem
 {
@@ -38,7 +39,7 @@ class CDlgSrchStarName : public QDialog
   Q_OBJECT
 
 public:
-  explicit CDlgSrchStarName(QWidget *parent = 0);
+  explicit CDlgSrchStarName(QWidget *parent, const mapView_t *view);
   ~CDlgSrchStarName();
 
   tychoStar_t *m_tycho;

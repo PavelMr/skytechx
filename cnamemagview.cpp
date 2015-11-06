@@ -23,7 +23,7 @@ CNameMagView::CNameMagView(QWidget *parent) :
   header()->setSortIndicator(0, Qt::AscendingOrder);
 }
 
-void CNameMagView::addRow(const QString &name, double mag, const QVariant &data)
+void CNameMagView::addRow(const QString &name, double mag, const QVariant &data, bool boldFont)
 {
   QStandardItem *itemName = new QStandardItem;
   QStandardItem *itemMag = new QStandardItem;
@@ -33,6 +33,11 @@ void CNameMagView::addRow(const QString &name, double mag, const QVariant &data)
   itemName->setData(data);
   itemName->setEditable(false);
 
+  QFont fnt = itemName->font();
+  fnt.setBold(boldFont);
+
+  itemName->setFont(fnt);
+
   itemMag->setText(getStrMag(mag));
   itemMag->setData(mag);
   itemMag->setEditable(false);
@@ -41,7 +46,6 @@ void CNameMagView::addRow(const QString &name, double mag, const QVariant &data)
   list.append(itemMag);
 
   m_model->appendRow(list);
-
 }
 
 void CNameMagView::setHeaderSize(int c1, int c2)

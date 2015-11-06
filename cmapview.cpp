@@ -490,7 +490,7 @@ void CMapView::mouseMoveEvent(QMouseEvent *e)
     }
   }
 
-  //tryShowToolTip(e->pos(), QApplication::keyboardModifiers() == Qt::CTRL);
+  tryShowToolTip(e->pos(), QApplication::keyboardModifiers() == Qt::ControlModifier);
 
   m_lastMousePos = e->pos();
   repaintMap(false);
