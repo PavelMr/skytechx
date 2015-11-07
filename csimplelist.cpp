@@ -1,8 +1,58 @@
 #include "csimplelist.h"
 
+#include <QDebug>
+
+class SimpleItem : public QStandardItem
+{
+public:
+  static void parse(const QString &item, QString &text, QString &number)
+  {
+    for (int i = 0; i < item.count(); i++)
+    {
+      QChar ch = item.at(i);
+      if (ch.isDigit())
+      {
+        for (; i < item.count(); i++)
+        {
+          QChar ch = item.at(i);
+          if (ch.isDigit())
+          {
+            number += ch;
+          }
+          else
+          {
+            return;
+          }
+        }
+        return;
+      }
+      text += ch;
+    }
+  }
+
+  bool operator <(const QStandardItem &other) const
+  {
+    QString text1;
+    QString text2;
+    QString number1;
+    QString number2;
+
+    parse(text(), text1, number1);
+    parse(other.text(), text2, number2);
+
+    if (text1 != text2)
+    {
+      return text1.toLower() < text2.toLower();
+    }
+
+    return number1.toInt() < number2.toInt();
+  }
+};
+
 CSimpleList::CSimpleList(QWidget *parent) :
   QListView(parent)
 {
+  m_sortByNumbers = false;
   m_model = new QStandardItemModel(0, 1, this);
   setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -13,7 +63,7 @@ CSimpleList::CSimpleList(QWidget *parent) :
 
 void CSimpleList::addRow(const QString &text, const QVariant &data, bool boldFont)
 {
-  QStandardItem *item = new QStandardItem;
+  SimpleItem *item = new SimpleItem;
 
   item->setText(text);
   item->setData(data);
@@ -49,6 +99,11 @@ int CSimpleList::findText(int from, const QString &text, bool partialy)
   }
 
   return -1;
+}
+
+void CSimpleList::setSortByNumber(bool enable)
+{
+  m_sortByNumbers = enable;
 }
 
 void CSimpleList::sort()

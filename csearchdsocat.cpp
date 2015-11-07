@@ -1,12 +1,14 @@
 #include "csearchdsocat.h"
 #include "ui_csearchdsocat.h"
 #include "cdso.h"
+#include "precess.h"
 
-CSearchDSOCat::CSearchDSOCat(QWidget *parent) :
+CSearchDSOCat::CSearchDSOCat(QWidget *parent, const mapView_t *view) :
   QDialog(parent),
   ui(new Ui::CSearchDSOCat)
 {
   ui->setupUi(this);
+  m_view = *view;
 
   CAddCustomObject::load(&m_catalogue);
   int i = 0;
@@ -19,7 +21,6 @@ CSearchDSOCat::CSearchDSOCat(QWidget *parent) :
 
   fillList();
 
-  ui->treeView->getModel()->setHeaderData(0, Qt::Horizontal, tr("Name"));
   ui->widget->setModel(ui->treeView->getModel(), 0);
   connect(ui->widget, SIGNAL(sigSetSelection(QModelIndex&)), this, SLOT(slotSelChange(QModelIndex&)));
 }
@@ -32,6 +33,7 @@ CSearchDSOCat::~CSearchDSOCat()
 void CSearchDSOCat::fillList()
 {
   ui->treeView->removeAll();
+  ui->treeView->setSortByNumber(true);
 
   int catalogueIndex = ui->cbCatalogue->currentIndex();
 
@@ -44,7 +46,18 @@ void CSearchDSOCat::fillList()
       continue;
     }
 
-    ui->treeView->addRow(cDSO.getName(dso), i);
+    double ra = dso->rd.Ra;
+    double dec = dso->rd.Dec;
+    precess(&ra, &dec, JD2000, m_view.jd);
+
+    double alt, azm;
+
+    CAstro astro;
+
+    astro.setParam(&m_view);
+    astro.convRD2AARef(ra, dec, &azm, &alt);
+
+    ui->treeView->addRow(cDSO.getName(dso), i, alt > 0);
   }
   ui->treeView->sort();
 }

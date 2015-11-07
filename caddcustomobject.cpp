@@ -270,4 +270,3 @@ void CAddCustomObject::slotDelete()
   model->removeRow(index);
   m_catalogue[ui->comboBox->currentIndex()].list.removeAt(index);
 }
-

@@ -24,6 +24,7 @@
 #include <QtGui>
 
 #include "skcore.h"
+#include "cmapview.h"
 
 namespace Ui {
     class CDSOComNameSearch;
@@ -34,7 +35,7 @@ class CDSOComNameSearch : public QDialog
     Q_OBJECT
 
 public:
-    explicit CDSOComNameSearch(QWidget *parent = 0);
+    explicit CDSOComNameSearch(QWidget *parent, mapView_t *view);
     ~CDSOComNameSearch();
     double m_ra;
     double m_dec;

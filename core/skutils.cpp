@@ -165,7 +165,9 @@ bool compareName(const char *str1, const char *str2)
   int len = strlen(str1) + 1;
 
   for (a=0;a<len;a++)
+  {
     if (str1[a] != 32) p1[b++] = str1[a];
+  }
 
   p1[b] = 0;
   l1 = b;
@@ -179,15 +181,16 @@ bool compareName(const char *str1, const char *str2)
   p2[b] = 0;
   l2 = b;
 
-  //if (strlen(p1) != strlen(p2)) return(false);
   if (l1 != l2)
   {
     return false;
   }
 
-  len = l1;//strlen(p1);
+  len = l1;
   for (a=0;a<len;a++)
+  {
     if (tolower(p1[a]) != tolower(p2[a])) return(false);
+  }
 
   return(true);
 }

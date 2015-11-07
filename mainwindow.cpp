@@ -2743,7 +2743,7 @@ void MainWindow::on_actionStar_by_proper_name_triggered()
 void MainWindow::on_actionDOS_by_common_name_triggered()
 ////////////////////////////////////////////////////////
 {
-  CDSOComNameSearch dlg(this);
+  CDSOComNameSearch dlg(this, &ui->widget->m_mapView);
 
   if (dlg.exec())
   {
@@ -5132,7 +5132,7 @@ void MainWindow::on_actionSatellite_3_triggered(bool checked)
 
 void MainWindow::on_actionDSO_by_catalogue_triggered()
 {
-  CSearchDSOCat dlg(this);
+  CSearchDSOCat dlg(this, &ui->widget->m_mapView);
 
   if (dlg.exec() == DL_OK)
   {

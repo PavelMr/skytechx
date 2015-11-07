@@ -2,6 +2,8 @@
 #include "ui_cseltelefield.h"
 #include "cteleeditdlg.h"
 
+static bool gs_showFOV = true;
+
 ///////////////////////////////////////////////
 CSelTeleField::CSelTeleField(QWidget *parent) :
   QDialog(parent),
@@ -9,6 +11,15 @@ CSelTeleField::CSelTeleField(QWidget *parent) :
 ///////////////////////////////////////////////
 {
   ui->setupUi(this);
+
+  if (gs_showFOV)
+  {
+    ui->radioButton->setChecked(true);
+  }
+  else
+  {
+    ui->radioButton_2->setChecked(true);
+  }
 
   QList <teleParam_t> tTelescope;
   QList <teleParam_t> tEyepiece;
@@ -169,6 +180,7 @@ void CSelTeleField::calcParam()
   m_outMag = t->par2 / e->par1 * m_outBP;
   m_outFR = t->par2 / t->par1 * m_outBP;
   m_outEP = t->par1 / m_outMag;
+  m_TEname = t->name + " - " + e->name;
 
   if (RAD2DEG(m_outFOV) >= 1)
     ui->label_a->setText(QString("%1°").arg(RAD2DEG(m_outFOV), 0, 'f', 2));
@@ -191,13 +203,24 @@ void CSelTeleField::on_pushButton_6_clicked()
   if (m_outFOV == CM_UNDEF)
     return;
 
-  if (RAD2DEG(m_outFOV) >= 1)
-    m_name = QString("%1°").arg(RAD2DEG(m_outFOV), 0, 'f', 2);
+  gs_showFOV = ui->radioButton->isChecked();
+
+  if (gs_showFOV)
+  {
+    if (RAD2DEG(m_outFOV) >= 1)
+      m_name = QString("%1°").arg(RAD2DEG(m_outFOV), 0, 'f', 2);
+    else
+      m_name = QString("%1'").arg(RAD2DEG(m_outFOV) * 60, 0, 'f', 1);
+  }
   else
-    m_name = QString("%1'").arg(RAD2DEG(m_outFOV) * 60, 0, 'f', 1);
+  {
+    m_name = m_TEname;
+  }
 
   saveTeleItem(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope/telescope.dat", ui->listWidget);
   saveTeleItem(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope/eyepiece.dat", ui->listWidget_2);
+
+
 
   done(DL_OK);
 }

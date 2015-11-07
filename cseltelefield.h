@@ -32,6 +32,7 @@ public:
   double  m_outMag;
   double  m_outFR;
   double  m_outEP;
+  QString m_TEname;
   QString m_name;
 
 protected:

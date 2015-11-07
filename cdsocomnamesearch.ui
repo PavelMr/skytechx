@@ -17,11 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QListWidget" name="listWidget">
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <widget class="CSimpleList" name="widget" native="true"/>
      </item>
     </layout>
    </item>
@@ -64,6 +60,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CSimpleList</class>
+   <extends>QWidget</extends>
+   <header location="global">csimplelist.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -355,7 +355,9 @@ int CDso::findDSO(char *pszName, dso_t **pDso)
     {
       QString pName = getName(&dso[i], j);
       if (pName.length() == 0)
+      {
         break;
+      }
       if (compareName(pName.toLatin1().data(), pszName))
       {
         *pDso = &dso[i];
@@ -517,7 +519,6 @@ QString CDso::getName(dso_t *pDso)
 QString CDso::getName(dso_t *pDso, int idx)
 ///////////////////////////////////////////
 {
-
   QStringList *list = &namesMap[pDso->nameOffs];
   if (idx >= list->count())
   {

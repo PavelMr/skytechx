@@ -12,6 +12,7 @@ public:
   explicit CSimpleList(QWidget *parent = 0);
   void addRow(const QString &text, const QVariant &data = 0, bool boldFont = false);
   int findText(int from, const QString &text, bool partialy = false);
+  void setSortByNumber(bool enable);
   void sort();
   void removeAll();
   void removeAt(int index);
@@ -28,6 +29,7 @@ public slots:
 protected:
   QStandardItemModel *m_model;
   QSortFilterProxyModel *m_proxy;
+  bool m_sortByNumbers;
 
 };
 
