@@ -816,7 +816,7 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
 
       orbit->ephemType = EPT_DE404;
 
-      orbit->hLon = data[0];
+      orbit->hLon = data[0] += nutationInLongitude(m_jd);
       orbit->hLat = data[1];
       orbit->r = data[2];
     }
@@ -844,7 +844,7 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
       de404(planet, m_deltaT + m_jd - lt, data);
 
       orbit->ephemType = EPT_DE404;
-      orbit->hLon = data[0];
+      orbit->hLon = data[0] += nutationInLongitude(m_jd);
       orbit->hLat = data[1];
       orbit->r = data[2];
 
@@ -868,7 +868,7 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
     double yg = yh + ys;
     double zg = zh + zs;
 
-    double obl = m_eclObl;
+    double obl = m_eclObl + nutationInObliquity(m_jd);
 
     double xe = xg;
     double ye = yg * cos(obl) - zg * sin(obl);
@@ -1154,6 +1154,8 @@ void CAstro::solveSun(orbit_t *o)
   double xs,ys,zs;
   double xe,ye,ze;
 
+  o->hLat;
+
   o->R = o->r;
   double cosl = cos(o->hLat);
 
@@ -1161,8 +1163,8 @@ void CAstro::solveSun(orbit_t *o)
   ys = o->r * sin(o->hLon) * cosl;
   zs = o->r                * sin(o->hLat);
 
-  double sine = sin(m_eclObl);
-  double cose = cos(m_eclObl);
+  double sine = sin(m_eclObl + nutationInObliquity(m_jd));
+  double cose = cos(m_eclObl + nutationInObliquity(m_jd));
 
   xe = xs;
   ye = ys * cose - zs * sine;
