@@ -3,6 +3,7 @@
 #include "cscanrender.h"
 #include "clunarfeatures.h"
 #include "cconsole.h"
+#include "smartlabeling.h"
 
 CPlanetRenderer  cPlanetRenderer; // NOTE: nedavat QPixmal QImage atd do globalnich konstruktoru kvuli addLibradyPath v main
 
@@ -563,9 +564,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
   if (g_showLabels && !isPreview)
   {
-    pPainter->setFont(setFonts[FONT_PLANET]);
-    setSetFontColor(FONT_PLANET, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + qMax(sx, sy) + 20, o->name);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + qMax(sx, sy) + 20), 0, o->name, FONT_PLANET, SL_AL_CENTER, SL_AL_FIXED);
   }
 
   switch (o->type)
@@ -624,9 +623,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
     if (g_showLabels)
     {
-      pPainter->setFont(setFonts[FONT_PLANET]);
-      setSetFontColor(FONT_PLANET, pPainter);
-      pPainter->drawCText(pt->sx, pt->sy + sy + 20, o->name);
+      g_labeling.addLabel(QPoint(pt->sx, pt->sy + sy + 20), 0, o->name, FONT_PLANET, SL_AL_CENTER, SL_AL_FIXED);
     }
 
     return(minSize);
@@ -702,9 +699,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
   if (g_showLabels)
   {
-    pPainter->setFont(setFonts[FONT_PLANET]);
-    setSetFontColor(FONT_PLANET, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + qMax(sx, sy) + 20, o->name);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + qMax(sx, sy) + 20), 0, o->name, FONT_PLANET, SL_AL_CENTER, SL_AL_FIXED);
   }
 
   switch (o->type)

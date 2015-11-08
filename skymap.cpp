@@ -24,6 +24,7 @@
 #include "Usno2A.h"
 #include "cucac4.h"
 #include "csgp4.h"
+#include "smartlabeling.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
 // ALL OBJECT ON MAP DRAW AT EPOCH J2000.0
@@ -338,23 +339,17 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
           bBayer = false;
           bFlamsteed = false;
         }
-        pPainter->setFont(setFonts[FONT_STAR_PNAME]);
-        pPainter->setPen(g_skSet.fonst[FONT_STAR_PNAME].color);
-        pPainter->drawTextLR(pt.sx + r, pt.sy + r, propName);
+        g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, propName, FONT_STAR_PNAME, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
       }
 
       if (bBayer && mapView->fov <= g_skSet.map.star.bayerFromFov)
       {
-        pPainter->setFont(setFonts[FONT_STAR_BAYER]);
-        pPainter->setPen(g_skSet.fonst[FONT_STAR_BAYER].color);
-        pPainter->drawTextLL(pt.sx - r, pt.sy + r, bayer);
+        g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, bayer, FONT_STAR_BAYER, SL_AL_BOTTOM_LEFT, SL_AL_ALL);
       }
 
       if (bFlamsteed && mapView->fov <= g_skSet.map.star.flamsFromFov)
       {
-        pPainter->setFont(setFonts[FONT_STAR_FLAMS]);
-        pPainter->setPen(g_skSet.fonst[FONT_STAR_FLAMS].color);
-        pPainter->drawTextUL(pt.sx - r, pt.sy - r, flamsteed);
+        g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, flamsteed, FONT_STAR_BAYER, SL_AL_TOP_LEFT, SL_AL_ALL);
       }
     }
   }
@@ -462,11 +457,8 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////////
 {
   cDSO.setPainter(pPainter, pImg);
-  cDSO.tLabels.clear();
 
   QList <dso_t *> tList;
-
-  setSetFont(FONT_DSO, pPainter);
 
   SKPLANE *frustum = trfGetFrustum();
 
@@ -540,6 +532,7 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     }
   }
 
+  /*
   // draw shape labels
   setSetFontColor(FONT_DSO, pPainter);
   dsoLabel_t lab;
@@ -547,6 +540,7 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   {
     pPainter->drawCText(lab.sx, lab.sy, lab.label);
   }
+  */
 }
 
 
@@ -811,8 +805,7 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o, bool bFront, mapView_t *view, int pid)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-{
-  p->setFont(setFonts[FONT_PLN_SAT]);
+{  
 
   for (int i = 0; i < sat->count; i++)
   {
@@ -830,11 +823,7 @@ static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o
 
         if (g_showLabels)
         {
-          setSetFontColor(FONT_PLN_SAT, p);
-          p->setFont(setFonts[FONT_PLN_SAT]);
-
-          p->drawText(QRect(pt.sx + r + 5, pt.sy + r + 5, 10000, 10000),
-                      Qt::AlignTop | Qt::AlignLeft, QString("%1").arg(sat->sat[i].name));
+          g_labeling.addLabel(QPoint(pt.sx, pt.sy), r + 5, sat->sat[i].name, FONT_PLN_SAT, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
         }
         addMapObj(pt.sx, pt.sy, MO_PLN_SAT, MO_CIRCLE, r + 2, pid, i, sat->sat[i].mag);
       }
@@ -1032,9 +1021,7 @@ static void renderTelescope(mapView_t *mapView, CSkPainter *pPainter)
 static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
 //////////////////////////////////////////////////////////////////////
 {
-  sgp4.setObserver(mapView);
-
-  setSetFont(FONT_SATELLITE, pPainter);
+  sgp4.setObserver(mapView);  
 
   for (int i = 0; i < sgp4.count(); i++)
   {
@@ -1077,8 +1064,7 @@ static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
 
           if (g_showLabels)
           {
-            setSetFontColor(FONT_SATELLITE, pPainter);
-            pPainter->renderText(pt.sx, pt.sy, 15 * g_skSet.map.satellite.size, out.name, RT_BOTTOM_RIGHT);
+            g_labeling.addLabel(QPoint(pt.sx, pt.sy), 15 * g_skSet.map.satellite.size, out.name, FONT_SATELLITE, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
           }
           addMapObj(pt.sx, pt.sy, MO_SATELLITE, MO_CIRCLE, 10, i, 0);
         }
@@ -1157,6 +1143,8 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 {
   int width = pPainter->device()->width();
   int height = pPainter->device()->height();
+
+  g_labeling.clear();
 
   if (g_antialiasing)
   {
@@ -1261,6 +1249,8 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
   if (g_showLegends)
     smRenderLegends(mapView, pPainter, pImg);
+
+  g_labeling.render(pPainter);
 
   return(false);
 }

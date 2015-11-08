@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "cobjtracking.h"
 #include "setting.h"
+#include "smartlabeling.h"
 
 extern bool g_comAstChanged;
 
@@ -249,18 +250,6 @@ static bool comSolve2(comet_t *a, double jdt)
                        &a->orbit.lAzm, &a->orbit.lAlt);
   }
 
-  /*
-  //mhelio = H + K * log10(r)
-  //log10(Lo) = -0.0075*mhelio2 - 0.19*mhelio + 2.10
-  //L = Lo * (1 - 10-4r) * (1 - 10-2r)
-
-  double m = a->H + a->G * log10(a->orbit.r);
-  double lo = pow(10, -0.0075 * m * m - 0.19 * m + 2.10);
-  double L =  lo * (1 - pow(10, -4 * a->orbit.r)) * (1 - pow(10, -2 * a->orbit.r));
-
-  qDebug() << a->name << L * 1000000 << R2D(CAstro::calcAparentSize(a->orbit.R, L));
-  */
-
   return(true);
 }
 
@@ -364,26 +353,27 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
 
         if (g_showLabels)
         {
-          setSetFontColor(FONT_COMET, p);
-          setSetFont(FONT_COMET, p);
+          int align;
+
           if (sunAng >= 0 && sunAng < R90)
           {
-            p->drawTextLL(pt.sx - size - 1, pt.sy + size + 1, a->name);
+            align = SL_AL_BOTTOM_LEFT;
           }
           else
           if (sunAng >= R90 && sunAng < R180)
           {
-            p->drawTextUL(pt.sx - size - 1, pt.sy - size - 1, a->name);
+            align = SL_AL_TOP_LEFT;
           }
           else
           if (sunAng >= R180 && sunAng < R270)
           {
-            p->drawTextUR(pt.sx + size + 1, pt.sy - size - 1, a->name);
+            align = SL_AL_TOP_RIGHT;
           }
           else
           {
-            p->drawTextLR(pt.sx + size + 1, pt.sy + size + 1, a->name);
+            align = SL_AL_BOTTOM_RIGHT;
           }
+          g_labeling.addLabel(QPoint(pt.sx, pt.sy), size + 2, a->name, FONT_COMET, align, SL_AL_ALL);
         }
         addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, size + 2, i, (qint64)a, a->orbit.mag);
       }

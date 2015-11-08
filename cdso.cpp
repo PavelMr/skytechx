@@ -2,6 +2,7 @@
 #include "mapobj.h"
 #include "setting.h"
 #include "cconsole.h"
+#include "smartlabeling.h"
 
 // FIXME: zrusit duplikaty
 // M47, IC 5146 =Sh2-125
@@ -10,8 +11,6 @@ CDso  cDSO;
 
 extern bool g_showDSOShapes;
 extern bool g_showLabels;
-
-static dsoLabel_t label;
 
 ////////////
 CDso::CDso()
@@ -602,8 +601,7 @@ void CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bo
 
   if (s > m_minSize && g_showLabels)
   {
-    setSetFontColor(FONT_DSO, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
   {
@@ -625,8 +623,7 @@ void CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
 
   if (s > m_minSize && g_showLabels)
   {
-    setSetFontColor(FONT_DSO, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
   {
@@ -649,8 +646,9 @@ void CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
 
   if (s > m_minSize && g_showLabels)
   {
-    setSetFontColor(FONT_DSO, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
+    //setSetFontColor(FONT_DSO, pPainter);
+    //pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
   {
@@ -673,8 +671,7 @@ void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
 
   if (s > m_minSize && g_showLabels)
   {
-    setSetFontColor(FONT_DSO, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
   {
@@ -729,12 +726,11 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
 
   if (g_showLabels)
   {
-    setSetFontColor(FONT_DSO, pPainter);
-
-    float uy = sx * sin( - ang);
-    float vy = sy * sin( - ang + MPI/2);
+    float uy = sy * sin( - ang);
+    float vy = sx * sin( - ang + MPI/2);
     int y = sqrt(uy*uy + vy*vy);
-    pPainter->drawCText(pt->sx, pt->sy + y + m_fntHeight, getName(pDso));
+
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + y + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
   {
@@ -756,8 +752,7 @@ void CDso::renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
 
   if (s > m_minSize && g_showLabels)
   {
-    setSetFontColor(FONT_DSO, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
   {
@@ -780,8 +775,7 @@ void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
 
   if (s > m_minSize && g_showLabels)
   {
-    setSetFontColor(FONT_DSO, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
   {
@@ -803,8 +797,7 @@ void CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, boo
 
   if (s > m_minSize && g_showLabels)
   {
-    setSetFontColor(FONT_DSO, pPainter);
-    pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
   {
@@ -827,11 +820,7 @@ void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool
   {
     if (g_showLabels)
     {
-      label.label = getName(dso);
-      label.sx = rc.center().x();
-      label.sy = rc.bottom() + m_fntHeight;
-
-      tLabels.append(label);
+      g_labeling.addLabel(QPoint(rc.center().x(), rc.bottom() + m_fntHeight), 0, getName(dso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
     }
     if (addToList)
     {

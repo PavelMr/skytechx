@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "cobjtracking.h"
 #include "setting.h"
+#include "smartlabeling.h"
 
 extern bool g_comAstChanged;
 
@@ -282,10 +283,8 @@ void astRender(CSkPainter *p, mapView_t *view, float maxMag)
         p->setBrush(QColor(g_skSet.map.aster.color));
         p->drawEllipse(QPoint(pt.sx, pt.sy), size, size);
         if (g_showLabels)
-        {
-          setSetFontColor(FONT_ASTER, p);
-          setSetFont(FONT_ASTER, p);
-          p->drawTextLR(pt.sx + size + 1, pt.sy + size + 1, a->name);
+        {          
+          g_labeling.addLabel(QPoint(pt.sx, pt.sy), size + 1, a->name, FONT_ASTER, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
         }
         addMapObj(pt.sx, pt.sy, MO_ASTER, MO_CIRCLE, size + 2, i, (qint64)a, a->orbit.mag);
       }

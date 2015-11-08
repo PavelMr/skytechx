@@ -45,12 +45,6 @@ typedef struct
   QString  commonName;
 } dsoCommonName_t;
 
-typedef struct
-{
-  QString label;
-  int     sx, sy;
-} dsoLabel_t;
-
 class CDso : public QObject
 {
   Q_OBJECT
@@ -99,7 +93,6 @@ class CDso : public QObject
 
     QMap <int, QStringList> namesMap;
 
-    QList <dsoLabel_t> tLabels;
     QList <CShape *>   tShapeList;
     dsoRect_t          sector[NUM_DSO_SEG_Y][NUM_DSO_SEG_X];
     QList <int>        tDsoSectors[NUM_DSO_SEG_Y][NUM_DSO_SEG_X];

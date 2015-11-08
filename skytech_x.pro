@@ -234,7 +234,8 @@ SOURCES += main.cpp\
     moonlessnightsdlg.cpp \
     systemsettings.cpp \
     xmlattrparser.cpp \
-    nutation.cpp
+    nutation.cpp \
+    smartlabeling.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -426,7 +427,8 @@ HEADERS  += mainwindow.h \
     moonlessnightsdlg.h \
     systemsettings.h \
     xmlattrparser.h \
-    nutation.h
+    nutation.h \
+    smartlabeling.h
 
 
 FORMS    += mainwindow.ui \
