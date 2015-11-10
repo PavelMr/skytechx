@@ -12,7 +12,7 @@ struct plantbl {
   double distance;
 };
 
-void de404(int pln, double jd, double rect[]);
+void de404(int pln, double jd, double polar[]);
 int gmoon404(double J, double rect[], double pol[]);
 
 #endif

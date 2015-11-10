@@ -235,7 +235,9 @@ SOURCES += main.cpp\
     systemsettings.cpp \
     xmlattrparser.cpp \
     nutation.cpp \
-    smartlabeling.cpp
+    smartlabeling.cpp \
+    cplanet.cpp \
+    sphxyz.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -428,7 +430,9 @@ HEADERS  += mainwindow.h \
     systemsettings.h \
     xmlattrparser.h \
     nutation.h \
-    smartlabeling.h
+    smartlabeling.h \
+    cplanet.h \
+    sphxyz.h
 
 
 FORMS    += mainwindow.ui \

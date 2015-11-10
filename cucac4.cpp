@@ -134,6 +134,25 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
     m_region[z].stars.clear();
   }
 
+  1. [b]Přesnější formát souřadnic[/b]:
+      Můžu udělat v nastavení zadání počtu desetinných míst ale zrovna u té deklinace mi to přijde na sekundy tak akorát.
+  2. [b]Úpravy dráhových elementů[/b]:
+      To tam je. V Dialogu katalogu komet/asteroidů je tlačítko 'Upravit položku'  (nebo dvojklik na požadovanou kometu)
+  3. [b]Ohledně hledání a okamžitého zobrazení informací[/b]:
+      Teď z hlavy nevím jak složité by to bylo. Kouknu na to.
+
+  4. [b]Zamčení  automatické změny velikosti  zorného pole[/b]:
+      To opravím. Teď se to neukládá.
+
+  5. [b]Kde se volí/ruší poloha měřícího bodu ?[/b]
+      Teď nikde. Na tohle se ptali už i jinde. Volí se klávesou SPACE.  Tj. přesune měřící bod na pozici kurzoru. Ale smazat zatím nejde. Taky jde o to co udělat když ho smažu. Co zobrazit ve status baru?
+
+  6. [b]Tiez by som uvital nejaku funkciu na meranie uhlovych vzd.[/b]
+      Viz bod 5. Hodnoty jsou ve status baru vpravo (vzdálenost a poziční úhel)
+
+  7. [b]Dodatečné katalogy[/b]
+      SkytechX umí zobrazit i část katalogů (UCAC4, PPMXL, a USNO2).  Zobrazit která část katalogu by byla na obrazovce by asi šlo. Většinou jsou soubory číslované jako zóny podle deklinace. Takže jeden soubor (např. Z450) je od R.A. 0h-24h v deklinaci 0.0 až 0.2°.
+
   ucac4Region_t *regionPtr = &m_region[z];
 
   int minRa  = (int)(R2D(cGSCReg.gscRegionSector[region].RaMin) * 3600. * 1000.);

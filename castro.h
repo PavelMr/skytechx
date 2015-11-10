@@ -54,6 +54,7 @@
 #define  PT_COMET         10
 #define  PT_ASTER         11
 #define  PT_EARTH_SHADOW  12
+#define  PT_EARTH         13 // used in geocentric position
 
 #define  EPT_DE404         0
 
@@ -126,7 +127,7 @@ class CAstro
     void sunEphemerid_Fast(orbit_t *o);
 
     void   calcEarthShadow(orbit_t *orbit, orbit_t *moon);
-    void   calcPlanet(int planet, orbit_t *orbit, bool bSunCopy = true, bool all = true);
+    void   calcPlanet(int planet, orbit_t *orbit, bool all = true);
     static double getEclObl(double jd);
     double getPolarisHourAngle(); // v 0..1
 

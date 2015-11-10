@@ -170,7 +170,7 @@ void C3DSolarWidget::generateOrbits()
     orbit_t o;
 
     ast.setParam(&view);
-    ast.calcPlanet(i, &o, true, false);
+    ast.calcPlanet(i, &o, false);
 
     double last = o.hLon;
     double total = 0;

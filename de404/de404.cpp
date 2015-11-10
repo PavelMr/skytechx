@@ -566,11 +566,55 @@ return(0);
 }
 
 
-
-
-// return eq. rectangular coordinates at epoch
-void de404(int pln, double jd, double rect[])
+// return helicntric polar coordinates at J2000.0
+void de404(int pln, double jd, double polar[])
 {
+  GCPlan cp;
+
+  plantbl *p;
+
+  switch (pln)
+  {
+    case PT_MERCURY:
+      p = &mer404;
+      break;
+    case PT_VENUS:
+      p = &ven404;
+      break;
+    case PT_MARS:
+      p = &mar404;
+      break;
+    case PT_JUPITER:
+      p = &jup404;
+      break;
+    case PT_SATURN:
+      p = &sat404;
+      break;
+    case PT_URANUS:
+      p = &ura404;
+      break;
+    case PT_NEPTUNE:
+      p = &nep404;
+      break;
+    case PT_SUN:
+      p = &ear404;
+      break;
+    case PT_EARTH:
+      p = &ear404;
+      break;
+    default:
+       break;
+  }
+
+  cp.gplan(jd, p, polar);
+
+  if (pln == PT_SUN)
+  {
+    polar[0] += R180;
+    rangeDbl(&polar[0], R360);
+  }
+
+#if 0
   GCPlan cp;
 
   plantbl *p;
@@ -653,4 +697,5 @@ void de404(int pln, double jd, double rect[])
   rect[2] = pol[2];
 
   rangeDbl(&rect[0], R360);
+#endif
 }

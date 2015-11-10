@@ -1,6 +1,8 @@
 #include "castro.h"
 #include "plantbl.h"
 #include "nutation.h"
+#include "cplanet.h"
+#include "sphxyz.h"
 
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
@@ -416,7 +418,6 @@ void CAstro::setParam(const mapView_t *view)
     m_geoTemp = view->geo.temp;
   }
 
-
   if (view->deltaT != CM_UNDEF)
     m_deltaT = view->deltaT;
   else
@@ -455,7 +456,7 @@ void CAstro::setParam(const mapView_t *view)
   //qDebug("GST   = %s", qPrintable(getStrTimeFromDayRads(m_gst)));
   //qDebug("LST   = %s", qPrintable(getStrTimeFromDayRads(m_lst)));
 
-  calcPlanet(PT_SUN, &m_sunOrbit, false);
+  //calcPlanet(PT_SUN, &m_sunOrbit, false);
 }
 
 
@@ -789,11 +790,38 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
   convRD2AANoRef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 }
 
-// TODO: udelat to i bez light corr.
 ////////////////////////////////////////////////////////////////////////////
-void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
+void CAstro::calcPlanet(int planet, orbit_t *orbit, bool all)
 ////////////////////////////////////////////////////////////////////////////
 {
+  CPlanet pln;
+  double helio[3];
+  double earth[3];
+
+  orbit->name = getName(planet);
+  orbit->englishName = getFileName(planet);
+  orbit->type = planet;
+
+  if (planet == PT_SUN)
+  {
+    pln.calcPlanet(planet, m_jd + m_deltaT, helio);
+    double lt = SECTODAY(helio[2] * AU1 / LSPEED);
+    pln.calcPlanet(planet, m_jd + m_deltaT - lt, helio);
+
+    orbit->hLon = helio[0];
+    orbit->hLat = helio[1];
+    orbit->r = helio[2];
+
+    solveSun(orbit);
+
+    return;
+  }
+
+  orbit->lRD.Ra  = 0;
+  orbit->lRD.Dec = 0;
+  orbit->R = 3;
+
+  /*
   double data[6];
 
   if (planet == PT_SUN && bSunCopy)
@@ -946,6 +974,7 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
       solveNeptune(orbit);
       break;
   }
+  */
 }
 
 //////////////////////////////////////////////////
@@ -1151,10 +1180,42 @@ void CAstro::solveMoon(orbit_t *o)
 void CAstro::solveSun(orbit_t *o)
 /////////////////////////////////
 {
+  double xs, ys, zs;
+  double xg, yg, zg;
+
+  o->R = o->r;
+
+  o->hLon += nutationInLongitude(m_jd);
+
+  // to heliocentric ecliptical XYZ
+  sphToXYZ(o->hLon, o->hLat, o->r, xs, ys, zs);
+
+  double sine = sin(m_eclObl + nutationInObliquity(m_jd));
+  double cose = cos(m_eclObl + nutationInObliquity(m_jd));
+
+  o->hRect[0] = 0;
+  o->hRect[1] = 0;
+  o->hRect[2] = 0;
+
+  o->eRect[0] = 0;
+  o->eRect[1] = 0;
+  o->eRect[2] = 0;
+
+  // geocentric equatorial at J2000
+  xg = xs;
+  yg = ys * cose - zs * sine;
+  zg = ys * sine + zs * cose;
+
+  o->gRD.Ra  = atan2(yg, xg);
+  o->gRD.Dec = atan2(zg, sqrt(xg * xg + yg * yg));
+  rangeDbl(&o->gRD.Ra, MPI2);
+
+  o->lRD.Ra  = o->gRD.Ra;
+  o->lRD.Dec = o->gRD.Dec;
+
+  /*
   double xs,ys,zs;
   double xe,ye,ze;
-
-  o->hLat;
 
   o->R = o->r;
   double cosl = cos(o->hLat);
@@ -1176,6 +1237,7 @@ void CAstro::solveSun(orbit_t *o)
 
   o->lRD.Ra  = o->gRD.Ra;
   o->lRD.Dec = o->gRD.Dec;
+  */
 
   calcParallax(o);
   convRD2AARef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
@@ -1193,6 +1255,7 @@ void CAstro::solveSun(orbit_t *o)
 
   o->PA = getNPA(poleRA[PT_SUN][0], poleRA[PT_SUN][1], poleDec[PT_SUN][0], poleDec[PT_SUN][1], o->gRD.Ra, o->gRD.Dec);
 
+  /*
   o->hRect[0] = o->r * cos(o->hLon) * cos(o->hLat);
   o->hRect[1] = o->r * sin(o->hLon) * cos(o->hLat);
   o->hRect[2] = o->r                * sin(o->hLat);
@@ -1200,6 +1263,7 @@ void CAstro::solveSun(orbit_t *o)
   o->eRect[0] = o->r * cos(o->hLon - R180) * cos(o->hLat);
   o->eRect[1] = o->r * sin(o->hLon - R180) * cos(o->hLat);
   o->eRect[2] = o->r                       * sin(o->hLat);
+  */
 
   o->cLat = 0;
   o->cMer = 0;
