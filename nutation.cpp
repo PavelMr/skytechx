@@ -153,3 +153,14 @@ double nutationInObliquity(double JD)
 
   return D2R(value / 3600.0);
 }
+
+double nutationInRightAscension(double Alpha, double Delta, double Obliquity, double NutationInLongitude, double NutationInObliquity)
+{
+  return (cos(Obliquity) + sin(Obliquity) * sin(Alpha) * tan(Delta)) * NutationInLongitude - cos(Alpha)*tan(Delta)*NutationInObliquity;
+}
+
+double nutationInDeclination(double Alpha, double Obliquity, double NutationInLongitude, double NutationInObliquity)
+{
+  return sin(Obliquity) * cos(Alpha) * NutationInLongitude + sin(Alpha)*NutationInObliquity;
+}
+

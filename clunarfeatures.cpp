@@ -176,12 +176,11 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
 
     SKVECTOR out;
     SKVECTOR in;
-    double ss = 0.997;
 
     double clat = cos(lf->lat);
-    in.x = clat * cos(-lf->lon) * scale * ss;
-    in.y =        sin(lf->lat)  * scale * ss;
-    in.z = clat * sin(-lf->lon) * scale * ss;
+    in.x = clat * cos(-lf->lon) * scale;
+    in.y =        sin(lf->lat)  * scale;
+    in.z = clat * sin(-lf->lon) * scale;
 
     SKVECTransform3(&out, &in, &mat);
 
@@ -194,12 +193,14 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     if (!trfPointOnScr(sx, sy, radius))
       continue;
 
-    double d = sqrt(POW2(out.x) + POW2(out.y)) * R90  / scale;
+    double d = sqrt(POW2(out.x) + POW2(out.y)) / scale;
 
     double r1 = radius;
-    double r2 = radius * (cos(d) * 2);
+    double r2 = radius * sqrt(1 - d * d);
     if (r2 > r1)
+    {
       r2 = r1;
+    }
     double ang = atan2(out.x, -out.y);
 
     p->setPen(g_skSet.map.planet.lunarFeatures);
