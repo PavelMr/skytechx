@@ -189,6 +189,8 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.dsoNoMagShapeFOV", set->map.dsoNoMagShapeFOV, ds);
   writeVal("map.dsoNoMagOtherFOV", set->map.dsoNoMagOtherFOV, ds);
 
+  writeVal("map.dsoFilter", set->map.dsoFilter, ds);
+
   for (int i = 0; i < DSOT_COUNT; i++)
   {
     writeVal("map.dsoTypeShow" + QString::number(i), set->map.dsoTypeShow[i], ds);
@@ -452,6 +454,7 @@ bool setLoad(QString name, setting_t *set)
 
   set->map.dsoNoMagShapeFOV = readVal("map.dsoNoMagShapeFOV", D2R(75), tMap).toDouble();
   set->map.dsoNoMagOtherFOV = readVal("map.dsoNoMagOtherFOV", D2R(25), tMap).toDouble();
+  set->map.dsoFilter = readVal("map.dsoFilter", "", tMap).toString();
 
   for (int i = 0; i < DSOT_COUNT; i++)
   {

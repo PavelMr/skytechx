@@ -456,6 +456,8 @@ static bool dsoComp(dso_t *d1, dso_t *d2)
 static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////////
 {
+  QStringList dsoFilterList = g_skSet.map.dsoFilter.remove(" ").split(";");
+
   cDSO.setPainter(pPainter, pImg);
 
   QList <dso_t *> tList;
@@ -505,7 +507,24 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
         if (draw)
         {
-          tList.append(d);
+          QString name = cDSO.getName(d);
+
+          foreach (const QString &filter, dsoFilterList)
+          {
+            QRegExp re(filter + "[\\s0-9]");
+            re.setCaseSensitivity(Qt::CaseInsensitive);
+
+            if (name.indexOf(re) == 0)
+            {
+              draw = false;
+              break;
+            }
+          }
+
+          if (draw)
+          {
+            tList.append(d);
+          }
         }
       }
     }

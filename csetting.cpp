@@ -236,6 +236,8 @@ void CSetting::setValues()
   ui->doubleSpinBox_23->setValue(R2D(set.map.starRange[9].fromFov));
 
   // DSO
+  ui->le_dso_filter->setText(g_skSet.map.dsoFilter);
+
   QStandardItemModel *model = new QStandardItemModel(0, 2, NULL);
   ui->treeView->setRootIsDecorated(false);
 
@@ -621,6 +623,8 @@ void CSetting::apply()
   g_skSet.map.starRange[9].fromFov = D2R(ui->doubleSpinBox_23->value());
 
   // DSO
+  g_skSet.map.dsoFilter = ui->le_dso_filter->text();
+
   QStandardItemModel *model = (QStandardItemModel *)ui->treeView->model();
 
   for (int i = 0; i < model->rowCount(); i++)

@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1070,6 +1070,49 @@
                        <string/>
                       </property>
                      </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QGroupBox" name="groupBox_14">
+                 <property name="title">
+                  <string>DSO Filter</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_84">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_83">
+                    <item>
+                     <widget class="QLabel" name="label_106">
+                      <property name="text">
+                       <string>Hide DSO with prefix. Separated by ;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="le_dso_filter"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_105">
+                      <property name="text">
+                       <string>Eg. M; IC; Mel; ngc</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_10">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
                     </item>
                    </layout>
                   </item>
