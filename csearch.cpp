@@ -247,6 +247,19 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
   QApplication::processEvents();
 
+  // dso
+  dso_t *dso;
+  if (cDSO.findDSO((char *)qPrintable(str), &dso) != -1)
+  {
+    ra = dso->rd.Ra;
+    dec = dso->rd.Dec;
+    precess(&ra, &dec, JD2000, mapView->jd);
+    fov = getOptObjFov(dso->sx / 3600., dso->sy / 3600.);
+    return(true);
+  }
+
+  QApplication::processEvents();
+
   // satellites
   QString satName = str;
 
@@ -317,21 +330,6 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
   {
     return(true);
   }
-
-  QApplication::processEvents();
-
-  // dso
-  dso_t *dso;
-  if (cDSO.findDSO((char *)qPrintable(str), &dso) != -1)
-  {
-    ra = dso->rd.Ra;
-    dec = dso->rd.Dec;
-    precess(&ra, &dec, JD2000, mapView->jd);
-    fov = getOptObjFov(dso->sx / 3600., dso->sy / 3600.);
-    return(true);
-  }
-
-  QApplication::processEvents();
 
   return(false);
 }

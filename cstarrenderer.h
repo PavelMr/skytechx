@@ -17,6 +17,8 @@ public:
     void setMaxMag(float mMag);
     QPixmap getExampleStar(void);
 
+    static uchar getSPIndex(float bvIndex);
+
 protected:
     QList <QPixmap> pStars[8];
     float    maxMag;

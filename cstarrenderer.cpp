@@ -126,6 +126,7 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
   p->drawPixmap(pt->sx - (pStars[spt][s].width() >> 1),
                 pt->sy - (pStars[spt][s].height() >> 1), pStars[spt][s]);
 
+
   return(pStars[spt][s].width() >> 1);
 }
 
@@ -136,20 +137,47 @@ QPixmap CStarRenderer::getExampleStar(void)
 {
   QPixmap pix(38, 38);
   pix.fill(QColor(128, 128, 128));
-  QPainter p(&pix);
+  QPainter p;
   SKPOINT  pt;
 
   pt.sx = 19;
   pt.sy = 19;
 
-  double bak = g_skSet.map.star.starSizeFactor;
-  g_skSet.map.star.starSizeFactor = 0;
-
-  renderStar(&pt, 0, 0, &p);
-
-  g_skSet.map.star.starSizeFactor = bak;
+  p.begin(&pix);
+  p.drawPixmap(pt.sx - (pStars[0][0].width() >> 1),
+               pt.sy - (pStars[0][0].height() >> 1), pStars[0][0]);
+  p.end();
 
   return(pix);
+}
+
+uchar CStarRenderer::getSPIndex(float bvIndex)
+{
+  if (bvIndex >= 1.37)
+  {
+    return 7;
+  }
+  if (bvIndex >= 0.81)
+  {
+    return 6;
+  }
+  if (bvIndex >= 0.6)
+  {
+    return 5;
+  }
+  if (bvIndex >= 0.32)
+  {
+    return 4;
+  }
+  if (bvIndex >= -0.01)
+  {
+    return 3;
+  }
+  if (bvIndex >= -0.3)
+  {
+    return 2;
+  }
+  return 1;
 }
 
 

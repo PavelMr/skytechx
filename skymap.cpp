@@ -108,7 +108,7 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
               }
             }
 
-            int r = cStarRenderer.renderStar(&pt, 0, star.mag, pPainter);
+            int r = cStarRenderer.renderStar(&pt, star.spIndex, star.mag, pPainter);
             addMapObj(pt.sx, pt.sy, MO_UCAC4, MO_CIRCLE, r + 4, region, i, star.mag);
           }
         }
@@ -805,7 +805,7 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o, bool bFront, mapView_t *view, int pid)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-{  
+{
 
   for (int i = 0; i < sat->count; i++)
   {
@@ -1021,7 +1021,7 @@ static void renderTelescope(mapView_t *mapView, CSkPainter *pPainter)
 static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
 //////////////////////////////////////////////////////////////////////
 {
-  sgp4.setObserver(mapView);  
+  sgp4.setObserver(mapView);
 
   for (int i = 0; i < sgp4.count(); i++)
   {

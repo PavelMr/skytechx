@@ -2,6 +2,7 @@
 #include "cgscreg.h"
 #include "setting.h"
 #include "skfile.h"
+#include "cstarrenderer.h"
 
 #include <QDebug>
 
@@ -259,6 +260,23 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
             skStar.rdPm[1] = 0;
           }
           skStar.mag = star.mag2 / 1000.0;
+
+          int b = star.apass_mag[0];
+          int v = star.apass_mag[1];
+          if (b < 30000 && v < 30000)
+          {
+            skStar.spIndex = CStarRenderer::getSPIndex((b - v) / 1000.0);
+          }
+          else
+          {
+            skStar.spIndex = 0;
+          }
+
+          if (z == 444 && ucac4Index == 10753)
+          {
+            qDebug() << b << v << skStar.spIndex << ((b - v) / 1000.0);
+          }
+
           skStar.number = ucac4Index;
           skStar.zone = z;
 

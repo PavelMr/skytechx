@@ -48,6 +48,7 @@ typedef struct
   short          rdPm[2]; // mas/year
   float          mag;
   unsigned short zone;
+  uchar          spIndex;
   unsigned int   number;
 } ucac4Star_t;
 

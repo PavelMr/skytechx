@@ -86,7 +86,7 @@ void CEarthTools::getHeight(double lon, double lat)
   }
 
   QSslConfiguration config = QSslConfiguration::defaultConfiguration();
-  config.setProtocol(QSsl::TlsV1_1);
+  config.setProtocol(QSsl::SslV3);
 
   QNetworkRequest request;
   request.setSslConfiguration(config);

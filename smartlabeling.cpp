@@ -27,7 +27,6 @@ void SmartLabeling::addLabel(const QPoint &point, int distance, const QString &t
   m_list.append(label);
 }
 
-
 QRect SmartLabeling::renderLabel(CSkPainter *painter, const QPoint &point, float offset, const QString &text, int fontId, int align, bool render)
 {
   QFont fnt = setFonts[fontId];
@@ -140,9 +139,7 @@ int SmartLabeling::getAlign(int align)
 
 void SmartLabeling::render(CSkPainter *painter)
 {
-  int maxSize = 32000;
-
-  if (1)
+  if (0)
   {
     foreach (const SmartLabel &label, m_list)
     {
@@ -213,7 +210,7 @@ void SmartLabeling::render(CSkPainter *painter)
 
       if (!done)
       {
-        doneList << renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, getAlign(label.m_defaultAlign), true);
+        //doneList << renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, getAlign(label.m_defaultAlign), true);
       }
     }
   }
