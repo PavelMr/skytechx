@@ -234,9 +234,247 @@ int CSatXYZ::read_bdl(QByteArray *fpa, double jd, double *xp, double *yp, double
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
 bool CSatXYZ::solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat)
-////////////////////////////////////////////////////////////////////////////////
+{
+  solveBDL(jd, pln, o, sun, sat);
+
+  switch (pln)
+  {
+    case PT_NEPTUNE:
+      solveNeptune(jd, pln, o, sun, sat);
+  }
+
+  return sat->count > 0;
+}
+
+static void rotateX(double &X, double &Y, double &Z, double theta)
+{
+  double st, ct, X0, Y0, Z0;
+
+  st = sin(theta);
+  ct = cos(theta);
+  X0 = X;
+  Y0 = Y;
+  Z0 = Z;
+
+  X = X0;
+  Y = Y0 * ct + Z0 * st;
+  Z = Z0 * ct - Y0 * st;
+}
+
+static void precessB1950J2000(double &X, double &Y, double &Z)
+{
+  double p[3][3] =
+        { { 0.9999256791774783, -0.0111815116768724, -0.0048590038154553 },
+          { 0.0111815116959975,  0.9999374845751042, -0.0000271625775175 },
+          { 0.0048590037714450, -0.0000271704492210,  0.9999881946023742 } };
+
+  double newX,newY,newZ;
+
+  newX = p[0][0] * X + p[0][1] * Y + p[0][2] * Z;
+  newY = p[1][0] * X + p[1][1] * Y + p[1][2] * Z;
+  newZ = p[2][0] * X + p[2][1] * Y + p[2][2] * Z;
+
+  X = newX;
+  Y = newY;
+  Z = newZ;
+}
+
+static void rotateZ(double &X, double &Y, double &Z, double theta)
+{
+  double st, ct, X0, Y0, Z0;
+
+  st = sin(theta);
+  ct = cos(theta);
+  X0 = X;
+  Y0 = Y;
+  Z0 = Z;
+
+  X = X0 * ct + Y0 * st;
+  Y = Y0 * ct - X0 * st;
+  Z = Z0;
+}
+
+static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
+{
+  // http://www.movable-type.co.uk/scripts/latlong.html
+
+  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
+  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
+}
+
+void CSatXYZ::solveNeptune(double jd, int pln, orbit_t *orbit, orbit_t *sun, satxyz_t *sat)
+{
+  double td;
+  double ty;
+  double tc;
+  double a, L, e, i, o, w, ma, J, N;
+  QString name;
+  double radius = 24764.0;
+  double diam;
+
+  for (int index = 0; index < 2; index++)
+  {
+    switch (index)
+    {
+      case 0:
+        name = "Triton";
+        diam = 2706;
+
+        td = jd - 2433282.5;
+        ty = td / 365.25;
+        tc = ty / 100;
+
+        a = 354611.773;
+        L = D2R(49.85334766 + 61.25726751 * td);
+        e = 0.0004102259410;
+        i = D2R(157.6852321);
+        o = D2R(151.7973992 + 0.5430763965 * ty);
+
+        w = D2R(236.7318362 + 0.5295275852 * ty);
+
+        ma = L - w;
+
+        w += o;
+
+        // inclination and node of the invariable plane on the Earth
+        // equator of 1950
+        J = D2R(90 - 42.51071244);
+        N = D2R(90 + 298.3065940);
+        break;
+
+      case 1:
+        name = "Nereid";
+        diam = 170;
+
+        td = jd - 2433680.5;
+        tc = td / 36525;
+
+        a = 5511233.255;
+        L = D2R(251.14984688 + 0.9996465329 * td);
+        e = 0.750876291;
+        i = D2R(6.748231850);
+        o = D2R(315.9958928 - 3.650272562 * tc);
+
+        w = D2R(251.7242240 + 0.8696048083 * tc);
+
+        ma = L - w;
+
+        w -= o;
+
+        // inclination and node of Neptune's orbit on the Earth
+        // equator of 1950
+        J = D2R(22.313);
+        N = D2R(3.522);
+        break;
+    }
+
+    double EE = cAstro.solveKepler(e, ma);
+    rangeDbl(&EE, R360);
+
+    // convert semi major axis from km to Neptune radius
+    //a /= radius;
+    a /= AU1;
+
+    // rectangular coordinates on the orbit plane, x-axis is toward pericenter
+    double X = a * (cos(EE) - e);
+    double Y = a * sqrt(1 - e * e) * sin(EE);
+    double Z = 0;
+
+    //qDebug() << name << a << EE << e << a;
+
+    // rotate towards ascending node of the orbit
+    rotateZ(X, Y, Z, -w);
+
+    // rotate towards orbital reference plane
+    rotateX(X, Y, Z, -i);
+
+    // rotate towards ascending node of the orbital reference plane on
+    // the Earth equator B1950
+    rotateZ(X, Y, Z, -o);
+
+    // rotate towards Earth equator B1950
+    rotateX(X, Y, Z, -J);
+
+    // rotate to vernal equinox
+    rotateZ(X, Y, Z, -N);
+
+    precessB1950J2000(X, Y, Z);
+
+    //qDebug() << name << X << Y << Z;
+
+    sat_t s;
+
+    //s.x = Y;
+    //s.y = -Z;
+    //s.z = X;
+
+    s.x = 0;//X / 100.;
+    s.y = 0;//Y / 100.;
+    s.z = 0;//Z / 10000.;
+
+    //qDebug() << s.x << s.y << s.z << name;
+
+    double rad = DEG2RAD((double)orbit->sx / 3600.0) / 2.0;
+    double ra = orbit->lRD.Ra;
+    double dec = orbit->lRD.Dec;
+    double dra  = rad * s.x;
+    double ddec = rad * s.y;
+
+    //qDebug() << " " << ra << dec << dra << ddec;
+
+    s.diam = diam;
+    s.inFront = true;
+    s.inSunLgt = true;
+    s.isHidden = false;
+    s.mag = 5;
+    s.name = name;
+    s.size = cAstro.calcAparentSize(orbit->R, s.diam);
+    //s.rd.Ra  = ra + dra;
+    //s.rd.Dec = dec - ddec;
+
+    //double dd = sqrt(s.x * s.x + s.y * s.y) * rad;
+    //calcAngularDistance(ra, dec, atan2(s.y, s.x), dd, s.rd.Ra, s.rd.Dec);
+
+    double xp = orbit->hRect[0];
+    double yp = orbit->hRect[1];
+    double zp = orbit->hRect[2];
+
+    double xs = sun->hRect[0];
+    double ys = sun->hRect[1];
+    double zs = sun->hRect[2];
+
+     double x=xp+xs;
+     double y=yp+ys;
+     double z=zp+zs;
+
+     double d1=sqrt(x*x+y*y+z*z);
+
+     //x=x+X;
+     //y=y+Y;
+     //z=z+Z;
+
+     x = xp + s.x + xs;
+     y = yp + s.y + ys;
+     z = zp + s.z + zs;
+
+     double d2=sqrt(x*x+y*y+z*z);
+     s.rd.Ra=atan2(y,x);
+     if (s.rd.Ra<0) s.rd.Ra=s.rd.Ra+2*MPI;
+     double qr=sqrt(x*x+y*y);
+     if (qr!=0) s.rd.Dec= atan(z/qr);
+
+     //precess(&s.rd.Ra, &s.rd.Dec, JD2000, jd);
+
+     qDebug() << index << getStrRA(ra) << dec << getStrRA(s.rd.Ra) << s.rd.Dec;
+
+
+    sat->sat.append(s);
+    sat->count++;
+  }
+}
+
+bool CSatXYZ::solveBDL(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat)
 {
   QByteArray *plArray;
   double x[MAX_XYZ_SATS];
@@ -272,7 +510,9 @@ bool CSatXYZ::solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat)
     div = .0001597;     /* Uranus radius, AU */
   }
   else
+  {
     return(false);
+  }
 
   /* check ranges and appropriate data file */
   if (jd < 2451179.50000)		/* Jan 1 1999 UTC */
@@ -293,6 +533,10 @@ bool CSatXYZ::solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat)
 
   for (int i = 0; i < c; i++)
   {
+    sat_t s;
+
+    sat->sat.append(s);
+
     sat->sat[i].x =  x[i] / div;
     sat->sat[i].y = -y[i] / div;
     sat->sat[i].z = -z[i] / div;

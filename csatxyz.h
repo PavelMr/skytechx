@@ -30,7 +30,7 @@ typedef struct
 typedef struct
 {
   int    count;
-  sat_t  sat[MAX_XYZ_SATS];
+  QList  <sat_t>  sat;//[MAX_XYZ_SATS];
 } satxyz_t;
 
 typedef enum {I, F, NL} ScanType;
@@ -46,6 +46,8 @@ public:
     bool bOk;
 
 protected:
+    void solveNeptune(double jd, int pln, orbit_t *orbit, orbit_t *sun, satxyz_t *sat);
+    bool solveBDL(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat);
     int read_bdl(QByteArray *pf, double jd, double *xp, double *yp, double *zp);
     int readField(QDataStream *fp, ScanType f, int width, void *ptr);
     qint64 readRec(QDataStream *fp, double *t0, double cmx[], double cfx[], double cmy[], double cfy[], double cmz[], double cfz[]);
