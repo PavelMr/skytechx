@@ -10,6 +10,7 @@
 #include "cdso.h"
 #include "cppmxl.h"
 
+#define MO_EMPTY        -1
 #define MO_TELESCOPE     0
 #define MO_PLANET        1
 #define MO_ASTER         2

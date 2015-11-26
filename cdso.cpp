@@ -341,9 +341,9 @@ QString CDso::getTypeName(int type, bool &ok)
 }
 
 
-//////////////////////////////////////////////
-int CDso::findDSO(char *pszName, dso_t **pDso)
-//////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+int CDso::findDSO(char *pszName, dso_t **pDso, int &index)
+/////////////////////////////////////////////////////////
 {
   if (pszName[0] == '\0')
     return(-1);
@@ -360,6 +360,7 @@ int CDso::findDSO(char *pszName, dso_t **pDso)
       if (compareName(pName.toLatin1().data(), pszName))
       {
         *pDso = &dso[i];
+        index = i;
         return(i);
       }
     }
@@ -379,6 +380,7 @@ int CDso::findDSO(char *pszName, dso_t **pDso)
           if (compareName(pName.toLatin1().data(), tDsoCommonNames[c].catName))
           {
             *pDso = &dso[i];
+            index = i;
             return(i);
           }
         }
@@ -386,6 +388,7 @@ int CDso::findDSO(char *pszName, dso_t **pDso)
     }
   }
 
+  index = -1;
   return(-1);
 }
 
@@ -425,7 +428,8 @@ void CDso::loadShapes()
   {
     dso_t *pDso;
     QFileInfo fi = list.at(i);
-    if (findDSO(fi.baseName().toLatin1().data(), &pDso) >= 0)
+    int index;
+    if (findDSO(fi.baseName().toLatin1().data(), &pDso, index) >= 0)
     {
       //qDebug("'%s'", fi.filePath().toAscii().data());
       CShape *shp = new CShape;

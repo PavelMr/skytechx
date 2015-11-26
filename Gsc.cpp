@@ -59,7 +59,7 @@ void CGsc::loadRegion(int r)
   }
 }
 
-bool CGsc::searchStar(int region, int number, gsc_t **star)
+bool CGsc::searchStar(int region, int number, gsc_t **star, int &index)
 {
   if (region <= 0 || region >= NUM_GSC_REGS || !g_skSet.map.gsc.show)
   {
@@ -77,6 +77,7 @@ bool CGsc::searchStar(int region, int number, gsc_t **star)
     if (g[i].id == number)
     {
       *star = &g[i];
+      index = i;
       return true;
     }
   }

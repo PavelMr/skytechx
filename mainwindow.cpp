@@ -2279,15 +2279,27 @@ void MainWindow::slotSearchDone()
   }
 
   double ra, dec, fov;
+  mapObj_t obj;
+
+  obj.type = MO_EMPTY;
 
   setCursor(Qt::WaitCursor);
   QApplication::processEvents();
 
-  if (CSearch::search(&ui->widget->m_mapView, str, ra, dec, fov))
+  if (CSearch::search(&ui->widget->m_mapView, str, ra, dec, fov, obj))
   {
     ui->widget->centerMap(ra, dec, noZoom ? CM_UNDEF : fov);
     m_search->addWord(str);
     unsetCursor();
+
+    if (obj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &obj, &item);
+      fillQuickInfo(&item);
+    }
   }
   else
   {

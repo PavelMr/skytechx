@@ -58,7 +58,7 @@ public:
 
   bool getStar(gsc_t *p, int reg, int i);
   void loadRegion(int r);
-  bool searchStar(int region, int number, gsc_t **star);
+  bool searchStar(int region, int number, gsc_t **star, int &index);
 
   long         m_maxGSCNumRegions;
   bool         bIsGsc;

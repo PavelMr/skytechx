@@ -116,8 +116,8 @@ void CAddCustomObject::on_pushButton_5_clicked()
     {
       QStandardItem *item = new QStandardItem;
       dso_t *dso;
-
-      cDSO.findDSO((char *)qPrintable(object), &dso);
+      int tmp;
+      cDSO.findDSO((char *)qPrintable(object), &dso, tmp);
 
       item->setText(cDSO.getName(dso, 0));
       item->setEditable(false);
@@ -213,7 +213,8 @@ void CAddCustomObject::save()
 bool CAddCustomObject::appendTo(const QString &catalogue, const QString &name)
 {
   dso_t *dso;
-  int index = cDSO.findDSO((char *)qPrintable(name), &dso);
+  int tmp;
+  int index = cDSO.findDSO((char *)qPrintable(name), &dso, tmp);
 
   if (index == -1)
   {

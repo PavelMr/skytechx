@@ -12,8 +12,9 @@ CDSOComNameSearch::CDSOComNameSearch(QWidget *parent, mapView_t *view) :
   for (int i = 0; i < cDSO.tDsoCommonNames.count(); i++)
   {
     dso_t *dso;
+    int index;
 
-    if (cDSO.findDSO(cDSO.tDsoCommonNames[i].catName, &dso) != -1)
+    if (cDSO.findDSO(cDSO.tDsoCommonNames[i].catName, &dso, index) != -1)
     {
       double ra = dso->rd.Ra;
       double dec = dso->rd.Dec;
@@ -63,7 +64,8 @@ void CDSOComNameSearch::on_pushButton_clicked()
 
   int id = ui->widget->getCustomData(index).toInt();
   dso_t *dso;
-  if (cDSO.findDSO(cDSO.tDsoCommonNames[id].catName, &dso) != -1)
+  int tmp;
+  if (cDSO.findDSO(cDSO.tDsoCommonNames[id].catName, &dso, tmp) != -1)
   {
     m_ra = dso->rd.Ra;
     m_dec = dso->rd.Dec;

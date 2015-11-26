@@ -14,9 +14,7 @@ CSearch::CSearch()
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, double &fov)
-///////////////////////////////////////////////////////////////////////////////////////////
+bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, double &fov, mapObj_t &obj)
 {
   QRegExp reg("\\b" + str + "\\b", Qt::CaseInsensitive);
 
@@ -32,6 +30,9 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
     ra = o.lRD.Ra;
     dec = o.lRD.Dec;
     fov = getOptObjFov(o.sx / 3600.0, o.sy / 3600.0);
+
+    obj.type = MO_EARTH_SHD;
+
     return(true);
   }
 
@@ -51,6 +52,11 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       dec = star->rd.Dec;
       precess(&ra, &dec, JD2000, mapView->jd);
       fov = DMS2RAD(10, 0, 0);
+
+      obj.type = MO_TYCSTAR;
+      obj.par1 = reg;
+      obj.par2 = index;
+
       return true;
     }
   }
@@ -75,6 +81,11 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         dec = star->rd.Dec;
         precess(&ra, &dec, JD2000, mapView->jd);
         fov = DMS2RAD(10, 0, 0);
+
+        obj.type = MO_TYCSTAR;
+        obj.par1 = reg;
+        obj.par2 = index;
+
         return true;
       }
     }
@@ -97,6 +108,14 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         dec = star.rd.Dec;
         precess(&ra, &dec, JD2000, mapView->jd);
         fov = DMS2RAD(0, 30, 0);
+
+         // FIX: region a poradi v GSC regionu
+        /*
+        obj.type = MO_UCAC4;
+        obj.par1 = star.zone;
+        obj.par2 = star.number;
+        */
+
         return true;
       }
     }
@@ -120,6 +139,14 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         dec = star.rd.Dec;
         precess(&ra, &dec, JD2000, mapView->jd);
         fov = DMS2RAD(0, 30, 0);
+
+        // FIX: region a poradi v GSC regionu
+        /*
+        obj.type = MO_USNO2;
+        obj.par1 = star.zone;
+        obj.par2 = star.number;
+        */
+
         return true;
       }
     }
@@ -135,14 +162,20 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
     {
       int reg = list[0].toInt();
       int num = list[1].toInt();
+      int index;
       gsc_t *star;
 
-      if (cGSC.searchStar(reg, num, &star))
+      if (cGSC.searchStar(reg, num, &star, index))
       {
         ra = star->Ra;
         dec = star->Dec;
         precess(&ra, &dec, JD2000, mapView->jd);
         fov = DMS2RAD(0, 30, 0);
+
+        obj.type = MO_GSCSTAR;
+        obj.par1 = reg - 1;
+        obj.par2 = index;
+
         return true;
       }
     }
@@ -222,6 +255,16 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       dec = cTYC.tNames[i]->rd.Dec;
       precess(&ra, &dec, JD2000, mapView->jd);
       fov = D2R(30);
+
+      int reg, index;
+
+      if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, cTYC.tNames[i]->tyc1, cTYC.tNames[i]->tyc2, cTYC.tNames[i]->tyc3, 0, reg, index))
+      {
+        obj.type = MO_TYCSTAR;
+        obj.par1 = reg;
+        obj.par2 = index;
+      }
+
       return(true);
     }
   }
@@ -232,6 +275,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
   for (int i = PT_SUN; i <= PT_MOON; i++)
   {
     orbit_t o;
+    cAstro.setParam(mapView);
     cAstro.calcPlanet(i, &o);
     QString name = o.name;
     QString english = o.englishName;
@@ -241,6 +285,11 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       ra = o.lRD.Ra;
       dec = o.lRD.Dec;
       fov = getOptObjFov(o.sx / 3600.0, o.sy / 3600.0);
+
+      obj.type = MO_PLANET;
+      obj.par1 = i;
+      obj.par2 = 0;
+
       return(true);
     }
   }
@@ -249,12 +298,18 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
   // dso
   dso_t *dso;
-  if (cDSO.findDSO((char *)qPrintable(str), &dso) != -1)
+  int index;
+  if (cDSO.findDSO((char *)qPrintable(str), &dso, index) != -1)
   {
     ra = dso->rd.Ra;
     dec = dso->rd.Dec;
     precess(&ra, &dec, JD2000, mapView->jd);
     fov = getOptObjFov(dso->sx / 3600., dso->sy / 3600.);
+
+    obj.type = MO_DSO;
+    obj.par1 = (qint64)dso;
+    obj.par2 = 0;
+
     return(true);
   }
 
@@ -278,6 +333,10 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         dec = rd.Dec;
         fov = getOptObjFov(0, 0, D2R(2.5));
 
+        obj.type = MO_SATELLITE;
+        obj.par1 = i;
+        obj.par2 = 0;
+
         return true;
       }
     }
@@ -300,6 +359,11 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       ra = a->orbit.lRD.Ra;
       dec = a->orbit.lRD.Dec;
       fov = AST_ZOOM;
+
+      obj.type = MO_ASTER;
+      obj.par1 = i;
+      obj.par2 = (qint64)a;
+
       return(true);
     }
   }
@@ -320,6 +384,11 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       ra = a->orbit.lRD.Ra;
       dec = a->orbit.lRD.Dec;
       fov = COM_ZOOM;
+
+      obj.type = MO_COMET;
+      obj.par1 = i;
+      obj.par2 = (qint64)a;
+
       return(true);
     }
   }
