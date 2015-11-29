@@ -480,6 +480,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     if (o->type == PT_SATURN)
       renderRing(-1, pt, o, sun, mapView, pPainter, pImg, isPreview);
 
+    #pragma omp parallel for
     for (int i = 0; i < mesh->numVertices; i++)
     {
       float x = mat.m_11 * mesh->vertices[i].x * sx +
@@ -499,8 +500,16 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
       mesh->vertices[i].sp[2] = z;
     }
 
-    for (int i = 0; i < mesh->numFaces; i++)
+    int i;
+    bool bi = scanRender.isBillinearInt();
+
+    #pragma omp parallel for
+    for (i = 0; i < mesh->numFaces; i++)
     {
+      CScanRender scanRender;
+
+      scanRender.enableBillinearInt(bi);
+
       int f0 = mesh->faces[i].vertices[0];
       int f1 = mesh->faces[i].vertices[1];
       int f2 = mesh->faces[i].vertices[2];

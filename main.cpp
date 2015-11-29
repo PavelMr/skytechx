@@ -172,6 +172,7 @@ int main(int argc, char *argv[])
 
   qDebug("octreedepth=%d", g_ocTreeDepth);
   qDebug("numthreads=%d", omp_get_max_threads());
+  qDebug("develop=%d", g_developMode);
 
   loadQSSStyle();
 

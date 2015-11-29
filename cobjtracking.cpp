@@ -335,6 +335,9 @@ void CObjTracking::on_pushButton_2_clicked()
     case 3:
       jdStep = step * 86400.0;
       break;
+
+    default:
+      return;
   }
 
   jdStep /= 86400.0;
@@ -369,6 +372,9 @@ void CObjTracking::on_pushButton_2_clicked()
     case MO_SATELLITE:
       track.objName = sgp4.getName(m_item->par1);
       break;
+
+    defaut:
+      return;
   }
 
   for (double j = jdFrom; j <= jdTo; j+= jdStep, c++)
