@@ -77,6 +77,7 @@ public:
   void setUCAC4Dir(const QString dir);
   ucac4Region_t *getStar(ucac4Star_t &s, int reg, int index);
   ucac4Region_t *loadGSCRegion(int region);
+  static int getZone(double dec);
 
 private:
   bool readAccFile(QFile &file);

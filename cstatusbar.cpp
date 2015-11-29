@@ -193,6 +193,12 @@ QString CStatusBar::getLabel(int id)
 
     case SB_SM_MODE:
       return tr("Chart mode");
+
+    case SB_SM_UCAC4_ZONE:
+      return tr("UCAC4 Zone");
+
+    case SB_SM_PPMXL_ZONE:
+      return tr("PPMXL Zone");
   }
 
   return QString();
@@ -257,6 +263,14 @@ void CStatusBar::addItem(int id)
 
     case SB_SM_MEASURE:
       createItem(SB_SM_MEASURE, label, 180);
+      break;
+
+    case SB_SM_UCAC4_ZONE:
+      createItem(SB_SM_UCAC4_ZONE, label, 100);
+      break;
+
+    case SB_SM_PPMXL_ZONE:
+      createItem(SB_SM_PPMXL_ZONE, label, 100);
       break;
   }
 }

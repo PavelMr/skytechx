@@ -303,6 +303,11 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
   return NULL;
 }
 
+int CUCAC4::getZone(double dec) // Dec. at J2000.
+{
+  return ((R2D(dec) + 90) / 0.2) + 1;
+}
+
 bool CUCAC4::readAccFile(QFile &file)
 {
   if (file.open(QFile::ReadOnly))

@@ -5,19 +5,21 @@
 #include <QtWidgets>
 #include <QMouseEvent>
 
-#define SB_SM_RA        0
-#define SB_SM_DEC       1
-#define SB_SM_FOV       2
-#define SB_SM_MAGS      3
-#define SB_SM_CONST     4
-#define SB_SM_DATE      5
-#define SB_SM_TIME      6
-#define SB_SM_MEASURE   7
-#define SB_SM_ALT       8
-#define SB_SM_AZM       9
-#define SB_SM_AIRMASS  10
-#define SB_SM_MODE     11
-#define SB_SM_COUNT    12
+#define SB_SM_RA          0
+#define SB_SM_DEC         1
+#define SB_SM_FOV         2
+#define SB_SM_MAGS        3
+#define SB_SM_CONST       4
+#define SB_SM_DATE        5
+#define SB_SM_TIME        6
+#define SB_SM_MEASURE     7
+#define SB_SM_ALT         8
+#define SB_SM_AZM         9
+#define SB_SM_AIRMASS    10
+#define SB_SM_MODE       11
+#define SB_SM_UCAC4_ZONE 12
+#define SB_SM_PPMXL_ZONE 13
+#define SB_SM_COUNT      14
 
 class CSBLabel : public QLabel
 {
