@@ -137,6 +137,8 @@ void CMoonCal::updateTime()
 
   QPainter p(m_img);
 
+  p.setRenderHint(QPainter::Antialiasing);
+
   float size = 0.5 * qMin(w, h) * 0.8f;
 
   for (int i = 0; i < cnt; i++)
@@ -175,9 +177,9 @@ void CMoonCal::updateTime()
     cRts.setLowPrec();
 
     if (m_isMoon)
-      cRts.calcOrbitRTS(&rts, PT_MOON, MO_PLANET, &view);
+      cRts.calcOrbitRTS(&rts, PT_MOON, MO_PLANET, &view, false);
     else
-      cRts.calcOrbitRTS(&rts, PT_SUN, MO_PLANET, &view);
+      cRts.calcOrbitRTS(&rts, PT_SUN, MO_PLANET, &view, false);
 
     pt.sx = r.center().x();
     pt.sy = r.center().y();
@@ -189,9 +191,9 @@ void CMoonCal::updateTime()
     if (m_isMoon)
     {
       p.drawPixmap(r, *m_moon);
-      p.setRenderHint(QPainter::Antialiasing, true);
+      p.save();
       cPlanetRenderer.drawPhase(&o, &s, &p, &pt, &view, size, size, false);
-      p.setRenderHint(QPainter::Antialiasing, false);
+      p.restore();
     }
     else
     {

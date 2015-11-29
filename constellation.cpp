@@ -125,10 +125,17 @@ int constWhatConstel(double Ra, double Dec, double epoch)
     if (constBnd[a].Ra1 > Ra) continue;
 
     if (Ra >= constBnd[a].Ra1 &&  Ra < constBnd[a].Ra2 && constBnd[a].Dec <= Dec)
-          return(constBnd[a].index);
-     else if (constBnd[a].Ra2 <  Ra) continue;
-     else return(0);
-
+    {
+      return(constBnd[a].index);
+    }
+     else if (constBnd[a].Ra2 <  Ra)
+     {
+       continue;
+      }
+     else
+    {
+      return(0);
+    }
      break;
   }
   return(0);

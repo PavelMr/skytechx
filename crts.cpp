@@ -74,7 +74,7 @@ double CRts::getRTSRaDecFromPtr(radec_t *rd, qint64 ptr, int type, double jd)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void CRts::calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view)
+void CRts::calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view, bool calcTransit)
 /////////////////////////////////////////////////////////////////////////////
 {
   mapView_t v;
@@ -104,35 +104,39 @@ void CRts::calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view)
   ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt);
 
   int cnt = 0;
-  while (1)
+
+  if (calcTransit)
   {
-    v.jd = jd;
-    ast->setParam(&v);
-    r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
-    ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt);
+    while (1)
+    {
+      v.jd = jd;
+      ast->setParam(&v);
+      r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
+      ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt);
 
-    if (azm >= R180 && lAzm <= R180)
-    {
-      jd -= add;
-      add /= 2.0;
-      if (add < m_limit) break;
+      if (azm >= R180 && lAzm <= R180)
+      {
+        jd -= add;
+        add /= 2.0;
+        if (add < m_limit) break;
+      }
+      else
+      {
+        jd += add;
+      }
+      if (++cnt > MAX_RTS_ITIN)
+      {
+        rts->flag = RTS_ERR;
+        v.jd = tmpJD;
+        return;
+      }
+      lAzm = azm;
     }
-    else
-    {
-      jd += add;
-    }
-    if (++cnt > MAX_RTS_ITIN)
-    {
-      rts->flag = RTS_ERR;
-      v.jd = tmpJD;
-      return;
-    }
-    lAzm = azm;
+
+    rts->tAlt = alt;// + (alt - lAlt) / 2.0;
+    rts->transit = jd;
+    rts->rts |= RTS_T_TRANSIT;
   }
-
-  rts->tAlt = alt;// + (alt - lAlt) / 2.0;
-  rts->transit = jd;
-  rts->rts |= RTS_T_TRANSIT;
 
   if (isNotRTS(rd.Dec, rts, view))
   { // no rise / set

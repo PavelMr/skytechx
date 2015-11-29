@@ -573,7 +573,12 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     case PT_MERCURY:
     case PT_MARS:
     case PT_MOON:
-      drawPhase(o, sun, pPainter, pt, mapView, sx, sy, true);
+      if (g_showSP)
+      {
+        pPainter->save();
+        drawPhase(o, sun, pPainter, pt, mapView, sx, sy, true);
+        pPainter->restore();
+      }
       break;
   }
 
@@ -708,7 +713,12 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     case PT_MERCURY:
     case PT_MARS:
     case PT_MOON:
-      drawPhase(o, sun, pPainter, pt, mapView, sx, sy, true);
+      if (g_showSP)
+      {
+        pPainter->save();
+        drawPhase(o, sun, pPainter, pt, mapView, sx, sy, true);
+        pPainter->restore();
+      }
       break;
   }
 
@@ -722,11 +732,6 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
-  if (!g_showSP) // TODO: u kalendare to nedelat
-  {
-    return;
-  }
-
   float scale = 1.001f;
   int   maxSize = qMax(rx, ry);
   p->setPen(Qt::NoPen);

@@ -46,7 +46,7 @@ public:
 
     void setLowPrec(void);
     void calcFixed(rts_t *rts, double ra, double dec, const mapView_t *view);
-    void calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view);
+    void calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view, bool calcTransit = true);
     void calcTwilight(daylight_t *rts, mapView_t *view);
 
 protected:
