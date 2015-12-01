@@ -37,13 +37,15 @@ typedef struct
   int  filter;
 } lfParam_t;
 
-class CLunarFeatures
+class CLunarFeatures : public QObject
 {
 public:
   CLunarFeatures();
   void load(QString name);
   void draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, mapView_t *view);
-  bool search(QString str, mapView_t *view, double &ra, double &dec, double &fov);
+  bool search(QString str, mapView_t *view, double &ra, double &dec, double &fov, int searchIndex = -1);
+  bool isVisible(int index, mapView_t *view);
+  static QString getTypeName(int id);
 
   QList <lunarItem_t>  tLunarItems;
 };

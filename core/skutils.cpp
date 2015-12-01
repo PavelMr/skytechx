@@ -446,10 +446,10 @@ QString getStrLon(double deg)
 
   getDMSFromRad(deg, &d, &m, &s);
 
-  str = QString("%1%2° %3' %4\"").arg(deg < 0 ? QObject::tr("W") : QObject::tr("E")).
-                                  arg(d, 3, 10, QChar('0')).
-                                  arg(m, 2, 10, QChar('0')).
-                                  arg(s, 2, 10, QChar('0'));
+  str = QString("%1 %2° %3' %4\"").arg(deg < 0 ? QObject::tr("W") : QObject::tr("E")).
+                                   arg(d, 3, 10, QChar('0')).
+                                   arg(m, 2, 10, QChar('0')).
+                                   arg(s, 2, 10, QChar('0'));
 
   return(str);
 }
@@ -464,10 +464,10 @@ QString getStrLat(double deg)
 
   getDMSFromRad(deg, &d, &m, &s);
 
-  str = QString("%1%2° %3' %4\"").arg(deg < 0 ? QObject::tr("S") : QObject::tr("N")).
-                                  arg(d, 2, 10, QChar('0')).
-                                  arg(m, 2, 10, QChar('0')).
-                                  arg(s, 2, 10, QChar('0'));
+  str = QString("%1 %2° %3' %4\"").arg(deg < 0 ? QObject::tr("S") : QObject::tr("N")).
+                                   arg(d, 2, 10, QChar('0')).
+                                   arg(m, 2, 10, QChar('0')).
+                                   arg(s, 2, 10, QChar('0'));
 
   return(str);
 }

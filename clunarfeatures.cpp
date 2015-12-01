@@ -61,7 +61,7 @@ void CLunarFeatures::load(QString name)
     item.lat = D2R(lat.toDouble());
 
     if (item.lon > 110)
-      continue; // never be seen
+      continue; // never seen
 
     if (list.at(2).endsWith('S'))
       item.lat = -item.lat;
@@ -263,9 +263,11 @@ static void calcAngularDistance(double ra, double dec, double angle, double dist
   raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &dec, double &fov)
-//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &dec, double &fov, int searchIndex)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   lunarItem_t item;
   lunarItem_t *lf;
@@ -274,6 +276,7 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
   SKMATRIX     mat;
   SKMATRIX     mX, mY, mZ, mS;
 
+  cAstro.setParam(view);
   cAstro.calcPlanet(PT_MOON, &o);
 
   double angle = o.PA;
@@ -285,11 +288,11 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
 
   mat = mY * mX * mZ * mS;
 
+  int i = 0;
   foreach (item, tLunarItems)
   {
     lf = &item;
-
-    if (!str.compare(lf->name, Qt::CaseInsensitive))
+    if (!str.compare(lf->name, Qt::CaseInsensitive) || searchIndex == i)
     {
       SKVECTOR out;
       SKVECTOR in;
@@ -325,9 +328,70 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
 
       return(true);
     }
+    i++;
   }
 
   return(false);
+}
+
+bool CLunarFeatures::isVisible(int index, mapView_t *view)
+{
+  lunarItem_t *lf = &tLunarItems[index];
+  orbit_t      o;
+  SKPOINT      pt;
+  SKMATRIX     mat;
+  SKMATRIX     mX, mY, mZ, mS;
+
+  cAstro.setParam(view);
+  cAstro.calcPlanet(PT_MOON, &o);
+
+  double angle = o.PA;
+
+  SKMATRIXRotateY(&mY, R90 + R180 - o.cMer);
+  SKMATRIXRotateX(&mX, R180 + o.cLat);
+  SKMATRIXRotateZ(&mZ, -angle);
+  SKMATRIXScale(&mS, view->flipX ? -1 : 1, view->flipY ? -1 : 1, 1);
+
+  mat = mY * mX * mZ * mS;
+
+  SKVECTOR out;
+  SKVECTOR in;
+
+  double clat = cos(lf->lat);
+  in.x = clat * cos(-lf->lon);
+  in.y =        sin(lf->lat);
+  in.z = clat * sin(-lf->lon);
+
+  SKVECTransform3(&out, &in, &mat);
+
+  return out.z < 0;
+}
+
+QString CLunarFeatures::getTypeName(int id)
+{
+  switch (id)
+  {
+    case LFT_LANDING_SITE:
+      return tr("Landing site");
+    case LFT_CRATER:
+      return tr("Crater");
+    case LFT_MONTES:
+      return tr("Montes");
+    case LFT_MONS:
+      return tr("Mons");
+    case LFT_RIMA:
+      return tr("Rima");
+    case LFT_MARE:
+      return tr("Mare");
+    case LFT_VALLIS:
+      return tr("Vallis");
+    case LFT_LACUS:
+      return tr("Lacus");
+    case LFT_SINUS:
+      return tr("Sinus");
+  }
+
+  return "???";
 }
 
 

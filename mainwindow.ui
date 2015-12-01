@@ -851,7 +851,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>5</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -862,7 +862,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>314</height>
+          <height>191</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1080,7 +1080,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>331</width>
+          <width>308</width>
           <height>669</height>
          </rect>
         </property>
@@ -1551,7 +1551,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>451</width>
+          <width>397</width>
           <height>520</height>
          </rect>
         </property>
@@ -1837,8 +1837,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>314</height>
+          <width>190</width>
+          <height>266</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2274,7 +2274,7 @@
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>314</height>
+          <height>305</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2376,7 +2376,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>327</height>
+          <height>329</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2384,14 +2384,28 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QPushButton" name="pushButton_5">
-           <property name="toolTip">
-            <string>Center Moon on screen</string>
-           </property>
-           <property name="text">
-            <string>Go to the Moon</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_18">
+           <item>
+            <widget class="QPushButton" name="pushButton_5">
+             <property name="toolTip">
+              <string>Center Moon on screen</string>
+             </property>
+             <property name="text">
+              <string>Go to the Moon</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_35">
+             <property name="toolTip">
+              <string>Search lunar features</string>
+             </property>
+             <property name="text">
+              <string>Search...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="Line" name="line_10">
@@ -2566,7 +2580,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>237</width>
+          <width>157</width>
           <height>431</height>
          </rect>
         </property>
@@ -2669,8 +2683,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>314</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2817,8 +2831,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
-          <height>314</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">

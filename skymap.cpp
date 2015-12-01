@@ -550,16 +550,6 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
       cDSO.renderObj(&pt, d, mapView);
     }
   }
-
-  /*
-  // draw shape labels
-  setSetFontColor(FONT_DSO, pPainter);
-  dsoLabel_t lab;
-  foreach (lab, cDSO.tLabels)
-  {
-    pPainter->drawCText(lab.sx, lab.sy, lab.label);
-  }
-  */
 }
 
 

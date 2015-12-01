@@ -593,6 +593,8 @@ private slots:
 
   void on_actionSearch_help_triggered();
 
+  void on_pushButton_35_clicked();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

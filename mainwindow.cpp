@@ -82,6 +82,7 @@
 #include "dssheaderdialog.h"
 #include "moonlessnightsdlg.h"
 #include "xmlattrparser.h"
+#include "clunarfeaturessearch.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -5635,4 +5636,14 @@ void MainWindow::on_actionSearch_help_triggered()
 
   ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/edit_search.htm"));
   ui->toolBox->setCurrentWidget(ui->page_4);
+}
+
+void MainWindow::on_pushButton_35_clicked()
+{
+  CLunarFeaturesSearch dlg(this, &ui->widget->m_mapView);
+
+  if (dlg.exec() == DL_OK)
+  {
+    ui->widget->centerMap(dlg.m_rd.Ra, dlg.m_rd.Dec, dlg.m_fov);
+  }
 }
