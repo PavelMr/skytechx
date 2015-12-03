@@ -372,7 +372,7 @@ QString getStrRA(double ra, bool simple)
 
   if (!simple)
   {
-    out = str.sprintf("%02dh %02dm %04.1fs", d, m, s);
+    out = str.sprintf("%02dh %02dm %06.3fs", d, m, s);
   }
   else
   {
@@ -397,13 +397,14 @@ QString getStrDeg(double deg, bool simple)
 {
   QString str;
   QString out;
-  int     d, m, s;
+  int     d, m;
+  double s;
 
   getDMSFromRad(deg, &d, &m, &s);
 
   if (!simple)
   {
-    out = str.sprintf("%s%02d° %02d' %02d\"", deg < 0 ? "-" : "+", d, m, s);
+    out = str.sprintf("%s%02d° %02d' %06.3f\"", deg < 0 ? "-" : "+", d, m, s);
   }
   else
   {

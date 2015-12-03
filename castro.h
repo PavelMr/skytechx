@@ -118,6 +118,7 @@ class CAstro
     static double calcAparentSize(double R, double d);
     double getNPA(double ra, double raD, double dec, double decD, double oRa, double oDec);
     void   calcParallax(orbit_t *o);
+    void   calcParallax(double &ra, double &dec, double R);
     double getRaDec_NP(double val, double delta);
     double calcDeltaT(double jd);
     QString getName(int type);

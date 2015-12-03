@@ -790,6 +790,7 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
 }
 
 // TODO: udelat to i bez light corr.
+// output is mean position at date
 ////////////////////////////////////////////////////////////////////////////
 void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
 ////////////////////////////////////////////////////////////////////////////
@@ -877,6 +878,9 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
     orbit->hRect[0] = xh;
     orbit->hRect[1] = yh;
     orbit->hRect[2] = zh;
+
+    if (planet == PT_NEPTUNE)
+      qDebug() << "ps" << xe << ye << ze;
 
     orbit->gRD.Ra  = atan2(ye, xe);
     orbit->gRD.Dec = atan2(ze, sqrt(xe * xe + ye * ye));
@@ -1454,6 +1458,20 @@ double CAstro::getRaDec_NP(double val, double delta)
   return(val + delta * T);
 }
 
+////////////////////////////////////////////////////////////
+void CAstro::calcParallax(double &ra, double &dec, double R)
+////////////////////////////////////////////////////////////
+{
+  double mpar = DEG2RAD((8.794 / 3600) / R);
+
+  double gRa = ra;
+  double gDec = dec;
+
+  ra  += -mpar * m_curGc * sin(m_lst - gRa) * cos(gDec);
+  dec +=  mpar * (m_curGc * cos(m_lst - gRa) * sin(gDec) - m_curGs * cos(gDec));
+
+  rangeDbl(&ra, MPI2);
+}
 
 /////////////////////////////////////
 void CAstro::calcParallax(orbit_t *o)

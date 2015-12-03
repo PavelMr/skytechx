@@ -54,8 +54,11 @@ protected:
     void moonSVis(orbit_t *o, orbit_t *s, sat_t *sat);
     bool plshadow(orbit_t *o, orbit_t *s, double polera, double poledec, double x, double y, double z, float *sxp, float *syp);
     void calcShadowSize(sat_t *sat, orbit_t *sun);
+    void calcSattelite(double jd, orbit_t *orbit, orbit_t *sun, sat_t *sat, const QString name, double diam);
 
     QByteArray array[8];
+private:
+
 };
 
 extern CSatXYZ       cSatXYZ;

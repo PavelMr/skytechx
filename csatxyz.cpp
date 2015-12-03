@@ -295,14 +295,6 @@ static void rotateZ(double &X, double &Y, double &Z, double theta)
   Z = Z0;
 }
 
-static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
-{
-  // http://www.movable-type.co.uk/scripts/latlong.html
-
-  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
-  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
-}
-
 void CSatXYZ::solveNeptune(double jd, int pln, orbit_t *orbit, orbit_t *sun, satxyz_t *sat)
 {
   double td;
@@ -310,8 +302,9 @@ void CSatXYZ::solveNeptune(double jd, int pln, orbit_t *orbit, orbit_t *sun, sat
   double tc;
   double a, L, e, i, o, w, ma, J, N;
   QString name;
-  double radius = 24764.0;
   double diam;
+
+  jd -= orbit->light;
 
   for (int index = 0; index < 2; index++)
   {
@@ -344,6 +337,21 @@ void CSatXYZ::solveNeptune(double jd, int pln, orbit_t *orbit, orbit_t *sun, sat
         break;
 
       case 1:
+        name = "Pavel";
+        diam = 170;
+
+        td = jd - 2433680.5;
+        tc = td / 36525;
+
+        a = 100000;
+        L = D2R(0.9996465329 * td);
+        e = 0.0;
+        i = 0;//D2R(45);
+        o = D2R(0 * tc);
+
+        w = D2R(1 * tc);
+
+        /*
         name = "Nereid";
         diam = 170;
 
@@ -357,6 +365,7 @@ void CSatXYZ::solveNeptune(double jd, int pln, orbit_t *orbit, orbit_t *sun, sat
         o = D2R(315.9958928 - 3.650272562 * tc);
 
         w = D2R(251.7242240 + 0.8696048083 * tc);
+        */
 
         ma = L - w;
 
@@ -372,8 +381,7 @@ void CSatXYZ::solveNeptune(double jd, int pln, orbit_t *orbit, orbit_t *sun, sat
     double EE = cAstro.solveKepler(e, ma);
     rangeDbl(&EE, R360);
 
-    // convert semi major axis from km to Neptune radius
-    //a /= radius;
+    // convert semi major axis from km to AU
     a /= AU1;
 
     // rectangular coordinates on the orbit plane, x-axis is toward pericenter
@@ -401,77 +409,90 @@ void CSatXYZ::solveNeptune(double jd, int pln, orbit_t *orbit, orbit_t *sun, sat
 
     precessB1950J2000(X, Y, Z);
 
-    //qDebug() << name << X << Y << Z;
-
     sat_t s;
 
-    //s.x = Y;
-    //s.y = -Z;
-    //s.z = X;
+    s.x = X;
+    s.y = Y;
+    s.z = Z;
 
-    s.x = 0;//X / 100.;
-    s.y = 0;//Y / 100.;
-    s.z = 0;//Z / 10000.;
-
-    //qDebug() << s.x << s.y << s.z << name;
-
-    double rad = DEG2RAD((double)orbit->sx / 3600.0) / 2.0;
-    double ra = orbit->lRD.Ra;
-    double dec = orbit->lRD.Dec;
-    double dra  = rad * s.x;
-    double ddec = rad * s.y;
-
-    //qDebug() << " " << ra << dec << dra << ddec;
-
-    s.diam = diam;
-    s.inFront = true;
-    s.inSunLgt = true;
-    s.isHidden = false;
-    s.mag = 5;
-    s.name = name;
-    s.size = cAstro.calcAparentSize(orbit->R, s.diam);
-    //s.rd.Ra  = ra + dra;
-    //s.rd.Dec = dec - ddec;
-
-    //double dd = sqrt(s.x * s.x + s.y * s.y) * rad;
-    //calcAngularDistance(ra, dec, atan2(s.y, s.x), dd, s.rd.Ra, s.rd.Dec);
-
-    double xp = orbit->hRect[0];
-    double yp = orbit->hRect[1];
-    double zp = orbit->hRect[2];
-
-    double xs = sun->hRect[0];
-    double ys = sun->hRect[1];
-    double zs = sun->hRect[2];
-
-     double x=xp+xs;
-     double y=yp+ys;
-     double z=zp+zs;
-
-     double d1=sqrt(x*x+y*y+z*z);
-
-     //x=x+X;
-     //y=y+Y;
-     //z=z+Z;
-
-     x = xp + s.x + xs;
-     y = yp + s.y + ys;
-     z = zp + s.z + zs;
-
-     double d2=sqrt(x*x+y*y+z*z);
-     s.rd.Ra=atan2(y,x);
-     if (s.rd.Ra<0) s.rd.Ra=s.rd.Ra+2*MPI;
-     double qr=sqrt(x*x+y*y);
-     if (qr!=0) s.rd.Dec= atan(z/qr);
-
-     //precess(&s.rd.Ra, &s.rd.Dec, JD2000, jd);
-
-     qDebug() << index << getStrRA(ra) << dec << getStrRA(s.rd.Ra) << s.rd.Dec;
-
+    calcSattelite(jd, orbit, sun, &s, name, diam);
 
     sat->sat.append(s);
     sat->count++;
   }
+}
+
+void CSatXYZ::calcSattelite(double jd, orbit_t *orbit, orbit_t *sun, sat_t *sat, const QString name, double diam)
+{
+  double r[3];
+
+  double obl = cAstro.getEclObl(JD2000);
+
+  r[0] = sat->x;
+  r[1] =  cos(obl) * sat->y + sin(obl) * sat->z;
+  r[2] = -sin(obl) * sat->y + cos(obl) * sat->z;
+
+  precessRect(r, JD2000, jd);
+
+  sat->x = r[0];
+  sat->y = r[1];
+  sat->z = r[2];
+
+  double ra = orbit->lRD.Ra;
+  double dec = orbit->lRD.Dec;
+
+  double xp = orbit->hRect[0] + sat->x;
+  double yp = orbit->hRect[1] + sat->y;
+  double zp = orbit->hRect[2] + sat->z;
+
+  double xs = sun->hRect[0];
+  double ys = sun->hRect[1];
+  double zs = sun->hRect[2];
+
+  double x = xp + xs;
+  double y = yp + ys;
+  double z = zp + zs;
+
+  obl = cAstro.getEclObl(jd);
+
+  double xe = x;
+  double ye = y * cos(obl) - z * sin(obl);
+  double ze = y * sin(obl) + z * cos(obl);
+
+
+  double sx = orbit->hRect[0];
+  double sy = orbit->hRect[1] * cos(obl) - orbit->hRect[2] * sin(obl);
+  double sz = orbit->hRect[1] * sin(obl) + orbit->hRect[2] * cos(obl);
+
+  sat->x = xe - sx;
+  sat->y = ye - sy;
+  sat->z = ze - sz;
+
+  double rr = 1;//AU1;//49528. / AU1;
+
+  sat->x *= rr;
+  sat->y *= rr;
+  sat->z *= rr;
+
+  sat->rd.Ra  = atan2(ye, xe);
+  sat->rd.Dec = atan2(ze, sqrt(xe * xe + ye * ye));
+  rangeDbl(&sat->rd.Ra, R360);
+
+  cAstro.calcParallax(sat->rd.Ra, sat->rd.Dec, orbit->R);
+
+  sat->diam = diam;
+  sat->inFront = z > 0;
+  sat->inSunLgt = true;
+  sat->isHidden = false;
+  sat->isTransit = false;
+  sat->throwShadow = false;
+  sat->mag = 5;
+  sat->name = name;
+  sat->size = cAstro.calcAparentSize(orbit->R, sat->diam);
+  sat->distance = anSep(ra, dec, sat->rd.Ra, sat->rd.Dec);
+
+  qDebug() << getStrRA(ra) << getStrDeg(dec) << getStrRA(sat->rd.Ra) << getStrDeg(sat->rd.Dec);
+  //qDebug() << index << ra << dec << s.rd.Ra << s.rd.Dec;
 }
 
 bool CSatXYZ::solveBDL(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat)
