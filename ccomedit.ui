@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>294</width>
-    <height>523</height>
+    <width>306</width>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -202,6 +202,9 @@
             <property name="maximum">
              <double>2.000000000000000</double>
             </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
             <property name="value">
              <double>1.000000000000000</double>
             </property>
@@ -210,25 +213,56 @@
           <item>
            <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>Perihelion distance (AU)</string>
+             <string>Perihelion distance (AU) or Semi-major axis (AU)</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_7">
-            <property name="decimals">
-             <number>10</number>
-            </property>
-            <property name="minimum">
-             <double>0.000001000000000</double>
-            </property>
-            <property name="maximum">
-             <double>1000.000000000000000</double>
-            </property>
-            <property name="value">
-             <double>0.500000000000000</double>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>q</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_7">
+              <property name="decimals">
+               <number>10</number>
+              </property>
+              <property name="minimum">
+               <double>0.000001000000000</double>
+              </property>
+              <property name="maximum">
+               <double>1000.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.500000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>a</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="dsb_a">
+              <property name="decimals">
+               <number>10</number>
+              </property>
+              <property name="minimum">
+               <double>0.000001000000000</double>
+              </property>
+              <property name="maximum">
+               <double>99999.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">

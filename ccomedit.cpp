@@ -32,6 +32,15 @@ CComEdit::CComEdit(QWidget *parent, bool bNew, comet_t *a) :
     ui->doubleSpinBox_10->setValue(dt.date().day() + d);
   }
 
+  if (ui->doubleSpinBox_5->value() < 1)
+  {
+    calcA(ui->doubleSpinBox_7->value());
+  }
+  else
+  {
+    ui->dsb_a->setEnabled(false);
+  }
+
   m_a = a;
 }
 
@@ -95,4 +104,47 @@ void CComEdit::on_spinBox_2_valueChanged(int arg1)
   QDate d(ui->spinBox->value(), arg1, 1);
 
   ui->doubleSpinBox_10->setRange(1, d.daysInMonth() + 0.999999);
+}
+
+void CComEdit::calcA(double q)
+{
+  double e = ui->doubleSpinBox_5->value();
+  double a = q / (1 - e);
+
+  ui->dsb_a->setValue(a);
+}
+
+void CComEdit::calcQ(double a)
+{
+  double e = ui->doubleSpinBox_5->value();
+  double q = (1 - e) * a;
+
+  ui->doubleSpinBox_7->setValue(q);
+}
+
+void CComEdit::on_doubleSpinBox_5_valueChanged(double arg1)
+{
+  if (arg1 >= 0.9999999)
+  {
+    ui->dsb_a->setEnabled(false);
+  }
+  else
+  {
+    ui->dsb_a->setEnabled(true);
+    calcA(ui->doubleSpinBox_7->value());
+  }
+}
+
+void CComEdit::on_doubleSpinBox_7_valueChanged(double arg1)
+{
+  ui->dsb_a->blockSignals(true);
+  calcA(arg1);
+  ui->dsb_a->blockSignals(false);
+}
+
+void CComEdit::on_dsb_a_valueChanged(double arg1)
+{
+  ui->doubleSpinBox_7->blockSignals(true);
+  calcQ(arg1);
+  ui->doubleSpinBox_7->blockSignals(false);
 }

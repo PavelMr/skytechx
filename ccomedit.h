@@ -49,8 +49,16 @@ private slots:
 
   void on_spinBox_2_valueChanged(int arg1);
 
+  void on_doubleSpinBox_5_valueChanged(double arg1);
+
+  void on_doubleSpinBox_7_valueChanged(double arg1);
+
+  void on_dsb_a_valueChanged(double arg1);
+
 private:
   Ui::CComEdit *ui;
+  void calcA(double q);
+  void calcQ(double a);
 };
 
 #endif // CCOMEDIT_H
