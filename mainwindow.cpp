@@ -86,6 +86,7 @@
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
+#include <QCompleter>
 
 // show/hide drawing
 bool g_showCenterScreen = false;
@@ -267,7 +268,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
   m_search = new CLineEditComp;
   m_search->setFixedWidth(150);
-  m_search->setMaxCompleterWords(1000);
   m_search->addWords(cDSO.getCommonNameList());
   ui->tb_search->insertWidget(ui->actionSearch, m_search);
   m_search->setToolTip(tr("Search"));

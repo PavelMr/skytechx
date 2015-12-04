@@ -1,8 +1,8 @@
 #ifndef CLINEEDITCOMP_H
 #define CLINEEDITCOMP_H
 
-#include <QtGui>
-#include <QtWidgets>
+#include <QLineEdit>
+#include <QStringListModel>
 
 class CLineEditComp : public QLineEdit
 {
@@ -14,17 +14,9 @@ public:
   void addWords(QStringList words);
 
 protected:
-  void keyPressEvent(QKeyEvent *e);
-
-  int         m_max;
-  QStringList m_list;
-  bool        m_back;
-
-signals:
-
-public slots:
-  void slotTextEdited(QString str);
-
+  QCompleter *m_completer;
+  QStringListModel *m_model;
+  int               m_max;
 };
 
 #endif // CLINEEDITCOMP_H
