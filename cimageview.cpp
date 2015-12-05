@@ -6,6 +6,8 @@ CImageView::CImageView(QWidget *parent) :
   QWidget(parent)
 {
   m_pix = NULL;
+  m_firstTime = true;
+  m_type = IV_NO_IMAGE;
 
   showFullScreen();
   showMaximized();
@@ -78,6 +80,13 @@ void CImageView::resizeEvent(QResizeEvent *)
 {
   m_btReset->move(5, 5);
   m_bt100->move(40, 5);
+
+  if (m_firstTime)
+  {
+    slotReset();
+  }
+
+  m_firstTime = false;
 }
 
 ////////////////////////////////////////////////
@@ -222,6 +231,4 @@ void CImageView::setSource(QPixmap *pix)
 
   m_btReset->setEnabled(true);
   m_bt100->setEnabled(true);
-
-  update();
 }

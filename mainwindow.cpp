@@ -731,6 +731,8 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(timer, SIGNAL(timeout()), this, SLOT(slotTimeSliderUpdate()));
   timer->start(15);
 
+  cDSO.applyNameFilter();
+
   setTitle();
 }
 

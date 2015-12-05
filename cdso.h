@@ -72,6 +72,8 @@ class CDso : public QObject
 
     bool addAddon(const QString name);
 
+    void applyNameFilter();
+
     void drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool addToList);
     void renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
     void renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);

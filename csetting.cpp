@@ -624,6 +624,7 @@ void CSetting::apply()
 
   // DSO
   g_skSet.map.dsoFilter = ui->le_dso_filter->text();
+  cDSO.applyNameFilter();
 
   QStandardItemModel *model = (QStandardItemModel *)ui->treeView->model();
 
@@ -675,8 +676,6 @@ void CSetting::apply()
   // background
   g_skSet.map.background.bStatic = ui->checkBox_4->isChecked();
   g_skSet.map.background.useAltAzmOnly = ui->checkBox_5->isChecked();
-
-  qDebug() << "config" << g_skSet.map.background.staticColor;
 
   //constellations
   g_skSet.map.constellation.linesFile = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toString();

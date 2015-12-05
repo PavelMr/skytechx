@@ -41,6 +41,7 @@ protected:
   int      m_type;
   QMovie  *m_waiting;
   QLabel  *m_label;
+  bool     m_firstTime;
 
 signals:
 

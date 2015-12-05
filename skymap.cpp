@@ -456,8 +456,6 @@ static bool dsoComp(dso_t *d1, dso_t *d2)
 static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////////
 {
-  QStringList dsoFilterList = g_skSet.map.dsoFilter.remove(" ").split(";");
-
   cDSO.setPainter(pPainter, pImg);
 
   QList <dso_t *> tList;
@@ -475,7 +473,6 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
       {
         dso_t *d = &cDSO.dso[cDSO.tDsoSectors[y][x][i]];
         SKPOINT pt;
-        bool draw = false;
         float mag;
 
         if (!g_skSet.map.dsoTypeShow[d->type])
@@ -488,44 +485,29 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
           if (d->shape == NO_DSO_SHAPE)
           {
-            if (mapView->fov <= g_skSet.map.dsoNoMagOtherFOV)
-              draw = true;
+            if (mapView->fov > g_skSet.map.dsoNoMagOtherFOV)
+              continue;
           }
           else
           {
-            if (mapView->fov <= g_skSet.map.dsoNoMagShapeFOV)
-              draw = true;
+            if (mapView->fov > g_skSet.map.dsoNoMagShapeFOV)
+              continue;
           }
         }
         else
         {
           mag = d->DSO_MAG;
 
-          if (mag <= mapView->dsoMag)
-            draw = true;
+          if (mag > mapView->dsoMag)
+            continue;
         }
 
-        if (draw)
+        if (!d->show)
         {
-          QString name = cDSO.getName(d);
-
-          foreach (const QString &filter, dsoFilterList)
-          {
-            QRegExp re(filter + "[\\s0-9]");
-            re.setCaseSensitivity(Qt::CaseInsensitive);
-
-            if (name.indexOf(re) == 0)
-            {
-              draw = false;
-              break;
-            }
-          }
-
-          if (draw)
-          {
-            tList.append(d);
-          }
+          continue;
         }
+
+        tList.append(d);
       }
     }
   }
@@ -683,13 +665,14 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 
   orc = rc;
 
-  pPainter->setOpacity(0.75);
   if (g_onPrinterBW)
   {
+    pPainter->setOpacity(1);
     pPainter->fillRect(rc, Qt::white);
   }
   else
   {
+    pPainter->setOpacity(0.75);
     pPainter->fillRect(rc, Qt::black);
   }
   pPainter->setOpacity(1);

@@ -91,6 +91,8 @@ void CDso::load()
     pf.read((char *)&dso[i].shape, sizeof(unsigned short));
     pf.read((char *)&dso[i].galType, sizeof(unsigned short));
 
+    dso[i].show = true;
+
     rangeDbl(&dso[i].rd.Ra, MPI2);
     if (dso[i].sx > 0 && dso[i].sy == 0)
     {
@@ -587,6 +589,35 @@ bool CDso::addAddon(const QString /*name*/)
   */
 
   return(true);
+}
+
+void CDso::applyNameFilter()
+{
+  QStringList dsoFilterList = g_skSet.map.dsoFilter.remove(" ").split(";");
+
+  for (qint32 i = 0; i < dsoHead.numDso; i++)
+  {
+    QString name = cDSO.getName(&dso[i]);
+
+    dso[i].show = true;
+
+    foreach (const QString &filter, dsoFilterList)
+    {
+      if (filter.isEmpty())
+      {
+        continue;
+      }
+
+      QRegExp re(filter + "[\\s0-9]");
+      re.setCaseSensitivity(Qt::CaseInsensitive);
+
+      if (name.indexOf(re) == 0)
+      {
+        dso[i].show = false;
+        break;
+      }
+    }
+  }
 }
 
 

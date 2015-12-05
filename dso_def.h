@@ -75,6 +75,8 @@ typedef struct
   unsigned short  shape;     // shape index
 
   unsigned short  galType;   // index to galaxy class
+
+  bool            show;
 } dso_t;
 
 
