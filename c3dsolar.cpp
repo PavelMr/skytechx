@@ -288,6 +288,10 @@ void C3DSolar::on_horizontalSlider_sliderReleased()
 void C3DSolar::slotTimer()
 {
   QEasingCurve curve(QEasingCurve::InCubic);
+  if (ui->horizontalSlider->value() == 0)
+  {
+    return;
+  }
   m_jd += (ui->horizontalSlider->value() > 0 ? +1 : -1) * curve.valueForProgress(qAbs(ui->horizontalSlider->value()) / 100.0) * 50.0;
   m_view.jd = m_jd;
   ui->frame->setView(&m_view);

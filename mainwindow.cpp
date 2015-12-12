@@ -83,6 +83,7 @@
 #include "moonlessnightsdlg.h"
 #include "xmlattrparser.h"
 #include "clunarfeaturessearch.h"
+#include "cplanetsize.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -5648,4 +5649,11 @@ void MainWindow::on_pushButton_35_clicked()
   {
     ui->widget->centerMap(dlg.m_rd.Ra, dlg.m_rd.Dec, dlg.m_fov);
   }
+}
+
+void MainWindow::on_actionPlanet_size_triggered()
+{
+  CPlanetSize dlg(this, &ui->widget->m_mapView);
+
+  dlg.exec();
 }

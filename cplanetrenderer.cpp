@@ -387,15 +387,12 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   else
     lev = 3;
 
+  if (isPreview)
+  {
+    lev = 3;
+  }
+
   mesh_t *mesh = m_sphere[lev];
-  /*
-  float angle = o->PA - trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec) + R180;
-  float angle2 = trfGetAngleDegFlipped(angle);
-
-  if (ang != CM_UNDEF)
-    angle = angle2 = ang;
-    */
-
   float angle = trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, mapView->jd);
 
   if (mapView->flipX + mapView->flipY == 1)
@@ -429,6 +426,11 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     if (mapView->flipX + mapView->flipY == 1)
     {
       angs = -angs;
+    }
+
+    if (isPreview)
+    {
+      angs = 0;
     }
 
     pPainter->save();
@@ -470,6 +472,10 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     if (mapView->flipY)
       angp = R180 + angp;
 
+    if (isPreview)
+    {
+      angp = 0;
+    }
 
     SKMATRIXRotateX(&matX, o->cLat);
     SKMATRIXRotateZ(&matZ, angp);
@@ -581,11 +587,12 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     case PT_VENUS:
     case PT_MERCURY:
     case PT_MARS:
+    case PT_JUPITER:
     case PT_MOON:
-      if (g_showSP)
+      if (g_showSP || isPreview)
       {
         pPainter->save();
-        drawPhase(o, sun, pPainter, pt, mapView, sx, sy, true);
+        drawPhase(o, sun, pPainter, pt, mapView, sx, sy, !isPreview);
         pPainter->restore();
       }
       break;

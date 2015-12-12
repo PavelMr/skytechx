@@ -608,6 +608,7 @@
     <addaction name="actionSOHO_Sun_images"/>
     <addaction name="actionPlanet_visibility"/>
     <addaction name="actionPlanet_altitude"/>
+    <addaction name="actionPlanet_size"/>
     <addaction name="actionMoon_calendary"/>
     <addaction name="actionEphemeride_list"/>
     <addaction name="actionPolaris_Hour_Angle"/>
@@ -851,7 +852,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>4</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -2274,7 +2275,7 @@
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>305</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2351,6 +2352,9 @@
              <property name="tickPosition">
               <enum>QSlider::TicksAbove</enum>
              </property>
+             <property name="tickInterval">
+              <number>10</number>
+             </property>
             </widget>
            </item>
            <item>
@@ -2374,7 +2378,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-32</y>
           <width>279</width>
           <height>329</height>
          </rect>
@@ -2683,8 +2687,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2831,8 +2835,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4879,6 +4883,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Open search help</string>
+   </property>
+  </action>
+  <action name="actionPlanet_size">
+   <property name="text">
+    <string>Planet size...</string>
    </property>
   </action>
  </widget>

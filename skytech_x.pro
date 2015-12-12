@@ -236,7 +236,8 @@ SOURCES += main.cpp\
     xmlattrparser.cpp \
     nutation.cpp \
     smartlabeling.cpp \
-    clunarfeaturessearch.cpp
+    clunarfeaturessearch.cpp \
+    cplanetsize.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -430,7 +431,8 @@ HEADERS  += mainwindow.h \
     xmlattrparser.h \
     nutation.h \
     smartlabeling.h \
-    clunarfeaturessearch.h
+    clunarfeaturessearch.h \
+    cplanetsize.h
 
 
 FORMS    += mainwindow.ui \
@@ -517,7 +519,8 @@ FORMS    += mainwindow.ui \
     dssheaderdialog.ui \
     cdownloadfile.ui \
     moonlessnightsdlg.ui \
-    clunarfeaturessearch.ui
+    clunarfeaturessearch.ui \
+    cplanetsize.ui
 
 
 RESOURCES += \

@@ -167,6 +167,7 @@ QPixmap CObjInfo::getPlanetPixmap(int w, int h)
   pt.sx = w / 2.;
   pt.sy = h / 2.;
 
+  cAstro.setParam(&view);
   cAstro.calcPlanet(m_infoItem.par1, &o);
   cAstro.calcPlanet(PT_SUN, &s);
 
