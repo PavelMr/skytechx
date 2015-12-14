@@ -19,6 +19,7 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
   ui(new Ui::C3DSolar)
 {
   ui->setupUi(this);
+
   ui->frame->setView(view, true);
   m_view = *view;
   m_jd = m_view.jd;

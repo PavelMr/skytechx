@@ -6,6 +6,7 @@
 #define DRAWING_VERSION   "VER2.0"
 #define ROT_MARGIN        10
 
+
 CDrawing g_cDrawing; // TODO: nepouzivat globalne promene s QObject kvuli tr();
 
 void setHelpText(QString text);

@@ -97,16 +97,16 @@ void CRts::calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view,
   rts->flag = RTS_DONE;
   rts->rts = 0;
 
-  // transit
-  v.jd = jd;
-  ast->setParam(&v);
-  r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
-  ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt);
-
   int cnt = 0;
 
   if (calcTransit)
   {
+    // transit
+    v.jd = jd;
+    ast->setParam(&v);
+    r = getRTSRaDecFromPtr(&rd, ptr, type, jd);
+    ast->convRD2AARef(rd.Ra, rd.Dec, &lAzm, &lAlt);
+
     while (1)
     {
       v.jd = jd;

@@ -24,6 +24,10 @@ static bool   bFlipY;
 static SKMATRIX m_matTransfSave;
 static SKMATRIX m_matProjSave;
 static SKMATRIX m_matViewSave;
+static SKMATRIX m_matViewNoPrecSave;
+
+static double scrxSave;
+static double scrySave;
 
 static double dxArcSec;
 
@@ -43,6 +47,9 @@ void trfSave(void)
   m_matTransfSave = m_matTransf;
   m_matProjSave = m_matProj;
   m_matViewSave = m_matView;
+  m_matViewNoPrecSave = m_matViewNoPrec;
+  scrxSave = scrx2;
+  scrySave = scry2;
 
   for (int i = 0; i < 5; i++)
     m_frustumSave[i] = m_frustum[i];
@@ -55,6 +62,9 @@ void trfRestore(void)
   m_matTransf = m_matTransfSave;
   m_matProj = m_matProjSave;
   m_matView = m_matViewSave;
+  m_matViewNoPrec = m_matViewNoPrecSave;
+  scrx2 = scrxSave;
+  scry2 = scrySave;
 
   for (int i = 0; i < 5; i++)
     m_frustum[i] = m_frustumSave[i];

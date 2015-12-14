@@ -15,7 +15,6 @@ static QString       qssStyle;
 extern QApplication *g_pApp;
 
 
-
 static double starMagnitudes[10][2] = {
                                         {D2R(90), 5.5},
                                         {D2R(75), 6.0},

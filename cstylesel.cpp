@@ -5,16 +5,24 @@
 
 extern QApplication *g_pApp;
 
-///////////////////////
-void loadQSSStyle(void)
-///////////////////////
+void loadQSSStyle(const QString &fileName)
 {
   QString path;
   QSettings set;
 
-  path = set.value("qss_style", "../data/styles/normal.qss").toString();
-  g_pApp->setStyleSheet(readAllFile(path));
+  if (fileName.isEmpty())
+  {
+    path = set.value("qss_style", "../data/styles/normal.qss").toString();
+  }
+  else
+  {
+    path = fileName;
+  }
+
+  QString str = readAllFile(path).replace("url(","url(" + QString("../data/styles/"));
+  g_pApp->setStyleSheet(str);
 }
+
 
 CStyleSel::CStyleSel(QWidget *parent) :
   QDialog(parent),
@@ -58,10 +66,11 @@ void CStyleSel::on_pushButton_2_clicked()
 
   QString path = item[0]->data(Qt::UserRole).toString();
   qDebug("%s", qPrintable(path));
-  g_pApp->setStyleSheet(readAllFile(path));
   QSettings set;
 
   set.setValue("qss_style", path);
+
+  loadQSSStyle();
 
   done(DL_OK);
 }
@@ -70,6 +79,7 @@ void CStyleSel::on_pushButton_2_clicked()
 void CStyleSel::on_pushButton_clicked()
 ///////////////////////////////////////
 {
+  loadQSSStyle();
   done(DL_CANCEL);
 }
 
@@ -80,3 +90,14 @@ void CStyleSel::on_listWidget_doubleClicked(const QModelIndex &)
   on_pushButton_2_clicked();
 }
 
+
+void CStyleSel::on_pushButton_3_clicked()
+{
+  QList <QListWidgetItem *> item = ui->listWidget->selectedItems();
+
+  if (item.count() == 0)
+    return;
+
+  QString path = item[0]->data(Qt::UserRole).toString();
+  loadQSSStyle(path);
+}

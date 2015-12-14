@@ -174,11 +174,11 @@ int main(int argc, char *argv[])
   qDebug("numthreads=%d", omp_get_max_threads());
   qDebug("develop=%d", g_developMode);
 
-  loadQSSStyle();
-
   CLoadingDlg *dlg = new CLoadingDlg;
   dlg->exec();
   delete dlg;
+
+  loadQSSStyle();
 
   MainWindow w;
   w.show();

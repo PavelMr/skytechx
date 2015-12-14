@@ -166,6 +166,8 @@ void CMoonCal::updateTime()
     mapView_t view = m_view;
     SKPOINT   pt;
 
+    view.flipX = false;
+    view.flipY = false;
     view.jd = jd;
     a.setParam(&view);
     a.calcPlanet(PT_MOON, &o);

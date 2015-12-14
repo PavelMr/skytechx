@@ -133,6 +133,8 @@ MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
+  QSettings settings;
+
   ui->setupUi(this);
 
   connect(&m_versionManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotVersionFinished(QNetworkReply*)));
@@ -219,6 +221,10 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(this, SIGNAL(sigFlipY(bool)), ui->widget, SLOT(slotCheckedFlipY(bool)));
   ui->actionFlipY->setChecked(false);
   emit sigFlipY(false);
+
+  ui->actionFlipX->setChecked(settings.value("flipX", false).toBool());
+  ui->actionFlipY->setChecked(settings.value("flipY", false).toBool());
+  ui->actionLock_FOV->setChecked(settings.value("lockFov", false).toBool());
 
   ui->actionAtlas_mode_Pole_Up->trigger();
 
@@ -325,7 +331,6 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionFast_250ms->toggle();
 
 
-  QSettings settings;
   restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
   restoreState(settings.value("mainWindowState").toByteArray());
 
@@ -1071,6 +1076,10 @@ void MainWindow::saveAndExit()
   settings.setValue("set_profile", g_setName);
   settings.setValue("horizon_file", g_horizonName);
   settings.setValue("use_real_time", ui->actionRealtime->isChecked());
+
+  settings.setValue("flipX", ui->actionFlipX->isChecked());
+  settings.setValue("flipY", ui->actionFlipY->isChecked());
+  settings.setValue("lockFov", ui->actionLock_FOV->isChecked());
 
   if (g_autoSave.mapPosition)
   {

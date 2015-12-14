@@ -73,10 +73,14 @@ void CWidget::paintEvent(QPaintEvent *)
   pt.sy = h / 2.;
   int space = 8;
 
+  // TODO: trf class
+  //trfSave();
+
   for (int i = PT_MERCURY; i <= PT_NEPTUNE; i++)
   {
     orbit_t o, s;
     mapView_t view = *mw;
+    CAstro cAstro;
 
     cAstro.setParam(&view);
     cAstro.calcPlanet(i, &o);
@@ -100,6 +104,8 @@ void CWidget::paintEvent(QPaintEvent *)
 
     pt.sx += trfGetArcSecToPix(o.sx) * (i == PT_SATURN ? 2.5 : 1) + space;
   }
+
+  //trfRestore();
 
   painter.drawImage(0, 0, blurredImage(img, 2, false));
   painter.setOpacity(0.25);
@@ -162,3 +168,7 @@ void CPlanetSize::updateLabels()
 }
 
 
+void CPlanetSize::on_pushButton_clicked()
+{
+  done(DL_OK);
+}

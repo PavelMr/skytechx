@@ -413,7 +413,7 @@ QString getStrDeg(double deg, bool simple)
     {
       out += str.sprintf(" %02d'", m);
     }
-    if (s != 0)
+    if ((int)s != 0)
     {
       out += str.sprintf(" %02.0f\"", s);
     }

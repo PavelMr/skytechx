@@ -246,16 +246,23 @@ void CScanRender::renderPolygon(QColor col, QImage *dst)
     if (px1 < 0)
     {
       px1 = 0;
+      if (px2 < 0)
+      {
+        continue;
+      }
     }
 
     if (px2 >= m_sx)
     {
+      if (px1 >= m_sx)
+      {
+        continue;
+      }
       px2 = m_sx - 1;
     }
 
     quint32 *pDst = bits + (y * dw) + px1;
 
-    // TODO: memset32 zkusit
     for (int x = px1; x < px2; x++)
     {
       *pDst = c;
@@ -334,8 +341,6 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
   bkScan_t *scan = scLR;
   bool bw = src->format() == QImage::Format_Indexed8 || src->format() == QImage::Format_Grayscale8;
 
-  // TODO: asi dat pryc je to pomalejsi !!!!!!!
-  //#pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])
@@ -424,7 +429,6 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
   bkScan_t *scan = scLR;
   bool bw = src->format() == QImage::Format_Indexed8 || src->format() == QImage::Format_Grayscale8;
 
-  //#pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])

@@ -144,6 +144,7 @@ void CPlanetAltitude::calculate(double jd)
       m_list[p].append(o.lAlt);
     }
   }
+
   setWindowTitle(tr("Planet altitude") + " " + getStrDate(jd, m_view.geo.tz));
 }
 

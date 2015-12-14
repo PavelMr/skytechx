@@ -62,7 +62,7 @@ bool CPlanetRenderer::load()
   m_ring[0] = createRing(10);
   m_ring[1] = createRing(20);
   m_ring[2] = createRing(30);
-  m_ring[3] = createRing(40);
+  m_ring[3] = createRing(60);
 
   m_bmp[PT_SUN] = new QImage("../data/planets/sun.jpg");
   m_bmp[PT_MERCURY] = new QImage("../data/planets/mercury.jpg");
@@ -221,9 +221,11 @@ mesh_t *CPlanetRenderer::createRing(int detail)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void CPlanetRenderer::renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *, mapView_t *mapView, CSkPainter *, QImage *pImg, bool isPreview)
+void CPlanetRenderer::renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *, mapView_t *mapView, CSkPainter *painter, QImage *pImg, bool isPreview)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
+  Q_UNUSED(painter);
+
   SKMATRIX matX;
   SKMATRIX matY;
   SKMATRIX matZ;
@@ -263,6 +265,7 @@ void CPlanetRenderer::renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *, m
 
   if (side == -1)
   {
+    #pragma omp parallel for
     for (int i = 0; i < mesh->numVertices; i++)
     {
       float x = mat.m_11 * mesh->vertices[i].x * sx +
@@ -345,17 +348,17 @@ void CPlanetRenderer::renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *, m
     scanRender.renderPolygonAlpha(pImg, m_satRing);
 
     /*
-    pPainter->drawLine(mesh->vertices[mesh->faces[i].vertices[0]].sp[0],
+    painter->drawLine(mesh->vertices[mesh->faces[i].vertices[0]].sp[0],
                        mesh->vertices[mesh->faces[i].vertices[0]].sp[1],
                        mesh->vertices[mesh->faces[i].vertices[1]].sp[0],
                        mesh->vertices[mesh->faces[i].vertices[1]].sp[1]);
-    */
-    /*
-    pPainter->drawLine(mesh->vertices[mesh->faces[i].vertices[1]].sp[0],
+
+
+    painter->drawLine(mesh->vertices[mesh->faces[i].vertices[1]].sp[0],
                        mesh->vertices[mesh->faces[i].vertices[1]].sp[1],
                        mesh->vertices[mesh->faces[i].vertices[2]].sp[0],
                        mesh->vertices[mesh->faces[i].vertices[2]].sp[1]);
-    */
+   */
 
   }
 

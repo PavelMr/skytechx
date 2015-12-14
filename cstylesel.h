@@ -12,11 +12,11 @@ namespace Ui {
 class CStyleSel : public QDialog
 {
   Q_OBJECT
-  
+
 public:
   explicit CStyleSel(QWidget *parent = 0);
   ~CStyleSel();
-  
+
 private slots:
   void on_pushButton_2_clicked();
 
@@ -24,11 +24,13 @@ private slots:
 
   void on_listWidget_doubleClicked(const QModelIndex &index);
 
+  void on_pushButton_3_clicked();
+
 private:
   Ui::CStyleSel *ui;
 };
 
-void loadQSSStyle(void);
+void loadQSSStyle(const QString &fileName = "");
 
 #endif // CSTYLESEL_H
 

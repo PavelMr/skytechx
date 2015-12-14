@@ -9369,7 +9369,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="4195"/>
         <source>Change language...</source>
-        <translation>Změna jazyka...</translation>
+        <translation type="unfinished">Změna jazyka (Language change)...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4204"/>

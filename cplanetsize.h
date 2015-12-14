@@ -35,6 +35,8 @@ private slots:
 
   void slotTimer();
 
+  void on_pushButton_clicked();
+
 private:
   Ui::CPlanetSize *ui;
   CWidget *m_widget;
