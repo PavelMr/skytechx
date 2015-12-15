@@ -235,7 +235,7 @@ int CSatXYZ::read_bdl(QByteArray *fpa, double jd, double *xp, double *yp, double
 
 
 ////////////////////////////////////////////////////////////////////////////////
-bool CSatXYZ::solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat)
+bool CSatXYZ::solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat, bool xyzOnly)
 ////////////////////////////////////////////////////////////////////////////////
 {
   QByteArray *plArray;
@@ -394,6 +394,11 @@ bool CSatXYZ::solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat)
       sat->sat[4].diam = 471.6; // km
     }
     break;
+  }
+
+  if (xyzOnly)
+  {
+    return true;
   }
 
   for (int i = 0; i < c; i++)

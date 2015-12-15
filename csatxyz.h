@@ -41,7 +41,7 @@ public:
     CSatXYZ();
    ~CSatXYZ();
     bool init(void);
-    bool solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat);
+    bool solve(double jd, int pln, orbit_t *o, orbit_t *sun, satxyz_t *sat, bool xyzOnly = false);
 
     bool bOk;
 

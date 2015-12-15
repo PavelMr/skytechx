@@ -92,8 +92,6 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
     jd2++;
   }
 
-  //p.fillRect(rect(), Qt::darkGray);
-
   int cx = width() / 2;
   double scale = width() / m_xScale;
 
@@ -223,7 +221,7 @@ void CSatelliteChartWidget::calculate(int height)
     cAstro.calcPlanet(m_planet, &o);
     cAstro.calcPlanet(PT_SUN, &s);
 
-    if (cSatXYZ.solve(jd, m_planet, &o, &s, &sat))
+    if (cSatXYZ.solve(jd, m_planet, &o, &s, &sat, true))
     {
       m_satCount = sat.count;
       for (int i = 0; i < sat.count; i++)

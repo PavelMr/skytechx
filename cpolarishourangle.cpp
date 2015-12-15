@@ -43,7 +43,6 @@ void CPolarisHourAngle::paintEvent(QPaintEvent *)
   CSkPainter p(this);
   QPointF center = ui->frame->rect().center();
   double r1 = 175;
-  double r2 = 160;
 
   p.setRenderHint(QPainter::Antialiasing);
   p.setRenderHint(QPainter::SmoothPixmapTransform);
@@ -54,12 +53,24 @@ void CPolarisHourAngle::paintEvent(QPaintEvent *)
   p.translate(ui->frame->pos());
 
   double angle = m_polarisHourAngle * MPI2 + MPI;
-  double s = sin(angle);
-  double c = cos(angle);
+  p.save();
 
-  p.drawLine(QPoint(255, 255), QPoint(center.x() + s * r1, center.y() + c * r1));
-  p.drawEllipse(QPoint(center.x() + s * r2, center.y() + c * r2), 5, 5);
-  p.drawEllipse(QPoint(center.x(), center.y()), 5, 5);
+  p.translate(center);
+  p.rotate(R2D(-angle));
+
+  QPolygon poly;
+
+  p.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+  p.setBrush(Qt::NoBrush);
+
+  poly << QPoint(0, r1);
+  poly << QPoint(10, -10);
+  poly << QPoint(-10, -10);
+  poly << QPoint(0, r1);
+
+  p.drawPolygon(poly);
+
+  p.restore();
 }
 
 void CPolarisHourAngle::updateTime()
