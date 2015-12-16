@@ -1,4 +1,4 @@
-#ifndef CLUNARFEATURES_H
+﻿#ifndef CLUNARFEATURES_H
 #define CLUNARFEATURES_H
 
 #include <QtCore>
@@ -20,11 +20,11 @@
 #define  LFT_SINUS          8
 
 typedef struct
-{
-  QString   name;
+{  
   double    lon;
   double    lat;
   double    rad;  // in km.
+  QString   name;
   int       type; // LFT_xxx
 } lunarItem_t;
 

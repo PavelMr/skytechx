@@ -485,7 +485,7 @@ void mapObjContextMenu(CMapView *map)
         break;
       }
 
-      case MO_USNOSTAR:
+      case MO_USNO2:
       {
         usnoStar_t s;
         usnoZone_t *z;
@@ -493,6 +493,12 @@ void mapObjContextMenu(CMapView *map)
         z = usno.getStar(&s, o.par1, o.par2);
 
         str = QString("USNO2 %1-%2").arg(z->zone).arg(s.id) + QString(QObject::tr(", %1 mag.")).arg(s.rMag, 0, 'f', 2);
+        break;
+      }
+
+      case MO_USNOB1:
+      {
+        str = QString("USNO B1 %1-%2").arg(o.par1).arg(o.par2) + QString(QObject::tr(", %1 mag.")).arg(o.mag, 0, 'f', 2);
         break;
       }
 
@@ -695,7 +701,7 @@ QString checkObjOnMap(const QPoint &pos)
         break;
       }
 
-      case MO_USNOSTAR:
+      case MO_USNO2:
       {
         usnoStar_t s;
         usnoZone_t *z;
@@ -704,6 +710,13 @@ QString checkObjOnMap(const QPoint &pos)
 
         nameStr = QString("USNO2 %1-%2").arg(z->zone).arg(s.id);
         magStr = getStrMag(s.rMag);
+        break;
+      }
+
+      case MO_USNOB1:
+      {
+        nameStr = QString("USNO B1 %1-%2").arg(obj.par1).arg(obj.par2);
+        magStr = getStrMag(obj.mag);
         break;
       }
 

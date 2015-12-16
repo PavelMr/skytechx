@@ -19,12 +19,13 @@
 #define MO_PLN_SAT       5
 #define MO_TYCSTAR       6
 #define MO_GSCSTAR       7
-#define MO_USNOSTAR      8
-#define MO_UCAC4         9
-#define MO_PPMXLSTAR    10
-#define MO_DSO          11
-#define MO_CONSTELL     12
-#define MO_EARTH_SHD    13
+#define MO_USNO2         8
+#define MO_USNOB1        9
+#define MO_UCAC4        10
+#define MO_PPMXLSTAR    11
+#define MO_DSO          12
+#define MO_CONSTELL     13
+#define MO_EARTH_SHD    14
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

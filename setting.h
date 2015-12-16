@@ -173,6 +173,13 @@ typedef struct
   bool   show;
   double fromFOV;
   double fromMag;
+} setUsnoB1_t;
+
+typedef struct
+{
+  bool   show;
+  double fromFOV;
+  double fromMag;
 } setUCAC4_t;
 
 typedef struct
@@ -230,7 +237,8 @@ typedef struct
   setDraw_t  drawing;
   setTrack_t tracking;
   setPpmxl_t ppmxl;
-  setUsno2_t usno2;
+  setUsno2_t  usno2;
+  setUsnoB1_t usnob1;
   setUCAC4_t ucac4;
   setGsc_t   gsc;
   setES_t    es;

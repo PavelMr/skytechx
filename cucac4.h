@@ -1,4 +1,4 @@
-#ifndef CUCAC4_H
+﻿#ifndef CUCAC4_H
 #define CUCAC4_H
 
 #include "skcore.h"
@@ -53,11 +53,11 @@ typedef struct
 } ucac4Star_t;
 
 typedef struct
-{
-  bool                bUsed;
+{  
   int                 region;
   QList <ucac4Star_t> stars;
   ulong               timer;
+  bool                bUsed;
 } ucac4Region_t;
 
 #define NUM_UCAC4_REGIONS       100

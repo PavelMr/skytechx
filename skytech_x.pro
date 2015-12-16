@@ -16,8 +16,8 @@ DEFINES += NOMINMAX
 
 Release:DEFINES  += QT_NO_DEBUG_OUTPUT QT_FATAL_WARNINGS
 
-Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11
-Debug:win32-g++   : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp
+Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11  -Wl,--stack,16777216
+Debug:win32-g++   : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp  -Wl,--stack,16777216
 
 win32-g++         : LIBS += -lgomp -lpsapi -lwinmm
 win32-msvc2013    : LIBS += winmm.lib
@@ -237,7 +237,8 @@ SOURCES += main.cpp\
     nutation.cpp \
     smartlabeling.cpp \
     clunarfeaturessearch.cpp \
-    cplanetsize.cpp
+    cplanetsize.cpp \
+    usnob1.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -432,7 +433,8 @@ HEADERS  += mainwindow.h \
     nutation.h \
     smartlabeling.h \
     clunarfeaturessearch.h \
-    cplanetsize.h
+    cplanetsize.h \
+    usnob1.h
 
 
 FORMS    += mainwindow.ui \

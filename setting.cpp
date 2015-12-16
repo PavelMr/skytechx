@@ -288,7 +288,6 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.milkyWay.sameAsBkColor", set->map.milkyWay.sameAsBkColor, ds);
   writeVal("map.milkyWay.color", set->map.milkyWay.color, ds);
 
-
   // drawing
   writeVal("map.drawing.color", set->map.drawing.color, ds);
 
@@ -302,6 +301,11 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.usno2.show", set->map.usno2.show, ds);
   writeVal("map.usno2.fromFOV", set->map.usno2.fromFOV, ds);
   writeVal("map.usno2.fromMag", set->map.usno2.fromMag, ds);
+
+  // USNO B1
+  writeVal("map.usnob1.show", set->map.usnob1.show, ds);
+  writeVal("map.usnob1.fromFOV", set->map.usnob1.fromFOV, ds);
+  writeVal("map.usnob1.fromMag", set->map.usnob1.fromMag, ds);
 
   // UCAC4
   writeVal("map.ucac4.show", set->map.ucac4.show, ds);

@@ -25,6 +25,7 @@
 #include "cucac4.h"
 #include "csgp4.h"
 #include "smartlabeling.h"
+#include "usnob1.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
 // ALL OBJECT ON MAP DRAW AT EPOCH J2000.0
@@ -57,6 +58,58 @@ extern bool bConstEdit;
 
 QColor currentSkyColor;
 
+/////////////////////////////////////////////////////////////////////////////////////
+static void smRenderUSNOB1Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
+/////////////////////////////////////////////////////////////////////////////////////
+{
+  if (!g_skSet.map.usnob1.show)
+  {
+    return;
+  }
+
+  if (mapView->fov < g_skSet.map.usnob1.fromFOV && mapView->starMag >= g_skSet.map.usnob1.fromMag)
+  {
+    UsnoB1Region_t *zone;
+
+    zone = usnoB1.getRegion(region);
+
+    if (zone == NULL)
+    {
+      return;
+    }
+
+    #pragma omp parallel for shared(mapView)
+    for (int i = 0; i < zone->stars.count(); i++)
+    {
+      const UsnoB1Star_t &star = zone->stars[i];
+      float vMag = usnoB1.getVMag(star);
+
+      if (vMag > mapView->starMag)
+      {
+        continue;
+      }
+
+      if (vMag >= g_skSet.map.usnob1.fromMag)
+      {
+        SKPOINT pt;
+        radec_t rd;
+
+        rd.Ra = UBRA(star.rd[0]);
+        rd.Dec = UBDEC(star.rd[1]);
+
+        trfRaDecToPointNoCorrect(&rd, &pt);
+        if (trfProjectPoint(&pt))
+        {
+          #pragma omp critical
+          {
+            int r = cStarRenderer.renderStar(&pt, 0, vMag, pPainter);
+            addMapObj(pt.sx, pt.sy, MO_USNOB1, MO_CIRCLE, r + 4, star.zone, star.id, vMag);
+          }
+        }
+      }
+    }
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
@@ -152,7 +205,7 @@ static void smRenderUSNO2Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
         if (trfProjectPoint(&pt))
         {
             int r = cStarRenderer.renderStar(&pt, 0, star.rMag, pPainter);
-            addMapObj(pt.sx, pt.sy, MO_USNOSTAR, MO_CIRCLE, r + 4, region, i, star.rMag);
+            addMapObj(pt.sx, pt.sy, MO_USNO2, MO_CIRCLE, r + 4, region, i, star.rMag);
         }
       }
     }
@@ -355,7 +408,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
   }
 }
 
-#if 0
+#if 1
 /////////////////////////////////////////////////////////////////////////////
 static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
 /////////////////////////////////////////////////////////////////////////////
@@ -435,8 +488,12 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
       continue; // region already rendered
     }
 
+    //if (region != 3560)
+      //continue;
+
     //smRenderGSCRegions(mapView, pPainter, region);
 
+    smRenderUSNOB1Stars(mapView, pPainter, region);
     smRenderUSNO2Stars(mapView, pPainter, region);
     smRenderPPMXLStars(mapView, pPainter, region);
     smRenderUCAC4Stars(mapView, pPainter, region);

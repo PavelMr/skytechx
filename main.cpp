@@ -190,11 +190,19 @@ int main(int argc, char *argv[])
     ret = a.exec();
   }
 
+  catch (QException &exc)
+  {
+    msgBoxError(NULL, exc.what());
+    qDebug() << "ERROR" << exc.what();
+  }
+
+  /*
   catch (std::bad_alloc &exc)
   {
     msgBoxError(NULL, exc.what());
     qDebug() << "ERROR" << exc.what();
   }
+  */
 
   return ret;
 }

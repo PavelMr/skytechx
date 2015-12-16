@@ -1,4 +1,4 @@
-#include "csatellitedlg.h"
+﻿#include "csatellitedlg.h"
 #include "ui_csatellitedlg.h"
 #include "mapobj.h"
 #include "cobjtracking.h"
@@ -244,7 +244,7 @@ void CSatelliteDlg::on_pushButton_5_clicked()
   releaseHoldObject(MO_SATELLITE);
   pcMainWnd->removeQuickInfo(MO_SATELLITE);
 
-  curSatelliteCatName = "";
+  curSatelliteCatName.clear();
   sgp4.removeAll();
   fillList();
 }
@@ -272,7 +272,7 @@ void CSatelliteDlg::on_pushButton_6_clicked()
   releaseHoldObject(MO_SATELLITE);
   pcMainWnd->removeQuickInfo(MO_SATELLITE);
 
-  curSatelliteCatName = "";
+  curSatelliteCatName.clear();
   sgp4.removeAll();
   fillList();
 
