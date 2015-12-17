@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>9</number>
+            <number>16</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2182,7 +2182,6 @@
                      <property name="title">
                       <string>GroupBox</string>
                      </property>
-                     <zorder></zorder>
                     </widget>
                    </item>
                    <item row="3" column="0">
@@ -3321,6 +3320,12 @@
                     </item>
                     <item>
                      <widget class="QDoubleSpinBox" name="doubleSpinBox_34">
+                      <property name="minimumSize">
+                       <size>
+                        <width>300</width>
+                        <height>0</height>
+                       </size>
+                      </property>
                       <property name="suffix">
                        <string>°</string>
                       </property>
@@ -3344,6 +3349,124 @@
                     </item>
                     <item>
                      <widget class="QDoubleSpinBox" name="doubleSpinBox_31">
+                      <property name="suffix">
+                       <string> mag.</string>
+                      </property>
+                      <property name="decimals">
+                       <number>0</number>
+                      </property>
+                      <property name="minimum">
+                       <double>0.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>99.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_8">
+            <layout class="QVBoxLayout" name="verticalLayout_93">
+             <item>
+              <layout class="QFormLayout" name="formLayout_19">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <item row="0" column="0">
+                <widget class="QGroupBox" name="groupBox_27">
+                 <property name="title">
+                  <string>Show</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_89">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_90">
+                    <item>
+                     <widget class="QCheckBox" name="showUSNOCheckBox_2">
+                      <property name="text">
+                       <string>Show USNO B1.0 Catalogue</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QGroupBox" name="groupBox_28">
+                 <property name="title">
+                  <string>Settings</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_91">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_92">
+                    <item>
+                     <widget class="QLabel" name="label_107">
+                      <property name="text">
+                       <string>Path to USNO B1.0 folder</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_28">
+                      <item>
+                       <widget class="QLineEdit" name="lineEdit_5">
+                        <property name="minimumSize">
+                         <size>
+                          <width>300</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="pushButton_66">
+                        <property name="text">
+                         <string>Browse...</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_108">
+                      <property name="text">
+                       <string>Show USNO B1.0 stars from FOV</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_39">
+                      <property name="suffix">
+                       <string>°</string>
+                      </property>
+                      <property name="decimals">
+                       <number>0</number>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>45.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_109">
+                      <property name="text">
+                       <string>Show USNO B1.0 stars from magnitude</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_40">
                       <property name="suffix">
                        <string> mag.</string>
                       </property>
@@ -3412,7 +3535,14 @@
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_24">
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_4"/>
+                       <widget class="QLineEdit" name="lineEdit_4">
+                        <property name="minimumSize">
+                         <size>
+                          <width>300</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                       </widget>
                       </item>
                       <item>
                        <widget class="QPushButton" name="pushButton_56">

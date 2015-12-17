@@ -123,6 +123,11 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
 {
   int s = getStarSize(mag);
 
+  if (!g_skSet.map.star.useSpectralTp)
+  {
+    spt = 0;
+  }
+
   p->drawPixmap(pt->sx - (pStars[spt][s].width() >> 1),
                 pt->sy - (pStars[spt][s].height() >> 1), pStars[spt][s]);
 

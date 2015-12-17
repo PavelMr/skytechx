@@ -70,24 +70,6 @@ UsnoB1Region_t *UsnoB1::getRegion(int gscRegion)
   return NULL;
 }
 
-float UsnoB1::getVMag(const UsnoB1Star_t &star)
-{
-  float r = star.rMag;
-  float b = star.bMag;
-
-  if (r > 49)
-  {
-    r = b;
-  }
-  else
-  if (b > 45)
-  {
-    b = r;
-  }
-
-  return 0.375 * b + 0.625 * r;
-}
-
 UsnoB1Star_t UsnoB1::getStar(int zone, int id)
 {
   UsnoB1Star_t s;
@@ -159,6 +141,7 @@ void UsnoB1::setStar(const UBCstar &ubstar, UsnoB1Star_t *star, int zone, int id
       star->rMag = 100;
     }
   }
+  star->vMag = getVMag(*star);
 }
 
 float UsnoB1::getMag(int mag)
@@ -177,7 +160,7 @@ float UsnoB1::getMag(int mag)
 
 static bool sort(const UsnoB1Star_t &a, const UsnoB1Star_t &b)
 {
-  return UsnoB1::getVMag(a) < UsnoB1::getVMag(b);
+  return usnoB1.getVMag(a) < usnoB1.getVMag(b);
 }
 
 bool UsnoB1::loadRegion(int gscRegion, UsnoB1Region_t *region)
@@ -213,7 +196,7 @@ bool UsnoB1::loadRegion(int gscRegion, UsnoB1Region_t *region)
     hRaMax = 240;
   }
 
-  //qDebug() << gscRegion <<  hRaMin << hRaMax << dRaMin / 15 << dRaMax / 15;
+  // FIXME: zkotrolovat jeste 22h-24h
 
   for (int z = zoneStart; z <= zoneEnd; z++)
   {
@@ -254,18 +237,21 @@ bool UsnoB1::loadRegion(int gscRegion, UsnoB1Region_t *region)
       return false;
     }
 
-    int id;
+    int id = -1;
 
     foreach (const usnob1_acc_t &item, acc)
     {
-      //qDebug() << item.ra * 10 << hRaMin << ((int)(item.ra * 10) >= hRaMin);
-      //if ((int)(item.ra * 10) >= hRaMin)
       if (item.ra + 0.25 >= dRaMin / 15)
       {
         id = item.index;
         fCat.seek((item.index - 1) * sizeof(UBCstar));
         break;
       }
+    }
+
+    if (id == -1)
+    {
+      return false;
     }
 
     while (true)

@@ -272,11 +272,6 @@ ucac4Region_t *CUCAC4::loadGSCRegion(int region)
             skStar.spIndex = 0;
           }
 
-          if (z == 444 && ucac4Index == 10753)
-          {
-            qDebug() << b << v << skStar.spIndex << ((b - v) / 1000.0);
-          }
-
           skStar.number = ucac4Index;
           skStar.zone = z;
 

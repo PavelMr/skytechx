@@ -1127,9 +1127,9 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   item->radec.Ra = s.rd.Ra;
   item->radec.Dec = s.rd.Dec;
   item->zoomFov = getOptObjFov(0, 0, D2R(0.15));
-  item->title = QString("USNO2 %1-%2").arg(z->zone).arg(s.id);
+  item->title = QString("USNO A2 %1-%2").arg(z->zone).arg(s.id);
   item->simbad = item->title;
-  item->id = QString("USNO2 %1-%2").arg(z->zone).arg(s.id);
+  item->id = QString("USNO A2 %1-%2").arg(z->zone).arg(s.id);
 
   addLabelItem(item, txDateTime);
   addSeparator(item);
@@ -1147,7 +1147,7 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
 
   int con = constWhatConstel(item->radec.Ra, item->radec.Dec, JD2000);
 
-  str = QString("USNO2 %1-%2").arg(z->zone).arg(s.id);
+  str = QString("USNO A2 %1-%2").arg(z->zone).arg(s.id);
   addTextItem(item, str, "");
   addSeparator(item);
 
@@ -1293,10 +1293,12 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, txDec, getStrDeg(item->radec.Dec));
   addSeparator(item);
 
-  addLabelItem(item, tr("Apparent view"));
+  addLabelItem(item, tr("Other"));
   addSeparator(item);
   addTextItem(item, tr("Red magnitude"), s.rMag < 50 ? getStrMag(s.rMag) : tr("N/A"));
   addTextItem(item, tr("Blue magnitude"), s.bMag < 50 ? getStrMag(s.bMag) : tr("N/A"));
+  addTextItem(item, tr("Visual magnitude"), getStrMag(obj->mag) + tr(" (Calc. from R/B)"));
+  addTextItem(item, tr("B-V Index"), (s.bMag < 50) ? getStrMag(s.bMag - s.vMag) : tr("N/A") + tr(" (Calc. from B/V)"));
   addSeparator(item);
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);

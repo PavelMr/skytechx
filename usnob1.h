@@ -33,6 +33,7 @@ typedef struct
   int     rd[2];
   float   bMag;
   float   rMag;
+  float   vMag;
   float   pm[2];  // mas/year
   short   zone;
   int     id;
@@ -57,7 +58,24 @@ public:
   UsnoB1();
   void setUsnoDir(const QString &name);
   UsnoB1Region_t *getRegion(int gscRegion);
-  static float getVMag(const UsnoB1Star_t &star);
+  float getVMag(const UsnoB1Star_t &star)
+  {
+    float r = star.rMag;
+    float b = star.bMag;
+
+    if (r > 49)
+    {
+      r = b;
+    }
+    else
+    if (b > 45)
+    {
+      b = r;
+    }
+
+    return 0.375 * b + 0.625 * r;
+  }
+
   UsnoB1Star_t getStar(int zone, int id);
   void clearCache();
 

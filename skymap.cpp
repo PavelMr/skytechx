@@ -82,14 +82,13 @@ static void smRenderUSNOB1Stars(mapView_t *mapView, CSkPainter *pPainter, int re
     for (int i = 0; i < zone->stars.count(); i++)
     {
       const UsnoB1Star_t &star = zone->stars[i];
-      float vMag = usnoB1.getVMag(star);
 
-      if (vMag > mapView->starMag)
+      if (star.vMag > mapView->starMag)
       {
         continue;
       }
 
-      if (vMag >= g_skSet.map.usnob1.fromMag)
+      if (star.vMag >= g_skSet.map.usnob1.fromMag)
       {
         SKPOINT pt;
         radec_t rd;
@@ -100,10 +99,11 @@ static void smRenderUSNOB1Stars(mapView_t *mapView, CSkPainter *pPainter, int re
         trfRaDecToPointNoCorrect(&rd, &pt);
         if (trfProjectPoint(&pt))
         {
+          int spIndex = (star.bMag < 50) ? CStarRenderer::getSPIndex((star.bMag - star.vMag)) : 0;
           #pragma omp critical
           {
-            int r = cStarRenderer.renderStar(&pt, 0, vMag, pPainter);
-            addMapObj(pt.sx, pt.sy, MO_USNOB1, MO_CIRCLE, r + 4, star.zone, star.id, vMag);
+            int r = cStarRenderer.renderStar(&pt, spIndex, star.vMag, pPainter);
+            addMapObj(pt.sx, pt.sy, MO_USNOB1, MO_CIRCLE, r + 4, star.zone, star.id, star.vMag);
           }
         }
       }
@@ -340,12 +340,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
       if (s->supIndex != -1)
       {
         tychoSupp_t *supp = &cTYC.pSupplement[s->supIndex];
-
-        if (g_skSet.map.star.useSpectralTp)
-          sp = supp->spt;
-        else
-          sp = 0;
-
+        sp = supp->spt;
         propName = cTYC.getStarName(supp);
         bayer = cTYC.getBayerStr(supp, bBayer);
 
@@ -487,9 +482,6 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
     {
       continue; // region already rendered
     }
-
-    //if (region != 3560)
-      //continue;
 
     //smRenderGSCRegions(mapView, pPainter, region);
 

@@ -601,6 +601,11 @@ bool setLoad(QString name, setting_t *set)
   set->map.usno2.fromFOV = readVal("map.usno2.fromFOV", D2R(5), tMap).toDouble();
   set->map.usno2.fromMag = readVal("map.usno2.fromMag", 13, tMap).toDouble();
 
+  // USNO B1
+  set->map.usnob1.show = readVal("map.usnob1.show", false, tMap).toBool();
+  set->map.usnob1.fromFOV = readVal("map.usnob1.fromFOV", D2R(2), tMap).toDouble();
+  set->map.usnob1.fromMag = readVal("map.usnob1.fromMag", 13, tMap).toDouble();
+
   // UCAC4
   set->map.ucac4.show = readVal("map.ucac4.show", false, tMap).toBool();
   set->map.ucac4.fromFOV = readVal("map.ucac4.fromFOV", D2R(15), tMap).toDouble();

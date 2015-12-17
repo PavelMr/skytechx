@@ -492,7 +492,7 @@ void mapObjContextMenu(CMapView *map)
 
         z = usno.getStar(&s, o.par1, o.par2);
 
-        str = QString("USNO2 %1-%2").arg(z->zone).arg(s.id) + QString(QObject::tr(", %1 mag.")).arg(s.rMag, 0, 'f', 2);
+        str = QString("USNO A2 %1-%2").arg(z->zone).arg(s.id) + QString(QObject::tr(", %1 mag.")).arg(s.rMag, 0, 'f', 2);
         break;
       }
 
@@ -708,7 +708,7 @@ QString checkObjOnMap(const QPoint &pos)
 
         z = usno.getStar(&s, obj.par1, obj.par2);
 
-        nameStr = QString("USNO2 %1-%2").arg(z->zone).arg(s.id);
+        nameStr = QString("USNO A2 %1-%2").arg(z->zone).arg(s.id);
         magStr = getStrMag(s.rMag);
         break;
       }

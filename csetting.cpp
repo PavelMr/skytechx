@@ -11,6 +11,7 @@
 #include "curlfile.h"
 #include "cppmxl.h"
 #include "Usno2A.h"
+#include "usnob1.h"
 #include "cucac4.h"
 #include "ctextsel.h"
 #include "mainwindow.h"
@@ -153,7 +154,8 @@ CSetting::CSetting(QWidget *parent) :
   ui->listWidget_2->addItem(tr("Tracking"));
   ui->listWidget_2->addItem(tr("PPMXL Catalogue"));
   ui->listWidget_2->addItem(tr("GSC Catalogue"));
-  ui->listWidget_2->addItem(tr("USNO2 Catalogue"));
+  ui->listWidget_2->addItem(tr("USNO A2 Catalogue"));
+  ui->listWidget_2->addItem(tr("USNO B1 Catalogue"));
   ui->listWidget_2->addItem(tr("UCAC4 Catalogue"));
   ui->listWidget_2->setCurrentRow(currentRow);
 
@@ -490,6 +492,12 @@ void CSetting::setValues()
   ui->doubleSpinBox_34->setValue(R2D(set.map.usno2.fromFOV));
   ui->doubleSpinBox_31->setValue(set.map.usno2.fromMag);
 
+  //USNO B1
+  ui->showUSNOCheckBox_2->setChecked(set.map.usnob1.show);
+  ui->lineEdit_5->setText(rset.value("usno_b1_path", "").toString());
+  ui->doubleSpinBox_39->setValue(R2D(set.map.usnob1.fromFOV));
+  ui->doubleSpinBox_40->setValue(set.map.usnob1.fromMag);
+
   //UCAC4
   ui->showUCAC4CheckBox->setChecked(set.map.ucac4.show);
   ui->lineEdit_4->setText(rset.value("ucac4_path", "").toString());
@@ -732,9 +740,17 @@ void CSetting::apply()
   usno.setUsnoDir(ui->lineEdit_3->text());
   rset.setValue("usno2_path", ui->lineEdit_3->text());
 
-  g_skSet.map.usno2.show = ui->showUSNOCheckBox->isChecked();
+  g_skSet.map.usno2.show = ui->showUSNOCheckBox_2->isChecked();
   g_skSet.map.usno2.fromFOV = D2R(ui->doubleSpinBox_34->value());
   g_skSet.map.usno2.fromMag = ui->doubleSpinBox_31->value();
+
+  //USNO B1
+  usnoB1.setUsnoDir(ui->lineEdit_5->text());
+  rset.setValue("usno_b1_path", ui->lineEdit_5->text());
+
+  g_skSet.map.usnob1.show = ui->showUSNOCheckBox_2->isChecked();
+  g_skSet.map.usnob1.fromFOV = D2R(ui->doubleSpinBox_39->value());
+  g_skSet.map.usnob1.fromMag = ui->doubleSpinBox_40->value();
 
   // UCAC4
   cUcac4.setUCAC4Dir(ui->lineEdit_4->text());
@@ -2006,4 +2022,11 @@ void CSetting::on_pushButton_65_clicked()
   }
   QListWidgetItem *currentItem = ui->tv_statusBar->takeItem(currentRow);
   ui->tv_statusBarUnused->addItem(currentItem);
+}
+
+void CSetting::on_pushButton_66_clicked()
+{
+  QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
+
+  ui->lineEdit_5->setText(folder);
 }
