@@ -166,13 +166,9 @@ bool Urat1::loadRegion(int gscRegion, urat1Region_t *region)
           region->stars.append(star);
         }
       }
-
-      //qDebug() << URPM(urat.pmRa) << URPM(urat.pmDec) << R2D(URRA(urat.raSec)) << R2D(URDEC(urat.decSec)) << URMAG(urat.bMag) << URMAG(urat.vMag) << URMAG(urat.rMag) << URMAG(urat.iMag) << URMAG(urat.fMag);
     }
     fCat.close();
   }
-
-  //qDebug() << gscRegion << rrr << sss;
 
   qSort(region->stars.begin(), region->stars.end(), sort);
 
@@ -199,7 +195,6 @@ bool Urat1::loadAccFile()
         m_acc[z].item.append(item);
       }
     }
-    qDebug() << "acc";
   }
   else
   {
@@ -222,7 +217,6 @@ bool Urat1::loadAccFile()
 
       m_acc[zone].item.append(item);
     }
-    qDebug() << "acs";
   }
 
   return true;
