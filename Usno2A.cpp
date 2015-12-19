@@ -146,7 +146,7 @@ usnoZone_t *CUsno2A::loadGSCRegion(int region)
   {
     if (zone[i].bUsed && zone[i].region == region)
     {
-      zone[i].timer = QDateTime::currentMSecsSinceEpoch() / 1000.0;
+      //zone[i].timer = QDateTime::currentMSecsSinceEpoch() / 1000.0;
       return(&zone[i]);
     }
     if (!zone[i].bUsed)

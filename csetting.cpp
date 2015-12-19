@@ -12,6 +12,7 @@
 #include "cppmxl.h"
 #include "Usno2A.h"
 #include "usnob1.h"
+#include "urat1.h"
 #include "cucac4.h"
 #include "ctextsel.h"
 #include "mainwindow.h"
@@ -157,6 +158,7 @@ CSetting::CSetting(QWidget *parent) :
   ui->listWidget_2->addItem(tr("USNO A2 Catalogue"));
   ui->listWidget_2->addItem(tr("USNO B1 Catalogue"));
   ui->listWidget_2->addItem(tr("UCAC4 Catalogue"));
+  ui->listWidget_2->addItem(tr("URAT1 Catalogue"));
   ui->listWidget_2->setCurrentRow(currentRow);
 
   QStandardItemModel *m = new QStandardItemModel;
@@ -498,6 +500,12 @@ void CSetting::setValues()
   ui->doubleSpinBox_39->setValue(R2D(set.map.usnob1.fromFOV));
   ui->doubleSpinBox_40->setValue(set.map.usnob1.fromMag);
 
+  //UART1
+  ui->showUrat1CheckBox_2->setChecked(set.map.urat1.show);
+  ui->lineEdit_urat_folder->setText(rset.value("urat1_path", "").toString());
+  ui->doubleSpinBox_urat_fov->setValue(R2D(set.map.urat1.fromFOV));
+  ui->doubleSpinBox_urat_mag->setValue(set.map.urat1.fromMag);
+
   //UCAC4
   ui->showUCAC4CheckBox->setChecked(set.map.ucac4.show);
   ui->lineEdit_4->setText(rset.value("ucac4_path", "").toString());
@@ -740,7 +748,7 @@ void CSetting::apply()
   usno.setUsnoDir(ui->lineEdit_3->text());
   rset.setValue("usno2_path", ui->lineEdit_3->text());
 
-  g_skSet.map.usno2.show = ui->showUSNOCheckBox_2->isChecked();
+  g_skSet.map.usno2.show = ui->showUSNOCheckBox->isChecked();
   g_skSet.map.usno2.fromFOV = D2R(ui->doubleSpinBox_34->value());
   g_skSet.map.usno2.fromMag = ui->doubleSpinBox_31->value();
 
@@ -751,6 +759,14 @@ void CSetting::apply()
   g_skSet.map.usnob1.show = ui->showUSNOCheckBox_2->isChecked();
   g_skSet.map.usnob1.fromFOV = D2R(ui->doubleSpinBox_39->value());
   g_skSet.map.usnob1.fromMag = ui->doubleSpinBox_40->value();
+
+  //URAT1
+  urat1.setUratDir(ui->lineEdit_urat_folder->text());
+  rset.setValue("urat1_path", ui->lineEdit_urat_folder->text());
+
+  g_skSet.map.urat1.show = ui->showUrat1CheckBox_2->isChecked();
+  g_skSet.map.urat1.fromFOV = D2R(ui->doubleSpinBox_urat_fov->value());
+  g_skSet.map.urat1.fromMag = ui->doubleSpinBox_urat_mag->value();
 
   // UCAC4
   cUcac4.setUCAC4Dir(ui->lineEdit_4->text());
@@ -2029,4 +2045,11 @@ void CSetting::on_pushButton_66_clicked()
   QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
 
   ui->lineEdit_5->setText(folder);
+}
+
+void CSetting::on_pushButton_urat_browse_clicked()
+{
+  QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
+
+  ui->lineEdit_urat_folder->setText(folder);
 }

@@ -9,6 +9,7 @@
 #include "cucac4.h"
 #include "csgp4.h"
 #include "usnob1.h"
+#include "urat1.h"
 
 #define FILEREGEXP   QRegExp("\\W")
 
@@ -96,6 +97,10 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
 
     case MO_USNOB1:
       fillUSNOB1Info(view, obj, item);
+      break;
+
+    case MO_URAT1:
+      fillURAT1Info(view, obj, item);
       break;
 
     case MO_DSO:
@@ -1308,6 +1313,104 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, "The USNO-B1.0 Catalogue (Monet+ 2003)", "");
 }
 
+
+void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
+{
+  QString      str;
+  urat1Star_t s = urat1.getStar(obj->par1, obj->par2);
+
+  item->radec.Ra = s.rd.Ra;
+  item->radec.Dec = s.rd.Dec;
+  item->zoomFov = getOptObjFov(0, 0, D2R(0.15));
+  item->title = QString("URAT1 %1-%2").arg(obj->par1).arg(obj->par2);
+  item->simbad = item->title;
+  item->id = item->title;
+
+  addLabelItem(item, txDateTime);
+  addSeparator(item);
+  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+  addSeparator(item);
+
+  addLabelItem(item, txObjType);
+  addSeparator(item);
+  addTextItem(item, txObjType, tr("Star (URAT1 cat.)"));
+  addSeparator(item);
+
+  addLabelItem(item, txDesig);
+  addSeparator(item);
+
+  int con = constWhatConstel(item->radec.Ra, item->radec.Dec, JD2000);
+
+  addTextItem(item, item->title, "");
+  addSeparator(item);
+
+  double ra, dec;
+
+  ra = item->radec.Ra;
+  dec = item->radec.Dec;
+
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
+
+  addLabelItem(item, txLocInfo);
+  addSeparator(item);
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+  addTextItem(item, txVisMag, getStrMag(URMAG(s.vMag)));
+  addTextItem(item, txConstel, constGetName(con, 1));
+
+  double azm, alt;
+  double nazm, nalt;
+
+  cAstro.convRD2AARef(ra, dec, &azm, &alt);
+  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+
+  addSeparator(item);
+  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addSeparator(item);
+  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addSeparator(item);
+  double airmass = CAstro::getAirmass(alt);
+  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+  addSeparator(item);
+
+  CRts   cRts;
+  rts_t  rts;
+  cRts.calcFixed(&rts, ra, dec, view);
+  fillRTS(&rts, view, item);
+
+  addLabelItem(item, tr("Position at JD2000.0"));
+  addSeparator(item);
+  addTextItem(item, txRA, getStrRA(item->radec.Ra));
+  addTextItem(item, txDec, getStrDeg(item->radec.Dec));
+  addSeparator(item);
+
+  addLabelItem(item, tr("Other"));
+  addSeparator(item);
+  addTextItem(item, tr("Red magnitude"), URMAG(s.rMag) < 25 ? getStrMag(URMAG(s.rMag)) : tr("N/A"));
+  addTextItem(item, tr("Blue magnitude"), URMAG(s.bMag) < 25 ? getStrMag(URMAG(s.bMag)) : tr("N/A"));
+  addTextItem(item, tr("Visual magnitude"), getStrMag(URMAG(s.vMag)));
+  addTextItem(item, tr("B-V Index"), (URMAG(s.bMag) < 25) ? getStrMag(URMAG(s.bMag - s.vMag)) : tr("N/A") + tr(" (Calc. from B/V)"));
+  addSeparator(item);
+
+  fillAtlas(item->radec.Ra, item->radec.Dec, item);
+
+  addLabelItem(item, tr("Source"));
+  addSeparator(item);
+  addTextItem(item, "The URAT1 Catalogue (Zacharias+ 2015)", "");
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)

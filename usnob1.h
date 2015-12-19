@@ -34,7 +34,7 @@ typedef struct
   float   bMag;
   float   rMag;
   float   vMag;
-  float   pm[2];  // mas/year
+  //float   pm[2];  // mas/year
   short   zone;
   int     id;
 } UsnoB1Star_t;

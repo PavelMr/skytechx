@@ -21,11 +21,12 @@
 #define MO_GSCSTAR       7
 #define MO_USNO2         8
 #define MO_USNOB1        9
-#define MO_UCAC4        10
-#define MO_PPMXLSTAR    11
-#define MO_DSO          12
-#define MO_CONSTELL     13
-#define MO_EARTH_SHD    14
+#define MO_URAT1        10
+#define MO_UCAC4        11
+#define MO_PPMXLSTAR    12
+#define MO_DSO          13
+#define MO_CONSTELL     14
+#define MO_EARTH_SHD    15
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

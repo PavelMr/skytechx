@@ -54,6 +54,7 @@ protected:
     void fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
+    void fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillESInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);

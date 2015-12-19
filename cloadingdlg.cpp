@@ -11,6 +11,7 @@
 #include "Usno2A.h"
 #include "usnob1.h"
 #include "cucac4.h"
+#include "urat1.h"
 #include "cplanetrenderer.h"
 #include "csgp4.h"
 #include "csatellitedlg.h"
@@ -169,6 +170,7 @@ void CLoadingDlg::slotLoad()
   usno.setUsnoDir(set.value("usno2_path", "").toString());
   cPPMXL.setDir(set.value("ppmxl_path", "").toString());
   cUcac4.setUCAC4Dir(set.value("ucac4_path", "").toString());
+  urat1.setUratDir(set.value("urat1_path", "").toString());
 
   done(0);
   qApp->processEvents(QEventLoop::AllEvents);

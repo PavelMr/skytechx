@@ -38,6 +38,8 @@ bool *g_bMouseMoveMap;
 extern bool g_developMode;
 extern bool g_showFps;
 extern bool g_lockFOV;
+extern int g_numStars;
+extern int g_numRegions;
 
 QCursor cur_rotate;
 
@@ -1746,7 +1748,9 @@ void CMapView::repaintMap(bool bRepaint)
       p.setPen(QColor(255, 255, 255));
       p.setFont(QFont("arial", 12, 250));
       qint64 elp = timer.elapsed();
-      p.drawText(10, 40, QString::number(elp) + "ms " + QString::number(1000 / (float)elp, 'f', 1) + " fps");
+      p.drawText(10, 40, QString::number(elp) + "ms " + QString::number(1000 / (float)elp, 'f', 1) + " fps" +
+                 QString(" numStars : %1").arg(g_numStars) +
+                 QString(" numRegions : %1").arg(g_numRegions));
     }
   }
 

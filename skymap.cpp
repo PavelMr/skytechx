@@ -23,9 +23,12 @@
 #include "cobjtracking.h"
 #include "Usno2A.h"
 #include "cucac4.h"
+#include "urat1.h"
 #include "csgp4.h"
 #include "smartlabeling.h"
 #include "usnob1.h"
+
+static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region);
 
 /////////////////////////////////////////////////////////////////////////////////////
 // ALL OBJECT ON MAP DRAW AT EPOCH J2000.0
@@ -57,6 +60,61 @@ extern bool g_antialiasing;
 extern bool bConstEdit;
 
 QColor currentSkyColor;
+
+int g_numStars;
+int g_numRegions;
+
+////////////////////////////////////////////////////////////////////////////////////
+static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
+////////////////////////////////////////////////////////////////////////////////////
+{
+  if (!g_skSet.map.urat1.show)
+  {
+    return;
+  }
+
+  if (mapView->fov < g_skSet.map.urat1.fromFOV && mapView->starMag >= g_skSet.map.urat1.fromMag)
+  {
+    urat1Region_t *zone;
+
+    zone = urat1.getRegion(region);
+
+    if (zone == NULL)
+    {
+      return;
+    }
+
+    #pragma omp parallel for shared(mapView)
+    for (int i = 0; i < zone->stars.count(); i++)
+    {
+      const urat1Star_t &star = zone->stars[i];
+      float vMag = URMAG(star.vMag);
+
+      if (vMag > mapView->starMag)
+      {
+        continue;
+      }
+
+      if (vMag >= g_skSet.map.urat1.fromMag)
+      {
+        SKPOINT pt;
+
+        trfRaDecToPointNoCorrect(&star.rd, &pt);
+        if (trfProjectPoint(&pt))
+        {
+          int spIndex = (URMAG(star.bMag) < 25) ? CStarRenderer::getSPIndex(URMAG(star.bMag - star.vMag)) : 0;
+
+          #pragma omp critical
+          {
+            int r = cStarRenderer.renderStar(&pt, spIndex, vMag, pPainter);
+            addMapObj(pt.sx, pt.sy, MO_URAT1, MO_CIRCLE, r + 4, star.zone, star.id, vMag);
+            g_numStars++;
+          }
+        }
+      }
+    }
+  }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////
 static void smRenderUSNOB1Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
@@ -104,6 +162,7 @@ static void smRenderUSNOB1Stars(mapView_t *mapView, CSkPainter *pPainter, int re
           {
             int r = cStarRenderer.renderStar(&pt, spIndex, star.vMag, pPainter);
             addMapObj(pt.sx, pt.sy, MO_USNOB1, MO_CIRCLE, r + 4, star.zone, star.id, star.vMag);
+            g_numStars++;
           }
         }
       }
@@ -163,6 +222,7 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
 
             int r = cStarRenderer.renderStar(&pt, star.spIndex, star.mag, pPainter);
             addMapObj(pt.sx, pt.sy, MO_UCAC4, MO_CIRCLE, r + 4, region, i, star.mag);
+            g_numStars++;
           }
         }
       } else return;
@@ -189,6 +249,8 @@ static void smRenderUSNO2Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
     if (zone == NULL)
       return;
 
+    smRenderGSCRegions(mapView, pPainter, region);
+
     long *pData = zone->pData;
 
     for (int i = 0; i < zone->starCount; i++)
@@ -206,6 +268,7 @@ static void smRenderUSNO2Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
         {
             int r = cStarRenderer.renderStar(&pt, 0, star.rMag, pPainter);
             addMapObj(pt.sx, pt.sy, MO_USNO2, MO_CIRCLE, r + 4, region, i, star.rMag);
+            g_numStars++;
         }
       }
     }
@@ -255,6 +318,7 @@ static void smRenderPPMXLStars(mapView_t *mapView, CSkPainter *pPainter, int reg
               //pPainter->drawTextLR(pt.sx + r, pt.sy + r, QString("%1 %2").arg(j).arg(region));
 
               addMapObj(pt.sx, pt.sy, MO_PPMXLSTAR, MO_CIRCLE, r + 4, region, j, mag);
+              g_numStars++;
             }
           }
         }
@@ -301,6 +365,7 @@ static void smRenderGSCStars(mapView_t *mapView, CSkPainter *pPainter, int regio
         {
           int r = cStarRenderer.renderStar(&pt, 0, g[j].pMag, pPainter);
           addMapObj(pt.sx, pt.sy, MO_GSCSTAR, MO_CIRCLE, r + 4, region, j, g[j].pMag);
+          g_numStars++;
         }
         id = g[j].id;
       }
@@ -373,6 +438,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
 
       int r = 3 + cStarRenderer.renderStar(&pt, sp, mag, pPainter);
       addMapObj(pt.sx, pt.sy, MO_TYCSTAR, MO_CIRCLE, r + 4, region, j, mag);
+      g_numStars++;
 
       if (!g_showLabels)
       {
@@ -411,6 +477,11 @@ static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
   SKPOINT pt[2];
 
   gscRegion_t *reg = cGSCReg.getRegion(region);
+
+  if (!cGSCReg.isRegionVisible(region, trfGetFrustum()))
+    return;
+
+  pPainter->setPen(Qt::blue);
 
   pt[0].w.x = reg->p[0][0];
   pt[0].w.y = reg->p[0][1];
@@ -465,6 +536,9 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
 {
   memset(cGSCReg.rendered, 0, sizeof(cGSCReg.rendered));
 
+  g_numStars = 0;
+  g_numRegions = 0;
+
   QList <int> visList;
   cGSCReg.getVisibleRegions(&visList, trfGetFrustum());
 
@@ -474,20 +548,33 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
 
     if (cGSCReg.rendered[region])
     {
+      // region already rendered
       continue;
     }
 
     cGSCReg.rendered[region] = true;
-    if (!cGSCReg.isRegionVisible(region, trfGetFrustum()))
+
+    gscRegion_t  *regPtr = cGSCReg.getRegion(region);
+    SKPOINT pt[4];
+    for (int i= 0; i < 4; i++)
     {
-      continue; // region already rendered
+      pt[i].w.x = regPtr->p[i][0];
+      pt[i].w.y = regPtr->p[i][1];
+      pt[i].w.z = regPtr->p[i][2];
     }
 
+    if (!SKPLANECheckFrustumToPolygon(trfGetFrustum(), pt, 4))
+    {
+      continue;
+    }
+
+    g_numRegions++;
     //smRenderGSCRegions(mapView, pPainter, region);
 
     smRenderUSNOB1Stars(mapView, pPainter, region);
     smRenderUSNO2Stars(mapView, pPainter, region);
     smRenderPPMXLStars(mapView, pPainter, region);
+    smRenderURAT1Stars(mapView, pPainter, region);
     smRenderUCAC4Stars(mapView, pPainter, region);
     smRenderGSCStars(mapView, pPainter, region);
     smRenderTychoStars(mapView, pPainter, region);

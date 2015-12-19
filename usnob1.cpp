@@ -97,6 +97,38 @@ void UsnoB1::clearCache()
   m_region.clear();
 }
 
+/*
+static double ubcpra(int magetc)
+{
+  double pm;
+
+  if (magetc < 0)
+    pm = (double) (-magetc % 10000);
+  else
+    pm = (double) (magetc % 10000);
+
+  //pm = ((pm * 0.002) - 10.0) / 3600.0;
+
+  return pm;
+}
+
+
+static double ubcpdec(int magetc)
+{
+  double pm;
+
+  if (magetc < 0)
+    pm = (double) ((-magetc % 100000000) / 10000);
+  else
+    pm = (double) ((magetc % 100000000) / 10000);
+
+  //pm = ((pm * 0.002) - 10.0) / 3600.0;
+
+  return pm;
+}
+*/
+
+
 void UsnoB1::setStar(const UBCstar &ubstar, UsnoB1Star_t *star, int zone, int id)
 {
   float invMag = 50;
@@ -109,6 +141,9 @@ void UsnoB1::setStar(const UBCstar &ubstar, UsnoB1Star_t *star, int zone, int id
   star->rd[1] = ubstar.decsec;
   star->zone = zone;
   star->id = id;
+
+  //star->pm[0] = ubcpra(ubstar.pm);
+  //star->pm[1] = ubcpdec(ubstar.pm);
 
   if (b1 < invMag)
   {
@@ -195,8 +230,6 @@ bool UsnoB1::loadRegion(int gscRegion, UsnoB1Region_t *region)
   {
     hRaMax = 240;
   }
-
-  // FIXME: zkotrolovat jeste 22h-24h
 
   for (int z = zoneStart; z <= zoneEnd; z++)
   {

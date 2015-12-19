@@ -302,6 +302,11 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.usno2.fromFOV", set->map.usno2.fromFOV, ds);
   writeVal("map.usno2.fromMag", set->map.usno2.fromMag, ds);
 
+  // URAT1
+  writeVal("map.urat1.show", set->map.urat1.show, ds);
+  writeVal("map.urat1.fromFOV", set->map.urat1.fromFOV, ds);
+  writeVal("map.urat1.fromMag", set->map.urat1.fromMag, ds);
+
   // USNO B1
   writeVal("map.usnob1.show", set->map.usnob1.show, ds);
   writeVal("map.usnob1.fromFOV", set->map.usnob1.fromFOV, ds);
@@ -600,6 +605,11 @@ bool setLoad(QString name, setting_t *set)
   set->map.usno2.show = readVal("map.usno2.show", false, tMap).toBool();
   set->map.usno2.fromFOV = readVal("map.usno2.fromFOV", D2R(5), tMap).toDouble();
   set->map.usno2.fromMag = readVal("map.usno2.fromMag", 13, tMap).toDouble();
+
+  // URAT1
+  set->map.urat1.show = readVal("map.urat1.show", false, tMap).toBool();
+  set->map.urat1.fromFOV = readVal("map.urat1.fromFOV", D2R(6), tMap).toDouble();
+  set->map.urat1.fromMag = readVal("map.urat1.fromMag", 13, tMap).toDouble();
 
   // USNO B1
   set->map.usnob1.show = readVal("map.usnob1.show", false, tMap).toBool();

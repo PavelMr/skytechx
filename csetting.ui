@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>16</number>
+            <number>13</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -3102,7 +3102,14 @@
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_22">
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_2"/>
+                       <widget class="QLineEdit" name="lineEdit_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>300</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                       </widget>
                       </item>
                       <item>
                        <widget class="QPushButton" name="pushButton_17">
@@ -3149,7 +3156,7 @@
                        <string> mag.</string>
                       </property>
                       <property name="decimals">
-                       <number>0</number>
+                       <number>1</number>
                       </property>
                       <property name="minimum">
                        <double>0.000000000000000</double>
@@ -3209,6 +3216,12 @@
                     </item>
                     <item>
                      <widget class="QDoubleSpinBox" name="doubleSpinBox_28">
+                      <property name="minimumSize">
+                       <size>
+                        <width>300</width>
+                        <height>0</height>
+                       </size>
+                      </property>
                       <property name="suffix">
                        <string>°</string>
                       </property>
@@ -3236,7 +3249,7 @@
                        <string> mag.</string>
                       </property>
                       <property name="decimals">
-                       <number>0</number>
+                       <number>1</number>
                       </property>
                       <property name="minimum">
                        <double>0.000000000000000</double>
@@ -3300,7 +3313,14 @@
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_23">
                       <item>
-                       <widget class="QLineEdit" name="lineEdit_3"/>
+                       <widget class="QLineEdit" name="lineEdit_3">
+                        <property name="minimumSize">
+                         <size>
+                          <width>300</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                       </widget>
                       </item>
                       <item>
                        <widget class="QPushButton" name="pushButton_50">
@@ -3353,7 +3373,7 @@
                        <string> mag.</string>
                       </property>
                       <property name="decimals">
-                       <number>0</number>
+                       <number>1</number>
                       </property>
                       <property name="minimum">
                        <double>0.000000000000000</double>
@@ -3471,7 +3491,7 @@
                        <string> mag.</string>
                       </property>
                       <property name="decimals">
-                       <number>0</number>
+                       <number>1</number>
                       </property>
                       <property name="minimum">
                        <double>0.000000000000000</double>
@@ -3589,7 +3609,125 @@
                        <string> mag.</string>
                       </property>
                       <property name="decimals">
+                       <number>1</number>
+                      </property>
+                      <property name="minimum">
+                       <double>0.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>99.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_9">
+            <layout class="QVBoxLayout" name="verticalLayout_94">
+             <item>
+              <layout class="QFormLayout" name="formLayout_36">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <item row="0" column="0">
+                <widget class="QGroupBox" name="groupBox_53">
+                 <property name="title">
+                  <string>Show</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_159">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_160">
+                    <item>
+                     <widget class="QCheckBox" name="showUrat1CheckBox_2">
+                      <property name="text">
+                       <string>Show URAT1 Catalogue</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QGroupBox" name="groupBox_54">
+                 <property name="title">
+                  <string>Settings</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_161">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_162">
+                    <item>
+                     <widget class="QLabel" name="label_190">
+                      <property name="text">
+                       <string>Path to URAT1 folder</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_44">
+                      <item>
+                       <widget class="QLineEdit" name="lineEdit_urat_folder">
+                        <property name="minimumSize">
+                         <size>
+                          <width>300</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="pushButton_urat_browse">
+                        <property name="text">
+                         <string>Browse...</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_191">
+                      <property name="text">
+                       <string>Show URAT1 stars from FOV</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_urat_fov">
+                      <property name="suffix">
+                       <string>°</string>
+                      </property>
+                      <property name="decimals">
                        <number>0</number>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>45.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_192">
+                      <property name="text">
+                       <string>Show URAT1 stars from magnitude</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_urat_mag">
+                      <property name="suffix">
+                       <string> mag.</string>
+                      </property>
+                      <property name="decimals">
+                       <number>1</number>
                       </property>
                       <property name="minimum">
                        <double>0.000000000000000</double>

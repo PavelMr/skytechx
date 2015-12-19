@@ -118,8 +118,63 @@ int main(int argc, char *argv[])
   g_systemSettings = new SystemSettings("../skytechx.cfg");
   g_systemSettings->readAll();
 
-  //char *p = (char *)12;
-  //*p = 1;
+
+
+  ///////////
+  /// \brief settings
+  ///////////
+
+  /*
+  int size = 10000000;
+
+  int *val = (int *)malloc(4 * size);
+
+  int *ia = (int *)malloc(4 * size);
+  QList <int> il;
+  QTime tsi;
+  QTime tsl;
+
+  for (int i = 0; i < size; i++)
+  {
+    val[i] = rand();
+  }
+
+  tsi.start();
+  for (int i = 0; i < size; i++)
+  {
+    ia[i] = val[i];
+  }
+  qDebug() << tsi.elapsed();
+
+  tsl.start();
+  for (int i = 0; i < size; i++)
+  {
+    il.append(val[i]);
+  }
+  qDebug() << tsl.elapsed();
+
+  ///////
+
+  tsi.start();
+  for (int i = 0; i < size; i++)
+  {
+    val[i] = ia[i];
+  }
+  qDebug() << tsi.elapsed();
+
+  tsl.start();
+  for (int i = 0; i < size; i++)
+  {
+    val[i] = il[i];
+  }
+  qDebug() << tsl.elapsed();
+
+  */
+
+
+
+  ///
+
 
   QSettings settings;
 

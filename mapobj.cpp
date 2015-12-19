@@ -502,6 +502,12 @@ void mapObjContextMenu(CMapView *map)
         break;
       }
 
+      case MO_URAT1:
+      {
+        str = QString("URAT1 %1-%2").arg(o.par1).arg(o.par2) + QString(QObject::tr(", %1 mag.")).arg(o.mag, 0, 'f', 2);
+        break;
+      }
+
       case MO_GSCSTAR:
       {
         gsc_t g;
@@ -716,6 +722,13 @@ QString checkObjOnMap(const QPoint &pos)
       case MO_USNOB1:
       {
         nameStr = QString("USNO B1 %1-%2").arg(obj.par1).arg(obj.par2);
+        magStr = getStrMag(obj.mag);
+        break;
+      }
+
+      case MO_URAT1:
+      {
+        nameStr = QString("URAT1 %1-%2").arg(obj.par1).arg(obj.par2);
         magStr = getStrMag(obj.mag);
         break;
       }
