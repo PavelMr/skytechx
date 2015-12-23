@@ -455,6 +455,29 @@ bool trfProjectLine(SKPOINT *p1, SKPOINT *p2)
   return(true);
 }
 
+////////////////////////////////////////////////////////////
+bool trfProjectLine(SKPOINT *p1, SKPOINT *p2, QPointF *out)
+////////////////////////////////////////////////////////////
+{
+  SKPOINT *p[2] = {p1, p2};
+
+  if (!SKPLANECheckFrustumToLine(m_frustum, &p1->w, &p2->w))
+  {
+    return(false);
+  }
+
+  for (int i = 0; i < 2; i++)
+  {
+    SKVECTOR vout;
+
+    SKVECTransform(&vout, &p[i]->w, &m_matTransf);
+
+    out[i] = QPointF(vout.x * scrx2 + scrx2 + 0.5, vout.y * scry2 + scry2 + 0.5);
+  }
+
+  return(true);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////
 // NOTE: pouzit skutecne  frustum ??? (ne to zvetsene)
 bool trfProjectLineGetClip(SKPOINT *p1, SKPOINT *p2, bool &bClipped, int &sx, int &sy)

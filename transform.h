@@ -21,6 +21,7 @@ void trfProjectLineNoCheck(SKPOINT *p1, SKPOINT *p2);
 bool trfProjectPoint(SKPOINT *p);
 void trfProjectPointNoCheck(SKPOINT *p);
 void trfProjectPointNoCheckDbl(SKPOINT *p, double &x, double &y);
+bool trfProjectLine(SKPOINT *p1, SKPOINT *p2, QPointF *out);
 
 void trfGetScreenSize(int &width, int &height);
 bool trfPointOnScr(int x, int y, double rad = 0);

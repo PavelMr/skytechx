@@ -284,6 +284,56 @@ static void render(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *pPai
       }
     }
   }
+  else
+  {
+    QPointF fpt[2];
+    if (eqOnly && y == 32400000 && trfProjectLine(&pt[0], &pt[3], fpt))
+    {
+      QString text;
+
+      if (g_skSet.map.showGridLabels && g_showLabels)
+      {
+        if (type == SMCT_RA_DEC)
+        {
+          text = getStrRA(ra, true);
+        }
+        else
+        if (type == SMCT_ECL)
+        {
+          text = getStrDeg(ra, true);
+        }
+        else
+        {
+          double value = R360 - ra;
+          rangeDbl(&value, R360);
+          text = getStrDeg(value, true);
+        }
+
+        SKVECTOR v;
+        double l = 10;
+
+        QPointF fpt2[2];
+        trfProjectLine(&pt[0], &pt[1], fpt2);
+
+        v.x = fpt2[0].x() - fpt2[1].x();
+        v.y = fpt2[0].y() - fpt2[1].y();
+        v.z = 0;
+
+        SKVecNormalize(&v, &v);
+
+        pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
+
+        pPainter->setPen(pen1);
+        pPainter->drawLine(fpt[0].x(), fpt[0].y(), fpt[0].x() - v.y * l, fpt[0].y() + v.x * l);
+        pPainter->drawLine(fpt[0].x(), fpt[0].y(), fpt[0].x() + v.y * l, fpt[0].y() - v.x * l);
+
+        setSetFontColor(FONT_GRID, pPainter);
+        pPainter->renderText(fpt[0].x(), fpt[0].y(), 10, text, RT_BOTTOM);
+
+        pPainter->setClipping(false);
+      }
+    }
+  }
 
   if ((eqOnly && y == 32400000) || !eqOnly)
   {
