@@ -384,7 +384,7 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
   pPainter->setPen(col);
   pPainter->drawRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
 
-  if (type == SMCT_ALT_AZM)
+  if (type == SMCT_ECL || type == SMCT_ALT_AZM)
   {
     radec_t rd;
     SKPOINT pt;
@@ -398,17 +398,20 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
 
     precess(&rd.Ra, &rd.Dec, mapView->jd, JD2000);
 
-    SKMATRIX mat1;
-    SKMATRIXInverse(&mat1, mat);
+    SKMATRIX matInv;
+    SKMATRIXInverse(&matInv, mat);
 
-    trfRaDecToPointNoCorrect(&rd, &pt, &mat1);
+    trfRaDecToPointNoCorrect(&rd, &pt, &matInv);
 
     cx = -atan2(pt.w.x, pt.w.z);
     cy =  atan2(-pt.w.y, sqrt(pt.w.x * pt.w.x + pt.w.z * pt.w.z));
 
     rangeDbl(&cx, R360);
 
-    cy += cAstro.getAtmRef(cy);
+    if (type == SMCT_ALT_AZM)
+    {
+      cy += cAstro.getAtmRef(cy);
+    }
   }
   else
   {
