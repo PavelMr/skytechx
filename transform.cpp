@@ -80,6 +80,11 @@ int trfGetArcSecToPix(float size)
   return((int)(dxArcSec * (size / 3600.0f) * 0.5));
 }
 
+void trfGetCenter(double &sx, double &sy)
+{
+  sx = scrx2;
+  sy = scry2;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 void trfSetTransform(SKMATRIX *trans, SKMATRIX *proj, SKMATRIX *view, SKMATRIX *fvp)

@@ -26,6 +26,8 @@ void trfGetScreenSize(int &width, int &height);
 bool trfPointOnScr(int x, int y, double rad = 0);
 bool trfCheckRDPolygonVis(radec_t *rd, int count);
 
+void trfGetCenter(double &sx, double &sy);
+
 SKPLANE *trfGetFrustum(void);
 SKMATRIX *trfGetTranfMatrix(void);
 
