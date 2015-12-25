@@ -1187,6 +1187,9 @@ void CAstro::solveSun(orbit_t *o)
   o->sx = calcAparentSize(o->R, o->dx);
   o->sy = o->sx;
 
+  o->poleRa = getRaDec_NP(poleRA[PT_SUN][0], poleRA[PT_SUN][1]);
+  o->poleDec = getRaDec_NP(poleDec[PT_SUN][0], poleDec[PT_SUN][1]);
+
   o->PA = getNPA(poleRA[PT_SUN][0], poleRA[PT_SUN][1], poleDec[PT_SUN][0], poleDec[PT_SUN][1], o->gRD.Ra, o->gRD.Dec);
   o->elongation = 0;
 
@@ -1198,8 +1201,8 @@ void CAstro::solveSun(orbit_t *o)
   o->eRect[1] = o->r * sin(o->hLon - R180) * cos(o->hLat);
   o->eRect[2] = o->r                       * sin(o->hLat);
 
-  o->cLat = 0;
   o->cMer = 0;
+  o->cLat = getPlnCentalLat(o, o->poleRa, o->poleDec);
 }
 
 

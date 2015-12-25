@@ -121,5 +121,6 @@
         <file>res/ico_pfeatures.png</file>
         <file>res/ico_help.png</file>
         <file>res/star_glow.png</file>
+        <file>res/ico_eq_axis.png</file>
     </qresource>
 </RCC>

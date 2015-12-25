@@ -9,6 +9,7 @@ CPlanetRenderer  cPlanetRenderer; // NOTE: nedavat QPixmal QImage atd do globaln
 
 extern QImage *g_pSunTexture;
 
+extern bool g_showObjectAxis;
 extern bool g_planetReal;
 extern bool g_showLabels;
 extern bool g_bilinearInt;
@@ -364,8 +365,57 @@ void CPlanetRenderer::renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *, m
 
 }
 
+void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, float sy, bool isPreview, SKPOINT *pt, orbit_t *o)
+{
+  if (g_showObjectAxis)
+  {
+    if (isPreview)
+    {
+      angle = D2R(180);
+    }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    pPainter->save();
+    pPainter->translate(QPoint(pt->sx, pt->sy));
+    int w = sx;
+    int h = sy * sin(qAbs(o->cLat));
+
+    pPainter->rotate(R2D(angle) - ((o->cLat < 0) ? 180 : 0));
+
+    pPainter->setPen(QPen(QColor(g_skSet.map.planet.penColor), 2, Qt::DotLine));
+    pPainter->drawArc(QRect(-w, -h, w * 2, h * 2), 0, 180 * 16);
+    pPainter->restore();
+
+    pPainter->save();
+    pPainter->translate(QPoint(pt->sx, pt->sy));
+    pPainter->rotate(R2D(angle));
+
+    pPainter->setPen(QPen(QColor(g_skSet.map.planet.penColor), 1));
+    int y = sy * qAbs(cos(o->cLat));
+    int len = (sy * 0.15) * qAbs(cos(o->cLat));
+    int diff = sy - y;
+
+    if (o->cLat < 0)
+    {
+      pPainter->drawLine(0, -y, 0, -y - len);
+
+      if (len - diff > 0)
+      {
+        pPainter->drawLine(0, sy, 0, sy + (len - diff));
+      }
+    }
+    else
+    {
+      pPainter->drawLine(0, y, 0, y + len);
+
+      if (len - diff > 0)
+      {
+        pPainter->drawLine(0, -sy, 0, -sy - (len - diff));
+      }
+    }
+    pPainter->restore();
+  }
+}
+
 int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, double /*ang*/, bool isPreview)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
@@ -405,18 +455,6 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
   angle = trfGetAngleDegFlipped(angle);
 
-  int m = sy * 1.2;
-
-  if (!isPreview)
-  { // draw axis
-    pPainter->save();
-    pPainter->translate(QPoint(pt->sx, pt->sy));
-    pPainter->rotate(R2D(angle));
-    pPainter->setPen(g_skSet.map.planet.penColor);
-    pPainter->drawLine(0, -m, 0, m);
-    pPainter->restore();
-  }
-
   if (g_pSunTexture && o->type == PT_SUN)
   {
     double angs = angle + R180;
@@ -445,6 +483,8 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     pPainter->drawImage(QRect(-sx, -sx, sx * 2, sx * 2), *g_pSunTexture);
     pPainter->setRenderHint(QPainter::SmoothPixmapTransform, prev);
     pPainter->restore();
+
+    drawAxises(angle, pPainter, sx, sy, isPreview, pt, o);
   }
   else
   {
@@ -576,6 +616,8 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
     }
 
+    drawAxises(angle, pPainter, sx, sy, isPreview, pt, o);
+
     if (o->type == PT_SATURN)
       renderRing(+1, pt, o, sun, mapView, pPainter, pImg, isPreview);
   }
@@ -611,7 +653,6 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
-  int m;
   int minSize = g_skSet.map.planet.plnRad;
   int sx = trfGetArcSecToPix(o->sx);
   int sy = trfGetArcSecToPix(o->sy);
@@ -653,8 +694,6 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     return(minSize);
   }
 
-  m = sy * 1.2;
-
   float angle = trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, mapView->jd);
 
   if (mapView->flipX + mapView->flipY == 1)
@@ -692,9 +731,10 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   pPainter->save();
   pPainter->translate(QPoint(pt->sx, pt->sy));
   pPainter->rotate(R2D(angle));
-  pPainter->drawLine(0, -m, 0, m);
   pPainter->drawEllipse(QPoint(0, 0), sx, sy);
   pPainter->restore();
+
+  drawAxises(angle, pPainter, sx, sy, false, pt, o);
 
   if (o->type == PT_SATURN)
   { // draw saturn ring front side

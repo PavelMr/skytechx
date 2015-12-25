@@ -863,7 +863,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>191</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1081,7 +1081,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>308</width>
+          <width>331</width>
           <height>669</height>
          </rect>
         </property>
@@ -1552,7 +1552,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>397</width>
+          <width>451</width>
           <height>520</height>
          </rect>
         </property>
@@ -1838,8 +1838,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>266</height>
+          <width>254</width>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2378,7 +2378,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-32</y>
+          <y>0</y>
           <width>279</width>
           <height>329</height>
          </rect>
@@ -2584,7 +2584,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>157</width>
+          <width>237</width>
           <height>431</height>
          </rect>
         </property>
@@ -2687,8 +2687,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>254</width>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2835,8 +2835,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>468</width>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3092,6 +3092,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="separator"/>
    <addaction name="actionCenter_of_screen"/>
    <addaction name="actionShow_Hide_lunar_features"/>
+   <addaction name="actionShow_planet_axis"/>
   </widget>
   <widget class="QToolBar" name="tb_map">
    <property name="windowTitle">
@@ -4888,6 +4889,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionPlanet_size">
    <property name="text">
     <string>Planet size...</string>
+   </property>
+  </action>
+  <action name="actionShow_planet_axis">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_eq_axis.png</normaloff>:/res/ico_eq_axis.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show planet axis</string>
+   </property>
+   <property name="toolTip">
+    <string>Show / Hide object axis and equator</string>
    </property>
   </action>
  </widget>

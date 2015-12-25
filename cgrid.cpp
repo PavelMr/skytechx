@@ -424,17 +424,17 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
     }
   }
 
-  if (mapView->fov > D2R(45)) spc = (10);
+  if (mapView->fov > D2R(45)) spc = 10;
     else
-  if (mapView->fov > D2R(10)) spc = (5);
+  if (mapView->fov > D2R(10)) spc = 5;
     else
-  if (mapView->fov > D2R(5)) spc = (2);
+  if (mapView->fov > D2R(5)) spc = 2;
     else
-  if (mapView->fov > D2R(1)) spc = (1);
+  if (mapView->fov > D2R(1)) spc = 1;
     else
-  if (mapView->fov > D2R(0.5)) spc = (0.5);
+  if (mapView->fov > D2R(0.5)) spc = 0.5;
     else
-  if (mapView->fov > D2R(0.25)) spc = (0.1);
+  if (mapView->fov > D2R(0.25)) spc = 0.1;
     else spc = (0.05);
 
   mSet.clear();
@@ -444,7 +444,7 @@ void CGrid::renderGrid(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *
 
   if (qAbs(mapView->y) > D2R(80))
   {
-    spcx *= 20;
+    spcx *= 40;
   }
   else
   if (qAbs(mapView->y) > D2R(60))

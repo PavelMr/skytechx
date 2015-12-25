@@ -108,6 +108,7 @@ bool g_showLegends = false;
 bool g_showLabels = false;
 bool g_showDrawings = false;
 bool g_showObjTracking = false;
+bool g_showObjectAxis = false;
 
 bool g_bilinearInt = false;
 bool g_showZoomBar = true;
@@ -718,6 +719,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_grid->setEnabled(g_showGrids);
   ui->actionDrawings->setChecked(g_showDrawings);
   ui->actionObject_tracking_2->setChecked(g_showObjTracking);
+
+  ui->actionShow_planet_axis->setChecked(g_showObjectAxis);
 
   int mapAutoRptInterval = 5;
   ui->pushButton_28->setAutoRepeatInterval(mapAutoRptInterval);
@@ -5637,7 +5640,15 @@ void MainWindow::on_pushButton_34_clicked()
   }
 
   releaseHoldObject(-1);
-  holdObject(info->type, info->par1, info->title);
+  if (info->type != MO_COMET || info->type != MO_ASTER)
+  {
+    holdObject(info->type, info->par2, info->title);
+  }
+  else
+  {
+    holdObject(info->type, info->par1, info->title);
+  }
+
   repaintMap();
   enableReleaseObject(true);
 }
@@ -5665,4 +5676,10 @@ void MainWindow::on_actionPlanet_size_triggered()
   CPlanetSize dlg(this, &ui->widget->m_mapView);
 
   dlg.exec();
+}
+
+void MainWindow::on_actionShow_planet_axis_triggered(bool checked)
+{
+  g_showObjectAxis = checked;
+  ui->widget->repaintMap();
 }
