@@ -372,9 +372,6 @@ void CObjTracking::on_pushButton_2_clicked()
     case MO_SATELLITE:
       track.objName = sgp4.getName(m_item->par1);
       break;
-
-    defaut:
-      return;
   }
 
   for (double j = jdFrom; j <= jdTo; j+= jdStep, c++)

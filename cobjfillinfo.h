@@ -67,6 +67,7 @@ protected:
     void addSeparator(ofiItem_t *item);
     void fillAtlas(double ra, double dec, ofiItem_t *item);
     void fillRTS(rts_t *rts, const mapView_t *view, ofiItem_t *item);
+    void fillZoneInfo(double ra2000, double dec2000, ofiItem_t *item);
 
     QString txDateTime;
     QString txRA;

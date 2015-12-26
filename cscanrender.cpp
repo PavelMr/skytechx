@@ -121,12 +121,14 @@ void CScanRender::scanLine(int x1, int y1, int x2, int y2)
 
 #if SCAN_FIX_PT
 
-  int fx = (int)(x * 65536);
-  int fdx = (int)(dx * 65536);
+#define FP 16
+
+  int fx = (int)(x * (float)(1 << FP));
+  int fdx = (int)(dx * (float)(1 << FP));
 
   for (y = y1; y <= y2; y++)
   {
-    scLR[y].scan[side] = fx >> 16;
+    scLR[y].scan[side] = fx >> FP;
     fx += fdx;
   }
 

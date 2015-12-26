@@ -214,6 +214,23 @@ void CObjFillInfo::fillRTS(rts_t *rts, const mapView_t *view, ofiItem_t *item)
   addSeparator(item);
 }
 
+void CObjFillInfo::fillZoneInfo(double ra2000, double dec2000, ofiItem_t *item)
+{
+  int ppmxlZone = qAbs(R2D(dec2000));
+  char ppmxlChar = 'a' + ((int)qAbs(R2D(dec2000) * 4) % 4);
+
+  addLabelItem(item, tr("Zones"));
+  addSeparator(item);
+  addTextItem(item, tr("PPMXL Zone"), QString("%1%2%3").arg(dec2000 >= 0 ? 'n' : 's').arg(ppmxlZone, 2, 10, QChar('0')).arg(ppmxlChar));
+  addTextItem(item, tr("UCAC4 Zone"), QString::number(CUCAC4::getZone(dec2000)));
+  addTextItem(item, tr("URAT1 Zone"), QString::number(CUCAC4::getZone(dec2000))); // same as UCAC4
+  addTextItem(item, tr("USNO B1 Zone"), QString::number((int)((R2D(dec2000) + 90) / 0.1)));
+
+  addSeparator(item);
+
+  Q_UNUSED(ra2000);
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
@@ -420,6 +437,7 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   fillAtlas(ra, dec, item);
+  fillZoneInfo(ra, dec, item);
 }
 
 
@@ -577,6 +595,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   fillAtlas(ra, dec, item);
+  fillZoneInfo(ra, dec, item);
 }
 
 void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
@@ -811,6 +830,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
 
   fillAtlas(t->rd.Ra, t->rd.Dec, item);
+  fillZoneInfo(t->rd.Ra, t->rd.Dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
@@ -910,6 +930,7 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
@@ -1016,6 +1037,7 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
 
   fillAtlas(t.Ra, t.Dec, item);
+  fillZoneInfo(t.Ra, t.Dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
@@ -1113,6 +1135,7 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
@@ -1209,6 +1232,7 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   addSeparator(item);
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
@@ -1307,6 +1331,7 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
@@ -1406,6 +1431,7 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
@@ -1526,6 +1552,7 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
@@ -1728,6 +1755,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
 
   fillAtlas(ra, dec, item);
+  fillZoneInfo(ra, dec, item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);

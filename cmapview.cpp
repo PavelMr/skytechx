@@ -1439,12 +1439,14 @@ void CMapView::updateStatusBar(void)
     double ang = RAD2DEG(trfGetPosAngle(ra, dec, m_measurePoint.Ra, m_measurePoint.Dec));
     pcMainWnd->statusBar->setItem(SB_SM_MEASURE, QString(tr("Sep : %1 / PA : %2°")).arg(getStrDegNoSign(sep)).arg(ang, 0, 'f', 2));
 
+    /*
     int ucac4Zone = CUCAC4::getZone(decOrig);
     pcMainWnd->statusBar->setItem(SB_SM_UCAC4_ZONE,  QString(tr("UCAC4 Zone : %1")).arg(ucac4Zone));
 
     int ppmxlZone = qAbs(R2D(decOrig));
     char ppmxlChar = 'a' + ((int)qAbs(R2D(decOrig) * 4) % 4);
     pcMainWnd->statusBar->setItem(SB_SM_PPMXL_ZONE,  QString(tr("PPMZL Zone : %1%2%3")).arg(decOrig >= 0 ? 'n' : 's').arg(ppmxlZone, 2, 10, QChar('0')).arg(ppmxlChar));
+    */
   }
 
   if (bDevelopMode)

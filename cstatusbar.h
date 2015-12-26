@@ -17,9 +17,7 @@
 #define SB_SM_AZM         9
 #define SB_SM_AIRMASS    10
 #define SB_SM_MODE       11
-#define SB_SM_UCAC4_ZONE 12
-#define SB_SM_PPMXL_ZONE 13
-#define SB_SM_COUNT      14
+#define SB_SM_COUNT      12
 
 class CSBLabel : public QLabel
 {
