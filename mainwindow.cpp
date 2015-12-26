@@ -207,7 +207,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->dockWidget->setWindowTitle(tr("Sidebar"));
   ui->lv_quickInfo->init(ui->toolBox);
 
-  ui->actionShow_Hide_lunar_features->setChecked(true);
+  ui->actionShow_Hide_lunar_features->setChecked(settings.value("lunarFeatures", true).toBool());
   connect(ui->checkBox_4, SIGNAL(toggled(bool)), ui->actionShow_Hide_lunar_features, SLOT(setChecked(bool)));
   connect(ui->actionShow_Hide_lunar_features, SIGNAL(toggled(bool)), ui->checkBox_4, SLOT(setChecked(bool)));
 
@@ -695,6 +695,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showDrawings = settings.value("show_drawings", true).toBool();
   g_showObjTracking = settings.value("show_obj_tracking", true).toBool();
   g_showCenterScreen = settings.value("show_center_of_screen", false).toBool();
+  g_showObjectAxis = settings.value("show_object_axis", false).toBool();
 
   ui->actionCenter_of_screen->setChecked(g_showCenterScreen);
 
@@ -1068,6 +1069,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_drawings", g_showDrawings);
   settings.setValue("show_obj_tracking", g_showObjTracking);
   settings.setValue("show_center_of_screen", g_showCenterScreen);
+  settings.setValue("show_object_axis", g_showObjectAxis);
 
   settings.setValue("mainWindowGeometry", saveGeometry());
   settings.setValue("mainWindowState", saveState());
@@ -1079,6 +1081,7 @@ void MainWindow::saveAndExit()
   settings.setValue("set_profile", g_setName);
   settings.setValue("horizon_file", g_horizonName);
   settings.setValue("use_real_time", ui->actionRealtime->isChecked());
+  settings.setValue("lunarFeatures", ui->actionShow_Hide_lunar_features->isEnabled());
 
   settings.setValue("flipX", ui->actionFlipX->isChecked());
   settings.setValue("flipY", ui->actionFlipY->isChecked());
