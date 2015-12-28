@@ -5313,6 +5313,17 @@ void MainWindow::enableReleaseObject(bool enable)
   ui->actionRelease_object->setEnabled(enable);
 }
 
+void MainWindow::updateControlInfo()
+{
+  QString text;
+  mapView_t *mapView = &ui->widget->m_mapView;
+
+  text += tr("FOV : ") + getStrDegNoSign(mapView->fov) + "\n";
+  text += tr("Rot : ") + getStrDeg(mapView->roll) + "\n";
+
+  ui->labelInfo->setText(text);
+}
+
 void MainWindow::on_tb_filter_clicked()
 {
   if (ui->dockFilter->isVisible())

@@ -1757,6 +1757,7 @@ void CMapView::repaintMap(bool bRepaint)
   }
 
   updateStatusBar();
+  pcMainWnd->updateControlInfo();
   QWidget::update();
 }
 

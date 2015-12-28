@@ -215,6 +215,14 @@ void CSetting::setValues()
       }
     }
   }
+  ui->frame_2->setStars(set.map.starBitmapName, &set);
+  ui->spinBox_5->setValue(set.map.star.saturation);
+
+  connect(ui->checkBox_3, SIGNAL(toggled(bool)), this, SLOT(starBitmapChange()));
+  connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(starBitmapChange()));
+  connect(ui->doubleSpinBox_30, SIGNAL(valueChanged(double)), this, SLOT(starBitmapChange()));
+  connect(ui->spinBox_5, SIGNAL(valueChanged(int)), this, SLOT(starBitmapChange()));
+
 
   // star mag.
   ui->horizontalSlider->setValue(set.map.starRange[0].mag * 10);
@@ -457,8 +465,6 @@ void CSetting::setValues()
   ui->horizontalSlider_14->setValue(set.map.milkyWay.dark);
   ui->pushButton_59->setColor(set.map.milkyWay.color);
 
-  qDebug() << "set" << set.map.milkyWay.sameAsBkColor;
-
   if (set.map.milkyWay.sameAsBkColor)
   {
     ui->radioButton->setChecked(true);
@@ -610,7 +616,10 @@ void CSetting::apply()
   g_skSet.map.star.starSizeFactor = ui->doubleSpinBox_30->value();
 
   g_skSet.map.starBitmapName = ui->comboBox->itemData(ui->comboBox->currentIndex()).toString();
+  g_skSet.map.star.saturation = ui->spinBox_5->value();
+
   cStarRenderer.open(g_skSet.map.starBitmapName);
+  //cStarRenderer.setConfig(&g_skSet);
 
   g_skSet.map.star.showProperMotion = ui->cb_properMotion->isChecked();
   g_skSet.map.star.properMotionYearVec = ui->sb_pmYears->value();
@@ -698,8 +707,6 @@ void CSetting::apply()
   g_skSet.map.constellation.language = ui->cb_con_names->currentData().toString();
   constLinesLoad(g_skSet.map.constellation.linesFile);
   loadConstelNonLatinNames("../data/constellation/" + g_skSet.map.constellation.language);
-
-  qDebug() << g_skSet.map.constellation.language;
 
   // solar system
   g_skSet.map.planet.phaseAlpha = ui->horizontalSlider_12->value();
@@ -1706,8 +1713,6 @@ void CSetting::applyGamepad()
   config.deadZone = ui->sb_dead_zone->value() / 100.0;
   config.speedMul = ui->sb_gp_speed->value();
 
-  qDebug() << config.deadZone;
-
   for (int i = 0; i < 20; i++)
   {
     gamepadControl_t ctrl;
@@ -2052,4 +2057,29 @@ void CSetting::on_pushButton_urat_browse_clicked()
   QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
 
   ui->lineEdit_urat_folder->setText(folder);
+}
+
+#include "cimageview.h"
+
+void CSetting::on_toolButton_2_clicked()
+{
+  QDialog  dlg(this);
+  CImageView img(&dlg);
+  QPixmap pix(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString());
+
+  dlg.showFullScreen();
+  img.resize(dlg.size());
+  img.setSource(&pix);
+  img.setOriginalSize();
+  dlg.exec();
+}
+
+void CSetting::starBitmapChange()
+{
+  setting_t tmp;
+
+  tmp.map.star.useSpectralTp = ui->checkBox_3->isChecked();
+  tmp.map.star.starSizeFactor = ui->doubleSpinBox_30->value();
+  tmp.map.star.saturation = ui->spinBox_5->value();
+  ui->frame_2->setStars(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(), &tmp);
 }

@@ -73,6 +73,8 @@ public:
 
   void enableReleaseObject(bool enable);
 
+  void updateControlInfo();
+
 protected:
 
   void changeEvent(QEvent *e);

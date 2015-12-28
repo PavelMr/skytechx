@@ -239,7 +239,8 @@ SOURCES += main.cpp\
     clunarfeaturessearch.cpp \
     cplanetsize.cpp \
     usnob1.cpp \
-    urat1.cpp
+    urat1.cpp \
+    cstarexample.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -436,7 +437,8 @@ HEADERS  += mainwindow.h \
     clunarfeaturessearch.h \
     cplanetsize.h \
     usnob1.h \
-    urat1.h
+    urat1.h \
+    cstarexample.h
 
 
 FORMS    += mainwindow.ui \

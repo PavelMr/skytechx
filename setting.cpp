@@ -121,6 +121,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.star.namePriority", set->map.star.namePriority, ds);
   writeVal("map.star.useSpectralTp", set->map.star.useSpectralTp, ds);
   writeVal("map.star.starSizeFactor", set->map.star.starSizeFactor, ds);
+  writeVal("map.star.saturation", set->map.star.saturation, ds);
   writeVal("map.star.properMotionYearVec", set->map.star.properMotionYearVec, ds);
   writeVal("map.star.showProperMotion", set->map.star.showProperMotion, ds);
   writeVal("map.starBitmapName", set->map.starBitmapName, ds);
@@ -404,6 +405,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.star.namePriority = readVal("map.star.namePriority", false, tMap).toBool();
   set->map.star.useSpectralTp = readVal("map.star.useSpectralTp", true, tMap).toBool();
   set->map.star.starSizeFactor = readVal("map.star.starSizeFactor", -0.5, tMap).toDouble();
+  set->map.star.saturation = readVal("map.star.saturation", 100, tMap).toDouble();
   set->map.star.properMotionYearVec = readVal("map.star.properMotionYearVec", 500, tMap).toDouble();
   set->map.star.showProperMotion = readVal("map.star.showProperMotion", false, tMap).toBool();
   set->map.starBitmapName = readVal("map.starBitmapName", "../data/stars/bitmaps/stars2.png", tMap).toString();
@@ -528,12 +530,9 @@ bool setLoad(QString name, setting_t *set)
   set->map.autoGrid = readVal("map.grid.auto", true, tMap).toBool();
   set->map.showGridLabels = readVal("map.grid.show.labels", true, tMap).toBool();
 
-
   // background
   set->map.background.bStatic = readVal("map.background.bStatic", false, tMap).toBool();
   set->map.background.staticColor = readVal("map.background.staticColor", MRGB(10, 10, 20), tMap).toUInt();
-
-  qDebug() << "read" << set->map.background.staticColor;
 
   set->map.background.dynamicColor[0] = readVal("map.background.dynamicColor0", MRGB(22, 22, 22), tMap).toUInt();
   set->map.background.dynamicColor[1] = readVal("map.background.dynamicColor1", MRGB(62, 64, 80), tMap).toUInt();

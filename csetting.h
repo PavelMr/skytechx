@@ -183,6 +183,10 @@ private slots:
 
    void on_pushButton_urat_browse_clicked();
 
+   void on_toolButton_2_clicked();
+
+   void starBitmapChange();
+
 private:
    Ui::CSetting *ui;
    void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList);

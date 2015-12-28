@@ -213,6 +213,11 @@ QPixmap *CImageView::getSource()
   return(m_pix);
 }
 
+void CImageView::setOriginalSize()
+{
+  slot100();
+}
+
 ////////////////////////////////////////
 void CImageView::setSource(QPixmap *pix)
 ////////////////////////////////////////

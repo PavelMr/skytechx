@@ -249,8 +249,6 @@ static void smRenderUSNO2Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
     if (zone == NULL)
       return;
 
-    smRenderGSCRegions(mapView, pPainter, region);
-
     long *pData = zone->pData;
 
     for (int i = 0; i < zone->starCount; i++)
@@ -1292,6 +1290,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   trfCreateMatrixView(&cAstro, mapView, width, height);
 
   cStarRenderer.setMaxMag(mapView->starMag);
+  cStarRenderer.setConfig(&g_skSet);
   smRenderBackground(mapView, pPainter, pImg);
 
   if (g_showMW)

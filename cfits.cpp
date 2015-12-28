@@ -142,7 +142,7 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
 
   if (bitpix != 16)
   {
-    qDebug("FITS invalid BITPIX != 16");
+    qDebug() << "FITS invalid BITPIX != 16" << file;
     return(false);
   }
 

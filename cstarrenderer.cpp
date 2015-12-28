@@ -1,5 +1,4 @@
 #include "cstarrenderer.h"
-#include "csetting.h"
 
 #include <QDebug>
 
@@ -20,7 +19,12 @@ bool CStarRenderer::open(QString filename)
   for (int sp = 0; sp < 8; sp++)
   {
     pStars[sp].clear();
+    pStarsOrig[sp].clear();
   }
+
+  m_starSizeFactor = 0;
+  m_useSpectralTp = true;
+  m_saturation = 100;
 
   QPixmap pImg;
 
@@ -74,7 +78,10 @@ bool CStarRenderer::open(QString filename)
         }
       }
 
-      pStars[sp].append(QPixmap::fromImage(img.copy(minX - 1, minY - 1, maxX - minX + 2, maxY - minY + 2)));
+      QPixmap pix = QPixmap::fromImage(img.copy(minX - 1, minY - 1, maxX - minX + 2, maxY - minY + 2));
+
+      pStars[sp].append(pix);
+      pStarsOrig[sp].append(pix);
     }
   }
 
@@ -96,7 +103,7 @@ int CStarRenderer::getStarSize(float mag)
   int   r;
   float vm;
   float a = (float)(numStars);
-  float brMag = g_skSet.map.star.starSizeFactor;
+  float brMag = m_starSizeFactor;
   float faMag = maxMag;
 
   if (mag < brMag) mag = brMag;
@@ -123,7 +130,7 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
 {
   int s = getStarSize(mag);
 
-  if (!g_skSet.map.star.useSpectralTp)
+  if (!m_useSpectralTp)
   {
     spt = 0;
   }
@@ -154,6 +161,50 @@ QPixmap CStarRenderer::getExampleStar(void)
   p.end();
 
   return(pix);
+}
+
+void CStarRenderer::setConfig(setting_t *set)
+{
+  if (set == NULL)
+  {
+    return;
+  }
+  m_useSpectralTp = set->map.star.useSpectralTp;
+  m_starSizeFactor = set->map.star.starSizeFactor;
+
+  if (m_saturation != set->map.star.saturation)
+  {
+    m_saturation = set->map.star.saturation;
+
+    for (int sp = 0; sp < 8; sp++)
+    {
+      for (int i = 0; i < pStars[sp].count(); i++)
+      {
+        QImage img = pStarsOrig[sp][i].toImage();
+
+        for (int y = 0; y < img.height(); y++)
+        {
+          for (int x = 0; x < img.width(); x++)
+          {
+            QRgb val = img.pixel(x, y);
+            QColor pix = val;
+
+            int h, s, v, a;
+
+            a = qAlpha(val);
+            h = pix.hsvHue();
+            s = pix.hsvSaturation();
+            s = CLAMP(s * (m_saturation / 100.0), 0, 255);// (2.3 * (m_saturation - 100)), 0, 255);
+            v = pix.value();
+            pix = pix.fromHsv(h, s, v, a);
+            img.setPixel(x, y, pix.rgba());
+          }
+        }
+
+        pStars[sp][i] = QPixmap::fromImage(img);
+      }
+    }
+  }
 }
 
 uchar CStarRenderer::getSPIndex(float bvIndex)

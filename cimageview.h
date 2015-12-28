@@ -21,6 +21,7 @@ public:
   void setSourceNoImage();
   void setSourceWaiting();
   QPixmap *getSource(void);
+  void setOriginalSize();
 
 protected:
   void paintEvent(QPaintEvent *);
