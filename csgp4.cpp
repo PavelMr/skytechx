@@ -112,10 +112,11 @@ bool CSGP4::solve(int index, const mapView_t *view, satellite_t *out)
 
   jdConvertJDTo_DateTime(view->jd, &dt);
 
-  DateTime time = DateTime(dt.date().year(), dt.date().month(), dt.date().day(),
-                           dt.time().hour(), dt.time().minute(), dt.time().second());
   try
   {
+    DateTime time = DateTime(dt.date().year(), dt.date().month(), dt.date().day(),
+                             dt.time().hour(), dt.time().minute(), dt.time().second());
+
     Eci eci = sgp4->FindPosition(time);
     CoordTopocentric topo;
     CoordGeodetic geo;
@@ -141,6 +142,12 @@ bool CSGP4::solve(int index, const mapView_t *view, satellite_t *out)
   catch (DecayedException &e)
   {
     //qDebug() << "error2" << e.what() << out->name;
+    return false;
+  }
+
+  catch (...)
+  {
+    qDebug() << "rrr";
     return false;
   }
 

@@ -11,13 +11,16 @@ CSetPosition::CSetPosition(QWidget *parent) :
   ui->horizontalSlider->setRange(1, (int)R2D(MAX_MAP_FOV));
 }
 
-///////////////////////////////////////////////////////
-void CSetPosition::init(double x, double y, double fov)
-///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+void CSetPosition::init(double x, double y, double fov, double rot)
+///////////////////////////////////////////////////////////////////
 {
   m_x = x;
   m_y = y;
   m_fov = fov;
+  m_roll = rot;
+
+  ui->doubleSpinBox->setValue(R2D(rot));
 
   ui->horizontalSlider->setValue(ceil(R2D(fov)));
 
@@ -162,6 +165,8 @@ void CSetPosition::on_pushButton_clicked()
     m_fov = CM_UNDEF;
   else
     m_fov = D2R(ui->horizontalSlider->value());
+
+  m_roll = D2R(ui->doubleSpinBox->value());
 
   done(DL_OK);
 }

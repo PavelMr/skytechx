@@ -16,65 +16,44 @@ CSearch::CSearch()
 
 bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, double &fov, mapObj_t &obj)
 {
+  QString what = str.mid(0, 4);
+  str = str.mid(4);
+
   QRegExp reg("\\b" + str + "\\b", Qt::CaseInsensitive);
 
   str = str.simplified();
 
-  if (!str.compare("es", Qt::CaseInsensitive))
+  if (SS_CHECK_OR(SS_PLANET, what))
   {
-    orbit_t o, m;
-
-    cAstro.calcPlanet(PT_MOON, &m);
-    cAstro.calcEarthShadow(&o, &m);
-
-    ra = o.lRD.Ra;
-    dec = o.lRD.Dec;
-    fov = getOptObjFov(o.sx / 3600.0, o.sy / 3600.0);
-
-    obj.type = MO_EARTH_SHD;
-
-    return(true);
-  }
-
-  if (str.startsWith("HD", Qt::CaseInsensitive))
-  {
-    str = str.mid(2);
-
-    int hd = str.toInt();
-
-    int reg, index;
-    tychoStar_t *star;
-
-    if (cTYC.findStar(NULL, TS_HD, 0, hd, 0, 0, 0, 0, 0, 0, reg, index))
+    if (!str.compare("es", Qt::CaseInsensitive))
     {
-      cTYC.getStar(&star, reg, index);
-      ra = star->rd.Ra;
-      dec = star->rd.Dec;
-      precess(&ra, &dec, JD2000, mapView->jd);
-      fov = DMS2RAD(10, 0, 0);
+      orbit_t o, m;
 
-      obj.type = MO_TYCSTAR;
-      obj.par1 = reg;
-      obj.par2 = index;
+      cAstro.calcPlanet(PT_MOON, &m);
+      cAstro.calcEarthShadow(&o, &m);
 
-      return true;
+      ra = o.lRD.Ra;
+      dec = o.lRD.Dec;
+      fov = getOptObjFov(o.sx / 3600.0, o.sy / 3600.0);
+
+      obj.type = MO_EARTH_SHD;
+
+      return(true);
     }
   }
 
-  if (str.startsWith("TYC", Qt::CaseInsensitive))
+  if (SS_CHECK_OR(SS_STAR, what))
   {
-    str = str.mid(3);
-    QStringList list = str.split("-");
-
-    if (list.count() == 3)
+    if (str.startsWith("HD", Qt::CaseInsensitive))
     {
-      int t1 = list[0].toInt();
-      int t2 = list[1].toInt();
-      int t3 = list[2].toInt();
+      str = str.mid(2);
+
+      int hd = str.toInt();
+
       int reg, index;
       tychoStar_t *star;
 
-      if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, t1, t2, t3, 0, reg, index))
+      if (cTYC.findStar(NULL, TS_HD, 0, hd, 0, 0, 0, 0, 0, 0, reg, index))
       {
         cTYC.getStar(&star, reg, index);
         ra = star->rd.Ra;
@@ -89,145 +68,304 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         return true;
       }
     }
-  }
 
-  if (str.startsWith("UCAC4", Qt::CaseInsensitive))
-  {
-    str = str.mid(5);
-    QStringList list = str.split("-");
-
-    if (list.count() == 2)
+    if (str.startsWith("TYC", Qt::CaseInsensitive))
     {
-      int zone = list[0].toInt();
-      int num = list[1].toInt();
-      ucac4Star_t star;
+      str = str.mid(3);
+      QStringList list = str.split("-");
 
-      if (cUcac4.searchStar(zone, num, &star))
+      if (list.count() == 3)
       {
-        ra = star.rd.Ra;
-        dec = star.rd.Dec;
-        precess(&ra, &dec, JD2000, mapView->jd);
-        fov = DMS2RAD(0, 30, 0);
+        int t1 = list[0].toInt();
+        int t2 = list[1].toInt();
+        int t3 = list[2].toInt();
+        int reg, index;
+        tychoStar_t *star;
 
-         // FIX: region a poradi v GSC regionu
-        /*
-        obj.type = MO_UCAC4;
-        obj.par1 = star.zone;
-        obj.par2 = star.number;
-        */
-
-        return true;
-      }
-    }
-    return false;
-  }
-
-  if (str.startsWith("USNO2", Qt::CaseInsensitive))
-  {
-    str = str.mid(5);
-    QStringList list = str.split("-");
-
-    if (list.count() == 2)
-    {
-      int zone = list[0].toInt();
-      int num = list[1].toInt();
-      usnoStar_t star;
-
-      if (usno.searchStar(zone, num, &star))
-      {
-        ra = star.rd.Ra;
-        dec = star.rd.Dec;
-        precess(&ra, &dec, JD2000, mapView->jd);
-        fov = DMS2RAD(0, 30, 0);
-
-        // FIX: region a poradi v GSC regionu
-        /*
-        obj.type = MO_USNO2;
-        obj.par1 = star.zone;
-        obj.par2 = star.number;
-        */
-
-        return true;
-      }
-    }
-    return false;
-  }
-
-  if (str.startsWith("GSC", Qt::CaseInsensitive))
-  {
-    str = str.mid(3);
-    QStringList list = str.split("-");
-
-    if (list.count() == 2)
-    {
-      int reg = list[0].toInt();
-      int num = list[1].toInt();
-      int index;
-      gsc_t *star;
-
-      if (cGSC.searchStar(reg, num, &star, index))
-      {
-        ra = star->Ra;
-        dec = star->Dec;
-        precess(&ra, &dec, JD2000, mapView->jd);
-        fov = DMS2RAD(0, 30, 0);
-
-        obj.type = MO_GSCSTAR;
-        obj.par1 = reg - 1;
-        obj.par2 = index;
-
-        return true;
-      }
-    }
-    return false;
-  }
-
-  // ra/dec
-  {
-    QStringList list = str.split(' ');
-    if (list.count() == 6)
-    {
-      double rah, ram, ras;
-      double decd, decm, decs;
-      bool ok;
-
-      for (int i = 0; i < 6; i++)
-      {
-        list.at(0).toDouble(&ok);
-        if (!ok)
+        if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, t1, t2, t3, 0, reg, index))
         {
-          break;
+          cTYC.getStar(&star, reg, index);
+          ra = star->rd.Ra;
+          dec = star->rd.Dec;
+          precess(&ra, &dec, JD2000, mapView->jd);
+          fov = DMS2RAD(10, 0, 0);
+
+          obj.type = MO_TYCSTAR;
+          obj.par1 = reg;
+          obj.par2 = index;
+
+          return true;
         }
       }
+    }
 
-      if (ok)
+    if (str.startsWith("UCAC4", Qt::CaseInsensitive))
+    {
+      str = str.mid(5);
+      QStringList list = str.split("-");
+
+      if (list.count() == 2)
       {
-        rah = list.at(0).toDouble();
-        ram = list.at(1).toDouble();
-        ras = list.at(2).toDouble();
+        int zone = list[0].toInt();
+        int num = list[1].toInt();
+        ucac4Star_t star;
 
-        decd = list.at(3).toDouble();
-        decm = list.at(4).toDouble();
-        decs = list.at(5).toDouble();
-
-        double mra = HMS2RAD(qAbs(rah), qAbs(ram), qAbs(ras));
-        double mdec = DMS2RAD(qAbs(decd), qAbs(decm), qAbs(decs));
-
-        if (decd < 0)
+        if (cUcac4.searchStar(zone, num, &star))
         {
-          mdec = -mdec;
+          ra = star.rd.Ra;
+          dec = star.rd.Dec;
+          precess(&ra, &dec, JD2000, mapView->jd);
+          fov = DMS2RAD(0, 30, 0);
+
+           // FIX: region a poradi v GSC regionu
+          /*
+          obj.type = MO_UCAC4;
+          obj.par1 = star.zone;
+          obj.par2 = star.number;
+          */
+
+          return true;
         }
+      }
+      return false;
+    }
 
-        if (mra >= 0 && mra <= R360 && mdec >= -R90 && mdec <= R90)
+    if (str.startsWith("USNO2", Qt::CaseInsensitive))
+    {
+      str = str.mid(5);
+      QStringList list = str.split("-");
+
+      if (list.count() == 2)
+      {
+        int zone = list[0].toInt();
+        int num = list[1].toInt();
+        usnoStar_t star;
+
+        if (usno.searchStar(zone, num, &star))
         {
-          ra = mra;
-          dec = mdec;
-          fov = CM_UNDEF;
+          ra = star.rd.Ra;
+          dec = star.rd.Dec;
+          precess(&ra, &dec, JD2000, mapView->jd);
+          fov = DMS2RAD(0, 30, 0);
 
-          if (mapView->epochJ2000 && mapView->coordType == SMCT_RA_DEC)
+          // FIX: region a poradi v GSC regionu
+          /*
+          obj.type = MO_USNO2;
+          obj.par1 = star.zone;
+          obj.par2 = star.number;
+          */
+
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (str.startsWith("GSC", Qt::CaseInsensitive))
+    {
+      str = str.mid(3);
+      QStringList list = str.split("-");
+
+      if (list.count() == 2)
+      {
+        int reg = list[0].toInt();
+        int num = list[1].toInt();
+        int index;
+        gsc_t *star;
+
+        if (cGSC.searchStar(reg, num, &star, index))
+        {
+          ra = star->Ra;
+          dec = star->Dec;
+          precess(&ra, &dec, JD2000, mapView->jd);
+          fov = DMS2RAD(0, 30, 0);
+
+          obj.type = MO_GSCSTAR;
+          obj.par1 = reg - 1;
+          obj.par2 = index;
+
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
+  if (SS_CHECK_OR(SS_POS, what))
+  {
+    // ra/dec
+    {
+      QStringList list = str.split(' ');
+      if (list.count() == 6)
+      {
+        double rah, ram, ras;
+        double decd, decm, decs;
+        bool ok;
+
+        for (int i = 0; i < 6; i++)
+        {
+          list.at(0).toDouble(&ok);
+          if (!ok)
           {
-            precess(&ra, &dec, JD2000, mapView->jd);
+            break;
           }
+        }
+
+        if (ok)
+        {
+          rah = list.at(0).toDouble();
+          ram = list.at(1).toDouble();
+          ras = list.at(2).toDouble();
+
+          decd = list.at(3).toDouble();
+          decm = list.at(4).toDouble();
+          decs = list.at(5).toDouble();
+
+          double mra = HMS2RAD(qAbs(rah), qAbs(ram), qAbs(ras));
+          double mdec = DMS2RAD(qAbs(decd), qAbs(decm), qAbs(decs));
+
+          if (decd < 0)
+          {
+            mdec = -mdec;
+          }
+
+          if (mra >= 0 && mra <= R360 && mdec >= -R90 && mdec <= R90)
+          {
+            ra = mra;
+            dec = mdec;
+            fov = CM_UNDEF;
+
+            if (mapView->epochJ2000 && mapView->coordType == SMCT_RA_DEC)
+            {
+              precess(&ra, &dec, JD2000, mapView->jd);
+            }
+
+            return true;
+          }
+        }
+      }
+    }
+  }
+
+  QApplication::processEvents();
+
+  if (SS_CHECK_OR(SS_CONSTEL, what))
+  {
+    // constellation
+    if (constFind(str, ra, dec, fov, mapView->jd))
+      return(true);
+  }
+
+  QApplication::processEvents();
+
+  if (SS_CHECK_OR(SS_STAR_NAME, what))
+  {
+    // star names
+    for (int i = 0; i < cTYC.tNames.count(); i++)
+    {
+      int offs = cTYC.tNames[i]->supIndex;
+      QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);
+
+      if (!str.compare(name, Qt::CaseInsensitive))
+      {
+        ra = cTYC.tNames[i]->rd.Ra;
+        dec = cTYC.tNames[i]->rd.Dec;
+        precess(&ra, &dec, JD2000, mapView->jd);
+        fov = D2R(30);
+
+        int reg, index;
+
+        if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, cTYC.tNames[i]->tyc1, cTYC.tNames[i]->tyc2, cTYC.tNames[i]->tyc3, 0, reg, index))
+        {
+          obj.type = MO_TYCSTAR;
+          obj.par1 = reg;
+          obj.par2 = index;
+        }
+
+        return(true);
+      }
+    }
+  }
+
+  QApplication::processEvents();
+
+  if (SS_CHECK_OR(SS_PLANET, what))
+  {
+    // search planet/sun/moon
+    for (int i = PT_SUN; i <= PT_MOON; i++)
+    {
+      orbit_t o;
+      cAstro.setParam(mapView);
+      cAstro.calcPlanet(i, &o);
+      QString name = o.name;
+      QString english = o.englishName;
+      if (!str.compare(name, Qt::CaseInsensitive) ||
+          !str.compare(english, Qt::CaseInsensitive))
+      {
+        ra = o.lRD.Ra;
+        dec = o.lRD.Dec;
+        fov = getOptObjFov(o.sx / 3600.0, o.sy / 3600.0);
+
+        obj.type = MO_PLANET;
+        obj.par1 = i;
+        obj.par2 = 0;
+
+        return(true);
+      }
+    }
+  }
+
+  QApplication::processEvents();
+
+  if (SS_CHECK_OR(SS_DSO, what))
+  {
+    // dso
+    dso_t *dso;
+    int index;
+    if (cDSO.findDSO((char *)qPrintable(str), &dso, index) != -1)
+    {
+      ra = dso->rd.Ra;
+      dec = dso->rd.Dec;
+      precess(&ra, &dec, JD2000, mapView->jd);
+      fov = getOptObjFov(dso->sx / 3600., dso->sy / 3600.);
+
+      obj.type = MO_DSO;
+      obj.par1 = (qint64)dso;
+      obj.par2 = 0;
+
+      return(true);
+    }
+  }
+
+  QApplication::processEvents();
+
+  if (SS_CHECK_OR(SS_ART_SAT, what))
+  {
+    // satellites
+    QString satName = str;
+
+    for (int i = 0; i < sgp4.count(); i++)
+    {
+      satellite_t out;
+      radec_t rd;
+
+      if (sgp4.getName(i).compare(satName, Qt::CaseInsensitive) == 0)
+      {
+        qDebug() << "ok";
+
+        if (sgp4.solve(i, mapView, &out))
+        {
+          qDebug() << "solve";
+
+          cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
+
+          ra = rd.Ra;
+          dec = rd.Dec;
+          fov = getOptObjFov(0, 0, D2R(2.5));
+
+          obj.type = MO_SATELLITE;
+          obj.par1 = i;
+          obj.par2 = 0;
 
           return true;
         }
@@ -237,167 +375,69 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
   QApplication::processEvents();
 
-  // constellation
-  if (constFind(str, ra, dec, fov, mapView->jd))
-    return(true);
-
-  QApplication::processEvents();
-
-  // star names
-  for (int i = 0; i < cTYC.tNames.count(); i++)
+  if (SS_CHECK_OR(SS_ASTER, what))
   {
-    int offs = cTYC.tNames[i]->supIndex;
-    QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);
-
-    if (!str.compare(name, Qt::CaseInsensitive))
+    // asteroids
+    for (int i = 0; i < tAsteroids.count(); i++)
     {
-      ra = cTYC.tNames[i]->rd.Ra;
-      dec = cTYC.tNames[i]->rd.Dec;
-      precess(&ra, &dec, JD2000, mapView->jd);
-      fov = D2R(30);
+      asteroid_t *a = &tAsteroids[i];
 
-      int reg, index;
+      if (!a->selected)
+        continue;
 
-      if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, cTYC.tNames[i]->tyc1, cTYC.tNames[i]->tyc2, cTYC.tNames[i]->tyc3, 0, reg, index))
+      if (QString(a->name).contains(reg))
       {
-        obj.type = MO_TYCSTAR;
-        obj.par1 = reg;
-        obj.par2 = index;
-      }
+        qDebug() << a->name << reg;
+        astSolve(a, mapView->jd);
+        ra = a->orbit.lRD.Ra;
+        dec = a->orbit.lRD.Dec;
+        fov = AST_ZOOM;
 
-      return(true);
-    }
-  }
-
-  QApplication::processEvents();
-
-  // search planet/sun/moon
-  for (int i = PT_SUN; i <= PT_MOON; i++)
-  {
-    orbit_t o;
-    cAstro.setParam(mapView);
-    cAstro.calcPlanet(i, &o);
-    QString name = o.name;
-    QString english = o.englishName;
-    if (!str.compare(name, Qt::CaseInsensitive) ||
-        !str.compare(english, Qt::CaseInsensitive))
-    {
-      ra = o.lRD.Ra;
-      dec = o.lRD.Dec;
-      fov = getOptObjFov(o.sx / 3600.0, o.sy / 3600.0);
-
-      obj.type = MO_PLANET;
-      obj.par1 = i;
-      obj.par2 = 0;
-
-      return(true);
-    }
-  }
-
-  QApplication::processEvents();
-
-  // dso
-  dso_t *dso;
-  int index;
-  if (cDSO.findDSO((char *)qPrintable(str), &dso, index) != -1)
-  {
-    ra = dso->rd.Ra;
-    dec = dso->rd.Dec;
-    precess(&ra, &dec, JD2000, mapView->jd);
-    fov = getOptObjFov(dso->sx / 3600., dso->sy / 3600.);
-
-    obj.type = MO_DSO;
-    obj.par1 = (qint64)dso;
-    obj.par2 = 0;
-
-    return(true);
-  }
-
-  QApplication::processEvents();
-
-  // satellites
-  QString satName = str;
-
-  for (int i = 0; i < sgp4.count(); i++)
-  {
-    satellite_t out;
-    radec_t rd;
-
-    if (sgp4.getName(i).compare(satName, Qt::CaseInsensitive) == 0)
-    {
-      if (sgp4.solve(i, mapView, &out))
-      {
-        cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
-
-        ra = rd.Ra;
-        dec = rd.Dec;
-        fov = getOptObjFov(0, 0, D2R(2.5));
-
-        obj.type = MO_SATELLITE;
+        obj.type = MO_ASTER;
         obj.par1 = i;
-        obj.par2 = 0;
+        obj.par2 = (qint64)a;
 
-        return true;
+        return(true);
       }
     }
   }
 
   QApplication::processEvents();
 
-  // asteroids
-  for (int i = 0; i < tAsteroids.count(); i++)
+  if (SS_CHECK_OR(SS_COMET, what))
   {
-    asteroid_t *a = &tAsteroids[i];
-
-    if (!a->selected)
-      continue;
-
-    if (QString(a->name).contains(reg))
+    // comets
+    for (int i = 0; i < tComets.count(); i++)
     {
-      qDebug() << a->name << reg;
-      astSolve(a, mapView->jd);
-      ra = a->orbit.lRD.Ra;
-      dec = a->orbit.lRD.Dec;
-      fov = AST_ZOOM;
+      comet_t *a = &tComets[i];
 
-      obj.type = MO_ASTER;
-      obj.par1 = i;
-      obj.par2 = (qint64)a;
+      if (!a->selected)
+        continue;
 
-      return(true);
+      if (QString(a->name).contains(reg))
+      {
+        comSolve(a, mapView->jd);
+        ra = a->orbit.lRD.Ra;
+        dec = a->orbit.lRD.Dec;
+        fov = COM_ZOOM;
+
+        obj.type = MO_COMET;
+        obj.par1 = i;
+        obj.par2 = (qint64)a;
+
+        return(true);
+      }
     }
   }
 
   QApplication::processEvents();
 
-  // comets
-  for (int i = 0; i < tComets.count(); i++)
+  if (SS_CHECK_OR(SS_LUNAR_FEAT, what))
   {
-    comet_t *a = &tComets[i];
-
-    if (!a->selected)
-      continue;
-
-    if (QString(a->name).contains(reg))
+    if (cLunarFeatures.search(str, mapView, ra, dec, fov))
     {
-      comSolve(a, mapView->jd);
-      ra = a->orbit.lRD.Ra;
-      dec = a->orbit.lRD.Dec;
-      fov = COM_ZOOM;
-
-      obj.type = MO_COMET;
-      obj.par1 = i;
-      obj.par2 = (qint64)a;
-
       return(true);
     }
-  }
-
-  QApplication::processEvents();
-
-  if (cLunarFeatures.search(str, mapView, ra, dec, fov))
-  {
-    return(true);
   }
 
   return(false);

@@ -10,19 +10,20 @@ class CSetPosition;
 class CSetPosition : public QDialog
 {
   Q_OBJECT
-  
+
 public:
   explicit CSetPosition(QWidget *parent = 0);
-  void     init(double x, double y, double fov);
+  void     init(double x, double y, double fov, double rot);
   ~CSetPosition();
 
   double m_fov;
   double m_x;
   double m_y;
-  
+  double m_roll;
+
 protected:
   void changeEvent(QEvent *e);
-  
+
 private slots:
   void on_horizontalSlider_valueChanged(int value);
 

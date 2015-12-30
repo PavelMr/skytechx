@@ -10,6 +10,20 @@
 #include "tycho.h"
 #include "mapobj.h"
 
+#define SS_ALL          "'**'"
+#define SS_PLANET       "'PL'"
+#define SS_STAR         "'ST'"
+#define SS_STAR_NAME    "'SN'"
+#define SS_POS          "'PS'"
+#define SS_CONSTEL      "'CN'"
+#define SS_DSO          "'DO'"
+#define SS_ART_SAT      "'AS'"
+#define SS_ASTER        "'AT'"
+#define SS_COMET        "'CO'"
+#define SS_LUNAR_FEAT   "'LF'"
+
+#define SS_CHECK_OR(a, str)     (!str.compare(a) || !str.compare(SS_ALL))
+
 class CSearch
 {
 public:

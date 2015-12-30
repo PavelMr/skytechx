@@ -251,6 +251,11 @@ int main(int argc, char *argv[])
     qDebug() << "ERROR" << exc.what();
   }
 
+  catch (...)
+  {
+    qDebug() << "ERROR2";
+  }
+
   /*
   catch (std::bad_alloc &exc)
   {

@@ -84,6 +84,7 @@
 #include "xmlattrparser.h"
 #include "clunarfeaturessearch.h"
 #include "cplanetsize.h"
+#include "cadvsearch.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -276,6 +277,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   m_search = new CLineEditComp;
   m_search->setFixedWidth(150);
+  m_search->setPlaceholderText(tr("[Enter object name]"));
   m_search->addWords(cDSO.getCommonNameList());
   ui->tb_search->insertWidget(ui->actionSearch, m_search);
   m_search->setToolTip(tr("Search"));
@@ -2305,7 +2307,7 @@ void MainWindow::slotSearchDone()
   setCursor(Qt::WaitCursor);
   QApplication::processEvents();
 
-  if (CSearch::search(&ui->widget->m_mapView, str, ra, dec, fov, obj))
+  if (CSearch::search(&ui->widget->m_mapView, "'**'" + str, ra, dec, fov, obj))
   {
     ui->widget->centerMap(ra, dec, noZoom ? CM_UNDEF : fov);
     m_search->addWord(str);
@@ -2799,10 +2801,20 @@ void MainWindow::on_actionPosition_triggered()
 
   trfConvScrPtToXY(ui->widget->width() / 2.0, ui->widget->height() / 2.0, ra, dec);
 
-  dlg.init(ra, dec, ui->widget->m_mapView.fov);
+  if (ui->widget->m_mapView.epochJ2000)
+  {
+    precess(&ra, &dec, ui->widget->m_mapView.jd, JD2000);
+  }
+
+  dlg.init(ra, dec, ui->widget->m_mapView.fov, ui->widget->m_mapView.roll);
 
   if (dlg.exec() == DL_OK)
   {
+    if (ui->widget->m_mapView.epochJ2000)
+    {
+      precess(&dlg.m_x, &dlg.m_y, JD2000, ui->widget->m_mapView.jd);
+    }
+    ui->widget->m_mapView.roll = dlg.m_roll;
     ui->widget->centerMap(dlg.m_x, dlg.m_y, dlg.m_fov);
   }
 }
@@ -5696,4 +5708,23 @@ void MainWindow::on_actionShow_planet_axis_triggered(bool checked)
 {
   g_showObjectAxis = checked;
   ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionAdvanced_search_triggered()
+{
+  CAdvSearch dlg(this, &ui->widget->m_mapView);
+
+  if (dlg.exec() == DL_OK)
+  {
+    ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
+
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
+  }
 }

@@ -572,6 +572,7 @@
      <string>&amp;Search</string>
     </property>
     <addaction name="action_Last_search_object"/>
+    <addaction name="actionAdvanced_search"/>
     <addaction name="separator"/>
     <addaction name="action_Constellation"/>
     <addaction name="separator"/>
@@ -1838,7 +1839,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
+          <width>264</width>
           <height>314</height>
          </rect>
         </property>
@@ -4920,6 +4921,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Show / Hide object axis and equator</string>
+   </property>
+  </action>
+  <action name="actionAdvanced_search">
+   <property name="text">
+    <string>Advanced search...</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+F</string>
    </property>
   </action>
  </widget>

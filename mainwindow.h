@@ -601,6 +601,8 @@ private slots:
 
   void on_actionShow_planet_axis_triggered(bool checked);
 
+  void on_actionAdvanced_search_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

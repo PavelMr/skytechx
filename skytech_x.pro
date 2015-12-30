@@ -240,7 +240,8 @@ SOURCES += main.cpp\
     cplanetsize.cpp \
     usnob1.cpp \
     urat1.cpp \
-    cstarexample.cpp
+    cstarexample.cpp \
+    cadvsearch.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -438,7 +439,8 @@ HEADERS  += mainwindow.h \
     cplanetsize.h \
     usnob1.h \
     urat1.h \
-    cstarexample.h
+    cstarexample.h \
+    cadvsearch.h
 
 
 FORMS    += mainwindow.ui \
@@ -526,7 +528,8 @@ FORMS    += mainwindow.ui \
     cdownloadfile.ui \
     moonlessnightsdlg.ui \
     clunarfeaturessearch.ui \
-    cplanetsize.ui
+    cplanetsize.ui \
+    cadvsearch.ui
 
 
 RESOURCES += \
