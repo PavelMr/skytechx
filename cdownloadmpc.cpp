@@ -10,7 +10,6 @@ CDownloadMPC::CDownloadMPC(QWidget *parent, QList <asteroid_t> *tList) :
   bIsComet = false;
 
   ui->setupUi(this);
-  setFixedSize(size());
   m_tList = tList;
   m_reply = NULL;
   m_bFirstData = false;
@@ -34,7 +33,6 @@ CDownloadMPC::CDownloadMPC(QWidget *parent, QList<comet_t> *tList) :
   bIsComet = true;
 
   ui->setupUi(this);
-  setFixedSize(size());
   m_tListCom = tList;
   m_reply = NULL;
   m_bFirstData = false;
@@ -89,7 +87,11 @@ void CDownloadMPC::readData(bool last)
           readMPCLineComet(str);
         else
           readMPCLine(str);
-        ui->lineEdit_2->setText(QString("%1").arg(m_count));
+
+        if ((m_count % 50) == 0)
+        {
+          ui->lineEdit_2->setText(QString("%1").arg(m_count));
+        }
       }
       else
       {
@@ -112,6 +114,11 @@ void CDownloadMPC::readData(bool last)
       str += m_data[i];
     }
   }
+
+  if (m_end)
+  {
+    m_reply->abort();
+  }
 }
 
 ///////////////////////////////////////////
@@ -124,6 +131,16 @@ void CDownloadMPC::readMPCLine(QString str)
     return;
 
   a.name = str.mid(166, 28).simplified();
+
+  if (!m_filter.isEmpty())
+  {
+    if (!a.name.contains(m_filter, Qt::CaseInsensitive))
+    {
+      m_count++;
+      return;
+    }
+  }
+
   a.selected = true;
   a.lastJD = CM_UNDEF;
   a.H = str.mid(8, 5).toFloat();
@@ -139,6 +156,11 @@ void CDownloadMPC::readMPCLine(QString str)
 
   m_tList->append(a);
   m_count++;
+
+  if (m_firstMatch)
+  {
+     m_end = true;
+  }
 }
 
 ////////////////////////////////////////////////
@@ -151,6 +173,16 @@ void CDownloadMPC::readMPCLineComet(QString str)
     return;
 
   a.name = str.mid(102, 28).simplified();
+
+  if (!m_filter.isEmpty())
+  {
+    if (!a.name.contains(m_filter, Qt::CaseInsensitive))
+    {
+      m_count++;
+      return;
+    }
+  }
+
   a.selected = true;
   a.lastJD = CM_UNDEF;
   a.H = str.mid(91, 4).toFloat();
@@ -170,6 +202,11 @@ void CDownloadMPC::readMPCLineComet(QString str)
 
   m_tListCom->append(a);
   m_count++;
+
+  if (m_firstMatch)
+  {
+     m_end = true;
+  }
 }
 
 //////////////////////////////////////////
@@ -192,10 +229,22 @@ void CDownloadMPC::on_pushButton_2_clicked()
 
   m_reply = reply;
   m_reply->setReadBufferSize(1024);
+  m_end = false;
 
   ui->pushButton_2->setEnabled(false);
   ui->spinBox->setEnabled(false);
   ui->comboBox->setEnabled(false);
+
+  m_filter = ui->lineEdit->text();
+  if (m_filter.startsWith("!"))
+  {
+    m_filter = m_filter.mid(1);
+    m_firstMatch = !m_filter.isEmpty();
+  }
+  else
+  {
+    m_firstMatch = false;
+  }
 
   connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
   connect(&m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotDownloadFinished(QNetworkReply*)));

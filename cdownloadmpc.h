@@ -56,6 +56,9 @@ protected:
   QByteArray            m_data;
   int                   m_count;
   bool                  m_bFirstData;
+  QString               m_filter;
+  bool                  m_firstMatch;
+  bool                  m_end;
 
 private slots:
   void on_pushButton_clicked();

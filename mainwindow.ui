@@ -864,7 +864,7 @@
           <x>0</x>
           <y>0</y>
           <width>274</width>
-          <height>314</height>
+          <height>191</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1082,7 +1082,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>331</width>
+          <width>308</width>
           <height>669</height>
          </rect>
         </property>
@@ -1553,7 +1553,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>451</width>
+          <width>397</width>
           <height>520</height>
          </rect>
         </property>
@@ -2292,7 +2292,7 @@
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>314</height>
+          <height>305</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2601,7 +2601,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>237</width>
+          <width>157</width>
           <height>431</height>
          </rect>
         </property>
@@ -2704,8 +2704,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>314</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2852,8 +2852,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
-          <height>314</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2963,6 +2963,7 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <addaction name="actionSearch_help"/>
    <addaction name="actionSearch"/>
+   <addaction name="actionAdvanced_search"/>
   </widget>
   <widget class="QToolBar" name="tb_alt_azm">
    <property name="windowTitle">
@@ -4924,6 +4925,10 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionAdvanced_search">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_adv_search.png</normaloff>:/res/ico_adv_search.png</iconset>
+   </property>
    <property name="text">
     <string>Advanced search...</string>
    </property>
