@@ -268,6 +268,8 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.planet.plnRad", set->map.planet.plnRad, ds);
   writeVal("map.planet.satRad", set->map.planet.satRad, ds);
   writeVal("map.planet.jupGRSLon", set->map.planet.jupGRSLon, ds);
+  writeVal("map.planet.jupGRSYearDrift", set->map.planet.jupGRSYearDrift, ds);
+  writeVal("map.planet.jupGRSDate", set->map.planet.jupGRSDate, ds);
   writeVal("map.planet.moonImage", set->map.planet.moonImage, ds);
   writeVal("map.planet.useCustomMoonTexture", set->map.planet.useCustomMoonTexture, ds);
 
@@ -569,7 +571,9 @@ bool setLoad(QString name, setting_t *set)
   set->map.planet.phaseAlpha = readVal("map.planet.phaseAlpha", 200, tMap).toInt();
   set->map.planet.plnRad = readVal("map.planet.plnRad", 5, tMap).toInt();
   set->map.planet.satRad = readVal("map.planet.satRad", 3, tMap).toInt();
-  set->map.planet.jupGRSLon = readVal("map.planet.jupGRSLon", 168.0, tMap).toDouble();
+  set->map.planet.jupGRSLon = readVal("map.planet.jupGRSLon", 236.0, tMap).toDouble();
+  set->map.planet.jupGRSYearDrift = readVal("map.planet.jupGRSYearDrift", 16.6, tMap).toDouble();
+  set->map.planet.jupGRSDate = readVal("map.planet.jupGRSDate", 2457388.5, tMap).toDouble();
   set->map.planet.moonImage = readVal("map.planet.moonImage", "", tMap).toString();
   set->map.planet.useCustomMoonTexture = readVal("map.planet.useCustomMoonTexture", false, tMap).toBool();
 

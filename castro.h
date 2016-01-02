@@ -132,6 +132,7 @@ class CAstro
     double getPolarisHourAngle(); // v 0..1
 
     static double getAirmass(double alt);
+    static double getJupiterGRSLon(double jd);
 
     double m_geoLon;
     double m_geoLat;

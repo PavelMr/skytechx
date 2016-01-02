@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>9</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2010,7 +2010,7 @@
              <item>
               <widget class="QTabWidget" name="tabWidget_3">
                <property name="currentIndex">
-                <number>0</number>
+                <number>5</number>
                </property>
                <widget class="QWidget" name="tab_12">
                 <attribute name="title">
@@ -2705,15 +2705,21 @@
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_38">
                       <item>
-                       <layout class="QVBoxLayout" name="verticalLayout_37">
-                        <item>
-                         <widget class="QLabel" name="label_70">
+                       <layout class="QGridLayout" name="gridLayout_11">
+                        <property name="horizontalSpacing">
+                         <number>24</number>
+                        </property>
+                        <property name="verticalSpacing">
+                         <number>6</number>
+                        </property>
+                        <item row="0" column="1">
+                         <widget class="QLabel" name="label_111">
                           <property name="text">
-                           <string>Longitude of GRS</string>
+                           <string>Yearly drift</string>
                           </property>
                          </widget>
                         </item>
-                        <item>
+                        <item row="1" column="0">
                          <widget class="QDoubleSpinBox" name="doubleSpinBox_32">
                           <property name="suffix">
                            <string>°</string>
@@ -2726,6 +2732,37 @@
                           </property>
                           <property name="maximum">
                            <double>360.000000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_70">
+                          <property name="text">
+                           <string>Longitude of GRS</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="1">
+                         <widget class="QDoubleSpinBox" name="doubleSpinBox_41">
+                          <property name="minimum">
+                           <double>-90.000000000000000</double>
+                          </property>
+                          <property name="maximum">
+                           <double>90.000000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="2">
+                         <widget class="QLabel" name="label_112">
+                          <property name="text">
+                           <string>Date UTC</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="2">
+                         <widget class="QDateEdit" name="dateEdit">
+                          <property name="calendarPopup">
+                           <bool>true</bool>
                           </property>
                          </widget>
                         </item>

@@ -426,6 +426,11 @@ void CSetting::setValues()
   ui->spinBox->setValue(set.map.planet.plnRad);
   ui->spinBox_2->setValue(set.map.planet.satRad);
   ui->doubleSpinBox_32->setValue(set.map.planet.jupGRSLon);
+  ui->doubleSpinBox_41->setValue(set.map.planet.jupGRSYearDrift);
+
+  QDateTime dt;
+  jdConvertJDTo_DateTime(set.map.planet.jupGRSDate, &dt);
+  ui->dateEdit->setDate(dt.date());
 
   ui->pushButton_57->setColor(set.map.satellite.color);
   ui->pushButton_58->setFontColor(setFonts[FONT_SATELLITE], set.fonst[FONT_SATELLITE].color);
@@ -729,6 +734,9 @@ void CSetting::apply()
   g_skSet.map.es.alpha = ui->horizontalSlider_15->value();
 
   g_skSet.map.planet.jupGRSLon = ui->doubleSpinBox_32->value();
+  g_skSet.map.planet.jupGRSYearDrift = ui->doubleSpinBox_41->value();
+  QDateTime dt;
+  g_skSet.map.planet.jupGRSDate = jdGetJDFrom_DateTime(&dt);
 
   g_skSet.map.satellite.size = ui->doubleSpinBox_38->value();
 

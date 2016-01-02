@@ -4,6 +4,7 @@
 #include "clunarfeatures.h"
 #include "cconsole.h"
 #include "smartlabeling.h"
+#include "castro.h"
 
 CPlanetRenderer  cPlanetRenderer; // NOTE: nedavat QPixmal QImage atd do globalnich konstruktoru kvuli addLibradyPath v main
 
@@ -578,7 +579,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   {
     if (o->type == PT_JUPITER)
     {
-      SKMATRIXRotateY(&matY, -o->sysII + D2R(g_skSet.map.planet.jupGRSLon));
+      SKMATRIXRotateY(&matY, -o->sysII + D2R(CAstro::getJupiterGRSLon(mapView->jd)));
     }
     else
     {

@@ -1751,6 +1751,13 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     addTextItem(item, tr("Sub-Earth Phi"), QString("%1°").arg(R2D(o.cLat), 0, 'f', 1));
   }
 
+  if (o.type == PT_JUPITER)
+  {
+    addSeparator(item);
+
+    addTextItem(item, tr("GRS longitude"), QString("%1°").arg(CAstro::getJupiterGRSLon(view->jd), 0, 'f', 1));
+  }
+
   addSeparator(item);
 
   ra  = o.lRD.Ra;

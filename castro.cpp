@@ -1,6 +1,7 @@
 #include "castro.h"
 #include "plantbl.h"
 #include "nutation.h"
+#include "setting.h"
 
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
@@ -391,6 +392,16 @@ double CAstro::getAirmass(double alt)
   double airmass = 1 / sin(D2R((dalt + 244 / (165 + 47 * pow(dalt, 1.1)))));
 
   return airmass;
+}
+
+// in degress
+double CAstro::getJupiterGRSLon(double jd)
+{
+  double y = (jd - g_skSet.map.planet.jupGRSDate) / 365.256;
+
+  double lon = g_skSet.map.planet.jupGRSLon + g_skSet.map.planet.jupGRSYearDrift * y;
+  rangeDbl(&lon, 360);
+  return lon;
 }
 
 
