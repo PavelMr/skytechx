@@ -1729,16 +1729,26 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     addTextItem(item, tr("Phase"), QString("%1%").arg(o.phase * 100.0, 0, 'f', 2));
     addTextItem(item, tr("Phase angle"), QString("%1°").arg(R2D(o.FV), 0, 'f', 2));
   }
-  addTextItem(item, tr("P.A."), QString("%1°").arg(R2D(o.PA), 0, 'f', 2));
+  addTextItem(item, tr("P.A."), QString("%1°").arg(R2D(o.PA), 0, 'f', 1));
 
   if (o.cMer != CM_UNDEF)
   {
-    addTextItem(item, tr("Central Meridian"), QString("%1°").arg(R2D(o.cMer), 0, 'f', 2));
+    if (o.type == PT_JUPITER ||
+        o.type == PT_SATURN)
+    {
+      addTextItem(item, tr("Central Meridian I"), QString("%1°").arg(R2D(o.cMer), 0, 'f', 1));
+      addTextItem(item, tr("Central Meridian II"), QString("%1°").arg(R2D(o.sysII), 0, 'f', 1));
+      addTextItem(item, tr("Central Meridian III"), QString("%1°").arg(R2D(o.sysIII), 0, 'f', 1));
+    }
+    else
+    {
+      addTextItem(item, tr("Central Meridian"), QString("%1°").arg(R2D(o.cMer), 0, 'f', 1));
+    }
   }
 
   if (o.cLat != CM_UNDEF)
   {
-    addTextItem(item, tr("Sub-Earth Phi"), QString("%1°").arg(R2D(o.cLat), 0, 'f', 2));
+    addTextItem(item, tr("Sub-Earth Phi"), QString("%1°").arg(R2D(o.cLat), 0, 'f', 1));
   }
 
   addSeparator(item);

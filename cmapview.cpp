@@ -720,6 +720,36 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
 {
   double mul = 1;
 
+  /*
+  if (key == Qt::Key_A)
+  {
+    gxxx+=0.05;
+    repaintMap();
+    return;
+  }
+
+  if (key == Qt::Key_D)
+  {
+    gxxx-=0.05;
+    repaintMap();
+    return;
+  }
+
+  if (key == Qt::Key_W)
+  {
+    gyyy+=0.05;
+    repaintMap();
+    return;
+  }
+
+  if (key == Qt::Key_S)
+  {
+    gyyy-=0.05;
+    repaintMap();
+    return;
+  }
+  */
+
   if (key == Qt::Key_Z)
   {
     m_zoomLens = true;

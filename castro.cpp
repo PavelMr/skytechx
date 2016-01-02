@@ -1125,23 +1125,23 @@ void CAstro::solveMoon(orbit_t *o)
   o->cLat = 0;
   o->cMer = 0;
 
-  mLibration(m_jd, &o->cLat, &o->cMer);
+  mLibration(m_jd, &o->cLat, &o->cMer); // optical libration
 
   // topocentric libration
-  double H = m_lst + o->gRD.Ra;
+  double H = m_lst - o->gRD.Ra;
   double pi = o->parallax;
 
-  double Q = atan2((cos(-m_geoLat) * sin(H)), (cos(o->gRD.Dec) * sin(-m_geoLat) - sin(o->gRD.Dec) * cos(-m_geoLat) * cos(H)));
-  double Z = acos(sin(o->gRD.Dec) * sin(-m_geoLat) + cos(o->gRD.Dec) * cos(-m_geoLat) * cos(H));
-  double pi2 = pi * sin(Z) + 0.0084 * sin(2* Z);
+  double Q = atan2((cos(m_geoLat) * sin(H)), (cos(o->gRD.Dec) * sin(m_geoLat) - sin(o->gRD.Dec) * cos(m_geoLat) * cos(H)));
+  double Z = acos(sin(o->gRD.Dec) * sin(m_geoLat) + cos(o->gRD.Dec) * cos(m_geoLat) * cos(H));
+  double pi2 = pi * (sin(Z) + 0.0084 * sin(2 * Z));
 
   double ll = -pi2 * sin(Q - o->PA) / cos(o->cLat);
   double lb = pi2 * cos(Q - o->PA);
   double lP = ll * sin(o->cLat) - pi2 * sin(Q) * tan(o->gRD.Dec);
 
-  o->cLat -= ll;
-  o->cMer -= lb;
-  o->PA -= lP;
+  o->cLat += lb;
+  o->cMer += ll;
+  o->PA += lP;
 }
 
 
@@ -1201,8 +1201,11 @@ void CAstro::solveSun(orbit_t *o)
   o->eRect[1] = o->r * sin(o->hLon - R180) * cos(o->hLat);
   o->eRect[2] = o->r                       * sin(o->hLat);
 
-  o->cMer = 0;
   o->cLat = getPlnCentalLat(o, o->poleRa, o->poleDec);
+
+  double d = m_jd - JD2000;  // W for the Sun is now corrected for light travel time
+  double W = 84.176 + 14.1844 * d;
+  o->cMer = calcMeridian(W, -1, o->poleRa, o->poleDec, o->gRD.Ra, o->gRD.Dec);
 }
 
 
@@ -1217,13 +1220,25 @@ double CAstro::getPlnCentalLat(orbit_t *o, double poleRa, double poleDec)
   return(atan2(SD,sqrt(1 - SD * SD)));
 }
 
+double CAstro::calcMeridian(double W, double mul, double poleRA, double poleDec, double gRA, double gDec)
+{
+  rangeDbl(&W, 360.0);
+
+  W = DEG2RAD(W);
+
+  double l = atan2(sin(poleDec) * cos(gDec) * cos(poleRA - gRA) - sin(gDec) * cos(poleDec), cos(gDec) * sin(poleRA - gRA));
+  double w = (W - l) * mul;
+  rangeDbl(&w, R360);
+
+  return(w);
+}
 
 //////////////////////////////////////////////////////
 double CAstro::solveMarsMer(orbit_t *pMars, double jd)
 //////////////////////////////////////////////////////
 {
-  double tau = pMars->light;
-  double W = 11.504 + 350.89200025 * (jd - tau - 2433282.5);
+  double d = (jd - pMars->light) - JD2000;
+  double W = 176.630 + 350.89198226 * d;
 
   double POLE_RA;
   double POLE_DEC;
@@ -1248,40 +1263,14 @@ double CAstro::solveMarsMer(orbit_t *pMars, double jd)
 void CAstro::solveJupiterMer(orbit_t *o, double jd)
 ///////////////////////////////////////////////////
 {
-  double d = (jd + m_deltaT) - 2433282.5;
+  double d = ((m_jd - o->light) - JD2000);
+  double W1 = 67.1 + 877.90003539 * d;
+  double W2 = 43.3 + 870.27003539 * d;
+  double W3 = 284.95 + 870.5360000 * d;
 
-  double W1 = 17.710 + 877.90003539 * d;
-  double W2 = 16.838 + 870.27003539 * d;
-
-  rangeDbl(&W1, 360);
-  rangeDbl(&W2, 360);
-
-  double POLE_RA = o->poleRa;
-  double POLE_DEC = o->poleDec;
-
-  double l0 = m_sunOrbit.hLon - R180;
-  double l = R2D(atan2(sin(POLE_DEC) * cos(o->gRD.Dec) * cos(POLE_RA - o->gRD.Ra) - sin(o->gRD.Dec) * cos(POLE_DEC),
-                       cos(o->gRD.Dec) * sin(POLE_RA - o->gRD.Ra)));
-
-  double geometricw1 = W1 - l - 5.07033 * o->R;
-  double geometricw2 = W2 - l - 5.02626 * o->R;
-
-  double C = 57.2958 * (2 * o->r * o->R + m_sunOrbit.r * m_sunOrbit.r - o->r * o->r - o->R * o->R) / (4 * o->r * o->R);
-
-  rangeDbl(&l0, R360);
-  if (o->hLon - l0 < 0)
-  {
-    C = -C;
-  }
-
-  geometricw1 += C;
-  geometricw2 += C;
-
-  rangeDbl(&geometricw1, 360);
-  rangeDbl(&geometricw2, 360);
-
-  o->cMer = D2R(geometricw2);
-  o->jupSysIMer = D2R(geometricw1);
+  o->cMer = calcMeridian(W1, 1, o->poleRa, o->poleDec, o->gRD.Ra, o->gRD.Dec);
+  o->sysII = calcMeridian(W2, 1, o->poleRa, o->poleDec, o->gRD.Ra, o->gRD.Dec);
+  o->sysIII = calcMeridian(W3, 1, o->poleRa, o->poleDec, o->gRD.Ra, o->gRD.Dec);
 }
 
 
@@ -1301,7 +1290,12 @@ void CAstro::solveMercury(orbit_t *orbit)
 
   orbit->PA = getNPA(poleRA[PT_MERCURY][0], poleRA[PT_MERCURY][1], poleDec[PT_MERCURY][0], poleDec[PT_MERCURY][1], orbit->lRD.Ra, orbit->lRD.Dec);
   orbit->cLat = getPlnCentalLat(orbit, orbit->poleRa, orbit->poleDec);
-  orbit->cMer = CM_UNDEF;
+
+  double d = ((m_jd - orbit->light) - JD2000);
+  double M1 = 174.791086 + 4.092335 * d;
+  double W = 329.5469 + 6.1385025 * d + 0.00993822 * sin(D2R(M1));
+
+  orbit->cMer = calcMeridian(W, 1, orbit->poleRa, orbit->poleDec, orbit->gRD.Ra, orbit->gRD.Dec);
 }
 
 
@@ -1322,7 +1316,9 @@ void CAstro::solveVenus(orbit_t *orbit)
   orbit->PA = getNPA(poleRA[PT_VENUS][0], poleRA[PT_VENUS][1], poleDec[PT_VENUS][0], poleDec[PT_VENUS][1], orbit->lRD.Ra, orbit->lRD.Dec);
   orbit->cLat = getPlnCentalLat(orbit, orbit->poleRa, orbit->poleDec);
 
-  orbit->cMer = CM_UNDEF;
+  double d = ((m_jd - orbit->light) - JD2000);
+  double W = 160.20 - 1.4813688 * d;
+  orbit->cMer = calcMeridian(W, -1, orbit->poleRa, orbit->poleDec, orbit->gRD.Ra, orbit->gRD.Dec);
 }
 
 //////////////////////////////////////
@@ -1346,7 +1342,7 @@ void CAstro::solveMars(orbit_t *orbit)
   orbit->PA = getNPA(poleRA[PT_MARS][0], poleRA[PT_MARS][1], poleDec[PT_MARS][0], poleDec[PT_MARS][1], orbit->lRD.Ra, orbit->lRD.Dec);
   orbit->cLat = getPlnCentalLat(orbit, orbit->poleRa, orbit->poleDec);
 
-  orbit->cMer = solveMarsMer(orbit, m_jd + orbit->light);
+  orbit->cMer = calcMeridian(176.630 + 350.89198226 * ((m_jd - orbit->light) - JD2000), 1, orbit->poleRa, orbit->poleDec, orbit->gRD.Ra, orbit->gRD.Dec);
 }
 
 
@@ -1403,7 +1399,14 @@ void CAstro::solveSaturn(orbit_t *orbit)
   orbit->PA = getNPA(poleRA[PT_SATURN][0], poleRA[PT_SATURN][1], poleDec[PT_SATURN][0], poleDec[PT_SATURN][1], orbit->lRD.Ra, orbit->lRD.Dec);
   orbit->cLat = getPlnCentalLat(orbit, orbit->poleRa, orbit->poleDec);
 
-  orbit->cMer = CM_UNDEF;
+  double d1 = ((m_jd - orbit->light) - JD2000);
+  double W1 = 227.2037 + 844.3 * d1;
+  double W2 = 105.4857 + 812.0 * d1;
+  double W3 = 38.90 + 810.7939024 * d1;
+
+  orbit->cMer = calcMeridian(W1, 1, orbit->poleRa, orbit->poleDec, orbit->gRD.Ra, orbit->gRD.Dec);
+  orbit->sysII = calcMeridian(W2, 1, orbit->poleRa, orbit->poleDec, orbit->gRD.Ra, orbit->gRD.Dec);
+  orbit->sysIII = calcMeridian(W3, 1, orbit->poleRa, orbit->poleDec, orbit->gRD.Ra, orbit->gRD.Dec);
 }
 
 
@@ -1424,7 +1427,10 @@ void CAstro::solveUranus(orbit_t *orbit)
   orbit->PA = getNPA(poleRA[PT_URANUS][0], poleRA[PT_URANUS][1], poleDec[PT_URANUS][0], poleDec[PT_URANUS][1], orbit->lRD.Ra, orbit->lRD.Dec);
   orbit->cLat = getPlnCentalLat(orbit, orbit->poleRa, orbit->poleDec);
 
-  orbit->cMer = CM_UNDEF;
+  double d1 = ((m_jd - orbit->light) - JD2000);
+  double W = 203.81 - 501.1600928 * d1;
+
+  orbit->cMer = calcMeridian(W, -1, orbit->poleRa, orbit->poleDec, orbit->gRD.Ra, orbit->gRD.Dec);
 }
 
 
@@ -1445,7 +1451,10 @@ void CAstro::solveNeptune(orbit_t *orbit)
   orbit->PA = getNPA(poleRA[PT_NEPTUNE][0], poleRA[PT_NEPTUNE][1], poleDec[PT_NEPTUNE][0], poleDec[PT_NEPTUNE][1], orbit->lRD.Ra, orbit->lRD.Dec);
   orbit->cLat = getPlnCentalLat(orbit, orbit->poleRa, orbit->poleDec);
 
-  orbit->cMer = CM_UNDEF;
+  double d1 = ((m_jd - orbit->light) - JD2000);
+  double W = 253.18 + 536.3128492 * d1;
+
+  orbit->cMer = calcMeridian(W, 1, orbit->poleRa, orbit->poleDec, orbit->gRD.Ra, orbit->gRD.Dec);
 }
 
 

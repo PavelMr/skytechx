@@ -365,7 +365,7 @@ void CPlanetRenderer::renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *, m
 
 }
 
-void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, float sy, bool isPreview, SKPOINT *pt, orbit_t *o)
+void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, float sy, bool isPreview, SKPOINT *pt, orbit_t *o, mapView_t *view)
 {
   if (g_showObjectAxis)
   {
@@ -374,24 +374,112 @@ void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, fl
       angle = D2R(180);
     }
 
+    double sign = 1;
+    // equator
     pPainter->save();
     pPainter->translate(QPoint(pt->sx, pt->sy));
     int w = sx;
     int h = sy * sin(qAbs(o->cLat));
 
-    pPainter->rotate(R2D(angle) - ((o->cLat < 0) ? 180 : 0));
+    if (view->flipX + view->flipY == 1)
+    {
+      sign = -1;
+    }
+    pPainter->rotate(R2D(angle) - (((sign * o->cLat) < 0) ? 180 : 0));
 
+    pPainter->setBrush(Qt::NoBrush);
     pPainter->setPen(QPen(QColor(g_skSet.map.planet.penColor), 2, Qt::DotLine));
     pPainter->drawArc(QRect(-w, -h, w * 2, h * 2), 0, 180 * 16);
     pPainter->restore();
 
+    // meridian
+
+    pPainter->save();
+    pPainter->setBrush(Qt::NoBrush);
+    pPainter->setPen(QPen(QColor(g_skSet.map.planet.penColor), 2, Qt::DotLine));
+
+    SKMATRIX matX;
+    SKMATRIX matY;
+    SKMATRIX matZ;
+    SKMATRIX matScale;
+    SKMATRIX mat;
+
+    SKMATRIXRotateY(&matY, -o->cMer);
+    double angp;
+
+    if (view->flipX + view->flipY == 1)
+    {
+      angp = (R360 - o->PA) - (trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, view->jd) - R180);
+    }
+    else
+    {
+      angp = (R360 - o->PA) + (trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, view->jd) - R180);
+    }
+
+    if (view->flipY)
+      angp = R180 + angp;
+
+    if (isPreview)
+    {
+      angp = 0;
+    }
+
+    SKMATRIXRotateX(&matX, o->cLat);
+    SKMATRIXRotateZ(&matZ, angp);
+    SKMATRIXScale(&matScale, view->flipX ? -1 : 1, view->flipY ? -1 : 1, 1);
+
+    mat = matY * matX * matZ * matScale;
+    double xyz[90][3];
+    QPolygon pts;
+
+    for (int i = 0; i < 90; i++)
+    {
+      radec_t rd;
+
+      rd.Ra = R180;
+      rd.Dec = D2R((i * 2) - 90);
+
+      double cd;
+
+      cd = cos(-rd.Dec);
+
+      xyz[i][0] = cd * sin(-rd.Ra);
+      xyz[i][1] = sin(-rd.Dec);
+      xyz[i][2] = cd * cos(-rd.Ra);
+    }
+
+    for (int i = 0; i < 90; i++)
+    {
+      float x = mat.m_11 * xyz[i][0] * sx +
+                mat.m_21 * xyz[i][1] * sy +
+                mat.m_31 * xyz[i][2] * sx;
+
+      float y = mat.m_12 * xyz[i][0] * sx +
+                mat.m_22 * xyz[i][1] * sy +
+                mat.m_32 * xyz[i][2] * sx;
+
+      float z = mat.m_13 * xyz[i][0] * sx +
+                mat.m_23 * xyz[i][1] * sy +
+                mat.m_33 * xyz[i][2] * sx;
+
+      if (z <= 0)
+      {
+        pts.append(QPoint(x + pt->sx, y + pt->sy));
+      }
+    }
+
+    pPainter->drawPolyline(pts);
+    pPainter->restore();
+
+    // polar axis
     pPainter->save();
     pPainter->translate(QPoint(pt->sx, pt->sy));
     pPainter->rotate(R2D(angle));
 
     pPainter->setPen(QPen(QColor(g_skSet.map.planet.penColor), 1));
-    int y = sy * qAbs(cos(o->cLat));
-    int len = (sy * 0.15) * qAbs(cos(o->cLat));
+    pPainter->setBrush(Qt::NoBrush);
+    int y = sy * qAbs(cos(sign * o->cLat));
+    int len = (sy * 0.15) * qAbs(cos(sign * o->cLat));
     int diff = sy - y;
 
     if (o->cLat < 0)
@@ -484,17 +572,13 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     pPainter->setRenderHint(QPainter::SmoothPixmapTransform, prev);
     pPainter->restore();
 
-    drawAxises(angle, pPainter, sx, sy, isPreview, pt, o);
+    drawAxises(angle, pPainter, sx, sy, isPreview, pt, o, mapView);
   }
   else
   {
     if (o->type == PT_JUPITER)
     {
-      SKMATRIXRotateY(&matY, -o->cMer + D2R(g_skSet.map.planet.jupGRSLon));
-    }
-    if (o->type == PT_MOON)
-    {
-      SKMATRIXRotateY(&matY, o->cMer);
+      SKMATRIXRotateY(&matY, -o->sysII + D2R(g_skSet.map.planet.jupGRSLon));
     }
     else
     {
@@ -616,7 +700,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
     }
 
-    drawAxises(angle, pPainter, sx, sy, isPreview, pt, o);
+    drawAxises(angle, pPainter, sx, sy, isPreview, pt, o, mapView);
 
     if (o->type == PT_SATURN)
       renderRing(+1, pt, o, sun, mapView, pPainter, pImg, isPreview);
@@ -734,7 +818,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   pPainter->drawEllipse(QPoint(0, 0), sx, sy);
   pPainter->restore();
 
-  drawAxises(angle, pPainter, sx, sy, false, pt, o);
+  drawAxises(angle, pPainter, sx, sy, false, pt, o, mapView);
 
   if (o->type == PT_SATURN)
   { // draw saturn ring front side
@@ -908,8 +992,6 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
   p->drawPolygon(pp, num);
   p->setOpacity(1);
   p->restore();
-
-  //qDebug("num = %d", num);
 
 }
 

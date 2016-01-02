@@ -208,9 +208,10 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->dockWidget->setWindowTitle(tr("Sidebar"));
   ui->lv_quickInfo->init(ui->toolBox);
 
-  ui->actionShow_Hide_lunar_features->setChecked(settings.value("lunarFeatures", true).toBool());
   connect(ui->checkBox_4, SIGNAL(toggled(bool)), ui->actionShow_Hide_lunar_features, SLOT(setChecked(bool)));
   connect(ui->actionShow_Hide_lunar_features, SIGNAL(toggled(bool)), ui->checkBox_4, SLOT(setChecked(bool)));
+  ui->actionShow_Hide_lunar_features->setChecked(settings.value("lunarFeatures", true).toBool());
+  ui->checkBox_4->setChecked(ui->actionShow_Hide_lunar_features->isChecked());
 
   connect(this, SIGNAL(sigMagLock(bool)), ui->widget, SLOT(slotCheckedMagLevLock(bool)));
   ui->actionStar_mag_lock->setChecked(false);
@@ -1083,7 +1084,7 @@ void MainWindow::saveAndExit()
   settings.setValue("set_profile", g_setName);
   settings.setValue("horizon_file", g_horizonName);
   settings.setValue("use_real_time", ui->actionRealtime->isChecked());
-  settings.setValue("lunarFeatures", ui->actionShow_Hide_lunar_features->isEnabled());
+  settings.setValue("lunarFeatures", ui->actionShow_Hide_lunar_features->isChecked());
 
   settings.setValue("flipX", ui->actionFlipX->isChecked());
   settings.setValue("flipY", ui->actionFlipY->isChecked());

@@ -88,7 +88,8 @@ typedef struct
   double  poleDec;
 
   double  cLat, cMer;
-  double  jupSysIMer;
+  double  sysII;
+  double  sysIII;
   double  PA;             // angle to north
   double  elongation;
   double  FV;
@@ -170,6 +171,7 @@ protected:
     double solveMarsMer(orbit_t *pMars, double jd);
     double getPlnCentalLat(orbit_t *o, double poleRa, double poleDec);
     void   solveJupiterMer(orbit_t *o, double jd);
+    double calcMeridian(double W, double mul, double poleRA, double poleDec, double gRA, double gDec);
 
     // delta T
     double deltaTTable(double jd);
