@@ -8,7 +8,7 @@
 #include "transform.h"
 #include "csatxyz.h"
 
-#define  NUM_LEVELS          4
+#define  NUM_LEVELS          3
 
 typedef struct
 {
@@ -42,11 +42,11 @@ public:
   int renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, double ang = CM_UNDEF, bool isPreview = false);
   void drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate);
   int renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t *o, sat_t *sat, bool bIsShadow, mapView_t *view);
-
-  void drawAxises(float angle, CSkPainter *pPainter, float sx, float sy, bool isPreview, SKPOINT *pt, orbit_t *o, mapView_t *view);
 protected:
   bool m_init;
   void renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, bool isPreview = false);
+  void renderRing(int sx, orbit_t *o, CSkPainter *pPainter, float angle, mapView_t *mapView, SKPOINT *pt, bool isFront);
+  void drawAxises(float angle, CSkPainter *pPainter, float sx, float sy, bool isPreview, SKPOINT *pt, orbit_t *o, mapView_t *view);
 
   mesh_t *createSphere(int detail);
   mesh_t *createRing(int detail);

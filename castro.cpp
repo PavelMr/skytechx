@@ -1378,6 +1378,8 @@ void CAstro::solveJupiter(orbit_t *orbit)
   solveJupiterMer(orbit, m_jd);
 }
 
+double gxxx = 0;
+double gyyy = 0;
 
 ////////////////////////////////////////
 void CAstro::solveSaturn(orbit_t *orbit)
