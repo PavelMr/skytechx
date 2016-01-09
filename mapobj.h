@@ -12,11 +12,11 @@
 
 #define MO_EMPTY        -1
 #define MO_TELESCOPE     0
-#define MO_PLANET        1
-#define MO_ASTER         2
-#define MO_SATELLITE     3
-#define MO_COMET         4
-#define MO_PLN_SAT       5
+#define MO_ASTER         1
+#define MO_SATELLITE     2
+#define MO_COMET         3
+#define MO_PLN_SAT       4
+#define MO_PLANET        5
 #define MO_TYCSTAR       6
 #define MO_GSCSTAR       7
 #define MO_USNO2         8

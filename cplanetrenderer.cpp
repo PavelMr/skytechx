@@ -955,21 +955,22 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   return sx;
 }
 
-int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t *, sat_t *sat, bool bIsShadow, mapView_t *view)
+int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t *o, planetSatellite_t *sat, bool bIsShadow, mapView_t *view)
 {
-  int r = trfGetArcSecToPix(sat->size);
+  double r = trfGetArcSecToPix(sat->size);
 
   if (r < g_skSet.map.planet.satRad)
     r = g_skSet.map.planet.satRad;
 
-  if (sat->throwShadow && ptp->sx != 99999)
-  {
+  if (sat->isThrowShadow && ptp->sx != 99999)
+  { // draw shadow
     SKPOINT sp;
 
-    trfRaDecToPointCorrectFromTo(&sat->srd, &sp, view->jd, JD2000);
+    trfRaDecToPointNoCorrect(&sat->sRD, &sp);
     if (trfProjectPoint(&sp))
     {
-      QRadialGradient gradient(QPointF(sp.sx, sp.sy), r, QPointF(sp.sx, sp.sy));
+      double mul = 1.5;
+      QRadialGradient gradient(QPointF(sp.sx, sp.sy), r * mul, QPointF(sp.sx, sp.sy));
 
       gradient.setColorAt(0, QColor(0, 0, 0, g_skSet.map.planet.phaseAlpha));
       gradient.setColorAt(0.7, QColor(0, 0, 0, g_skSet.map.planet.phaseAlpha));
@@ -978,36 +979,23 @@ int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t 
       p->setPen(Qt::NoPen);
       p->setBrush(gradient);
 
-      p->drawEllipse(QPoint(sp.sx, sp.sy), r, r);
+      p->drawEllipse(QPointF(sp.sx, sp.sy), r * mul, r * mul);
       p->setOpacity(1);
     }
   }
 
-  p->setPen(g_skSet.map.planet.satColor);
-  p->setBrush(QColor(g_skSet.map.planet.satColor));
-
-  if (!bIsShadow)
-  {
-    if (sat->inSunLgt)
-    { // in sunlight
-    }
-    else
-    { // in planet shadow
-      p->setPen(g_skSet.map.planet.satColorShd);
-      p->setBrush(QColor(g_skSet.map.planet.satColorShd));
-    }
+  if (sat->isInLight)
+  { // in sunlight
+    p->setPen(g_skSet.map.planet.satColor);
+    p->setBrush(QColor(g_skSet.map.planet.satColor));
   }
   else
-  {
-    // TODO: invalid ???????? nepouziva se
+  { // in planet shadow
+    p->setPen(g_skSet.map.planet.satColorShd);
+    p->setBrush(QColor(g_skSet.map.planet.satColorShd));
   }
 
-  if (sat->isTransit)
-  {
-  }
-
-  // TODO: upravit rotaci a rx, ry
-  p->drawEllipse(QPoint(pt->sx, pt->sy), r, r);
+  p->drawEllipse(QPointF(pt->sx, pt->sy), r, r);
 
   return(r);
 }

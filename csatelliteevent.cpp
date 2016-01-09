@@ -5,11 +5,7 @@
 
 #include <QDebug>
 
-static QColor  colors[4][8] = {{Qt::red, Qt::yellow, Qt::black, Qt::black, Qt::black, Qt::black, Qt::black, Qt::black},
-                               {Qt::magenta, Qt::red, Qt::green, Qt::blue, Qt::black, Qt::black, Qt::black, Qt::black},
-                               {Qt::red, Qt::yellow, Qt::blue, Qt::green, Qt::darkCyan, Qt::magenta, Qt::white, Qt::darkRed},
-                               {Qt::red, Qt::yellow, Qt::black, Qt::green, Qt::magenta, Qt::white, Qt::black, Qt::black}
-                              };
+static QColor  colors[10] = {Qt::red, Qt::yellow, Qt::blue, Qt::green, Qt::darkCyan, Qt::magenta, Qt::white, Qt::darkRed, Qt::darkBlue, Qt::cyan};
 
 CSatelliteChartWidget::CSatelliteChartWidget(QWidget *parent, QLabel *label) :
   QWidget(parent),
@@ -46,6 +42,11 @@ void CSatelliteChartWidget::setData(const mapView_t *view, int planet)
 
     case PT_URANUS:
       m_xScale = 29;
+      m_yScale = 10;
+      break;
+
+    case PT_NEPTUNE:
+      m_xScale = 59;
       m_yScale = 10;
       break;
   }
@@ -96,6 +97,7 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
   double scale = width() / m_xScale;
 
   QRect planetRc = QRect(cx - scale * 0.5, 0, scale, height());
+  if (planetRc.width() < 1) planetRc.setWidth(1);
   p.fillRect(planetRc, Qt::black);
   p.setPen(Qt::white);
 
@@ -103,7 +105,7 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
   {
     int cc = 0;
     int y = 0;
-    p.setPen(QPen(colors[m_planet - PT_MARS][j], 2));
+    p.setPen(QPen(colors[j], 2));
     for (int i = 0; i < m_data[j].count() - 1; i++)
     {
       chart_t &p1 = m_data[j][i];
@@ -149,8 +151,7 @@ void CSatelliteChartWidget::wheelEvent(QWheelEvent *e)
     m_xScale *= 0.8;
   }
 
-  m_xScale = CLAMP(m_xScale, 0.5, 150);
-
+  m_xScale = CLAMP(m_xScale, 0.5, 1000);
   update();
 }
 
@@ -169,7 +170,6 @@ void CSatelliteChartWidget::mouseMoveEvent(QMouseEvent *e)
     m_lastPoint = e->pos();
     update();
   }
-
 
   if (m_satCount)
   {
@@ -211,7 +211,8 @@ void CSatelliteChartWidget::calculate(int height)
 
   for (double jd = from; jd < from + m_yScale; jd += step)
   {
-    satxyz_t sat;
+    CPlanetSatellite planSat;
+    planetSatellites_t sats;
     orbit_t o;
     orbit_t s;
 
@@ -221,18 +222,16 @@ void CSatelliteChartWidget::calculate(int height)
     cAstro.calcPlanet(m_planet, &o);
     cAstro.calcPlanet(PT_SUN, &s);
 
-    if (cSatXYZ.solve(jd, m_planet, &o, &s, &sat, true))
+    planSat.solve(m_view.jd - o.light, m_planet, &sats, &o, &s, false);
+    m_satCount = sats.sats.count();
+    for (int i = 0; i < m_satCount; i++)
     {
-      m_satCount = sat.count;
-      for (int i = 0; i < sat.count; i++)
-      {
-        chart_t data;
+      chart_t data;
 
-        data.jd = jd;
-        data.x = sat.sat[i].x;
-        data.z = sat.sat[i].z;
-        m_data[i].append(data);
-      }
+      data.jd = jd;
+      data.x = sats.sats[i].ex;
+      data.z = sats.sats[i].ez;
+      m_data[i].append(data);
     }
   }
 }
@@ -253,6 +252,7 @@ CSatelliteEvent::CSatelliteEvent(QWidget *parent, const mapView_t *view) :
   ui->comboBox->addItem(astro.getName(PT_JUPITER), PT_JUPITER);
   ui->comboBox->addItem(astro.getName(PT_SATURN), PT_SATURN);
   ui->comboBox->addItem(astro.getName(PT_URANUS), PT_URANUS);
+  ui->comboBox->addItem(astro.getName(PT_NEPTUNE), PT_NEPTUNE);
 }
 
 CSatelliteEvent::~CSatelliteEvent()
@@ -264,7 +264,8 @@ void CSatelliteEvent::on_comboBox_currentIndexChanged(int index)
 {
   m_chart->setData(&m_view, ui->comboBox->itemData(index).toInt());
 
-  satxyz_t sat;
+  CPlanetSatellite planSat;
+  planetSatellites_t sats;
   orbit_t o;
   orbit_t s;
 
@@ -272,21 +273,20 @@ void CSatelliteEvent::on_comboBox_currentIndexChanged(int index)
   cAstro.calcPlanet(index + PT_MARS, &o);
   cAstro.calcPlanet(PT_SUN, &s);
 
-  if (cSatXYZ.solve(m_view.jd, index + PT_MARS, &o, &s, &sat))
+  planSat.solve(m_view.jd - o.light, index + PT_MARS, &sats, &o, &s, false);
+  QString temp = "<font color='%1'>%2</font>";
+  QLabel *label[10] = {ui->label, ui->label_2, ui->label_3, ui->label_4,
+                       ui->label_5, ui->label_6, ui->label_7, ui->label_8,
+                       ui->label_9, ui->label_10};
+
+  for (int i = 0; i < 10; i++)
   {
-    QString temp = "<font color='%1'>%2</font>";
-    QLabel *label[8] = {ui->label, ui->label_2, ui->label_3, ui->label_4,
-                        ui->label_5, ui->label_6, ui->label_7, ui->label_8};
+    label[i]->setText("");
+  }
 
-    for (int i = 0; i < 8; i++)
-    {
-      label[i]->setText("");
-    }
-
-    for (int i = 0; i < sat.count; i++)
-    {
-      label[i]->setText(temp.arg(colors[index][i].name(), sat.sat[i].name));
-    }
+  for (int i = 0; i < sats.sats.count(); i++)
+  {
+    label[i]->setText(temp.arg(colors[i].name(), sats.sats[i].name));
   }
 }
 

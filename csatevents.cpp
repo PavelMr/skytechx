@@ -22,6 +22,7 @@ CSatEvents::CSatEvents(QWidget *parent, mapView_t *view) :
   ui->comboBox->addItem(cAstro.getName(PT_JUPITER));
   ui->comboBox->addItem(cAstro.getName(PT_SATURN));
   ui->comboBox->addItem(cAstro.getName(PT_URANUS));
+  ui->comboBox->addItem(cAstro.getName(PT_NEPTUNE));
 
   ui->comboBox->setCurrentIndex(lastSel);
 
@@ -60,39 +61,36 @@ void CSatEvents::solve(double jd, int pln)
 
   for (double j = jd; j < jd + 1; j += step)
   {
-    satxyz_t sat;
     orbit_t  o, s;
+    CPlanetSatellite planSat;
+    planetSatellites_t sats;
 
     m_view.jd = j;
     cAstro.setParam(&m_view);
     cAstro.calcPlanet(PT_SUN, &s);
     cAstro.calcPlanet(pln, &o);
 
-    if (!cSatXYZ.solve(j, pln, &o, &s, &sat))
-    {
-      continue;
-    }
-
+    planSat.solve(j - o.light, pln, &sats, &o, &s);
     if (first)
     {
-      for (int i = 0; i < sat.count; i++)
+      for (int i = 0; i < sats.sats.count(); i++)
       {
-        double s = sqrt(POW2(sat.sat[i].x) + POW2(sat.sat[i].y)) * o.sx;
+        double s = sats.sats[i].ex;//sats.sats[i].distance;
 
-        transit[i] = sat.sat[i].isTransit;
-        hidden[i] = sat.sat[i].isHidden;
-        throwShd[i] = sat.sat[i].throwShadow;
+        transit[i] = sats.sats[i].isTransit;
+        hidden[i] = sats.sats[i].isHidden;
+        throwShd[i] = sats.sats[i].isThrowShadow;
         lastSep1[i] = lastSep2[i] = s;
       }
       first = false;
     }
 
     QStandardItem *item;
-    for (int i = 0; i < sat.count; i++)
+    for (int i = 0; i < sats.sats.count(); i++)
     {
-      double s = sqrt(POW2(sat.sat[i].x) + POW2(sat.sat[i].y)) * o.sx;
+      double s = sats.sats[i].ex;//sats.sats[i].distance;
 
-      if (lastSep1[i] > lastSep2[i] && lastSep1[i] > s)
+      if (lastSep1[i] > lastSep2[i] && s < lastSep1[i])
       {
         item = new QStandardItem;
         item->setText(getStrTime(j, tz, true));
@@ -100,8 +98,10 @@ void CSatEvents::solve(double jd, int pln)
         m->setItem(row, 0, item);
 
         item = new QStandardItem;
-        item->setText(QString(tr("Max elongation of %1")).arg(sat.sat[i].name));
+        item->setText(QString(tr("Max elongation of %1")).arg(sats.sats[i].name));
         m->setItem(row, 1, item);
+
+        qDebug() << lastSep1[i] * 1000 << lastSep2[i] * 1000 << s * 1000;
 
         row++;
       }
@@ -109,11 +109,11 @@ void CSatEvents::solve(double jd, int pln)
       lastSep1[i] = s;
     }
 
-    for (int i = 0; i < sat.count; i++)
+    for (int i = 0; i < sats.sats.count(); i++)
     {
-      if (transit[i] != sat.sat[i].isTransit)
+      if (transit[i] != sats.sats[i].isTransit)
       {
-        transit[i] = sat.sat[i].isTransit;
+        transit[i] = sats.sats[i].isTransit;
 
         item = new QStandardItem;
         item->setText(getStrTime(j, tz, true));
@@ -122,17 +122,17 @@ void CSatEvents::solve(double jd, int pln)
 
         item = new QStandardItem;
         if (transit[i])
-          item->setText(QString(tr("Begin transit of %1")).arg(sat.sat[i].name));
+          item->setText(QString(tr("Begin transit of %1")).arg(sats.sats[i].name));
         else
-          item->setText(QString(tr("End of transit %1")).arg(sat.sat[i].name));
+          item->setText(QString(tr("End of transit %1")).arg(sats.sats[i].name));
         m->setItem(row, 1, item);
 
         row++;
       }
 
-      if (hidden[i] != sat.sat[i].isHidden)
+      if (hidden[i] != sats.sats[i].isHidden)
       {
-        hidden[i] = sat.sat[i].isHidden;
+        hidden[i] = sats.sats[i].isHidden;
 
         item = new QStandardItem;
         item->setText(getStrTime(j, tz, true));
@@ -141,17 +141,17 @@ void CSatEvents::solve(double jd, int pln)
 
         item = new QStandardItem;
         if (hidden[i])
-          item->setText(QString(tr("Begin occultation of %1")).arg(sat.sat[i].name));
+          item->setText(QString(tr("Begin occultation of %1")).arg(sats.sats[i].name));
         else
-          item->setText(QString(tr("End of occultation %1")).arg(sat.sat[i].name));
+          item->setText(QString(tr("End of occultation %1")).arg(sats.sats[i].name));
         m->setItem(row, 1, item);
 
         row++;
       }
 
-      if (throwShd[i] != sat.sat[i].throwShadow)
+      if (throwShd[i] != sats.sats[i].isThrowShadow)
       {
-        throwShd[i] = sat.sat[i].throwShadow;
+        throwShd[i] = sats.sats[i].isThrowShadow;
 
         item = new QStandardItem;
         item->setText(getStrTime(j, tz, true));
@@ -160,9 +160,9 @@ void CSatEvents::solve(double jd, int pln)
 
         item = new QStandardItem;
         if (throwShd[i])
-          item->setText(QString(tr("Begin shadow of %1")).arg(sat.sat[i].name));
+          item->setText(QString(tr("Begin shadow of %1")).arg(sats.sats[i].name));
         else
-          item->setText(QString(tr("End of shadow %1")).arg(sat.sat[i].name));
+          item->setText(QString(tr("End of shadow %1")).arg(sats.sats[i].name));
         m->setItem(row, 1, item);
 
         row++;

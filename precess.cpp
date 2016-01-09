@@ -128,7 +128,7 @@ void precess(radec_t *src, radec_t *dst, double jdFrom, double jdTo)
 /////////////////////////////////////////////////////////////////
 void precess(double *ra, double *dec, double jdFrom, double jdTo)
 /////////////////////////////////////////////////////////////////
-{  
+{
   SKMATRIX mat;
 
   precessMatrix(jdFrom, jdTo, &mat);
@@ -147,11 +147,30 @@ void precess(double *ra, double *dec, double jdFrom, double jdTo)
   rangeDbl(ra, R360);
 }
 
-
 ///////////////////////////////////////////////////////
 void precessRect(double *r, double jdFrom, double jdTo)
 ///////////////////////////////////////////////////////
 {
+  double ra, dec;
+
+  double dist = sqrt(r[0] * r[0] + r[1] * r[1] + r[2] * r[2]);
+
+  ra  = atan2(r[1], r[0]);
+  dec = atan2(r[2], sqrt(r[0] * r[0] + r[1] * r[1]));
+
+  precess_hiprec(jdFrom, jdTo, &ra, &dec);
+
+  double cDec = cos(dec);
+
+  r[0] = cDec * cos(ra) * dist;
+  r[1] = cDec * sin(ra) * dist;
+  r[2] = sin(dec) * dist;
+}
+
+///////////////////////////////////////////////////////////
+void precessRectNorm(double *r, double jdFrom, double jdTo)
+///////////////////////////////////////////////////////////
+{ // return normalized
   double ra, dec;
 
   ra  = atan2(r[1], r[0]);
@@ -163,17 +182,17 @@ void precessRect(double *r, double jdFrom, double jdTo)
 
   r[0] = cDec * cos(ra);
   r[1] = cDec * sin(ra);
-  r[2] = sin(dec);  
+  r[2] = sin(dec);
 }
 
 
 ///////////////////////////////////////////////////////////
 void precessMatrix(double jdFrom, double jdTo, SKMATRIX *m)
 ///////////////////////////////////////////////////////////
-{  
+{
   static SKMATRIX lastMat;
   static double lastFrom = -1;
-  static double lastTo = -1;    
+  static double lastTo = -1;
 
   if (jdFrom == lastFrom &&
       jdTo == lastTo)

@@ -423,16 +423,24 @@ QString getStrDeg(double deg, bool simple)
 }
 
 
-///////////////////////////////////
-QString getStrDegNoSign(double deg)
-///////////////////////////////////
+//////////////////////////////////////////////
+QString getStrDegNoSign(double deg, bool msec)
+//////////////////////////////////////////////
 {
   QString str;
-  int     d, m, s;
+  int     d, m;
+  double  s;
 
   getDMSFromRad(deg, &d, &m, &s);
 
-  str = str.sprintf("%02d° %02d' %02d\"", d, m, s);
+  if (!msec)
+  {
+    str = str.sprintf("%02d° %02d' %02d\"", d, m, (int)s);
+  }
+  else
+  {
+    str = str.sprintf("%02d° %02d' %04.2f\"", d, m, s);
+  }
 
   return(str);
 }

@@ -139,7 +139,7 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     angle = angle + R180;
   }
 
-  SKMATRIXRotateY(&mY, R90 + R180 - moon->cMer);
+  SKMATRIXRotateY(&mY, R90 + R180 + moon->cMer);
   SKMATRIXRotateX(&mX, R180 + moon->cLat);
   SKMATRIXRotateZ(&mZ, -angle);
   SKMATRIXScale(&mS, view->flipX ? -1 : 1, view->flipY ? -1 : 1, 1);
@@ -281,7 +281,7 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
 
   double angle = o.PA;
 
-  SKMATRIXRotateY(&mY, R90 + R180 - o.cMer);
+  SKMATRIXRotateY(&mY, R90 + R180 + o.cMer);
   SKMATRIXRotateX(&mX, R180 + o.cLat);
   SKMATRIXRotateZ(&mZ, -angle);
   SKMATRIXScale(&mS, view->flipX ? -1 : 1, view->flipY ? -1 : 1, 1);
@@ -347,7 +347,7 @@ bool CLunarFeatures::isVisible(int index, mapView_t *view)
 
   double angle = o.PA;
 
-  SKMATRIXRotateY(&mY, R90 + R180 - o.cMer);
+  SKMATRIXRotateY(&mY, R90 + R180 + o.cMer);
   SKMATRIXRotateX(&mX, R180 + o.cLat);
   SKMATRIXRotateZ(&mZ, -angle);
   SKMATRIXScale(&mS, view->flipX ? -1 : 1, view->flipY ? -1 : 1, 1);

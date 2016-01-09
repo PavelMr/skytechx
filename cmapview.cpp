@@ -1472,7 +1472,7 @@ void CMapView::updateStatusBar(void)
 
     double sep = anSep(m_measurePoint.Ra, m_measurePoint.Dec, ra, dec);
     double ang = RAD2DEG(trfGetPosAngle(ra, dec, m_measurePoint.Ra, m_measurePoint.Dec));
-    pcMainWnd->statusBar->setItem(SB_SM_MEASURE, QString(tr("Sep : %1 / PA : %2°")).arg(getStrDegNoSign(sep)).arg(ang, 0, 'f', 2));
+    pcMainWnd->statusBar->setItem(SB_SM_MEASURE, QString(tr("Sep : %1 / PA : %2°")).arg(getStrDegNoSign(sep, true)).arg(ang, 0, 'f', 2));
 
     /*
     int ucac4Zone = CUCAC4::getZone(decOrig);

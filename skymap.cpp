@@ -928,30 +928,29 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   pPainter->drawRect(orc);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void smRenderMoons(CSkPainter *p, satxyz_t *sat, SKPOINT *ptp, orbit_t *o, bool bFront, mapView_t *view, int pid)
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static void smRenderMoons(CSkPainter *p, planetSatellites_t *sat, SKPOINT *ptp, orbit_t *o, bool bFront, mapView_t *view, int pid)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
-
-  for (int i = 0; i < sat->count; i++)
+  for (int i = 0; i < sat->sats.count(); i++)
   {
-    if (sat->sat[i].inFront == bFront)
+    if (sat->sats[i].inFront == bFront)
     {
       SKPOINT pt;
 
-      trfRaDecToPointCorrectFromTo(&sat->sat[i].rd, &pt, view->jd, JD2000);
+      trfRaDecToPointNoCorrect(&sat->sats[i].lRD, &pt);
 
       if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, D2R(1)))
       {
         trfProjectPointNoCheck(&pt);
 
-        int r = cPlanetRenderer.renderMoon(p, &pt, ptp, o, &sat->sat[i], false, view);
+        int r = cPlanetRenderer.renderMoon(p, &pt, ptp, o, &sat->sats[i], false, view);
 
         if (g_showLabels)
         {
-          g_labeling.addLabel(QPoint(pt.sx, pt.sy), r + 5, sat->sat[i].name, FONT_PLN_SAT, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
+          g_labeling.addLabel(QPoint(pt.sx, pt.sy), r + 5, sat->sats[i].name, FONT_PLN_SAT, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
         }
-        addMapObj(pt.sx, pt.sy, MO_PLN_SAT, MO_CIRCLE, r + 2, pid, i, sat->sat[i].mag);
+        addMapObj(pt.sx, pt.sy, MO_PLN_SAT, MO_CIRCLE, r + 2, pid, i, sat->sats[i].mag);
       }
     }
   }
@@ -1005,16 +1004,23 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   for (int i = PT_SUN; i <= PT_MOON; i++)
   {
     SKPOINT pt;
-    satxyz_t sat;
+    //satxyz_t sat;
 
-    bool moons = cSatXYZ.solve(mapView->jd, order[i], &o[order[i]], sun, &sat);
+    CPlanetSatellite planSat;
+    planetSatellites_t sats;
 
-    if (mapView->fov > DEG2RAD(2))
+    planSat.solve(mapView->jd - o[order[i]].light, order[i], &sats, &o[order[i]], sun);
+
+    bool moons = sats.sats.count() > 0;
+
+    //bool moons = cSatXYZ.solve(mapView->jd, order[i], &o[order[i]], sun, &sat);
+
+    if (mapView->fov > DEG2RAD(3))
       moons = false;
 
     if (moons)
     {
-      smRenderMoons(pPainter, &sat, NULL, NULL, false, mapView, order[i]);
+      smRenderMoons(pPainter, &sats, NULL, NULL, false, mapView, order[i]);
     }
 
     trfRaDecToPointCorrectFromTo(&o[order[i]].lRD, &pt, mapView->jd, JD2000);
@@ -1026,9 +1032,55 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       addMapObj(pt.sx, pt.sy, MO_PLANET, MO_CIRCLE, s, o[order[i]].type, 0, o[order[i]].mag);
     }
 
+
+    /*
+    ///////////////
+    CPlanetSatellite ss;
+    planetSatellites_t ssats;
+
+    ss.solve(mapView->jd - o[order[i]].light, order[i], &ssats, &o[order[i]], sun);
+
+    for (int j = 0; j < ssats.sats.count(); j++)
+    {
+      trfRaDecToPointNoCorrect(&ssats.sats[j].lRD, &pt);
+      if (trfProjectPoint(&pt))
+      {
+        if (ssats.sats[j].isTransit)
+          pPainter->setBrush(Qt::red);
+        else
+          if (ssats.sats[j].isHidden)
+            pPainter->setBrush(Qt::gray);
+        else
+            if (!ssats.sats[j].isInLight)
+              pPainter->setBrush(Qt::yellow);
+        else pPainter->setBrush(Qt::white);
+
+
+        int r = trfGetArcSecToPix(ssats.sats[j].size);
+        pPainter->drawEllipse(QPoint(pt.sx, pt.sy), r, r);
+
+        double ff = sqrt(POW2(ssats.sats[j].ex) + POW2(ssats.sats[j].ey));
+        //qDebug() << "ff" << ff  << ssats.sats[j].ex << ssats.sats[j].ey << POW2(ssats.sats[j].ex) << POW2(ssats.sats[j].ey);
+
+        g_labeling.addLabel(QPoint(pt.sx, pt.sy), 10, QString("%1").
+                            arg(ssats.sats[j].name),
+                            FONT_PLN_SAT, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
+      }
+
+      trfRaDecToPointNoCorrect(&ssats.sats[j].sRD, &pt);
+      if (trfProjectPoint(&pt) && ssats.sats[j].isThrowShadow)
+      {
+        pPainter->setBrush(Qt::blue);
+        pPainter->drawEllipse(QPoint(pt.sx, pt.sy), 8, 8);
+      }
+    }
+    */
+
+    /////////////////
+
     if (moons)
     {
-      smRenderMoons(pPainter, &sat, &pt, &o[order[i]], true, mapView, order[i]);
+      smRenderMoons(pPainter, &sats, &pt, &o[order[i]], true, mapView, order[i]);
     }
   }
 

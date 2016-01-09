@@ -66,7 +66,8 @@ typedef struct
 
   double  hLon;
   double  hLat;
-  double  hRect[3];
+  double  hRect[3];       // at date
+  double  hRect2000[3];
   double  eRect[3];       // earth helio rect
   double  sRectJ2000[3];
   double  r, R;
@@ -119,15 +120,18 @@ class CAstro
     static double calcAparentSize(double R, double d);
     double getNPA(double ra, double raD, double dec, double decD, double oRa, double oDec);
     void   calcParallax(orbit_t *o);
+    void   calcParallax(radec_t *rd, double R);
     double getRaDec_NP(double val, double delta);
     double calcDeltaT(double jd);
     QString getName(int type);
+
     static QString getFileName(int type);
-    double solveKepler(double eccent, double M);
+    static double solveKepler(double eccent, double M);
+
     void sunEphemerid_Fast(orbit_t *o);
 
     void   calcEarthShadow(orbit_t *orbit, orbit_t *moon);
-    void   calcPlanet(int planet, orbit_t *orbit, bool bSunCopy = true, bool all = true);
+    void   calcPlanet(int planet, orbit_t *orbit, bool bSunCopy = true, bool all = true, bool lightCorrection = true);
     static double getEclObl(double jd);
     double getPolarisHourAngle(); // v 0..1
 

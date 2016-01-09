@@ -568,7 +568,7 @@ return(0);
 
 
 
-// return eq. rectangular coordinates at epoch
+// return ecl. polar coordinates at epoch
 void de404(int pln, double jd, double rect[])
 {
   GCPlan cp;

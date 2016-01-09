@@ -242,9 +242,10 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, txDateTime, QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
   addSeparator(item);
 
-  satxyz_t sat;
   orbit_t  pl;
   orbit_t  s;
+  CPlanetSatellite planSat;
+  planetSatellites_t sats;
 
   item->riseJD = CM_UNDEF;
   item->setJD = CM_UNDEF;
@@ -253,15 +254,13 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
 
   cAstro.calcPlanet(obj->par1, &pl);
   cAstro.calcPlanet(PT_SUN, &s);
-  cSatXYZ.solve(view->jd, obj->par1, &pl, &s, &sat);
+  planSat.solve(view->jd - pl.light, obj->par1, &sats, &pl, &s);
 
-  item->radec.Ra = sat.sat[obj->par2].rd.Ra;
-  item->radec.Dec = sat.sat[obj->par2].rd.Dec;
+  item->radec.Ra = sats.sats[obj->par2].lRD.Ra;
+  item->radec.Dec = sats.sats[obj->par2].lRD.Dec;
   item->zoomFov = getOptObjFov(0, 0, D2R(0.05));
 
-  precess(&item->radec.Ra, &item->radec.Dec, view->jd, JD2000);
-
-  item->title = sat.sat[obj->par2].name;
+  item->title = sats.sats[obj->par2].name;
   item->simbad = item->title;
 
   QString str = item->title;
@@ -276,20 +275,23 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
 
   addLabelItem(item, txDesig);
   addSeparator(item);
-  addTextItem(item, sat.sat[obj->par2].name, "");
+  addTextItem(item, sats.sats[obj->par2].name, "");
   addSeparator(item);
 
-  int con = constWhatConstel(sat.sat[obj->par2].rd.Ra,
-                             sat.sat[obj->par2].rd.Dec, view->jd);
+  int con = constWhatConstel(sats.sats[obj->par2].lRD.Ra,
+                             sats.sats[obj->par2].lRD.Dec, view->jd);
 
-  double ra = sat.sat[obj->par2].rd.Ra;
-  double dec = sat.sat[obj->par2].rd.Dec;
+  double ra = sats.sats[obj->par2].lRD.Ra;
+  double dec = sats.sats[obj->par2].lRD.Dec;
   QString jd2000;
 
   if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
   {
     jd2000 = txJ2000;
-    precess(&ra, &dec, view->jd, JD2000);
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
   }
 
   addLabelItem(item, txLocInfo);
@@ -299,8 +301,8 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
   addTextItem(item, txConstel, constGetName(con, 1));
   addSeparator(item);
-  addTextItem(item, txVisMag, getStrMag(sat.sat[obj->par2].mag));
-  addTextItem(item, tr("Distance from planet center"), getStrDeg(sat.sat[obj->par2].distance));
+  addTextItem(item, txVisMag, getStrMag(sats.sats[obj->par2].mag));
+  addTextItem(item, tr("Distance from planet center"), getStrDeg(sats.sats[obj->par2].distance));
 
   /*
   addTextItem(item, tr("In sun light"), QString::number(sat.sat[obj->par2].inSunLgt));

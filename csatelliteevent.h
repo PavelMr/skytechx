@@ -83,7 +83,7 @@ private:
   int       m_satCount;
   int       m_planet;
   mapView_t m_view;
-  QList <chart_t> m_data[8];
+  QList <chart_t> m_data[10];
   QLabel   *m_label;
 };
 

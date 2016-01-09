@@ -802,12 +802,12 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
 
 // TODO: udelat to i bez light corr.
 ////////////////////////////////////////////////////////////////////////////
-void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
+void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, bool lightCorrection)
 ////////////////////////////////////////////////////////////////////////////
 {
   double data[6];
 
-  if (planet == PT_SUN && bSunCopy)
+  if (planet == PT_SUN && bSunCopy && lightCorrection)
   {
     *orbit = m_sunOrbit;
     return;
@@ -819,7 +819,7 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
 
   // DE404
   double lt = 0; // light time
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < (lightCorrection ? 2 : 1); i++)
   {
     if (planet != PT_MOON)
     {
@@ -845,7 +845,7 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
       orbit->sRectJ2000[1] = data[4];
       orbit->sRectJ2000[2] = data[5];
 
-      if (bSunCopy)
+      if (!lightCorrection)
       {
         return;
       }
@@ -888,6 +888,12 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all)
     orbit->hRect[0] = xh;
     orbit->hRect[1] = yh;
     orbit->hRect[2] = zh;
+
+    orbit->hRect2000[0] = xh;
+    orbit->hRect2000[1] = yh * cos(obl) - zh * sin(obl);
+    orbit->hRect2000[2] = yh * sin(obl) + zh * cos(obl);
+
+    precessRect(orbit->hRect2000, m_jd, JD2000);
 
     orbit->gRD.Ra  = atan2(ye, xe);
     orbit->gRD.Dec = atan2(ze, sqrt(xe * xe + ye * ye));
@@ -1212,6 +1218,18 @@ void CAstro::solveSun(orbit_t *o)
   o->eRect[1] = o->r * sin(o->hLon - R180) * cos(o->hLat);
   o->eRect[2] = o->r                       * sin(o->hLat);
 
+  double xh = o->hRect[0];
+  double yh = o->hRect[1];
+  double zh = o->hRect[2];
+
+  double obl = getEclObl(m_jd);
+
+  o->hRect2000[0] = xh;
+  o->hRect2000[1] = yh * cos(obl) - zh * sin(obl);
+  o->hRect2000[2] = yh * sin(obl) + zh * cos(obl);
+
+  precessRect(o->hRect2000, m_jd, JD2000);
+
   o->cLat = getPlnCentalLat(o, o->poleRa, o->poleDec);
 
   double d = m_jd - JD2000;  // W for the Sun is now corrected for light travel time
@@ -1517,4 +1535,17 @@ void CAstro::calcParallax(orbit_t *o)
 }
 
 
+void CAstro::calcParallax(radec_t *rd, double R)
+{
+  double S = m_lst;
+  double mpar = DEG2RAD((8.794/3600) / R);
+
+  double ra  = -mpar * m_curGc * sin(S - rd->Ra) * cos(rd->Dec);
+  double dec =  mpar * (m_curGc * cos(S - rd->Ra) * sin(rd->Dec) - m_curGs * cos(rd->Dec));
+
+  rd->Ra  += ra;
+  rd->Dec += dec;
+
+  rangeDbl(&rd->Ra, MPI2);
+}
 

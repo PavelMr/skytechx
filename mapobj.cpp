@@ -367,15 +367,17 @@ void mapObjContextMenu(CMapView *map)
 
       case MO_PLN_SAT:
       {
-        satxyz_t sat;
+        CPlanetSatellite planSat;
+        planetSatellites_t sats;
         orbit_t  pl;
         orbit_t  s;
 
         cAstro.calcPlanet(o.par1, &pl);
         cAstro.calcPlanet(PT_SUN, &s);
-        cSatXYZ.solve(map->m_mapView.jd, o.par1, &pl, &s, &sat);
 
-        str = sat.sat[o.par2].name + " " + getStrMag(sat.sat[o.par2].mag);
+        planSat.solve(map->m_mapView.jd - pl.light, o.par1, &sats, &pl, &s);
+
+        str = sats.sats[o.par2].name + " " + getStrMag(o.mag);
 
         break;
       }

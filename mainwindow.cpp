@@ -2358,19 +2358,23 @@ void MainWindow::centerSearchBox(bool bCenter)
     double ra, dec;
     double ra2, dec2;
 
-    satxyz_t sat;
+    //satxyz_t sat;
+    CPlanetSatellite planSat;
+    planetSatellites_t sats;
     orbit_t  pl;
     orbit_t  s;
 
     cAstro.setParam(&ui->widget->m_mapView);
     cAstro.calcPlanet(info->par1, &pl);
     cAstro.calcPlanet(PT_SUN, &s);
-    cSatXYZ.solve(ui->widget->m_mapView.jd, info->par1, &pl, &s, &sat);
+    planSat.solve(ui->widget->m_mapView.jd - pl.light, info->par1, &sats, &pl, &s);
+    //cSatXYZ.solve(ui->widget->m_mapView.jd, info->par1, &pl, &s, &sat);
 
-    ra2 = ra = sat.sat[info->par2].rd.Ra;
-    dec2 = dec = sat.sat[info->par2].rd.Dec;
+    ra2 = ra = sats.sats[info->par2].lRD.Ra;
+    dec2 = dec = sats.sats[info->par2].lRD.Dec;
 
-    precess(&ra2, &dec2, ui->widget->m_mapView.jd, JD2000);
+    //precess(&ra2, &dec2, JD2000, ui->widget->m_mapView.jd);
+    precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
 
     info->radec.Ra = ra2;
     info->radec.Dec = dec2;

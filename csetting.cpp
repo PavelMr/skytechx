@@ -735,7 +735,7 @@ void CSetting::apply()
 
   g_skSet.map.planet.jupGRSLon = ui->doubleSpinBox_32->value();
   g_skSet.map.planet.jupGRSYearDrift = ui->doubleSpinBox_41->value();
-  QDateTime dt;
+  QDateTime dt = ui->dateEdit->dateTime();
   g_skSet.map.planet.jupGRSDate = jdGetJDFrom_DateTime(&dt);
 
   g_skSet.map.satellite.size = ui->doubleSpinBox_38->value();

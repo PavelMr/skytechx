@@ -440,7 +440,8 @@ HEADERS  += mainwindow.h \
     usnob1.h \
     urat1.h \
     cstarexample.h \
-    cadvsearch.h
+    cadvsearch.h \
+    tass17.h
 
 
 FORMS    += mainwindow.ui \

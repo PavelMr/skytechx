@@ -28,7 +28,7 @@ void getDeg(double degress, int *deg, int *min, int *sec, int *sign);
 
 QString getStrDegDF(double deg);
 QString getStrDeg(double deg, bool simple = false);
-QString getStrDegNoSign(double deg);
+QString getStrDegNoSign(double deg, bool msec = false);
 QString getStrRA(double ra, bool simple = false);
 
 QString getStrLon(double deg);
