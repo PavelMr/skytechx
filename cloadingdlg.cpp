@@ -112,19 +112,15 @@ void CLoadingDlg::slotLoad()
   cMilkyWay.load();
   sigProgress(5);
 
-  qDebug() << "L6";
-  cSatXYZ.init();
-  sigProgress(6);
-
   qDebug() << "L7";
   curAsteroidCatName = set.value("asteroid_file", "").toString();
   astLoad(curAsteroidCatName);
-  sigProgress(7);
+  sigProgress(6);
 
   qDebug() << "L8";
   curCometCatName = set.value("comet_file", "").toString();
   comLoad(curCometCatName);
-  sigProgress(8);
+  sigProgress(7);
 
   qDebug() << "L9";
   g_pSunTexture = new QImage(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/sun/sun_tex.png");
@@ -133,7 +129,7 @@ void CLoadingDlg::slotLoad()
     delete g_pSunTexture;
     g_pSunTexture = NULL;
   }
-  sigProgress(9);
+  sigProgress(8);
 
   qDebug() << "L10";
   g_pDb = new CDB(QSqlDatabase::addDatabase("QSQLITE", "sql_skytech"));
@@ -144,25 +140,25 @@ void CLoadingDlg::slotLoad()
     g_pDb->init();
   }
 
-  sigProgress(10);
+  sigProgress(9);
 
   qDebug() << "L11";
   g_horizonName = set.value("horizon_file", "none").toString();
   background.loadBackground(g_horizonName);
 
-  sigProgress(11);
+  sigProgress(10);
   cLunarFeatures.load("../data/moon/moon.dat");
 
-  sigProgress(12);
+  sigProgress(11);
   loadTracking();
 
-  sigProgress(13);
+  sigProgress(12);
   drawingLoad();
 
-  sigProgress(14);
+  sigProgress(13);
   loadDSOPlugins();
 
-  sigProgress(15);
+  sigProgress(14);
   curSatelliteCatName = set.value("satellite_file", "").toString();
   sgp4.loadTLEData(curSatelliteCatName);
 

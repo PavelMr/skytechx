@@ -1032,52 +1032,6 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       addMapObj(pt.sx, pt.sy, MO_PLANET, MO_CIRCLE, s, o[order[i]].type, 0, o[order[i]].mag);
     }
 
-
-    /*
-    ///////////////
-    CPlanetSatellite ss;
-    planetSatellites_t ssats;
-
-    ss.solve(mapView->jd - o[order[i]].light, order[i], &ssats, &o[order[i]], sun);
-
-    for (int j = 0; j < ssats.sats.count(); j++)
-    {
-      trfRaDecToPointNoCorrect(&ssats.sats[j].lRD, &pt);
-      if (trfProjectPoint(&pt))
-      {
-        if (ssats.sats[j].isTransit)
-          pPainter->setBrush(Qt::red);
-        else
-          if (ssats.sats[j].isHidden)
-            pPainter->setBrush(Qt::gray);
-        else
-            if (!ssats.sats[j].isInLight)
-              pPainter->setBrush(Qt::yellow);
-        else pPainter->setBrush(Qt::white);
-
-
-        int r = trfGetArcSecToPix(ssats.sats[j].size);
-        pPainter->drawEllipse(QPoint(pt.sx, pt.sy), r, r);
-
-        double ff = sqrt(POW2(ssats.sats[j].ex) + POW2(ssats.sats[j].ey));
-        //qDebug() << "ff" << ff  << ssats.sats[j].ex << ssats.sats[j].ey << POW2(ssats.sats[j].ex) << POW2(ssats.sats[j].ey);
-
-        g_labeling.addLabel(QPoint(pt.sx, pt.sy), 10, QString("%1").
-                            arg(ssats.sats[j].name),
-                            FONT_PLN_SAT, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
-      }
-
-      trfRaDecToPointNoCorrect(&ssats.sats[j].sRD, &pt);
-      if (trfProjectPoint(&pt) && ssats.sats[j].isThrowShadow)
-      {
-        pPainter->setBrush(Qt::blue);
-        pPainter->drawEllipse(QPoint(pt.sx, pt.sy), 8, 8);
-      }
-    }
-    */
-
-    /////////////////
-
     if (moons)
     {
       smRenderMoons(pPainter, &sats, &pt, &o[order[i]], true, mapView, order[i]);
