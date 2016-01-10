@@ -231,6 +231,8 @@ typedef struct
   bool       autoGrid;
   bool       showGridLabels;
 
+  bool       smartLabels;
+
   QRgb       objSelectionColor;
   penStyle_t measurePoint;
 

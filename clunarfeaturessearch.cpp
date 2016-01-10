@@ -101,7 +101,7 @@ void CLunarFeaturesSearch::on_pushButton_2_clicked()
     return;
   }
 
-  Q_ASSERT(cLunarFeatures.search("", m_view, m_rd.Ra, m_rd.Dec, m_fov, lfIndex));
+  Q_ASSERT(cLunarFeatures.search(item->text(), m_view, m_rd.Ra, m_rd.Dec, m_fov, lfIndex));
 
   done(DL_OK);
 }

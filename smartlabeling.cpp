@@ -130,6 +130,9 @@ int SmartLabeling::getAlign(int align)
     case SL_AL_TOP_LEFT:
       return RT_TOP_LEFT;
 
+    case SL_AL_BOTTOM:
+      return RT_BOTTOM;
+
     default:
       qDebug() << "SmartLabeling::getAlign() invalid align!!!";
   }
@@ -139,7 +142,7 @@ int SmartLabeling::getAlign(int align)
 
 void SmartLabeling::render(CSkPainter *painter)
 {
-  if (0)
+  if (!g_skSet.map.smartLabels)
   {
     foreach (const SmartLabel &label, m_list)
     {

@@ -601,7 +601,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
     if (g_showLabels)
     {
-      g_labeling.addLabel(QPoint(pt->sx, pt->sy + minSize + 20), 0, o->name, FONT_PLANET, SL_AL_CENTER, SL_AL_FIXED);
+      g_labeling.addLabel(QPoint(pt->sx, pt->sy), minSize + 8, o->name, FONT_PLANET, SL_AL_BOTTOM, SL_AL_ALL);
     }
 
     return(minSize);
@@ -643,7 +643,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
   if (g_showLabels)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + qMax(sx, sy) + 20), 0, o->name, FONT_PLANET, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy), qMax(sx, sy) + 8, o->name, FONT_PLANET, SL_AL_BOTTOM, SL_AL_ALL);
   }
 
   switch (o->type)
@@ -929,7 +929,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
   if (g_showLabels && !isPreview)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + qMax(sx, sy) + 20), 0, o->name, FONT_PLANET, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy), qMax(sx, sy) + 8, o->name, FONT_PLANET, SL_AL_BOTTOM, SL_AL_ALL);
   }
 
   switch (o->type)

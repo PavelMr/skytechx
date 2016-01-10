@@ -159,6 +159,7 @@ CSetting::CSetting(QWidget *parent) :
   ui->listWidget_2->addItem(tr("USNO B1 Catalogue"));
   ui->listWidget_2->addItem(tr("UCAC4 Catalogue"));
   ui->listWidget_2->addItem(tr("URAT1 Catalogue"));
+  ui->listWidget_2->addItem(tr("Other"));
   ui->listWidget_2->setCurrentRow(currentRow);
 
   QStandardItemModel *m = new QStandardItemModel;
@@ -528,6 +529,9 @@ void CSetting::setValues()
   ui->doubleSpinBox_28->setValue(R2D(set.map.gsc.fromFOV));
   ui->doubleSpinBox_29->setValue(set.map.gsc.fromMag);
 
+  // other
+  ui->checkBox_18->setChecked(set.map.smartLabels);
+
   QList<urlItem_t> strList;
   CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/comets.url", &strList);
   fillAstComList(ui->treeWidgetComet, strList);
@@ -795,6 +799,9 @@ void CSetting::apply()
   g_skSet.map.gsc.show = ui->showGSCCheckBox->isChecked();
   g_skSet.map.gsc.fromFOV = D2R(ui->doubleSpinBox_28->value());
   g_skSet.map.gsc.fromMag = ui->doubleSpinBox_29->value();
+
+  // other
+  g_skSet.map.smartLabels = ui->checkBox_18->isChecked();
 
   // status bar
   QSettings set;

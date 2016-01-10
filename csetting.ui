@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>9</number>
+            <number>19</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2010,7 +2010,7 @@
              <item>
               <widget class="QTabWidget" name="tabWidget_3">
                <property name="currentIndex">
-                <number>5</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tab_12">
                 <attribute name="title">
@@ -2019,6 +2019,78 @@
                 <layout class="QVBoxLayout" name="verticalLayout_47">
                  <item>
                   <layout class="QGridLayout" name="gridLayout_10">
+                   <item row="2" column="0">
+                    <widget class="QGroupBox" name="groupBox_4">
+                     <property name="title">
+                      <string>Planet satellites</string>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_46">
+                      <item>
+                       <layout class="QGridLayout" name="gridLayout_6">
+                        <item row="1" column="0">
+                         <widget class="CPushColorButton" name="pushButton_24">
+                          <property name="text">
+                           <string>PushButton</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="2">
+                         <widget class="QLabel" name="label_25">
+                          <property name="text">
+                           <string>Sat. label font &amp; color</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLabel" name="label_26">
+                          <property name="text">
+                           <string>Shadow color</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="1">
+                         <widget class="CPushColorButton" name="pushButton_27">
+                          <property name="text">
+                           <string>PushButton</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_23">
+                          <property name="text">
+                           <string>Satellite color</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="2">
+                         <widget class="CFontColorButton" name="pushButton_26">
+                          <property name="text">
+                           <string>PushButton</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="3">
+                         <widget class="QLabel" name="label_28">
+                          <property name="text">
+                           <string>Min. symbol radius</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="3">
+                         <widget class="QSpinBox" name="spinBox_2">
+                          <property name="minimum">
+                           <number>1</number>
+                          </property>
+                          <property name="maximum">
+                           <number>32</number>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
                    <item row="0" column="0">
                     <widget class="QGroupBox" name="groupBox_21">
                      <property name="title">
@@ -2123,6 +2195,54 @@
                      </layout>
                     </widget>
                    </item>
+                   <item row="1" column="0">
+                    <layout class="QVBoxLayout" name="verticalLayout_81">
+                     <item>
+                      <widget class="QGroupBox" name="groupBox_13">
+                       <property name="title">
+                        <string>Moon texture (Restart required)</string>
+                       </property>
+                       <layout class="QVBoxLayout" name="verticalLayout_82">
+                        <item>
+                         <widget class="QRadioButton" name="radioButton_3">
+                          <property name="text">
+                           <string>Default texture</string>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QRadioButton" name="radioButton_4">
+                          <property name="text">
+                           <string>Custom texture</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <layout class="QHBoxLayout" name="horizontalLayout_26">
+                          <item>
+                           <widget class="QLineEdit" name="lineEdit">
+                            <property name="readOnly">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QToolButton" name="toolButton">
+                            <property name="text">
+                             <string>...</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
                    <item row="0" column="1">
                     <widget class="QGroupBox" name="groupBox_6">
                      <property name="title">
@@ -2190,133 +2310,6 @@
                          </size>
                         </property>
                        </spacer>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <layout class="QVBoxLayout" name="verticalLayout_81">
-                     <item>
-                      <widget class="QGroupBox" name="groupBox_13">
-                       <property name="title">
-                        <string>Moon texture (Restart required)</string>
-                       </property>
-                       <layout class="QVBoxLayout" name="verticalLayout_82">
-                        <item>
-                         <widget class="QRadioButton" name="radioButton_3">
-                          <property name="text">
-                           <string>Default texture</string>
-                          </property>
-                          <property name="checked">
-                           <bool>true</bool>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QRadioButton" name="radioButton_4">
-                          <property name="text">
-                           <string>Custom texture</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <layout class="QHBoxLayout" name="horizontalLayout_26">
-                          <item>
-                           <widget class="QLineEdit" name="lineEdit">
-                            <property name="readOnly">
-                             <bool>true</bool>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QToolButton" name="toolButton">
-                            <property name="text">
-                             <string>...</string>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="2" column="0">
-                    <widget class="QGroupBox" name="groupBox_20">
-                     <property name="title">
-                      <string>GroupBox</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="3" column="0">
-                    <widget class="QGroupBox" name="groupBox_4">
-                     <property name="title">
-                      <string>Planet satellites</string>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_46">
-                      <item>
-                       <layout class="QGridLayout" name="gridLayout_6">
-                        <item row="1" column="0">
-                         <widget class="CPushColorButton" name="pushButton_24">
-                          <property name="text">
-                           <string>PushButton</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="2">
-                         <widget class="QLabel" name="label_25">
-                          <property name="text">
-                           <string>Sat. label font &amp; color</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="1">
-                         <widget class="QLabel" name="label_26">
-                          <property name="text">
-                           <string>Shadow color</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="1">
-                         <widget class="CPushColorButton" name="pushButton_27">
-                          <property name="text">
-                           <string>PushButton</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="0">
-                         <widget class="QLabel" name="label_23">
-                          <property name="text">
-                           <string>Satellite color</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="2">
-                         <widget class="CFontColorButton" name="pushButton_26">
-                          <property name="text">
-                           <string>PushButton</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="3">
-                         <widget class="QLabel" name="label_28">
-                          <property name="text">
-                           <string>Min. symbol radius</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="3">
-                         <widget class="QSpinBox" name="spinBox_2">
-                          <property name="minimum">
-                           <number>1</number>
-                          </property>
-                          <property name="maximum">
-                           <number>32</number>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
                       </item>
                      </layout>
                     </widget>
@@ -3848,6 +3841,50 @@
              </item>
             </layout>
            </widget>
+           <widget class="QWidget" name="page_10">
+            <layout class="QVBoxLayout" name="verticalLayout_95">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_37">
+               <item>
+                <widget class="QGroupBox" name="groupBox_20">
+                 <property name="title">
+                  <string>Other</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_97">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_96">
+                    <item>
+                     <widget class="QCheckBox" name="checkBox_18">
+                      <property name="toolTip">
+                       <string>Try to place the labels so that they do not overlap</string>
+                      </property>
+                      <property name="text">
+                       <string>Smart label placement</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_14">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -3933,31 +3970,35 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
-             <widget class="QCheckBox" name="checkBox_10">
-              <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show zoom control bar on map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="text">
-               <string>Show zoom bar</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkBox_13">
-              <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If the box is checked, then the left mouse button moves the map and Shift + left mouse button zoom the map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="text">
-               <string>Alternative mouse commands</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkBox_14">
-              <property name="text">
-               <string>Parking telescope before disconnection</string>
-              </property>
-             </widget>
+             <layout class="QFormLayout" name="formLayout_12">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="checkBox_10">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show zoom control bar on map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Show zoom bar</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="checkBox_13">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If the box is checked, then the left mouse button moves the map and Shift + left mouse button zoom the map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Alternative mouse commands</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="checkBox_14">
+                <property name="text">
+                 <string>Parking telescope before disconnection</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <widget class="Line" name="line">

@@ -461,7 +461,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
 
       if (bFlamsteed && mapView->fov <= g_skSet.map.star.flamsFromFov)
       {
-        g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, flamsteed, FONT_STAR_BAYER, SL_AL_TOP_LEFT, SL_AL_ALL);
+        g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, flamsteed, FONT_STAR_FLAMS, SL_AL_TOP_LEFT, SL_AL_ALL);
       }
     }
   }

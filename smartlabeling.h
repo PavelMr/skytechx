@@ -22,7 +22,8 @@ class CSkPainter;
 #define SL_AL_BOTTOM_LEFT    2
 #define SL_AL_TOP_LEFT       3
 #define SL_AL_BOTTOM_RIGHT   4
-#define SL_AL_TOP_RIGHT      5
+#define SL_AL_BOTTOM         5
+#define SL_AL_TOP_RIGHT      6
 #define SL_AL_ALL           10
 
 class SmartLabel

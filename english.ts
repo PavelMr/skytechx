@@ -142,79 +142,79 @@ Zoom by mouse wheel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.ui" line="430"/>
+        <location filename="c3dsolar.ui" line="433"/>
         <source>Forward date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.ui" line="450"/>
+        <location filename="c3dsolar.ui" line="453"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="33"/>
-        <location filename="c3dsolar.cpp" line="48"/>
-        <location filename="c3dsolar.cpp" line="57"/>
+        <location filename="c3dsolar.cpp" line="34"/>
+        <location filename="c3dsolar.cpp" line="49"/>
+        <location filename="c3dsolar.cpp" line="58"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="34"/>
+        <location filename="c3dsolar.cpp" line="35"/>
         <source>Comet/Asteroid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="35"/>
+        <location filename="c3dsolar.cpp" line="36"/>
         <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="36"/>
+        <location filename="c3dsolar.cpp" line="37"/>
         <source>Mercury</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="37"/>
+        <location filename="c3dsolar.cpp" line="38"/>
         <source>Venus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="38"/>
+        <location filename="c3dsolar.cpp" line="39"/>
         <source>Earth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="39"/>
+        <location filename="c3dsolar.cpp" line="40"/>
         <source>Mars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="40"/>
+        <location filename="c3dsolar.cpp" line="41"/>
         <source>Jupiter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="41"/>
+        <location filename="c3dsolar.cpp" line="42"/>
         <source>Saturn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="42"/>
+        <location filename="c3dsolar.cpp" line="43"/>
         <source>Uranus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="43"/>
+        <location filename="c3dsolar.cpp" line="44"/>
         <source>Neptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="207"/>
+        <location filename="c3dsolar.cpp" line="211"/>
         <source>Nothing to show!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="c3dsolar.cpp" line="335"/>
+        <location filename="c3dsolar.cpp" line="343"/>
         <source>Comet is not periodical!</source>
         <oldsource>Commet is not periodical!</oldsource>
         <translation type="unfinished"></translation>
@@ -356,18 +356,97 @@ Zoom by mouse wheel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="caddcustomobject.cpp" line="221"/>
+        <location filename="caddcustomobject.cpp" line="222"/>
         <source>Object &apos;%1&apos; not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="caddcustomobject.cpp" line="233"/>
+        <location filename="caddcustomobject.cpp" line="234"/>
         <source>Object &apos;%1&apos; is already in the list!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="caddcustomobject.cpp" line="249"/>
+        <location filename="caddcustomobject.cpp" line="250"/>
         <source>Do you wish remove this catalogue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CAdvSearch</name>
+    <message>
+        <location filename="cadvsearch.ui" line="14"/>
+        <source>Advanced search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="30"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="40"/>
+        <source>Planet, Sun,Moon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="47"/>
+        <source>Star</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="54"/>
+        <source>Star common name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="61"/>
+        <source>Constellation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="68"/>
+        <source>Deep sky object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="75"/>
+        <source>Artifical sattelite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="82"/>
+        <source>Asteroid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="89"/>
+        <source>Comet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="96"/>
+        <source>Lunar feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="112"/>
+        <location filename="cadvsearch.ui" line="126"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="119"/>
+        <source>[Enter object name]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.ui" line="170"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cadvsearch.cpp" line="55"/>
+        <source>Not found!!!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -467,22 +546,22 @@ Zoom by mouse wheel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="461"/>
+        <location filename="casterdlg.cpp" line="460"/>
         <source>Save current catalogue to disc?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="504"/>
+        <location filename="casterdlg.cpp" line="503"/>
         <source>Asteroids </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="586"/>
+        <location filename="casterdlg.cpp" line="585"/>
         <source>Open a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="632"/>
+        <location filename="casterdlg.cpp" line="631"/>
         <source>Asteroid tracking and holding will be discarded.
 Quick information about asteroid too.
 
@@ -808,22 +887,22 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="564"/>
+        <location filename="ccomdlg.cpp" line="563"/>
         <source>Save current catalogue to disc?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="607"/>
+        <location filename="ccomdlg.cpp" line="606"/>
         <source>Comets </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="689"/>
+        <location filename="ccomdlg.cpp" line="688"/>
         <source>Open a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="735"/>
+        <location filename="ccomdlg.cpp" line="734"/>
         <source>Comet tracking and holding will be discarded.
 Quick information about comets too.
 
@@ -889,27 +968,37 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomedit.ui" line="213"/>
-        <source>Perihelion distance (AU)</source>
+        <location filename="ccomedit.ui" line="216"/>
+        <source>Perihelion distance (AU) or Semi-major axis (AU)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomedit.ui" line="238"/>
+        <location filename="ccomedit.ui" line="225"/>
+        <source>q</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ccomedit.ui" line="248"/>
+        <source>a</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ccomedit.ui" line="272"/>
         <source>Absolute magnitude, H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomedit.ui" line="245"/>
+        <location filename="ccomedit.ui" line="279"/>
         <source>Slope parameter, G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomedit.ui" line="333"/>
+        <location filename="ccomedit.ui" line="367"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomedit.ui" line="323"/>
+        <location filename="ccomedit.ui" line="357"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1229,17 +1318,17 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdsocomnamesearch.ui" line="49"/>
+        <location filename="cdsocomnamesearch.ui" line="45"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdsocomnamesearch.ui" line="59"/>
+        <location filename="cdsocomnamesearch.ui" line="55"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdsocomnamesearch.cpp" line="55"/>
+        <location filename="cdsocomnamesearch.cpp" line="77"/>
         <source>Object not found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1411,32 +1500,32 @@ Do you wish show this dialog window next time?</source>
 <context>
     <name>CDSSOpenDialog</name>
     <message>
-        <location filename="mainwindow.cpp" line="2909"/>
+        <location filename="mainwindow.cpp" line="3070"/>
         <source>Rescale to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2916"/>
+        <location filename="mainwindow.cpp" line="3077"/>
         <source>Original size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2917"/>
+        <location filename="mainwindow.cpp" line="3078"/>
         <source>128 x 128</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2918"/>
+        <location filename="mainwindow.cpp" line="3079"/>
         <source>256 x 256</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2919"/>
+        <location filename="mainwindow.cpp" line="3080"/>
         <source>512 x 512</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2920"/>
+        <location filename="mainwindow.cpp" line="3081"/>
         <source>1024 x 1024</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1761,6 +1850,34 @@ Do you wish show this dialog window next time?</source>
     </message>
 </context>
 <context>
+    <name>CDownloadFile</name>
+    <message>
+        <location filename="cdownloadfile.ui" line="14"/>
+        <source>Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdownloadfile.ui" line="39"/>
+        <source>Select URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdownloadfile.ui" line="64"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdownloadfile.ui" line="71"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdownloadfile.cpp" line="68"/>
+        <source>Save TLE File</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CDownloadMPC</name>
     <message>
         <location filename="cdownloadmpc.ui" line="14"/>
@@ -1768,27 +1885,37 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdownloadmpc.ui" line="26"/>
+        <location filename="cdownloadmpc.ui" line="38"/>
         <source>Maximum line count (0 = all)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdownloadmpc.ui" line="52"/>
-        <source>URL</source>
+        <location filename="cdownloadmpc.ui" line="58"/>
+        <source>Name filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="cdownloadmpc.ui" line="65"/>
+        <source>Eg. &apos;halley&apos; or &apos;!linear&apos; prefix ! means stop downloading after first match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdownloadmpc.ui" line="76"/>
+        <source>URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdownloadmpc.ui" line="126"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdownloadmpc.ui" line="78"/>
+        <location filename="cdownloadmpc.ui" line="116"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdownloadmpc.ui" line="94"/>
+        <location filename="cdownloadmpc.ui" line="31"/>
         <source>Lines readed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1796,26 +1923,26 @@ Do you wish show this dialog window next time?</source>
 <context>
     <name>CDrawing</name>
     <message>
-        <location filename="cdrawing.cpp" line="172"/>
-        <location filename="cdrawing.cpp" line="184"/>
-        <location filename="cdrawing.cpp" line="200"/>
-        <location filename="cdrawing.cpp" line="216"/>
+        <location filename="cdrawing.cpp" line="173"/>
+        <location filename="cdrawing.cpp" line="185"/>
+        <location filename="cdrawing.cpp" line="201"/>
+        <location filename="cdrawing.cpp" line="217"/>
         <source>Move object by mouse.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdrawing.cpp" line="172"/>
-        <location filename="cdrawing.cpp" line="184"/>
-        <location filename="cdrawing.cpp" line="200"/>
-        <location filename="cdrawing.cpp" line="216"/>
+        <location filename="cdrawing.cpp" line="173"/>
+        <location filename="cdrawing.cpp" line="185"/>
+        <location filename="cdrawing.cpp" line="201"/>
+        <location filename="cdrawing.cpp" line="217"/>
         <source>ENTER : Done
 ESC : Cancel
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdrawing.cpp" line="200"/>
+        <location filename="cdrawing.cpp" line="201"/>
         <source>Rotate object by an edge.
 </source>
         <translation type="unfinished"></translation>
@@ -1877,103 +2004,103 @@ ESC : Cancel
 <context>
     <name>CDso</name>
     <message>
-        <location filename="cdso.cpp" line="299"/>
+        <location filename="cdso.cpp" line="300"/>
         <source>Unknown object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="301"/>
+        <location filename="cdso.cpp" line="302"/>
         <source>Nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="303"/>
+        <location filename="cdso.cpp" line="304"/>
         <source>Bright nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="305"/>
+        <location filename="cdso.cpp" line="306"/>
         <source>Dark nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="307"/>
+        <location filename="cdso.cpp" line="308"/>
         <source>NGC Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="309"/>
+        <location filename="cdso.cpp" line="310"/>
         <source>Planetary nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="311"/>
+        <location filename="cdso.cpp" line="312"/>
         <source>Open cluster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="313"/>
+        <location filename="cdso.cpp" line="314"/>
         <source>Open cluster with nebulosity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="315"/>
+        <location filename="cdso.cpp" line="316"/>
         <source>Asterism</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="317"/>
+        <location filename="cdso.cpp" line="318"/>
         <source>Double star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="319"/>
+        <location filename="cdso.cpp" line="320"/>
         <source>Milky Way star cloud</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="321"/>
+        <location filename="cdso.cpp" line="322"/>
         <source>Galaxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="323"/>
+        <location filename="cdso.cpp" line="324"/>
         <source>Part of galaxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="325"/>
+        <location filename="cdso.cpp" line="326"/>
         <source>Cluster of galaxies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="327"/>
+        <location filename="cdso.cpp" line="328"/>
         <source>Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="329"/>
+        <location filename="cdso.cpp" line="330"/>
         <source>Supernova remnant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="331"/>
+        <location filename="cdso.cpp" line="332"/>
         <source>Quasar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="333"/>
+        <location filename="cdso.cpp" line="334"/>
         <source>Globular cluster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="335"/>
+        <location filename="cdso.cpp" line="336"/>
         <source>Other object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdso.cpp" line="338"/>
-        <location filename="cdso.cpp" line="341"/>
+        <location filename="cdso.cpp" line="339"/>
+        <location filename="cdso.cpp" line="342"/>
         <source>Invalid object</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2432,7 +2559,8 @@ ESC : Cancel
     </message>
     <message>
         <location filename="ceventsearch.cpp" line="446"/>
-        <source>You must select two objects only!</source>
+        <source>You must select least two objects!</source>
+        <oldsource>You must select two objects only!</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2441,12 +2569,12 @@ ESC : Cancel
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ceventsearch.cpp" line="545"/>
+        <location filename="ceventsearch.cpp" line="528"/>
         <source>No event found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ceventsearch.cpp" line="548"/>
+        <location filename="ceventsearch.cpp" line="531"/>
         <source>%1 event(s) found!
 The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
@@ -2778,22 +2906,22 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
 <context>
     <name>CImageView</name>
     <message>
-        <location filename="cimageview.cpp" line="23"/>
+        <location filename="cimageview.cpp" line="25"/>
         <source>Rescale to screen size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cimageview.cpp" line="27"/>
+        <location filename="cimageview.cpp" line="29"/>
         <source>100%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cimageview.cpp" line="30"/>
+        <location filename="cimageview.cpp" line="32"/>
         <source>Resize to 100%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cimageview.cpp" line="69"/>
+        <location filename="cimageview.cpp" line="71"/>
         <source>No image to view!!!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3060,6 +3188,107 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
     </message>
 </context>
 <context>
+    <name>CLunarFeatures</name>
+    <message>
+        <location filename="clunarfeatures.cpp" line="375"/>
+        <source>Landing site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeatures.cpp" line="377"/>
+        <source>Crater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeatures.cpp" line="379"/>
+        <source>Montes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeatures.cpp" line="381"/>
+        <source>Mons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeatures.cpp" line="383"/>
+        <source>Rima</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeatures.cpp" line="385"/>
+        <source>Mare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeatures.cpp" line="387"/>
+        <source>Vallis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeatures.cpp" line="389"/>
+        <source>Lacus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeatures.cpp" line="391"/>
+        <source>Sinus</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CLunarFeaturesSearch</name>
+    <message>
+        <location filename="clunarfeaturessearch.ui" line="14"/>
+        <source>Search lunar features</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.ui" line="52"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.ui" line="59"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.cpp" line="20"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.cpp" line="21"/>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.cpp" line="22"/>
+        <source>Diameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.cpp" line="23"/>
+        <source>Longitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.cpp" line="24"/>
+        <source>Latitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.cpp" line="45"/>
+        <source> km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="clunarfeaturessearch.cpp" line="100"/>
+        <source>This lunar feature is not visible!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CLvQInfo</name>
     <message>
         <location filename="clvqinfo.cpp" line="30"/>
@@ -3085,78 +3314,108 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
 <context>
     <name>CMapView</name>
     <message>
-        <location filename="cmapview.cpp" line="1363"/>
-        <location filename="cmapview.cpp" line="1617"/>
+        <location filename="cmapview.cpp" line="1431"/>
+        <location filename="cmapview.cpp" line="1720"/>
         <source>R.A. : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1364"/>
-        <location filename="cmapview.cpp" line="1617"/>
+        <location filename="cmapview.cpp" line="1432"/>
+        <location filename="cmapview.cpp" line="1720"/>
         <source>Dec. : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1365"/>
+        <location filename="cmapview.cpp" line="1433"/>
         <source>FOV : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1366"/>
+        <location filename="cmapview.cpp" line="1434"/>
         <source>Star : %1 mag. / DSO %2 mag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1368"/>
-        <source>Alt. : %1</source>
+        <location filename="cmapview.cpp" line="1440"/>
+        <source>Eqt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1369"/>
-        <source>Azm. : %1</source>
+        <location filename="cmapview.cpp" line="1444"/>
+        <source>Hor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1371"/>
-        <location filename="cmapview.cpp" line="1618"/>
-        <source>Date : %1</source>
+        <location filename="cmapview.cpp" line="1448"/>
+        <source>Ecl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1372"/>
-        <location filename="cmapview.cpp" line="1619"/>
-        <source>Time : %1</source>
+        <location filename="cmapview.cpp" line="1451"/>
+        <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1381"/>
-        <source>Sep : %1 / PA : %2°</source>
+        <location filename="cmapview.cpp" line="1456"/>
+        <source>Airmass : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1430"/>
-        <source>Save File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cmapview.cpp" line="1432"/>
-        <location filename="cmapview.cpp" line="1464"/>
-        <source>Skytech dev. shapes (*.shp)</source>
+        <location filename="cmapview.cpp" line="1460"/>
+        <source>Airmass : N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="cmapview.cpp" line="1462"/>
+        <source>Alt. : %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cmapview.cpp" line="1463"/>
+        <source>Azm. : %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cmapview.cpp" line="1465"/>
+        <location filename="cmapview.cpp" line="1721"/>
+        <source>Date : %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cmapview.cpp" line="1466"/>
+        <location filename="cmapview.cpp" line="1722"/>
+        <source>Time : %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cmapview.cpp" line="1475"/>
+        <source>Sep : %1 / PA : %2°</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cmapview.cpp" line="1533"/>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cmapview.cpp" line="1535"/>
+        <location filename="cmapview.cpp" line="1567"/>
+        <source>Skytech dev. shapes (*.shp)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cmapview.cpp" line="1565"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1701"/>
-        <location filename="cmapview.cpp" line="1720"/>
+        <location filename="cmapview.cpp" line="1807"/>
+        <location filename="cmapview.cpp" line="1826"/>
         <source>Setting time to epoch J2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1788"/>
+        <location filename="cmapview.cpp" line="1919"/>
         <source>FOV : </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3299,29 +3558,29 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="218"/>
+        <location filename="cmooncal.cpp" line="222"/>
         <source>Rise/Set solve ERROR!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="222"/>
+        <location filename="cmooncal.cpp" line="226"/>
         <source>Object is circumpolar.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="226"/>
+        <location filename="cmooncal.cpp" line="230"/>
         <source>Object is never visible!
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="231"/>
+        <location filename="cmooncal.cpp" line="235"/>
         <source>Rise : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="233"/>
+        <location filename="cmooncal.cpp" line="237"/>
         <source>Set : </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3342,603 +3601,747 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
 <context>
     <name>CObjFillInfo</name>
     <message>
-        <location filename="cobjfillinfo.cpp" line="129"/>
+        <location filename="cobjfillinfo.cpp" line="139"/>
         <source>Atlases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="133"/>
+        <location filename="cobjfillinfo.cpp" line="143"/>
         <source>Hvezdna obloha 2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="137"/>
+        <location filename="cobjfillinfo.cpp" line="147"/>
         <source>Sky Atlas 2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="139"/>
+        <location filename="cobjfillinfo.cpp" line="149"/>
         <source>Uranometria 2000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="156"/>
+        <location filename="cobjfillinfo.cpp" line="166"/>
         <source>Rise/Set solve ERROR!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="156"/>
-        <location filename="cobjfillinfo.cpp" line="1248"/>
+        <location filename="cobjfillinfo.cpp" line="166"/>
+        <location filename="cobjfillinfo.cpp" line="393"/>
+        <location filename="cobjfillinfo.cpp" line="523"/>
+        <location filename="cobjfillinfo.cpp" line="793"/>
+        <location filename="cobjfillinfo.cpp" line="914"/>
+        <location filename="cobjfillinfo.cpp" line="1019"/>
+        <location filename="cobjfillinfo.cpp" line="1125"/>
+        <location filename="cobjfillinfo.cpp" line="1222"/>
+        <location filename="cobjfillinfo.cpp" line="1313"/>
+        <location filename="cobjfillinfo.cpp" line="1329"/>
+        <location filename="cobjfillinfo.cpp" line="1330"/>
+        <location filename="cobjfillinfo.cpp" line="1332"/>
+        <location filename="cobjfillinfo.cpp" line="1413"/>
+        <location filename="cobjfillinfo.cpp" line="1429"/>
+        <location filename="cobjfillinfo.cpp" line="1430"/>
+        <location filename="cobjfillinfo.cpp" line="1432"/>
+        <location filename="cobjfillinfo.cpp" line="1515"/>
+        <location filename="cobjfillinfo.cpp" line="1532"/>
+        <location filename="cobjfillinfo.cpp" line="1653"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="162"/>
+        <location filename="cobjfillinfo.cpp" line="172"/>
         <source>Object is circumpolar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="163"/>
         <location filename="cobjfillinfo.cpp" line="173"/>
-        <location filename="cobjfillinfo.cpp" line="193"/>
+        <location filename="cobjfillinfo.cpp" line="183"/>
+        <location filename="cobjfillinfo.cpp" line="203"/>
         <source>Transit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="163"/>
         <location filename="cobjfillinfo.cpp" line="173"/>
-        <location filename="cobjfillinfo.cpp" line="193"/>
+        <location filename="cobjfillinfo.cpp" line="183"/>
+        <location filename="cobjfillinfo.cpp" line="203"/>
         <source>Alt : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="172"/>
+        <location filename="cobjfillinfo.cpp" line="182"/>
         <source>Object is never visible!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="188"/>
+        <location filename="cobjfillinfo.cpp" line="198"/>
         <source>Rise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="188"/>
         <location filename="cobjfillinfo.cpp" line="198"/>
+        <location filename="cobjfillinfo.cpp" line="208"/>
         <source>Azm : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="198"/>
+        <location filename="cobjfillinfo.cpp" line="208"/>
         <source>Set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="214"/>
-        <location filename="cobjfillinfo.cpp" line="313"/>
-        <location filename="cobjfillinfo.cpp" line="438"/>
-        <location filename="cobjfillinfo.cpp" line="600"/>
-        <location filename="cobjfillinfo.cpp" line="680"/>
-        <location filename="cobjfillinfo.cpp" line="811"/>
-        <location filename="cobjfillinfo.cpp" line="905"/>
-        <location filename="cobjfillinfo.cpp" line="1008"/>
-        <location filename="cobjfillinfo.cpp" line="1101"/>
-        <location filename="cobjfillinfo.cpp" line="1195"/>
-        <location filename="cobjfillinfo.cpp" line="1335"/>
-        <location filename="cobjfillinfo.cpp" line="1507"/>
+        <location filename="cobjfillinfo.cpp" line="241"/>
+        <location filename="cobjfillinfo.cpp" line="342"/>
+        <location filename="cobjfillinfo.cpp" line="471"/>
+        <location filename="cobjfillinfo.cpp" line="637"/>
+        <location filename="cobjfillinfo.cpp" line="717"/>
+        <location filename="cobjfillinfo.cpp" line="858"/>
+        <location filename="cobjfillinfo.cpp" line="962"/>
+        <location filename="cobjfillinfo.cpp" line="1069"/>
+        <location filename="cobjfillinfo.cpp" line="1166"/>
+        <location filename="cobjfillinfo.cpp" line="1258"/>
+        <location filename="cobjfillinfo.cpp" line="1358"/>
+        <location filename="cobjfillinfo.cpp" line="1462"/>
+        <location filename="cobjfillinfo.cpp" line="1606"/>
+        <location filename="cobjfillinfo.cpp" line="1809"/>
         <source>JD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="247"/>
-        <location filename="cobjfillinfo.cpp" line="606"/>
+        <location filename="cobjfillinfo.cpp" line="273"/>
+        <location filename="cobjfillinfo.cpp" line="643"/>
         <source>Satellite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="47"/>
+        <location filename="cobjfillinfo.cpp" line="49"/>
         <source>Constellation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="40"/>
+        <location filename="cobjfillinfo.cpp" line="42"/>
         <source>Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="41"/>
+        <location filename="cobjfillinfo.cpp" line="43"/>
         <source>Right Ascension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="42"/>
+        <location filename="cobjfillinfo.cpp" line="44"/>
         <source>Object type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="43"/>
+        <location filename="cobjfillinfo.cpp" line="45"/>
         <source>Designation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="44"/>
+        <location filename="cobjfillinfo.cpp" line="46"/>
         <source>Declination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="45"/>
+        <location filename="cobjfillinfo.cpp" line="47"/>
         <source>Local information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="46"/>
+        <location filename="cobjfillinfo.cpp" line="48"/>
+        <location filename="cobjfillinfo.cpp" line="1331"/>
+        <location filename="cobjfillinfo.cpp" line="1431"/>
         <source>Visual magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="51"/>
+        <location filename="cobjfillinfo.cpp" line="53"/>
         <source>Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="52"/>
+        <location filename="cobjfillinfo.cpp" line="54"/>
         <source>Galaxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="53"/>
+        <location filename="cobjfillinfo.cpp" line="55"/>
         <source>Unknown object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="54"/>
+        <location filename="cobjfillinfo.cpp" line="56"/>
         <source>Deep sky object / Plate defect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="55"/>
+        <location filename="cobjfillinfo.cpp" line="57"/>
         <source>Unspecified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="56"/>
+        <location filename="cobjfillinfo.cpp" line="58"/>
         <source>Artefact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="319"/>
+        <location filename="cobjfillinfo.cpp" line="348"/>
         <source>Asteroid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="48"/>
+        <location filename="cobjfillinfo.cpp" line="50"/>
         <source>Elongation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="49"/>
+        <location filename="cobjfillinfo.cpp" line="51"/>
         <source> (J2000.0)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="135"/>
+        <location filename="cobjfillinfo.cpp" line="145"/>
         <source>Millennium Star Atlas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="141"/>
+        <location filename="cobjfillinfo.cpp" line="151"/>
         <source>Interstellarum Deep Sky Atlas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="276"/>
+        <location filename="cobjfillinfo.cpp" line="222"/>
+        <source>Zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="224"/>
+        <source>PPMXL Zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="225"/>
+        <source>UCAC4 Zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="226"/>
+        <source>URAT1 Zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="227"/>
+        <source>USNO B1 Zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="305"/>
         <source>Distance from planet center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="357"/>
-        <location filename="cobjfillinfo.cpp" line="483"/>
-        <location filename="cobjfillinfo.cpp" line="634"/>
-        <location filename="cobjfillinfo.cpp" line="749"/>
-        <location filename="cobjfillinfo.cpp" line="860"/>
-        <location filename="cobjfillinfo.cpp" line="955"/>
-        <location filename="cobjfillinfo.cpp" line="1057"/>
-        <location filename="cobjfillinfo.cpp" line="1150"/>
-        <location filename="cobjfillinfo.cpp" line="1258"/>
-        <location filename="cobjfillinfo.cpp" line="1375"/>
+        <location filename="cobjfillinfo.cpp" line="386"/>
+        <location filename="cobjfillinfo.cpp" line="516"/>
+        <location filename="cobjfillinfo.cpp" line="671"/>
+        <location filename="cobjfillinfo.cpp" line="786"/>
+        <location filename="cobjfillinfo.cpp" line="907"/>
+        <location filename="cobjfillinfo.cpp" line="1012"/>
+        <location filename="cobjfillinfo.cpp" line="1118"/>
+        <location filename="cobjfillinfo.cpp" line="1215"/>
+        <location filename="cobjfillinfo.cpp" line="1306"/>
+        <location filename="cobjfillinfo.cpp" line="1406"/>
+        <location filename="cobjfillinfo.cpp" line="1525"/>
+        <location filename="cobjfillinfo.cpp" line="1646"/>
         <source>Azimuth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="358"/>
-        <location filename="cobjfillinfo.cpp" line="484"/>
-        <location filename="cobjfillinfo.cpp" line="635"/>
-        <location filename="cobjfillinfo.cpp" line="643"/>
-        <location filename="cobjfillinfo.cpp" line="750"/>
-        <location filename="cobjfillinfo.cpp" line="861"/>
-        <location filename="cobjfillinfo.cpp" line="956"/>
-        <location filename="cobjfillinfo.cpp" line="1058"/>
-        <location filename="cobjfillinfo.cpp" line="1151"/>
-        <location filename="cobjfillinfo.cpp" line="1259"/>
-        <location filename="cobjfillinfo.cpp" line="1376"/>
+        <location filename="cobjfillinfo.cpp" line="387"/>
+        <location filename="cobjfillinfo.cpp" line="517"/>
+        <location filename="cobjfillinfo.cpp" line="672"/>
+        <location filename="cobjfillinfo.cpp" line="680"/>
+        <location filename="cobjfillinfo.cpp" line="787"/>
+        <location filename="cobjfillinfo.cpp" line="908"/>
+        <location filename="cobjfillinfo.cpp" line="1013"/>
+        <location filename="cobjfillinfo.cpp" line="1119"/>
+        <location filename="cobjfillinfo.cpp" line="1216"/>
+        <location filename="cobjfillinfo.cpp" line="1307"/>
+        <location filename="cobjfillinfo.cpp" line="1407"/>
+        <location filename="cobjfillinfo.cpp" line="1526"/>
+        <location filename="cobjfillinfo.cpp" line="1647"/>
         <source>Altitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="360"/>
-        <location filename="cobjfillinfo.cpp" line="486"/>
-        <location filename="cobjfillinfo.cpp" line="752"/>
-        <location filename="cobjfillinfo.cpp" line="863"/>
-        <location filename="cobjfillinfo.cpp" line="958"/>
-        <location filename="cobjfillinfo.cpp" line="1060"/>
-        <location filename="cobjfillinfo.cpp" line="1153"/>
-        <location filename="cobjfillinfo.cpp" line="1261"/>
-        <location filename="cobjfillinfo.cpp" line="1378"/>
+        <location filename="cobjfillinfo.cpp" line="389"/>
+        <location filename="cobjfillinfo.cpp" line="519"/>
+        <location filename="cobjfillinfo.cpp" line="789"/>
+        <location filename="cobjfillinfo.cpp" line="910"/>
+        <location filename="cobjfillinfo.cpp" line="1015"/>
+        <location filename="cobjfillinfo.cpp" line="1121"/>
+        <location filename="cobjfillinfo.cpp" line="1218"/>
+        <location filename="cobjfillinfo.cpp" line="1309"/>
+        <location filename="cobjfillinfo.cpp" line="1409"/>
+        <location filename="cobjfillinfo.cpp" line="1528"/>
+        <location filename="cobjfillinfo.cpp" line="1649"/>
         <source>Altitude without ref.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="361"/>
-        <location filename="cobjfillinfo.cpp" line="487"/>
-        <location filename="cobjfillinfo.cpp" line="753"/>
-        <location filename="cobjfillinfo.cpp" line="864"/>
-        <location filename="cobjfillinfo.cpp" line="959"/>
-        <location filename="cobjfillinfo.cpp" line="1061"/>
-        <location filename="cobjfillinfo.cpp" line="1154"/>
-        <location filename="cobjfillinfo.cpp" line="1262"/>
-        <location filename="cobjfillinfo.cpp" line="1379"/>
+        <location filename="cobjfillinfo.cpp" line="390"/>
+        <location filename="cobjfillinfo.cpp" line="520"/>
+        <location filename="cobjfillinfo.cpp" line="790"/>
+        <location filename="cobjfillinfo.cpp" line="911"/>
+        <location filename="cobjfillinfo.cpp" line="1016"/>
+        <location filename="cobjfillinfo.cpp" line="1122"/>
+        <location filename="cobjfillinfo.cpp" line="1219"/>
+        <location filename="cobjfillinfo.cpp" line="1310"/>
+        <location filename="cobjfillinfo.cpp" line="1410"/>
+        <location filename="cobjfillinfo.cpp" line="1529"/>
+        <location filename="cobjfillinfo.cpp" line="1650"/>
         <source>Atm. refraction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="378"/>
-        <location filename="cobjfillinfo.cpp" line="504"/>
-        <location filename="cobjfillinfo.cpp" line="639"/>
-        <location filename="cobjfillinfo.cpp" line="1396"/>
+        <location filename="cobjfillinfo.cpp" line="393"/>
+        <location filename="cobjfillinfo.cpp" line="523"/>
+        <location filename="cobjfillinfo.cpp" line="793"/>
+        <location filename="cobjfillinfo.cpp" line="914"/>
+        <location filename="cobjfillinfo.cpp" line="1019"/>
+        <location filename="cobjfillinfo.cpp" line="1125"/>
+        <location filename="cobjfillinfo.cpp" line="1222"/>
+        <location filename="cobjfillinfo.cpp" line="1313"/>
+        <location filename="cobjfillinfo.cpp" line="1413"/>
+        <location filename="cobjfillinfo.cpp" line="1532"/>
+        <location filename="cobjfillinfo.cpp" line="1653"/>
+        <source>Airmass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="410"/>
+        <location filename="cobjfillinfo.cpp" line="540"/>
+        <location filename="cobjfillinfo.cpp" line="676"/>
+        <location filename="cobjfillinfo.cpp" line="1670"/>
         <source>Geocentric information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="382"/>
-        <location filename="cobjfillinfo.cpp" line="508"/>
-        <location filename="cobjfillinfo.cpp" line="1402"/>
+        <location filename="cobjfillinfo.cpp" line="414"/>
+        <location filename="cobjfillinfo.cpp" line="544"/>
+        <location filename="cobjfillinfo.cpp" line="1676"/>
         <source>R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="382"/>
-        <location filename="cobjfillinfo.cpp" line="395"/>
-        <location filename="cobjfillinfo.cpp" line="508"/>
-        <location filename="cobjfillinfo.cpp" line="521"/>
-        <location filename="cobjfillinfo.cpp" line="1402"/>
-        <location filename="cobjfillinfo.cpp" line="1424"/>
+        <location filename="cobjfillinfo.cpp" line="414"/>
+        <location filename="cobjfillinfo.cpp" line="427"/>
+        <location filename="cobjfillinfo.cpp" line="544"/>
+        <location filename="cobjfillinfo.cpp" line="557"/>
+        <location filename="cobjfillinfo.cpp" line="1676"/>
+        <location filename="cobjfillinfo.cpp" line="1698"/>
         <source>AU</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="383"/>
-        <location filename="cobjfillinfo.cpp" line="509"/>
-        <location filename="cobjfillinfo.cpp" line="1403"/>
-        <location filename="cobjfillinfo.cpp" line="1408"/>
+        <location filename="cobjfillinfo.cpp" line="415"/>
+        <location filename="cobjfillinfo.cpp" line="545"/>
+        <location filename="cobjfillinfo.cpp" line="1677"/>
+        <location filename="cobjfillinfo.cpp" line="1682"/>
         <source>Light time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="383"/>
-        <location filename="cobjfillinfo.cpp" line="509"/>
-        <location filename="cobjfillinfo.cpp" line="1403"/>
+        <location filename="cobjfillinfo.cpp" line="415"/>
+        <location filename="cobjfillinfo.cpp" line="545"/>
+        <location filename="cobjfillinfo.cpp" line="1677"/>
         <source> hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="386"/>
-        <location filename="cobjfillinfo.cpp" line="512"/>
-        <location filename="cobjfillinfo.cpp" line="1415"/>
+        <location filename="cobjfillinfo.cpp" line="418"/>
+        <location filename="cobjfillinfo.cpp" line="548"/>
+        <location filename="cobjfillinfo.cpp" line="1689"/>
         <source>Heliocentric information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="388"/>
-        <location filename="cobjfillinfo.cpp" line="514"/>
-        <location filename="cobjfillinfo.cpp" line="1417"/>
+        <location filename="cobjfillinfo.cpp" line="420"/>
+        <location filename="cobjfillinfo.cpp" line="550"/>
+        <location filename="cobjfillinfo.cpp" line="1691"/>
         <source>X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="389"/>
-        <location filename="cobjfillinfo.cpp" line="515"/>
-        <location filename="cobjfillinfo.cpp" line="1418"/>
+        <location filename="cobjfillinfo.cpp" line="421"/>
+        <location filename="cobjfillinfo.cpp" line="551"/>
+        <location filename="cobjfillinfo.cpp" line="1692"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="390"/>
-        <location filename="cobjfillinfo.cpp" line="516"/>
-        <location filename="cobjfillinfo.cpp" line="1419"/>
+        <location filename="cobjfillinfo.cpp" line="422"/>
+        <location filename="cobjfillinfo.cpp" line="552"/>
+        <location filename="cobjfillinfo.cpp" line="1693"/>
         <source>Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="392"/>
-        <location filename="cobjfillinfo.cpp" line="518"/>
-        <location filename="cobjfillinfo.cpp" line="641"/>
-        <location filename="cobjfillinfo.cpp" line="1421"/>
+        <location filename="cobjfillinfo.cpp" line="424"/>
+        <location filename="cobjfillinfo.cpp" line="554"/>
+        <location filename="cobjfillinfo.cpp" line="678"/>
+        <location filename="cobjfillinfo.cpp" line="1695"/>
         <source>Longitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="393"/>
-        <location filename="cobjfillinfo.cpp" line="519"/>
-        <location filename="cobjfillinfo.cpp" line="642"/>
-        <location filename="cobjfillinfo.cpp" line="1422"/>
+        <location filename="cobjfillinfo.cpp" line="425"/>
+        <location filename="cobjfillinfo.cpp" line="555"/>
+        <location filename="cobjfillinfo.cpp" line="679"/>
+        <location filename="cobjfillinfo.cpp" line="1696"/>
         <source>Latitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="395"/>
-        <location filename="cobjfillinfo.cpp" line="521"/>
-        <location filename="cobjfillinfo.cpp" line="1424"/>
+        <location filename="cobjfillinfo.cpp" line="427"/>
+        <location filename="cobjfillinfo.cpp" line="557"/>
+        <location filename="cobjfillinfo.cpp" line="1698"/>
         <source>r</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="403"/>
-        <location filename="cobjfillinfo.cpp" line="557"/>
-        <location filename="cobjfillinfo.cpp" line="761"/>
-        <location filename="cobjfillinfo.cpp" line="872"/>
-        <location filename="cobjfillinfo.cpp" line="967"/>
-        <location filename="cobjfillinfo.cpp" line="1069"/>
-        <location filename="cobjfillinfo.cpp" line="1162"/>
-        <location filename="cobjfillinfo.cpp" line="1280"/>
-        <location filename="cobjfillinfo.cpp" line="1469"/>
+        <location filename="cobjfillinfo.cpp" line="435"/>
+        <location filename="cobjfillinfo.cpp" line="593"/>
+        <location filename="cobjfillinfo.cpp" line="801"/>
+        <location filename="cobjfillinfo.cpp" line="922"/>
+        <location filename="cobjfillinfo.cpp" line="1027"/>
+        <location filename="cobjfillinfo.cpp" line="1133"/>
+        <location filename="cobjfillinfo.cpp" line="1230"/>
+        <location filename="cobjfillinfo.cpp" line="1321"/>
+        <location filename="cobjfillinfo.cpp" line="1421"/>
+        <location filename="cobjfillinfo.cpp" line="1550"/>
+        <location filename="cobjfillinfo.cpp" line="1770"/>
         <source>Position at JD2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="439"/>
-        <location filename="cobjfillinfo.cpp" line="601"/>
-        <location filename="cobjfillinfo.cpp" line="681"/>
-        <location filename="cobjfillinfo.cpp" line="812"/>
-        <location filename="cobjfillinfo.cpp" line="906"/>
-        <location filename="cobjfillinfo.cpp" line="1009"/>
-        <location filename="cobjfillinfo.cpp" line="1102"/>
-        <location filename="cobjfillinfo.cpp" line="1196"/>
-        <location filename="cobjfillinfo.cpp" line="1336"/>
-        <location filename="cobjfillinfo.cpp" line="1508"/>
+        <location filename="cobjfillinfo.cpp" line="472"/>
+        <location filename="cobjfillinfo.cpp" line="638"/>
+        <location filename="cobjfillinfo.cpp" line="718"/>
+        <location filename="cobjfillinfo.cpp" line="859"/>
+        <location filename="cobjfillinfo.cpp" line="963"/>
+        <location filename="cobjfillinfo.cpp" line="1070"/>
+        <location filename="cobjfillinfo.cpp" line="1167"/>
+        <location filename="cobjfillinfo.cpp" line="1259"/>
+        <location filename="cobjfillinfo.cpp" line="1359"/>
+        <location filename="cobjfillinfo.cpp" line="1463"/>
+        <location filename="cobjfillinfo.cpp" line="1607"/>
+        <location filename="cobjfillinfo.cpp" line="1810"/>
         <source>Date/Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="444"/>
+        <location filename="cobjfillinfo.cpp" line="477"/>
         <source>Comet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="512"/>
+        <location filename="cobjfillinfo.cpp" line="548"/>
         <source>J2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="524"/>
-        <location filename="cobjfillinfo.cpp" line="646"/>
-        <location filename="cobjfillinfo.cpp" line="973"/>
-        <location filename="cobjfillinfo.cpp" line="1270"/>
+        <location filename="cobjfillinfo.cpp" line="560"/>
+        <location filename="cobjfillinfo.cpp" line="683"/>
+        <location filename="cobjfillinfo.cpp" line="1033"/>
+        <location filename="cobjfillinfo.cpp" line="1327"/>
+        <location filename="cobjfillinfo.cpp" line="1427"/>
+        <location filename="cobjfillinfo.cpp" line="1540"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="527"/>
-        <location filename="cobjfillinfo.cpp" line="648"/>
+        <location filename="cobjfillinfo.cpp" line="563"/>
+        <location filename="cobjfillinfo.cpp" line="685"/>
         <source>Orbital period</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="533"/>
+        <location filename="cobjfillinfo.cpp" line="569"/>
         <source> years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="537"/>
+        <location filename="cobjfillinfo.cpp" line="573"/>
         <source>Non periodic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="549"/>
+        <location filename="cobjfillinfo.cpp" line="585"/>
         <source>Current speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="549"/>
+        <location filename="cobjfillinfo.cpp" line="585"/>
         <source> km/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="636"/>
+        <location filename="cobjfillinfo.cpp" line="673"/>
         <source>Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="636"/>
-        <location filename="cobjfillinfo.cpp" line="643"/>
-        <location filename="cobjfillinfo.cpp" line="650"/>
+        <location filename="cobjfillinfo.cpp" line="673"/>
+        <location filename="cobjfillinfo.cpp" line="680"/>
+        <location filename="cobjfillinfo.cpp" line="687"/>
         <source> km.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="648"/>
+        <location filename="cobjfillinfo.cpp" line="685"/>
         <source> min.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="649"/>
+        <location filename="cobjfillinfo.cpp" line="686"/>
         <source>Inclination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="650"/>
+        <location filename="cobjfillinfo.cpp" line="687"/>
         <source>Perigee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="651"/>
+        <location filename="cobjfillinfo.cpp" line="688"/>
         <source>Epoch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="654"/>
+        <location filename="cobjfillinfo.cpp" line="691"/>
         <source>Time difference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="654"/>
+        <location filename="cobjfillinfo.cpp" line="691"/>
         <source> day(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="686"/>
+        <location filename="cobjfillinfo.cpp" line="723"/>
         <source>Star (TYC2 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="767"/>
-        <location filename="cobjfillinfo.cpp" line="1429"/>
+        <location filename="cobjfillinfo.cpp" line="807"/>
+        <location filename="cobjfillinfo.cpp" line="928"/>
+        <source>Proper motion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="813"/>
+        <location filename="cobjfillinfo.cpp" line="1703"/>
         <source>Apparent view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="778"/>
+        <location filename="cobjfillinfo.cpp" line="824"/>
         <source>Spectral type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="782"/>
+        <location filename="cobjfillinfo.cpp" line="828"/>
         <source>B-V mag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="784"/>
+        <location filename="cobjfillinfo.cpp" line="830"/>
         <source>Johnson BT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="785"/>
+        <location filename="cobjfillinfo.cpp" line="831"/>
         <source>Johnson VT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="658"/>
-        <location filename="cobjfillinfo.cpp" line="790"/>
-        <location filename="cobjfillinfo.cpp" line="880"/>
-        <location filename="cobjfillinfo.cpp" line="983"/>
-        <location filename="cobjfillinfo.cpp" line="1077"/>
-        <location filename="cobjfillinfo.cpp" line="1170"/>
-        <location filename="cobjfillinfo.cpp" line="1288"/>
-        <location filename="cobjfillinfo.cpp" line="1477"/>
+        <location filename="cobjfillinfo.cpp" line="695"/>
+        <location filename="cobjfillinfo.cpp" line="837"/>
+        <location filename="cobjfillinfo.cpp" line="937"/>
+        <location filename="cobjfillinfo.cpp" line="1044"/>
+        <location filename="cobjfillinfo.cpp" line="1142"/>
+        <location filename="cobjfillinfo.cpp" line="1239"/>
+        <location filename="cobjfillinfo.cpp" line="1338"/>
+        <location filename="cobjfillinfo.cpp" line="1438"/>
+        <location filename="cobjfillinfo.cpp" line="1559"/>
+        <location filename="cobjfillinfo.cpp" line="1779"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="817"/>
+        <location filename="cobjfillinfo.cpp" line="864"/>
         <source>Star (UCAC4 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="911"/>
+        <location filename="cobjfillinfo.cpp" line="968"/>
         <source>Star (GSC1.2 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="975"/>
+        <location filename="cobjfillinfo.cpp" line="1035"/>
         <source>Emulsion &amp; Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="978"/>
+        <location filename="cobjfillinfo.cpp" line="1038"/>
         <source>Identification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1014"/>
+        <location filename="cobjfillinfo.cpp" line="1075"/>
         <source>Star (PPMXL cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1107"/>
+        <location filename="cobjfillinfo.cpp" line="1172"/>
         <source>Star (USNO2 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1274"/>
-        <location filename="cobjfillinfo.cpp" line="1450"/>
+        <location filename="cobjfillinfo.cpp" line="1264"/>
+        <source>Star (USNO B1 cat.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1329"/>
+        <location filename="cobjfillinfo.cpp" line="1429"/>
+        <source>Red magnitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1330"/>
+        <location filename="cobjfillinfo.cpp" line="1430"/>
+        <source>Blue magnitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1331"/>
+        <source> (Calc. from R/B)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1332"/>
+        <location filename="cobjfillinfo.cpp" line="1432"/>
+        <source>B-V Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1332"/>
+        <location filename="cobjfillinfo.cpp" line="1432"/>
+        <source> (Calc. from B/V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1364"/>
+        <source>Star (URAT1 cat.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1544"/>
+        <location filename="cobjfillinfo.cpp" line="1734"/>
         <source>P.A.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1276"/>
+        <location filename="cobjfillinfo.cpp" line="1546"/>
         <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1407"/>
+        <location filename="cobjfillinfo.cpp" line="1681"/>
         <source>Dist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1407"/>
+        <location filename="cobjfillinfo.cpp" line="1681"/>
         <source>Km</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1408"/>
+        <location filename="cobjfillinfo.cpp" line="1682"/>
         <source> sec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1437"/>
+        <location filename="cobjfillinfo.cpp" line="1713"/>
+        <location filename="cobjfillinfo.cpp" line="1724"/>
         <source>Apparent diameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1442"/>
+        <location filename="cobjfillinfo.cpp" line="1718"/>
+        <location filename="cobjfillinfo.cpp" line="1726"/>
         <source>Apparent radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1447"/>
+        <location filename="cobjfillinfo.cpp" line="1731"/>
         <source>Phase</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1448"/>
+        <location filename="cobjfillinfo.cpp" line="1732"/>
         <source>Phase angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1454"/>
+        <location filename="cobjfillinfo.cpp" line="1741"/>
+        <source>Central Meridian I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1742"/>
+        <source>Central Meridian II</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1743"/>
+        <source>Central Meridian III</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1747"/>
         <source>Central Meridian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1459"/>
+        <location filename="cobjfillinfo.cpp" line="1753"/>
         <source>Sub-Earth Phi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1517"/>
+        <location filename="cobjfillinfo.cpp" line="1760"/>
+        <source>GRS longitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="1819"/>
         <source>Apparent umbra radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1519"/>
+        <location filename="cobjfillinfo.cpp" line="1821"/>
         <source>Apparent penumbra radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1524"/>
+        <location filename="cobjfillinfo.cpp" line="1826"/>
         <source>Apparent umbra diameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1526"/>
+        <location filename="cobjfillinfo.cpp" line="1828"/>
         <source>Apparent penumbra diameter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4081,7 +4484,7 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjinfo.cpp" line="213"/>
+        <location filename="cobjinfo.cpp" line="214"/>
         <source>Object information : </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4195,7 +4598,7 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjtracking.cpp" line="418"/>
+        <location filename="cobjtracking.cpp" line="421"/>
         <source>Tracking has too few points!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4204,7 +4607,7 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
     <name>CPlanetAltitude</name>
     <message>
         <location filename="cplanetaltitude.ui" line="14"/>
-        <location filename="cplanetaltitude.cpp" line="147"/>
+        <location filename="cplanetaltitude.cpp" line="148"/>
         <source>Planet altitude</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4226,6 +4629,60 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
     <message>
         <location filename="cplanetaltitude.ui" line="105"/>
         <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CPlanetSize</name>
+    <message>
+        <location filename="cplanetsize.ui" line="20"/>
+        <source>Apparent size of planets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.ui" line="33"/>
+        <source>Backward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.ui" line="42"/>
+        <source>+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.ui" line="52"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.ui" line="59"/>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.ui" line="99"/>
+        <source>Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.ui" line="129"/>
+        <location filename="cplanetsize.ui" line="175"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.ui" line="152"/>
+        <source>Now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.ui" line="195"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplanetsize.cpp" line="167"/>
+        <source>Diameter : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4383,7 +4840,7 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
 <context>
     <name>CPushColorButton</name>
     <message>
-        <location filename="cpushcolorbutton.cpp" line="31"/>
+        <location filename="cpushcolorbutton.cpp" line="30"/>
         <source>Set color...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4446,6 +4903,12 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="crestoretm.cpp" line="100"/>
+        <location filename="crestoretm.cpp" line="102"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CSatEvents</name>
@@ -4490,22 +4953,22 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatevents.cpp" line="48"/>
+        <location filename="csatevents.cpp" line="49"/>
         <source>Events for %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatevents.cpp" line="58"/>
+        <location filename="csatevents.cpp" line="59"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatevents.cpp" line="59"/>
+        <location filename="csatevents.cpp" line="60"/>
         <source>Desc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatevents.cpp" line="103"/>
+        <location filename="csatevents.cpp" line="101"/>
         <source>Max elongation of %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4549,7 +5012,7 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
 <context>
     <name>CSatelliteChartWidget</name>
     <message>
-        <location filename="csatelliteevent.cpp" line="185"/>
+        <location filename="csatelliteevent.cpp" line="183"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4572,47 +5035,52 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.ui" line="62"/>
+        <location filename="csatellitedlg.ui" line="44"/>
+        <source>Download...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csatellitedlg.ui" line="69"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.ui" line="70"/>
+        <location filename="csatellitedlg.ui" line="77"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.ui" line="84"/>
+        <location filename="csatellitedlg.ui" line="91"/>
         <source>Minimal date UTC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.ui" line="98"/>
+        <location filename="csatellitedlg.ui" line="105"/>
         <source>Maximum date UTC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.ui" line="131"/>
+        <location filename="csatellitedlg.ui" line="138"/>
         <source>Select all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.ui" line="151"/>
+        <location filename="csatellitedlg.ui" line="158"/>
         <source>Deselect all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.ui" line="180"/>
+        <location filename="csatellitedlg.ui" line="187"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.cpp" line="18"/>
+        <location filename="csatellitedlg.cpp" line="19"/>
         <source>Save current catalogue to disc?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.cpp" line="68"/>
+        <location filename="csatellitedlg.cpp" line="69"/>
         <source>Satellite tracking and holding will be discarded.
 Quick information about satellites too.
 
@@ -4620,12 +5088,12 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.cpp" line="110"/>
+        <location filename="csatellitedlg.cpp" line="111"/>
         <source>Open a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatellitedlg.cpp" line="165"/>
+        <location filename="csatellitedlg.cpp" line="166"/>
         <source>Satellite - </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4646,12 +5114,14 @@ Do you wish show this dialog window next time?</source>
         <location filename="csatelliteevent.ui" line="148"/>
         <location filename="csatelliteevent.ui" line="164"/>
         <location filename="csatelliteevent.ui" line="180"/>
-        <location filename="csatelliteevent.ui" line="199"/>
+        <location filename="csatelliteevent.ui" line="196"/>
+        <location filename="csatelliteevent.ui" line="212"/>
+        <location filename="csatelliteevent.ui" line="231"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csatelliteevent.ui" line="219"/>
+        <location filename="csatelliteevent.ui" line="251"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4741,12 +5211,17 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csavetm.ui" line="70"/>
+        <location filename="csavetm.ui" line="47"/>
+        <source>Save map position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csavetm.ui" line="80"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csavetm.ui" line="60"/>
+        <location filename="csavetm.ui" line="70"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4857,69 +5332,84 @@ Do you wish show this dialog window next time?</source>
     </message>
     <message>
         <location filename="cseltelefield.ui" line="75"/>
-        <location filename="cseltelefield.ui" line="336"/>
+        <location filename="cseltelefield.ui" line="363"/>
         <source>Add..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="cseltelefield.ui" line="115"/>
-        <location filename="cseltelefield.ui" line="376"/>
+        <location filename="cseltelefield.ui" line="403"/>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="315"/>
+        <location filename="cseltelefield.ui" line="342"/>
         <source>Eyepiece</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="191"/>
+        <location filename="cseltelefield.ui" line="218"/>
         <source>Telescope parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="cseltelefield.ui" line="95"/>
-        <location filename="cseltelefield.ui" line="356"/>
+        <location filename="cseltelefield.ui" line="383"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="197"/>
-        <location filename="cseltelefield.ui" line="214"/>
-        <location filename="cseltelefield.ui" line="251"/>
-        <location filename="cseltelefield.ui" line="258"/>
+        <location filename="cseltelefield.ui" line="133"/>
+        <source>Label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cseltelefield.ui" line="141"/>
+        <source>Show FOV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cseltelefield.ui" line="148"/>
+        <source>Show telescope and eyepiece name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cseltelefield.ui" line="224"/>
+        <location filename="cseltelefield.ui" line="241"/>
+        <location filename="cseltelefield.ui" line="278"/>
         <location filename="cseltelefield.ui" line="285"/>
-        <location filename="cseltelefield.ui" line="292"/>
+        <location filename="cseltelefield.ui" line="312"/>
+        <location filename="cseltelefield.ui" line="319"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="204"/>
+        <location filename="cseltelefield.ui" line="231"/>
         <source>Focal ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="221"/>
+        <location filename="cseltelefield.ui" line="248"/>
         <source>Exit pupil</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="231"/>
+        <location filename="cseltelefield.ui" line="258"/>
         <source>Magnification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="241"/>
+        <location filename="cseltelefield.ui" line="268"/>
         <source>Resolving power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="265"/>
+        <location filename="cseltelefield.ui" line="292"/>
         <source>Limiting magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="275"/>
+        <location filename="cseltelefield.ui" line="302"/>
         <source>Field of view</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4929,12 +5419,12 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="133"/>
+        <location filename="cseltelefield.ui" line="182"/>
         <source>Barlow power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cseltelefield.ui" line="153"/>
+        <location filename="cseltelefield.ui" line="160"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5033,17 +5523,17 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetjd.ui" line="100"/>
+        <location filename="csetjd.ui" line="114"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetjd.ui" line="110"/>
+        <location filename="csetjd.ui" line="100"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetjd.ui" line="117"/>
+        <location filename="csetjd.ui" line="107"/>
         <source>Current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5073,6 +5563,7 @@ Do you wish show this dialog window next time?</source>
         <location filename="csetposition.ui" line="322"/>
         <location filename="csetposition.ui" line="403"/>
         <location filename="csetposition.ui" line="473"/>
+        <location filename="csetposition.ui" line="588"/>
         <source>°</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5160,17 +5651,22 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetposition.ui" line="605"/>
+        <location filename="csetposition.ui" line="581"/>
+        <source>Rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetposition.ui" line="638"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetposition.ui" line="615"/>
+        <location filename="csetposition.ui" line="648"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetposition.cpp" line="91"/>
+        <location filename="csetposition.cpp" line="94"/>
         <source>FOV : </source>
         <translation type="unfinished"></translation>
     </message>
@@ -5322,17 +5818,17 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="4068"/>
+        <location filename="csetting.ui" line="4773"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="4078"/>
+        <location filename="csetting.ui" line="4783"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="4085"/>
+        <location filename="csetting.ui" line="4790"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5368,8 +5864,8 @@ Do you wish show this dialog window next time?</source>
     </message>
     <message>
         <location filename="csetting.ui" line="59"/>
-        <location filename="csetting.ui" line="2608"/>
-        <location filename="csetting.ui" line="2668"/>
+        <location filename="csetting.ui" line="2870"/>
+        <location filename="csetting.ui" line="2930"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5379,152 +5875,154 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="276"/>
-        <location filename="csetting.ui" line="329"/>
-        <location filename="csetting.ui" line="352"/>
-        <location filename="csetting.ui" line="448"/>
-        <location filename="csetting.ui" line="490"/>
-        <location filename="csetting.ui" line="532"/>
-        <location filename="csetting.ui" line="574"/>
-        <location filename="csetting.ui" line="616"/>
-        <location filename="csetting.ui" line="658"/>
-        <location filename="csetting.ui" line="700"/>
-        <location filename="csetting.ui" line="742"/>
-        <location filename="csetting.ui" line="784"/>
-        <location filename="csetting.ui" line="826"/>
-        <location filename="csetting.ui" line="923"/>
-        <location filename="csetting.ui" line="949"/>
-        <location filename="csetting.ui" line="1106"/>
-        <location filename="csetting.ui" line="1148"/>
-        <location filename="csetting.ui" line="1190"/>
-        <location filename="csetting.ui" line="1232"/>
-        <location filename="csetting.ui" line="1274"/>
-        <location filename="csetting.ui" line="1316"/>
-        <location filename="csetting.ui" line="1358"/>
-        <location filename="csetting.ui" line="1400"/>
-        <location filename="csetting.ui" line="1442"/>
-        <location filename="csetting.ui" line="1484"/>
-        <location filename="csetting.ui" line="2494"/>
-        <location filename="csetting.ui" line="2966"/>
-        <location filename="csetting.ui" line="3053"/>
-        <location filename="csetting.ui" line="3164"/>
-        <location filename="csetting.ui" line="3275"/>
+        <location filename="csetting.ui" line="183"/>
+        <location filename="csetting.ui" line="268"/>
+        <location filename="csetting.ui" line="298"/>
+        <location filename="csetting.ui" line="543"/>
+        <location filename="csetting.ui" line="585"/>
+        <location filename="csetting.ui" line="627"/>
+        <location filename="csetting.ui" line="669"/>
+        <location filename="csetting.ui" line="711"/>
+        <location filename="csetting.ui" line="753"/>
+        <location filename="csetting.ui" line="795"/>
+        <location filename="csetting.ui" line="837"/>
+        <location filename="csetting.ui" line="879"/>
+        <location filename="csetting.ui" line="921"/>
+        <location filename="csetting.ui" line="1018"/>
+        <location filename="csetting.ui" line="1044"/>
+        <location filename="csetting.ui" line="1244"/>
+        <location filename="csetting.ui" line="1286"/>
+        <location filename="csetting.ui" line="1328"/>
+        <location filename="csetting.ui" line="1370"/>
+        <location filename="csetting.ui" line="1412"/>
+        <location filename="csetting.ui" line="1454"/>
+        <location filename="csetting.ui" line="1496"/>
+        <location filename="csetting.ui" line="1538"/>
+        <location filename="csetting.ui" line="1580"/>
+        <location filename="csetting.ui" line="1622"/>
+        <location filename="csetting.ui" line="2725"/>
+        <location filename="csetting.ui" line="3235"/>
+        <location filename="csetting.ui" line="3328"/>
+        <location filename="csetting.ui" line="3452"/>
+        <location filename="csetting.ui" line="3570"/>
+        <location filename="csetting.ui" line="3688"/>
+        <location filename="csetting.ui" line="3806"/>
         <source>°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="262"/>
+        <location filename="csetting.ui" line="213"/>
         <source>Show proper name from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="322"/>
+        <location filename="csetting.ui" line="284"/>
         <source>Show bayer letter from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="345"/>
+        <location filename="csetting.ui" line="314"/>
         <source>Show flamsteed number from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="225"/>
+        <location filename="csetting.ui" line="220"/>
         <source>Bayer letter priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="197"/>
+        <location filename="csetting.ui" line="199"/>
         <source>Proper name priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="269"/>
+        <location filename="csetting.ui" line="397"/>
         <source>Star bitmap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="315"/>
+        <location filename="csetting.ui" line="449"/>
         <source>Use spectral color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="211"/>
+        <location filename="csetting.ui" line="240"/>
         <source>Proper name font &amp; color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="218"/>
+        <location filename="csetting.ui" line="247"/>
         <source>Bayer letter font &amp; color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="248"/>
+        <location filename="csetting.ui" line="321"/>
         <source>Flamsteed number font &amp; color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="183"/>
+        <location filename="csetting.ui" line="370"/>
         <source>Star size factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="404"/>
-        <location filename="csetting.ui" line="1062"/>
+        <location filename="csetting.ui" line="499"/>
+        <location filename="csetting.ui" line="1200"/>
         <source>Magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="411"/>
-        <location filename="csetting.ui" line="1069"/>
+        <location filename="csetting.ui" line="506"/>
+        <location filename="csetting.ui" line="1207"/>
         <source>From FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="901"/>
+        <location filename="csetting.ui" line="996"/>
         <source>Label font and color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="894"/>
-        <location filename="csetting.ui" line="1590"/>
-        <location filename="csetting.ui" line="1625"/>
-        <location filename="csetting.ui" line="1649"/>
-        <location filename="csetting.ui" line="1666"/>
-        <location filename="csetting.ui" line="1680"/>
-        <location filename="csetting.ui" line="1705"/>
-        <location filename="csetting.ui" line="1751"/>
+        <location filename="csetting.ui" line="989"/>
+        <location filename="csetting.ui" line="1728"/>
+        <location filename="csetting.ui" line="1763"/>
+        <location filename="csetting.ui" line="1787"/>
         <location filename="csetting.ui" line="1804"/>
-        <location filename="csetting.ui" line="1899"/>
-        <location filename="csetting.ui" line="1913"/>
-        <location filename="csetting.ui" line="1927"/>
-        <location filename="csetting.ui" line="1993"/>
-        <location filename="csetting.ui" line="2014"/>
-        <location filename="csetting.ui" line="2028"/>
-        <location filename="csetting.ui" line="2074"/>
-        <location filename="csetting.ui" line="2088"/>
-        <location filename="csetting.ui" line="2133"/>
-        <location filename="csetting.ui" line="2147"/>
-        <location filename="csetting.ui" line="2211"/>
-        <location filename="csetting.ui" line="2225"/>
-        <location filename="csetting.ui" line="2319"/>
-        <location filename="csetting.ui" line="2333"/>
-        <location filename="csetting.ui" line="2424"/>
-        <location filename="csetting.ui" line="2438"/>
-        <location filename="csetting.ui" line="2551"/>
-        <location filename="csetting.ui" line="2701"/>
-        <location filename="csetting.ui" line="2715"/>
-        <location filename="csetting.ui" line="2849"/>
-        <location filename="csetting.ui" line="2863"/>
+        <location filename="csetting.ui" line="1818"/>
+        <location filename="csetting.ui" line="1843"/>
+        <location filename="csetting.ui" line="1889"/>
+        <location filename="csetting.ui" line="1942"/>
+        <location filename="csetting.ui" line="2047"/>
+        <location filename="csetting.ui" line="2054"/>
+        <location filename="csetting.ui" line="2075"/>
+        <location filename="csetting.ui" line="2146"/>
+        <location filename="csetting.ui" line="2160"/>
+        <location filename="csetting.ui" line="2263"/>
+        <location filename="csetting.ui" line="2284"/>
+        <location filename="csetting.ui" line="2298"/>
+        <location filename="csetting.ui" line="2358"/>
+        <location filename="csetting.ui" line="2372"/>
+        <location filename="csetting.ui" line="2436"/>
+        <location filename="csetting.ui" line="2450"/>
+        <location filename="csetting.ui" line="2544"/>
+        <location filename="csetting.ui" line="2558"/>
+        <location filename="csetting.ui" line="2649"/>
+        <location filename="csetting.ui" line="2663"/>
+        <location filename="csetting.ui" line="2813"/>
+        <location filename="csetting.ui" line="2963"/>
+        <location filename="csetting.ui" line="2977"/>
+        <location filename="csetting.ui" line="3111"/>
+        <location filename="csetting.ui" line="3125"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="967"/>
+        <location filename="csetting.ui" line="1062"/>
         <source>Object with no magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="910"/>
+        <location filename="csetting.ui" line="1005"/>
         <source>With shape show from FOV</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5534,1009 +6032,1197 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="939"/>
+        <location filename="csetting.ui" line="1034"/>
         <source>Other from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="997"/>
+        <location filename="csetting.ui" line="1092"/>
         <source>Shape color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1005"/>
+        <location filename="csetting.ui" line="1100"/>
         <source>Brightness part of nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1019"/>
+        <location filename="csetting.ui" line="1114"/>
         <source>Medium part of nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1033"/>
+        <location filename="csetting.ui" line="1128"/>
         <source>Darkneest part of nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1529"/>
+        <location filename="csetting.ui" line="1667"/>
         <source>R.A. / Dec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1545"/>
+        <location filename="csetting.ui" line="1683"/>
         <source>Alt. / Azm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1561"/>
+        <location filename="csetting.ui" line="1699"/>
         <source>Ecliptical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1583"/>
+        <location filename="csetting.ui" line="1721"/>
         <source>Show coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1611"/>
+        <location filename="csetting.ui" line="1749"/>
         <source>Constellation font &amp; color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1635"/>
+        <location filename="csetting.ui" line="1773"/>
         <source>Main lines color &amp; style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1659"/>
+        <location filename="csetting.ui" line="1797"/>
         <source>Secondary lines color &amp; style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1673"/>
+        <location filename="csetting.ui" line="1811"/>
         <source>Boundary lines color &amp; style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1642"/>
+        <location filename="csetting.ui" line="1780"/>
         <source>Constellation lines style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1712"/>
+        <location filename="csetting.ui" line="1850"/>
         <source>Horizon opacity (alpha)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1698"/>
+        <location filename="csetting.ui" line="1836"/>
         <source>Horizon color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1744"/>
+        <location filename="csetting.ui" line="1882"/>
         <source>Horizon font &amp; color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1758"/>
+        <location filename="csetting.ui" line="1896"/>
         <source>Show horizon only in Alt/Azm mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1797"/>
+        <location filename="csetting.ui" line="1935"/>
         <source>Static color only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1844"/>
+        <location filename="csetting.ui" line="1982"/>
         <source>Night...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1851"/>
+        <location filename="csetting.ui" line="1989"/>
         <source>Twilight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1858"/>
+        <location filename="csetting.ui" line="1996"/>
         <source>Day...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1811"/>
+        <location filename="csetting.ui" line="1949"/>
         <source>Dynamic color in Alt/Azm map only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1879"/>
+        <location filename="csetting.ui" line="2017"/>
         <source>Planets, Sun &amp;&amp; Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1951"/>
-        <location filename="csetting.ui" line="2154"/>
+        <location filename="csetting.ui" line="2092"/>
+        <location filename="csetting.ui" line="2379"/>
         <source>Phase opacity (alpha)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1892"/>
-        <location filename="csetting.ui" line="2067"/>
+        <location filename="csetting.ui" line="2033"/>
+        <location filename="csetting.ui" line="2139"/>
         <source>Pen color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1906"/>
+        <location filename="csetting.ui" line="2061"/>
         <source>Brush color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1577"/>
-        <location filename="csetting.ui" line="1920"/>
-        <location filename="csetting.ui" line="2081"/>
-        <location filename="csetting.ui" line="2140"/>
-        <location filename="csetting.ui" line="2218"/>
-        <location filename="csetting.ui" line="2326"/>
-        <location filename="csetting.ui" line="2431"/>
-        <location filename="csetting.ui" line="2694"/>
-        <location filename="csetting.ui" line="2856"/>
+        <location filename="csetting.ui" line="1715"/>
+        <location filename="csetting.ui" line="2040"/>
+        <location filename="csetting.ui" line="2153"/>
+        <location filename="csetting.ui" line="2365"/>
+        <location filename="csetting.ui" line="2443"/>
+        <location filename="csetting.ui" line="2551"/>
+        <location filename="csetting.ui" line="2656"/>
+        <location filename="csetting.ui" line="2956"/>
+        <location filename="csetting.ui" line="3118"/>
         <source>Label font &amp; color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1985"/>
+        <location filename="csetting.ui" line="2255"/>
         <source>Planet satellites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2021"/>
+        <location filename="csetting.ui" line="2291"/>
         <source>Satellite color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2000"/>
+        <location filename="csetting.ui" line="2270"/>
         <source>Sat. label font &amp; color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2007"/>
+        <location filename="csetting.ui" line="2277"/>
         <source>Shadow color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1934"/>
-        <location filename="csetting.ui" line="2035"/>
+        <location filename="csetting.ui" line="2068"/>
+        <location filename="csetting.ui" line="2305"/>
         <source>Min. symbol radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1618"/>
+        <location filename="csetting.ui" line="254"/>
+        <source>Vector size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="261"/>
+        <source>Show proper motion vector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="335"/>
+        <source> year(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="377"/>
+        <source>Show star bitmap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="380"/>
+        <source>I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="463"/>
+        <source>Saturation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="1147"/>
+        <source>DSO Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="1155"/>
+        <source>Hide DSO with prefix. Separated by ;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="1165"/>
+        <source>Eg. M; IC; Mel; ngc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="1756"/>
         <source>Constelation names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1765"/>
+        <location filename="csetting.ui" line="1903"/>
         <source>Show directions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1772"/>
+        <location filename="csetting.ui" line="1910"/>
         <source>Hide texture when mouse move the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="1779"/>
+        <location filename="csetting.ui" line="1917"/>
         <source>Set horizon type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2057"/>
+        <location filename="csetting.ui" line="2025"/>
+        <source>Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2129"/>
         <source>Lunar features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2118"/>
+        <location filename="csetting.ui" line="2202"/>
+        <source>Moon texture (Restart required)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2208"/>
+        <source>Default texture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2218"/>
+        <source>Custom texture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2234"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2248"/>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2343"/>
         <source>Earth shadow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2126"/>
-        <location filename="csetting.ui" line="2204"/>
-        <location filename="csetting.ui" line="2312"/>
-        <location filename="csetting.ui" line="2417"/>
-        <location filename="csetting.ui" line="2708"/>
-        <location filename="csetting.ui" line="2842"/>
-        <location filename="csetting.cpp" line="255"/>
+        <location filename="csetting.ui" line="2351"/>
+        <location filename="csetting.ui" line="2429"/>
+        <location filename="csetting.ui" line="2537"/>
+        <location filename="csetting.ui" line="2642"/>
+        <location filename="csetting.ui" line="2970"/>
+        <location filename="csetting.ui" line="3104"/>
+        <location filename="csetting.cpp" line="311"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2186"/>
+        <location filename="csetting.ui" line="2411"/>
         <source>Show earth shadow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2196"/>
-        <location filename="csetting.ui" line="3855"/>
+        <location filename="csetting.ui" line="2421"/>
+        <location filename="csetting.ui" line="4514"/>
         <source>Comets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2232"/>
-        <location filename="csetting.ui" line="2340"/>
+        <location filename="csetting.ui" line="2457"/>
+        <location filename="csetting.ui" line="2565"/>
         <source>Symbol radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2249"/>
-        <location filename="csetting.ui" line="2357"/>
+        <location filename="csetting.ui" line="2474"/>
+        <location filename="csetting.ui" line="2582"/>
         <source>Magnitude as stars +</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2301"/>
-        <location filename="csetting.ui" line="3901"/>
+        <location filename="csetting.ui" line="2526"/>
+        <location filename="csetting.ui" line="4560"/>
         <source>Asteroids</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2530"/>
+        <location filename="csetting.ui" line="2718"/>
+        <source>Yearly drift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2758"/>
+        <source>Date UTC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="2792"/>
         <source>Show Milky Way</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2537"/>
+        <location filename="csetting.ui" line="2799"/>
         <source>Use background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2544"/>
+        <location filename="csetting.ui" line="2806"/>
         <source>Select custom color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2558"/>
+        <location filename="csetting.ui" line="2820"/>
         <source>Brightness  (Bright part)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2618"/>
+        <location filename="csetting.ui" line="2880"/>
         <source>Brightness ( Dark part)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2930"/>
-        <location filename="csetting.ui" line="3038"/>
-        <location filename="csetting.ui" line="3128"/>
-        <location filename="csetting.ui" line="3239"/>
-        <location filename="csetting.cpp" line="714"/>
+        <location filename="csetting.ui" line="3192"/>
+        <location filename="csetting.ui" line="3307"/>
+        <location filename="csetting.ui" line="3403"/>
+        <location filename="csetting.ui" line="3527"/>
+        <location filename="csetting.ui" line="3645"/>
+        <location filename="csetting.ui" line="3763"/>
+        <location filename="csetting.cpp" line="850"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2938"/>
+        <location filename="csetting.ui" line="3200"/>
         <source>Path to PPMXL folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2950"/>
-        <location filename="csetting.ui" line="3148"/>
-        <location filename="csetting.ui" line="3259"/>
+        <location filename="csetting.ui" line="3219"/>
+        <location filename="csetting.ui" line="3430"/>
+        <location filename="csetting.ui" line="3554"/>
+        <location filename="csetting.ui" line="3672"/>
+        <location filename="csetting.ui" line="3790"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2982"/>
+        <location filename="csetting.ui" line="3251"/>
         <source>Show PPXML stars from magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2256"/>
-        <location filename="csetting.ui" line="2282"/>
-        <location filename="csetting.ui" line="2364"/>
-        <location filename="csetting.ui" line="2390"/>
-        <location filename="csetting.ui" line="2989"/>
-        <location filename="csetting.ui" line="3076"/>
-        <location filename="csetting.ui" line="3187"/>
-        <location filename="csetting.ui" line="3298"/>
+        <location filename="csetting.ui" line="2481"/>
+        <location filename="csetting.ui" line="2507"/>
+        <location filename="csetting.ui" line="2589"/>
+        <location filename="csetting.ui" line="2615"/>
+        <location filename="csetting.ui" line="3258"/>
+        <location filename="csetting.ui" line="3351"/>
+        <location filename="csetting.ui" line="3475"/>
+        <location filename="csetting.ui" line="3593"/>
+        <location filename="csetting.ui" line="3711"/>
+        <location filename="csetting.ui" line="3829"/>
         <source> mag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2275"/>
-        <location filename="csetting.ui" line="2383"/>
+        <location filename="csetting.ui" line="2500"/>
+        <location filename="csetting.ui" line="2608"/>
         <source>Don&apos;t use if fainter than</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2409"/>
+        <location filename="csetting.ui" line="2634"/>
+        <location filename="csetting.ui" line="4705"/>
         <source>Satellites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2445"/>
+        <location filename="csetting.ui" line="2670"/>
         <source>Symbol multiplier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2471"/>
+        <location filename="csetting.ui" line="2696"/>
         <source>Jupiter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2479"/>
+        <location filename="csetting.ui" line="2704"/>
         <source>Great Red Spot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2487"/>
+        <location filename="csetting.ui" line="2741"/>
         <source>Longitude of GRS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2686"/>
+        <location filename="csetting.ui" line="2948"/>
         <source>Drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2740"/>
+        <location filename="csetting.ui" line="3002"/>
         <source>Measure point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2748"/>
-        <location filename="csetting.ui" line="2792"/>
+        <location filename="csetting.ui" line="3010"/>
+        <location filename="csetting.ui" line="3054"/>
         <source>Color &amp; style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2784"/>
+        <location filename="csetting.ui" line="3046"/>
         <source>Selected object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2959"/>
+        <location filename="csetting.ui" line="3228"/>
         <source>Show PPXML stars from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2910"/>
-        <location filename="csetting.ui" line="3018"/>
-        <location filename="csetting.ui" line="3108"/>
-        <location filename="csetting.ui" line="3219"/>
-        <location filename="csetting.cpp" line="201"/>
+        <location filename="csetting.ui" line="3172"/>
+        <location filename="csetting.ui" line="3287"/>
+        <location filename="csetting.ui" line="3383"/>
+        <location filename="csetting.ui" line="3507"/>
+        <location filename="csetting.ui" line="3625"/>
+        <location filename="csetting.ui" line="3743"/>
+        <location filename="csetting.cpp" line="257"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2918"/>
+        <location filename="csetting.ui" line="3180"/>
         <source>Show PPXML Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3026"/>
+        <location filename="csetting.ui" line="3295"/>
         <source>Show GSC Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3046"/>
+        <location filename="csetting.ui" line="3315"/>
         <source>Show GSC stars from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3069"/>
+        <location filename="csetting.ui" line="3344"/>
         <source>Show GSC stars from magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3157"/>
+        <location filename="csetting.ui" line="3439"/>
         <source>Show USNO2 stars from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3180"/>
+        <location filename="csetting.ui" line="3468"/>
         <source>Show USNO stars from magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3136"/>
+        <location filename="csetting.ui" line="3411"/>
         <source>Path to USNO2 folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3116"/>
+        <location filename="csetting.ui" line="3391"/>
         <source>Show USNO2 Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3227"/>
+        <location filename="csetting.ui" line="3633"/>
         <source>Show UCAC4 Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3268"/>
+        <location filename="csetting.ui" line="3681"/>
         <source>Show UCAC4 stars from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3291"/>
+        <location filename="csetting.ui" line="3704"/>
         <source>Show UCAC4 stars from magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3247"/>
+        <location filename="csetting.ui" line="3653"/>
         <source>Path to UCAC4 folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3328"/>
+        <location filename="csetting.ui" line="3859"/>
         <source>Autosave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3336"/>
+        <location filename="csetting.ui" line="3867"/>
         <source>Autosave at exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3344"/>
+        <location filename="csetting.ui" line="3875"/>
         <source>Object tracking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3358"/>
+        <location filename="csetting.ui" line="3889"/>
         <source>Event list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3351"/>
+        <location filename="csetting.ui" line="3882"/>
         <source>Drawing on map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3365"/>
-        <source>Map position</source>
+        <location filename="csetting.ui" line="3515"/>
+        <source>Show USNO B1.0 Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3393"/>
-        <location filename="csetting.ui" line="3399"/>
-        <location filename="csetting.cpp" line="247"/>
-        <source>Other</source>
+        <location filename="csetting.ui" line="3535"/>
+        <source>Path to USNO B1.0 folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3407"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show zoom control bar on map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="csetting.ui" line="3563"/>
+        <source>Show USNO B1.0 stars from FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3410"/>
-        <source>Show zoom bar</source>
+        <location filename="csetting.ui" line="3586"/>
+        <source>Show USNO B1.0 stars from magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3417"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If the box is checked, then the left mouse button moves the map and Shift + left mouse button zoom the map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="csetting.ui" line="3751"/>
+        <source>Show URAT1 Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3420"/>
-        <source>Alternative mouse commands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3427"/>
-        <source>Parking telescope before disconnection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3441"/>
-        <source>Toolbar icon size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3487"/>
-        <source>Gamepad</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3495"/>
-        <source>Enable gamepad/joystick</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3502"/>
-        <source>Device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3569"/>
-        <source>Polling period</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3531"/>
-        <source> ms</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3550"/>
-        <source>x</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3576"/>
-        <source>Dead zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3583"/>
-        <source>Speed multiplier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3603"/>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3703"/>
-        <source>More stars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3693"/>
-        <source>Less stars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3674"/>
-        <source>More DSO</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3664"/>
-        <source>Less DSO</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3648"/>
-        <source>Move map down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3713"/>
-        <source>Move map right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3786"/>
-        <source>Move map up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3760"/>
-        <source>Move map left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3738"/>
-        <source>Zoom in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csetting.ui" line="3773"/>
-        <source>Zoom out</source>
+        <location filename="csetting.ui" line="3771"/>
+        <source>Path to URAT1 folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="csetting.ui" line="3799"/>
-        <location filename="csetting.ui" line="3806"/>
+        <source>Show URAT1 stars from FOV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3822"/>
+        <source>Show URAT1 stars from magnitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3896"/>
+        <source>Map position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3924"/>
+        <location filename="csetting.ui" line="3930"/>
+        <location filename="csetting.cpp" line="303"/>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3938"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show zoom control bar on map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3941"/>
+        <source>Show zoom bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3948"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If the box is checked, then the left mouse button moves the map and Shift + left mouse button zoom the map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3951"/>
+        <source>Alternative mouse commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3958"/>
+        <source>Parking telescope before disconnection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3972"/>
+        <source>Toolbar icon size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4006"/>
+        <source>Status bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4017"/>
+        <source>Used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4042"/>
+        <source>Move up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4052"/>
+        <source>Move down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4075"/>
+        <source>&lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4082"/>
+        <source>&gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4093"/>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4143"/>
+        <source>Gamepad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4151"/>
+        <source>Enable gamepad/joystick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4158"/>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4225"/>
+        <source>Polling period</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4187"/>
+        <source> ms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4206"/>
+        <source>x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4232"/>
+        <source>Dead zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4239"/>
+        <source>Speed multiplier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="470"/>
+        <location filename="csetting.ui" line="4259"/>
+        <source>%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4359"/>
+        <source>More stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4349"/>
+        <source>Less stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4330"/>
+        <source>More DSO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4320"/>
+        <source>Less DSO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4304"/>
+        <source>Move map down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4369"/>
+        <source>Move map right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4442"/>
+        <source>Move map up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4416"/>
+        <source>Move map left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4394"/>
+        <source>Zoom in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4429"/>
+        <source>Zoom out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="4455"/>
+        <location filename="csetting.ui" line="4462"/>
         <source>Primary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3813"/>
-        <location filename="csetting.ui" line="3820"/>
+        <location filename="csetting.ui" line="4469"/>
+        <location filename="csetting.ui" line="4476"/>
         <source>Alternative</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3845"/>
+        <location filename="csetting.ui" line="4501"/>
         <source>Online data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3878"/>
-        <location filename="csetting.ui" line="3924"/>
-        <location filename="csetting.ui" line="3977"/>
-        <location filename="csetting.ui" line="4023"/>
+        <location filename="csetting.ui" line="4537"/>
+        <location filename="csetting.ui" line="4583"/>
+        <location filename="csetting.ui" line="4636"/>
+        <location filename="csetting.ui" line="4682"/>
+        <location filename="csetting.ui" line="4728"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3947"/>
+        <location filename="csetting.ui" line="4606"/>
         <source>DSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3953"/>
+        <location filename="csetting.ui" line="4612"/>
         <source>{RA_DEG} R.A. in degress. {DEC_DEG} Declination in degress. {SIZE_MIN} Field size in arc minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="4000"/>
+        <location filename="csetting.ui" line="4659"/>
         <source>Sun Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="51"/>
+        <location filename="csetting.cpp" line="54"/>
         <source>24x24 (Default size)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="52"/>
+        <location filename="csetting.cpp" line="55"/>
         <source>18x18 (Small size)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="102"/>
+        <location filename="csetting.cpp" line="143"/>
         <source>Stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="103"/>
+        <location filename="csetting.cpp" line="144"/>
         <source>Stars magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="104"/>
+        <location filename="csetting.cpp" line="145"/>
         <source>Deep sky objects (1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="105"/>
+        <location filename="csetting.cpp" line="146"/>
         <source>Deep sky objects (2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="106"/>
+        <location filename="csetting.cpp" line="147"/>
         <source>DSO magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="107"/>
+        <location filename="csetting.cpp" line="148"/>
         <source>Grids</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="108"/>
+        <location filename="csetting.cpp" line="149"/>
         <source>Constellations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="109"/>
+        <location filename="csetting.cpp" line="150"/>
         <source>Horizon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="110"/>
+        <location filename="csetting.cpp" line="151"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="111"/>
+        <location filename="csetting.cpp" line="152"/>
         <source>Solar system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="112"/>
+        <location filename="csetting.cpp" line="153"/>
         <source>Milky Way</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="113"/>
+        <location filename="csetting.cpp" line="154"/>
         <source>Drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="2834"/>
-        <location filename="csetting.cpp" line="114"/>
+        <location filename="csetting.ui" line="3096"/>
+        <location filename="csetting.cpp" line="155"/>
         <source>Tracking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="115"/>
+        <location filename="csetting.cpp" line="156"/>
         <source>PPMXL Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="116"/>
+        <location filename="csetting.cpp" line="157"/>
         <source>GSC Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="117"/>
-        <source>USNO2 Catalogue</source>
+        <location filename="csetting.cpp" line="158"/>
+        <source>USNO A2 Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="118"/>
+        <location filename="csetting.cpp" line="159"/>
+        <source>USNO B1 Catalogue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.cpp" line="160"/>
         <source>UCAC4 Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="202"/>
+        <location filename="csetting.cpp" line="161"/>
+        <source>URAT1 Catalogue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.cpp" line="258"/>
         <source>Show all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="204"/>
+        <location filename="csetting.cpp" line="260"/>
         <source>If checkbox is unchecked show only object
 with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="238"/>
+        <location filename="csetting.cpp" line="294"/>
         <source>Nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="239"/>
+        <location filename="csetting.cpp" line="295"/>
         <source>Bright nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="240"/>
+        <location filename="csetting.cpp" line="296"/>
         <source>Dark nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="241"/>
+        <location filename="csetting.cpp" line="297"/>
         <source>Open cluster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="242"/>
+        <location filename="csetting.cpp" line="298"/>
         <source>Globular cluster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="243"/>
+        <location filename="csetting.cpp" line="299"/>
         <source>Planetary nebula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="244"/>
+        <location filename="csetting.cpp" line="300"/>
         <source>Galaxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="245"/>
+        <location filename="csetting.cpp" line="301"/>
         <source>Galaxy cluster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="246"/>
+        <location filename="csetting.cpp" line="302"/>
         <source>Star/Stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="254"/>
+        <location filename="csetting.cpp" line="310"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="484"/>
+        <location filename="csetting.cpp" line="572"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="485"/>
+        <location filename="csetting.cpp" line="573"/>
         <source>Url</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1143"/>
+        <location filename="csetting.cpp" line="1279"/>
         <source>Load this profile?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1158"/>
+        <location filename="csetting.cpp" line="1294"/>
         <source>Reset current profile?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1182"/>
+        <location filename="csetting.cpp" line="1318"/>
         <source>Cannot save profile!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1345"/>
+        <location filename="csetting.cpp" line="1481"/>
         <source>Do you want remove this profile?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1390"/>
+        <location filename="csetting.cpp" line="1530"/>
         <source>Add New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1398"/>
+        <location filename="csetting.cpp" line="1538"/>
         <source>Delete </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1436"/>
+        <location filename="csetting.cpp" line="1576"/>
         <source>Reset to default?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1494"/>
+        <location filename="csetting.cpp" line="1634"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1495"/>
+        <location filename="csetting.cpp" line="1635"/>
         <source>X Axis -</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1496"/>
+        <location filename="csetting.cpp" line="1636"/>
         <source>X Axis +</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1497"/>
+        <location filename="csetting.cpp" line="1637"/>
         <source>Y Axis -</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1498"/>
+        <location filename="csetting.cpp" line="1638"/>
         <source>Y Axis +</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1499"/>
+        <location filename="csetting.cpp" line="1639"/>
         <source>Z Axis -</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1500"/>
+        <location filename="csetting.cpp" line="1640"/>
         <source>Z Axis +</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1501"/>
+        <location filename="csetting.cpp" line="1641"/>
         <source>R Axis -</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1502"/>
+        <location filename="csetting.cpp" line="1642"/>
         <source>R Axis +</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1503"/>
+        <location filename="csetting.cpp" line="1643"/>
         <source>POV Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1504"/>
+        <location filename="csetting.cpp" line="1644"/>
         <source>POV Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1505"/>
+        <location filename="csetting.cpp" line="1645"/>
         <source>POV Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1506"/>
+        <location filename="csetting.cpp" line="1646"/>
         <source>POV Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1507"/>
+        <location filename="csetting.cpp" line="1647"/>
         <source>Button 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1508"/>
+        <location filename="csetting.cpp" line="1648"/>
         <source>Button 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1509"/>
+        <location filename="csetting.cpp" line="1649"/>
         <source>Button 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1510"/>
+        <location filename="csetting.cpp" line="1650"/>
         <source>Button 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1511"/>
+        <location filename="csetting.cpp" line="1651"/>
         <source>Button 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1512"/>
+        <location filename="csetting.cpp" line="1652"/>
         <source>Button 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1513"/>
+        <location filename="csetting.cpp" line="1653"/>
         <source>Button 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1514"/>
+        <location filename="csetting.cpp" line="1654"/>
         <source>Button 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1515"/>
+        <location filename="csetting.cpp" line="1655"/>
         <source>Button 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1516"/>
+        <location filename="csetting.cpp" line="1656"/>
         <source>Button 10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1517"/>
+        <location filename="csetting.cpp" line="1657"/>
         <source>Button 11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1518"/>
+        <location filename="csetting.cpp" line="1658"/>
         <source>Button 12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1519"/>
+        <location filename="csetting.cpp" line="1659"/>
         <source>Button 13</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1520"/>
+        <location filename="csetting.cpp" line="1660"/>
         <source>Button 14</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1521"/>
+        <location filename="csetting.cpp" line="1661"/>
         <source>Button 15</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1522"/>
+        <location filename="csetting.cpp" line="1662"/>
         <source>Button 16</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1610"/>
+        <location filename="csetting.cpp" line="1748"/>
         <source>Latin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1686"/>
-        <location filename="csetting.cpp" line="1693"/>
-        <location filename="csetting.cpp" line="1750"/>
+        <location filename="csetting.cpp" line="1824"/>
+        <location filename="csetting.cpp" line="1831"/>
+        <location filename="csetting.cpp" line="1888"/>
+        <location filename="csetting.cpp" line="2058"/>
+        <location filename="csetting.cpp" line="2065"/>
         <source>Select a folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1773"/>
+        <location filename="csetting.cpp" line="1911"/>
         <source>Select name of new profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1788"/>
+        <location filename="csetting.cpp" line="1926"/>
         <source>Profile already exist!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="csetting.cpp" line="1979"/>
+        <source>Select file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6650,55 +7336,65 @@ with magnitude information</source>
 <context>
     <name>CStatusBar</name>
     <message>
-        <location filename="cstatusbar.cpp" line="69"/>
+        <location filename="cstatusbar.cpp" line="162"/>
         <source>Constellation under cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="70"/>
+        <location filename="cstatusbar.cpp" line="165"/>
         <source>Map date</source>
         <oldsource>Current date</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="71"/>
+        <location filename="cstatusbar.cpp" line="168"/>
         <source>Map time</source>
         <oldsource>Current time</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="72"/>
+        <location filename="cstatusbar.cpp" line="171"/>
         <source>Field of view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="73"/>
+        <location filename="cstatusbar.cpp" line="174"/>
         <source>Right Ascension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="74"/>
+        <location filename="cstatusbar.cpp" line="177"/>
         <source>Declination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="75"/>
+        <location filename="cstatusbar.cpp" line="180"/>
         <source>Azimuth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="76"/>
+        <location filename="cstatusbar.cpp" line="183"/>
         <source>Altitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="77"/>
+        <location filename="cstatusbar.cpp" line="186"/>
+        <source>Airmass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cstatusbar.cpp" line="189"/>
         <source>Star and DSO magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstatusbar.cpp" line="78"/>
+        <location filename="cstatusbar.cpp" line="192"/>
         <source>Measure (Distance/Angle)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cstatusbar.cpp" line="195"/>
+        <source>Chart mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6710,12 +7406,17 @@ with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstylesel.ui" line="42"/>
+        <location filename="cstylesel.ui" line="29"/>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cstylesel.ui" line="49"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cstylesel.ui" line="52"/>
+        <location filename="cstylesel.ui" line="59"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7185,7 +7886,7 @@ with magnitude information</source>
     <message>
         <location filename="ctychosearch.ui" line="40"/>
         <location filename="ctychosearch.ui" line="115"/>
-        <location filename="ctychosearch.ui" line="212"/>
+        <location filename="ctychosearch.ui" line="174"/>
         <location filename="ctychosearch.ui" line="278"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
@@ -7250,7 +7951,7 @@ with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cversioncheck.cpp" line="24"/>
+        <location filename="cversioncheck.cpp" line="26"/>
         <source>SkytechX is up to date.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7358,12 +8059,14 @@ with magnitude information</source>
     <message>
         <location filename="cwpossel.ui" line="247"/>
         <location filename="cwpossel.ui" line="346"/>
-        <source>Get from &apos;www.earthtools.org&apos;</source>
+        <source>Get from &apos;Google API&apos;</source>
+        <oldsource>Get from &apos;www.earthtools.org&apos;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="cwpossel.ui" line="250"/>
         <location filename="cwpossel.ui" line="349"/>
+        <location filename="cwpossel.ui" line="452"/>
         <source>Get...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7414,62 +8117,67 @@ with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="452"/>
+        <location filename="cwpossel.ui" line="449"/>
+        <source>Get from &apos;Google API&apos; (Current DST)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cwpossel.ui" line="462"/>
         <source>Atmosphere</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="458"/>
+        <location filename="cwpossel.ui" line="468"/>
         <source> hPa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="471"/>
+        <location filename="cwpossel.ui" line="481"/>
         <source>Temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="491"/>
+        <location filename="cwpossel.ui" line="501"/>
         <source>° Deg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="504"/>
+        <location filename="cwpossel.ui" line="514"/>
         <source>Atm. pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="524"/>
+        <location filename="cwpossel.ui" line="534"/>
         <source>Disable atm. refraction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="539"/>
+        <location filename="cwpossel.ui" line="549"/>
         <source>Saved locations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="562"/>
+        <location filename="cwpossel.ui" line="572"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="582"/>
+        <location filename="cwpossel.ui" line="592"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="602"/>
+        <location filename="cwpossel.ui" line="612"/>
         <source>Update...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="636"/>
+        <location filename="cwpossel.ui" line="646"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cwpossel.ui" line="646"/>
+        <location filename="cwpossel.ui" line="656"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7503,6 +8211,11 @@ with magnitude information</source>
         <source>Cannot get time zone!!!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="cwpossel.cpp" line="612"/>
+        <source>Cannot get DST!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CWeather</name>
@@ -7527,43 +8240,56 @@ with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cweather.cpp" line="114"/>
+        <location filename="cweather.cpp" line="115"/>
         <source>Temperature : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cweather.cpp" line="115"/>
+        <location filename="cweather.cpp" line="116"/>
         <source>Humidity : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cweather.cpp" line="116"/>
+        <location filename="cweather.cpp" line="117"/>
         <source>Pressure : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cweather.cpp" line="117"/>
+        <location filename="cweather.cpp" line="118"/>
         <source>Wind speed : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cweather.cpp" line="118"/>
+        <location filename="cweather.cpp" line="119"/>
         <source>Wind dir. : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cweather.cpp" line="119"/>
+        <location filename="cweather.cpp" line="120"/>
         <source>Clouds : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cweather.cpp" line="120"/>
+        <location filename="cweather.cpp" line="121"/>
         <source>Name : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cweather.cpp" line="121"/>
+        <location filename="cweather.cpp" line="122"/>
         <source>Date/Time : </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DSSHeaderDialog</name>
+    <message>
+        <location filename="dssheaderdialog.ui" line="14"/>
+        <source>DSS Fit Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dssheaderdialog.ui" line="40"/>
+        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7576,14 +8302,14 @@ with magnitude information</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="95"/>
-        <location filename="mainwindow.ui" line="4045"/>
+        <location filename="mainwindow.ui" line="4227"/>
         <source>Time window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="124"/>
-        <location filename="mainwindow.ui" line="3632"/>
-        <location filename="mainwindow.cpp" line="3437"/>
+        <location filename="mainwindow.ui" line="3808"/>
+        <location filename="mainwindow.cpp" line="3598"/>
         <source>Telescope</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7609,7 +8335,7 @@ with magnitude information</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="274"/>
-        <location filename="mainwindow.ui" line="4264"/>
+        <location filename="mainwindow.ui" line="4446"/>
         <source>Time dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7644,48 +8370,48 @@ with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="596"/>
+        <location filename="mainwindow.ui" line="597"/>
         <source>&amp;Observing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="621"/>
+        <location filename="mainwindow.ui" line="624"/>
         <source>&amp;Telescope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="625"/>
+        <location filename="mainwindow.ui" line="628"/>
         <source>Select telescope shape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="632"/>
+        <location filename="mainwindow.ui" line="635"/>
         <source>Refresh rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="650"/>
+        <location filename="mainwindow.ui" line="653"/>
         <source>Catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="664"/>
+        <location filename="mainwindow.ui" line="667"/>
         <source>Sho&amp;w</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="695"/>
-        <location filename="mainwindow.ui" line="2861"/>
+        <location filename="mainwindow.ui" line="698"/>
+        <location filename="mainwindow.ui" line="3035"/>
         <source>Drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1042"/>
+        <location filename="mainwindow.ui" line="1059"/>
         <source>Go to information dialog...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="732"/>
+        <location filename="mainwindow.ui" line="735"/>
         <source>Magnitude control</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7695,219 +8421,220 @@ with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="760"/>
+        <location filename="mainwindow.ui" line="763"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="868"/>
+        <location filename="mainwindow.ui" line="871"/>
         <source>Object information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1029"/>
+        <location filename="mainwindow.ui" line="1033"/>
         <source>Go to object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1055"/>
+        <location filename="mainwindow.ui" line="1046"/>
         <source>Add to list...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1016"/>
+        <location filename="mainwindow.ui" line="1072"/>
         <source>Tracking object path...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="600"/>
+        <location filename="mainwindow.ui" line="601"/>
         <source>Planet satellite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="959"/>
+        <location filename="mainwindow.ui" line="949"/>
         <source>Set time to rise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="972"/>
+        <location filename="mainwindow.ui" line="962"/>
         <source>Set time to transit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="985"/>
+        <location filename="mainwindow.ui" line="975"/>
         <source>Set time to set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1073"/>
+        <location filename="mainwindow.ui" line="1090"/>
         <source>DSS Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1084"/>
-        <location filename="mainwindow.ui" line="3523"/>
+        <location filename="mainwindow.ui" line="1101"/>
+        <location filename="mainwindow.ui" line="3699"/>
         <source>Open DSS file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1096"/>
+        <location filename="mainwindow.ui" line="1113"/>
         <source>Load all images on screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1106"/>
+        <location filename="mainwindow.ui" line="1123"/>
         <source>Manager...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1119"/>
+        <location filename="mainwindow.ui" line="1136"/>
         <source>Download progress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1172"/>
+        <location filename="mainwindow.ui" line="1189"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1185"/>
+        <location filename="mainwindow.ui" line="1202"/>
         <source>Center &amp;&amp; Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1323"/>
+        <location filename="mainwindow.ui" line="1340"/>
         <source>Hide DSO shapes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1313"/>
+        <location filename="mainwindow.ui" line="1330"/>
         <source>Show Frame &amp;&amp; Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1350"/>
+        <location filename="mainwindow.ui" line="1367"/>
         <source>Process all images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1362"/>
-        <location filename="mainwindow.ui" line="2202"/>
+        <location filename="mainwindow.ui" line="1379"/>
+        <location filename="mainwindow.ui" line="2255"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1372"/>
+        <location filename="mainwindow.ui" line="1389"/>
         <source>Reset all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1386"/>
+        <location filename="mainwindow.ui" line="1403"/>
         <source>Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1415"/>
+        <location filename="mainwindow.ui" line="1432"/>
         <source>Contrast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1450"/>
+        <location filename="mainwindow.ui" line="1467"/>
         <source>Gamma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1494"/>
+        <location filename="mainwindow.ui" line="1511"/>
         <source>Invert image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1504"/>
+        <location filename="mainwindow.ui" line="1521"/>
         <source>Auto adjust</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1544"/>
+        <location filename="mainwindow.ui" line="1561"/>
         <source>Event information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1661"/>
-        <location filename="mainwindow.ui" line="2741"/>
-        <location filename="mainwindow.cpp" line="480"/>
-        <location filename="mainwindow.cpp" line="577"/>
+        <location filename="mainwindow.ui" line="1698"/>
+        <location filename="mainwindow.ui" line="2333"/>
+        <location filename="mainwindow.ui" line="2913"/>
+        <location filename="mainwindow.cpp" line="498"/>
+        <location filename="mainwindow.cpp" line="595"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1675"/>
+        <location filename="mainwindow.ui" line="1712"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1689"/>
+        <location filename="mainwindow.ui" line="1726"/>
         <source>Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1732"/>
-        <location filename="mainwindow.cpp" line="1276"/>
+        <location filename="mainwindow.ui" line="1769"/>
+        <location filename="mainwindow.cpp" line="1362"/>
         <source>Current event : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1739"/>
+        <location filename="mainwindow.ui" line="1776"/>
         <source>Click change time to event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1779"/>
+        <location filename="mainwindow.ui" line="1816"/>
         <source>Zoom to event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1789"/>
+        <location filename="mainwindow.ui" line="1826"/>
         <source>Move to event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1632"/>
+        <location filename="mainwindow.ui" line="1649"/>
         <source>Clear all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2246"/>
+        <location filename="mainwindow.ui" line="2404"/>
         <source>Lunar features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2255"/>
+        <location filename="mainwindow.ui" line="2415"/>
         <source>Go to the Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2271"/>
+        <location filename="mainwindow.ui" line="2443"/>
         <source>Show lunar features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2284"/>
+        <location filename="mainwindow.ui" line="2456"/>
         <source>Show feature diameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2300"/>
+        <location filename="mainwindow.ui" line="2472"/>
         <source>Level of detail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2342"/>
+        <location filename="mainwindow.ui" line="2514"/>
         <source>abc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="319"/>
-        <location filename="mainwindow.ui" line="2387"/>
+        <location filename="mainwindow.ui" line="2559"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7917,211 +8644,261 @@ with magnitude information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="969"/>
+        <location filename="mainwindow.ui" line="959"/>
         <source>Set time to object transit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="982"/>
+        <location filename="mainwindow.ui" line="972"/>
         <source>Set time to object set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1013"/>
+        <location filename="mainwindow.ui" line="1069"/>
         <source>Open dialog with object tracking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1026"/>
+        <location filename="mainwindow.ui" line="1030"/>
         <source>Center this object to screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1039"/>
+        <location filename="mainwindow.ui" line="1056"/>
         <source>Open dialog with additional features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1052"/>
+        <location filename="mainwindow.ui" line="1043"/>
         <source>Add this object to custom DSO catalogue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1081"/>
+        <location filename="mainwindow.ui" line="1098"/>
         <source>Open DSS file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1093"/>
+        <location filename="mainwindow.ui" line="1110"/>
         <source>Load all DSS files on screen </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1103"/>
+        <location filename="mainwindow.ui" line="1120"/>
         <source>Open DSS manager dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1169"/>
+        <location filename="mainwindow.ui" line="1186"/>
         <source>Center selected DSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1182"/>
+        <location filename="mainwindow.ui" line="1199"/>
         <source>Center/Zoom selected DSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1195"/>
+        <location filename="mainwindow.ui" line="1212"/>
         <source>Remove all DSS from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1237"/>
+        <location filename="mainwindow.ui" line="1254"/>
         <source>Hide all DSS from map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1250"/>
+        <location filename="mainwindow.ui" line="1267"/>
         <source>Show all DSS on map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1269"/>
+        <location filename="mainwindow.ui" line="1286"/>
         <source>Remove selected DSS from disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1514"/>
+        <location filename="mainwindow.ui" line="1531"/>
         <source>Set filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1517"/>
+        <location filename="mainwindow.ui" line="1534"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1652"/>
+        <location filename="mainwindow.ui" line="1689"/>
         <source>Search new event...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1810"/>
+        <location filename="mainwindow.ui" line="1847"/>
         <source>Map control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1833"/>
+        <location filename="mainwindow.ui" line="2144"/>
         <source>Move map down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1868"/>
+        <location filename="mainwindow.ui" line="2007"/>
         <source>Move map right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1903"/>
+        <location filename="mainwindow.ui" line="1921"/>
         <source>Move map up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1938"/>
+        <location filename="mainwindow.ui" line="1972"/>
         <source>Zoom out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1973"/>
+        <location filename="mainwindow.ui" line="1886"/>
         <source>Move map left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2008"/>
+        <location filename="mainwindow.ui" line="2109"/>
         <source>Zoom in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2056"/>
+        <location filename="mainwindow.ui" line="2074"/>
         <source>Rotale map right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2091"/>
+        <location filename="mainwindow.ui" line="946"/>
+        <source>Set time to object rise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="1002"/>
+        <source>Hold object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="1669"/>
+        <source>Double click show event information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="1861"/>
+        <source>RA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2042"/>
         <source>Reset rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2123"/>
+        <location filename="mainwindow.ui" line="2179"/>
         <source>Rotale map left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2171"/>
+        <location filename="mainwindow.ui" line="2224"/>
         <source>Speed multiplicator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2180"/>
+        <location filename="mainwindow.ui" line="2233"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2252"/>
+        <location filename="mainwindow.ui" line="2299"/>
+        <source>Date/Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2307"/>
+        <source>Map time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2326"/>
+        <source>Backward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2343"/>
+        <source>Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2412"/>
         <source>Center Moon on screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2399"/>
-        <source>Select all</source>
+        <location filename="mainwindow.ui" line="2422"/>
+        <source>Search lunar features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2419"/>
-        <source>Deselect all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="2437"/>
-        <source>Shape editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="2446"/>
-        <location filename="mainwindow.ui" line="2636"/>
-        <source>Enable editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="2475"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add new shape: &lt;span style=&quot; font-weight:600;&quot;&gt;N&lt;/span&gt;&lt;br/&gt;Add new vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;V&lt;br/&gt;&lt;/span&gt;Delete vertex:&lt;span style=&quot; font-weight:600;&quot;&gt; Backspace&lt;br/&gt;&lt;/span&gt;Delete shape:&lt;span style=&quot; font-weight:600;&quot;&gt; Delete&lt;br/&gt;&lt;/span&gt;Delete all:&lt;span style=&quot; font-weight:600;&quot;&gt; CTRL + Delete&lt;br/&gt;&lt;/span&gt;Next shape: &lt;span style=&quot; font-weight:600;&quot;&gt;W&lt;/span&gt;&lt;br/&gt;Prev. shape: &lt;span style=&quot; font-weight:600;&quot;&gt;Q&lt;br/&gt;&lt;/span&gt;Next vertex:&lt;span style=&quot; font-weight:600;&quot;&gt; 2&lt;/span&gt;&lt;br/&gt;Prev. vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;1&lt;br/&gt;&lt;/span&gt;Next ID: &lt;span style=&quot; font-weight:600;&quot;&gt;[&lt;br/&gt;&lt;/span&gt;Prev ID: &lt;span style=&quot; font-weight:600;&quot;&gt;]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Nebula brightness ID:&lt;span style=&quot; font-weight:600;&quot;&gt; 0..2&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="2488"/>
-        <location filename="mainwindow.ui" line="2598"/>
-        <source>Load shapes...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="2498"/>
-        <location filename="mainwindow.ui" line="2555"/>
-        <source>Save shapes...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="2505"/>
-        <location filename="mainwindow.ui" line="2649"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="2540"/>
-        <source>Constellation editor</source>
+        <location filename="mainwindow.ui" line="2425"/>
+        <source>Search...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2571"/>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2591"/>
+        <source>Deselect all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2609"/>
+        <source>Shape editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2618"/>
+        <location filename="mainwindow.ui" line="2808"/>
+        <source>Enable editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2647"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add new shape: &lt;span style=&quot; font-weight:600;&quot;&gt;N&lt;/span&gt;&lt;br/&gt;Add new vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;V&lt;br/&gt;&lt;/span&gt;Delete vertex:&lt;span style=&quot; font-weight:600;&quot;&gt; Backspace&lt;br/&gt;&lt;/span&gt;Delete shape:&lt;span style=&quot; font-weight:600;&quot;&gt; Delete&lt;br/&gt;&lt;/span&gt;Delete all:&lt;span style=&quot; font-weight:600;&quot;&gt; CTRL + Delete&lt;br/&gt;&lt;/span&gt;Next shape: &lt;span style=&quot; font-weight:600;&quot;&gt;W&lt;/span&gt;&lt;br/&gt;Prev. shape: &lt;span style=&quot; font-weight:600;&quot;&gt;Q&lt;br/&gt;&lt;/span&gt;Next vertex:&lt;span style=&quot; font-weight:600;&quot;&gt; 2&lt;/span&gt;&lt;br/&gt;Prev. vertex: &lt;span style=&quot; font-weight:600;&quot;&gt;1&lt;br/&gt;&lt;/span&gt;Next ID: &lt;span style=&quot; font-weight:600;&quot;&gt;[&lt;br/&gt;&lt;/span&gt;Prev ID: &lt;span style=&quot; font-weight:600;&quot;&gt;]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Nebula brightness ID:&lt;span style=&quot; font-weight:600;&quot;&gt; 0..2&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2660"/>
+        <location filename="mainwindow.ui" line="2770"/>
+        <source>Load shapes...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2670"/>
+        <location filename="mainwindow.ui" line="2727"/>
+        <source>Save shapes...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2677"/>
+        <location filename="mainwindow.ui" line="2821"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2712"/>
+        <source>Constellation editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="2743"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -8134,1939 +8911,2063 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2688"/>
+        <location filename="mainwindow.ui" line="2860"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2717"/>
+        <location filename="mainwindow.ui" line="2889"/>
         <source>about:blank</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2784"/>
-        <location filename="mainwindow.ui" line="3389"/>
-        <location filename="mainwindow.cpp" line="265"/>
+        <location filename="mainwindow.ui" line="2956"/>
+        <location filename="mainwindow.ui" line="3565"/>
+        <location filename="mainwindow.cpp" line="284"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2796"/>
+        <location filename="mainwindow.ui" line="2970"/>
         <source>Azm/Alt View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2812"/>
-        <location filename="mainwindow.ui" line="3803"/>
+        <location filename="mainwindow.ui" line="2986"/>
+        <location filename="mainwindow.ui" line="3985"/>
         <source>Grids</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2827"/>
+        <location filename="mainwindow.ui" line="3001"/>
         <source>Rendering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2844"/>
+        <location filename="mainwindow.ui" line="3018"/>
         <source>Telescope control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2882"/>
+        <location filename="mainwindow.ui" line="3056"/>
         <source>Search planet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2905"/>
+        <location filename="mainwindow.ui" line="3079"/>
         <source>Show/Hide objects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2941"/>
+        <location filename="mainwindow.ui" line="3117"/>
         <source>Chart orientation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2957"/>
+        <location filename="mainwindow.ui" line="3133"/>
         <source>Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2972"/>
+        <location filename="mainwindow.ui" line="3148"/>
         <source>&amp;Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2981"/>
+        <location filename="mainwindow.ui" line="3157"/>
         <source>&amp;About...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2990"/>
+        <location filename="mainwindow.ui" line="3166"/>
         <source>inc_star_mag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2993"/>
+        <location filename="mainwindow.ui" line="3169"/>
         <source>Increase star magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3002"/>
+        <location filename="mainwindow.ui" line="3178"/>
         <source>dec_star_mag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3005"/>
+        <location filename="mainwindow.ui" line="3181"/>
         <source>Decrease star magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3017"/>
+        <location filename="mainwindow.ui" line="3193"/>
         <source>star_mag_lock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3020"/>
+        <location filename="mainwindow.ui" line="3196"/>
         <source>Lock magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3032"/>
+        <location filename="mainwindow.ui" line="3208"/>
         <source>flipX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3035"/>
+        <location filename="mainwindow.ui" line="3211"/>
         <source>Flip X axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3047"/>
+        <location filename="mainwindow.ui" line="3223"/>
         <source>flipY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3050"/>
+        <location filename="mainwindow.ui" line="3226"/>
         <source>Flip Y axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3059"/>
+        <location filename="mainwindow.ui" line="3235"/>
         <source>inc_dso_mag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3062"/>
+        <location filename="mainwindow.ui" line="3238"/>
         <source>Increase DSO magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3071"/>
+        <location filename="mainwindow.ui" line="3247"/>
         <source>dec_dso_mag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3074"/>
+        <location filename="mainwindow.ui" line="3250"/>
         <source>Decrease DSO magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3079"/>
+        <location filename="mainwindow.ui" line="3255"/>
         <source>1°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3082"/>
+        <location filename="mainwindow.ui" line="3258"/>
         <source>Zoom to 1°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3087"/>
+        <location filename="mainwindow.ui" line="3263"/>
         <source>5°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3090"/>
+        <location filename="mainwindow.ui" line="3266"/>
         <source>Zoom to 5°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3095"/>
+        <location filename="mainwindow.ui" line="3271"/>
         <source>10°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3098"/>
+        <location filename="mainwindow.ui" line="3274"/>
         <source>Zoom to 10°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3103"/>
+        <location filename="mainwindow.ui" line="3279"/>
         <source>20°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3106"/>
+        <location filename="mainwindow.ui" line="3282"/>
         <source>Zoom to 20°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3111"/>
+        <location filename="mainwindow.ui" line="3287"/>
         <source>45°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3114"/>
+        <location filename="mainwindow.ui" line="3290"/>
         <source>Zoom to 45°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3119"/>
+        <location filename="mainwindow.ui" line="3295"/>
         <source>90°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3122"/>
+        <location filename="mainwindow.ui" line="3298"/>
         <source>Zoom to 90°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3127"/>
+        <location filename="mainwindow.ui" line="3303"/>
         <source>Export map to image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3132"/>
+        <location filename="mainwindow.ui" line="3308"/>
         <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3135"/>
+        <location filename="mainwindow.ui" line="3311"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3140"/>
+        <location filename="mainwindow.ui" line="3316"/>
         <source>Copy map to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3152"/>
+        <location filename="mainwindow.ui" line="3328"/>
         <source>Atlas mode (Pole up)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3155"/>
+        <location filename="mainwindow.ui" line="3331"/>
         <source>Ctrl+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3167"/>
+        <location filename="mainwindow.ui" line="3343"/>
         <source>Horizon mode (Zenith up)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3170"/>
+        <location filename="mainwindow.ui" line="3346"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3175"/>
+        <location filename="mainwindow.ui" line="3351"/>
         <source>Set JD...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3178"/>
+        <location filename="mainwindow.ui" line="3354"/>
         <source>Ctrl+J</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3183"/>
+        <location filename="mainwindow.ui" line="3359"/>
         <source>Set local time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3186"/>
+        <location filename="mainwindow.ui" line="3362"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3191"/>
+        <location filename="mainwindow.ui" line="3367"/>
         <source>Set UTC time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3200"/>
+        <location filename="mainwindow.ui" line="3376"/>
         <source>Set current time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3203"/>
+        <location filename="mainwindow.ui" line="3379"/>
         <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3208"/>
+        <location filename="mainwindow.ui" line="3384"/>
         <source>DeltaT...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3211"/>
+        <location filename="mainwindow.ui" line="3387"/>
         <source>Set DeltaT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3226"/>
+        <location filename="mainwindow.ui" line="3402"/>
         <source>Show sidebar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3229"/>
+        <location filename="mainwindow.ui" line="3405"/>
         <source>Ctrl+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3237"/>
+        <location filename="mainwindow.ui" line="3413"/>
         <source>&amp;Selected object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3240"/>
+        <location filename="mainwindow.ui" line="3416"/>
         <source>Go to selected object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3245"/>
+        <location filename="mainwindow.ui" line="3421"/>
         <source>Y+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3248"/>
+        <location filename="mainwindow.ui" line="3424"/>
         <source>Year+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3253"/>
+        <location filename="mainwindow.ui" line="3429"/>
         <source>Y-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3256"/>
+        <location filename="mainwindow.ui" line="3432"/>
         <source>Year-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3261"/>
-        <location filename="mainwindow.ui" line="3337"/>
+        <location filename="mainwindow.ui" line="3437"/>
+        <location filename="mainwindow.ui" line="3513"/>
         <source>M+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3264"/>
+        <location filename="mainwindow.ui" line="3440"/>
         <source>Month+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3269"/>
-        <location filename="mainwindow.ui" line="3345"/>
+        <location filename="mainwindow.ui" line="3445"/>
+        <location filename="mainwindow.ui" line="3521"/>
         <source>M-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3272"/>
+        <location filename="mainwindow.ui" line="3448"/>
         <source>Month-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3277"/>
+        <location filename="mainwindow.ui" line="3453"/>
         <source>D+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3280"/>
+        <location filename="mainwindow.ui" line="3456"/>
         <source>Day+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3285"/>
+        <location filename="mainwindow.ui" line="3461"/>
         <source>D-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3288"/>
+        <location filename="mainwindow.ui" line="3464"/>
         <source>Day-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3297"/>
+        <location filename="mainwindow.ui" line="3473"/>
         <source>CT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3300"/>
+        <location filename="mainwindow.ui" line="3476"/>
         <source>Set current local time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3305"/>
+        <location filename="mainwindow.ui" line="3481"/>
         <source>SD+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3308"/>
+        <location filename="mainwindow.ui" line="3484"/>
         <source>Siderical day+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3313"/>
+        <location filename="mainwindow.ui" line="3489"/>
         <source>SD-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3316"/>
+        <location filename="mainwindow.ui" line="3492"/>
         <source>Siderical day-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3321"/>
+        <location filename="mainwindow.ui" line="3497"/>
         <source>H+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3324"/>
+        <location filename="mainwindow.ui" line="3500"/>
         <source>Hour+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3329"/>
+        <location filename="mainwindow.ui" line="3505"/>
         <source>H-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3332"/>
+        <location filename="mainwindow.ui" line="3508"/>
         <source>Hour-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3340"/>
+        <location filename="mainwindow.ui" line="3516"/>
         <source>Minute+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3348"/>
+        <location filename="mainwindow.ui" line="3524"/>
         <source>Minute-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3353"/>
+        <location filename="mainwindow.ui" line="3529"/>
         <source>S+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3356"/>
+        <location filename="mainwindow.ui" line="3532"/>
         <source>Second+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3361"/>
+        <location filename="mainwindow.ui" line="3537"/>
         <source>S-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3364"/>
+        <location filename="mainwindow.ui" line="3540"/>
         <source>Second-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3369"/>
+        <location filename="mainwindow.ui" line="3545"/>
         <source>Star by &amp;proper name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3372"/>
+        <location filename="mainwindow.ui" line="3548"/>
         <source>Search star by proper name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3377"/>
+        <location filename="mainwindow.ui" line="3553"/>
         <source>&amp;DSO by common name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3380"/>
+        <location filename="mainwindow.ui" line="3556"/>
         <source>Search DSO by common name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3392"/>
+        <location filename="mainwindow.ui" line="3568"/>
         <source>Search object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3397"/>
+        <location filename="mainwindow.ui" line="3573"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3400"/>
+        <location filename="mainwindow.ui" line="3576"/>
         <source>Look at north</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3405"/>
+        <location filename="mainwindow.ui" line="3581"/>
         <source>S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3408"/>
+        <location filename="mainwindow.ui" line="3584"/>
         <source>Look at south</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3413"/>
+        <location filename="mainwindow.ui" line="3589"/>
         <source>E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3416"/>
+        <location filename="mainwindow.ui" line="3592"/>
         <source>Look at east</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3421"/>
+        <location filename="mainwindow.ui" line="3597"/>
         <source>W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3424"/>
+        <location filename="mainwindow.ui" line="3600"/>
         <source>Look at west</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3429"/>
+        <location filename="mainwindow.ui" line="3605"/>
         <source>Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3432"/>
+        <location filename="mainwindow.ui" line="3608"/>
         <source>Look at zenith</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3444"/>
+        <location filename="mainwindow.ui" line="3620"/>
         <source>Ecliptic coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3447"/>
+        <location filename="mainwindow.ui" line="3623"/>
         <source>Ctrl+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3455"/>
+        <location filename="mainwindow.ui" line="3631"/>
         <source>Galactic coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3460"/>
+        <location filename="mainwindow.ui" line="3636"/>
         <source>Position...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3463"/>
+        <location filename="mainwindow.ui" line="3639"/>
         <source>Go to Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3475"/>
-        <location filename="mainwindow.ui" line="3478"/>
+        <location filename="mainwindow.ui" line="3651"/>
+        <location filename="mainwindow.ui" line="3654"/>
         <source>Automatic grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3490"/>
+        <location filename="mainwindow.ui" line="3666"/>
         <source>Realtime</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3493"/>
+        <location filename="mainwindow.ui" line="3669"/>
         <source>Realtime On/Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3675"/>
+        <location filename="mainwindow.ui" line="3823"/>
+        <source>Save time and map position...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3826"/>
+        <source>Save time and map position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3831"/>
+        <source>Restore time and map position...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3834"/>
+        <source>Restore time and map position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3857"/>
         <source>Show/Hide Stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3693"/>
+        <location filename="mainwindow.ui" line="3875"/>
         <source>Show/Hide DSO Shapes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3711"/>
+        <location filename="mainwindow.ui" line="3893"/>
         <source>Show/Hide Constellation lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3729"/>
+        <location filename="mainwindow.ui" line="3911"/>
         <source>Show/Hide Constellation boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3747"/>
+        <location filename="mainwindow.ui" line="3929"/>
         <source>Show/Hide DSO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3765"/>
+        <location filename="mainwindow.ui" line="3947"/>
         <source>Show/Hide Milkyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3783"/>
+        <location filename="mainwindow.ui" line="3965"/>
         <source>Show/Hide Planets, Sun &amp; Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3806"/>
+        <location filename="mainwindow.ui" line="3988"/>
         <source>Show/Hide Grids</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3819"/>
+        <location filename="mainwindow.ui" line="4001"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3827"/>
+        <location filename="mainwindow.ui" line="4009"/>
         <source>Ctrl+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3845"/>
+        <location filename="mainwindow.ui" line="4027"/>
         <source>Show/Hide Asteroids</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3926"/>
+        <location filename="mainwindow.ui" line="4108"/>
         <source>Show/Hide Legends</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3944"/>
+        <location filename="mainwindow.ui" line="4126"/>
         <source>Show/Hide Comets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3957"/>
+        <location filename="mainwindow.ui" line="4139"/>
         <source>Planets, Sun  Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3975"/>
+        <location filename="mainwindow.ui" line="4157"/>
         <source>Show/Hide Labels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4060"/>
+        <location filename="mainwindow.ui" line="4242"/>
         <source>Alt+F12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4078"/>
+        <location filename="mainwindow.ui" line="4260"/>
         <source>Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4094"/>
+        <location filename="mainwindow.ui" line="4276"/>
         <source>Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4123"/>
+        <location filename="mainwindow.ui" line="4305"/>
         <source>Ephemeris list...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4126"/>
+        <location filename="mainwindow.ui" line="4308"/>
         <source>Ephemeris list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4177"/>
+        <location filename="mainwindow.ui" line="4359"/>
         <source>Image gallery...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4190"/>
+        <location filename="mainwindow.ui" line="4372"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4239"/>
+        <location filename="mainwindow.ui" line="4421"/>
         <source>Night mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4242"/>
+        <location filename="mainwindow.ui" line="4424"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4247"/>
+        <location filename="mainwindow.ui" line="4429"/>
         <source>Solar system...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4252"/>
+        <location filename="mainwindow.ui" line="4434"/>
         <source>&amp;Constellation...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4267"/>
+        <location filename="mainwindow.ui" line="4449"/>
         <source>Open/Close time dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4270"/>
+        <location filename="mainwindow.ui" line="4452"/>
         <source>Ctrl+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4275"/>
+        <location filename="mainwindow.ui" line="4457"/>
         <source>List of drawings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4287"/>
+        <location filename="mainwindow.ui" line="4469"/>
         <source>Lock FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4290"/>
+        <location filename="mainwindow.ui" line="4472"/>
         <source>Locking automatic changes of field of view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4295"/>
+        <location filename="mainwindow.ui" line="4477"/>
         <source>Planet altitude...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4300"/>
+        <location filename="mainwindow.ui" line="4482"/>
         <source>Actual weather...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4312"/>
+        <location filename="mainwindow.ui" line="4494"/>
         <source>grid label</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4315"/>
+        <location filename="mainwindow.ui" line="4497"/>
         <source>Show / Hide grid labels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4327"/>
+        <location filename="mainwindow.ui" line="4509"/>
         <source>Drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4330"/>
+        <location filename="mainwindow.ui" line="4512"/>
         <source>Show/Hide Drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4335"/>
+        <location filename="mainwindow.ui" line="4517"/>
         <source>Tip of the day...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4340"/>
+        <location filename="mainwindow.ui" line="4522"/>
         <source>Print preview...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4345"/>
-        <location filename="mainwindow.ui" line="4518"/>
+        <location filename="mainwindow.ui" line="4527"/>
+        <location filename="mainwindow.ui" line="4700"/>
         <source>Custom DSO...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4350"/>
+        <location filename="mainwindow.ui" line="4532"/>
         <source>Go to SkytechX home page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4355"/>
+        <location filename="mainwindow.ui" line="4537"/>
         <source>Sunrise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4360"/>
+        <location filename="mainwindow.ui" line="4542"/>
         <source>Sun transit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4365"/>
+        <location filename="mainwindow.ui" line="4547"/>
         <source>Sunset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4370"/>
+        <location filename="mainwindow.ui" line="4552"/>
         <source>Moonrise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4375"/>
+        <location filename="mainwindow.ui" line="4557"/>
         <source>Moon transit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4380"/>
+        <location filename="mainwindow.ui" line="4562"/>
         <source>Moonset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4389"/>
-        <location filename="mainwindow.ui" line="4392"/>
+        <location filename="mainwindow.ui" line="4571"/>
+        <location filename="mainwindow.ui" line="4574"/>
         <source>Search a Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4401"/>
-        <location filename="mainwindow.ui" line="4404"/>
+        <location filename="mainwindow.ui" line="4583"/>
+        <location filename="mainwindow.ui" line="4586"/>
         <source>Search a Mercury</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4413"/>
-        <location filename="mainwindow.ui" line="4416"/>
+        <location filename="mainwindow.ui" line="4595"/>
+        <location filename="mainwindow.ui" line="4598"/>
         <source>Search a Venus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4425"/>
-        <location filename="mainwindow.ui" line="4428"/>
+        <location filename="mainwindow.ui" line="4607"/>
+        <location filename="mainwindow.ui" line="4610"/>
         <source>Search a Mars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4437"/>
-        <location filename="mainwindow.ui" line="4440"/>
+        <location filename="mainwindow.ui" line="4619"/>
+        <location filename="mainwindow.ui" line="4622"/>
         <source>Search a Jupiter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4449"/>
-        <location filename="mainwindow.ui" line="4452"/>
+        <location filename="mainwindow.ui" line="4631"/>
+        <location filename="mainwindow.ui" line="4634"/>
         <source>Search a Saturn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4461"/>
-        <location filename="mainwindow.ui" line="4464"/>
+        <location filename="mainwindow.ui" line="4643"/>
+        <location filename="mainwindow.ui" line="4646"/>
         <source>Search a Uranus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4473"/>
-        <location filename="mainwindow.ui" line="4476"/>
+        <location filename="mainwindow.ui" line="4655"/>
+        <location filename="mainwindow.ui" line="4658"/>
         <source>Search a Neptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4485"/>
-        <location filename="mainwindow.ui" line="4488"/>
+        <location filename="mainwindow.ui" line="4667"/>
+        <location filename="mainwindow.ui" line="4670"/>
         <source>Search a Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4493"/>
-        <location filename="mainwindow.ui" line="4498"/>
+        <location filename="mainwindow.ui" line="4675"/>
+        <location filename="mainwindow.ui" line="4680"/>
         <source>Satellite...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4510"/>
+        <location filename="mainwindow.ui" line="4692"/>
         <source>Satellite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4513"/>
+        <location filename="mainwindow.ui" line="4695"/>
         <source>Show/Hide Satellite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4521"/>
+        <location filename="mainwindow.ui" line="4703"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4533"/>
+        <location filename="mainwindow.ui" line="4715"/>
         <source>Atlas chart at epoch J2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4536"/>
-        <location filename="mainwindow.ui" line="4539"/>
+        <location filename="mainwindow.ui" line="4718"/>
+        <location filename="mainwindow.ui" line="4721"/>
         <source>Mean epoch J2000.0 otherwise true to date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4544"/>
+        <location filename="mainwindow.ui" line="4726"/>
         <source>Check new version...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4556"/>
+        <location filename="mainwindow.ui" line="4738"/>
         <source>Horizon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4559"/>
+        <location filename="mainwindow.ui" line="4741"/>
         <source>Show/Hide horizon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4564"/>
+        <location filename="mainwindow.ui" line="4746"/>
         <source>Satellite chart...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4569"/>
+        <location filename="mainwindow.ui" line="4751"/>
         <source>Release notes...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4581"/>
-        <location filename="mainwindow.ui" line="4584"/>
+        <location filename="mainwindow.ui" line="4763"/>
+        <location filename="mainwindow.ui" line="4766"/>
         <source>Show/Hide planet phase</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4593"/>
+        <location filename="mainwindow.ui" line="4775"/>
         <source>Donation...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4605"/>
+        <location filename="mainwindow.ui" line="4787"/>
         <source>Insert text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4610"/>
+        <location filename="mainwindow.ui" line="4792"/>
         <source>DSS Manager...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4622"/>
+        <location filename="mainwindow.ui" line="4804"/>
         <source>Object tracking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4625"/>
+        <location filename="mainwindow.ui" line="4807"/>
         <source>Show/Hide Object tracking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4634"/>
-        <location filename="mainwindow.ui" line="4637"/>
+        <location filename="mainwindow.ui" line="4816"/>
+        <location filename="mainwindow.ui" line="4819"/>
         <source>Look backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4642"/>
+        <location filename="mainwindow.ui" line="4824"/>
         <source>3D Solar system...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4654"/>
+        <location filename="mainwindow.ui" line="4836"/>
         <source>Release object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4663"/>
+        <location filename="mainwindow.ui" line="4845"/>
         <source>Binocular FOV...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4666"/>
+        <location filename="mainwindow.ui" line="4848"/>
         <source>Insert binocular FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4678"/>
+        <location filename="mainwindow.ui" line="4860"/>
         <source>Center of screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4687"/>
+        <location filename="mainwindow.ui" line="4869"/>
         <source>Finderscope FOV...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4690"/>
+        <location filename="mainwindow.ui" line="4872"/>
         <source>Insert finderscope FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3503"/>
+        <location filename="mainwindow.ui" line="4877"/>
+        <source>Moonless nights...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4889"/>
+        <location filename="mainwindow.ui" line="4892"/>
+        <source>Show/Hide lunar features</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4901"/>
+        <source>Search help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4904"/>
+        <source>Open search help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4909"/>
+        <source>Planet size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4921"/>
+        <source>Show planet axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4924"/>
+        <source>Show / Hide object axis and equator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4933"/>
+        <source>Advanced search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4936"/>
+        <source>Alt+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3679"/>
         <source>Sun images...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3508"/>
+        <location filename="mainwindow.ui" line="3684"/>
         <source>Planet visibility...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3513"/>
+        <location filename="mainwindow.ui" line="3689"/>
         <source>Moon &amp;&amp; Sun almanac...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3518"/>
+        <location filename="mainwindow.ui" line="3694"/>
         <source>Setting...</source>
         <translation>Settings...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3532"/>
+        <location filename="mainwindow.ui" line="3708"/>
         <source>Connect device...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3543"/>
+        <location filename="mainwindow.ui" line="3719"/>
         <source>Standard cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3551"/>
+        <location filename="mainwindow.ui" line="3727"/>
         <source>Select...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3556"/>
+        <location filename="mainwindow.ui" line="3732"/>
         <source>Select world location...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3568"/>
+        <location filename="mainwindow.ui" line="3744"/>
         <source>Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3580"/>
+        <location filename="mainwindow.ui" line="3756"/>
         <source>Find telescope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3591"/>
+        <location filename="mainwindow.ui" line="3767"/>
         <source>Very fast (100ms)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3602"/>
+        <location filename="mainwindow.ui" line="3778"/>
         <source>Fast (250ms)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3613"/>
+        <location filename="mainwindow.ui" line="3789"/>
         <source>Slow (500ms)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3624"/>
+        <location filename="mainwindow.ui" line="3800"/>
         <source>Very slow (1000ms)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3637"/>
+        <location filename="mainwindow.ui" line="3813"/>
         <source>Asteroids...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3642"/>
+        <location filename="mainwindow.ui" line="3818"/>
         <source>Asteroid...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3647"/>
-        <source>Save time mark...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="3652"/>
-        <source>Restore time mark...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="3657"/>
+        <location filename="mainwindow.ui" line="3839"/>
         <source>Daily events...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3672"/>
+        <location filename="mainwindow.ui" line="3854"/>
         <source>Stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3690"/>
+        <location filename="mainwindow.ui" line="3872"/>
         <source>DSO Shapes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3708"/>
+        <location filename="mainwindow.ui" line="3890"/>
         <source>Constellation lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3726"/>
+        <location filename="mainwindow.ui" line="3908"/>
         <source>Constellation boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3744"/>
+        <location filename="mainwindow.ui" line="3926"/>
         <source>DSO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3762"/>
+        <location filename="mainwindow.ui" line="3944"/>
         <source>Milkyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3788"/>
+        <location filename="mainwindow.ui" line="3970"/>
         <source>Satellite daily events...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1253"/>
-        <location filename="mainwindow.ui" line="3811"/>
+        <location filename="mainwindow.ui" line="1270"/>
+        <location filename="mainwindow.ui" line="3993"/>
         <source>Show all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="941"/>
+        <location filename="mainwindow.ui" line="989"/>
         <source>Update with actual map time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="944"/>
+        <location filename="mainwindow.ui" line="992"/>
         <source>Autoupdate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1198"/>
+        <location filename="mainwindow.ui" line="1215"/>
         <source>Clear list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1272"/>
+        <location filename="mainwindow.ui" line="1289"/>
         <source>Delete permanently</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3498"/>
+        <location filename="mainwindow.ui" line="3674"/>
         <source>Day &amp;&amp; Night...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3780"/>
+        <location filename="mainwindow.ui" line="3962"/>
         <source>Planets, Sun &amp;&amp; Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3816"/>
+        <location filename="mainwindow.ui" line="3998"/>
         <source>Star in &amp;Tycho catalogue...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3824"/>
+        <location filename="mainwindow.ui" line="4006"/>
         <source>Search events...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3842"/>
+        <location filename="mainwindow.ui" line="4024"/>
         <source>Asteroids</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3860"/>
+        <location filename="mainwindow.ui" line="4042"/>
         <source>Antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3863"/>
+        <location filename="mainwindow.ui" line="4045"/>
         <source>Enable/Disable map antialiasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3878"/>
+        <location filename="mainwindow.ui" line="4060"/>
         <source>Real / Symbol planet rendering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3881"/>
+        <location filename="mainwindow.ui" line="4063"/>
         <source>Real/ Symbol planet rendering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3886"/>
+        <location filename="mainwindow.ui" line="4068"/>
         <source>Comets...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3891"/>
+        <location filename="mainwindow.ui" line="4073"/>
         <source>Comet...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3896"/>
+        <location filename="mainwindow.ui" line="4078"/>
         <source>Object tracking...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3905"/>
+        <location filename="mainwindow.ui" line="4087"/>
         <source>Telescope FOV...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3908"/>
+        <location filename="mainwindow.ui" line="4090"/>
         <source>Insert telescope FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3923"/>
+        <location filename="mainwindow.ui" line="4105"/>
         <source>Legends</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3941"/>
+        <location filename="mainwindow.ui" line="4123"/>
         <source>Comets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3949"/>
+        <location filename="mainwindow.ui" line="4131"/>
         <source>Double stars...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3954"/>
+        <location filename="mainwindow.ui" line="4136"/>
         <source>Planets, Sun &amp;&amp; Moon...</source>
         <oldsource>Planets, Sun &amp; Moon...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3972"/>
+        <location filename="mainwindow.ui" line="4154"/>
         <source>Labels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3984"/>
+        <location filename="mainwindow.ui" line="4166"/>
         <source>Telrad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3987"/>
+        <location filename="mainwindow.ui" line="4169"/>
         <source>Insert Telrad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3992"/>
-        <location filename="mainwindow.ui" line="4602"/>
+        <location filename="mainwindow.ui" line="4174"/>
+        <location filename="mainwindow.ui" line="4784"/>
         <source>Text...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4000"/>
+        <location filename="mainwindow.ui" line="4182"/>
         <source>Clear map...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1240"/>
-        <location filename="mainwindow.ui" line="4005"/>
+        <location filename="mainwindow.ui" line="1257"/>
+        <location filename="mainwindow.ui" line="4187"/>
         <source>Hide all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4014"/>
+        <location filename="mainwindow.ui" line="4196"/>
         <source>Frame field...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4017"/>
+        <location filename="mainwindow.ui" line="4199"/>
         <source>Insert frame field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4025"/>
+        <location filename="mainwindow.ui" line="4207"/>
         <source>Find edited object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4033"/>
+        <location filename="mainwindow.ui" line="4215"/>
         <source>Center edited object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4057"/>
+        <location filename="mainwindow.ui" line="4239"/>
         <source>Show full screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4072"/>
+        <location filename="mainwindow.ui" line="4254"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4075"/>
+        <location filename="mainwindow.ui" line="4257"/>
         <source>Stop current operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4086"/>
+        <location filename="mainwindow.ui" line="4268"/>
         <source>Change style...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4091"/>
+        <location filename="mainwindow.ui" line="4273"/>
         <source>Measure point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4106"/>
+        <location filename="mainwindow.ui" line="4288"/>
         <source>Telescope window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4115"/>
+        <location filename="mainwindow.ui" line="4297"/>
         <source>Circle...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4118"/>
+        <location filename="mainwindow.ui" line="4300"/>
         <source>Insert circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4141"/>
+        <location filename="mainwindow.ui" line="4323"/>
         <source>Bilinear interpolation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4144"/>
+        <location filename="mainwindow.ui" line="4326"/>
         <source>Enable/Disable bilinear interpolation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4149"/>
+        <location filename="mainwindow.ui" line="4331"/>
         <source>Polaris Hour Angle...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4157"/>
+        <location filename="mainwindow.ui" line="4339"/>
         <source>Deep Sky Objects...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4169"/>
-        <location filename="mainwindow.ui" line="4172"/>
+        <location filename="mainwindow.ui" line="4351"/>
+        <location filename="mainwindow.ui" line="4354"/>
         <source>Time-lapse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4182"/>
+        <location filename="mainwindow.ui" line="4364"/>
         <source>Set horizon...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4187"/>
+        <location filename="mainwindow.ui" line="4369"/>
         <source>Keyboard reference...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4195"/>
+        <location filename="mainwindow.ui" line="4377"/>
         <source>Change language...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4204"/>
+        <location filename="mainwindow.ui" line="4386"/>
         <source>Reset magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4207"/>
+        <location filename="mainwindow.ui" line="4389"/>
         <source>Reset magniture to current FOV.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4216"/>
+        <location filename="mainwindow.ui" line="4398"/>
         <source>Time-Lapse Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4219"/>
+        <location filename="mainwindow.ui" line="4401"/>
         <source>Set time-lapse preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4228"/>
+        <location filename="mainwindow.ui" line="4410"/>
         <source>Show help...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4231"/>
+        <location filename="mainwindow.ui" line="4413"/>
         <source>F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="198"/>
+        <location filename="mainwindow.cpp" line="208"/>
         <source>Sidebar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="218"/>
+        <location filename="mainwindow.cpp" line="237"/>
         <source>Time multiplicator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="230"/>
+        <location filename="mainwindow.cpp" line="249"/>
         <source>Time-lapse multiplicator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="280"/>
+        <location filename="mainwindow.cpp" line="281"/>
+        <source>[Enter object name]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="299"/>
         <source>R.A./Dec. grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="289"/>
+        <location filename="mainwindow.cpp" line="308"/>
         <source>Alt/Azm. grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="298"/>
+        <location filename="mainwindow.cpp" line="317"/>
         <source>Ecliptical grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="389"/>
+        <location filename="mainwindow.cpp" line="407"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="390"/>
+        <location filename="mainwindow.cpp" line="408"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="391"/>
+        <location filename="mainwindow.cpp" line="409"/>
         <source>File Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="446"/>
-        <location filename="mainwindow.cpp" line="479"/>
+        <location filename="mainwindow.cpp" line="464"/>
+        <location filename="mainwindow.cpp" line="497"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="447"/>
+        <location filename="mainwindow.cpp" line="465"/>
         <source>Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="448"/>
+        <location filename="mainwindow.cpp" line="466"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="456"/>
+        <location filename="mainwindow.cpp" line="474"/>
         <source>Max. elongation of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="457"/>
+        <location filename="mainwindow.cpp" line="475"/>
         <source>Opposition of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="458"/>
+        <location filename="mainwindow.cpp" line="476"/>
         <source>Conjunction of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="459"/>
+        <location filename="mainwindow.cpp" line="477"/>
         <source>Solar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="460"/>
+        <location filename="mainwindow.cpp" line="478"/>
         <source>Transit of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="461"/>
+        <location filename="mainwindow.cpp" line="479"/>
         <source>Occultation of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="462"/>
+        <location filename="mainwindow.cpp" line="480"/>
         <source>Lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="463"/>
+        <location filename="mainwindow.cpp" line="481"/>
         <source>Biggest Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="465"/>
+        <location filename="mainwindow.cpp" line="483"/>
         <source>Show all events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="469"/>
+        <location filename="mainwindow.cpp" line="487"/>
         <source>All events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="470"/>
+        <location filename="mainwindow.cpp" line="488"/>
         <source>Not visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="471"/>
+        <location filename="mainwindow.cpp" line="489"/>
         <source>Partial visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="472"/>
+        <location filename="mainwindow.cpp" line="490"/>
         <source>Full visisble</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="481"/>
+        <location filename="mainwindow.cpp" line="499"/>
         <source>Desc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="504"/>
+        <location filename="mainwindow.cpp" line="522"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="510"/>
+        <location filename="mainwindow.cpp" line="528"/>
         <source>Landing site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="516"/>
+        <location filename="mainwindow.cpp" line="534"/>
         <source>Crater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="522"/>
+        <location filename="mainwindow.cpp" line="540"/>
         <source>Montes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="528"/>
+        <location filename="mainwindow.cpp" line="546"/>
         <source>Mons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="534"/>
+        <location filename="mainwindow.cpp" line="552"/>
         <source>Rima</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="540"/>
+        <location filename="mainwindow.cpp" line="558"/>
         <source>Mare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="546"/>
+        <location filename="mainwindow.cpp" line="564"/>
         <source>Vallis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="552"/>
+        <location filename="mainwindow.cpp" line="570"/>
         <source>Lacus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="558"/>
+        <location filename="mainwindow.cpp" line="576"/>
         <source>Sinus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="573"/>
+        <location filename="mainwindow.cpp" line="591"/>
         <source>Set Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="624"/>
+        <location filename="mainwindow.cpp" line="642"/>
         <source>Open help in default web browser.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="765"/>
+        <location filename="mainwindow.cpp" line="796"/>
         <source>   Location : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="765"/>
+        <location filename="mainwindow.cpp" line="796"/>
         <source>Profile : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="804"/>
+        <location filename="mainwindow.cpp" line="837"/>
         <source>Rename </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="820"/>
+        <location filename="mainwindow.cpp" line="841"/>
+        <source>Show FITS header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="857"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="839"/>
+        <location filename="mainwindow.cpp" line="876"/>
         <source>Cannot rename a file!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1148"/>
+        <location filename="mainwindow.cpp" line="1234"/>
         <source> and </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1203"/>
+        <location filename="mainwindow.cpp" line="1289"/>
         <source>Max. west elongation is </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1205"/>
+        <location filename="mainwindow.cpp" line="1291"/>
         <source>Max. east elongation is </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1209"/>
+        <location filename="mainwindow.cpp" line="1295"/>
         <source>Size : %1&quot;  R = %2 AU</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1213"/>
-        <location filename="mainwindow.cpp" line="1217"/>
+        <location filename="mainwindow.cpp" line="1299"/>
+        <location filename="mainwindow.cpp" line="1303"/>
         <source>Begin : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1213"/>
-        <location filename="mainwindow.cpp" line="1217"/>
+        <location filename="mainwindow.cpp" line="1299"/>
+        <location filename="mainwindow.cpp" line="1303"/>
         <source>, end : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1221"/>
+        <location filename="mainwindow.cpp" line="1307"/>
         <source>Distance : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1225"/>
+        <location filename="mainwindow.cpp" line="1311"/>
         <source>Moon distance : %1 E.radii</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1230"/>
+        <location filename="mainwindow.cpp" line="1316"/>
         <source>Partial penumbral lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1233"/>
+        <location filename="mainwindow.cpp" line="1319"/>
         <source>Penumbral lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1236"/>
+        <location filename="mainwindow.cpp" line="1322"/>
         <source>Partial umbral lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1239"/>
+        <location filename="mainwindow.cpp" line="1325"/>
         <source>Total lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1246"/>
+        <location filename="mainwindow.cpp" line="1332"/>
         <source>Total solar eclipse. Dur : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1247"/>
-        <location filename="mainwindow.cpp" line="1251"/>
-        <location filename="mainwindow.cpp" line="1254"/>
+        <location filename="mainwindow.cpp" line="1333"/>
+        <location filename="mainwindow.cpp" line="1337"/>
+        <location filename="mainwindow.cpp" line="1340"/>
         <source> Mag. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1251"/>
+        <location filename="mainwindow.cpp" line="1337"/>
         <source>Partial solar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1253"/>
+        <location filename="mainwindow.cpp" line="1339"/>
         <source>Annular (ring) solar eclipse. Dur : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1338"/>
-        <location filename="mainwindow.cpp" line="1409"/>
-        <location filename="mainwindow.cpp" line="1514"/>
+        <location filename="mainwindow.cpp" line="1424"/>
+        <location filename="mainwindow.cpp" line="1495"/>
+        <location filename="mainwindow.cpp" line="1600"/>
         <source>First contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1354"/>
-        <location filename="mainwindow.cpp" line="1425"/>
+        <location filename="mainwindow.cpp" line="1440"/>
+        <location filename="mainwindow.cpp" line="1511"/>
         <source>First inner contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1367"/>
+        <location filename="mainwindow.cpp" line="1453"/>
         <source>Greatest transit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1381"/>
-        <location filename="mainwindow.cpp" line="1452"/>
+        <location filename="mainwindow.cpp" line="1467"/>
+        <location filename="mainwindow.cpp" line="1538"/>
         <source>Last inner contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1394"/>
-        <location filename="mainwindow.cpp" line="1465"/>
-        <location filename="mainwindow.cpp" line="1518"/>
+        <location filename="mainwindow.cpp" line="1480"/>
+        <location filename="mainwindow.cpp" line="1551"/>
+        <location filename="mainwindow.cpp" line="1604"/>
         <source>Last contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1438"/>
+        <location filename="mainwindow.cpp" line="1524"/>
         <source>Greatest occultation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1479"/>
+        <location filename="mainwindow.cpp" line="1565"/>
         <source>P1 : Beginning of the penumbral eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1480"/>
+        <location filename="mainwindow.cpp" line="1566"/>
         <source>U1 : Beginning of the partial eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1481"/>
+        <location filename="mainwindow.cpp" line="1567"/>
         <source>U2 : Beginning of the total eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1482"/>
-        <location filename="mainwindow.cpp" line="1516"/>
+        <location filename="mainwindow.cpp" line="1568"/>
+        <location filename="mainwindow.cpp" line="1602"/>
         <source>Greatest eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1483"/>
+        <location filename="mainwindow.cpp" line="1569"/>
         <source>U3 : End of the total eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1484"/>
+        <location filename="mainwindow.cpp" line="1570"/>
         <source>U4 : End of the partial eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1485"/>
+        <location filename="mainwindow.cpp" line="1571"/>
         <source>P2 : End of the penumbral eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1515"/>
+        <location filename="mainwindow.cpp" line="1601"/>
         <source>Second contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1517"/>
+        <location filename="mainwindow.cpp" line="1603"/>
         <source>Third contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1704"/>
-        <location filename="mainwindow.cpp" line="3560"/>
+        <location filename="mainwindow.cpp" line="1791"/>
+        <location filename="mainwindow.cpp" line="3721"/>
         <source>Total size : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1956"/>
+        <location filename="mainwindow.cpp" line="1837"/>
+        <source>Cannot parse version file!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2082"/>
         <source>Save map to image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2183"/>
+        <location filename="mainwindow.cpp" line="2095"/>
+        <source>Cannot create image!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2329"/>
         <source>Object &apos;%1&apos; not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2871"/>
+        <location filename="mainwindow.cpp" line="3032"/>
         <source>You cannot change map setting in night mode!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2948"/>
+        <location filename="mainwindow.cpp" line="3109"/>
         <source>Open a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2956"/>
-        <location filename="mainwindow.cpp" line="3312"/>
-        <location filename="mainwindow.cpp" line="3349"/>
+        <location filename="mainwindow.cpp" line="3117"/>
+        <location filename="mainwindow.cpp" line="3473"/>
+        <location filename="mainwindow.cpp" line="3510"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3047"/>
+        <location filename="mainwindow.cpp" line="3208"/>
         <source>Disconnect current telescope?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3423"/>
+        <location filename="mainwindow.cpp" line="3584"/>
         <source>Telescope - </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3470"/>
+        <location filename="mainwindow.cpp" line="3631"/>
         <source>Location was changed! Result may by inaccurate!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5168"/>
+        <location filename="mainwindow.cpp" line="5338"/>
+        <source>FOV : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="5339"/>
+        <source>Rot : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="5364"/>
         <source>Can&apos;t do that. Auto adjust is used!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="158"/>
-        <location filename="mainwindow.cpp" line="3482"/>
+        <location filename="mainwindow.cpp" line="5669"/>
+        <source>You cannot hold static object!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="168"/>
+        <location filename="mainwindow.cpp" line="3643"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="157"/>
+        <location filename="mainwindow.cpp" line="167"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="159"/>
+        <location filename="mainwindow.cpp" line="169"/>
         <source>Blur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="160"/>
+        <location filename="mainwindow.cpp" line="170"/>
         <source>Sharpen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="161"/>
+        <location filename="mainwindow.cpp" line="171"/>
         <source>Edge detect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="162"/>
+        <location filename="mainwindow.cpp" line="172"/>
         <source>Emboss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3484"/>
+        <location filename="mainwindow.cpp" line="3645"/>
         <source>Partial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3486"/>
+        <location filename="mainwindow.cpp" line="3647"/>
         <source>Full</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3548"/>
+        <location filename="mainwindow.cpp" line="3709"/>
         <source>Do you wand delete all images?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3866"/>
+        <location filename="mainwindow.cpp" line="4039"/>
         <source>Sun altitude : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3869"/>
+        <location filename="mainwindow.cpp" line="4042"/>
         <source>Moon altitude : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3878"/>
+        <location filename="mainwindow.cpp" line="4051"/>
         <source>Object altitude : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3883"/>
+        <location filename="mainwindow.cpp" line="4056"/>
         <source>Altitude of the center conjunctions : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3985"/>
+        <location filename="mainwindow.cpp" line="4158"/>
         <source>Maximal diameter : %1 Km</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4089"/>
+        <location filename="mainwindow.cpp" line="4262"/>
         <source>Clear all drawing on map?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4526"/>
+        <location filename="mainwindow.cpp" line="4699"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4528"/>
+        <location filename="mainwindow.cpp" line="4701"/>
         <source>Skytech const. lines (*.lin)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4647"/>
+        <location filename="mainwindow.cpp" line="4832"/>
         <source>Do you want delete file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4772"/>
+        <location filename="mainwindow.cpp" line="4957"/>
         <source>You can append only deep sky objects!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4808"/>
-        <location filename="mainwindow.cpp" line="4827"/>
-        <location filename="mainwindow.cpp" line="4846"/>
-        <location filename="mainwindow.cpp" line="4865"/>
-        <location filename="mainwindow.cpp" line="4884"/>
-        <location filename="mainwindow.cpp" line="4903"/>
+        <location filename="mainwindow.cpp" line="4993"/>
+        <location filename="mainwindow.cpp" line="5012"/>
+        <location filename="mainwindow.cpp" line="5031"/>
+        <location filename="mainwindow.cpp" line="5050"/>
+        <location filename="mainwindow.cpp" line="5069"/>
+        <location filename="mainwindow.cpp" line="5088"/>
         <source>Can not compute!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5028"/>
+        <location filename="mainwindow.cpp" line="5213"/>
         <source>You cannot track static object!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MoonlessNightsDlg</name>
+    <message>
+        <location filename="moonlessnightsdlg.ui" line="14"/>
+        <source>Moonless night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="moonlessnightsdlg.ui" line="22"/>
+        <source>Moon phase less than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="moonlessnightsdlg.ui" line="35"/>
+        <source>%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="moonlessnightsdlg.ui" line="67"/>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="moonlessnightsdlg.ui" line="98"/>
+        <source>OK &amp;&amp; Set time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="moonlessnightsdlg.ui" line="105"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10074,8 +10975,8 @@ p, li { white-space: pre-wrap; }
     <name>QObject</name>
     <message>
         <location filename="background.cpp" line="396"/>
-        <location filename="core/skutils.cpp" line="463"/>
-        <location filename="skymap.cpp" line="939"/>
+        <location filename="core/skutils.cpp" line="475"/>
+        <location filename="skymap.cpp" line="1095"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10086,8 +10987,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="background.cpp" line="396"/>
-        <location filename="core/skutils.cpp" line="445"/>
-        <location filename="skymap.cpp" line="945"/>
+        <location filename="core/skutils.cpp" line="457"/>
+        <location filename="skymap.cpp" line="1096"/>
         <source>E</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10098,8 +10999,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="background.cpp" line="396"/>
-        <location filename="core/skutils.cpp" line="463"/>
-        <location filename="skymap.cpp" line="941"/>
+        <location filename="core/skutils.cpp" line="475"/>
+        <location filename="skymap.cpp" line="1094"/>
         <source>S</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10110,8 +11011,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="background.cpp" line="396"/>
-        <location filename="core/skutils.cpp" line="445"/>
-        <location filename="skymap.cpp" line="943"/>
+        <location filename="core/skutils.cpp" line="457"/>
+        <location filename="skymap.cpp" line="1097"/>
         <source>W</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10121,68 +11022,69 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="422"/>
-        <location filename="ccomdlg.cpp" line="525"/>
-        <location filename="csetting.cpp" line="1172"/>
+        <location filename="casterdlg.cpp" line="421"/>
+        <location filename="ccomdlg.cpp" line="524"/>
+        <location filename="csetting.cpp" line="1308"/>
         <source>Save a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="469"/>
-        <location filename="ccomdlg.cpp" line="572"/>
+        <location filename="casterdlg.cpp" line="468"/>
+        <location filename="ccomdlg.cpp" line="571"/>
         <location filename="ceventsearch.cpp" line="186"/>
-        <location filename="csatellitedlg.cpp" line="25"/>
+        <location filename="csatellitedlg.cpp" line="26"/>
+        <location filename="dssheaderdialog.cpp" line="16"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="923"/>
+        <location filename="castro.cpp" line="984"/>
         <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="924"/>
+        <location filename="castro.cpp" line="985"/>
         <source>Mercury</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="925"/>
+        <location filename="castro.cpp" line="986"/>
         <source>Venus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="926"/>
+        <location filename="castro.cpp" line="987"/>
         <source>Mars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="927"/>
+        <location filename="castro.cpp" line="988"/>
         <source>Jupiter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="928"/>
+        <location filename="castro.cpp" line="989"/>
         <source>Saturn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="929"/>
+        <location filename="castro.cpp" line="990"/>
         <source>Uranus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="930"/>
+        <location filename="castro.cpp" line="991"/>
         <source>Neptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="931"/>
+        <location filename="castro.cpp" line="992"/>
         <source>Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="937"/>
-        <location filename="mapobj.cpp" line="333"/>
+        <location filename="castro.cpp" line="998"/>
+        <location filename="mapobj.cpp" line="341"/>
         <source>Earth shadow</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10193,118 +11095,130 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="cdailyev.cpp" line="58"/>
-        <location filename="crestoretm.cpp" line="38"/>
+        <location filename="crestoretm.cpp" line="49"/>
         <source>Desc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="core/skutils.cpp" line="346"/>
+        <location filename="core/skutils.cpp" line="349"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="core/skutils.cpp" line="574"/>
+        <location filename="core/skutils.cpp" line="586"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="core/skutils.cpp" line="575"/>
-        <location filename="core/skutils.cpp" line="596"/>
+        <location filename="core/skutils.cpp" line="587"/>
+        <location filename="core/skutils.cpp" line="608"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="core/skutils.cpp" line="584"/>
+        <location filename="core/skutils.cpp" line="596"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="core/skutils.cpp" line="585"/>
+        <location filename="core/skutils.cpp" line="597"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="core/skutils.cpp" line="586"/>
+        <location filename="core/skutils.cpp" line="598"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="core/skutils.cpp" line="595"/>
+        <location filename="core/skutils.cpp" line="607"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crestoretm.cpp" line="37"/>
+        <location filename="crestoretm.cpp" line="48"/>
         <source>Date/Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="243"/>
+        <location filename="crestoretm.cpp" line="50"/>
+        <source>R.A.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crestoretm.cpp" line="51"/>
+        <source>Dec.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mapobj.cpp" line="251"/>
         <source>  Hold object </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="249"/>
+        <location filename="mapobj.cpp" line="257"/>
         <source>Center map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="255"/>
+        <location filename="mapobj.cpp" line="263"/>
         <source>Download DSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="262"/>
+        <location filename="mapobj.cpp" line="270"/>
         <source>Release object </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="271"/>
+        <location filename="mapobj.cpp" line="279"/>
         <source>Slew telescope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="277"/>
+        <location filename="mapobj.cpp" line="285"/>
         <source>Sync telescope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="320"/>
+        <location filename="mapobj.cpp" line="328"/>
         <source>Hold </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="354"/>
+        <location filename="mapobj.cpp" line="362"/>
         <source>  Set Sun texture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="394"/>
+        <location filename="mapobj.cpp" line="404"/>
         <source>  Show asteroid </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="421"/>
+        <location filename="mapobj.cpp" line="431"/>
         <source>  Show comet </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="394"/>
-        <location filename="mapobj.cpp" line="421"/>
+        <location filename="mapobj.cpp" line="404"/>
+        <location filename="mapobj.cpp" line="431"/>
         <source> in 3D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="455"/>
-        <location filename="mapobj.cpp" line="466"/>
+        <location filename="mapobj.cpp" line="465"/>
         <location filename="mapobj.cpp" line="476"/>
-        <location filename="mapobj.cpp" line="487"/>
-        <location filename="mapobj.cpp" line="496"/>
+        <location filename="mapobj.cpp" line="486"/>
+        <location filename="mapobj.cpp" line="497"/>
+        <location filename="mapobj.cpp" line="503"/>
+        <location filename="mapobj.cpp" line="509"/>
+        <location filename="mapobj.cpp" line="518"/>
         <source>, %1 mag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="620"/>
+        <location filename="mapobj.cpp" line="642"/>
         <source>Do you really want to synchronize the telescope?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10329,62 +11243,62 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="730"/>
+        <location filename="skymap.cpp" line="883"/>
         <source>Gal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="731"/>
+        <location filename="skymap.cpp" line="884"/>
         <source>Neb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="732"/>
+        <location filename="skymap.cpp" line="885"/>
         <source>BNeb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="733"/>
+        <location filename="skymap.cpp" line="886"/>
         <source>DNeb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="734"/>
+        <location filename="skymap.cpp" line="887"/>
         <source>PNeb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="735"/>
+        <location filename="skymap.cpp" line="888"/>
         <source>OC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="736"/>
+        <location filename="skymap.cpp" line="889"/>
         <source>OCNeb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="737"/>
+        <location filename="skymap.cpp" line="890"/>
         <source>GC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="738"/>
+        <location filename="skymap.cpp" line="891"/>
         <source>GalC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="739"/>
+        <location filename="skymap.cpp" line="892"/>
         <source>Ast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="740"/>
+        <location filename="skymap.cpp" line="893"/>
         <source>Qua</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="skymap.cpp" line="741"/>
+        <location filename="skymap.cpp" line="894"/>
         <source>Unk</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10414,8 +11328,13 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="90"/>
+        <location filename="main.cpp" line="93"/>
         <source>SkytechX already running!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dssheaderdialog.cpp" line="17"/>
+        <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

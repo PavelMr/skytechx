@@ -681,8 +681,6 @@ void CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
 
   if (s > m_minSize && g_showLabels)
   {
-    //setSetFontColor(FONT_DSO, pPainter);
-    //pPainter->drawCText(pt->sx, pt->sy + s + m_fntHeight, getName(pDso));
     g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
   }
   if (addToList)
@@ -721,9 +719,6 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
 {
   int sz = m_minSize - 1;
   pPainter->setPen(m_pen);
-
-  //if (pDso->nameOffs != 32214)
-    //return;
 
   int sx = trfGetArcSecToPix(pDso->sx);
   int sy = trfGetArcSecToPix(pDso->sy);

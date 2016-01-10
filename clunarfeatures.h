@@ -20,7 +20,7 @@
 #define  LFT_SINUS          8
 
 typedef struct
-{  
+{
   double    lon;
   double    lat;
   double    rad;  // in km.
@@ -39,6 +39,7 @@ typedef struct
 
 class CLunarFeatures : public QObject
 {
+  Q_OBJECT
 public:
   CLunarFeatures();
   void load(QString name);

@@ -330,6 +330,8 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.gsc.fromFOV", set->map.gsc.fromFOV, ds);
   writeVal("map.gsc.fromMag", set->map.gsc.fromMag, ds);
 
+  writeVal("map.smartLabels", set->map.smartLabels, ds);
+
   return true;
 }
 
@@ -633,6 +635,8 @@ bool setLoad(QString name, setting_t *set)
   set->map.gsc.show = readVal("map.gsc.show", false, tMap).toBool();
   set->map.gsc.fromFOV = readVal("map.gsc.fromFOV", D2R(10), tMap).toDouble();
   set->map.gsc.fromMag = readVal("map.gsc.fromMag", 11, tMap).toDouble();
+
+  set->map.smartLabels = readVal("map.smartLabels", true, tMap).toBool();
 
   setCreateFonts();
 

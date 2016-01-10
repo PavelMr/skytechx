@@ -162,7 +162,7 @@ bool compareName(const char *str1, const char *str2)
   static char p2[128];
   int l1, l2;
 
-  int len = strlen(str1) + 1;
+  int len = (int)strlen(str1) + 1;
 
   for (a=0;a<len;a++)
   {
@@ -173,7 +173,7 @@ bool compareName(const char *str1, const char *str2)
   l1 = b;
   b = 0;
 
-  len = strlen(str2) + 1;
+  len = (int)strlen(str2) + 1;
 
   for (a=0;a<len;a++)
     if (str2[a] != 32) p2[b++] = str2[a];

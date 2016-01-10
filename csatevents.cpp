@@ -75,7 +75,7 @@ void CSatEvents::solve(double jd, int pln)
     {
       for (int i = 0; i < sats.sats.count(); i++)
       {
-        double s = sats.sats[i].ex;//sats.sats[i].distance;
+        double s = qAbs(sats.sats[i].ex);//sats.sats[i].distance;
 
         transit[i] = sats.sats[i].isTransit;
         hidden[i] = sats.sats[i].isHidden;
@@ -88,7 +88,7 @@ void CSatEvents::solve(double jd, int pln)
     QStandardItem *item;
     for (int i = 0; i < sats.sats.count(); i++)
     {
-      double s = sats.sats[i].ex;//sats.sats[i].distance;
+      double s = qAbs(sats.sats[i].ex);//sats.sats[i].distance;
 
       if (lastSep1[i] > lastSep2[i] && s < lastSep1[i])
       {
@@ -100,8 +100,6 @@ void CSatEvents::solve(double jd, int pln)
         item = new QStandardItem;
         item->setText(QString(tr("Max elongation of %1")).arg(sats.sats[i].name));
         m->setItem(row, 1, item);
-
-        qDebug() << lastSep1[i] * 1000 << lastSep2[i] * 1000 << s * 1000;
 
         row++;
       }
