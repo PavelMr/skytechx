@@ -17,6 +17,7 @@
 #include "csatellitedlg.h"
 #include "constellation.h"
 #include "build.h"
+#include "suntexture.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;

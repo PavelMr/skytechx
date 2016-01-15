@@ -85,6 +85,7 @@
 #include "clunarfeaturessearch.h"
 #include "cplanetsize.h"
 #include "cadvsearch.h"
+#include "suntexture.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -121,6 +122,8 @@ bool g_antialiasing;
 bool g_planetReal;
 
 bool g_quickInfoForced;
+
+CStatusBar *g_statusBar;
 
 QString g_horizonName = "none";
 
@@ -618,6 +621,12 @@ MainWindow::MainWindow(QWidget *parent) :
   statusBar = new CStatusBar(ui->statusBar);
   statusBar->createSkyMapBar();
   connect(statusBar, SIGNAL(sigDoubleClicked(int)), this, SLOT(slotStatusBarDoubleClick(int)));
+
+  g_statusBar = statusBar;
+
+  g_sunOnlineDaemon.setupParams();
+  g_sunOnlineDaemon.start();
+  connect(&g_sunOnlineDaemon, SIGNAL(repaint()), this, SLOT(repaintMap()));
 
   ui->widget->setFocus();
 
@@ -3101,6 +3110,7 @@ int CDSSOpenDialog::getSize()
 
   return (0);
 }
+
 
 //////////////////////////////////////////
 void MainWindow::on_pushButton_2_clicked()

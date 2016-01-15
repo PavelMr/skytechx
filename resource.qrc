@@ -123,5 +123,6 @@
         <file>res/star_glow.png</file>
         <file>res/ico_eq_axis.png</file>
         <file>res/ico_adv_search.png</file>
+        <file>res/loading._ico.gif</file>
     </qresource>
 </RCC>

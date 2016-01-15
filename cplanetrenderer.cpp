@@ -962,7 +962,7 @@ int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t 
   if (r < g_skSet.map.planet.satRad)
     r = g_skSet.map.planet.satRad;
 
-  if (sat->isThrowShadow && ptp->sx != 99999)
+  if (sat->isThrowShadow && bIsShadow && ptp->sx != 99999)
   { // draw shadow
     SKPOINT sp;
 

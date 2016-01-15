@@ -8,6 +8,7 @@ typedef struct
 {
   QString  name;
   QString  url;
+  int      param;
 } urlItem_t;
 
 class CUrlFile

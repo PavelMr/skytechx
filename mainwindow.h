@@ -50,7 +50,6 @@ public:
   void fillQuickInfo(ofiItem_t *item, bool scroll = false);
   bool isQuickInfoTimeUpdate();
   ofiItem_t *getQuickInfo(void);
-  void repaintMap(void);
   void setToolBoxPage(int page);
   void updateDSS(bool refill = true);
   void checkDSS(void);
@@ -609,6 +608,7 @@ private:
 
   void setTitle();
 public slots:
+  void repaintMap();
   void slotFilterChanged();
   void slotOpenWebHelp();
   void slotPrintPreview(QPrinter*);

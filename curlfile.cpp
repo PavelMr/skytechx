@@ -21,12 +21,21 @@ void CUrlFile::readFile(QString name, QList<urlItem_t> *tList)
     {
       line = f.readLine();
       split = line.split(";");
-      if (split.count() == 2)
+      if (split.count() == 2 || split.count() == 3)
       {
         urlItem_t item;
 
         item.name = split.at(0).simplified();
         item.url = split.at(1).simplified();
+
+        if (split.count() == 3)
+        {
+          item.param = split.at(2).simplified().toInt();
+        }
+        else
+        {
+          item.param = 0;
+        }
 
         tList->append(item);
       }
@@ -47,7 +56,7 @@ void CUrlFile::writeFile(const QString name, const QList<urlItem_t> *tList)
       if (!item.name.simplified().isEmpty() ||
           !item.url.simplified().isEmpty())
       {
-        s << item.name << " ; " << item.url << "\n";
+        s << item.name << " ; " << item.url << " ; " << item.param << "\n";
       }
     }
   }

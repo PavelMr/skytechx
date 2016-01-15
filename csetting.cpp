@@ -20,6 +20,8 @@
 #include "skcore.h"
 #include "csethorizon.h"
 #include "cstatusbar.h"
+#include "suntexture.h"
+#include "cimageview.h"
 
 #include <QSettings>
 
@@ -40,6 +42,8 @@ CSetting::CSetting(QWidget *parent) :
   ui(new Ui::CSetting)
 {
   ui->setupUi(this);
+
+  g_sunOnlineDaemon.stop();
 
   set = g_skSet;
   g_horizonNameOld = g_horizonName;
@@ -103,9 +107,29 @@ CSetting::CSetting(QWidget *parent) :
   connect(ui->treeWidgetDSS, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
   connect(ui->treeWidgetSat, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
 
+  // sun texture
+  ui->cb_onlineSunPeriod->addItem(tr("At startup only"), 0);
+  ui->cb_onlineSunPeriod->addItem(tr("1 hour"), 60 * 60);
+  ui->cb_onlineSunPeriod->addItem(tr("2 hour"), 60 * 60 * 2);
+  ui->cb_onlineSunPeriod->addItem(tr("6 hour"), 60 * 60 * 6);
+  ui->cb_onlineSunPeriod->addItem(tr("12 hour"), 60 * 60 * 12);
+  ui->cb_onlineSunPeriod->addItem(tr("24 hour"), 60 * 60 * 24);
+
+  QSettings settings;
+
+  ui->cb_useSunOnline->setChecked(settings.value("sun_online_used", false).toBool());
+  int period = settings.value("sun_online_period", 0).toInt();
+  int index = ui->cb_onlineSunPeriod->findData(period);
+  ui->cb_onlineSunPeriod->setCurrentIndex(index);
+
+  if (settings.value("sun_online_startup_only").toBool())
+  {
+    ui->cb_onlineSunPeriod->setCurrentIndex(0);
+  }
+
   // status bar
   bool ok;
-  int  index = 0;
+  index = 0;
   do
   {
     QString text;
@@ -173,6 +197,9 @@ CSetting::CSetting(QWidget *parent) :
 
 CSetting::~CSetting()
 {
+  g_sunOnlineDaemon.setupParams();
+  g_sunOnlineDaemon.start();
+
   currentRow = ui->listWidget_2->currentRow();
   delete ui;
 }
@@ -543,10 +570,12 @@ void CSetting::setValues()
   fillAstComList(ui->treeWidgetDSS, strList);
 
   CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &strList);
-  fillAstComList(ui->treeWidgetSun, strList);
+  fillAstComList(ui->treeWidgetSun, strList, true);
 
   CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url", &strList);
   fillAstComList(ui->treeWidgetSat, strList);
+
+  on_tabWidget_currentChanged(0); // fill urls
 }
 
 void CSetting::getAstComList(QTreeWidget* list, QList<urlItem_t>& strList)
@@ -560,6 +589,7 @@ void CSetting::getAstComList(QTreeWidget* list, QList<urlItem_t>& strList)
   {
     urlItem.name = (*it)->data(0, Qt::EditRole).toString();
     urlItem.url = (*it)->data(1, Qt::EditRole).toString();
+    urlItem.param = (*it)->data(2, Qt::EditRole).toInt();
     strList.append(urlItem);
     it++;
   }
@@ -568,21 +598,37 @@ void CSetting::getAstComList(QTreeWidget* list, QList<urlItem_t>& strList)
 // "C:/Users/Pavel/AppData/Local/PMR/SkytechX/data/profiles/default.dat"
 // "C:/Users/Pavel/AppData/Local/PMR/SkytechX/data/profiles/default.dat"
 
-void CSetting::fillAstComList(QTreeWidget* list, const QList<urlItem_t>& strList)
+void CSetting::fillAstComList(QTreeWidget* list, const QList<urlItem_t>& strList, bool sun)
 {
   list->clear();
 
-  list->setColumnCount(2);
+  if (sun)
+    list->setColumnCount(3);
+  else
+    list->setColumnCount(2);
   list->header()->model()->setHeaderData(0, Qt::Horizontal, tr("Name"));
   list->header()->model()->setHeaderData(1, Qt::Horizontal, tr("Url"));
-  list->header()->resizeSection(0, 100);
-  list->header()->resizeSection(0, 200);
+  if (sun)
+  {
+    list->headerItem()->setToolTip(2, tr("Sun radius in pixels. 0 = automatic"));
+    list->header()->model()->setHeaderData(2, Qt::Horizontal, tr("Radius (px)"));
+  }
+  list->header()->resizeSection(0, 150);
+  list->header()->resizeSection(1, 400);
+  if (sun)
+  {
+    list->header()->resizeSection(2, 100);
+  }
 
   foreach (urlItem_t urlItem, strList)
   {
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, urlItem.name);
     item->setText(1, urlItem.url);
+    if (sun)
+    {
+      item->setText(2, QString::number(urlItem.param));
+    }
     item->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled);
 
     list->addTopLevelItem(item);
@@ -800,6 +846,56 @@ void CSetting::apply()
   g_skSet.map.gsc.fromFOV = D2R(ui->doubleSpinBox_28->value());
   g_skSet.map.gsc.fromMag = ui->doubleSpinBox_29->value();
 
+  // online sun
+  QSettings settings;
+
+  settings.setValue("sun_online_used", ui->cb_useSunOnline->isChecked());
+
+  QList<urlItem_t> strList2;
+  CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &strList2);
+
+  int urlIndex = ui->cb_onlineSunUrl->currentData().toInt();
+
+  urlItem_t *url = &strList2[urlIndex];
+
+  qDebug() << url;
+  qDebug() << url->url << url->param;
+
+  settings.setValue("sun_radius", url->param);
+  settings.setValue("sun_online_url", url->url);
+  int period = ui->cb_onlineSunPeriod->currentData().toInt();
+
+  if (period == 0)
+  {
+    settings.setValue("sun_online_startup_only", true);
+  }
+  else
+  {
+    settings.setValue("sun_online_period", period);
+    settings.setValue("sun_online_startup_only", false);
+  }
+
+  /*
+  m_used = set.value("sun_online_used", false).toBool();
+  m_radius = set.value("sun_radius", 0).toInt();
+  m_url = set.value("sun_online_url", "http://sdo.gsfc.nasa.gov/assets/img/latest/latest_2048_4500.jpg").toString();
+  m_period = set.value("sun_online_period", 0).toInt();
+  m_lastJD = set.value("sun_online_last_update", 0.0).toDouble();
+  m_startupOnly = set.value("sun_online_startup_only", true).toBool();
+  */
+
+  /*
+  int index = ui->cb_onlineSunUrl->currentData(Qt::UserRole)// settings.value("sun_online_url", "").toString());
+  if (index == -1)
+  {
+    index = 0;
+  }
+  ui->cb_onlineSunUrl->setCurrentIndex(index);
+  int period = settings.value("sun_online_period", 60 * 60).toInt();
+  index = ui->cb_onlineSunPeriod->findData(period);
+  ui->cb_onlineSunPeriod->setCurrentIndex(index);
+  */
+
   // other
   g_skSet.map.smartLabels = ui->checkBox_18->isChecked();
 
@@ -821,6 +917,7 @@ void CSetting::apply()
 
   setCreateFonts();
   pcMapView->repaintMap(true);
+
 }
 
 //////////////////////////////////////////////////////////
@@ -1815,7 +1912,7 @@ void CSetting::on_pushButton_46_clicked()
              QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url");
     QList<urlItem_t> strList;
     CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/sun.url", &strList);
-    fillAstComList(ui->treeWidgetSun, strList);
+    fillAstComList(ui->treeWidgetSun, strList, true);
   }
 }
 
@@ -2074,8 +2171,6 @@ void CSetting::on_pushButton_urat_browse_clicked()
   ui->lineEdit_urat_folder->setText(folder);
 }
 
-#include "cimageview.h"
-
 void CSetting::on_toolButton_2_clicked()
 {
   QDialog  dlg(this);
@@ -2097,4 +2192,33 @@ void CSetting::starBitmapChange()
   tmp.map.star.starSizeFactor = ui->doubleSpinBox_30->value();
   tmp.map.star.saturation = ui->spinBox_5->value();
   ui->frame_2->setStars(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(), &tmp);
+}
+
+void CSetting::on_tabWidget_currentChanged(int)
+{
+  QSettings settings;
+
+  int index = ui->cb_onlineSunUrl->currentIndex();
+
+  ui->cb_onlineSunUrl->clear();
+
+  QString sunUrl = settings.value("sun_online_url", "").toString();
+
+  QList<urlItem_t> strList;
+  getAstComList(ui->treeWidgetSun, strList);
+
+  int i = 0;
+  foreach (const urlItem_t &url, strList)
+  {
+    ui->cb_onlineSunUrl->addItem(url.name, i);
+    if (index == i || url.url == sunUrl)
+    {
+      ui->cb_onlineSunUrl->setCurrentIndex(i);
+    }
+    i++;
+  }
+  if (ui->cb_onlineSunUrl->currentIndex() == -1)
+  {
+    ui->cb_onlineSunUrl->setCurrentIndex(0);
+  }
 }

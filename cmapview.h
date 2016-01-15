@@ -151,6 +151,7 @@ protected:
   bool      m_bClick;
   bool      m_drawing;
   bool      m_bZoomByMouse;
+  bool      m_bZoomByMouseCenter;
   QPoint    m_zoomPoint;
 
   bool      m_bMouseMoveMap;

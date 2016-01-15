@@ -944,7 +944,7 @@ static void smRenderMoons(CSkPainter *p, planetSatellites_t *sat, SKPOINT *ptp, 
       {
         trfProjectPointNoCheck(&pt);
 
-        int r = cPlanetRenderer.renderMoon(p, &pt, ptp, o, &sat->sats[i], false, view);
+        int r = cPlanetRenderer.renderMoon(p, &pt, ptp, o, &sat->sats[i], bFront, view);
 
         if (g_showLabels)
         {
@@ -1012,8 +1012,6 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     planSat.solve(mapView->jd - o[order[i]].light, order[i], &sats, &o[order[i]], sun);
 
     bool moons = sats.sats.count() > 0;
-
-    //bool moons = cSatXYZ.solve(mapView->jd, order[i], &o[order[i]], sun, &sat);
 
     if (mapView->fov > DEG2RAD(3))
       moons = false;
@@ -1363,6 +1361,8 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     renderSatellites(mapView, pPainter);
   }
 
+  g_labeling.render(pPainter);
+
   if (!g_skSet.map.hor.cb_hor_show_alt_azm || (g_skSet.map.hor.cb_hor_show_alt_azm && mapView->coordType == SMCT_ALT_AZM))
   {
     if (g_showHorizon)
@@ -1382,8 +1382,6 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
   if (g_showLegends)
     smRenderLegends(mapView, pPainter, pImg);
-
-  g_labeling.render(pPainter);
 
   return(false);
 }

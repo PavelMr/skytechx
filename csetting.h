@@ -187,9 +187,11 @@ private slots:
 
    void starBitmapChange();
 
+   void on_tabWidget_currentChanged(int index);
+
 private:
    Ui::CSetting *ui;
-   void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList);
+   void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList, bool sun = false);
    void getAstComList(QTreeWidget *list, QList<urlItem_t> &strList);
 };
 

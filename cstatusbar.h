@@ -4,6 +4,7 @@
 #include <QtGui>
 #include <QtWidgets>
 #include <QMouseEvent>
+#include <QMovie>
 
 #define SB_SM_RA          0
 #define SB_SM_DEC         1
@@ -17,7 +18,8 @@
 #define SB_SM_AZM         9
 #define SB_SM_AIRMASS    10
 #define SB_SM_MODE       11
-#define SB_SM_COUNT      12
+#define SB_SM_LOADING    12
+#define SB_SM_COUNT      13
 
 class CSBLabel : public QLabel
 {
@@ -59,6 +61,7 @@ public:
     bool getUsedItem(int index, QString &label, int &id);
     bool getAvailableItem(int id, QString &label);
     QString getLabel(int id);
+    void setDownloadStatus(bool start);
 
     bool isUsed(int id);
 signals:
@@ -74,6 +77,8 @@ protected:
 
    QStatusBar *pStatusBar;
    QList <sbItem_t> tItems;
+   QMovie *m_movie;
+
 };
 
 #endif // CSTATUSBAR_H

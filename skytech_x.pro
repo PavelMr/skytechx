@@ -31,6 +31,9 @@ Debug:win32-msvc2013   :  QMAKE_LFLAGS += /INCREMENTAL:NO
 TARGET = skytech_x
 TEMPLATE = app
 
+
+DEPENDPATH += rc
+
 #Release: build_nr.commands = $$PWD/build_inc.bat
 #Release: build_nr.depends = FORCE
 #Release: QMAKE_EXTRA_TARGETS += build_nr

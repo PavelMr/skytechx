@@ -124,23 +124,23 @@ void CPlanetSatellite::solve(double jd, int id, planetSatellites_t *sats, orbit_
   switch (id)
   {
     case PT_MARS:
-      solveMarsSat(jd, sats, pln->R);
+      solveMarsSat(jd, sats, pln);
       break;
 
     case PT_JUPITER:
-      solveJupiterSat(jd, sats);
+      solveJupiterSat(jd, sats, pln);
       break;
 
     case PT_SATURN:
-      solveSaturnSat(jd, sats);
+      solveSaturnSat(jd, sats, pln);
       break;
 
     case PT_URANUS:
-      solveUranusSat(jd, sats);
+      solveUranusSat(jd, sats, pln);
       break;
 
     case PT_NEPTUNE:
-      solveNeptuneSat(jd, sats);
+      solveNeptuneSat(jd, sats, pln);
       break;
   }
 
@@ -157,7 +157,7 @@ void CPlanetSatellite::solve(double jd, int id, planetSatellites_t *sats, orbit_
     double eg[3];
     double eh[3];
 
-    // moon to eqt. geocentric
+    // planet to eqt. geocentric
     eg[0] = xg;
     eg[1] = yg * cos(obl) - zg * sin(obl);
     eg[2] = yg * sin(obl) + zg * cos(obl);
@@ -186,10 +186,6 @@ void CPlanetSatellite::solve(double jd, int id, planetSatellites_t *sats, orbit_
     precessRect(eh, jd, JD2000);
 
     // calc shadow
-    double x = eg[0] + s->x;
-    double y = eg[1] + s->y;
-    double z = eg[2] + s->z;
-
     double mul = (pln->dx * 0.5) / AU1;
 
     double pr[3];
@@ -248,6 +244,10 @@ void CPlanetSatellite::solve(double jd, int id, planetSatellites_t *sats, orbit_
     {
       continue;
     }
+
+    double x = eg[0] + s->x;
+    double y = eg[1] + s->y;
+    double z = eg[2] + s->z;
 
     // rotate PA angle
     rotateZ(s->ex, s->ey, s->ez, pln->PA);
@@ -335,7 +335,7 @@ void CPlanetSatellite::computeArguments(double t,
   G = D2R(30.237557 + 0.08309257010 * t);
 }
 
-void CPlanetSatellite::solveMarsSat(double jd, planetSatellites_t *sats, double R)
+void CPlanetSatellite::solveMarsSat(double jd, planetSatellites_t *sats, orbit_t *pln)
 {
   double a, e, I, L, P, K, N, J, dL;
 
@@ -346,14 +346,15 @@ void CPlanetSatellite::solveMarsSat(double jd, planetSatellites_t *sats, double 
   double td = jd - 2441266.5;
   double ty = td / 365.25;
 
-  double dmag = 5.0 * log10(R + 0.4);
+  double fv = qAbs(R2D(pln->FV));
+  double dmag = 5 * log10(pln->R * pln->r) + fv * (0.0380 + fv * (-0.000273 + fv * 2e-6));
 
   for (int b = 0; b < 2; b++)
   {
     switch (b)
     {
       case 0:
-        name = "Phobos I";
+        name = "Phobos";
         diameter = 22.2;
         mag = 11.8 + dmag;
 
@@ -368,7 +369,7 @@ void CPlanetSatellite::solveMarsSat(double jd, planetSatellites_t *sats, double 
         break;
 
       case 1:
-        name = "Deimos II";
+        name = "Deimos";
         diameter = 12.4;
         mag = 12.9 + dmag;
 
@@ -386,6 +387,9 @@ void CPlanetSatellite::solveMarsSat(double jd, planetSatellites_t *sats, double 
     }
 
     double ma = L - P;
+
+    rangeDbl(&ma, R360);
+
     double EE = CAstro::solveKepler(e, ma);
 
     // convert semi major axis from km to AU
@@ -434,7 +438,7 @@ void CPlanetSatellite::solveMarsSat(double jd, planetSatellites_t *sats, double 
   }
 }
 
-void CPlanetSatellite::solveJupiterSat(double jd, planetSatellites_t *sats)
+void CPlanetSatellite::solveJupiterSat(double jd, planetSatellites_t *sats, orbit_t *pln)
 {
   double phi, pi1, pi2, pi3, pi4, PIj, phi1, phi2, phi3, phi4;
   double axis1, axis2, axis3, axis4, PIG2;
@@ -489,15 +493,17 @@ void CPlanetSatellite::solveJupiterSat(double jd, planetSatellites_t *sats)
   QString name;
   double  diameter;
   double  mag;
+  double fv = qAbs(R2D(pln->FV));
+  double  dmag = 5 * log10(pln->R * pln->r) + 0.005 * fv;
 
   for (int b = 0; b < 4; b++)
   {
     switch (b)
     {
       case 0: // IO
-        name = "Io I";
+        name = "Io";
         diameter = 3630.6;
-        mag = 5.7;
+        mag = -1.68 + dmag;
 
         lon = l1;
 
@@ -574,9 +580,9 @@ void CPlanetSatellite::solveJupiterSat(double jd, planetSatellites_t *sats)
         break;
 
       case 1:
-        name = "Europa II";
+        name = "Europa";
         diameter = 3121.6;
-        mag = 5.8;
+        mag = -1.41 + dmag;
 
         lon = l2;
 
@@ -696,9 +702,9 @@ void CPlanetSatellite::solveJupiterSat(double jd, planetSatellites_t *sats)
         break;
 
       case 2:
-        name = "Ganymede III";
+        name = "Ganymede";
         diameter = 2634.1;
-        mag = 5.3;
+        mag = -2.09 + dmag;
 
         lon = l3;
 
@@ -836,9 +842,9 @@ void CPlanetSatellite::solveJupiterSat(double jd, planetSatellites_t *sats)
         break;
 
       case 3:
-        name = "Callisto IV";
+        name = "Callisto";
         diameter = 2410.3;
-        mag = 6.7;
+        mag = -1.05 + dmag;
 
         lon = l4;
 
@@ -1140,7 +1146,7 @@ static void UranicentricToGeocentricEquatorial(double &X, double &Y, double &Z)
     Z = -cd * oldY + sd * oldZ;
 }
 
-void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats)
+void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats, orbit_t *pln)
 {
   const double t = jd - 2444239.5;
   const double tcen = t/365.25;
@@ -1175,6 +1181,8 @@ void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats)
   double diameter;
   QString name;
   double mag;
+  double fv = qAbs(R2D(pln->FV));
+  double dmag = 5 * log10(pln->R * pln->r);
 
   for (int b = 0; b < 5; b++)
   {
@@ -1183,7 +1191,7 @@ void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats)
     case 0:
         name = "Miranda";
         diameter = 235.8 * 2;
-        mag = 15.8;
+        mag = 3.60 + dmag;
 
         N = (4443522.67
              - 34.92 * cos(N1 - 3*N2 + 2*N3)
@@ -1238,7 +1246,7 @@ void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats)
     case 1:
         name = "Ariel";
         diameter = 578.9 * 2;
-        mag = 14.4;
+        mag = 1.45 + dmag;
 
         N = (2492542.57
              +   2.55 * cos(N1 - 3*N2 + 2*N3)
@@ -1294,7 +1302,7 @@ void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats)
     case 2:
         name = "Umbriel";
         diameter = 584.7 * 2;
-        mag = 14.5;
+        mag = 2.10 + dmag;
 
         N = (1515954.90
              +   9.74 * cos(N3 - 2*N4 + E3)
@@ -1378,7 +1386,7 @@ void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats)
     case 3:
         name = "Titania";
         diameter = 788.4 * 2;
-        mag = 13.9;
+        mag = 1.02 + dmag;
 
         N = (721663.16
              -  2.64 * cos(N3 - 2*N4 + E3)
@@ -1472,7 +1480,7 @@ void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats)
     case 4:
         name = "Oberon";
         diameter = 761.4 * 2;
-        mag = 14.1;
+        mag = 1.23 + dmag;
 
         N = (466580.54
              +  2.08 * cos(2*N4 - 3*N5 + E5)
@@ -1582,7 +1590,7 @@ void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats)
   }
 }
 
-void CPlanetSatellite::solveNeptuneSat(double jd, planetSatellites_t *sats)
+void CPlanetSatellite::solveNeptuneSat(double jd, planetSatellites_t *sats, orbit_t *pln)
 {
     double td;       // Julian days from reference date
     double ty;       // Julian years from reference date
@@ -1605,6 +1613,8 @@ void CPlanetSatellite::solveNeptuneSat(double jd, planetSatellites_t *sats)
     double diameter;
     QString name;
     double  mag;
+    double fv = qAbs(R2D(pln->FV));
+    double dmag = 5 * log10(pln->R * pln->r);
 
     for (int b = 0; b < 2; b++)
     {
@@ -1613,7 +1623,7 @@ void CPlanetSatellite::solveNeptuneSat(double jd, planetSatellites_t *sats)
       case 0: //TRITON:
           name = "Triton";
           diameter = 1353.4 * 2;
-          mag = 13.4;
+          mag = -1.22 + dmag;
 
           td = jd - 2433282.5;
           ty = td/365.25;
@@ -1641,7 +1651,7 @@ void CPlanetSatellite::solveNeptuneSat(double jd, planetSatellites_t *sats)
       case 1: //NEREID:
           name = "Nereid";
           diameter = 170 * 2;
-          mag = 18.7;
+          mag = 4.0 + dmag;
 
           td = jd - 2433680.5;
           tc = td/36525;
@@ -1830,12 +1840,14 @@ static void elemHyperion(const double jd, double elem[6])
 }
 
 
-void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats)
+void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats, orbit_t *pln)
 {
   double X, Y, Z;
   QString name;
   double  diameter;
   double  mag;
+  double fv = qAbs(R2D(pln->FV));
+  double dmag = 5 * log10(pln->r * pln->R) + 0.044 * fv;
 
   for (int b = 0; b < 9; b++)
   {
@@ -1886,7 +1898,7 @@ void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats)
 
             sat.name = "Phoebe";
             sat.diameter = 106.5 * 2;
-            sat.mag = 16.4;
+            sat.mag = 6.7 + dmag;
             sat.x = X;
             sat.y = Y;
             sat.z = Z;
@@ -1899,7 +1911,7 @@ void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats)
 
             name = "Hyperion";
             diameter = 205 * 2;
-            mag = 14.2;
+            mag = 4.63 + dmag;
 
             aam = 0.2953088138695000E+00 * 365.25;
             tmas = 1/0.3333333333333000E+08;
@@ -1913,7 +1925,7 @@ void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats)
             case 2: //MIMAS:
                 name = "Mimas";
                 diameter = 196 * 2;
-                mag = 12.9;
+                mag = 3.30 + dmag;
                 index = 0;
                 break;
 
@@ -1921,27 +1933,27 @@ void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats)
                 index = 1;
                 name = "Enceladus";
                 diameter = 250 * 2;
-                mag = 11.7;
+                mag = 2.10 + dmag;
                 break;
 
             case 4://TETHYS:
                 index = 2;
                 name = "Tethys";
                 diameter = 530 * 2;
-                mag = 10.2;
+                mag = 0.60 + dmag;
                 break;
 
             case 5://DIONE:
                 index = 3;
                 name = "Dione";
                 diameter = 560 * 2;
-                mag = 10.4;
+                mag = 0.80 + dmag;
                 break;
 
             case 6://RHEA:
                 name = "Rhea";
                 diameter = 763.8 * 2;
-                mag = 10;
+                mag = 0.10 + dmag;
                 index = 4;
                 break;
 
@@ -1949,14 +1961,14 @@ void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats)
                 index = 5;
                 name = "Titan";
                 diameter = 2575 * 2;
-                mag = 8.2;
+                mag = -1.28 + dmag;
                 break;
 
             case 8://IAPETUS:
                 index = 6;
                 name = "Iapetus";
                 diameter = 730 * 2;
-                mag = 10.8;
+                mag = 1.50 + dmag;
                 break;
             }
 
@@ -2034,6 +2046,7 @@ void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats)
 
             sat.name = name;
             sat.diameter = diameter;
+            sat.mag = mag;
             sat.x = X;
             sat.y = Y;
             sat.z = Z;

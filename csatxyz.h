@@ -42,11 +42,11 @@ public:
 private:
   void computeArguments(double t, double &l1, double &l2, double &l3, double &l4, double &om1, double &om2, double &om3, double &om4, double &psi, double &Gp, double &G);
 
-  void solveJupiterSat(double jd, planetSatellites_t *sats);
-  void solveMarsSat(double jd, planetSatellites_t *sats, double R);
-  void solveUranusSat(double jd, planetSatellites_t *sats);
-  void solveNeptuneSat(double jd, planetSatellites_t *sats);
-  void solveSaturnSat(double jd, planetSatellites_t *sats);
+  void solveJupiterSat(double jd, planetSatellites_t *sats, orbit_t *pln);
+  void solveMarsSat(double jd, planetSatellites_t *sats, orbit_t *pln);
+  void solveUranusSat(double jd, planetSatellites_t *sats, orbit_t *pln);
+  void solveNeptuneSat(double jd, planetSatellites_t *sats, orbit_t *pln);
+  void solveSaturnSat(double jd, planetSatellites_t *sats, orbit_t *pln);
 };
 
 

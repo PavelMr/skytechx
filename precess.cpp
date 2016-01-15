@@ -8,112 +8,6 @@
 #define	DASIN(x)	RAD2DEG(asin(x))
 #define	DATAN2(y,x)	RAD2DEG(atan2((y),(x)))
 
-/*
- * Copyright (c) 1990 by Craig Counterman. All rights reserved.
- *
- * This software may be redistributed freely, not sold.
- * This copyright notice and disclaimer of warranty must remain
- *    unchanged.
- *
- * No representation is made about the suitability of this
- * software for any purpose.  It is provided "as is" without express or
- * implied warranty, to the extent permitted by applicable law.
- *
- * Rigorous precession. From Astronomical Ephemeris 1989, p. B18
- *
- * 96-06-20 Hayo Hase <hase@wettzell.ifag.de>: theta_a corrected
- */
-
- // todo: zkusit to jenom v radianech
-
-static void precess_hiprec(
-double jd1, double jd2,	/* initial and final epoch JDs */
-double *ra, double *dec)	/* ra/dec for jd1 in, for jd2 out */
-{
-  static double last_jd1 = -213.432, last_from;
-  static double last_jd2 = -213.432, last_to;
-  double zeta_A, z_A, theta_A;
-  double T;
-  double A, B, C;
-  double alpha, delta;
-  double alpha_in, delta_in;
-  double from_equinox, to_equinox;
-  double alpha2000, delta2000;
-
-  /* convert mjds to years;
-   * avoid the remarkably expensive calls to mjd_year()
-   */
-  if (last_jd1 == jd1)
-      from_equinox = last_from;
-  else {
-      from_equinox =  jdGetYearFromJD(jd1);
-      last_jd1 = jd1;
-      last_from = from_equinox;
-  }
-  if (last_jd2 == jd2)
-      to_equinox = last_to;
-  else {
-      to_equinox = jdGetYearFromJD(jd2);
-      last_jd2 = jd2;
-      last_to = to_equinox;
-  }
-
-  /* convert coords in rads to degs */
-  alpha_in = RAD2DEG(*ra);
-  delta_in = RAD2DEG(*dec);
-
-  /* precession progresses about 1 arc second in .047 years */
-  /* From from_equinox to 2000.0 */
-  if (fabs (from_equinox-2000.0) > .02) {
-      T = (from_equinox - 2000.0)/100.0;
-      zeta_A  = 0.6406161* T + 0.0000839* T*T + 0.0000050* T*T*T;
-      z_A     = 0.6406161* T + 0.0003041* T*T + 0.0000051* T*T*T;
-      theta_A = 0.5567530* T - 0.0001185* T*T - 0.0000116* T*T*T;
-
-      double alphazA = DEG2RAD(alpha_in - z_A);
-
-      A = sin(alphazA) * DCOS(delta_in);
-      B = cos(alphazA) * DCOS(theta_A) * DCOS(delta_in)
-        + DSIN(theta_A) * DSIN(delta_in);
-      C = -cos(alphazA) * DSIN(theta_A) * DCOS(delta_in)
-        + DCOS(theta_A) * DSIN(delta_in);
-
-      alpha2000 = DATAN2(A,B) - zeta_A;
-      rangeDbl(&alpha2000, 360.0);
-      delta2000 = DASIN(C);
-  } else {
-      /* should get the same answer, but this could improve accruacy */
-      alpha2000 = alpha_in;
-      delta2000 = delta_in;
-  };
-
-  /* From 2000.0 to to_equinox */
-  if (fabs (to_equinox - 2000.0) > .02) {
-      T = (to_equinox - 2000.0)/100.0;
-      zeta_A  = 0.6406161* T + 0.0000839* T*T + 0.0000050* T*T*T;
-      z_A     = 0.6406161* T + 0.0003041* T*T + 0.0000051* T*T*T;
-      theta_A = 0.5567530* T - 0.0001185* T*T - 0.0000116* T*T*T;
-
-      double a2000zA = DEG2RAD(alpha2000 + zeta_A);
-
-      A = sin(a2000zA) * DCOS(delta2000);
-      B = cos(a2000zA) * DCOS(theta_A) * DCOS(delta2000)
-        - DSIN(theta_A) * DSIN(delta2000);
-      C = cos(a2000zA) * DSIN(theta_A) * DCOS(delta2000)
-        + DCOS(theta_A) * DSIN(delta2000);
-
-      alpha = DATAN2(A,B) + z_A;
-      rangeDbl(&alpha, 360.0);
-      delta = DASIN(C);
-  } else {
-      /* should get the same answer, but this could improve accruacy */
-      alpha = alpha2000;
-      delta = delta2000;
-  };
-
-  *ra = DEG2RAD(alpha);
-  *dec = DEG2RAD(delta);
-}
 
 ////////////////////////////////////////////////////////////////////
 void precess(radec_t *src, radec_t *dst, double jdFrom, double jdTo)
@@ -158,7 +52,7 @@ void precessRect(double *r, double jdFrom, double jdTo)
   ra  = atan2(r[1], r[0]);
   dec = atan2(r[2], sqrt(r[0] * r[0] + r[1] * r[1]));
 
-  precess_hiprec(jdFrom, jdTo, &ra, &dec);
+  precess(&ra, &dec, jdFrom, jdTo);
 
   double cDec = cos(dec);
 
@@ -166,25 +60,6 @@ void precessRect(double *r, double jdFrom, double jdTo)
   r[1] = cDec * sin(ra) * dist;
   r[2] = sin(dec) * dist;
 }
-
-///////////////////////////////////////////////////////////
-void precessRectNorm(double *r, double jdFrom, double jdTo)
-///////////////////////////////////////////////////////////
-{ // return normalized
-  double ra, dec;
-
-  ra  = atan2(r[1], r[0]);
-  dec = atan2(r[2], sqrt(r[0] * r[0] + r[1] * r[1]));
-
-  precess_hiprec(jdFrom, jdTo, &ra, &dec);
-
-  double cDec = cos(dec);
-
-  r[0] = cDec * cos(ra);
-  r[1] = cDec * sin(ra);
-  r[2] = sin(dec);
-}
-
 
 ///////////////////////////////////////////////////////////
 void precessMatrix(double jdFrom, double jdTo, SKMATRIX *m)

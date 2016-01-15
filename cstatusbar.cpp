@@ -6,6 +6,7 @@ CStatusBar::CStatusBar(QStatusBar *pBar)
 ////////////////////////////////////////
 {
   pStatusBar = pBar;
+  m_movie = new QMovie(":/res/loading._ico.gif");
 }
 
 //////////////////////////////////////
@@ -38,11 +39,48 @@ QWidget *CStatusBar::createItem(int id, const QString & tooltip, int width, Qt::
   pStatusBar->addWidget(i.pLabel, 0);
   i.pLabel->setToolTip(tooltip);
 
+  if (id == SB_SM_LOADING)
+  {
+    i.pLabel->setMovie(m_movie);
+  }
+
   tItems.append(i);
 
   return i.pLabel;
 }
 
+void CStatusBar::setDownloadStatus(bool start)
+{
+  static int counter = 0;
+
+  if (start)
+  {
+    counter++;
+  }
+  else
+  {
+    counter--;
+  }
+
+  Q_ASSERT(counter >= 0);
+
+  for (int i = 0; i < tItems.count(); i++)
+  {
+    if (tItems[i].id == SB_SM_LOADING)
+    {
+      if (counter > 0)
+      {
+        m_movie->start();
+        tItems[i].pLabel->show();
+      }
+      else
+      {
+        m_movie->stop();
+        tItems[i].pLabel->hide();
+      }
+    }
+  }
+}
 
 /////////////////////////////////////////////
 void CStatusBar::setItem(int id, QString str)
@@ -92,6 +130,7 @@ void CStatusBar::restoreStatusBar()
 
   if (data.isEmpty())
   {
+    addItem(SB_SM_LOADING);
     addItem(SB_SM_CONST);
     addItem(SB_SM_DATE);
     addItem(SB_SM_TIME);
@@ -193,10 +232,15 @@ QString CStatusBar::getLabel(int id)
 
     case SB_SM_MODE:
       return tr("Chart mode");
+
+    case SB_SM_LOADING:
+      return tr("Download status");
   }
 
   return QString();
 }
+
+
 
 void CStatusBar::slotDoubleClicked(int id)
 {
@@ -257,6 +301,10 @@ void CStatusBar::addItem(int id)
 
     case SB_SM_MEASURE:
       createItem(SB_SM_MEASURE, label, 180);
+      break;
+
+    case SB_SM_LOADING:
+      createItem(SB_SM_LOADING, label, 24);
       break;
   }
 }

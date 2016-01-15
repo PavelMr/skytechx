@@ -336,7 +336,9 @@ void CMapView::mousePressEvent(QMouseEvent *e)
     if ((e->modifiers() & Qt::ShiftModifier) && (e->buttons() & Qt::LeftButton) == Qt::LeftButton)
     {
       m_bZoomByMouse = true;
+      m_bZoomByMouseCenter = e->modifiers() & Qt::AltModifier;
       m_zoomPoint = e->pos();
+
     }
     else
     if ( e->button() == Qt::LeftButton)
@@ -352,6 +354,7 @@ void CMapView::mousePressEvent(QMouseEvent *e)
     {
       m_bClick = true;
       m_bZoomByMouse = true;
+      m_bZoomByMouseCenter = e->modifiers() & Qt::AltModifier;
       m_zoomPoint = e->pos();
     }
 
@@ -633,6 +636,13 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
   { // zoom map
     QRect  rc(m_zoomPoint, m_lastMousePos);
     double x, y;
+
+    if (m_bZoomByMouseCenter)
+    {
+      rc.setWidth(rc.width() * 2);
+      rc.setHeight(rc.height() * 2);
+      rc.moveCenter(m_zoomPoint);
+    }
 
     double fov = calcNewPos(&rc, &x, &y);
     if (fov != 0)
@@ -1231,6 +1241,7 @@ double CMapView::getDsoMagnitudeLevel(void)
 
   return(mag);
 }
+
 
 //////////////////////////////////////////////////
 void CMapView::slotCheckedMagLevLock(bool checked)
@@ -1850,16 +1861,8 @@ void CMapView::paintEvent(QPaintEvent *)
   if (!m_bInit)
     return;
 
-  if (g_antialiasing)
-  {
-    p.setRenderHint(QPainter::Antialiasing, true);
-    p.setRenderHint(QPainter::SmoothPixmapTransform, true);
-  }
-  else
-  {
-    p.setRenderHint(QPainter::Antialiasing, false);
-    p.setRenderHint(QPainter::SmoothPixmapTransform, false);
-  }
+  p.setRenderHint(QPainter::Antialiasing, g_antialiasing);
+  p.setRenderHint(QPainter::SmoothPixmapTransform, g_antialiasing);
 
   p.drawImage(0, 0, *pBmp);
 
@@ -1906,24 +1909,19 @@ void CMapView::paintEvent(QPaintEvent *)
     QRect  rc(m_zoomPoint, m_lastMousePos);
     double x, y;
 
+    if (m_bZoomByMouseCenter)
+    {
+      rc.setWidth(rc.width() * 2);
+      rc.setHeight(rc.height() * 2);
+      rc.moveCenter(m_zoomPoint);
+    }
+
     double fov = calcNewPos(&rc, &x, &y);
+
+    rc = rc.normalized();
 
     p.setFont(QFont("arial",  11, QFont::Bold));
 
-    int mm = qMin(m_lastMousePos.x() - m_zoomPoint.x(), m_lastMousePos.y() - m_zoomPoint.y());
-    int size = qMax((int)(mm * 0.05f), 5);
-    p.setPen(QPen(QColor(255, 255, 255), 1, Qt::SolidLine));
-    p.drawCross(m_zoomPoint + (m_lastMousePos - m_zoomPoint) * 0.5, size);
-    //QRect rc3 = rc;
-    p.setPen(Qt::white);
-    QString str = tr("FOV : ") + getStrDegNoSign(fov);
-    rc = p.renderText(rc.left(), rc.top(), 0, str, RT_TOP_RIGHT, false);
-    QRect rc2 = rc.translated(0, 0);
-    rc2.adjust(-2, -2, 2, 2);
-    p.fillRect(rc2, Qt::black);
-    p.drawText(rc2, Qt::AlignCenter, str);
-
-    p.setBrush(Qt::NoBrush);
 
     if (fov != 0)
     {
@@ -1934,10 +1932,16 @@ void CMapView::paintEvent(QPaintEvent *)
       p.setPen(QPen(QColor(255, 0, 0), 3, Qt::DotLine));
     }
 
-    QRect rc3(m_zoomPoint, m_lastMousePos);
+    QString str = tr("FOV : ") + getStrDegNoSign(fov);
+    p.drawText(rc.left(), rc.top() - 5, str);
+
     p.setCompositionMode(QPainter::CompositionMode_Difference);
-    p.drawRect(rc3);
+    p.drawRect(rc);
     p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+
+    int size = qMin(10, (int)qMin(0.5 * rc.width(), 0.5 * rc.height()));
+    p.setPen(QPen(QColor(255, 255, 255), 1, Qt::SolidLine));
+    p.drawCross(rc.center(), size);
   }
 
   if (g_dssUse)

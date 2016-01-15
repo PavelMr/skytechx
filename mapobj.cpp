@@ -356,12 +356,6 @@ void mapObjContextMenu(CMapView *map)
           g_HoldObject.objType = MO_PLANET;
           isHoldObjFirst =  true;
         }
-
-        if (o.par1 == PT_SUN)
-        {
-          strSuf.append(QObject::tr("  Set Sun texture"));
-          strIdx.append(-6);
-        }
         break;
       }
 
@@ -626,14 +620,6 @@ void mapObjContextMenu(CMapView *map)
       {
         g_bHoldObject = false;
         pcMainWnd->enableReleaseObject(false);
-        return;
-      }
-
-      case -6:
-      {
-        CSohoImg dlg(map);
-
-        dlg.exec();
         return;
       }
 

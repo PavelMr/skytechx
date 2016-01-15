@@ -35,7 +35,6 @@ CSohoImg::CSohoImg(QWidget *parent) :
   {
     ui->widget->setSourceNoImage();
     ui->pushButton_2->setEnabled(false);
-    ui->pushButton_3->setEnabled(false);
   }
 }
 
@@ -92,8 +91,6 @@ void CSohoImg::on_pushButton_2_clicked()
 
   ui->pushButton_2->setDisabled(true);
   ui->pushButton->setDisabled(true);
-  ui->pushButton_3->setDisabled(true);
-  ui->pushButton_4->setDisabled(true);
   ui->comboBox->setDisabled(true);
 
   ui->widget->setSourceWaiting();
@@ -132,8 +129,6 @@ void CSohoImg::slotDownFinished(QNetworkReply *reply)
 
   ui->pushButton_2->setEnabled(true);
   ui->pushButton->setEnabled(true);
-  ui->pushButton_3->setEnabled(true);
-  ui->pushButton_4->setEnabled(true);
   ui->comboBox->setEnabled(true);
 
   setCursor(Qt::ArrowCursor);

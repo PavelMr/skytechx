@@ -1,8 +1,10 @@
 #include "cdownload.h"
 #include "mainwindow.h"
 #include "cbkimages.h"
+#include "cstatusbar.h"
 
 extern MainWindow *pcMainWnd;
+extern CStatusBar *g_statusBar;
 
 ///////////////////////////////////////
 CDownload::CDownload(QObject *parent) :
@@ -30,6 +32,7 @@ void CDownload::begin(QString url, QString fileName)
   connect(this, SIGNAL(sigError(QString)), pcMainWnd, SLOT(slotDownloadError(QString)));
 
   pcMainWnd->setToolBoxPage(1);
+  g_statusBar->setDownloadStatus(true);
 }
 
 ///////////////////////////////////////////////////////
@@ -78,5 +81,6 @@ void CDownload::slotDownloadFinished(QNetworkReply *reply)
 
   reply->deleteLater();
   deleteLater();
+  g_statusBar->setDownloadStatus(false);
 }
 
