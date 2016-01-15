@@ -263,6 +263,7 @@ typedef struct
   bool drawing;
   bool events;
   bool mapPosition;
+  bool dssImages;
 } setAutosave_t;
 
 typedef struct

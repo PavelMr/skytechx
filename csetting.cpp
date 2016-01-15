@@ -53,6 +53,7 @@ CSetting::CSetting(QWidget *parent) :
   ui->checkBox_8->setChecked(g_autoSave.events);
   ui->checkBox_9->setChecked(g_autoSave.drawing);
   ui->checkBox_12->setChecked(g_autoSave.mapPosition);
+  ui->checkBox_19->setChecked(g_autoSave.dssImages);
   ui->checkBox_10->setChecked(g_showZoomBar);
 
   ui->cb_iconSize->addItem(tr("24x24 (Default size)"));
@@ -1000,6 +1001,8 @@ void CSetting::on_pushButton_clicked()
   g_autoSave.events = ui->checkBox_8->isChecked();
   g_autoSave.drawing = ui->checkBox_9->isChecked();
   g_autoSave.mapPosition = ui->checkBox_12->isChecked();
+  g_autoSave.dssImages = ui->checkBox_19->isChecked();
+
   g_showZoomBar = ui->checkBox_10->isChecked();
 
   bAlternativeMouse = ui->checkBox_13->isChecked();

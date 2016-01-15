@@ -755,6 +755,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   cDSO.applyNameFilter();
 
+  restoreDSSList();
+
   setTitle();
 }
 
@@ -1039,6 +1041,8 @@ void MainWindow::on_action_Exit_2_triggered()
 void MainWindow::saveAndExit()
 //////////////////////////////
 {
+  saveDSSList();
+
   if (g_pTelePlugin != NULL)
   {
     g_pTelePlugin->disconnectDev(bParkTelescope);
@@ -3111,6 +3115,109 @@ int CDSSOpenDialog::getSize()
   return (0);
 }
 
+void MainWindow::restoreDSSList()
+{
+  if (!g_autoSave.dssImages)
+  {
+    return;
+  }
+
+  SkFile file(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/last.dat");
+
+  QProgressDialog progress(tr("Loading DSS images.\nPlease wait..."), "", 0, 0, this);
+  progress.setWindowFlags(( progress.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint);
+  progress.setWindowModality(Qt::WindowModal);
+  progress.setMinimumDuration(0);
+  progress.setCancelButton(NULL);
+  progress.show();
+
+  if (file.open(QFile::ReadOnly | QFile::Text))
+  {
+    QString     str;
+    QStringList list;
+    int i = 0;
+    do
+    {
+      str = file.readLine();
+      if (str.isEmpty())
+      {
+        break;
+      }
+
+      list = str.split(";");
+      if (list.count() != 18)
+      {
+        continue;
+      }
+
+      if (bkImg.load(list[0], list[17].toInt()))
+      {
+         bkImg.m_tImgList[i].bShow = list[1].toInt();
+         bkImg.m_tImgList[i].param.autoAdjust = list[2].toInt();
+         bkImg.m_tImgList[i].param.brightness = list[3].toInt();
+         bkImg.m_tImgList[i].param.contrast = list[4].toInt();
+         bkImg.m_tImgList[i].param.gamma = list[5].toInt();
+         bkImg.m_tImgList[i].param.invert = list[6].toInt();
+         bkImg.m_tImgList[i].param.matrix[0][0] = list[7].toDouble();
+         bkImg.m_tImgList[i].param.matrix[0][1] = list[8].toDouble();
+         bkImg.m_tImgList[i].param.matrix[0][2] = list[9].toDouble();
+         bkImg.m_tImgList[i].param.matrix[1][0] = list[10].toDouble();
+         bkImg.m_tImgList[i].param.matrix[1][1] = list[11].toDouble();
+         bkImg.m_tImgList[i].param.matrix[1][2] = list[12].toDouble();
+         bkImg.m_tImgList[i].param.matrix[2][0] = list[13].toDouble();
+         bkImg.m_tImgList[i].param.matrix[2][1] = list[14].toDouble();
+         bkImg.m_tImgList[i].param.matrix[2][2] = list[15].toDouble();
+         bkImg.m_tImgList[i].param.useMatrix = list[16].toInt();
+         bkImg.m_tImgList[i].param.dlgSize = list[17].toInt();
+
+         CFits *f = (CFits *)bkImg.m_tImgList[i].ptr;
+         CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[i].param);
+         i++;
+      }
+
+      QApplication::processEvents();
+
+    } while (1);
+  }
+}
+
+void MainWindow::saveDSSList()
+{
+  if (!g_autoSave.dssImages)
+  {
+    return;
+  }
+
+  QStandardItemModel *model = (QStandardItemModel *)ui->treeView->model();
+
+  SkFile file(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/last.dat");
+  QTextStream ts(&file);
+
+  if (file.open(QFile::WriteOnly | QFile::Text))
+  {
+    for (int index = 0; index < model->rowCount(); index++)
+    {
+      ts << bkImg.m_tImgList[index].filePath << ";" <<
+            bkImg.m_tImgList[index].bShow << ";" <<
+            bkImg.m_tImgList[index].param.autoAdjust << ";" <<
+            bkImg.m_tImgList[index].param.brightness << ";" <<
+            bkImg.m_tImgList[index].param.contrast << ";" <<
+            bkImg.m_tImgList[index].param.gamma << ";" <<
+            bkImg.m_tImgList[index].param.invert << ";" <<
+            bkImg.m_tImgList[index].param.matrix[0][0] << ";" <<
+            bkImg.m_tImgList[index].param.matrix[0][1] << ";" <<
+            bkImg.m_tImgList[index].param.matrix[0][2] << ";" <<
+            bkImg.m_tImgList[index].param.matrix[1][0] << ";" <<
+            bkImg.m_tImgList[index].param.matrix[1][1] << ";" <<
+            bkImg.m_tImgList[index].param.matrix[1][2] << ";" <<
+            bkImg.m_tImgList[index].param.matrix[2][0] << ";" <<
+            bkImg.m_tImgList[index].param.matrix[2][1] << ";" <<
+            bkImg.m_tImgList[index].param.matrix[2][2] << ";" <<
+            bkImg.m_tImgList[index].param.useMatrix << ";" <<
+            bkImg.m_tImgList[index].param.dlgSize << "\n";
+    }
+  }
+}
 
 //////////////////////////////////////////
 void MainWindow::on_pushButton_2_clicked()

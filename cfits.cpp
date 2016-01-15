@@ -256,7 +256,6 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
   {
     QImage tmp = m_pix->scaledToWidth(resizeTo, Qt::SmoothTransformation);
     delete m_pix;
-
     m_pix = new QImage(tmp);
   }
 

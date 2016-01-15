@@ -607,6 +607,8 @@ private:
   CDSOCatalogue *m_DSOCatalogueDlg;
 
   void setTitle();
+  void restoreDSSList();
+  void saveDSSList();
 public slots:
   void repaintMap();
   void slotFilterChanged();

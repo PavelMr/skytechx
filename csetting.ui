@@ -3994,6 +3994,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QCheckBox" name="checkBox_19">
+                <property name="text">
+                 <string>DSS background images</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="verticalSpacer_2">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -4040,7 +4047,7 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
+              <item row="2" column="0">
                <widget class="QCheckBox" name="checkBox_13">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If the box is checked, then the left mouse button moves the map and Shift + left mouse button zoom the map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -4050,7 +4057,7 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
+              <item row="4" column="0">
                <widget class="QCheckBox" name="checkBox_14">
                 <property name="text">
                  <string>Parking telescope before disconnection</string>

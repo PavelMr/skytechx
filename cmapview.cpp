@@ -129,6 +129,8 @@ CMapView::CMapView(QWidget *parent) :
   g_autoSave.events = settings.value("saving/events", true).toBool();
   g_autoSave.tracking = settings.value("saving/tracking", true).toBool();
   g_autoSave.mapPosition = settings.value("saving/mapPosition", true).toBool();
+  g_autoSave.dssImages = settings.value("saving/dssImages", true).toBool();
+
   bAlternativeMouse = settings.value("altMouse", false).toBool();
   bParkTelescope = settings.value("parkTelescope", false).toBool();
 
@@ -1089,6 +1091,8 @@ void CMapView::saveSetting()
   settings.setValue("saving/events", g_autoSave.events);
   settings.setValue("saving/tracking", g_autoSave.tracking);
   settings.setValue("saving/mapPosition", g_autoSave.mapPosition);
+  settings.setValue("saving/dssImages", g_autoSave.dssImages);
+
   settings.setValue("altMouse", bAlternativeMouse);
   settings.setValue("parkTelescope", bParkTelescope);
 

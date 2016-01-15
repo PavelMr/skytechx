@@ -48,7 +48,6 @@ bool CBkImages::load(const QString name, int resizeTo)
   {
     CFits *f = new CFits;
 
-    //qDebug() << resizeTo;
     if (!f->load(name, memOk, true, resizeTo))
     {
       delete f;
@@ -72,6 +71,8 @@ bool CBkImages::load(const QString name, int resizeTo)
     i.param.useMatrix = false;
     memset(i.param.matrix, 0, sizeof(i.param.matrix));
     i.param.matrix[1][1] = 1;
+    i.param.dlgSize = resizeTo;
+
 
     m_totalSize += i.byteSize;
 

@@ -35,6 +35,7 @@ typedef struct
   float  gamma;
   bool   autoAdjust;
   bool   invert;
+  int    dlgSize;
 } imageParam_t;
 
 typedef struct
