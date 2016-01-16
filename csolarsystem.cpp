@@ -32,7 +32,7 @@ CSolarSystem::CSolarSystem(QWidget *parent, mapView_t *view) :
     m_view.jd = jd;
 
     ast.setParam(&m_view);
-    ast.calcPlanet(i, &o);
+    ast.calcPlanet(i, &o, false, true, false);
 
     double last = o.hLon;
     double total = 0;
@@ -46,7 +46,7 @@ CSolarSystem::CSolarSystem(QWidget *parent, mapView_t *view) :
     {
       m_view.jd += steps[i];
       ast.setParam(&m_view);
-      ast.calcPlanet(i, &o);
+      ast.calcPlanet(i, &o, false, true, false);
 
       double delta = o.hLon - last;
 
@@ -167,7 +167,7 @@ void CSolarSystem::generatePixmap()
     orbit_t o;
 
     ast.setParam(&m_view);
-    ast.calcPlanet(i, &o);
+    ast.calcPlanet(i, &o, false, true, false);
 
     for (int j = 0; j < ptsList[i].count(); j++)
     {

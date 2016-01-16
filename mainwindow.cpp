@@ -5431,7 +5431,10 @@ void MainWindow::on_action3D_Solar_system_triggered()
 {
   C3DSolar dlg(&ui->widget->m_mapView, this);
 
-  dlg.exec();
+  if (dlg.exec())
+  {
+    ui->widget->m_mapView.jd = dlg.jd();
+  }
   repaintMap();
 }
 

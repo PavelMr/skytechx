@@ -64,7 +64,7 @@ void C3DSolarWidget::generateComet(int index, double time, double period, bool i
       m_view.jd = jd;
       cAstro.setParam(&m_view);
 
-      if (!comSolve(com, jd))
+      if (!comSolve(com, jd, false))
       {
         break;
       }
@@ -77,7 +77,7 @@ void C3DSolarWidget::generateComet(int index, double time, double period, bool i
 
       m_view.jd = jd;
       cAstro.setParam(&m_view);
-      astSolve(com, jd);
+      astSolve(com, jd, false);
 
       pos = QVector3D(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
     }
@@ -170,7 +170,7 @@ void C3DSolarWidget::generateOrbits()
     orbit_t o;
 
     ast.setParam(&view);
-    ast.calcPlanet(i, &o, true, false);
+    ast.calcPlanet(i, &o, false, false, false);
 
     double last = o.hLon;
     double total = 0;
@@ -184,7 +184,7 @@ void C3DSolarWidget::generateOrbits()
     {
       view.jd += steps[i] * 1.0;
       ast.setParam(&view);
-      ast.calcPlanet(i, &o);
+      ast.calcPlanet(i, &o, false, true, false);
 
       double delta = o.hLon - last;
 
@@ -224,7 +224,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     {
       comet_t *com = &tComets[m_index];
       cAstro.setParam(&m_view);
-      if (comSolve(com, m_view.jd))
+      if (comSolve(com, m_view.jd, false))
       {
         QVector3D pos(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
 
@@ -235,7 +235,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     {
       asteroid_t *com = &tAsteroids[m_index];
       cAstro.setParam(&m_view);
-      astSolve(com, m_view.jd);
+      astSolve(com, m_view.jd, false);
 
       QVector3D pos(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
       setViewParam(CM_UNDEF, CM_UNDEF, -pos.x(), -pos.y(), -pos.z(), false);
@@ -251,7 +251,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
     if (m_lockAt != 20 && m_lockAt != PT_SUN)
     {
-      ast.calcPlanet(m_lockAt, &o);
+      ast.calcPlanet(m_lockAt, &o, false, true, false);
       setViewParam(CM_UNDEF, CM_UNDEF, -o.hRect[0], -o.hRect[1], -o.hRect[2], false);
       rtfCreateOrthoView(width(), height(), 0.005, 10500, m_scale, m_translate, m_yaw, m_pitch, true);
     }
@@ -263,7 +263,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     }
     else
     { // earth
-      ast.calcPlanet(PT_SUN, &o);
+      ast.calcPlanet(PT_SUN, &o, false, true, false);
 
       setViewParam(CM_UNDEF, CM_UNDEF, -o.eRect[0], -o.eRect[1], -o.eRect[2], false);
       rtfCreateOrthoView(width(), height(), 0.005, 10500, m_scale, m_translate, m_yaw, m_pitch, true);
@@ -407,7 +407,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     QVector3D pos;
 
     ast.setParam(&m_view);
-    ast.calcPlanet(i, &o);
+    ast.calcPlanet(i, &o, false, true, false);
 
     if (i == 0)
     {
@@ -529,7 +529,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       comet_t *com = &tComets[m_index];
 
       cAstro.setParam(&m_view);
-      if (!comSolve(com, m_view.jd))
+      if (!comSolve(com, m_view.jd, false))
       {
         return;
       }
@@ -543,7 +543,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       asteroid_t *com = &tAsteroids[m_index];
 
       cAstro.setParam(&m_view);
-      astSolve(com, m_view.jd);
+      astSolve(com, m_view.jd, false);
       pos = QVector3D(com->orbit.hRect[0], com->orbit.hRect[1], com->orbit.hRect[2]);
       rr = com->orbit.r;
       RR = com->orbit.R;

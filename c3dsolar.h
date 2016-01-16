@@ -17,6 +17,8 @@ public:
   explicit C3DSolar(mapView_t *view, QWidget *parent = 0, bool isComet = true, int index = -1);
   ~C3DSolar();
 
+  double jd() const;
+
 private slots:
   void on_pushButton_2_clicked();
 
@@ -59,6 +61,8 @@ private slots:
   void on_comboBox_currentIndexChanged(int index);
 
   void on_comboBox_3_currentIndexChanged(int index);
+
+  void on_pushButton_14_clicked();
 
 private:
   Ui::C3DSolar *ui;

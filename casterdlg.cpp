@@ -123,9 +123,9 @@ static double caclHGMag(double h, double g, double rp, double rho, double rsn)
 }
 
 
-////////////////////////////////////////////////
-static void astSolve2(asteroid_t *a, double jdt)
-////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+static void astSolve2(asteroid_t *a, double jdt, bool lightCorrected = true)
+////////////////////////////////////////////////////////////////////////////
 {
   double ea;
   double xe;
@@ -135,7 +135,7 @@ static void astSolve2(asteroid_t *a, double jdt)
 
   // NOTE: komety a asteroidy maji uz deltaT v sobe
 
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < (lightCorrected ? 2 : 1); i++)
   {
     double tt = (jdt - a->epoch);
     double P = a->n;
@@ -219,9 +219,9 @@ static void astSolve2(asteroid_t *a, double jdt)
 }
 
 
-////////////////////////////////////////
-void astSolve(asteroid_t *a, double jdt)
-////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+void astSolve(asteroid_t *a, double jdt, bool lightCorrected)
+/////////////////////////////////////////////////////////////
 {
   static double lastJD = -1;
 
@@ -240,7 +240,7 @@ void astSolve(asteroid_t *a, double jdt)
   }
 
   a->lastJD = jdt;
-  astSolve2(a, jdt);
+  astSolve2(a, jdt, lightCorrected);
 }
 
 

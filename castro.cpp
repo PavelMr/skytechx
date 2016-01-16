@@ -807,8 +807,6 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
 {
   double data[6];
 
-  lightCorrection = true;
-
   if (planet == PT_SUN && bSunCopy && lightCorrection)
   {
     *orbit = m_sunOrbit;

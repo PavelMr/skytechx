@@ -448,6 +448,13 @@ Zoom by mouse wheel</string>
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_14">
+       <property name="text">
+        <string>OK &amp;&amp; Set map time</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>OK</string>

@@ -53,7 +53,7 @@ extern QString curCometCatName;
 void comRender(CSkPainter *p, mapView_t *view, float maxMag);
 bool comSave(QString fileName, QWidget *parent);
 bool comLoad(QString fileName);
-bool comSolve(comet_t *a, double jdt);
+bool comSolve(comet_t *a, double jdt, bool lightCorrected = true);
 void comClear(void);
 
 double unpackMPCDate(QString str);

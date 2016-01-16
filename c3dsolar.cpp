@@ -389,3 +389,13 @@ void C3DSolar::on_comboBox_3_currentIndexChanged(int)
   ui->comboBox->setCurrentIndex(0);
   ui->comboBox_3->blockSignals(false);
 }
+
+void C3DSolar::on_pushButton_14_clicked()
+{
+  done(DL_OK);
+}
+double C3DSolar::jd() const
+{
+  return m_jd;
+}
+

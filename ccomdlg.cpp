@@ -157,9 +157,9 @@ static void solveCometHyperbolic(comet_t *com, double dt, double &r, double &v)
   rangeDbl(&v, MPI2);
 }
 
-/////////////////////////////////////////////
-static bool comSolve2(comet_t *a, double jdt)
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
+/////////////////////////////////////////////////////////////////////////
 {
   double R, r, v;
   double xe;
@@ -169,7 +169,7 @@ static bool comSolve2(comet_t *a, double jdt)
   // NOTE: komety a asteroidy maji uz deltaT v sobe
   double t = (jdt - a->perihelionDate);
 
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < (lightCorrected ? 2 : 1); i++)
   {
     if (a->e < 1.0)
     {
@@ -254,9 +254,9 @@ static bool comSolve2(comet_t *a, double jdt)
 }
 
 
-/////////////////////////////////////
-bool comSolve(comet_t *a, double jdt)
-/////////////////////////////////////
+//////////////////////////////////////////////////////////
+bool comSolve(comet_t *a, double jdt, bool lightCorrected)
+//////////////////////////////////////////////////////////
 {
   static double lastJD = -1;
 
@@ -276,7 +276,7 @@ bool comSolve(comet_t *a, double jdt)
 
   a->lastJD = jdt;
 
-  return(comSolve2(a, jdt));
+  return(comSolve2(a, jdt, lightCorrected));
 }
 
 

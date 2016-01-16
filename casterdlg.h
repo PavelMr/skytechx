@@ -55,7 +55,7 @@ extern QString curAsteroidCatName;
 void astRender(CSkPainter *p, mapView_t *view, float maxMag);
 bool astSave(QString fileName, QWidget *parent);
 bool astLoad(QString fileName);
-void astSolve(asteroid_t *a, double jdt);
+void astSolve(asteroid_t *a, double jdt, bool lightCorrected = true);
 void astClear(void);
 
 double unpackMPCDate(QString str);
