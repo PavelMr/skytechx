@@ -853,7 +853,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -1081,8 +1081,8 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
-          <width>308</width>
+          <y>-107</y>
+          <width>331</width>
           <height>669</height>
          </rect>
         </property>
@@ -1289,19 +1289,6 @@
               <string>Delete permanently</string>
              </property>
             </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </item>
