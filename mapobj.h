@@ -24,9 +24,10 @@
 #define MO_URAT1        10
 #define MO_UCAC4        11
 #define MO_PPMXLSTAR    12
-#define MO_DSO          13
-#define MO_CONSTELL     14
-#define MO_EARTH_SHD    15
+#define MO_NOMAD        13
+#define MO_DSO          14
+#define MO_CONSTELL     15
+#define MO_EARTH_SHD    16
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

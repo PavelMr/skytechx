@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>9</number>
+            <number>19</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -3877,6 +3877,124 @@
                     </item>
                     <item>
                      <widget class="QDoubleSpinBox" name="doubleSpinBox_urat_mag">
+                      <property name="suffix">
+                       <string> mag.</string>
+                      </property>
+                      <property name="decimals">
+                       <number>1</number>
+                      </property>
+                      <property name="minimum">
+                       <double>0.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>99.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_11">
+            <layout class="QVBoxLayout" name="verticalLayout_183">
+             <item>
+              <layout class="QFormLayout" name="formLayout_39">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <item row="0" column="0">
+                <widget class="QGroupBox" name="groupBox_58">
+                 <property name="title">
+                  <string>Show</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_175">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_176">
+                    <item>
+                     <widget class="QCheckBox" name="showNomadCB">
+                      <property name="text">
+                       <string>Show NOMAD Catalogue</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QGroupBox" name="groupBox_59">
+                 <property name="title">
+                  <string>Settings</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_177">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_178">
+                    <item>
+                     <widget class="QLabel" name="label_204">
+                      <property name="text">
+                       <string>Path to NOMAD folder</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_46">
+                      <item>
+                       <widget class="QLineEdit" name="lineEdit_nomad_folder">
+                        <property name="minimumSize">
+                         <size>
+                          <width>300</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="pushButton_nomad_browse">
+                        <property name="text">
+                         <string>Browse...</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_205">
+                      <property name="text">
+                       <string>Show NOMAD stars from FOV</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_nomad_fov">
+                      <property name="suffix">
+                       <string>°</string>
+                      </property>
+                      <property name="decimals">
+                       <number>0</number>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>45.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_206">
+                      <property name="text">
+                       <string>Show NOMAD stars from magnitude</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_nomad_mag">
                       <property name="suffix">
                        <string> mag.</string>
                       </property>

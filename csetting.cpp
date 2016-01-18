@@ -14,6 +14,7 @@
 #include "usnob1.h"
 #include "urat1.h"
 #include "cucac4.h"
+#include "nomad.h"
 #include "ctextsel.h"
 #include "mainwindow.h"
 #include "cgamepad.h"
@@ -184,6 +185,7 @@ CSetting::CSetting(QWidget *parent) :
   ui->listWidget_2->addItem(tr("USNO B1 Catalogue"));
   ui->listWidget_2->addItem(tr("UCAC4 Catalogue"));
   ui->listWidget_2->addItem(tr("URAT1 Catalogue"));
+  ui->listWidget_2->addItem(tr("NOMAD Catalogue"));
   ui->listWidget_2->addItem(tr("Other"));
   ui->listWidget_2->setCurrentRow(currentRow);
 
@@ -546,6 +548,12 @@ void CSetting::setValues()
   ui->doubleSpinBox_urat_fov->setValue(R2D(set.map.urat1.fromFOV));
   ui->doubleSpinBox_urat_mag->setValue(set.map.urat1.fromMag);
 
+  // NOMAD
+  ui->showNomadCB->setChecked(set.map.nomad.show);
+  ui->lineEdit_nomad_folder->setText(rset.value("nomad_path", "").toString());
+  ui->doubleSpinBox_nomad_fov->setValue(R2D(set.map.nomad.fromFOV));
+  ui->doubleSpinBox_nomad_mag->setValue(set.map.nomad.fromMag);
+
   //UCAC4
   ui->showUCAC4CheckBox->setChecked(set.map.ucac4.show);
   ui->lineEdit_4->setText(rset.value("ucac4_path", "").toString());
@@ -833,6 +841,14 @@ void CSetting::apply()
   g_skSet.map.urat1.show = ui->showUrat1CheckBox_2->isChecked();
   g_skSet.map.urat1.fromFOV = D2R(ui->doubleSpinBox_urat_fov->value());
   g_skSet.map.urat1.fromMag = ui->doubleSpinBox_urat_mag->value();
+
+  //NOMAD
+  g_nomad.setNomadDir(ui->lineEdit_nomad_folder->text());
+  rset.setValue("nomad_path", ui->lineEdit_nomad_folder->text());
+
+  g_skSet.map.nomad.show = ui->showNomadCB->isChecked();
+  g_skSet.map.nomad.fromFOV = D2R(ui->doubleSpinBox_nomad_fov->value());
+  g_skSet.map.nomad.fromMag = ui->doubleSpinBox_nomad_mag->value();
 
   // UCAC4
   cUcac4.setUCAC4Dir(ui->lineEdit_4->text());
@@ -2224,4 +2240,11 @@ void CSetting::on_tabWidget_currentChanged(int)
   {
     ui->cb_onlineSunUrl->setCurrentIndex(0);
   }
+}
+
+void CSetting::on_pushButton_nomad_browse_clicked()
+{
+  QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
+
+  ui->lineEdit_nomad_folder->setText(folder);
 }

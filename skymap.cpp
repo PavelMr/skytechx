@@ -27,11 +27,12 @@
 #include "csgp4.h"
 #include "smartlabeling.h"
 #include "usnob1.h"
+#include "nomad.h"
 
 static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region);
 
 /////////////////////////////////////////////////////////////////////////////////////
-// ALL OBJECT ON MAP DRAW AT EPOCH J2000.0
+// ALL OBJECTS ON MAP MUST BE AT EPOCH J2000.0
 /////////////////////////////////////////////////////////////////////////////////////
 
 extern CMapView      *pcMapView;
@@ -108,6 +109,61 @@ static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
           {
             int r = cStarRenderer.renderStar(&pt, spIndex, vMag, pPainter);
             addMapObj(pt.sx, pt.sy, MO_URAT1, MO_CIRCLE, r + 4, star.zone, star.id, vMag);
+            g_numStars++;
+          }
+        }
+      }
+    }
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+static void smRenderNomadStars(mapView_t *mapView, CSkPainter *pPainter, int region)
+/////////////////////////////////////////////////////////////////////////////////////
+{
+  if (!g_skSet.map.nomad.show)
+  {
+    return;
+  }
+
+  if (mapView->fov < g_skSet.map.nomad.fromFOV && mapView->starMag >= g_skSet.map.nomad.fromMag)
+  {
+    NomadRegion_t *zone;
+
+    zone = g_nomad.getRegion(region);
+
+    if (zone == NULL)
+    {
+      return;
+    }
+
+    #pragma omp parallel for shared(mapView)
+    for (int i = 0; i < zone->stars.count(); i++)
+    {
+      const nomad_t &star = zone->stars[i];
+      float mag = g_nomad.getMagnitude(&star);
+
+      if (mag > mapView->starMag)
+      {
+        continue;
+      }
+
+      if (mag >= g_skSet.map.nomad.fromMag)
+      {
+        SKPOINT pt;
+        radec_t rd;
+
+        rd.Ra = D2R(NOMAD_TO_RA(star.ra));
+        rd.Dec = D2R(NOMAD_TO_DEC(star.dec));
+
+        trfRaDecToPointNoCorrect(&rd, &pt);
+        if (trfProjectPoint(&pt))
+        {
+          int spIndex = CStarRenderer::getSPIndex(g_nomad.getBVIndex(&star));
+          #pragma omp critical
+          {
+            int r = cStarRenderer.renderStar(&pt, spIndex, mag, pPainter);
+            addMapObj(pt.sx, pt.sy, MO_NOMAD, MO_CIRCLE, r + 4, star.zone, star.id, mag);
             g_numStars++;
           }
         }
@@ -569,6 +625,14 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
     g_numRegions++;
     //smRenderGSCRegions(mapView, pPainter, region);
 
+    /*
+    if (region != 8467)
+    {
+      continue;
+    }
+    */
+
+    smRenderNomadStars(mapView, pPainter, region);
     smRenderUSNOB1Stars(mapView, pPainter, region);
     smRenderUSNO2Stars(mapView, pPainter, region);
     smRenderPPMXLStars(mapView, pPainter, region);

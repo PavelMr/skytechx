@@ -189,6 +189,8 @@ private slots:
 
    void on_tabWidget_currentChanged(int index);
 
+   void on_pushButton_nomad_browse_clicked();
+
 private:
    Ui::CSetting *ui;
    void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList, bool sun = false);

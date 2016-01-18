@@ -325,6 +325,11 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.ppmxl.fromFOV", set->map.ppmxl.fromFOV, ds);
   writeVal("map.ppmxl.fromMag", set->map.ppmxl.fromMag, ds);
 
+  // NOMAD
+  writeVal("map.nomad.show", set->map.nomad.show, ds);
+  writeVal("map.nomad.fromFOV", set->map.nomad.fromFOV, ds);
+  writeVal("map.nomad.fromMag", set->map.nomad.fromMag, ds);
+
   // GSC
   writeVal("map.gsc.show", set->map.gsc.show, ds);
   writeVal("map.gsc.fromFOV", set->map.gsc.fromFOV, ds);
@@ -630,6 +635,11 @@ bool setLoad(QString name, setting_t *set)
   set->map.ppmxl.show = readVal("map.ppmxl.show", false, tMap).toBool();
   set->map.ppmxl.fromFOV = readVal("map.ppmxl.fromFOV", D2R(5), tMap).toDouble();
   set->map.ppmxl.fromMag = readVal("map.ppmxl.fromMag", 13, tMap).toDouble();
+
+  // NOMAD
+  set->map.nomad.show = readVal("map.nomad.show", false, tMap).toBool();
+  set->map.nomad.fromFOV = readVal("map.nomad.fromFOV", D2R(3), tMap).toDouble();
+  set->map.nomad.fromMag = readVal("map.nomad.fromMag", 13, tMap).toDouble();
 
   // GSC
   set->map.gsc.show = readVal("map.gsc.show", false, tMap).toBool();

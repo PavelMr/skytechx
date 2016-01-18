@@ -10,6 +10,7 @@
 #include "csgp4.h"
 #include "usnob1.h"
 #include "urat1.h"
+#include "nomad.h"
 
 #define FILEREGEXP   QRegExp("\\W")
 
@@ -46,6 +47,7 @@ CObjFillInfo::CObjFillInfo()
   txDec      = tr("Declination");
   txLocInfo  = tr("Local information");
   txVisMag   = tr("Visual magnitude");
+  txMag   = tr("Magnitude");
   txConstel  = tr("Constellation");
   txElongation = tr("Elongation");
   txJ2000      = tr(" (J2000.0)");
@@ -97,6 +99,10 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
 
     case MO_USNOB1:
       fillUSNOB1Info(view, obj, item);
+      break;
+
+    case MO_NOMAD:
+      fillNomadInfo(view, obj, item);
       break;
 
     case MO_URAT1:
@@ -1338,6 +1344,123 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The USNO-B1.0 Catalogue (Monet+ 2003)", "");
+}
+
+void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
+{
+  QString str;
+  nomad_t s;
+
+  g_nomad.getStar(obj->par1, obj->par2, &s);
+
+  item->radec.Ra = D2R(NOMAD_TO_RA(s.ra));
+  item->radec.Dec = D2R(NOMAD_TO_DEC(s.dec));
+  item->zoomFov = getOptObjFov(0, 0, D2R(0.15));
+  item->title = QString("NOMAD %1-%2").arg(obj->par1).arg(obj->par2);
+  item->simbad = item->title;
+  item->id = item->title;
+
+  addLabelItem(item, txDateTime);
+  addSeparator(item);
+  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+  addSeparator(item);
+
+  addLabelItem(item, txObjType);
+  addSeparator(item);
+  addTextItem(item, txObjType, tr("Star (NOMAD cat.)"));
+  addSeparator(item);
+
+  addLabelItem(item, txDesig);
+  addSeparator(item);
+
+  int con = constWhatConstel(item->radec.Ra, item->radec.Dec, JD2000);
+
+  addTextItem(item, item->title, "");
+  addSeparator(item);
+
+  double ra, dec;
+
+  ra = item->radec.Ra;
+  dec = item->radec.Dec;
+
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
+
+  addLabelItem(item, txLocInfo);
+  addSeparator(item);
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+
+  addTextItem(item, txMag, getStrMag(g_nomad.getMagnitude(&s)));
+  addTextItem(item, txConstel, constGetName(con, 1));
+
+  double azm, alt;
+  double nazm, nalt;
+
+  cAstro.convRD2AARef(ra, dec, &azm, &alt);
+  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+
+  addSeparator(item);
+  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addSeparator(item);
+  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addSeparator(item);
+  double airmass = CAstro::getAirmass(alt);
+  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+  addSeparator(item);
+
+  CRts   cRts;
+  rts_t  rts;
+  cRts.calcFixed(&rts, ra, dec, view);
+  fillRTS(&rts, view, item);
+
+  addLabelItem(item, tr("Position at JD2000.0"));
+  addSeparator(item);
+  addTextItem(item, txRA, getStrRA(item->radec.Ra));
+  addTextItem(item, txDec, getStrDeg(item->radec.Dec));
+  addSeparator(item);
+
+  auto mag = [](qint16 m) -> QString
+  {
+    float mf = m / 1000.0;
+
+    return mf < 30 ? getStrMag(mf) : tr("N/A");
+  };
+
+  addLabelItem(item, tr("Other"));
+  addSeparator(item);
+  addTextItem(item, tr("Red magnitude"), mag(s.magR));
+  addTextItem(item, tr("Blue magnitude"), mag(s.magB));
+  addTextItem(item, txVisMag, mag(s.magV));
+  addTextItem(item, tr("H magnitude"), mag(s.magH));
+  addTextItem(item, tr("J magnitude"), mag(s.magJ));
+  addTextItem(item, tr("K magnitude"), mag(s.magK));
+  addSeparator(item);
+
+  addLabelItem(item, tr("Proper motion"));
+  addSeparator(item);
+  addTextItem(item, txRA, QString::number(s.pmRa, 'f', 2) + " " + "mas/yr");
+  addTextItem(item, txDec, QString::number(s.pmDec, 'f', 2) + " " + "mas/yr");
+  addSeparator(item);
+
+  fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
+
+  addLabelItem(item, tr("Source"));
+  addSeparator(item);
+  addTextItem(item, "NOMAD Catalog (Zacharias+ 2005)", "");
 }
 
 
