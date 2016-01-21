@@ -419,7 +419,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         comSolve(a, mapView->jd);
         ra = a->orbit.lRD.Ra;
         dec = a->orbit.lRD.Dec;
-        fov = COM_ZOOM;
+        fov = qMin(COM_ZOOM, 2 * D2R(a->orbit.params[2] / 3600.));
 
         obj.type = MO_COMET;
         obj.par1 = i;

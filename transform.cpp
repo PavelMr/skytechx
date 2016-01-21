@@ -620,12 +620,8 @@ void trfConvScrPtToXY(double sx, double sy, double &x, double &y)
 double trfGetAngleDegFlipped(double ang)
 ////////////////////////////////////////
 {
-  //if ((bFlipX && bFlipY) || (!bFlipX && !bFlipY))
-    //return ang;
-
   ang *= bFlipX ? -1 : 1;
   ang *= bFlipY ? -1 : 1;
-  //ang = -ang + R90;
 
   return ang;
 }

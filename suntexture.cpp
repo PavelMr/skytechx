@@ -180,6 +180,8 @@ void SunOnlineDaemon::setupParams()
 
 void SunOnlineDaemon::start()
 {
+  g_statusBar->setDownloadStatus(false, true);
+
   if (m_used)
   {
     m_firstTime = true;

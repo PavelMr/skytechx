@@ -61,7 +61,7 @@ public:
     bool getUsedItem(int index, QString &label, int &id);
     bool getAvailableItem(int id, QString &label);
     QString getLabel(int id);
-    void setDownloadStatus(bool start);
+    void setDownloadStatus(bool start, bool reset = false);
 
     bool isUsed(int id);
 signals:

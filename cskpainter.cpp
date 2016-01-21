@@ -203,6 +203,16 @@ QRect CSkPainter::renderText(int x, int y, double offset, const QString &text, i
 
   return trc;
 }
+QImage *CSkPainter::image() const
+{
+    return m_image;
+}
+
+void CSkPainter::setImage(QImage *image)
+{
+    m_image = image;
+}
+
 
 
 

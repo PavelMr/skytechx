@@ -127,11 +127,11 @@ static double caclHGMag(double h, double g, double rp, double rho, double rsn)
 static void astSolve2(asteroid_t *a, double jdt, bool lightCorrected = true)
 ////////////////////////////////////////////////////////////////////////////
 {
-  double ea;
-  double xe;
-  double ye;
-  double ze;
-  double r;
+  double ea = 0;
+  double xe = 0;
+  double ye = 0;
+  double ze = 0;
+  double r = 0;
 
   // NOTE: komety a asteroidy maji uz deltaT v sobe
 

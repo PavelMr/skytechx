@@ -7,8 +7,10 @@
 #include "cobjtracking.h"
 #include "setting.h"
 #include "smartlabeling.h"
+#include "cscanrender.h"
 
 extern bool g_comAstChanged;
+extern bool g_onPrinterBW;
 
 /////////////////////////////////////////////////////////
 extern MainWindow *pcMainWnd;
@@ -153,7 +155,7 @@ static void solveCometHyperbolic(comet_t *com, double dt, double &r, double &v)
   double num = sqrt(com->e * com->e - 1)*(U * U - 1)/(2 * U) ;
   double den = com->e-(U * U + 1)/(2 * U) ;
   v = atan2(num, den);
-  r = da * ((com->e * (U * U + 1)/(2 * U)) - 1) ;
+  r = qAbs(da * ((com->e * (U * U + 1)/(2 * U)) - 1));
   rangeDbl(&v, MPI2);
 }
 
@@ -165,6 +167,7 @@ static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
   double xe;
   double ye;
   double ze;
+  double rh[3] = {0,0,0};
 
   // NOTE: komety a asteroidy maji uz deltaT v sobe
   double t = (jdt - a->perihelionDate);
@@ -191,7 +194,6 @@ static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
     double p = a->W;
 
     // Helio. ecliptic J2000.0
-    double rh[3];
     rh[0] = r * ( cos(n) * cos(v + p) - sin(n) * sin(v + p) * cos(a->i));
     rh[1] = r * ( sin(n) * cos(v + p) + cos(n) * sin(v + p) * cos(a->i));
     rh[2] = r * ( sin(v + p) * sin(a->i));
@@ -224,11 +226,41 @@ static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
     t -= a->orbit.light;
   }
 
+  // from skychart sw
+  double D = ((qMax(0.0, 1 - log(a->orbit.r)) / qMax(1.0, a->H - 2.0)) * 30.0 / a->orbit.R) * 60;
+  double L = qMax(0.0, 1. - log(a->orbit.r)) / pow(qMax(1.0, (double)a->H), 1.5);
+
+  a->orbit.params[2] = D;
+  a->orbit.params[3] = L * AU1;
+
+  double d = 1 / sqrt(POW2(rh[0]) + POW2(rh[1]) + POW2(rh[2]));
+  double nsx = rh[0] * d;
+  double nsy = rh[1] * d;
+  double nsz = rh[2] * d;
+
+  double tx = rh[0] + nsx * L;
+  double ty = rh[1] + nsy * L;
+  double tz = rh[2] + nsz * L;
+
+  tx += xs;
+  ty += ys;
+  tz += zs;
+
+  double ea = cAstro.getEclObl(JD2000);
+  double txe = tx;
+  double tye = ty * cos(ea) - tz * sin(ea);
+  double tze = ty * sin(ea) + tz * cos(ea);
+
+  // tail end ra/dec
+  a->orbit.params[0] = atan2(tye, txe);
+  a->orbit.params[1] = atan2(tze, sqrt(txe * txe + tye * tye));
+
   a->orbit.gRD.Ra  = atan2(ye, xe);
   a->orbit.gRD.Dec = atan2(ze, sqrt(xe * xe + ye * ye));
   rangeDbl(&a->orbit.gRD.Ra, MPI2);
 
   precess(&a->orbit.gRD.Ra, &a->orbit.gRD.Dec, JD2000, jdt);
+  precess(&a->orbit.params[0], &a->orbit.params[1], JD2000, jdt);
 
   a->orbit.mag = a->H + 5 * log10(a->orbit.R) + 2.5 * a->G * log10(a->orbit.r);
 
@@ -279,7 +311,6 @@ bool comSolve(comet_t *a, double jdt, bool lightCorrected)
   return(comSolve2(a, jdt, lightCorrected));
 }
 
-
 ////////////////////////////////////////////////////////////
 void comRender(CSkPainter *p, mapView_t *view, float maxMag)
 ////////////////////////////////////////////////////////////
@@ -298,6 +329,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
   #pragma omp parallel for shared(size, lineSize, offset, offsetX, offsetY)
   for (int i = 0; i < tComets.count(); i++)
   {
+    int comaSize = 5;
     comet_t *a = &tComets[i];
 
     if (!a->selected)
@@ -317,6 +349,92 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
     }
 
     SKPOINT pt;
+
+    SKPOINT pt1;
+    SKPOINT pt2;
+    radec_t tail = {a->orbit.params[0], a->orbit.params[1]};
+
+    trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt1, view->jd, JD2000);
+    trfRaDecToPointCorrectFromTo(&tail, &pt2, view->jd, JD2000);
+    if (trfProjectLine(&pt1, &pt2))
+    {
+      double cs = trfGetArcSecToPix(a->orbit.params[2]);
+
+      if (!g_onPrinterBW)
+      {
+        QImage tailImage = QImage(":/res/comet_tail.png");
+        QImage comaImage = QImage(":/res/comet_coma.png");
+
+        trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt1, view->jd, JD2000);
+        trfRaDecToPointCorrectFromTo(&tail, &pt2, view->jd, JD2000);
+        trfProjectLineNoCheck(&pt1, &pt2);
+
+        double vx = pt1.sy - pt2.sy;
+        double vy = -(pt1.sx - pt2.sx);
+        double d = sqrt(POW2(vx) + POW2(vy));
+
+        double dx = pt1.sx - pt2.sx;
+        double dy = pt1.sy - pt2.sy;
+        double d1 = sqrt(POW2(dx) + POW2(dy));
+
+        vx /= d;
+        vy /= d;
+
+        dx /= d1;
+        dy /= d1;
+
+        double s = d * 0.5 * (tailImage.height() / (double)tailImage.width());
+        double s1 = d * 0.02;
+
+        QPoint pts[4];
+
+        // tail
+        pts[0] = QPoint((pt1.sx + (vx * s)) + (dx * s1), (pt1.sy + (vy * s)) + (dy * s1));
+        pts[1] = QPoint((pt1.sx - (vx * s)) + (dx * s1), (pt1.sy - (vy * s)) + (dy * s1));
+
+        pts[2] = QPoint(pt2.sx + vx * s, pt2.sy + vy * s);
+        pts[3] = QPoint(pt2.sx - vx * s, pt2.sy - vy * s);
+
+        #pragma omp critical
+        {
+          scanRender.resetScanPoly(p->image()->width(), p->image()->height());
+
+          scanRender.scanLine(pts[0].x(), pts[0].y(),
+                              pts[2].x(), pts[2].y(), 0, 0, 1, 0);
+          scanRender.scanLine(pts[2].x(), pts[2].y(),
+                              pts[3].x(), pts[3].y(), 1, 0, 1, 1);
+          scanRender.scanLine(pts[3].x(), pts[3].y(),
+                              pts[1].x(), pts[1].y(), 1, 1, 0, 1);
+          scanRender.scanLine(pts[1].x(), pts[1].y(),
+                              pts[0].x(), pts[0].y(), 0, 1, 0, 0);
+
+          scanRender.renderPolygonAlpha(p->image(), &tailImage);
+
+          // coma
+          pts[0] = QPoint((pt1.sx + (vx * cs)) + (dx * cs), (pt1.sy + (vy * cs)) + (dy * cs));
+          pts[1] = QPoint((pt1.sx - (vx * cs)) + (dx * cs), (pt1.sy - (vy * cs)) + (dy * cs));
+
+          pts[2] = QPoint((pt1.sx + (vx * cs)) - (dx * cs), (pt1.sy + (vy * cs)) - (dy * cs));
+          pts[3] = QPoint((pt1.sx - (vx * cs)) - (dx * cs), (pt1.sy - (vy * cs)) - (dy * cs));
+
+          scanRender.resetScanPoly(p->image()->width(), p->image()->height());
+
+          scanRender.scanLine(pts[0].x(), pts[0].y(),
+                              pts[2].x(), pts[2].y(), 0, 0, 1, 0);
+          scanRender.scanLine(pts[2].x(), pts[2].y(),
+                              pts[3].x(), pts[3].y(), 1, 0, 1, 1);
+          scanRender.scanLine(pts[3].x(), pts[3].y(),
+                              pts[1].x(), pts[1].y(), 1, 1, 0, 1);
+          scanRender.scanLine(pts[1].x(), pts[1].y(),
+                              pts[0].x(), pts[0].y(), 0, 1, 0, 0);
+
+
+          scanRender.renderPolygonAlpha(p->image(), &comaImage);
+        }
+      }
+
+      comaSize = qMax(cs, 1.0);
+    }
 
     trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt, view->jd, JD2000);
     if (trfProjectPoint(&pt))
@@ -340,16 +458,44 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
           ang = R2D(R180 + sunAng + ang);
         }
 
-        p->save();
-        p->translate(pt.sx, pt.sy);
-        p->rotate(ang);
+        double sep = anSep(a->orbit.params[0], a->orbit.params[1], a->orbit.lRD.Ra, a->orbit.lRD.Dec);
+        double r2 = trfGetArcSecToPix(R2D(sep) * 3600);
 
-        p->drawEllipse(QPoint(0, 0), size, size);
-        p->drawLine(0, 0, -offsetX, -offsetY);
-        p->drawLine(0, 0, 0, -offset);
-        p->drawLine(0, 0, offsetX, -offsetY);
+        if (r2 <= 20)
+        {
+          p->save();
+          p->translate(pt.sx, pt.sy);
+          p->rotate(ang);
 
-        p->restore();
+          p->drawEllipse(QPoint(0, 0), size, size);
+
+          p->drawLine(0, 0, -offsetX, -offsetY);
+          p->drawLine(0, 0, 0, -offset);
+          p->drawLine(0, 0, offsetX, -offsetY);
+
+          p->restore();
+        }
+        else
+        if (g_onPrinterBW)
+        {
+          p->save();
+          p->translate(pt.sx, pt.sy);
+          p->rotate(ang);
+
+          p->drawEllipse(QPoint(0, 0), size, size);
+
+          double r1 = r2 * 0.1;
+          double focus = sqrt(POW2(r2) - POW2(r1));
+
+          p->setBrush(Qt::NoBrush);
+          p->drawEllipse(QPointF(0, -focus), r1, r2);
+
+          p->drawLine(0, 0, -offsetX, -offsetY);
+          p->drawLine(0, 0, 0, -offset);
+          p->drawLine(0, 0, offsetX, -offsetY);
+
+          p->restore();
+        }
 
         if (g_showLabels)
         {
@@ -373,11 +519,12 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
           {
             align = SL_AL_BOTTOM_RIGHT;
           }
-          g_labeling.addLabel(QPoint(pt.sx, pt.sy), size + 2, a->name, FONT_COMET, align, SL_AL_ALL);
+          g_labeling.addLabel(QPoint(pt.sx, pt.sy), comaSize + 2, a->name, FONT_COMET, align, SL_AL_ALL);
         }
-        addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, size + 2, i, (qint64)a, a->orbit.mag);
+        addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, comaSize + 2, i, (qint64)a, a->orbit.mag);
       }
     }
+
   }
 }
 

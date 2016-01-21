@@ -61,7 +61,7 @@ void CPolarisHourAngle::paintEvent(QPaintEvent *)
   QPolygon poly;
 
   p.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
-  p.setBrush(Qt::NoBrush);
+  p.setBrush(p.pen().color());
 
   poly << QPoint(0, r1);
   poly << QPoint(10, -10);

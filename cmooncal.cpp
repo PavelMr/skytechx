@@ -179,9 +179,9 @@ void CMoonCal::updateTime()
     cRts.setLowPrec();
 
     if (m_isMoon)
-      cRts.calcOrbitRTS(&rts, PT_MOON, MO_PLANET, &view, false);
+      cRts.calcOrbitRTS(&rts, PT_MOON, MO_PLANET, &view);
     else
-      cRts.calcOrbitRTS(&rts, PT_SUN, MO_PLANET, &view, false);
+      cRts.calcOrbitRTS(&rts, PT_SUN, MO_PLANET, &view);
 
     pt.sx = r.center().x();
     pt.sy = r.center().y();

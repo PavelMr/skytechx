@@ -1338,6 +1338,8 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   int width = pPainter->device()->width();
   int height = pPainter->device()->height();
 
+  pPainter->setImage(pImg);
+
   g_labeling.clear();
 
   if (g_antialiasing)

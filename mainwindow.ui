@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1147</width>
-    <height>730</height>
+    <height>803</height>
    </rect>
   </property>
   <property name="font">
@@ -853,7 +853,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>4</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -863,8 +863,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>274</width>
-          <height>191</height>
+          <width>425</width>
+          <height>387</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1081,8 +1081,8 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-107</y>
-          <width>331</width>
+          <y>-282</y>
+          <width>408</width>
           <height>669</height>
          </rect>
         </property>
@@ -1540,7 +1540,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>397</width>
+          <width>408</width>
           <height>520</height>
          </rect>
         </property>
@@ -1826,8 +1826,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>314</height>
+          <width>425</width>
+          <height>387</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2278,8 +2278,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
-          <height>305</height>
+          <width>425</width>
+          <height>387</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2299,7 +2299,13 @@
             <widget class="QTimeEdit" name="timeEdit"/>
            </item>
            <item>
-            <widget class="QCalendarWidget" name="calendarWidget">
+            <widget class="SkCalendar" name="calendarWidget">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>220</height>
+              </size>
+             </property>
              <property name="gridVisible">
               <bool>true</bool>
              </property>
@@ -2362,6 +2368,19 @@
             </widget>
            </item>
            <item>
+            <widget class="QComboBox" name="comboBox_4"/>
+           </item>
+           <item>
+            <widget class="SkWatch" name="widget_2" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
             <spacer name="verticalSpacer_9">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -2383,8 +2402,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
-          <height>329</height>
+          <width>425</width>
+          <height>387</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2588,7 +2607,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>157</width>
+          <width>408</width>
           <height>431</height>
          </rect>
         </property>
@@ -2691,8 +2710,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>425</width>
+          <height>387</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2839,8 +2858,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>425</width>
+          <height>387</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4946,6 +4965,17 @@ p, li { white-space: pre-wrap; }
    <class>CMultiProgress</class>
    <extends>QWidget</extends>
    <header>cmultiprogress.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SkCalendar</class>
+   <extends>QCalendarWidget</extends>
+   <header>skcalendar.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SkWatch</class>
+   <extends>QWidget</extends>
+   <header>skwatch.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

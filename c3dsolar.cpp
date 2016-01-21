@@ -392,10 +392,11 @@ void C3DSolar::on_comboBox_3_currentIndexChanged(int)
 
 void C3DSolar::on_pushButton_14_clicked()
 {
+  qDebug() << "ok";
   done(DL_OK);
 }
 double C3DSolar::jd() const
 {
-  return m_jd;
+  return m_view.jd;
 }
 

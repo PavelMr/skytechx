@@ -86,6 +86,7 @@
 #include "cplanetsize.h"
 #include "cadvsearch.h"
 #include "suntexture.h"
+#include "skcalendar.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -753,6 +754,14 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(timer, SIGNAL(timeout()), this, SLOT(slotTimeSliderUpdate()));
   timer->start(15);
 
+  ui->comboBox_4->addItem(tr("Black clock"));
+  ui->comboBox_4->addItem(tr("White clock"));
+  ui->comboBox_4->addItem(tr("Digital clock"));
+  connect(ui->comboBox_4, SIGNAL(currentIndexChanged(int)), ui->widget_2, SLOT(setStyle(int)));
+  int index = settings.value("clock_type", 0).toInt();
+  ui->comboBox_4->setCurrentIndex(index);
+  ui->widget_2->setStyle(index);
+
   cDSO.applyNameFilter();
 
   restoreDSSList();
@@ -1067,6 +1076,7 @@ void MainWindow::saveAndExit()
 
   QSettings settings;
 
+  settings.setValue("clock_type", ui->comboBox_4->currentIndex());
   settings.setValue("show_dso_shapes", g_showDSOShapes);
   settings.setValue("show_dso", g_showDSO);
   settings.setValue("show_stars", g_showStars);
@@ -4874,8 +4884,11 @@ void MainWindow::timeDialogUpdate()
   jdConvertJDTo_DateTime(ui->widget->m_mapView.jd + ui->widget->m_mapView.geo.tz, &tm);
 
   ui->calendarWidget->blockSignals(true);
+  ui->calendarWidget->setSelectedTime(tm.time());
   ui->calendarWidget->setSelectedDate(tm.date());
   ui->calendarWidget->blockSignals(false);
+
+  ui->widget_2->setTime(tm.time());
 
   ui->timeEdit->blockSignals(true);
   ui->timeEdit->setTime(tm.time());
@@ -5053,6 +5066,7 @@ void MainWindow::on_actionPrint_preview_triggered()
 
   QPrintPreviewDialog dlg(this);
 
+  dlg.setWindowFlags(dlg.windowFlags() | Qt::WindowMaximizeButtonHint);
   dlg.printer()->setOrientation(QPrinter::Landscape);
   dlg.printer()->setPageMargins(10, 10, 10, 10, QPrinter::Millimeter);
   dlg.resize(1000, 1000 / 1.333);
@@ -5431,7 +5445,7 @@ void MainWindow::on_action3D_Solar_system_triggered()
 {
   C3DSolar dlg(&ui->widget->m_mapView, this);
 
-  if (dlg.exec())
+  if (dlg.exec() == DL_OK)
   {
     ui->widget->m_mapView.jd = dlg.jd();
   }

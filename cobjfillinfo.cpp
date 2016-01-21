@@ -228,9 +228,8 @@ void CObjFillInfo::fillZoneInfo(double ra2000, double dec2000, ofiItem_t *item)
   addLabelItem(item, tr("Zones"));
   addSeparator(item);
   addTextItem(item, tr("PPMXL Zone"), QString("%1%2%3").arg(dec2000 >= 0 ? 'n' : 's').arg(ppmxlZone, 2, 10, QChar('0')).arg(ppmxlChar));
-  addTextItem(item, tr("UCAC4 Zone"), QString::number(CUCAC4::getZone(dec2000)));
-  addTextItem(item, tr("URAT1 Zone"), QString::number(CUCAC4::getZone(dec2000))); // same as UCAC4
-  addTextItem(item, tr("USNO B1 Zone"), QString::number((int)((R2D(dec2000) + 90) / 0.1)));
+  addTextItem(item, tr("URAT1 / UCAC4 Zone"), QString::number(CUCAC4::getZone(dec2000)));
+  addTextItem(item, tr("NOMAD / USNO B1 Zone"), QString::number((int)((R2D(dec2000) + 90) / 0.1)));
 
   addSeparator(item);
 

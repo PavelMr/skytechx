@@ -171,7 +171,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>19</number>
+            <number>9</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2348,7 +2348,7 @@
                         <item>
                          <widget class="QLabel" name="label_113">
                           <property name="text">
-                           <string>Donwload every</string>
+                           <string>Download every</string>
                           </property>
                          </widget>
                         </item>

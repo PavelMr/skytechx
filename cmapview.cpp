@@ -403,8 +403,6 @@ void CMapView::mouseMoveEvent(QMouseEvent *e)
       double dRa  = prvRd.Ra - curRd.Ra;
       double dDec = prvRd.Dec - curRd.Dec;
 
-      //qDebug("RD = %f", dRa);
-
       for (int i = 0; i < dev_shapes[dev_shape_index].shapes.count(); i++)
       {
         dev_shapes[dev_shape_index].shapes[i].Ra  -= dRa;

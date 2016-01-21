@@ -74,8 +74,14 @@ void CDownloadMPC::readData(bool last)
   m_data += m_reply->readAll();
   QTextStream s(&m_data);
 
+  //qDebug() << m_data;
+
+  //return;
+
   for (int i = 0; i < m_data.count(); i++)
   {
+    //qDebug() << m_data[i];
+
     if (m_data[i] == '\n' || (last && (i + 1 == m_data.count())))
     {
       if ((last && (i + 1 == m_data.count())))
@@ -228,7 +234,6 @@ void CDownloadMPC::on_pushButton_2_clicked()
   QNetworkReply *reply = m_manager.get(request);
 
   m_reply = reply;
-  m_reply->setReadBufferSize(1024);
   m_end = false;
 
   ui->pushButton_2->setEnabled(false);
@@ -261,6 +266,14 @@ void CDownloadMPC::slotReadyRead()
 void CDownloadMPC::slotDownloadFinished(QNetworkReply *reply)
 /////////////////////////////////////////////////////////////
 {
+  qDebug() << reply;
+
+  qDebug() << reply->header(QNetworkRequest::ContentTypeHeader).toString();
+  qDebug() << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime().toString();;
+  qDebug() << reply->header(QNetworkRequest::ContentLengthHeader).toULongLong();
+  qDebug() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+  qDebug() << reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
+
   if (reply->error() == QNetworkReply::NoError)
   {
     readData(true);

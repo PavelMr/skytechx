@@ -644,7 +644,10 @@ void mapObjContextMenu(CMapView *map)
       {
         C3DSolar dlg(&pcMapView->m_mapView, pcMainWnd, true, cometIndex);
 
-        dlg.exec();
+        if (dlg.exec() == DL_OK)
+        {
+          pcMapView->m_mapView.jd = dlg.jd();
+        }
 
         pcMainWnd->repaintMap();
         return;
@@ -654,7 +657,10 @@ void mapObjContextMenu(CMapView *map)
       {
         C3DSolar dlg(&pcMapView->m_mapView, pcMainWnd, false, astIndex);
 
-        dlg.exec();
+        if (dlg.exec() == DL_OK)
+        {
+          pcMapView->m_mapView.jd = dlg.jd();
+        }
 
         pcMainWnd->repaintMap();
         return;

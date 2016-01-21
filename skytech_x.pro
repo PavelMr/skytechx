@@ -245,7 +245,8 @@ SOURCES += main.cpp\
     urat1.cpp \
     cstarexample.cpp \
     cadvsearch.cpp \
-    nomad.cpp
+    nomad.cpp \
+    skwatch.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -446,7 +447,9 @@ HEADERS  += mainwindow.h \
     cstarexample.h \
     cadvsearch.h \
     tass17.h \
-    nomad.h
+    nomad.h \
+    skcalendar.h \
+    skwatch.h
 
 
 FORMS    += mainwindow.ui \

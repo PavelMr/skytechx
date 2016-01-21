@@ -32,6 +32,12 @@ class CSkPainter : public QPainter
     void drawCross(QPoint p, int size);
     void drawRotatedText(float degrees, int x, int y, const QString &text);
     QRect renderText(int x, int y, double offset, const QString &text, int align, bool render = true);
+
+    QImage *image() const;
+    void setImage(QImage *image);
+
+private:
+    QImage *m_image;
 };
 
 #endif // CSKPAINTER_H

@@ -49,9 +49,23 @@ QWidget *CStatusBar::createItem(int id, const QString & tooltip, int width, Qt::
   return i.pLabel;
 }
 
-void CStatusBar::setDownloadStatus(bool start)
+void CStatusBar::setDownloadStatus(bool start, bool reset)
 {
   static int counter = 0;
+
+  if (reset)
+  {
+    for (int i = 0; i < tItems.count(); i++)
+    {
+      if (tItems[i].id == SB_SM_LOADING)
+      {
+        m_movie->stop();
+        tItems[i].pLabel->hide();
+        return;
+      }
+    }
+    return;
+  }
 
   if (start)
   {
@@ -78,6 +92,7 @@ void CStatusBar::setDownloadStatus(bool start)
         m_movie->stop();
         tItems[i].pLabel->hide();
       }
+      return;
     }
   }
 }

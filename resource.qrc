@@ -124,5 +124,7 @@
         <file>res/ico_eq_axis.png</file>
         <file>res/ico_adv_search.png</file>
         <file>res/loading._ico.gif</file>
+        <file>res/comet_tail.png</file>
+        <file>res/comet_coma.png</file>
     </qresource>
 </RCC>

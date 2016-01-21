@@ -95,8 +95,9 @@ typedef struct
   double  elongation;
   double  FV;
   double  phase;
-
   double  parallax;
+
+  double  params[8];     // user params
 } orbit_t;
 
 
