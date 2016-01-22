@@ -676,7 +676,7 @@ void C3DSolarWidget::mouseMoveEvent(QMouseEvent *e)
   }
 }
 
-void C3DSolarWidget::mouseReleaseEvent(QMouseEvent */*e*/)
+void C3DSolarWidget::mouseReleaseEvent(QMouseEvent * /*e*/)
 {
   m_drag = false;
   m_rotate = false;

@@ -225,7 +225,7 @@ void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, fl
   {
     if (isPreview)
     {
-      angle = D2R(180);
+      angle = (float)D2R(180);
     }
 
     sy = (int)LERP(qAbs(sin(o->cLat)), sy, sx);

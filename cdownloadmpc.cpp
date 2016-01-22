@@ -64,67 +64,51 @@ void CDownloadMPC::changeEvent(QEvent *e)
   }
 }
 
-//////////////////////////////////////
-void CDownloadMPC::readData(bool last)
-//////////////////////////////////////
+////////////////////////////
+void CDownloadMPC::readData()
+////////////////////////////
 {
-  QString str;
   int     maxCnt = ui->spinBox->value();
+  QString str;
+  int lastOffset = 0;
 
   m_data += m_reply->readAll();
-  QTextStream s(&m_data);
-
-  //qDebug() << m_data;
-
-  //return;
 
   for (int i = 0; i < m_data.count(); i++)
   {
-    //qDebug() << m_data[i];
-
-    if (m_data[i] == '\n' || (last && (i + 1 == m_data.count())))
+    char ch = m_data[i];
+    if (ch == '\n')
     {
-      if ((last && (i + 1 == m_data.count())))
-        str += m_data[i];
-
-      if (m_bFirstData || bIsComet)
+      if (bIsComet)
       {
-        if (bIsComet)
-          readMPCLineComet(str);
-        else
-          readMPCLine(str);
-
-        if ((m_count % 50) == 0)
-        {
-          ui->lineEdit_2->setText(QString("%1").arg(m_count));
-        }
+        readMPCLineComet(str);
       }
       else
       {
-        if (str.startsWith("-------------------"))
-          m_bFirstData = true;
+        readMPCLine(str);
       }
+
+      if ((m_count % 50) == 0)
+      {
+        ui->lineEdit_2->setText(QString("%1").arg(m_count));
+      }
+
+      lastOffset = i;
+      str.clear();
 
       if (maxCnt == m_count && maxCnt != 0)
       {
         m_reply->abort();
         break;
       }
-
-      str = "" ;
-      m_data = m_data.mid(i);
-      i = 0;
     }
     else
     {
-      str += m_data[i];
+      str += ch;
     }
   }
 
-  if (m_end)
-  {
-    m_reply->abort();
-  }
+  m_data.remove(0, lastOffset);
 }
 
 ///////////////////////////////////////////
@@ -165,7 +149,7 @@ void CDownloadMPC::readMPCLine(QString str)
 
   if (m_firstMatch)
   {
-     m_end = true;
+    m_reply->abort();
   }
 }
 
@@ -211,7 +195,7 @@ void CDownloadMPC::readMPCLineComet(QString str)
 
   if (m_firstMatch)
   {
-     m_end = true;
+    m_reply->abort();
   }
 }
 
@@ -233,8 +217,9 @@ void CDownloadMPC::on_pushButton_2_clicked()
   QNetworkRequest request(qurl);
   QNetworkReply *reply = m_manager.get(request);
 
+  reply->setReadBufferSize(64000);
+
   m_reply = reply;
-  m_end = false;
 
   ui->pushButton_2->setEnabled(false);
   ui->spinBox->setEnabled(false);
@@ -259,25 +244,17 @@ void CDownloadMPC::on_pushButton_2_clicked()
 void CDownloadMPC::slotReadyRead()
 //////////////////////////////////
 {
-  readData(false);
+  readData();
 }
 
 /////////////////////////////////////////////////////////////
 void CDownloadMPC::slotDownloadFinished(QNetworkReply *reply)
 /////////////////////////////////////////////////////////////
 {
-  qDebug() << reply;
-
-  qDebug() << reply->header(QNetworkRequest::ContentTypeHeader).toString();
-  qDebug() << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime().toString();;
-  qDebug() << reply->header(QNetworkRequest::ContentLengthHeader).toULongLong();
-  qDebug() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-  qDebug() << reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-
   if (reply->error() == QNetworkReply::NoError)
   {
-    readData(true);
     done(DL_OK);
+    return;
   }
   else
   { // error
@@ -286,7 +263,6 @@ void CDownloadMPC::slotDownloadFinished(QNetworkReply *reply)
       msgBoxError(this, reply->errorString());
     }
   }
-  reply->deleteLater();
   done(DL_OK);
 }
 

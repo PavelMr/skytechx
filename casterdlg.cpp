@@ -544,6 +544,8 @@ void CAsterDlg::fillList()
   setCursor(Qt::WaitCursor);
   QApplication::processEvents();
 
+  qDebug() << tAsteroids.count();
+
   for (int i = 0; i < tAsteroids.count(); i++)
   {
     asteroid_t *a = &tAsteroids[i];
@@ -687,11 +689,17 @@ void CAsterDlg::on_pushButton_7_clicked()
 
   astClear();
 
-  CDownloadMPC dlg(this, &tAsteroids);
+  CDownloadMPC *dlg = new CDownloadMPC(this, &tAsteroids);
 
-  if (dlg.exec() == DL_CANCEL)
+  if (dlg->exec() == DL_CANCEL)
   {
+    delete dlg; // delete dlg before clearing
     astClear();
+
+  }
+  else
+  {
+    delete dlg;
   }
 
   fillList();

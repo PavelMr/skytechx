@@ -43,7 +43,7 @@ public:
 
 protected:
   void changeEvent(QEvent *e);
-  void readData(bool last);
+  void readData();
   void readMPCLine(QString str);
   void readMPCLineComet(QString str);
 
@@ -58,7 +58,6 @@ protected:
   bool                  m_bFirstData;
   QString               m_filter;
   bool                  m_firstMatch;
-  bool                  m_end;
 
 private slots:
   void on_pushButton_clicked();

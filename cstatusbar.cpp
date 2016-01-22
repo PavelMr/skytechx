@@ -117,6 +117,8 @@ void CStatusBar::createSkyMapBar(void)
 {
   deleteStatusBar();
   restoreStatusBar();
+
+  //pStatusBar->addPermanentWidget(new QLabel("0"), 0);
 }
 
 void CStatusBar::saveStatusBar()

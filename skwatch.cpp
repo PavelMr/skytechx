@@ -106,7 +106,7 @@ void SkWatch::render()
       {
         p.setPen(Qt::black);
         p.setBrush(Qt::black);
-        p.drawEllipse(QPoint(0, radius * 0.94), radius * 0.03, radius * 0.03);
+        p.drawEllipse(QPointF(0, radius * 0.94), radius * 0.03, radius * 0.03);
 
         qreal tx;
         qreal ty;

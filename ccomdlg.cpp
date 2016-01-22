@@ -931,11 +931,16 @@ void CComDlg::on_pushButton_7_clicked()
 
   comClear();
 
-  CDownloadMPC dlg(this, &tComets);
+  CDownloadMPC *dlg = new CDownloadMPC(this, &tComets);
 
-  if (dlg.exec() == DL_CANCEL)
+  if (dlg->exec() == DL_CANCEL)
   {
+    delete dlg; // delete dlg before clearing
     comClear();
+  }
+  else
+  {
+    delete dlg;
   }
 
   fillList();
