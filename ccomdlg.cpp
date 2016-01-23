@@ -163,10 +163,10 @@ static void solveCometHyperbolic(comet_t *com, double dt, double &r, double &v)
 static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
 /////////////////////////////////////////////////////////////////////////
 {
-  double R, r, v;
-  double xe;
-  double ye;
-  double ze;
+  double R = 0, r = 0, v = 0;
+  double xe = 0;
+  double ye = 0;
+  double ze = 0;
   double rh[3] = {0,0,0};
 
   // NOTE: komety a asteroidy maji uz deltaT v sobe

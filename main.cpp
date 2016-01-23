@@ -14,13 +14,6 @@
 #include "clog.h"
 #include "systemsettings.h"
 
-// TODO: list
-/*
- *
- *
- *
- * */
-
 int g_ocTreeDepth = 4;
 bool g_developMode = false;
 bool g_showFps = false;
@@ -66,8 +59,6 @@ static bool getCommandParamValue(const QString command, const QString& param, co
 
   return true;
 }
-
-#include "nutation.h"
 
 ////////////////////////////////
 int main(int argc, char *argv[])
@@ -117,64 +108,6 @@ int main(int argc, char *argv[])
 
   g_systemSettings = new SystemSettings("../skytechx.cfg");
   g_systemSettings->readAll();
-
-
-
-  ///////////
-  /// \brief settings
-  ///////////
-
-  /*
-  int size = 10000000;
-
-  int *val = (int *)malloc(4 * size);
-
-  int *ia = (int *)malloc(4 * size);
-  QList <int> il;
-  QTime tsi;
-  QTime tsl;
-
-  for (int i = 0; i < size; i++)
-  {
-    val[i] = rand();
-  }
-
-  tsi.start();
-  for (int i = 0; i < size; i++)
-  {
-    ia[i] = val[i];
-  }
-  qDebug() << tsi.elapsed();
-
-  tsl.start();
-  for (int i = 0; i < size; i++)
-  {
-    il.append(val[i]);
-  }
-  qDebug() << tsl.elapsed();
-
-  ///////
-
-  tsi.start();
-  for (int i = 0; i < size; i++)
-  {
-    val[i] = ia[i];
-  }
-  qDebug() << tsi.elapsed();
-
-  tsl.start();
-  for (int i = 0; i < size; i++)
-  {
-    val[i] = il[i];
-  }
-  qDebug() << tsl.elapsed();
-
-  */
-
-
-
-  ///
-
 
   QSettings settings;
 
@@ -255,14 +188,6 @@ int main(int argc, char *argv[])
   {
     qDebug() << "ERROR2";
   }
-
-  /*
-  catch (std::bad_alloc &exc)
-  {
-    msgBoxError(NULL, exc.what());
-    qDebug() << "ERROR" << exc.what();
-  }
-  */
 
   return ret;
 }

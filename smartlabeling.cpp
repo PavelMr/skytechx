@@ -213,7 +213,7 @@ void SmartLabeling::render(CSkPainter *painter)
 
       if (!done)
       {
-        //doneList << renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, getAlign(label.m_defaultAlign), true);
+        doneList << renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, getAlign(label.m_defaultAlign), true);
       }
     }
   }
