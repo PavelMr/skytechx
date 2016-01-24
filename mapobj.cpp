@@ -11,6 +11,7 @@
 #include "cucac4.h"
 #include "csgp4.h"
 #include "c3dsolar.h"
+#include "cdrawing.h"
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
@@ -25,7 +26,6 @@ typedef struct
 
 bool          g_bHoldObject = false;
 holdObject_t  g_HoldObject;
-
 
 void holdObject(int type, int id, const QString &name)
 {
@@ -247,6 +247,7 @@ void mapObjContextMenu(CMapView *map)
 
   QList <QString>  strSuf;
   QList <int>      strIdx;
+  QMap <QAction *, int> drawingMap;
 
   QString cHoldObj = QObject::tr("  Hold object ");
 
@@ -333,6 +334,40 @@ void mapObjContextMenu(CMapView *map)
           g_HoldObject.objType = MO_TELESCOPE;
           isHoldObjFirst =  true;
         }
+        continue;
+      }
+
+      case MO_INSERT:
+      {
+        QString name;
+
+        drawing_t *d = getDrawing(o.par1);
+
+        switch (d->type)
+        {
+          case DT_TEXT:
+            name = d->text_t.text;
+            break;
+
+          case DT_TELRAD:
+            name = QObject::tr("Telrad");
+            break;
+
+          case DT_TELESCOPE:
+            name = d->telescope_t.name;
+            break;
+
+          case DT_FRM_FIELD:
+            name = d->frmField_t.text;
+            break;
+
+          default:
+            name = "???";
+        }
+
+        a = myMenu.addAction(QObject::tr("Edit object '") + name + "'");
+        drawingMap[a] = o.par1;
+        a->setData(-10);
         continue;
       }
 
@@ -663,6 +698,12 @@ void mapObjContextMenu(CMapView *map)
         }
 
         pcMainWnd->repaintMap();
+        return;
+      }
+
+      case -10:
+      {
+        g_cDrawing.selectAndEdit(drawingMap[selectedItem]);
         return;
       }
 

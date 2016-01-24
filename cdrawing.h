@@ -80,11 +80,12 @@ public:
   void setEditedPos(radec_t *rd);
   void getEditedPos(radec_t *rd);
 
-  int drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, QString text = "", bool bEdited = false);
-  int drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited = false);
-  int drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited = false);
-  int drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited = false);
+  void selectAndEdit(int id);
 
+  int drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, QString text = "", bool bEdited = false, int id = -1);
+  int drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited = false, int id = -1);
+  int drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited = false, int id = -1);
+  int drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited = false, int id = -1);
 
   void insertTelescope(radec_t *rd, float rad, QString text);
   void insertTelrad(radec_t *rd);
@@ -99,6 +100,7 @@ public:
   void cancel(void);
   int  count(void);
   void clearAll(void);
+  void setHelp(int type);
 
 signals:
   void sigChange(bool bEdited, bool isEmpty);

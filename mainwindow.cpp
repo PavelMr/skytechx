@@ -5861,6 +5861,8 @@ void MainWindow::on_actionShow_planet_axis_triggered(bool checked)
   ui->widget->repaintMap();
 }
 
+void insertCopy();
+
 void MainWindow::on_actionAdvanced_search_triggered()
 {
   CAdvSearch dlg(this, &ui->widget->m_mapView);

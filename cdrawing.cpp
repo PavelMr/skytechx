@@ -2,6 +2,7 @@
 #include "cmapview.h"
 #include "setting.h"
 #include "skcore.h"
+#include "mapobj.h"
 
 #define DRAWING_VERSION   "VER2.0"
 #define ROT_MARGIN        10
@@ -161,6 +162,16 @@ void CDrawing::getEditedPos(radec_t *rd)
   *rd = m_drawing.rd;
 }
 
+void CDrawing::selectAndEdit(int id)
+{
+  m_drawing = m_tList[id];
+
+  setHelp(m_drawing.type);
+
+  m_tList.removeAt(id);
+  emit sigChange(true, m_tList.count() == 0);
+}
+
 ////////////////////////////////////////////////////////////////////
 void CDrawing::insertTelescope(radec_t *rd, float rad, QString text)
 ////////////////////////////////////////////////////////////////////
@@ -170,7 +181,7 @@ void CDrawing::insertTelescope(radec_t *rd, float rad, QString text)
   m_drawing.telescope_t.name = text;
   m_drawing.telescope_t.rad = rad;
 
-  setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\n"));
+  setHelp(DT_TELESCOPE);
 
   emit sigChange(true, m_tList.count() == 0);
 }
@@ -182,7 +193,7 @@ void CDrawing::insertTelrad(radec_t *rd)
   m_drawing.type = DT_TELRAD;
   m_drawing.rd = *rd;
 
-  setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\n"));
+  setHelp(DT_TELRAD);
 
   emit sigChange(true, m_tList.count() == 0);
 }
@@ -198,7 +209,7 @@ void CDrawing::insertFrmField(radec_t *rd, double x, double y, QString name)
   m_drawing.frmField_t.y = y;
   m_drawing.angle = 0;
 
-  setHelpText(tr("Move object by mouse.\n") + tr("Rotate object by an edge.\n") + tr("ENTER : Done\nESC : Cancel\n"));
+  setHelp(DT_FRM_FIELD);
 
   emit sigChange(true, m_tList.count() == 0);
 }
@@ -214,7 +225,7 @@ void CDrawing::insertText(radec_t *rd, QString name, QFont *font, int align, boo
   m_drawing.text_t.align = align;
   m_drawing.text_t.bRect = bRect;
 
-  setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\n"));
+  setHelp(DT_TEXT);
 
   emit sigChange(true, m_tList.count() == 0);
 }
@@ -271,19 +282,19 @@ void CDrawing::drawObjects(CSkPainter *p)
       case DT_TELESCOPE:
         drawCircle(out, p, &m_tList[i].rd,
                             m_tList[i].telescope_t.rad,
-                            m_tList[i].telescope_t.name, false);
+                            m_tList[i].telescope_t.name, false, i);
         break;
 
       case DT_TELRAD:
-        drawTelrad(out, p, &m_tList[i].rd, false);
+        drawTelrad(out, p, &m_tList[i].rd, false, i);
         break;
 
       case DT_TEXT:
-        drawText(out, p, &m_tList[i], false);
+        drawText(out, p, &m_tList[i], false, i);
         break;
 
       case DT_FRM_FIELD:
-        drawFrmField(out, p, &m_tList[i], false);
+        drawFrmField(out, p, &m_tList[i], false, i);
         break;
     }
   }
@@ -386,8 +397,24 @@ void CDrawing::clearAll()
   emit sigChange(false, m_tList.count() == 0);
 }
 
+void CDrawing::setHelp(int type)
+{
+  switch (type)
+  {
+    case DT_TEXT:
+    case DT_TELRAD:
+    case DT_TELESCOPE:
+      setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\n"));
+      break;
+
+    case DT_FRM_FIELD:
+      setHelpText(tr("Move object by mouse.\n") + tr("Rotate object by an edge.\n") + tr("ENTER : Done\nESC : Cancel\n"));
+      break;
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, QString text, bool bEdited)
+int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, QString text, bool bEdited, int id)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt;
@@ -437,6 +464,13 @@ int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, Q
       m_drawing.onScr = true;
       m_drawing.rect = QRect(pt.sx - r, pt.sy - r, r * 2, r * 2);
     }
+    else
+    {
+      if (id >= 0)
+      {
+        addMapObj(pt.sx, pt.sy, MO_INSERT, MO_CIRCLE, r, id, 0);
+      }
+    }
 
     ptOut.setX(pt.sx);
     ptOut.setY(pt.sy);
@@ -446,7 +480,7 @@ int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, Q
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited)
+int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited, int id)
 /////////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt;
@@ -499,6 +533,13 @@ int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited
       m_drawing.onScr = true;
       m_drawing.rect = QRect(pt.sx - r1, pt.sy - r1, r1 * 2, r1 * 2);
     }
+    else
+    {
+      if (id >= 0)
+      {
+        addMapObj(pt.sx, pt.sy, MO_INSERT, MO_CIRCLE, r1, id, 0);
+      }
+    }
 
     ptOut.setX(pt.sx);
     ptOut.setY(pt.sy);
@@ -509,7 +550,7 @@ int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited
 
 //////////////////////////////////////////////////////////////////////////////////
 // TODO: dodelat to
-int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited)
+int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited, int id)
 //////////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt;
@@ -549,6 +590,11 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
       {
         p->setPen(QPen(QColor(g_skSet.map.drawing.color), 1));
         p->drawRect(rc.adjusted(-5, -5, 5, 5));
+      }
+
+      if (id >= 0)
+      {
+        addMapObj(rc.center().x(), rc.center().y(), MO_INSERT, MO_CIRCLE, rc.height() / 2, id, 0);
       }
     }
 
@@ -618,7 +664,7 @@ void calcAngularDistance(double ra, double dec, double angle, double distance, d
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
-int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, bool bEdited)
+int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, bool bEdited, int id)
 //////////////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt;
@@ -733,6 +779,13 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
       p->drawRect(m_drawing.rect);
       rc = m_drawing.rect.adjusted(ROT_MARGIN, ROT_MARGIN, -ROT_MARGIN, -ROT_MARGIN);
       p->drawRect(rc);
+    }
+    else
+    {
+      if (id >= 0)
+      {
+        addMapObj(rc.center().x(), rc.center().y(), MO_INSERT, MO_CIRCLE, rc.width() / 2, id, 0);
+      }
     }
 
     if (qMax(rc.width(), rc.height()) > 50 && showText)
