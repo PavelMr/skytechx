@@ -103,6 +103,12 @@ void C3DSolarWidget::setShowEclipticPlane(bool show)
   update();
 }
 
+void C3DSolarWidget::setShowRadius(bool show)
+{
+  m_showRadius = show;
+  update();
+}
+
 void C3DSolarWidget::setLockAt(int index)
 {
   if (index == -1)
@@ -446,6 +452,23 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       p.drawEllipse(QPointF(p1.sx, p1.sy), r, r);
       p.setPen(Qt::white);
       p.renderText(p1.sx, p1.sy, r, (i == 0) ? tr("Earth") : o.name, RT_BOTTOM_RIGHT);
+    }
+
+    if (m_showRadius)
+    {
+      p1.w.x = pos.x();
+      p1.w.y = pos.y();
+      p1.w.z = pos.z();
+
+      p2.w.x = 0;
+      p2.w.y = 0;
+      p2.w.z = 0;
+
+      if (trfProjectLine(&p1, &p2))
+      {
+        p.setPen(QPen(Qt::gray, 0.75, Qt::DotLine));
+        p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+      }
     }
   }
 

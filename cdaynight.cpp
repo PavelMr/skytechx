@@ -385,5 +385,10 @@ void CDayNight::on_pushButton_12_clicked()
 void CDayNight::on_pushButton_2_clicked()
 /////////////////////////////////////////
 {
+  done(DL_CANCEL);
+}
+
+void CDayNight::on_pushButton_13_clicked()
+{
   done(DL_OK);
 }

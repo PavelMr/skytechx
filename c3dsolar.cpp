@@ -11,6 +11,7 @@ static int g_cb2 = 0;
 static int g_cb3 = 0;
 static bool g_cbx = false;
 static bool g_cbx2 = true;
+static bool g_cbx3 = false;
 static int g_sb = 500;
 static int g_sb2 = 1;
 
@@ -45,6 +46,7 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
 
   ui->frame->setShowHeight(ui->checkBox->isChecked());
   ui->frame->setShowEclipticPlane(ui->checkBox_2->isChecked());
+  ui->frame->setShowRadius(ui->checkBox_3->isChecked());
 
   ui->comboBox->addItem(tr("None"), -1);
   for (int i = 0; i < tComets.count(); i++)
@@ -106,6 +108,7 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
   ui->comboBox_2->setCurrentIndex(g_cb2);
   ui->checkBox->setChecked(g_cbx);
   ui->checkBox_2->setChecked(g_cbx2);
+  ui->checkBox_3->setChecked(g_cbx3);
   ui->spinBox->setValue(g_sb);
   ui->spinBox_2->setValue(g_sb2);
 
@@ -121,6 +124,7 @@ void C3DSolar::saveAll()
   g_cb3 = ui->comboBox_3->currentIndex();
   g_cbx = ui->checkBox->isChecked();
   g_cbx2 = ui->checkBox_2->isChecked();
+  g_cbx3 = ui->checkBox_2->isChecked();
   g_sb = ui->spinBox->value();
   g_sb2 = ui->spinBox_2->value();
 }
@@ -400,3 +404,8 @@ double C3DSolar::jd() const
   return m_view.jd;
 }
 
+
+void C3DSolar::on_checkBox_3_toggled(bool checked)
+{
+  ui->frame->setShowRadius(checked);
+}

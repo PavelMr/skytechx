@@ -190,6 +190,20 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="toolTip">
+          <string>OK &amp; Set map time</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resource.qrc">
+           <normaloff>:/res/set_map_time.png</normaloff>:/res/set_map_time.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
           <string>OK</string>
@@ -202,6 +216,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

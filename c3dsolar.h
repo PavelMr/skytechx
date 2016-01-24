@@ -64,6 +64,8 @@ private slots:
 
   void on_pushButton_14_clicked();
 
+  void on_checkBox_3_toggled(bool checked);
+
 private:
   Ui::C3DSolar *ui;
   double m_jd;

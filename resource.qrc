@@ -126,5 +126,6 @@
         <file>res/loading._ico.gif</file>
         <file>res/comet_tail.png</file>
         <file>res/comet_coma.png</file>
+        <file>res/set_map_time.png</file>
     </qresource>
 </RCC>

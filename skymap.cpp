@@ -1375,6 +1375,8 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     smRenderDSO(mapView, pPainter, pImg);
   }
 
+  g_labeling.render(pPainter);
+
   if (g_showGrids)
   {
     smRenderGrids(mapView, pPainter);

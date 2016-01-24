@@ -35,6 +35,9 @@ public:
   int     m_allowedAlign;
   QString m_text;
   int     m_fontId;
+
+  QRect   m_rect;
+  bool    m_done;
 };
 
 class SmartLabeling
@@ -48,6 +51,7 @@ public:
 
 private:
   QList <SmartLabel> m_list;
+  QList <QRect>      doneList;
 
   static bool sortFnc(const SmartLabel &a, const SmartLabel &b)
   {

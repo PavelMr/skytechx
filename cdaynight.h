@@ -40,6 +40,7 @@ class CDayNight : public QDialog
 public:
   explicit CDayNight(QWidget *parent, mapView_t *view);
   ~CDayNight();
+  double     m_jd;
 
 protected:
   void changeEvent(QEvent *e);
@@ -53,7 +54,6 @@ protected:
   QImage *m_shade;
 
   mapView_t  m_view;
-  double     m_jd;
 
 private slots:
   void on_pushButton_clicked();
@@ -79,6 +79,8 @@ private slots:
   void on_pushButton_12_clicked();
 
   void on_pushButton_2_clicked();
+
+  void on_pushButton_13_clicked();
 
 private:
   Ui::CDayNight *ui;

@@ -16,8 +16,6 @@ CDailyEv::CDailyEv(QWidget *parent, mapView_t *view) :
   m_view = *view;
   setTitle();
   fillList();
-
-
 }
 
 CDailyEv::~CDailyEv()

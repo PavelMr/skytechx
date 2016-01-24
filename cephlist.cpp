@@ -523,7 +523,7 @@ void CEphList::on_tabWidget_currentChanged(int index)
     case 0: // planets
       if (ui->listWidget->currentRow() == 8) // moon
       {
-        for (int i = 15; i < 22; i++)
+        for (int i = 17; i < 24; i++)
         {
           item = ui->listWidget_2->item(i); item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable);
         }

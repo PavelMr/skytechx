@@ -43,6 +43,7 @@ bool Nomad::getStar(int zone, int id, nomad_t *star)
 
 void Nomad::setNomadDir(const QString &name)
 {
+  qDebug() << "Setting NOMAD folder" << name;
   m_folder = name;
   m_region.clear();
 }

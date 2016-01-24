@@ -158,6 +158,7 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
           i.param.gamma = 150;
           i.param.invert = false;
           i.param.autoAdjust = false;
+          i.param.dlgSize = 0;
           i.param.useMatrix = false;
           memset(i.param.matrix, 0, sizeof(i.param.matrix));
           i.param.matrix[1][1] = 1;

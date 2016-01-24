@@ -273,6 +273,26 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_13">
+   <property name="geometry">
+    <rect>
+     <x>754</x>
+     <y>570</y>
+     <width>31</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>OK &amp; Set map time</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/set_map_time.png</normaloff>:/res/set_map_time.png</iconset>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>pushButton</tabstop>
@@ -288,6 +308,8 @@
   <tabstop>pushButton_12</tabstop>
   <tabstop>pushButton_2</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -32,7 +32,7 @@ protected:
   QString getSpaces(int len, int maxLen);
   QPixmap getPlanetPixmap(int w, int h);
   void resizeEvent(QResizeEvent *);
-  void addPhysicalInfo(CXMLSimpleMapParser *parser, const QString& mapIndex, const QString& label);
+  QString addPhysicalInfo(CXMLSimpleMapParser *parser, const QString& mapIndex, const QString& label);
 
   CMapView              *m_map;
   CPixmapWidget         *m_pixmapWidget;

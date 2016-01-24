@@ -92,13 +92,6 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
   ui->textEdit->setTextCursor(crs);
   /////////////
 
-  QFont fnt = ui->textBrowser1->font();
-
-  fnt.setFamily("courier new");
-  fnt.setPointSize(fnt.pointSize() + 1);
-  ui->textBrowser1->setFont(fnt);
-  ui->textBrowser_2->setFont(fnt);
-
   fillInfo(view, &m_infoItem);
 
   ui->textEdit->setFocus();
@@ -113,12 +106,18 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
 
     parser.begin(readAllFile("../data/planets/" + CAstro::getFileName(m_infoItem.par1) + ".xml"));
 
-    addPhysicalInfo(&parser, "Equator_radius", tr("Equator radius"));
-    addPhysicalInfo(&parser, "Semi_major_axis", tr("Semi-major axis"));
-    addPhysicalInfo(&parser, "Eccentricity", tr("Eccentricity"));
-    addPhysicalInfo(&parser, "Mass", tr("Mass"));
-    addPhysicalInfo(&parser, "Rotation_period", tr("Rotation period"));
-    addPhysicalInfo(&parser, "Escape_velocity", tr("Escape velocity"));
+    QString str = "<table>\n";
+
+    str += addPhysicalInfo(&parser, "Equator_radius", tr("Equator radius"));
+    str += addPhysicalInfo(&parser, "Semi_major_axis", tr("Semi-major axis"));
+    str += addPhysicalInfo(&parser, "Eccentricity", tr("Eccentricity"));
+    str += addPhysicalInfo(&parser, "Mass", tr("Mass"));
+    str += addPhysicalInfo(&parser, "Rotation_period", tr("Rotation period"));
+    str += addPhysicalInfo(&parser, "Escape_velocity", tr("Escape velocity"));
+
+    str +=  "</table>\n";
+
+    ui->textBrowser_2->setHtml(str);
   }
   else
   {
@@ -197,12 +196,15 @@ void CObjInfo::resizeEvent(QResizeEvent *)
   }
 }
 
-void CObjInfo::addPhysicalInfo(CXMLSimpleMapParser *parser, const QString &mapIndex, const QString &label)
+QString CObjInfo::addPhysicalInfo(CXMLSimpleMapParser *parser, const QString &mapIndex, const QString &label)
 {
+  QString str;
   if (parser->m_data.contains(mapIndex))
   {
-    ui->textBrowser_2->setHtml(ui->textBrowser_2->toHtml() + "<b>" + label + "</b>" + getSpaces(label.length(), 28) + " : " + parser->m_data[mapIndex] + "\n");
+    str += "<tr><td><b>" + label + "</b></td><td> &nbsp;&nbsp; : &nbsp;&nbsp; </td> <td>" + parser->m_data[mapIndex] + "</td></tr>\n";
   }
+
+  return str;
 }
 
 ///////////////////////////////////////////////////////////
@@ -213,9 +215,15 @@ void CObjInfo::fillInfo(const mapView_t *, ofiItem_t *info)
 
   setWindowTitle(tr("Object information : ") + info->title);
 
+  str += "<table>\n";
+
   for (int i = 0; i < info->tTextItem.count(); i++)
   {
     ofiTextItem_t *item = &info->tTextItem[i];
+
+    str += "<tr>\n";
+
+    str += "<td>\n";
 
     if (item->bBold)
       str += "<b>";
@@ -228,19 +236,26 @@ void CObjInfo::fillInfo(const mapView_t *, ofiItem_t *info)
     if (item->bIsTitle)
       str += "</u>";
 
+    str += "</td>\n";
+
     if (!item->bIsTitle)
     {
-      str += getSpaces(item->label.length(), 28);
-      if (item->value.length() > 0)
-        str += " : ";
+      str += "<td>\n";
+      str += "&nbsp;&nbsp; : &nbsp;&nbsp;";
+      str += "</td>\n";
+
+      str += "<td>\n";
       str += item->value;
+      str += "</td>\n";
     }
 
     if (item->bBold)
       str += ("</b>");
 
-    str += ("<br/>");
+    str += "</tr>\n";
   }
+
+  str += "</table>\n";
 
   ui->textBrowser1->setHtml(str);
 

@@ -3001,6 +3001,10 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
   ui->actionSMinus->setDisabled(checked);
   m_timeMul->setDisabled(checked);
 
+  ui->horizontalSlider->setDisabled(checked);
+  ui->calendarWidget->setDisabled(checked);
+  ui->timeEdit->setDisabled(checked);
+
   ui->actionCurLocTime->setDisabled(checked);
   ui->actionSet_current_time->setDisabled(checked);
   ui->actionSet_JD->setDisabled(checked);
@@ -3015,7 +3019,11 @@ void MainWindow::on_actionDay_Night_triggered()
 {
   CDayNight dlg(this, &ui->widget->m_mapView);
 
-  dlg.exec();
+  if (dlg.exec() == DL_OK)
+  {
+    ui->widget->m_mapView.jd = dlg.m_jd;
+    ui->widget->repaintMap();
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -5840,7 +5848,11 @@ void MainWindow::on_actionPlanet_size_triggered()
 {
   CPlanetSize dlg(this, &ui->widget->m_mapView);
 
-  dlg.exec();
+  if (dlg.exec() == DL_OK)
+  {
+    ui->widget->m_mapView.jd = dlg.m_jd;
+    ui->widget->repaintMap();
+  }
 }
 
 void MainWindow::on_actionShow_planet_axis_triggered(bool checked)

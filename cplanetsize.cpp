@@ -170,5 +170,11 @@ void CPlanetSize::updateLabels()
 
 void CPlanetSize::on_pushButton_clicked()
 {
+  done(DL_CANCEL);
+}
+
+void CPlanetSize::on_pushButton_3_clicked()
+{
+  m_jd = mw->jd;
   done(DL_OK);
 }

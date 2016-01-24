@@ -19,6 +19,7 @@ public:
   void generateComet(int index, double time, double period, bool isComet);
   void setShowHeight(bool show);
   void setShowEclipticPlane(bool show);
+  void setShowRadius(bool show);
   void setLockAt(int index);
   void setViewParam(double yaw = CM_UNDEF, double pitch = CM_UNDEF, double x = CM_UNDEF, double y = CM_UNDEF, double z = CM_UNDEF, bool updateView = true);
   void removeOrbit();
@@ -40,6 +41,7 @@ protected:
   int       m_lockAt;
   bool      m_showEclipticPlane;
   bool      m_showHeight;
+  bool      m_showRadius;
   mapView_t m_view;
   double    m_scale;
   QVector3D m_translate;

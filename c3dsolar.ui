@@ -167,6 +167,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBox_3">
+         <property name="text">
+          <string>Show radius vector</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="Line" name="line_6">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -449,8 +456,15 @@ Zoom by mouse wheel</string>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_14">
+       <property name="toolTip">
+        <string>OK &amp; Set map time</string>
+       </property>
        <property name="text">
-        <string>OK &amp;&amp; Set map time</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/res/set_map_time.png</normaloff>:/res/set_map_time.png</iconset>
        </property>
       </widget>
      </item>
@@ -473,6 +487,8 @@ Zoom by mouse wheel</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
