@@ -9,6 +9,7 @@ CScanRender::CScanRender(void)
 //////////////////////////////
 {
   bBilinear = false;
+  m_opacity = 1.f;
 }
 
 /////////////////////////////////////////////////
@@ -316,6 +317,11 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
       pDst++;
     }
   }
+}
+
+void CScanRender::setOpacity(float opacity)
+{
+  m_opacity = opacity;
 }
 
 #define number2int(i,d)  { __asm fld d;   __asm fistp i; }
@@ -676,9 +682,9 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
         float xy1 = x_diff *y_1diff;
 
         float alpha = 0.00390625f * (((a>>24)&0xff)*(x1y1) + ((b>>24)&0xff)*(xy1) +
-                     ((c>>24)&0xff)*(x1y) + ((d>>24)&0xff)*(xy));
+                     ((c>>24)&0xff)*(x1y) + ((d>>24)&0xff)*(xy)) * m_opacity;
 
-        if (alpha > 0.00390625f)
+        if (alpha > 0.00390625f) // > 1 / 256.
         {
           // blue element
           int blue = (a&0xff)*(x1y1) + (b&0xff)* (xy1) +
@@ -771,7 +777,7 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
       const quint32 *pSrc = bitsSrc + ((int)(uv[0])) + ((int)(uv[1]) * sw);
       QRgb rgbs = *pSrc;
       QRgb rgbd = *pDst;
-      float a = qAlpha(*pSrc) * 0.00390625f;
+      float a = qAlpha(*pSrc) * 0.00390625f * m_opacity;
 
       if (a > 0.00390625f)
       {

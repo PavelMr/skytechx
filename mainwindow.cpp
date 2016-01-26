@@ -4816,7 +4816,7 @@ void MainWindow::on_lv_quickInfo_customContextMenuRequested(const QPoint &pos)
     return;
   }
 
-  QAction *add = new QAction("Copy '" + index.data().toString() + "'", this);
+  QAction *add = new QAction(tr("Copy '") + index.data().toString() + "'", this);
   QList<QAction *> actions;
 
   actions.append(add);

@@ -64,10 +64,10 @@ bool CPlanetRenderer::load()
   m_ring[1] = createRing(40);
   m_ring[2] = createRing(60);
 
-  m_bmp[PT_SUN] = new QImage("../data/planets/sun2.jpg");
+  m_bmp[PT_SUN] = new QImage("../data/planets/sun.jpg");
   m_bmp[PT_MERCURY] = new QImage("../data/planets/mercury.jpg");
-  m_bmp[PT_VENUS] = new QImage("../data/planets/venus2.jpg");
-  m_bmp[PT_MARS] = new QImage("../data/planets/mars2.png");
+  m_bmp[PT_VENUS] = new QImage("../data/planets/venus.jpg");
+  m_bmp[PT_MARS] = new QImage("../data/planets/mars.png");
   m_bmp[PT_JUPITER] = new QImage("../data/planets/jupiter.jpg");
   m_bmp[PT_SATURN] = new QImage("../data/planets/saturn.jpg");
   m_bmp[PT_URANUS] = new QImage("../data/planets/uranus.jpg");

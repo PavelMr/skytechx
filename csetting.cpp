@@ -59,6 +59,7 @@ CSetting::CSetting(QWidget *parent) :
 
   ui->cb_iconSize->addItem(tr("24x24 (Default size)"));
   ui->cb_iconSize->addItem(tr("18x18 (Small size)"));
+  ui->cb_iconSize->addItem(tr("32x32 (Large size)"));
 
   QSettings setting;
 
@@ -72,6 +73,11 @@ CSetting::CSetting(QWidget *parent) :
   if (tbIconSize == 24)
   {
     ui->cb_iconSize->setCurrentIndex(0);
+  }
+  else
+  if (tbIconSize == 32)
+  {
+    ui->cb_iconSize->setCurrentIndex(2);
   }
 
   //int size = set.value("toolbar_icon_size", 24).toInt();
@@ -196,6 +202,13 @@ CSetting::CSetting(QWidget *parent) :
   setProfileLabel();
   fillProfiles();
   resize(sizeHint());
+
+  connect(ui->checkBox_20, SIGNAL(toggled(bool)), this, SLOT(starBitmapChange()));
+  connect(ui->checkBox_3, SIGNAL(toggled(bool)), this, SLOT(starBitmapChange()));
+  connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(starBitmapChange()));
+  connect(ui->doubleSpinBox_30, SIGNAL(valueChanged(double)), this, SLOT(starBitmapChange()));
+  connect(ui->spinBox_5, SIGNAL(valueChanged(int)), this, SLOT(starBitmapChange()));
+  connect(ui->spinBox_6, SIGNAL(valueChanged(int)), this, SLOT(starBitmapChange()));
 }
 
 CSetting::~CSetting()
@@ -229,6 +242,9 @@ void CSetting::setValues()
   ui->cb_properMotion->setChecked(set.map.star.showProperMotion);
   ui->sb_pmYears->setValue(set.map.star.properMotionYearVec);
 
+  ui->spinBox_6->setValue(set.map.star.glowAlpha * 100.0);
+  ui->checkBox_20->setChecked(set.map.star.showGlow);
+
   CStarRenderer sr;
 
   QDir dir("../data/stars/bitmaps/", "*.png");
@@ -237,6 +253,7 @@ void CSetting::setValues()
   ui->comboBox->clear();
   for (int i = 0; i < list.count(); i++)
   {
+    qDebug() << list.at(i).filePath();
     if (sr.open(list.at(i).filePath()))
     {
       ui->comboBox->addItem(sr.getExampleStar(), list.at(i).fileName(), list.at(i).filePath());
@@ -248,12 +265,6 @@ void CSetting::setValues()
   }
   ui->frame_2->setStars(set.map.starBitmapName, &set);
   ui->spinBox_5->setValue(set.map.star.saturation);
-
-  connect(ui->checkBox_3, SIGNAL(toggled(bool)), this, SLOT(starBitmapChange()));
-  connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(starBitmapChange()));
-  connect(ui->doubleSpinBox_30, SIGNAL(valueChanged(double)), this, SLOT(starBitmapChange()));
-  connect(ui->spinBox_5, SIGNAL(valueChanged(int)), this, SLOT(starBitmapChange()));
-
 
   // star mag.
   ui->horizontalSlider->setValue(set.map.starRange[0].mag * 10);
@@ -682,11 +693,16 @@ void CSetting::apply()
   g_skSet.map.starBitmapName = ui->comboBox->itemData(ui->comboBox->currentIndex()).toString();
   g_skSet.map.star.saturation = ui->spinBox_5->value();
 
+  qDebug() << "1";
   cStarRenderer.open(g_skSet.map.starBitmapName);
+  qDebug() << "2";
   //cStarRenderer.setConfig(&g_skSet);
 
   g_skSet.map.star.showProperMotion = ui->cb_properMotion->isChecked();
   g_skSet.map.star.properMotionYearVec = ui->sb_pmYears->value();
+
+  g_skSet.map.star.glowAlpha = ui->spinBox_6->value() / 100.0;
+  g_skSet.map.star.showGlow = ui->checkBox_20->isChecked();
 
   // star mag.
   g_skSet.map.starRange[0].mag = ui->horizontalSlider->value() / 10.;
@@ -1034,6 +1050,11 @@ void CSetting::on_pushButton_clicked()
   if (ui->cb_iconSize->currentIndex() == 1)
   {
     setting.setValue("toolbar_icon_size", 18);
+  }
+  else
+  if (ui->cb_iconSize->currentIndex() == 2)
+  {
+    setting.setValue("toolbar_icon_size", 32);
   }
 
   apply();
@@ -2210,6 +2231,8 @@ void CSetting::starBitmapChange()
   tmp.map.star.useSpectralTp = ui->checkBox_3->isChecked();
   tmp.map.star.starSizeFactor = ui->doubleSpinBox_30->value();
   tmp.map.star.saturation = ui->spinBox_5->value();
+  tmp.map.star.glowAlpha = ui->spinBox_6->value() / 100.0;
+  tmp.map.star.showGlow = ui->checkBox_20->isChecked();
   ui->frame_2->setStars(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(), &tmp);
 }
 

@@ -1048,6 +1048,12 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
     repaintMap(true);
   }
 
+  if (key == Qt::Key_Delete)
+  {
+    g_cDrawing.remove();
+    repaintMap(true);
+  }
+
   tryShowToolTip(m_lastMousePos, key == Qt::Key_Control);
 }
 

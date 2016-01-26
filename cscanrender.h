@@ -34,8 +34,10 @@ class CScanRender
 
 
     void renderPolygonAlpha(QColor col, QImage *dst);
+    void setOpacity(float opacity);
 
-protected:
+private:
+    float    m_opacity;
     int      plMinY;
     int      plMaxY;
     int      m_sx;

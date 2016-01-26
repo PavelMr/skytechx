@@ -22,6 +22,7 @@ public:
     static uchar getSPIndex(float bvIndex);
 
 protected:
+    QPixmap  *m_halo;
     QList <QPixmap> pStars[8];
     QList <QPixmap> pStarsOrig[8];
     float    maxMag;
@@ -30,6 +31,8 @@ protected:
     double   m_starSizeFactor;
     int      m_saturation;
     bool     m_useSpectralTp;
+    bool     m_showHalo;
+    float    m_haloFactor;
 };
 
 extern CStarRenderer   cStarRenderer;

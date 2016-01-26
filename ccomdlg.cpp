@@ -323,7 +323,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
 
   int offsetX = lineSize * sin(D2R(22.5));
   int offsetY = lineSize * cos(D2R(22.5));
-  int offset = lineSize;// * sin(D2R(45));
+  int offset = lineSize;
 
   // TODO: dat asi cAstro do kazdeho vlakna
   #pragma omp parallel for shared(size, lineSize, offset, offsetX, offsetY)
@@ -358,6 +358,10 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
     trfRaDecToPointCorrectFromTo(&tail, &pt2, view->jd, JD2000);
     if (trfProjectLine(&pt1, &pt2))
     {
+      float frac = a->orbit.mag / 10.;
+
+      frac = 1 - CLAMP(frac, 0, 1);
+      float opacity = LERP(frac, 0.25, 1);
       double cs = trfGetArcSecToPix(a->orbit.params[2]);
 
       if (!g_onPrinterBW)
@@ -408,6 +412,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
           scanRender.scanLine(pts[1].x(), pts[1].y(),
                               pts[0].x(), pts[0].y(), 0, 1, 0, 0);
 
+          scanRender.setOpacity(opacity);
           scanRender.renderPolygonAlpha(p->image(), &tailImage);
 
           // coma
@@ -430,6 +435,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
 
 
           scanRender.renderPolygonAlpha(p->image(), &comaImage);
+          scanRender.setOpacity(1);
         }
       }
 

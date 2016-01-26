@@ -81,6 +81,7 @@ public:
   void getEditedPos(radec_t *rd);
 
   void selectAndEdit(int id);
+  void remove();
 
   int drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, QString text = "", bool bEdited = false, int id = -1);
   int drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited = false, int id = -1);
@@ -111,6 +112,8 @@ protected:
   mapView_t  m_view;
   SKPLANE   *m_frustum;
   drawing_t  m_drawing;
+  bool       m_edited;
+  drawing_t  m_editedObj;
 
   QString txMove;
   QString txRotate;

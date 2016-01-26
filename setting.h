@@ -118,6 +118,8 @@ typedef struct
   int    saturation;
   double properMotionYearVec;
   bool   showProperMotion;
+  bool   showGlow;
+  float  glowAlpha;
 } setStar_t;
 
 typedef struct

@@ -863,6 +863,8 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 
   orc = rc;
 
+  pPainter->setClipRect(rc);
+
   if (g_onPrinterBW)
   {
     pPainter->setOpacity(1);
@@ -990,6 +992,7 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   pPainter->setPen(QColor(48, 48, 48));
   pPainter->setBrush(Qt::NoBrush);
   pPainter->drawRect(orc);
+  pPainter->setClipping(false);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

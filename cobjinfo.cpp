@@ -238,7 +238,7 @@ void CObjInfo::fillInfo(const mapView_t *, ofiItem_t *info)
 
     str += "</td>\n";
 
-    if (!item->bIsTitle)
+    if (!item->bIsTitle && !item->value.isEmpty())
     {
       str += "<td>\n";
       str += "&nbsp;&nbsp; : &nbsp;&nbsp;";

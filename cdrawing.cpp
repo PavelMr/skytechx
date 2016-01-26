@@ -165,7 +165,9 @@ void CDrawing::getEditedPos(radec_t *rd)
 void CDrawing::selectAndEdit(int id)
 {
   m_drawing = m_tList[id];
+  m_editedObj = m_drawing;
 
+  m_edited = true;
   setHelp(m_drawing.type);
 
   m_tList.removeAt(id);
@@ -181,6 +183,8 @@ void CDrawing::insertTelescope(radec_t *rd, float rad, QString text)
   m_drawing.telescope_t.name = text;
   m_drawing.telescope_t.rad = rad;
 
+  m_edited = false;
+
   setHelp(DT_TELESCOPE);
 
   emit sigChange(true, m_tList.count() == 0);
@@ -192,6 +196,8 @@ void CDrawing::insertTelrad(radec_t *rd)
 {
   m_drawing.type = DT_TELRAD;
   m_drawing.rd = *rd;
+
+  m_edited = false;
 
   setHelp(DT_TELRAD);
 
@@ -209,6 +215,8 @@ void CDrawing::insertFrmField(radec_t *rd, double x, double y, QString name)
   m_drawing.frmField_t.y = y;
   m_drawing.angle = 0;
 
+  m_edited = false;
+
   setHelp(DT_FRM_FIELD);
 
   emit sigChange(true, m_tList.count() == 0);
@@ -224,6 +232,8 @@ void CDrawing::insertText(radec_t *rd, QString name, QFont *font, int align, boo
   m_drawing.text_t.font = *font;
   m_drawing.text_t.align = align;
   m_drawing.text_t.bRect = bRect;
+
+  m_edited = false;
 
   setHelp(DT_TEXT);
 
@@ -367,6 +377,21 @@ void CDrawing::done()
   m_tList.append(m_drawing);
   m_drawing.type = DT_NONE;
   setHelpText("");
+  m_edited = false;
+
+  emit sigChange(false, m_tList.count() == 0);
+}
+
+void CDrawing::remove()
+{
+  if (m_drawing.type == DT_NONE)
+  {
+    return;
+  }
+
+  m_drawing.type = DT_NONE;
+  setHelpText("");
+  m_edited = false;
 
   emit sigChange(false, m_tList.count() == 0);
 }
@@ -375,6 +400,13 @@ void CDrawing::done()
 void CDrawing::cancel()
 ///////////////////////
 {
+  if (m_edited)
+  {
+    m_drawing = m_editedObj;
+    done();
+    return;
+  }
+
   m_drawing.type = DT_NONE;
   setHelpText("");
 
@@ -404,11 +436,11 @@ void CDrawing::setHelp(int type)
     case DT_TEXT:
     case DT_TELRAD:
     case DT_TELESCOPE:
-      setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\n"));
+      setHelpText(tr("Move object by mouse.\n") + tr("ENTER : Done\nESC : Cancel\nDelete : Delete object"));
       break;
 
     case DT_FRM_FIELD:
-      setHelpText(tr("Move object by mouse.\n") + tr("Rotate object by an edge.\n") + tr("ENTER : Done\nESC : Cancel\n"));
+      setHelpText(tr("Move object by mouse.\n") + tr("Rotate object by an edge.\n") + tr("ENTER : Done\nESC : Cancel\n") + tr("Delete : Delete object"));
       break;
   }
 }
@@ -594,7 +626,7 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
 
       if (id >= 0)
       {
-        addMapObj(rc.center().x(), rc.center().y(), MO_INSERT, MO_CIRCLE, rc.height() / 2, id, 0);
+        addMapObj(rc.center().x(), rc.center().y(), MO_INSERT, MO_CIRCLE, rc.height(), id, 0);
       }
     }
 

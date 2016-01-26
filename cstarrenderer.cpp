@@ -4,7 +4,8 @@
 
 CStarRenderer   cStarRenderer;
 
-CStarRenderer::CStarRenderer()
+CStarRenderer::CStarRenderer() :
+  m_halo(0)
 {
 }
 
@@ -16,6 +17,10 @@ CStarRenderer::~CStarRenderer()
 bool CStarRenderer::open(QString filename)
 //////////////////////////////////////////
 {
+  if (m_halo) delete m_halo;
+  //m_halo = new QPixmap(":/res/glow.png");
+  m_halo = new QPixmap(":/res/star_glow.png");
+
   for (int sp = 0; sp < 8; sp++)
   {
     pStars[sp].clear();
@@ -25,12 +30,14 @@ bool CStarRenderer::open(QString filename)
   m_starSizeFactor = 0;
   m_useSpectralTp = true;
   m_saturation = 100;
+  m_showHalo = false;
+  m_haloFactor = 1.0f;
 
   QPixmap pImg;
 
   if (!pImg.load(filename))
   {
-    qDebug("CStarRenderer::open(%s) failed!", filename.toLatin1().data());
+    qDebug() << "CStarRenderer::open() failed!" << filename;
     return(false);
   }
 
@@ -78,7 +85,7 @@ bool CStarRenderer::open(QString filename)
         }
       }
 
-      QPixmap pix = QPixmap::fromImage(img.copy(minX - 1, minY - 1, maxX - minX + 2, maxY - minY + 2));
+      QPixmap pix = QPixmap::fromImage(img.copy(minX - 1, minY - 1, maxX - minX + 3, maxY - minY + 3));
 
       pStars[sp].append(pix);
       pStarsOrig[sp].append(pix);
@@ -135,9 +142,26 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
     spt = 0;
   }
 
-  p->drawPixmap(pt->sx - (pStars[spt][s].width() >> 1),
-                pt->sy - (pStars[spt][s].height() >> 1), pStars[spt][s]);
+  int w = pStars[spt][s].width();
+  int h = pStars[spt][s].height();
 
+  if (m_showHalo)
+  {
+    float op = (1 - CLAMP(s / (float)(numStars * 0.5f), 0, 1)) * m_haloFactor;
+
+    if (op > 0.01)
+    {
+      p->save();
+      p->translate(pt->sx, pt->sy);
+      p->rotate(mag * 20.);
+      p->setOpacity(op);
+      p->drawPixmap(-w * 1.5, -w * 1.5, w * 3, h * 3, *m_halo);
+      p->restore();
+    }
+  }
+
+  p->drawPixmap(pt->sx - (w >> 1),
+                pt->sy - (h >> 1), pStars[spt][s]);
 
   return(pStars[spt][s].width() >> 1);
 }
@@ -171,6 +195,8 @@ void CStarRenderer::setConfig(setting_t *set)
   }
   m_useSpectralTp = set->map.star.useSpectralTp;
   m_starSizeFactor = set->map.star.starSizeFactor;
+  m_showHalo = set->map.star.showGlow;
+  m_haloFactor = set->map.star.glowAlpha;
 
   if (m_saturation != set->map.star.saturation)
   {

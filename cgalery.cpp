@@ -94,6 +94,7 @@ void CGalleryArea::slotLoad(const QPixmap &pix, const QString &name, const QStri
   p.found = found;
 
   QListWidgetItem* item = new QListWidgetItem(QIcon(p.pix), name);
+  item->setToolTip(path);
 
   QVariant var;
   var.setValue(p);

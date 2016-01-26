@@ -124,6 +124,9 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.star.saturation", set->map.star.saturation, ds);
   writeVal("map.star.properMotionYearVec", set->map.star.properMotionYearVec, ds);
   writeVal("map.star.showProperMotion", set->map.star.showProperMotion, ds);
+  writeVal("map.star.showGlow", set->map.star.showGlow, ds);
+  writeVal("map.star.glowAlpha", set->map.star.glowAlpha, ds);
+
   writeVal("map.starBitmapName", set->map.starBitmapName, ds);
 
   // satellite
@@ -417,6 +420,8 @@ bool setLoad(QString name, setting_t *set)
   set->map.star.saturation = readVal("map.star.saturation", 100, tMap).toDouble();
   set->map.star.properMotionYearVec = readVal("map.star.properMotionYearVec", 500, tMap).toDouble();
   set->map.star.showProperMotion = readVal("map.star.showProperMotion", false, tMap).toBool();
+  set->map.star.showGlow = readVal("map.star.showGlow", false, tMap).toBool();
+  set->map.star.glowAlpha = readVal("map.star.glowAlpha", 1.0, tMap).toFloat();
   set->map.starBitmapName = readVal("map.starBitmapName", "../data/stars/bitmaps/stars2.png", tMap).toString();
 
   // horizon

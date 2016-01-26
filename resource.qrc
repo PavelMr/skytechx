@@ -127,5 +127,6 @@
         <file>res/comet_tail.png</file>
         <file>res/comet_coma.png</file>
         <file>res/set_map_time.png</file>
+        <file>res/glow.png</file>
     </qresource>
 </RCC>

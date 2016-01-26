@@ -3,6 +3,7 @@
 #include "precess.h"
 #include "skcore.h"
 #include "setting.h"
+#include "smartlabeling.h"
 
 #define NBNDRIES 357
 
@@ -435,7 +436,8 @@ void constRenderConstellationNames(CSkPainter *p, mapView_t *view)
       trfRaDecToPointNoCorrect(&constelRD[i], &pt);
       if (trfProjectPoint(&pt))
       {
-        p->drawCText(pt.sx, pt.sy, nonLatinLoaded ? constelNonLatinNames[i] : constelShort[i]);
+        g_labeling.addLabel(QPoint(pt.sx, pt.sy), 0, nonLatinLoaded ? constelNonLatinNames[i] : constelShort[i], FONT_CONST, SL_AL_CENTER, SL_AL_ALL);
+        //p->drawCText(pt.sx, pt.sy, nonLatinLoaded ? constelNonLatinNames[i] : constelShort[i]);
       }
     }
   }
