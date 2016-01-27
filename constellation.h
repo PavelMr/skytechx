@@ -15,6 +15,7 @@ typedef struct
    qint32 cmd;     // 0-data, 1-main line to, 2-sec. line to
 } constelLine_t;
 
+QStringList constGetNameList();
 void constLoad(void);
 void getConstPosition(int index, double &ra, double &dec);
 void constLinesLoad(QString name);

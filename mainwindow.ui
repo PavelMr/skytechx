@@ -99,10 +99,10 @@
     <widget class="QDockWidget" name="dockTele">
      <property name="geometry">
       <rect>
-       <x>190</x>
-       <y>400</y>
+       <x>80</x>
+       <y>281</y>
        <width>231</width>
-       <height>138</height>
+       <height>153</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -127,6 +127,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <layout class="QGridLayout" name="gridLayout_3">
+         <property name="spacing">
+          <number>6</number>
+         </property>
          <item row="0" column="0">
           <widget class="QLabel" name="label_21">
            <property name="font">
@@ -242,8 +245,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>200</y>
+       <x>430</x>
+       <y>50</y>
        <width>211</width>
        <height>81</height>
       </rect>
@@ -863,7 +866,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>425</width>
+          <width>274</width>
           <height>387</height>
          </rect>
         </property>
@@ -1081,8 +1084,8 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-282</y>
-          <width>408</width>
+          <y>0</y>
+          <width>302</width>
           <height>669</height>
          </rect>
         </property>
@@ -1540,7 +1543,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>408</width>
+          <width>451</width>
           <height>520</height>
          </rect>
         </property>
@@ -1826,7 +1829,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>425</width>
+          <width>264</width>
           <height>387</height>
          </rect>
         </property>
@@ -2278,8 +2281,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>425</width>
-          <height>387</height>
+          <width>268</width>
+          <height>449</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2297,6 +2300,9 @@
            </item>
            <item>
             <widget class="QTimeEdit" name="timeEdit"/>
+           </item>
+           <item>
+            <widget class="QMdiArea" name="mdiArea"/>
            </item>
            <item>
             <widget class="SkCalendar" name="calendarWidget">
@@ -2402,7 +2408,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>425</width>
+          <width>279</width>
           <height>387</height>
          </rect>
         </property>
@@ -2607,7 +2613,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>408</width>
+          <width>237</width>
           <height>431</height>
          </rect>
         </property>
@@ -2710,7 +2716,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>425</width>
+          <width>254</width>
           <height>387</height>
          </rect>
         </property>
@@ -2858,7 +2864,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>425</width>
+          <width>468</width>
           <height>387</height>
          </rect>
         </property>

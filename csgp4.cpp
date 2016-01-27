@@ -112,6 +112,8 @@ bool CSGP4::solve(int index, const mapView_t *view, satellite_t *out)
 
   jdConvertJDTo_DateTime(view->jd, &dt);
 
+  //qDebug() << dt;
+
   try
   {
     DateTime time = DateTime(dt.date().year(), dt.date().month(), dt.date().day(),
@@ -135,7 +137,7 @@ bool CSGP4::solve(int index, const mapView_t *view, satellite_t *out)
 
   catch (SatelliteException &e)
   {
-    //qDebug() << "error1" << e.what() << out->name;
+    qDebug() << "error1" << e.what() << out->name;
     return false;
   }
 

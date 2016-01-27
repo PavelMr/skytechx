@@ -114,7 +114,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit">
+             <widget class="CLineEditComp" name="lineEdit">
               <property name="placeholderText">
                <string>[Enter object name]</string>
               </property>
@@ -175,6 +175,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CLineEditComp</class>
+   <extends>QLineEdit</extends>
+   <header>clineeditcomp.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>lineEdit</tabstop>
   <tabstop>pushButton_2</tabstop>

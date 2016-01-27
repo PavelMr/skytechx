@@ -263,7 +263,17 @@ static void calcAngularDistance(double ra, double dec, double angle, double dist
   raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
 }
 
+QStringList CLunarFeatures::getNames()
+{
+  QStringList list;
 
+  foreach (const lunarItem_t &item, tLunarItems)
+  {
+    list.append(item.name);
+  }
+
+  return list;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &dec, double &fov, int searchIndex)

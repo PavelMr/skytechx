@@ -31,6 +31,8 @@ private slots:
 
   void on_lineEdit_textChanged(const QString &arg1);
 
+  void slotRadioChange();
+
 private:
   Ui::CAdvSearch *ui;
 

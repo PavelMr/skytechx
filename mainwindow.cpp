@@ -133,7 +133,6 @@ extern bool bParkTelescope;
 extern bool g_developMode;
 extern QApplication *g_pApp;
 
-
 ////////////////////////////////////////////
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),

@@ -12,9 +12,10 @@ public:
   void setMaxCompleterWords(int nMax = 100);
   void addWord(QString word);
   void addWords(QStringList words);
+  void removeWords();
 
 protected:
-  QCompleter *m_completer;
+  QCompleter       *m_completer;
   QStringListModel *m_model;
   int               m_max;
 };

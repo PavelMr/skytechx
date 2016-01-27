@@ -6,6 +6,8 @@
 #include <QDebug>
 
 static QColor  colors[10] = {Qt::red, Qt::yellow, Qt::blue, Qt::green, Qt::darkCyan, Qt::magenta, Qt::white, Qt::darkRed, Qt::darkBlue, Qt::cyan};
+static bool    invert = false;
+static int     planetIndex = 0;
 
 CSatelliteChartWidget::CSatelliteChartWidget(QWidget *parent, QLabel *label) :
   QWidget(parent),
@@ -56,16 +58,17 @@ void CSatelliteChartWidget::setData(const mapView_t *view, int planet)
   update();
 }
 
+
 void CSatelliteChartWidget::paintEvent(QPaintEvent *)
 {
   QPainter p(this);
 
   p.setRenderHint(QPainter::Antialiasing);
 
-  double jd2 = m_jd + m_view.geo.tz;
+  double jd2 = (m_jd + m_view.geo.tz) - 0.5;
   double dy = height() / m_yScale;
-  double y = -(jd2 - (floor(jd2 + 0.5) - 0.5)) * dy;
-  int mod = (int)(jd2 - 0.5);
+  double y = -(jd2 - (floor(jd2))) * dy;
+  int mod = (int)(jd2);
 
   p.setPen(Qt::black);
   p.setFont(QFont("Arial", 11, QFont::Bold));
@@ -85,7 +88,7 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
 
     if (rc.height() > 35)
     {
-      p.drawText(rc.adjusted(10, 10, -10, -10), Qt::AlignLeft | Qt::AlignVCenter, getStrDate(jd2, m_view.geo.tz));
+      p.drawText(rc.adjusted(10, 10, -10, -10), Qt::AlignLeft | Qt::AlignVCenter, getStrDate(jd2 + 0.5, 0));
     }
 
     mod++;
@@ -111,8 +114,19 @@ void CSatelliteChartWidget::paintEvent(QPaintEvent *)
       chart_t &p1 = m_data[j][i];
       chart_t &p2 = m_data[j][i + 1];
 
-      int x1 = cx - p1.x * scale;
-      int x2 = cx - p2.x * scale;
+      int x1;
+      int x2;
+
+      if (!invert)
+      {
+        x1 = cx - p1.x * scale;
+        x2 = cx - p2.x * scale;
+      }
+      else
+      {
+        x1 = cx + p1.x * scale;
+        x2 = cx + p2.x * scale;
+      }
 
       cc++;
 
@@ -253,10 +267,15 @@ CSatelliteEvent::CSatelliteEvent(QWidget *parent, const mapView_t *view) :
   ui->comboBox->addItem(astro.getName(PT_SATURN), PT_SATURN);
   ui->comboBox->addItem(astro.getName(PT_URANUS), PT_URANUS);
   ui->comboBox->addItem(astro.getName(PT_NEPTUNE), PT_NEPTUNE);
+
+  ui->comboBox->setCurrentIndex(planetIndex);
+  ui->checkBox->setChecked(invert);
 }
 
 CSatelliteEvent::~CSatelliteEvent()
 {
+  invert = ui->checkBox->isChecked();
+  planetIndex = ui->comboBox->currentIndex();
   delete ui;
 }
 
@@ -293,4 +312,10 @@ void CSatelliteEvent::on_comboBox_currentIndexChanged(int index)
 void CSatelliteEvent::on_pushButton_3_clicked()
 {
   done(DL_OK);
+}
+
+void CSatelliteEvent::on_checkBox_toggled(bool checked)
+{
+  invert = checked;
+  m_chart->update();
 }

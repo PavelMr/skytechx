@@ -47,6 +47,7 @@ public:
   bool search(QString str, mapView_t *view, double &ra, double &dec, double &fov, int searchIndex = -1);
   bool isVisible(int index, mapView_t *view);
   static QString getTypeName(int id);
+  QStringList getNames();
 
   QList <lunarItem_t>  tLunarItems;
 };

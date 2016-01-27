@@ -6,7 +6,6 @@
 
 static double deg_to_rad = MPI / 180.0;
 
-
 static void precessB1950J2000(double &X, double &Y, double &Z)
 {
   double p[3][3] =
@@ -1181,7 +1180,6 @@ void CPlanetSatellite::solveUranusSat(double jd, planetSatellites_t *sats, orbit
   double diameter;
   QString name;
   double mag;
-  double fv = qAbs(R2D(pln->FV));
   double dmag = 5 * log10(pln->R * pln->r);
 
   for (int b = 0; b < 5; b++)
@@ -1613,7 +1611,6 @@ void CPlanetSatellite::solveNeptuneSat(double jd, planetSatellites_t *sats, orbi
     double diameter;
     QString name;
     double  mag;
-    double fv = qAbs(R2D(pln->FV));
     double dmag = 5 * log10(pln->R * pln->r);
 
     for (int b = 0; b < 2; b++)
@@ -2014,8 +2011,6 @@ void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats, orbit
 
             const double x1 = dga * (cf - rk - psi * rh * dlf);
             const double y1 = dga * (sf - rh + psi * rk * dlf);
-            const double vx1 = amo * asr * dga * (-sf - psi * rh * rsam1);
-            const double vy1 = amo * asr * dga * ( cf + psi * rk * rsam1);
 
             const double dwho = 2 * sqrt(1 - elem[5] * elem[5] - elem[4] * elem[4]);
             const double rtp = 1 - 2 * elem[5] * elem[5];

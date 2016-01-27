@@ -23,6 +23,8 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
   str = str.simplified();
 
+  cAstro.setParam(mapView);
+
   if (SS_CHECK_OR(SS_PLANET, what))
   {
     if (!str.compare("es", Qt::CaseInsensitive))
@@ -344,6 +346,8 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
     // satellites
     QString satName = str;
 
+    sgp4.setObserver(mapView);
+
     for (int i = 0; i < sgp4.count(); i++)
     {
       satellite_t out;
@@ -351,12 +355,8 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
       if (sgp4.getName(i).compare(satName, Qt::CaseInsensitive) == 0)
       {
-        qDebug() << "ok";
-
         if (sgp4.solve(i, mapView, &out))
         {
-          qDebug() << "solve";
-
           cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
 
           ra = rd.Ra;
@@ -385,7 +385,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       if (!a->selected)
         continue;
 
-      if (QString(a->name).contains(reg))
+      if (QString(a->name).contains(reg) || a->name == str)
       {
         qDebug() << a->name << reg;
         astSolve(a, mapView->jd);
@@ -414,7 +414,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       if (!a->selected)
         continue;
 
-      if (QString(a->name).contains(reg))
+      if (QString(a->name).contains(reg) || a->name == str)
       {
         comSolve(a, mapView->jd);
         ra = a->orbit.lRD.Ra;

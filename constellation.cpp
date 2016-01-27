@@ -42,6 +42,17 @@ extern bool g_showLabels;
 extern int  dev_const_type;
 extern int  dev_const_sel;
 
+QStringList constGetNameList()
+{
+  QStringList list;
+
+  for (int i = 0; i < 88; i++)
+  {
+    list.append(constelLongNames[i]);
+  }
+
+  return list;
+}
 
 //////////////////////////////////////////////
 QList <constelLine_t> *constGetLinesList(void)

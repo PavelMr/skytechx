@@ -9,9 +9,10 @@ CLineEditComp::CLineEditComp(QWidget *parent) :
   m_model = new QStringListModel();
 
   m_completer->setModel(m_model);
-  m_completer->setMaxVisibleItems(10);
+  m_completer->setMaxVisibleItems(16);
   m_completer->setCaseSensitivity(Qt::CaseInsensitive);
   m_completer->setCompletionMode(QCompleter::PopupCompletion);
+  m_completer->setFilterMode(Qt::MatchContains );
 
   setCompleter(m_completer);
 
@@ -57,5 +58,10 @@ void CLineEditComp::addWords(QStringList words)
   {
     addWord(word);
   }
+}
+
+void CLineEditComp::removeWords()
+{
+  m_model->setStringList(QStringList());
 }
 
