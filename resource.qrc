@@ -128,5 +128,10 @@
         <file>res/comet_coma.png</file>
         <file>res/set_map_time.png</file>
         <file>res/glow.png</file>
+        <file>res/ico_reset.png</file>
+        <file>res/ico_reset_all.png</file>
+        <file>res/ico_process_all.png</file>
+        <file>res/ico_manager.png</file>
+        <file>res/ico_green.png</file>
     </qresource>
 </RCC>

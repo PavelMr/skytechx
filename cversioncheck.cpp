@@ -2,6 +2,7 @@
 #include "ui_cversioncheck.h"
 #include "build.h"
 #include "skcore.h"
+#include "soundmanager.h"
 
 #include <QDesktopServices>
 #include <QSettings>
@@ -25,6 +26,11 @@ CVersionCheck::CVersionCheck(QWidget *parent, const QString &newVersion, int bui
   {
     ui->label_3->setText(tr("SkytechX is up to date."));
   }
+  else
+  {
+    g_soundManager.play(MC_NOTIFICATION);
+  }
+
 
   QSettings set;
   if (set.value("check_version", true).toBool())

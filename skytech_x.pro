@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network webkit webkitwidgets xml sql widgets printsupport script
+QT       += core gui network webkit webkitwidgets xml sql widgets printsupport script multimedia
 
 CONFIG   += openssl-linked
 CONFIG   += qxt
@@ -246,7 +246,8 @@ SOURCES += main.cpp\
     cstarexample.cpp \
     cadvsearch.cpp \
     nomad.cpp \
-    skwatch.cpp
+    skwatch.cpp \
+    soundmanager.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -449,7 +450,8 @@ HEADERS  += mainwindow.h \
     tass17.h \
     nomad.h \
     skcalendar.h \
-    skwatch.h
+    skwatch.h \
+    soundmanager.h
 
 
 FORMS    += mainwindow.ui \

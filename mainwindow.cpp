@@ -87,6 +87,8 @@
 #include "cadvsearch.h"
 #include "suntexture.h"
 #include "skcalendar.h"
+#include "soundmanager.h"
+#include "cdssdlg.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -850,6 +852,8 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
   QStandardItemModel *m = (QStandardItemModel *)ui->treeView->model();
   QAction *ren;
   QAction *info;
+  QAction *download;
+  QAction *copy;
 
   if (index.isValid())
   {
@@ -860,6 +864,14 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
     info = new QAction(tr("Show FITS header"), this);
     info->setData(index);
     actions.append(info);
+
+    download = new QAction(tr("Download new DSS from same location"), this);
+    download->setData(index);
+    actions.append(download);
+
+    copy = new QAction(tr("Copy image to clipboard"), this);
+    copy->setData(index);
+    actions.append(copy);
   }
 
   if (actions.count() > 0)
@@ -900,12 +912,34 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
     if (selected == info)
     {
       int index = getCurDSS();
-
       CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
 
       DSSHeaderDialog  dlg(this, f->getHeader());
 
       dlg.exec();
+    }
+    else
+    if (selected == download)
+    {
+      int index = getCurDSS();
+      CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+      double ra = f->m_ra;
+      double dec = f->m_dec;
+
+      precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
+
+      ui->widget->centerMap(ra, dec);
+      CDSSDlg dlg(this, ra, dec, ui->widget->m_mapView.jd);
+      dlg.exec();
+    }
+    else
+    if (selected == copy)
+    {
+      int index = getCurDSS();
+      CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+      QImage img =QImage(*f->getImage());
+      img = img.convertToFormat(QImage::Format_ARGB32);
+      QApplication::clipboard()->setImage(img);
     }
   }
   ui->widget->repaintMap();
@@ -3310,6 +3344,7 @@ void MainWindow::on_actionConnect_device_triggered()
 
       ui->widget->m_lastTeleRaDec.Ra = CM_UNDEF;
       ui->widget->m_lastTeleRaDec.Dec = CM_UNDEF;
+      g_soundManager.play(MC_CONNECT);
     }
     ui->widget->repaintMap();
     slotTimeUpdate();

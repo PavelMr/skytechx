@@ -1345,16 +1345,8 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
   g_labeling.clear();
 
-  if (g_antialiasing)
-  {
-    pPainter->setRenderHint(QPainter::Antialiasing, true);
-    pPainter->setRenderHint(QPainter::SmoothPixmapTransform, true);
-  }
-  else
-  {
-    pPainter->setRenderHint(QPainter::Antialiasing, false);
-    pPainter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-  }
+  pPainter->setRenderHint(QPainter::Antialiasing, g_antialiasing);
+  pPainter->setRenderHint(QPainter::SmoothPixmapTransform, g_antialiasing);
 
   mapObjReset();
 

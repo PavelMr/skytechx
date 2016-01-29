@@ -856,7 +856,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -866,7 +866,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>274</width>
+          <width>348</width>
           <height>387</height>
          </rect>
         </property>
@@ -1085,8 +1085,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>302</width>
-          <height>669</height>
+          <width>331</width>
+          <height>576</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1094,7 +1094,7 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,0">
            <item>
             <widget class="QPushButton" name="pushButton_2">
              <property name="statusTip">
@@ -1102,6 +1102,20 @@
              </property>
              <property name="text">
               <string>Open DSS file...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_18">
+             <property name="toolTip">
+              <string>Open DSS manager dialog</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/ico_manager.png</normaloff>:/res/ico_manager.png</iconset>
              </property>
             </widget>
            </item>
@@ -1114,16 +1128,6 @@
            </property>
            <property name="text">
             <string>Load all images on screen</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_18">
-           <property name="toolTip">
-            <string>Open DSS manager dialog</string>
-           </property>
-           <property name="text">
-            <string>Manager...</string>
            </property>
           </widget>
          </item>
@@ -1341,44 +1345,79 @@
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
             <widget class="QPushButton" name="pushButton_dss_all">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="toolTip">
-              <string/>
+              <string>Process all images</string>
              </property>
              <property name="text">
-              <string>Process all images</string>
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/ico_process_all.png</normaloff>:/res/ico_process_all.png</iconset>
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="Line" name="line_16">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_dss_reset">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Reset</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/ico_reset.png</normaloff>:/res/ico_reset.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_dss_reset_all">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Reset all</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/ico_reset_all.png</normaloff>:/res/ico_reset_all.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_dss_reset">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Reset</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_dss_reset_all">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Reset all</string>
-           </property>
-          </widget>
          </item>
          <item>
           <widget class="Line" name="line_4">
@@ -1543,8 +1582,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>451</width>
-          <height>520</height>
+          <width>350</width>
+          <height>521</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1635,8 +1674,15 @@
           <layout class="QHBoxLayout" name="horizontalLayout_14">
            <item>
             <widget class="QPushButton" name="pushButton_10">
-             <property name="text">
+             <property name="toolTip">
               <string>Clear all</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/ico_reset_all.png</normaloff>:/res/ico_reset_all.png</iconset>
              </property>
             </widget>
            </item>
@@ -1829,7 +1875,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
+          <width>348</width>
           <height>387</height>
          </rect>
         </property>
@@ -2281,8 +2327,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
-          <height>449</height>
+          <width>348</width>
+          <height>387</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2300,9 +2346,6 @@
            </item>
            <item>
             <widget class="QTimeEdit" name="timeEdit"/>
-           </item>
-           <item>
-            <widget class="QMdiArea" name="mdiArea"/>
            </item>
            <item>
             <widget class="SkCalendar" name="calendarWidget">
@@ -2408,7 +2451,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
+          <width>348</width>
           <height>387</height>
          </rect>
         </property>
@@ -2613,7 +2656,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>237</width>
+          <width>331</width>
           <height>431</height>
          </rect>
         </property>
@@ -2716,7 +2759,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
+          <width>348</width>
           <height>387</height>
          </rect>
         </property>
@@ -2864,7 +2907,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
+          <width>348</width>
           <height>387</height>
          </rect>
         </property>

@@ -27,6 +27,7 @@
 #include "cgeohash.h"
 #include "cgetprofile.h"
 #include "cucac4.h"
+#include "soundmanager.h"
 
 double m_lastFOV;
 double m_lastRA;
@@ -652,6 +653,14 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
       m_lastDec = m_mapView.y;
 
       centerMap(x, y, fov);
+      g_soundManager.play(MC_ZOOM);
+    }
+    else
+    {
+      if (qMax(rc.width(), rc.height()) > 1)
+      {
+        g_soundManager.play(MC_ERROR);
+      }
     }
     m_bZoomByMouse = false;
   }
@@ -2106,6 +2115,7 @@ void CMapView::paintEvent(QPaintEvent *)
     iy += pix.height() + 10;
   }
 
+  static bool slew;
   if (g_pTelePlugin && g_pTelePlugin->isSlewing())
   {
     QPixmap pix[2] = {QPixmap(":/res/slew_1.png"),
@@ -2113,6 +2123,13 @@ void CMapView::paintEvent(QPaintEvent *)
 
     p.drawPixmap(width() - 10 - pix[slewBlink].width(), iy, pix[slewBlink]);
     iy += pix[slewBlink].height() + 10;
+    slew = true;
+  }
+
+  if (g_pTelePlugin && (!g_pTelePlugin->isSlewing() && slew))
+  {
+    g_soundManager.play(MC_BEEP);
+    slew = false;
   }
 
   /////////////////////////////////////////////////////

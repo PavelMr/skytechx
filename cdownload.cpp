@@ -63,11 +63,13 @@ void CDownload::slotDownloadFinished(QNetworkReply *reply)
   //qDebug("done %s", qPrintable(reply->errorString()));
   if (reply->error() == QNetworkReply::NoError)
   {
+    QByteArray data = reply->readAll();
+
     SkFile f(m_fileName);
 
     if (f.open(SkFile::WriteOnly))
     {
-      f.write(reply->readAll());
+      f.write(data);
       f.close();
     }
 

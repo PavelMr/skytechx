@@ -23,6 +23,7 @@
 #include "cstatusbar.h"
 #include "suntexture.h"
 #include "cimageview.h"
+#include "soundmanager.h"
 
 #include <QSettings>
 
@@ -84,6 +85,7 @@ CSetting::CSetting(QWidget *parent) :
 
   ui->checkBox_13->setChecked(bAlternativeMouse);
   ui->checkBox_14->setChecked(bParkTelescope);
+  ui->checkBox_21->setChecked(setting.value("sound_enable", false).toBool());
 
   fillGamepad();
 
@@ -1041,6 +1043,9 @@ void CSetting::on_pushButton_clicked()
   bParkTelescope = ui->checkBox_14->isChecked();
 
   QSettings setting;
+
+  setting.setValue("sound_enable", ui->checkBox_21->isChecked());
+  g_soundManager.configure();
 
   if (ui->cb_iconSize->currentIndex() == 0)
   {

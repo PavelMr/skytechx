@@ -288,9 +288,16 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>spinBox</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>spinBox_2</tabstop>
+  <tabstop>spinBox_3</tabstop>
+  <tabstop>spinBox_4</tabstop>
+  <tabstop>spinBox_DecSign</tabstop>
   <tabstop>spinBox_5</tabstop>
   <tabstop>spinBox_7</tabstop>
   <tabstop>spinBox_6</tabstop>
+  <tabstop>checkBox</tabstop>
   <tabstop>pushButton_3</tabstop>
   <tabstop>pushButton_2</tabstop>
  </tabstops>

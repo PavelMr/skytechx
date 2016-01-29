@@ -156,7 +156,7 @@ void CSatelliteChartWidget::resizeEvent(QResizeEvent *e)
 
 void CSatelliteChartWidget::wheelEvent(QWheelEvent *e)
 {
-  if (e->delta() > 0)
+  if (e->delta() < 0)
   {
     m_xScale *= 1.2;
   }

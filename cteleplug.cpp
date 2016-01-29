@@ -1,5 +1,6 @@
 #include "cteleplug.h"
 #include "mapobj.h"
+#include "soundmanager.h"
 
 extern bool bParkTelescope;
 
@@ -80,6 +81,7 @@ void tpUnloadDriver(void)
   if (g_pTelePlugin)
   {
     g_pTelePlugin->disconnectDev(bParkTelescope);
+    g_soundManager.play(MC_DISCONNECT);
   }
 
   releaseHoldObject(MO_TELESCOPE);

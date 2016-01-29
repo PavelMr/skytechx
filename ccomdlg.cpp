@@ -415,30 +415,13 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
           scanRender.setOpacity(opacity);
           scanRender.renderPolygonAlpha(p->image(), &tailImage);
 
-          // coma
-          pts[0] = QPoint((pt1.sx + (vx * cs)) + (dx * cs), (pt1.sy + (vy * cs)) + (dy * cs));
-          pts[1] = QPoint((pt1.sx - (vx * cs)) + (dx * cs), (pt1.sy - (vy * cs)) + (dy * cs));
-
-          pts[2] = QPoint((pt1.sx + (vx * cs)) - (dx * cs), (pt1.sy + (vy * cs)) - (dy * cs));
-          pts[3] = QPoint((pt1.sx - (vx * cs)) - (dx * cs), (pt1.sy - (vy * cs)) - (dy * cs));
-
-          scanRender.resetScanPoly(p->image()->width(), p->image()->height());
-
-          scanRender.scanLine(pts[0].x(), pts[0].y(),
-                              pts[2].x(), pts[2].y(), 0, 0, 1, 0);
-          scanRender.scanLine(pts[2].x(), pts[2].y(),
-                              pts[3].x(), pts[3].y(), 1, 0, 1, 1);
-          scanRender.scanLine(pts[3].x(), pts[3].y(),
-                              pts[1].x(), pts[1].y(), 1, 1, 0, 1);
-          scanRender.scanLine(pts[1].x(), pts[1].y(),
-                              pts[0].x(), pts[0].y(), 0, 1, 0, 0);
-
-
-          scanRender.renderPolygonAlpha(p->image(), &comaImage);
-          scanRender.setOpacity(1);
+          p->save();
+          p->setOpacity(opacity);
+          p->setRenderHint(QPainter::SmoothPixmapTransform, scanRender.isBillinearInt());
+          p->drawImage(QRect(pt1.sx - cs, pt1.sy - cs, cs * 2, cs * 2), comaImage);
+          p->restore();
         }
       }
-
       comaSize = qMax(cs, 1.0);
     }
 

@@ -13,7 +13,7 @@ CDSSManager::CDSSManager(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  m_model = new QStandardItemModel(0, 5, NULL);
+  m_model = new QStandardItemModel(0, 6, NULL);
   m_proxy = new CManagerModel();
   m_proxy->setSourceModel(m_model);
 
@@ -22,6 +22,10 @@ CDSSManager::CDSSManager(QWidget *parent) :
   m_model->setHeaderData(2, Qt::Horizontal, QObject::tr("Dimension"));
   m_model->setHeaderData(3, Qt::Horizontal, QObject::tr("Size"));
   m_model->setHeaderData(4, Qt::Horizontal, QObject::tr("Date"));
+  m_model->setHeaderData(5, Qt::Horizontal, QObject::tr("Loaded"));
+
+  //ui->treeView->header()->resizeSection(5, 14);
+  //ui->treeView->resizeColumnToContents(0);
 
   ui->treeView->setModel(m_proxy);
 
@@ -37,13 +41,12 @@ CDSSManager::~CDSSManager()
   delete ui;
 }
 
-void CDSSManager::resizeEvent(QResizeEvent *e)
+void CDSSManager::resizeEvent(QResizeEvent *)
 {
-  int w = (e->size().width() / 5) - 10;
-
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < 4; i++)
   {
-    ui->treeView->header()->resizeSection(i, w);
+    ui->treeView->resizeColumnToContents(i);
+    ui->treeView->header()->resizeSection(i, ui->treeView->header()->sectionSize(i) + 16);
   }
 }
 
@@ -73,6 +76,7 @@ void CDSSManager::fillList()
       QStandardItem *item3 = new QStandardItem;
       QStandardItem *item4 = new QStandardItem;
       QStandardItem *item5 = new QStandardItem;
+      QStandardItem *item6 = new QStandardItem;
 
       double size = anSep(f->m_cor[0].Ra, f->m_cor[0].Dec, f->m_cor[2].Ra, f->m_cor[2].Dec);
 
@@ -91,7 +95,16 @@ void CDSSManager::fillList()
       item5->setText(fi.lastModified().toString(Qt::SystemLocaleShortDate));
       item5->setData(fi.lastModified());
 
-      QList <QStandardItem *> list({item1, item2, item3, item4, item5});
+      for (int j = 0; j < bkImg.m_tImgList.count(); j++)
+      {
+        if (bkImg.m_tImgList[j].fileName == f->m_name)
+        {
+          item6->setIcon(QIcon(":/res/ico_green.png"));
+          break;
+        }
+      }
+
+      QList <QStandardItem *> list({item1, item2, item3, item4, item5, item6});
 
       m_model->appendRow(list);
 
@@ -120,7 +133,12 @@ void CDSSManager::on_pushButton_2_clicked()
   QModelIndex index = m_proxy->mapToSource(il.at(0));
   QStandardItem *item = m_model->item(index.row(), 0);
 
-  bkImg.load(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/" + item->text());
+  if (bkImg.load(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/" + item->text()))
+  {
+    QStandardItem *item = m_model->item(index.row(), 5);
+
+    item->setIcon(QIcon(":/res/ico_green.png"));
+  }
 }
 
 void CDSSManager::on_pushButton_3_clicked()

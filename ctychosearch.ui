@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>391</width>
-    <height>325</height>
+    <width>433</width>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -339,17 +339,20 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>comboBox_2</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>spinBox_2</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>spinBox_3</tabstop>
   <tabstop>comboBox_3</tabstop>
   <tabstop>pushButton_3</tabstop>
-  <tabstop>spinBox_2</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>spinBox_4</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>spinBox</tabstop>
+  <tabstop>comboBox_2</tabstop>
+  <tabstop>pushButton</tabstop>
   <tabstop>spinBox_5</tabstop>
+  <tabstop>spinBox_4</tabstop>
   <tabstop>spinBox_6</tabstop>
   <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_5</tabstop>
  </tabstops>
  <resources/>
  <connections/>

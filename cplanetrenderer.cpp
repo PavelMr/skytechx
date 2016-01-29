@@ -866,8 +866,8 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
       int f2 = mesh->faces[i].vertices[2];
       int f3 = mesh->faces[i].vertices[3];
 
-      if (mesh->vertices[f0].sp[2] >= 0 && mesh->vertices[f1].sp[2] >= 0 &&
-          mesh->vertices[f2].sp[2] >= 0 && mesh->vertices[f3].sp[2] >= 0)
+      if (mesh->vertices[f0].sp[2] > 0 && mesh->vertices[f1].sp[2] > 0 &&
+          mesh->vertices[f2].sp[2] > 0 && mesh->vertices[f3].sp[2] > 0)
         continue;
 
       scanRender.resetScanPoly(pImg->width(), pImg->height());
@@ -910,6 +910,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 
       scanRender.renderPolygon(pImg, m_bmp[o->type]);
 
+
       /*
       pPainter->drawLine(mesh->vertices[f0].sp[0], mesh->vertices[f0].sp[1],
                          mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1]);
@@ -917,6 +918,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
       pPainter->drawLine(mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1],
                          mesh->vertices[f2].sp[0], mesh->vertices[f2].sp[1]);
       */
+
     }
 
     drawAxises(angle, pPainter, sx, sy, isPreview, pt, o, mapView);

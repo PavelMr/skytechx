@@ -13,6 +13,7 @@
 #include "cconsole.h"
 #include "clog.h"
 #include "systemsettings.h"
+#include "soundmanager.h"
 
 int g_ocTreeDepth = 4;
 bool g_developMode = false;
@@ -105,6 +106,8 @@ int main(int argc, char *argv[])
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/horizons");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/gamepad");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dso");
+
+  g_soundManager.init();
 
   g_systemSettings = new SystemSettings("../skytechx.cfg");
   g_systemSettings->readAll();

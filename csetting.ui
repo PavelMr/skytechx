@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -4221,6 +4221,13 @@
                 </property>
                </widget>
               </item>
+              <item row="5" column="0">
+               <widget class="QCheckBox" name="checkBox_21">
+                <property name="text">
+                 <string>Enable sounds</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -4256,6 +4263,11 @@
                </spacer>
               </item>
              </layout>
+            </item>
+            <item>
+             <widget class="QDockWidget" name="dockWidget">
+              <widget class="QWidget" name="dockWidgetContents"/>
+             </widget>
             </item>
             <item>
              <widget class="Line" name="line_3">
