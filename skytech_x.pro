@@ -247,7 +247,8 @@ SOURCES += main.cpp\
     cadvsearch.cpp \
     nomad.cpp \
     skwatch.cpp \
-    soundmanager.cpp
+    soundmanager.cpp \
+    skserver.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -451,7 +452,8 @@ HEADERS  += mainwindow.h \
     nomad.h \
     skcalendar.h \
     skwatch.h \
-    soundmanager.h
+    soundmanager.h \
+    skserver.h
 
 
 FORMS    += mainwindow.ui \

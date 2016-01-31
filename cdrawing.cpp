@@ -266,6 +266,7 @@ void CDrawing::drawEditedObject(CSkPainter *p)
       break;
 
     case DT_FRM_FIELD:
+    case DT_EXT_FRAME:
       drawFrmField(out, p, &m_drawing, true);
       break;
   }
@@ -304,6 +305,7 @@ void CDrawing::drawObjects(CSkPainter *p)
         break;
 
       case DT_FRM_FIELD:
+      case DT_EXT_FRAME:
         drawFrmField(out, p, &m_tList[i], false, i);
         break;
     }
@@ -329,7 +331,7 @@ int CDrawing::editObject(QPoint pos, QPoint delta, int op)
   { // check operation
     moveRect.adjust(ROT_MARGIN, ROT_MARGIN, -ROT_MARGIN, -ROT_MARGIN);
 
-    if (!moveRect.contains(pos) && m_drawing.type == DT_FRM_FIELD)
+    if (!moveRect.contains(pos) && (m_drawing.type == DT_FRM_FIELD || m_drawing.type == DT_EXT_FRAME))
       return(DTO_ROTATE);
 
     return(DTO_MOVE);
@@ -440,6 +442,7 @@ void CDrawing::setHelp(int type)
       break;
 
     case DT_FRM_FIELD:
+    case DT_EXT_FRAME:
       setHelpText(tr("Move object by mouse.\n") + tr("Rotate object by an edge.\n") + tr("ENTER : Done\nESC : Cancel\n") + tr("Delete : Delete object"));
       break;
   }
@@ -843,5 +846,64 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
   }
 
   return(r);
+}
+
+bool CDrawing::getExtFrame(double &ra, double &dec, double &angle)
+{
+  for (int i = 0; i < m_tList.count(); i++)
+  {
+    if (m_tList[i].type == DT_EXT_FRAME)
+    {
+      ra = m_tList[i].rd.Ra;
+      dec = m_tList[i].rd.Dec;
+      angle = m_tList[i].angle;
+      return true;
+    }
+  }
+
+  if (m_edited)
+  {
+    if (m_drawing.type == DT_EXT_FRAME)
+    {
+      ra = m_drawing.rd.Ra;
+      dec = m_drawing.rd.Dec;
+      angle = m_drawing.angle;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
+void CDrawing::insertExtFrame(radec_t *rd, double x, double y, double angle, QString name)
+{
+  drawing_t obj;
+
+  for (int i = 0; i < m_tList.count(); i++)
+  {
+    if (m_tList[i].type == DT_EXT_FRAME)
+    {
+      m_tList[i].show = true;
+      m_tList[i].type = DT_EXT_FRAME;
+      m_tList[i].rd = *rd;
+      m_tList[i].frmField_t.text = name;
+      m_tList[i].frmField_t.x = x;
+      m_tList[i].frmField_t.y = y;
+      m_tList[i].angle = angle;
+
+      return;
+    }
+  }
+
+  obj.show = true;
+  obj.type = DT_EXT_FRAME;
+  obj.rd = *rd;
+  obj.frmField_t.text = name;
+  obj.frmField_t.x = x;
+  obj.frmField_t.y = y;
+  obj.angle = angle;
+
+  m_tList.append(obj);
 }
 

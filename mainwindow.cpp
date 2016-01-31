@@ -89,6 +89,7 @@
 #include "skcalendar.h"
 #include "soundmanager.h"
 #include "cdssdlg.h"
+#include "skserver.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -768,6 +769,13 @@ MainWindow::MainWindow(QWidget *parent) :
   restoreDSSList();
 
   setTitle();
+
+  g_skServer.setMainWindow(this);
+  g_skServer.setPort(settings.value("server_port", SK_SERVER_DEFAULT_PORT).toInt());
+  if (settings.value("server_run_startup", false).toBool())
+  {
+    g_skServer.start();
+  }
 }
 
 void MainWindow::setToolbarIconSize()
@@ -2862,7 +2870,7 @@ void MainWindow::on_actionPosition_triggered()
 
   trfConvScrPtToXY(ui->widget->width() / 2.0, ui->widget->height() / 2.0, ra, dec);
 
-  if (ui->widget->m_mapView.epochJ2000)
+  if (ui->widget->m_mapView.epochJ2000 && ui->widget->m_mapView.coordType == SMCT_RA_DEC)
   {
     precess(&ra, &dec, ui->widget->m_mapView.jd, JD2000);
   }
@@ -2871,7 +2879,7 @@ void MainWindow::on_actionPosition_triggered()
 
   if (dlg.exec() == DL_OK)
   {
-    if (ui->widget->m_mapView.epochJ2000)
+    if (ui->widget->m_mapView.epochJ2000 && ui->widget->m_mapView.coordType == SMCT_RA_DEC)
     {
       precess(&dlg.m_x, &dlg.m_y, JD2000, ui->widget->m_mapView.jd);
     }
@@ -5515,6 +5523,40 @@ void MainWindow::updateControlInfo()
   text += tr("Rot : ") + getStrDeg(mapView->roll) + "\n";
 
   ui->labelInfo->setText(text);
+}
+
+void MainWindow::setChartMode(int mode)
+{
+  switch (mode)
+  {
+    case SMCT_RA_DEC:
+      on_actionAtlas_mode_Pole_Up_triggered();
+      break;
+
+    case SMCT_ALT_AZM:
+      on_actionHorizon_mode_Zenith_up_triggered();
+      break;
+
+    case SMCT_ECL:
+      on_actionEcliptic_triggered();
+      break;
+  }
+}
+
+void MainWindow::setRTC(bool start)
+{
+  ui->actionRealtime->setChecked(start);
+  ui->actionRealtime->triggered(start);
+}
+
+bool MainWindow::getRTC()
+{
+  return ui->actionRealtime->isChecked();
+}
+
+CMapView *MainWindow::getView()
+{
+  return ui->widget;
 }
 
 void MainWindow::on_tb_filter_clicked()

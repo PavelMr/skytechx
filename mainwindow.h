@@ -73,6 +73,11 @@ public:
   void enableReleaseObject(bool enable);
 
   void updateControlInfo();
+  void setChartMode(int mode);
+  void setRTC(bool start);
+  bool getRTC();
+
+  CMapView *getView();
 
 protected:
 

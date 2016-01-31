@@ -133,5 +133,6 @@
         <file>res/ico_process_all.png</file>
         <file>res/ico_manager.png</file>
         <file>res/ico_green.png</file>
+        <file>res/ico_red.png</file>
     </qresource>
 </RCC>

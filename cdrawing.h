@@ -33,6 +33,7 @@
 #define DT_TELRAD         2
 #define DT_TEXT           3
 #define DT_FRM_FIELD      4
+#define DT_EXT_FRAME      5
 
 #define DTO_NONE          0
 #define DTO_MOVE          1
@@ -88,6 +89,8 @@ public:
   int drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited = false, int id = -1);
   int drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited = false, int id = -1);
 
+  bool getExtFrame(double &ra, double &dec, double &angle);
+  void insertExtFrame(radec_t *rd, double x, double y, double angle, QString name = "Custom");
   void insertTelescope(radec_t *rd, float rad, QString text);
   void insertTelrad(radec_t *rd);
   void insertFrmField(radec_t *rd, double x, double y, QString name = "Custom");

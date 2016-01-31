@@ -191,10 +191,17 @@ private slots:
 
    void on_pushButton_nomad_browse_clicked();
 
+   void setServerGui();
+
+   void on_pushButton_server_start_clicked();
+
+   void on_pushButton_server_stop_clicked();
+
 private:
    Ui::CSetting *ui;
    void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList, bool sun = false);
    void getAstComList(QTreeWidget *list, QList<urlItem_t> &strList);
+
 };
 
 #endif // CSETTING_H

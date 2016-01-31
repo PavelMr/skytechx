@@ -57,16 +57,22 @@ CDrawingList::CDrawingList(QWidget *parent) :
         item->setText(tr("Frame field"));
         item1->setText(QString("%1' x %2'").arg(R2D(draw->frmField_t.x * 60), 0, 'f', 2).arg(R2D(draw->frmField_t.y * 60), 0, 'f', 2));
         break;
+
+      case DT_EXT_FRAME:
+        item->setText(tr("External Frame field"));
+        item1->setText(QString("%1' x %2'").arg(R2D(draw->frmField_t.x * 60), 0, 'f', 2).arg(R2D(draw->frmField_t.y * 60), 0, 'f', 2));
+        break;
     }
     item->setData((qint64)draw);
     m_model->setItem(i, 0, item);
     m_model->setItem(i, 1, item1);
   }
 
-  ui->treeView->setRootIsDecorated(false);
-  ui->treeView->header()->resizeSection(0, 100);
-  ui->treeView->header()->resizeSection(1, 300);
   ui->treeView->setModel(m_model);
+  ui->treeView->setRootIsDecorated(false);
+  ui->treeView->header()->resizeSection(0, 150);
+  ui->treeView->header()->resizeSection(1, 200);
+
 
   QShortcut *sh1 = new QShortcut(QKeySequence(Qt::Key_Delete), ui->treeView, 0, 0,  Qt::WidgetShortcut);
   connect(sh1, SIGNAL(activated()), this, SLOT(slotDelete()));

@@ -358,6 +358,7 @@ void mapObjContextMenu(CMapView *map)
             break;
 
           case DT_FRM_FIELD:
+          case DT_EXT_FRAME:
             name = d->frmField_t.text;
             break;
 

@@ -24,6 +24,7 @@
 #include "suntexture.h"
 #include "cimageview.h"
 #include "soundmanager.h"
+#include "skserver.h"
 
 #include <QSettings>
 
@@ -64,6 +65,13 @@ CSetting::CSetting(QWidget *parent) :
 
   QSettings setting;
 
+  // server
+  setServerGui();
+  connect(&g_skServer, SIGNAL(stateChange()), this, SLOT(setServerGui()));
+  ui->checkBox_server->setChecked(setting.value("server_run_startup", false).toBool());
+  ui->spinBox_server_port->setValue(setting.value("server_port", SK_SERVER_DEFAULT_PORT).toInt());
+
+  // toolbar
   int tbIconSize = setting.value("toolbar_icon_size", 24).toInt();
 
   if (tbIconSize == 18)
@@ -617,6 +625,35 @@ void CSetting::getAstComList(QTreeWidget* list, QList<urlItem_t>& strList)
   }
 }
 
+void CSetting::setServerGui()
+{
+  qDebug() << "srv state";
+
+  ui->pushButton_server_start->setEnabled(!g_skServer.isRunning());
+  ui->pushButton_server_stop->setEnabled(g_skServer.isRunning());
+
+  if (g_skServer.isRunning())
+  {
+    ui->label_server_state->setText(tr("Server is running") + QString(" (v") + SK_SERVER_VERSION + QString(")"));
+    ui->label_server_icon->setPixmap(QPixmap(":/res/ico_green.png"));
+  }
+  else
+  {
+    ui->label_server_state->setText(tr("Server is stopped"));
+    ui->label_server_icon->setPixmap(QPixmap(":/res/ico_red.png"));
+  }
+
+  QString addr;
+  if (g_skServer.isConnected(addr))
+  {
+    ui->lineEdit_server_client->setText(addr);
+  }
+  else
+  {
+    ui->lineEdit_server_client->setText(tr("Not connected"));
+  }
+}
+
 // "C:/Users/Pavel/AppData/Local/PMR/SkytechX/data/profiles/default.dat"
 // "C:/Users/Pavel/AppData/Local/PMR/SkytechX/data/profiles/default.dat"
 
@@ -827,6 +864,9 @@ void CSetting::apply()
   g_skSet.map.showGridLabels = ui->checkBox_11->isChecked();
 
   QSettings rset;
+
+  rset.setValue("server_run_startup", ui->checkBox_server->isChecked());
+  rset.setValue("server_port", ui->spinBox_server_port->value());
 
   //PPMXL
   cPPMXL.setDir(ui->lineEdit_2->text());
@@ -2275,4 +2315,15 @@ void CSetting::on_pushButton_nomad_browse_clicked()
   QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
 
   ui->lineEdit_nomad_folder->setText(folder);
+}
+
+void CSetting::on_pushButton_server_start_clicked()
+{
+  g_skServer.setPort(ui->spinBox_server_port->value());
+  g_skServer.start();
+}
+
+void CSetting::on_pushButton_server_stop_clicked()
+{
+  g_skServer.stop();
 }

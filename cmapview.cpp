@@ -1428,8 +1428,6 @@ void CMapView::updateStatusBar(void)
   double ra, dec;
   double azm, alt;
   double epoch;
-  double raOrig;
-  double decOrig;
 
   trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), ra, dec);
 
@@ -1443,14 +1441,6 @@ void CMapView::updateStatusBar(void)
   else
   {
     epoch = m_mapView.jd;
-  }
-
-  raOrig = ra;
-  decOrig = dec;
-
-  if (!m_mapView.epochJ2000)
-  {
-    precess(&raOrig, &decOrig, m_mapView.jd, JD2000);
   }
 
   if (pcMainWnd->statusBar)
