@@ -67,7 +67,7 @@ void CSatEvents::solve(double jd, int pln)
 
     m_view.jd = j;
     cAstro.setParam(&m_view);
-    cAstro.calcPlanet(PT_SUN, &s);
+    cAstro.calcPlanet(PT_EARTH, &s, true, true, false);
     cAstro.calcPlanet(pln, &o);
 
     planSat.solve(j - o.light, pln, &sats, &o, &s);

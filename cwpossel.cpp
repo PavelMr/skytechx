@@ -409,12 +409,22 @@ void CWPosSel::slotLocationDone(QNetworkReply *reply)
   setDisabled(false);
   unsetCursor();
 
-  QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+  /*
+  QList<QByteArray> headerList = reply->rawHeaderList();
+  foreach(QByteArray head, headerList) {
+      qDebug() << head << ":" << reply->rawHeader(head);
+  }
+  */
+
+  QByteArray data = reply->readAll();
+
+  QJsonDocument doc = QJsonDocument::fromJson(data);
   QJsonObject obj = doc.object();
-  QJsonObject tempObject;
-  QJsonValue val;
   double lon;
   double lat;
+
+  qDebug() << reply->errorString();
+  qDebug() << data;
 
   if (obj.contains("latitude") && obj.contains("longitude"))
   {
@@ -630,7 +640,7 @@ void CWPosSel::on_pushButton_7_clicked()
 
 void CWPosSel::on_pushButton_8_clicked()
 {
-  QNetworkRequest request(QUrl("http://www.telize.com/geoip"));
+  QNetworkRequest request(QUrl("http://freegeoip.net/json/"));
   QNetworkReply *reply = m_manager.get(request);
 
   setDisabled(true);

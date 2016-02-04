@@ -16,17 +16,18 @@ typedef struct
 class CInsertFrmField : public QDialog
 {
   Q_OBJECT
-  
+
 public:
   explicit CInsertFrmField(QWidget *parent = 0);
   ~CInsertFrmField();
 
   double m_x;
   double m_y;
+  QString m_name;
 
 protected:
   void updateData(void);
-  
+
 private slots:
   void on_pushButton_2_clicked();
 

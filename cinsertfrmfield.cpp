@@ -77,6 +77,7 @@ void CInsertFrmField::updateData()
   double cx =  (x * 3438) / f;
   double cy =  (y * 3438) / f;
 
+  m_name = ui->comboBox->currentText();
   m_x = D2R(cx / 60);
   m_y = D2R(cy / 60);
 

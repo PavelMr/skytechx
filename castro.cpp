@@ -6,6 +6,8 @@
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
 
+const double g_AAParallax_C1 = sin(DMS2RAD(0, 0, 8.794));
+
 CAstro cAstro;
 
 static double Rearth = 4.26352325064817808471e-5;
@@ -405,6 +407,19 @@ double CAstro::getJupiterGRSLon(double jd)
 }
 
 
+static double fRhoSinThetaPrime(double GeographicalLatitude, double Height)
+{
+  double U = atan(0.99664719 * tan(GeographicalLatitude));
+  return 0.99664719 * sin(U) + (Height/6378149 * sin(GeographicalLatitude));
+}
+
+
+static double fRhoCosThetaPrime(double GeographicalLatitude, double Height)
+{
+  double U = atan(0.99664719 * tan(GeographicalLatitude));
+  return cos(U) + (Height/6378149 * cos(GeographicalLatitude));
+}
+
 ////////////////////////////////////////////
 void CAstro::setParam(const mapView_t *view)
 ////////////////////////////////////////////
@@ -433,11 +448,8 @@ void CAstro::setParam(const mapView_t *view)
   else
     m_deltaT = calcDeltaT(m_jd);
 
-  m_curGc = (pow(1 - 0.006694 * pow(sin(m_geoLat),2), -0.5) +
-             0.1568 * m_geoTZ * 10e-6) * cos(m_geoLat);
-
-  m_curGs = (0.993306 * pow(1 - 0.006694 * pow(sin(m_geoLat),2), -0.5) +
-             0.1568 * m_geoTZ * 10e-6) * sin(m_geoLat);
+  m_RhoSinThetaPrime = fRhoSinThetaPrime(m_geoLat, m_geoAlt);
+  m_RhoCosThetaPrime = fRhoCosThetaPrime(m_geoLat, m_geoAlt);
 
   m_eclObl = getEclObl(m_jd);
   m_eclOblJ2000 = getEclObl(JD2000);
@@ -466,7 +478,7 @@ void CAstro::setParam(const mapView_t *view)
   //qDebug("GST   = %s", qPrintable(getStrTimeFromDayRads(m_gst)));
   //qDebug("LST   = %s", qPrintable(getStrTimeFromDayRads(m_lst)));
 
-  calcPlanet(PT_SUN, &m_sunOrbit, false);
+  calcPlanet(PT_EARTH, &m_sunOrbit, false, true, false);
 }
 
 
@@ -807,12 +819,13 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
 {
   double data[6];
 
-  if (planet == PT_SUN && bSunCopy && lightCorrection)
-  {
+  if (planet == PT_SUN && bSunCopy && lightCorrection == m_sunOrbit.isLightCorrected)
+  { // earth geometric pos.
     *orbit = m_sunOrbit;
     return;
   }
 
+  orbit->isLightCorrected = lightCorrection;
   orbit->name = getName(planet);
   orbit->englishName = getFileName(planet);
   orbit->type = planet;
@@ -1498,45 +1511,70 @@ double CAstro::getRaDec_NP(double val, double delta)
   return(val + delta * T);
 }
 
-
 /////////////////////////////////////
 void CAstro::calcParallax(orbit_t *o)
 /////////////////////////////////////
 {
-  double lx,ly,lz;
-  double r,mpar;
-  double S = m_lst;
-  double R = o->R;
+  double Distance = o->R;
 
-  if (o->type == PT_MOON)
-  {
-    r = o->R;
-    lx = r * cos(o->gRD.Dec) * cos(S - o->gRD.Ra) - m_curGc;
-    ly = r * cos(o->gRD.Dec) * sin(S - o->gRD.Ra);
-    lz = r * sin(o->gRD.Dec) - m_curGs;
-
-    o->parallax = asin(1 / r);
-    o->lRD.Ra = S - atan2(ly,lx);
-    o->lRD.Dec = atan2(lz, sqrt(lx * lx + ly * ly));
-    rangeDbl(&o->lRD.Ra, MPI2);
-    return;
-  }
-
-  mpar = DEG2RAD((8.794/3600) / R);
-  o->parallax = mpar;
-
+  /*
   o->lRD.Ra = o->gRD.Ra;
   o->lRD.Dec = o->gRD.Dec;
 
-  o->lRD.Ra  += -mpar * m_curGc * sin(S - o->gRD.Ra) * cos(o->gRD.Dec);
-  o->lRD.Dec +=  mpar * (m_curGc * cos(S - o->gRD.Ra) * sin(o->gRD.Dec) - m_curGs * cos(o->gRD.Dec));
+  return;
+  */
 
+  if (o->type == PT_MOON)
+  {
+    Distance *= 0.000042587504556; // radii to AU
+  }
+
+  //Calculate the Sidereal time
+  double theta = R2D(m_gst) / 15.0;
+  double cosDelta = cos(o->gRD.Dec);
+
+  //Calculate the Parallax
+  double pi = asin(g_AAParallax_C1 / Distance);
+  double sinpi = sin(pi);
+
+  //Calculate the hour angle
+  double H = HMS2RAD(theta - R2D(-m_geoLon) / 15. - R2D(o->gRD.Ra) / 15., 0, 0);
+  double cosH = cos(H);
+  double sinH = sin(H);
+
+  //Calculate the adjustment in right ascension
+  double DeltaAlpha = atan2(-m_RhoCosThetaPrime * sinpi * sinH, cosDelta - m_RhoCosThetaPrime * sinpi * cosH);
+
+  o->parallax = pi;
+  o->lRD.Ra = o->gRD.Ra + DeltaAlpha;
+  o->lRD.Dec = atan2((sin(o->gRD.Dec) - m_RhoSinThetaPrime * sinpi) * cos(DeltaAlpha), cosDelta - m_RhoCosThetaPrime * sinpi * cosH);
   rangeDbl(&o->lRD.Ra, MPI2);
 }
 
 
 void CAstro::calcParallax(radec_t *rd, double R)
 {
+  //Calculate the Sidereal time
+  double theta = R2D(m_gst) / 15.0;
+  double cosDelta = cos(rd->Dec);
+
+  //Calculate the Parallax
+  double pi = asin(g_AAParallax_C1 / R);
+  double sinpi = sin(pi);
+
+  //Calculate the hour angle
+  double H = HMS2RAD(theta - R2D(-m_geoLon) / 15. - R2D(rd->Ra) / 15., 0, 0);
+  double cosH = cos(H);
+  double sinH = sin(H);
+
+  //Calculate the adjustment in right ascension
+  double DeltaAlpha = atan2(-m_RhoCosThetaPrime * sinpi * sinH, cosDelta - m_RhoCosThetaPrime * sinpi * cosH);
+
+  rd->Ra = rd->Ra + DeltaAlpha;
+  rd->Dec = atan2((sin(rd->Dec) - m_RhoSinThetaPrime * sinpi) * cos(DeltaAlpha), cosDelta - m_RhoCosThetaPrime * sinpi * cosH);
+  rangeDbl(&rd->Ra, MPI2);
+
+  /*
   double S = m_lst;
   double mpar = DEG2RAD((8.794/3600) / R);
 
@@ -1547,5 +1585,6 @@ void CAstro::calcParallax(radec_t *rd, double R)
   rd->Dec += dec;
 
   rangeDbl(&rd->Ra, MPI2);
+  */
 }
 

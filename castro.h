@@ -54,6 +54,7 @@
 #define  PT_COMET         10
 #define  PT_ASTER         11
 #define  PT_EARTH_SHADOW  12
+#define  PT_EARTH          0
 
 #define  EPT_DE404         0
 
@@ -98,6 +99,7 @@ typedef struct
   double  parallax;
 
   double  params[8];     // user params
+  bool    isLightCorrected;
 } orbit_t;
 
 
@@ -147,8 +149,8 @@ class CAstro
     double m_geoPress;
     bool   m_useAtmRefraction;
 
-    double m_curGc;
-    double m_curGs;
+    double m_RhoSinThetaPrime;
+    double m_RhoCosThetaPrime;
 
     double m_jd;
     double m_deltaT;    // in days

@@ -258,7 +258,7 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   item->rtsType = RTS_ERR;
 
   cAstro.calcPlanet(obj->par1, &pl);
-  cAstro.calcPlanet(PT_SUN, &s);
+  cAstro.calcPlanet(PT_EARTH, &s, false, true, false);
   planSat.solve(view->jd - pl.light, obj->par1, &sats, &pl, &s);
 
   item->radec.Ra = sats.sats[obj->par2].lRD.Ra;
@@ -1754,8 +1754,11 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, txVisMag, getStrMag(o.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
 
-  addSeparator(item);
-  addTextItem(item, txElongation, QString("%1").arg(R2D(o.elongation), 0, 'f', 2));
+  if (!o.type == PT_SUN)
+  {
+    addSeparator(item);
+    addTextItem(item, txElongation, QString("%1°").arg(R2D(o.elongation), 0, 'f', 2));
+  }
 
   double azm, alt;
   double nazm, nalt;

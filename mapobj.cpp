@@ -403,7 +403,7 @@ void mapObjContextMenu(CMapView *map)
         orbit_t  s;
 
         cAstro.calcPlanet(o.par1, &pl);
-        cAstro.calcPlanet(PT_SUN, &s);
+        cAstro.calcPlanet(PT_EARTH, &s, true, true, false);
 
         planSat.solve(map->m_mapView.jd - pl.light, o.par1, &sats, &pl, &s);
 

@@ -19,8 +19,10 @@ DEFINES += NOMINMAX
 Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11  -Wl,--stack,16777216
 Debug:win32-g++   : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp  -Wl,--stack,16777216
 
-win32-g++         : LIBS += -lgomp -lpsapi -lwinmm
+win32-g++         : LIBS += -lgomp -lpsapi -lwinmm -lws2_32 -lcrypt32
 win32-msvc2013    : LIBS += winmm.lib
+
+#-lssl -lcrypto
 
 Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA /FAcs
 
@@ -33,6 +35,7 @@ TEMPLATE = app
 
 
 DEPENDPATH += rc
+DEPENDPATH += ssl
 
 #Release: build_nr.commands = $$PWD/build_inc.bat
 #Release: build_nr.depends = FORCE

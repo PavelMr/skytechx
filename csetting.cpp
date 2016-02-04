@@ -263,7 +263,6 @@ void CSetting::setValues()
   ui->comboBox->clear();
   for (int i = 0; i < list.count(); i++)
   {
-    qDebug() << list.at(i).filePath();
     if (sr.open(list.at(i).filePath()))
     {
       ui->comboBox->addItem(sr.getExampleStar(), list.at(i).fileName(), list.at(i).filePath());
@@ -2165,7 +2164,7 @@ void CSetting::on_pushButton_61_clicked()
 
 void CSetting::on_toolButton_clicked()
 {
-  QString fileName = QFileDialog::getOpenFileName(this, tr("Select file"), "", "Images (*.png *.jpg)");
+  QString fileName = QFileDialog::getOpenFileName(this, tr("Select file"), "../data/planets", "Images (*.png *.jpg)");
 
   if (!fileName.isEmpty())
   {

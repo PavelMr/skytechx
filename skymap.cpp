@@ -1029,7 +1029,9 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 {
   orbit_t o[PT_PLANET_COUNT];
   int     order[PT_PLANET_COUNT];
-  orbit_t *sun;
+  orbit_t *sun, earth;
+
+  cAstro.calcPlanet(PT_EARTH, &earth, false, true, false);
 
   for (int i = PT_SUN; i <= PT_MOON; i++)
   {
@@ -1076,7 +1078,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     CPlanetSatellite planSat;
     planetSatellites_t sats;
 
-    planSat.solve(mapView->jd - o[order[i]].light, order[i], &sats, &o[order[i]], sun);
+    planSat.solve(mapView->jd - o[order[i]].light, order[i], &sats, &o[order[i]], &earth);
 
     bool moons = sats.sats.count() > 0;
 

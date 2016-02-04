@@ -86,7 +86,7 @@ bool CPlanetRenderer::load()
   }
   else
   {
-    m_bmp[PT_MOON] = new QImage("../data/planets/moon8k.jpg");
+    m_bmp[PT_MOON] = new QImage("../data/planets/moon2k.png");
   }
 
   QImage *satRing_a = new QImage("../data/planets/saturn_ring_alpha.jpg");
@@ -960,6 +960,13 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
 int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t *o, planetSatellite_t *sat, bool bIsShadow, mapView_t *view)
 {
   double r = trfGetArcSecToPix(sat->size);
+  QRadialGradient br = QRadialGradient(QPoint(pt->sx, pt->sy), r, QPoint(pt->sx, pt->sy));
+
+  p->setPen(Qt::NoPen);
+
+  br.setColorAt(1, QColor(g_skSet.map.planet.satColor).darker());
+  br.setColorAt(0.8, QColor(g_skSet.map.planet.satColor));
+  br.setColorAt(0, QColor(g_skSet.map.planet.satColor));
 
   if (r < g_skSet.map.planet.satRad)
     r = g_skSet.map.planet.satRad;
@@ -988,13 +995,15 @@ int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t 
 
   if (sat->isInLight)
   { // in sunlight
-    p->setPen(g_skSet.map.planet.satColor);
-    p->setBrush(QColor(g_skSet.map.planet.satColor));
+    //p->setPen(g_skSet.map.planet.satColor);
+    //p->setBrush(QColor(g_skSet.map.planet.satColor));
+    p->setBrush(br);
   }
   else
   { // in planet shadow
-    p->setPen(g_skSet.map.planet.satColorShd);
+    //p->setPen(g_skSet.map.planet.satColorShd);
     p->setBrush(QColor(g_skSet.map.planet.satColorShd));
+    p->setBrush(br);
   }
 
   p->drawEllipse(QPointF(pt->sx, pt->sy), r, r);

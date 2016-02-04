@@ -1349,8 +1349,6 @@ void CMapView::addFov(double dir, double mul)
 void CMapView::addX(double dir, double mul)
 ///////////////////////////////////////////
 {
-  double asp = width() / (double)height();
-
   if (m_mapView.flipX)
   {
     if (dir == -1)
@@ -1359,11 +1357,8 @@ void CMapView::addX(double dir, double mul)
       dir = -1;
   }
 
-  // TODO: udelat to poradne (posun mapy)
-
-  //qDebug("f = %f", LERP(sin(fabs(m_mapView.y)), m_mapView.fov, MAX_MAP_FOV));
-
-  m_mapView.x += dir * LERP(sin(fabs(m_mapView.y)), m_mapView.fov, MAX_MAP_FOV) * 0.02 * asp * mul;
+  QEasingCurve crv(QEasingCurve::InCirc);
+  m_mapView.x += dir * LERP(crv.valueForProgress(fabs(1 - cos(m_mapView.y))), m_mapView.fov, MAX_MAP_FOV) * 0.015 * mul;
   rangeDbl(&m_mapView.x, R360);
 }
 
@@ -2105,7 +2100,7 @@ void CMapView::paintEvent(QPaintEvent *)
     iy += pix.height() + 10;
   }
 
-  static bool slew;
+  static bool slew = false;
   if (g_pTelePlugin && g_pTelePlugin->isSlewing())
   {
     QPixmap pix[2] = {QPixmap(":/res/slew_1.png"),
@@ -2140,7 +2135,7 @@ void CMapView::paintEvent(QPaintEvent *)
     rc.adjust(-10, -10, 10, 10);
     rc.moveTo(10, 10);
 
-    p.setBrush(Qt::black);
+    p.setBrush(QColor(0, 0, 48));
     p.setPen(Qt::white);
     p.setOpacity(0.8);
     p.drawRoundedRect(rc, 3, 3);

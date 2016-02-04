@@ -2430,7 +2430,7 @@ void MainWindow::centerSearchBox(bool bCenter)
 
     cAstro.setParam(&ui->widget->m_mapView);
     cAstro.calcPlanet(info->par1, &pl);
-    cAstro.calcPlanet(PT_SUN, &s);
+    cAstro.calcPlanet(PT_EARTH, &s, true, true, false);
     planSat.solve(ui->widget->m_mapView.jd - pl.light, info->par1, &sats, &pl, &s);
     //cSatXYZ.solve(ui->widget->m_mapView.jd, info->par1, &pl, &s, &sat);
 
@@ -4428,7 +4428,7 @@ void MainWindow::on_actionText_triggered()
     precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
     g_cDrawing.insertText(&rd, dlg.m_text, &dlg.m_font, dlg.m_align, dlg.m_bRect);
 
-    ui->widget->centerMap(CM_UNDEF, CM_UNDEF, getOptObjFov(5, 5));
+    ui->widget->centerMap(CM_UNDEF, CM_UNDEF);
   }
 }
 
@@ -4519,7 +4519,7 @@ void MainWindow::on_actionFrame_field_triggered()
     trfConvScrPtToXY(ui->widget->width() * 0.5,
                      ui->widget->height() * 0.5, rd.Ra, rd.Dec);
     precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
-    g_cDrawing.insertFrmField(&rd, dlg.m_x, dlg.m_y);
+    g_cDrawing.insertFrmField(&rd, dlg.m_x, dlg.m_y, dlg.m_name);
 
     ui->widget->centerMap(CM_UNDEF, CM_UNDEF, getOptObjFov(R2D(dlg.m_x), R2D(dlg.m_y)));
   }

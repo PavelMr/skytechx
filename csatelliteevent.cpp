@@ -234,7 +234,7 @@ void CSatelliteChartWidget::calculate(int height)
 
     cAstro.setParam(&m_view);
     cAstro.calcPlanet(m_planet, &o);
-    cAstro.calcPlanet(PT_SUN, &s);
+    cAstro.calcPlanet(PT_EARTH, &s, true, true, false);
 
     planSat.solve(m_view.jd - o.light, m_planet, &sats, &o, &s, false);
     m_satCount = sats.sats.count();
@@ -290,7 +290,7 @@ void CSatelliteEvent::on_comboBox_currentIndexChanged(int index)
 
   cAstro.setParam(&m_view);
   cAstro.calcPlanet(index + PT_MARS, &o);
-  cAstro.calcPlanet(PT_SUN, &s);
+  cAstro.calcPlanet(PT_EARTH, &s, true, true, false);
 
   planSat.solve(m_view.jd - o.light, index + PT_MARS, &sats, &o, &s, false);
   QString temp = "<font color='%1'>%2</font>";

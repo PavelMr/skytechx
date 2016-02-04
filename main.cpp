@@ -15,9 +15,12 @@
 #include "systemsettings.h"
 #include "soundmanager.h"
 
+static QString LOG_FILE;
+
 int g_ocTreeDepth = 4;
 bool g_developMode = false;
 bool g_showFps = false;
+bool g_log = false;
 
 QApplication *g_pApp = NULL;
 
@@ -61,6 +64,38 @@ static bool getCommandParamValue(const QString command, const QString& param, co
   return true;
 }
 
+void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+  QString txt;
+  switch (type)
+  {
+    case QtDebugMsg:
+      txt = QString("Debug: %1").arg(msg);
+      break;
+
+    case QtInfoMsg:
+      txt = QString("Info: %1").arg(msg);
+      break;
+
+    case QtWarningMsg:
+      txt = QString("Warning: %1").arg(msg);
+      break;
+
+    case QtCriticalMsg:
+      txt = QString("Critical: %1").arg(msg);
+      break;
+
+    case QtFatalMsg:
+      txt = QString("Fatal: %1").arg(msg);
+      abort();
+  }
+
+  QFile outFile(LOG_FILE);
+  outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+  QTextStream ts(&outFile);
+  ts << txt << endl;
+}
+
 ////////////////////////////////
 int main(int argc, char *argv[])
 ////////////////////////////////
@@ -74,7 +109,7 @@ int main(int argc, char *argv[])
 
   QCoreApplication::setOrganizationDomain("Frostware");
   QCoreApplication::setOrganizationName("PMR");
-  QCoreApplication::setApplicationName("SkytechX_104"); // FIXME:
+  QCoreApplication::setApplicationName("SkytechX_beta_1"); // FIXME:
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   QApplication a(argc, argv);
@@ -85,6 +120,9 @@ int main(int argc, char *argv[])
     msgBoxError(NULL, QObject::tr("SkytechX already running!"));
     return 1;
   }
+
+  LOG_FILE = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log/log.txt";
+  checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log");
 
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope");
@@ -146,6 +184,17 @@ int main(int argc, char *argv[])
     {
       settings.remove("");
     }
+    else
+    if (param.startsWith("-log"))
+    {
+      g_log = true;
+    }
+  }
+
+  if (g_log)
+  {
+    QFile::remove(LOG_FILE);
+    qInstallMessageHandler(messageHandler);
   }
 
   QString languagePath = settings.value("language").toString();
@@ -164,6 +213,7 @@ int main(int argc, char *argv[])
   qDebug("octreedepth=%d", g_ocTreeDepth);
   qDebug("numthreads=%d", omp_get_max_threads());
   qDebug("develop=%d", g_developMode);
+  qDebug("SSL support %d", QSslSocket::supportsSsl());
 
   CLoadingDlg *dlg = new CLoadingDlg;
   dlg->exec();
