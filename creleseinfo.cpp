@@ -13,7 +13,7 @@ CReleseInfo::CReleseInfo(QWidget *parent) :
 
   QString str;
 
-  QFile f("release.txt");
+  QFile f("../release.txt");
 
   if (f.open(QFile::Text | QFile::ReadOnly))
   {

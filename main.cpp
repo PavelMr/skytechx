@@ -1,6 +1,7 @@
 #include <QtGui>
 
 #include <QtCore>
+#include <QAudioDeviceInfo>
 #include <omp.h>
 
 #include "skcore.h"
@@ -214,6 +215,7 @@ int main(int argc, char *argv[])
   qDebug("numthreads=%d", omp_get_max_threads());
   qDebug("develop=%d", g_developMode);
   qDebug("SSL support %d", QSslSocket::supportsSsl());
+  qDebug("Sound support %d", !QAudioDeviceInfo::availableDevices(QAudio::AudioOutput).isEmpty());
 
   CLoadingDlg *dlg = new CLoadingDlg;
   dlg->exec();

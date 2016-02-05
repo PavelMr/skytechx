@@ -26,7 +26,7 @@ void MoonlessNightsDlg::fillList()
 
   ui->widget->removeAll();
 
-  for (int i = 0; i < 50; i++)
+  for (int i = 0; i < 90; i++)
   {
     orbit_t moon;
 
@@ -36,7 +36,7 @@ void MoonlessNightsDlg::fillList()
 
     if ((moon.phase * 100.) < ui->spinBox->value())
     {
-      ui->widget->addRow(getStrDate(m_view.jd, m_view.geo.tz) + " " + getStrTime(m_view.jd, m_view.geo.tz), m_view.jd);
+      ui->widget->addRow(getStrDate(m_view.jd, m_view.geo.tz) + " " + getTimeZone(m_view.geo.tz), m_view.jd);
     }
   }
 }
@@ -60,4 +60,26 @@ void MoonlessNightsDlg::on_pushButton_2_clicked()
   }
   m_jd = ui->widget->getCustomData(index).toDouble();
   done(DL_OK);
+}
+
+void MoonlessNightsDlg::on_pushButton_4_clicked()
+{
+  QDateTime dt;
+
+  jdConvertJDTo_DateTime(m_startJD, &dt);
+  dt = dt.addMonths(-1);
+  m_startJD = jdGetJDFrom_DateTime(&dt);
+
+  fillList();
+}
+
+void MoonlessNightsDlg::on_pushButton_5_clicked()
+{
+  QDateTime dt;
+
+  jdConvertJDTo_DateTime(m_startJD, &dt);
+  dt = dt.addMonths(1);
+  m_startJD = jdGetJDFrom_DateTime(&dt);
+
+  fillList();
 }

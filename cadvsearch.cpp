@@ -16,19 +16,7 @@ CAdvSearch::CAdvSearch(QWidget *parent, mapView_t *view) :
   ui->setupUi(this);
   m_mapView = *view;
 
-  ui->lineEdit->setMaxCompleterWords(10000);
-
-  connect(ui->radioButton_all , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton_2, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton_3, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton_4, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton_5, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton_6, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton_7, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton_8, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-  connect(ui->radioButton_9 , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
-
+  ui->lineEdit->setMaxCompleterWords(100000);
 
   switch (lastRadio)
   {
@@ -63,6 +51,19 @@ CAdvSearch::CAdvSearch(QWidget *parent, mapView_t *view) :
       ui->radioButton_9->setChecked(true);
       break;
   }
+
+  connect(ui->radioButton_all , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_2, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_3, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_4, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_5, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_6, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_7, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_8, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_9 , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+
+  slotRadioChange();
 }
 
 CAdvSearch::~CAdvSearch()
@@ -122,7 +123,9 @@ void CAdvSearch::slotRadioChange()
 {
   ui->lineEdit->removeWords();
 
-  if (ui->radioButton->isChecked())
+  bool isAll = ui->radioButton_all->isChecked();
+
+  if (ui->radioButton->isChecked() || isAll)
   {
     lastRadio = 1;
     CAstro astro;
@@ -131,10 +134,9 @@ void CAdvSearch::slotRadioChange()
       ui->lineEdit->addWord(astro.getName(i));
       ui->lineEdit->addWord(astro.getFileName(i));
     }
-    return;
   }
 
-  if (ui->radioButton_2->isChecked())
+  if (ui->radioButton_2->isChecked() || isAll)
   {
     lastRadio = 2;
     ui->lineEdit->addWord("TYC");
@@ -142,10 +144,9 @@ void CAdvSearch::slotRadioChange()
     ui->lineEdit->addWord("USNO2");
     ui->lineEdit->addWord("GSC");
     ui->lineEdit->addWord("HD");
-    return;
   }
 
-  if (ui->radioButton_3->isChecked())
+  if (ui->radioButton_3->isChecked() || isAll)
   {
     lastRadio = 3;
     for (int i = 0; i < cTYC.tNames.count(); i++)
@@ -154,24 +155,21 @@ void CAdvSearch::slotRadioChange()
       QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);
       ui->lineEdit->addWord(name);
     }
-    return;
   }
 
-  if (ui->radioButton_4->isChecked())
+  if (ui->radioButton_4->isChecked() || isAll)
   {
     lastRadio = 4;
     ui->lineEdit->addWords(constGetNameList());
-    return;
   }
 
-  if (ui->radioButton_5->isChecked())
+  if (ui->radioButton_5->isChecked() || isAll)
   {
     lastRadio = 5;
     ui->lineEdit->addWords(cDSO.getCommonNameList());
-    return;
   }
 
-  if (ui->radioButton_6->isChecked())
+  if (ui->radioButton_6->isChecked() || isAll)
   {
     lastRadio = 6;
     for (int i = 0; i < sgp4.count(); i++)
@@ -181,10 +179,9 @@ void CAdvSearch::slotRadioChange()
         ui->lineEdit->addWord(sgp4.getName(i));
       }
     }
-    return;
   }
 
-  if (ui->radioButton_7->isChecked())
+  if (ui->radioButton_7->isChecked() || isAll)
   {
     lastRadio = 7;
     for (int i = 0; i < tAsteroids.count(); i++)
@@ -194,10 +191,9 @@ void CAdvSearch::slotRadioChange()
         ui->lineEdit->addWord(tAsteroids[i].name);
       }
     }
-    return;
   }
 
-  if (ui->radioButton_8->isChecked())
+  if (ui->radioButton_8->isChecked() || isAll)
   {
     lastRadio = 8;
     for (int i = 0; i < tComets.count(); i++)
@@ -207,19 +203,16 @@ void CAdvSearch::slotRadioChange()
         ui->lineEdit->addWord(tComets[i].name);
       }
     }
-    return;
   }
 
-  if (ui->radioButton_9->isChecked())
+  if (ui->radioButton_9->isChecked() || isAll)
   {
     lastRadio = 9;
     ui->lineEdit->addWords(cLunarFeatures.getNames());
-    return;
   }
 
   if (ui->radioButton_all->isChecked())
   {
     lastRadio = 0;
-    return;
   }
 }

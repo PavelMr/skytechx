@@ -957,19 +957,12 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   return sx;
 }
 
-int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t *o, planetSatellite_t *sat, bool bIsShadow, mapView_t *view)
+int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t * /*o*/, planetSatellite_t *sat, bool bIsShadow, mapView_t * /*view*/)
 {
   double r = trfGetArcSecToPix(sat->size);
-  QRadialGradient br = QRadialGradient(QPoint(pt->sx, pt->sy), r, QPoint(pt->sx, pt->sy));
+  bool mins = false;
 
   p->setPen(Qt::NoPen);
-
-  br.setColorAt(1, QColor(g_skSet.map.planet.satColor).darker());
-  br.setColorAt(0.8, QColor(g_skSet.map.planet.satColor));
-  br.setColorAt(0, QColor(g_skSet.map.planet.satColor));
-
-  if (r < g_skSet.map.planet.satRad)
-    r = g_skSet.map.planet.satRad;
 
   if (sat->isThrowShadow && bIsShadow && ptp->sx != 99999)
   { // draw shadow
@@ -978,32 +971,55 @@ int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t 
     trfRaDecToPointNoCorrect(&sat->sRD, &sp);
     if (trfProjectPoint(&sp))
     {
-      double mul = 1.5;
+      if (r < 2) r = 2;
+      double mul = 1.3;
       QRadialGradient gradient(QPointF(sp.sx, sp.sy), r * mul, QPointF(sp.sx, sp.sy));
 
       gradient.setColorAt(0, QColor(0, 0, 0, g_skSet.map.planet.phaseAlpha));
       gradient.setColorAt(0.7, QColor(0, 0, 0, g_skSet.map.planet.phaseAlpha));
       gradient.setColorAt(1, QColor(0, 0, 0, 1));
 
-      p->setPen(Qt::NoPen);
       p->setBrush(gradient);
 
       p->drawEllipse(QPointF(sp.sx, sp.sy), r * mul, r * mul);
-      p->setOpacity(1);
     }
   }
 
+  if (r < g_skSet.map.planet.satRad)
+  {
+    r = g_skSet.map.planet.satRad;
+    mins = true;
+  }
+
+  QRadialGradient br = QRadialGradient(QPoint(pt->sx, pt->sy), r, QPoint(pt->sx, pt->sy));
+
   if (sat->isInLight)
   { // in sunlight
-    //p->setPen(g_skSet.map.planet.satColor);
-    //p->setBrush(QColor(g_skSet.map.planet.satColor));
-    p->setBrush(br);
+    if (!mins)
+    {
+      br.setColorAt(1, QColor(g_skSet.map.planet.satColor).darker());
+      br.setColorAt(0.8, QColor(g_skSet.map.planet.satColor));
+      br.setColorAt(0, QColor(g_skSet.map.planet.satColor));
+      p->setBrush(br);
+    }
+    else
+    {
+      p->setBrush(QColor(g_skSet.map.planet.satColor));
+    }
   }
   else
   { // in planet shadow
-    //p->setPen(g_skSet.map.planet.satColorShd);
-    p->setBrush(QColor(g_skSet.map.planet.satColorShd));
-    p->setBrush(br);
+    if (!mins)
+    {
+      br.setColorAt(1, QColor(g_skSet.map.planet.satColorShd).darker());
+      br.setColorAt(0.8, QColor(g_skSet.map.planet.satColorShd));
+      br.setColorAt(0, QColor(g_skSet.map.planet.satColorShd));
+      p->setBrush(br);
+    }
+    else
+    {
+      p->setBrush(QColor(g_skSet.map.planet.satColorShd));
+    }
   }
 
   p->drawEllipse(QPointF(pt->sx, pt->sy), r, r);

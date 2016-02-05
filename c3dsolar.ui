@@ -93,15 +93,21 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_2">
+        <widget class="QDoubleSpinBox" name="spinBox_2">
+         <property name="prefix">
+          <string/>
+         </property>
          <property name="suffix">
           <string> day(s)</string>
          </property>
          <property name="minimum">
-          <number>1</number>
+          <double>0.100000000000000</double>
          </property>
          <property name="maximum">
-          <number>100</number>
+          <double>20.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -463,7 +469,7 @@ Zoom by mouse wheel</string>
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="resource.qrc">
+        <iconset>
          <normaloff>:/res/set_map_time.png</normaloff>:/res/set_map_time.png</iconset>
        </property>
       </widget>
@@ -487,8 +493,6 @@ Zoom by mouse wheel</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -74,6 +74,16 @@ CAbout::CAbout(QWidget *parent) :
   ui->textEdit_source->append("The NOMAD Catalog (Zacharias+ 2005) (Optional)");
   ui->textEdit_source->moveCursor(QTextCursor::Start) ;
   ui->textEdit_source->ensureCursorVisible();
+
+  setAttribute(Qt::WA_TranslucentBackground);
+  setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+
+  QGraphicsDropShadowEffect *eff = new QGraphicsDropShadowEffect();
+
+  eff->setBlurRadius(4);
+  eff->setOffset(0, 0);
+
+  ui->widget->setGraphicsEffect(eff);
 }
 
 CAbout::~CAbout()

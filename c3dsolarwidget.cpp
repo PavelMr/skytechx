@@ -586,8 +586,27 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       p.setBrush(Qt::white);
       p.drawEllipse(QPointF(p1.sx, p1.sy), r, r);
 
-      if (m_isComet)
+      if (m_showRadius)
       {
+        SKPOINT pt1, pt2;
+
+        pt1.w.x = p1.w.x;
+        pt1.w.y = p1.w.y;
+        pt1.w.z = p1.w.z;
+
+        pt2.w.x = 0;
+        pt2.w.y = 0;
+        pt2.w.z = 0;
+
+        if (trfProjectLine(&pt1, &pt2))
+        {
+          p.setPen(QPen(Qt::lightGray, 1.25, Qt::DotLine));
+          p.drawLine(pt1.sx, pt1.sy, pt2.sx, pt2.sy);
+        }
+      }
+
+      if (m_isComet)
+      { // draw tail
         QVector3D vec = -pos.normalized();
 
         p2.w.x = (pos.x() - vec.x()) * tail;
@@ -638,6 +657,26 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     p.renderText(5, 25, 5, tr("Distance from Sun : %1 AU").arg(rr, 0, 'f', 8), RT_BOTTOM_RIGHT);
     p.renderText(5, 42, 5, tr("Distance from Earth : %1 AU").arg(RR, 0, 'f', 8), RT_BOTTOM_RIGHT);
   }
+
+  int ix = 10;
+  int iy = height() - 10;
+  int sc = 0;
+
+  do
+  {
+    sc++;
+    qDebug() << sc;
+  }
+  while ((m_scale / sc) > width() - 150);
+
+
+  int au1 = m_scale / sc;
+
+  //qDebug() << width() / m_scale << m_scale << sc;
+
+  p.setPen(QPen(Qt::white, 3));
+  p.drawLine(ix, iy, ix + au1, iy);
+  p.drawText(5 + ix + au1, iy, QString::number(1 / (double)sc, 'f', 2) + tr(" AU"));
 }
 
 void C3DSolarWidget::wheelEvent(QWheelEvent *e)
@@ -651,7 +690,7 @@ void C3DSolarWidget::wheelEvent(QWheelEvent *e)
     m_scale *= 1.2;
   }
 
-  m_scale = CLAMP(m_scale, 0.5, 2000);
+  m_scale = CLAMP(m_scale, 4, 3000);
 
   update();
 }

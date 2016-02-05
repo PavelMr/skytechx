@@ -548,6 +548,20 @@ QString getStrDate(double jd, double tz)
   return(str);
 }
 
+QString getTimeZone(double tz)
+{
+  QString tzName;
+
+  if (tz == 0)
+    tzName = " UTC";
+  else
+  {
+    tzName = " UTC" + QString("%1").arg(tz >= 0 ? "+" : "") +  QString::number(24 * tz, 'f', 1);
+  }
+
+  return tzName;
+}
+
 ////////////////////////////////////////////////////
 QString getStrTime(double jd, double tz, bool noSec, bool noTZ)
 ////////////////////////////////////////////////////

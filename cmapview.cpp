@@ -1960,7 +1960,9 @@ void CMapView::paintEvent(QPaintEvent *)
       rd.Ra = g_dssRa;
       rd.Dec = g_dssDec;
 
-      trfRaDecToPointCorrectFromTo(&rd, &pt, m_mapView.jd, JD2000);
+      precess(&rd.Ra, &rd.Dec, m_mapView.jd, JD2000);
+
+      trfRaDecToPointNoCorrect(&rd, &pt);
       if (trfProjectPoint(&pt))
       {
         QRect rc;

@@ -43,6 +43,7 @@ QString getStrMag(double mag);
 
 QString getStrTime(double jd, double tz, bool noSec = false, bool noTZ = false);
 QString getStrDate(double jd, double tz);
+QString getTimeZone(double tz);
 
 void msgBoxError(QWidget *w, QString str);
 int msgBoxQuest(QWidget *w, QString str);
