@@ -384,7 +384,9 @@ double CAstro::getPolarisHourAngle()
 
   precess(&polarisRA, &polarisDec, JD2000, m_jd);
 
-  return (m_lst - polarisRA) / M_PI / 2 + 0.5;
+  double val = ((m_lst - polarisRA) / M_PI / 2 + 0.5);
+
+  return val;
 }
 
 // Pickering (2002)
@@ -1301,9 +1303,9 @@ double CAstro::solveMarsMer(orbit_t *pMars, double jd)
 }
 
 
-///////////////////////////////////////////////////
-void CAstro::solveJupiterMer(orbit_t *o, double jd)
-///////////////////////////////////////////////////
+////////////////////////////////////////
+void CAstro::solveJupiterMer(orbit_t *o)
+////////////////////////////////////////
 {
   double d = ((m_jd - o->light) - JD2000);
   double W1 = 67.1 + 877.90003539 * d;
@@ -1406,7 +1408,7 @@ void CAstro::solveJupiter(orbit_t *orbit)
   orbit->PA = getNPA(poleRA[PT_JUPITER][0], poleRA[PT_JUPITER][1], poleDec[PT_JUPITER][0], poleDec[PT_JUPITER][1], orbit->lRD.Ra, orbit->lRD.Dec);
   orbit->cLat = getPlnCentalLat(orbit, orbit->poleRa, orbit->poleDec);
 
-  solveJupiterMer(orbit, m_jd);
+  solveJupiterMer(orbit);
 }
 
 double gxxx = 0;

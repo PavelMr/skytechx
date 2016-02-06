@@ -95,11 +95,14 @@ void CDSSManager::fillList()
       item5->setText(fi.lastModified().toString(Qt::SystemLocaleShortDate));
       item5->setData(fi.lastModified());
 
+      item6->setData(0);
+
       for (int j = 0; j < bkImg.m_tImgList.count(); j++)
       {
         if (bkImg.m_tImgList[j].fileName == f->m_name)
         {
           item6->setIcon(QIcon(":/res/ico_green.png"));
+          item6->setData(1);
           break;
         }
       }

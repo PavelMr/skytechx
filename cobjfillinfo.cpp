@@ -308,13 +308,17 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(sats.sats[obj->par2].mag));
   addTextItem(item, tr("Distance from planet center"), getStrDeg(sats.sats[obj->par2].distance));
+  addSeparator(item);
 
-  /*
-  addTextItem(item, tr("In sun light"), QString::number(sat.sat[obj->par2].inSunLgt));
-  addTextItem(item, tr("Is hidden"), QString::number(sat.sat[obj->par2].isHidden));
-  addTextItem(item, tr("Is transiting"), QString::number(sat.sat[obj->par2].isTransit));
-  addTextItem(item, tr("Throw shadow"), QString::number(sat.sat[obj->par2].throwShadow));
-  */
+  auto yesNo = [](bool val) -> QString
+  {
+    return val ? tr("Yes") : tr("No");
+  };
+
+  addTextItem(item, tr("In sun light"), yesNo(sats.sats[obj->par2].isInLight));
+  addTextItem(item, tr("Is hidden"), yesNo(sats.sats[obj->par2].isHidden));
+  addTextItem(item, tr("Is transiting"), yesNo(sats.sats[obj->par2].isTransit));
+  addTextItem(item, tr("Cast a shadow"), yesNo(sats.sats[obj->par2].isThrowShadow));
 
   //str = sat.sat[o.par2].name + " " + getStrMag(sat.sat[obj->par2].mag);
 }

@@ -39,7 +39,9 @@ CLoadingDlg::CLoadingDlg(QWidget *parent) :
   setFixedSize(size());
   ui->label_3->setText(SK_VERSION);
 
-  ui->progressBar->setRange(0, 15);
+  ui->progressBar->setRange(0, 14);
+
+  ui->progressBar->setStyleSheet("QProgressBar { border: 1px; border-color: white; background-color: #81d4fa;  height: 1px; }  QProgressBar::chunk {  background-color: #0277bd }");
 
   QTimer::singleShot(0, this, SLOT(slotLoad()));
 }

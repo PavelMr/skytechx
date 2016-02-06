@@ -432,6 +432,9 @@ void CEventSearch::on_pushButton_2_clicked()
     case 7:
       bOk = biggestMoon();
       break;
+
+    default:
+      return;
   }
 
   if (!bOk)

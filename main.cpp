@@ -65,7 +65,7 @@ static bool getCommandParamValue(const QString command, const QString& param, co
   return true;
 }
 
-void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void messageHandler(QtMsgType type, const QMessageLogContext & /*context*/, const QString &msg)
 {
   QString txt;
   switch (type)

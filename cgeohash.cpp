@@ -2,7 +2,11 @@
 
 static quint64 doubleToUInt64(double val)
 {
-  return *((quint64 *)&val);
+  quint64 i64;
+
+  memcpy(&i64, &val, sizeof(i64));
+
+  return i64;
 }
 
 CGeoHash::CGeoHash()

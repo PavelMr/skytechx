@@ -104,6 +104,29 @@ void recenterHoldObject(CMapView *p, bool bRepaint)
 
     p->centerMap(rd.Ra, rd.Dec, CM_UNDEF);
   }
+  else
+  if (g_HoldObject.objType == MO_PLN_SAT)
+  {
+    int pln = g_HoldObject.objIdx & 0xffff;
+    int index = (g_HoldObject.objIdx & 0xffff0000) >> 16;
+    CPlanetSatellite planSat;
+    planetSatellites_t sats;
+
+    orbit_t earth, o;
+
+    cAstro.setParam(&p->m_mapView);
+    cAstro.calcPlanet(PT_EARTH, &earth, false, true, false);
+    cAstro.calcPlanet(pln, &o);
+
+    planSat.solve(p->m_mapView.jd - o.light, pln, &sats, &o, &earth);
+
+    double ra = sats.sats[index].lRD.Ra;
+    double dec = sats.sats[index].lRD.Dec;
+
+    precess(&ra, &dec, JD2000, p->m_mapView.jd);
+
+    p->centerMap(ra, dec, CM_UNDEF);
+  }
 
   if (bRepaint)
     p->repaintMap();
@@ -408,6 +431,17 @@ void mapObjContextMenu(CMapView *map)
         planSat.solve(map->m_mapView.jd - pl.light, o.par1, &sats, &pl, &s);
 
         str = sats.sats[o.par2].name + " " + getStrMag(o.mag);
+
+        if (!g_bHoldObject && !isHoldObjFirst)
+        {
+          strSuf.append(cHoldObj + sats.sats[o.par2].name);
+          strIdx.append(-4);
+
+          g_HoldObject.objName = sats.sats[o.par2].name;
+          g_HoldObject.objIdx = o.par1 | (o.par2 << 16);
+          g_HoldObject.objType = MO_PLN_SAT;
+          isHoldObjFirst =  true;
+        }
 
         break;
       }

@@ -2150,8 +2150,7 @@ void CMapView::paintEvent(QPaintEvent *)
 
 void CMapView::slotAnimChanged(curvePoint_t &p)
 {
-  qDebug() << p.x << p.y;
-
+  //qDebug() << p.x << p.y;
   centerMap(p.x, p.y, p.fov);
 }
 

@@ -5331,8 +5331,17 @@ void MainWindow::slotSearchPlanetTriggered()
     fov = CM_UNDEF;
   }
 
+  mapObj_t obj;
+  CObjFillInfo info;
+  ofiItem_t    item;
+
+  obj.type = MO_PLANET;
+  obj.par1 = id;
+
+  info.fillInfo(&ui->widget->m_mapView, &obj, &item);
+  fillQuickInfo(&item);
+
   ui->widget->centerMap(ra, dec, fov);
-  //recenterHoldObject(ui->widget, false);
 }
 
 void MainWindow::on_actionSatellite_triggered()
@@ -5881,6 +5890,7 @@ void MainWindow::on_pushButton_34_clicked()
 
   if (info->type != MO_PLANET &&
       info->type != MO_SATELLITE &&
+      info->type != MO_PLN_SAT &&
       info->type != MO_COMET &&
       info->type != MO_ASTER)
   {
@@ -5889,9 +5899,14 @@ void MainWindow::on_pushButton_34_clicked()
   }
 
   releaseHoldObject(-1);
-  if (info->type != MO_COMET || info->type != MO_ASTER)
+  if (info->type == MO_COMET || info->type == MO_ASTER)
   {
     holdObject(info->type, info->par2, info->title);
+  }
+  else
+  if (info->type == MO_PLN_SAT)
+  {
+    holdObject(info->type, info->par1 | (info->par2 << 16), info->title);
   }
   else
   {
@@ -5936,8 +5951,6 @@ void MainWindow::on_actionShow_planet_axis_triggered(bool checked)
   g_showObjectAxis = checked;
   ui->widget->repaintMap();
 }
-
-void insertCopy();
 
 void MainWindow::on_actionAdvanced_search_triggered()
 {

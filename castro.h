@@ -178,7 +178,7 @@ protected:
 
     double solveMarsMer(orbit_t *pMars, double jd);
     double getPlnCentalLat(orbit_t *o, double poleRa, double poleDec);
-    void   solveJupiterMer(orbit_t *o, double jd);
+    void   solveJupiterMer(orbit_t *o);
     double calcMeridian(double W, double mul, double poleRA, double poleDec, double gRA, double gDec);
 
     // delta T

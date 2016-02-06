@@ -26,6 +26,11 @@ class CManagerModel : public QSortFilterProxyModel
       return (left.data(Qt::UserRole + 1).toDateTime() < right.data(Qt::UserRole + 1).toDateTime());
     }
 
+    if (sortColumn() == 5)
+    {
+      return (left.data(Qt::UserRole + 1).toInt() < right.data(Qt::UserRole + 1).toInt());
+    }
+
     QVariant leftData = sourceModel()->data(left);
     QVariant rightData = sourceModel()->data(right);
 

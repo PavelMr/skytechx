@@ -655,7 +655,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
   if (m_index >= 0)
   {
     p.renderText(5, 25, 5, tr("Distance from Sun : %1 AU").arg(rr, 0, 'f', 8), RT_BOTTOM_RIGHT);
-    p.renderText(5, 42, 5, tr("Distance from Earth : %1 AU").arg(RR, 0, 'f', 8), RT_BOTTOM_RIGHT);
+    p.renderText(5, 42, 5, tr("Distance from Earth : %1 AU / %2 KM").arg(RR, 0, 'f', 8).arg(RR * AU1, 0, 'f', 8), RT_BOTTOM_RIGHT);
   }
 
   int ix = 10;
@@ -665,14 +665,9 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
   do
   {
     sc++;
-    qDebug() << sc;
   }
   while ((m_scale / sc) > width() - 150);
-
-
   int au1 = m_scale / sc;
-
-  //qDebug() << width() / m_scale << m_scale << sc;
 
   p.setPen(QPen(Qt::white, 3));
   p.drawLine(ix, iy, ix + au1, iy);
