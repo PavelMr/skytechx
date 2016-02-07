@@ -40,6 +40,9 @@ CPlanetRenderer::~CPlanetRenderer()
     delete m_bmp[PT_NEPTUNE];
     delete m_bmp[PT_MOON];
 
+    for (int i = 0; i < 5; i++)
+      delete m_bmpMoon[i];
+
     for (int i = 0; i < NUM_LEVELS; i++)
     {
       free(m_sphere[i]->faces);
@@ -98,6 +101,12 @@ bool CPlanetRenderer::load()
 
   delete satRing;
   delete satRing_a;
+
+  m_bmpMoon[0] = new QImage("../data/planets/moons/io.png");
+  m_bmpMoon[1] = new QImage("../data/planets/moons/europa.png");
+  m_bmpMoon[2] = new QImage("../data/planets/moons/ganymede.png");
+  m_bmpMoon[3] = new QImage("../data/planets/moons/callisto.png");
+  m_bmpMoon[4] = new QImage("../data/planets/moons/titan.png");
 
   m_init = true;
 
@@ -957,10 +966,148 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   return sx;
 }
 
-int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t * /*o*/, planetSatellite_t *sat, bool bIsShadow, mapView_t * /*view*/)
+void CPlanetRenderer::renderSphere(QPainter *pPainter, SKPOINT *pt, double r, double lon, double lat, QImage *texture, QImage *pImg, mapView_t *view, double ra, double dec, double PA)
+{
+  SKMATRIX matX;
+  SKMATRIX matY;
+  SKMATRIX matZ;
+  SKMATRIX mat;
+  SKMATRIX matScale;
+  int lod = 2;
+
+  double sx = r;
+  double sy = r;
+  double sz = r;
+
+  if (r > 200) lod = 2;
+  else
+  if (r > 50) lod = 1;
+  else lod = 0;
+
+  mesh_t *mesh = m_sphere[2];
+
+  SKMATRIXRotateY(&matY, -lon);
+
+  double angp;
+
+  if (view->flipX +view->flipY == 1)
+  {
+    angp = (R360 - PA) - (trfGetAngleToNPole(ra, dec, view->jd) - R180);
+  }
+  else
+  {
+    angp = (R360 - PA) + (trfGetAngleToNPole(ra, dec, view->jd) - R180);
+  }
+
+  if (view->flipY)
+  {
+    angp = R180 + angp;
+  }
+
+  SKMATRIXRotateX(&matX, lat);
+  SKMATRIXRotateZ(&matZ, angp);
+  SKMATRIXScale(&matScale, view->flipX ? -1 : 1, view->flipY ? -1 : 1, 1);
+
+  mat = matY * matX * matZ * matScale;
+
+  #pragma omp parallel for
+  for (int i = 0; i < mesh->numVertices; i++)
+  {
+    float x = mat.m_11 * mesh->vertices[i].x * sx +
+              mat.m_21 * mesh->vertices[i].y * sy +
+              mat.m_31 * mesh->vertices[i].z * sz;
+
+    float y = mat.m_12 * mesh->vertices[i].x * sx +
+              mat.m_22 * mesh->vertices[i].y * sy +
+              mat.m_32 * mesh->vertices[i].z * sz;
+
+    float z = mat.m_13 * mesh->vertices[i].x * sx +
+              mat.m_23 * mesh->vertices[i].y * sy +
+              mat.m_33 * mesh->vertices[i].z * sz;
+
+    mesh->vertices[i].sp[0] = x + pt->sx;
+    mesh->vertices[i].sp[1] = y + pt->sy;
+    mesh->vertices[i].sp[2] = z;
+  }
+
+  int i;
+  bool bi = scanRender.isBillinearInt();
+
+  #pragma omp parallel for
+  for (i = 0; i < mesh->numFaces; i++)
+  {
+    CScanRender scanRender;
+
+    scanRender.enableBillinearInt(bi);
+
+    int f0 = mesh->faces[i].vertices[0];
+    int f1 = mesh->faces[i].vertices[1];
+    int f2 = mesh->faces[i].vertices[2];
+    int f3 = mesh->faces[i].vertices[3];
+
+    if (mesh->vertices[f0].sp[2] > 0 && mesh->vertices[f1].sp[2] > 0 &&
+        mesh->vertices[f2].sp[2] > 0 && mesh->vertices[f3].sp[2] > 0)
+      continue;
+
+    scanRender.resetScanPoly(pImg->width(), pImg->height());
+
+    scanRender.scanLine(mesh->vertices[f0].sp[0],
+                        mesh->vertices[f0].sp[1],
+                        mesh->vertices[f1].sp[0],
+                        mesh->vertices[f1].sp[1],
+                        mesh->vertices[f0].uv[0],
+                        mesh->vertices[f0].uv[1],
+                        mesh->vertices[f1].uv[0],
+                        mesh->vertices[f1].uv[1]);
+
+    scanRender.scanLine(mesh->vertices[f1].sp[0],
+                        mesh->vertices[f1].sp[1],
+                        mesh->vertices[f2].sp[0],
+                        mesh->vertices[f2].sp[1],
+                        mesh->vertices[f1].uv[0],
+                        mesh->vertices[f1].uv[1],
+                        mesh->vertices[f2].uv[0],
+                        mesh->vertices[f2].uv[1]);
+
+    scanRender.scanLine(mesh->vertices[f2].sp[0],
+                        mesh->vertices[f2].sp[1],
+                        mesh->vertices[f3].sp[0],
+                        mesh->vertices[f3].sp[1],
+                        mesh->vertices[f2].uv[0],
+                        mesh->vertices[f2].uv[1],
+                        mesh->vertices[f3].uv[0],
+                        mesh->vertices[f3].uv[1]);
+
+    scanRender.scanLine(mesh->vertices[f3].sp[0],
+                        mesh->vertices[f3].sp[1],
+                        mesh->vertices[f0].sp[0],
+                        mesh->vertices[f0].sp[1],
+                        mesh->vertices[f3].uv[0],
+                        mesh->vertices[f3].uv[1],
+                        mesh->vertices[f0].uv[0],
+                        mesh->vertices[f0].uv[1]);
+
+    scanRender.renderPolygon(pImg, texture);
+
+
+    /*
+    pPainter->setPen(Qt::black);
+    pPainter->drawLine(mesh->vertices[f0].sp[0], mesh->vertices[f0].sp[1],
+                       mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1]);
+
+    pPainter->drawLine(mesh->vertices[f1].sp[0], mesh->vertices[f1].sp[1],
+                       mesh->vertices[f2].sp[0], mesh->vertices[f2].sp[1]);
+    */
+  }
+}
+
+int CPlanetRenderer::renderMoon(int id, QImage *pImg, QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t *o, planetSatellite_t *sat, bool bIsShadow, mapView_t *view)
 {
   double r = trfGetArcSecToPix(sat->size);
   bool mins = false;
+
+  if (o == NULL)
+    return(r);
 
   p->setPen(Qt::NoPen);
 
@@ -991,38 +1138,72 @@ int CPlanetRenderer::renderMoon(QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t 
     mins = true;
   }
 
-  QRadialGradient br = QRadialGradient(QPoint(pt->sx, pt->sy), r, QPoint(pt->sx, pt->sy));
+  int index = -1;
 
-  if (sat->isInLight)
-  { // in sunlight
-    if (!mins)
-    {
-      br.setColorAt(1, QColor(g_skSet.map.planet.satColor).darker());
-      br.setColorAt(0.8, QColor(g_skSet.map.planet.satColor));
-      br.setColorAt(0, QColor(g_skSet.map.planet.satColor));
-      p->setBrush(br);
-    }
+  if (o->type == PT_JUPITER)
+  {
+    if (id == 0) index = 0; // io
+      else
+    if (id == 1) index = 1; // europa
+      else
+    if (id == 2) index = 2; // ganymede
     else
+    if (id == 3) index = 3; // callisto
+  }
+  else
+  if (o->type == PT_SATURN)
+  {
+    if (id == 7) index = 4; // titan
+  }
+
+  if (index != -1 && g_planetReal) // texture
+  {
+    renderSphere(p, pt, r, 0, 0, m_bmpMoon[index], pImg, view, o->lRD.Ra, o->lRD.Dec, 0);
+
+    if (!sat->isInLight)
     {
-      p->setBrush(QColor(g_skSet.map.planet.satColor));
+      p->setOpacity(0.8);
+      p->setBrush(Qt::black);
+      p->drawEllipse(QPointF(pt->sx, pt->sy), r + 1, r + 1);
+      p->setOpacity(1);
     }
   }
   else
-  { // in planet shadow
-    if (!mins)
-    {
-      br.setColorAt(1, QColor(g_skSet.map.planet.satColorShd).darker());
-      br.setColorAt(0.8, QColor(g_skSet.map.planet.satColorShd));
-      br.setColorAt(0, QColor(g_skSet.map.planet.satColorShd));
-      p->setBrush(br);
+  {
+    QRadialGradient br = QRadialGradient(QPoint(pt->sx, pt->sy), r, QPoint(pt->sx, pt->sy));
+
+    if (sat->isInLight)
+    { // in sunlight
+      if (!mins)
+      {
+        br.setColorAt(1, QColor(g_skSet.map.planet.satColor).darker());
+        br.setColorAt(0.8, QColor(g_skSet.map.planet.satColor));
+        br.setColorAt(0, QColor(g_skSet.map.planet.satColor));
+        p->setBrush(br);
+      }
+      else
+      {
+        p->setBrush(QColor(g_skSet.map.planet.satColor));
+      }
     }
     else
-    {
-      p->setBrush(QColor(g_skSet.map.planet.satColorShd));
+    { // in planet shadow
+      if (!mins)
+      {
+        br.setColorAt(1, QColor(g_skSet.map.planet.satColorShd).darker());
+        br.setColorAt(0.8, QColor(g_skSet.map.planet.satColorShd));
+        br.setColorAt(0, QColor(g_skSet.map.planet.satColorShd));
+        p->setBrush(br);
+      }
+      else
+      {
+        p->setBrush(QColor(g_skSet.map.planet.satColorShd));
+      }
     }
+
+    p->drawEllipse(QPointF(pt->sx, pt->sy), r, r);
   }
 
-  p->drawEllipse(QPointF(pt->sx, pt->sy), r, r);
 
   return(r);
 }

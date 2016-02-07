@@ -30,6 +30,8 @@ CLoadingDlg::CLoadingDlg(QWidget *parent) :
 {
   ui->setupUi(this);
 
+  setWindowFlags(Qt::WindowStaysOnTopHint);
+
   const QRect screen = QApplication::desktop()->screenGeometry();
   move(screen.center() - this->rect().center());
 

@@ -996,7 +996,7 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void smRenderMoons(CSkPainter *p, planetSatellites_t *sat, SKPOINT *ptp, orbit_t *o, bool bFront, mapView_t *view, int pid)
+static void smRenderMoons(QImage *pImg, CSkPainter *p, planetSatellites_t *sat, SKPOINT *ptp, orbit_t *o, bool bFront, mapView_t *view, int pid)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   for (int i = 0; i < sat->sats.count(); i++)
@@ -1011,7 +1011,7 @@ static void smRenderMoons(CSkPainter *p, planetSatellites_t *sat, SKPOINT *ptp, 
       {
         trfProjectPointNoCheck(&pt);
 
-        int r = cPlanetRenderer.renderMoon(p, &pt, ptp, o, &sat->sats[i], bFront, view);
+        int r = cPlanetRenderer.renderMoon(i, pImg, p, &pt, ptp, o, &sat->sats[i], bFront, view);
 
         if (g_showLabels)
         {
@@ -1087,7 +1087,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 
     if (moons)
     {
-      smRenderMoons(pPainter, &sats, NULL, NULL, false, mapView, order[i]);
+      smRenderMoons(pImg, pPainter, &sats, NULL, &o[order[i]], false, mapView, order[i]);
     }
 
     trfRaDecToPointCorrectFromTo(&o[order[i]].lRD, &pt, mapView->jd, JD2000);
@@ -1101,7 +1101,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 
     if (moons)
     {
-      smRenderMoons(pPainter, &sats, &pt, &o[order[i]], true, mapView, order[i]);
+      smRenderMoons(pImg, pPainter, &sats, &pt, &o[order[i]], true, mapView, order[i]);
     }
   }
 
