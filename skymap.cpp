@@ -1360,6 +1360,8 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   cStarRenderer.setConfig(&g_skSet);
   smRenderBackground(mapView, pPainter, pImg);
 
+  //background.renderHorizonBk(mapView, pPainter, pImg);
+
   if (g_showMW)
   {
     cMilkyWay.render(mapView, pPainter, pImg);

@@ -994,8 +994,8 @@ void MainWindow::slotTimeSliderUpdate()
     return;
   }
 
-  QEasingCurve curve(QEasingCurve::InCubic);
-  ui->widget->m_mapView.jd += (ui->horizontalSlider->value() > 0 ? +1 : -1) * curve.valueForProgress(qAbs(ui->horizontalSlider->value()) / 100.0) * 0.5;
+  QEasingCurve curve(QEasingCurve::InQuint);
+  ui->widget->m_mapView.jd += (ui->horizontalSlider->value() > 0 ? +1 : -1) * curve.valueForProgress(qAbs(ui->horizontalSlider->value()) / 100.0) * 0.25;
   repaintMap();
 }
 
@@ -1769,6 +1769,15 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool scroll)
   ui->pushButton_19->setEnabled(!IS_NEAR(item->riseJD, CM_UNDEF, 0.01));
   ui->pushButton_20->setEnabled(!IS_NEAR(item->transitJD, CM_UNDEF, 0.01));
   ui->pushButton_21->setEnabled(!IS_NEAR(item->setJD, CM_UNDEF, 0.01));
+
+  qDebug() << item->type;
+
+  if (item->type == MO_EARTH_SHD)
+  {
+    ui->pushButton_19->setEnabled(false);
+    ui->pushButton_20->setEnabled(false);
+    ui->pushButton_21->setEnabled(false);
+  }
 
   ui->pushButton->setEnabled(true);
   ui->pushButton_4->setEnabled(true);
@@ -5892,7 +5901,8 @@ void MainWindow::on_pushButton_34_clicked()
       info->type != MO_SATELLITE &&
       info->type != MO_PLN_SAT &&
       info->type != MO_COMET &&
-      info->type != MO_ASTER)
+      info->type != MO_ASTER &&
+      info->type != MO_EARTH_SHD)
   {
     msgBoxError(this, tr("You cannot hold static object!!!"));
     return;

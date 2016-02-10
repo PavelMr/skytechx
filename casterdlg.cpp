@@ -229,7 +229,7 @@ void astSolve(asteroid_t *a, double jdt, bool lightCorrected)
   {
     if (lastJD != jdt)
     {
-      cAstro.calcPlanet(PT_SUN, &sunOrbit);
+      cAstro.calcPlanet(PT_EARTH, &sunOrbit, true, true, false);
 
       xs = sunOrbit.sRectJ2000[0];
       ys = sunOrbit.sRectJ2000[1];

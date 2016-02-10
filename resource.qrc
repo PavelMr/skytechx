@@ -134,5 +134,8 @@
         <file>res/ico_manager.png</file>
         <file>res/ico_green.png</file>
         <file>res/ico_red.png</file>
+        <file>res/rise_icon.png</file>
+        <file>res/set_icon.png</file>
+        <file>res/transit_icon.png</file>
     </qresource>
 </RCC>

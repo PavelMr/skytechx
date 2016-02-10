@@ -547,6 +547,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
                   ((c>>16)&0xff)*(yx1)  + ((d>>16)&0xff)*(xy);
 
         // ????: pretypovani to zrychly
+
         *pDst = 0xff000000 |
                 ((((int)red)<<16)&0xff0000) |
                 ((((int)green)<<8)&0xff00) |

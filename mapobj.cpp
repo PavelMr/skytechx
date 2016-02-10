@@ -70,6 +70,16 @@ void recenterHoldObject(CMapView *p, bool bRepaint)
     p->centerMap(o.lRD.Ra, o.lRD.Dec, CM_UNDEF);
   }
   else
+  if (g_HoldObject.objType == MO_EARTH_SHD)
+  {
+    orbit_t o, m;
+
+    cAstro.setParam(&p->m_mapView);
+    cAstro.calcPlanet(PT_MOON, &m);
+    cAstro.calcEarthShadow(&o, &m);
+    p->centerMap(o.lRD.Ra, o.lRD.Dec, CM_UNDEF);
+  }
+  else
   if (g_HoldObject.objType == MO_TELESCOPE)
   {
     p->centerMap(pcMapView->m_lastTeleRaDec.Ra, pcMapView->m_lastTeleRaDec.Dec, CM_UNDEF);
@@ -398,6 +408,17 @@ void mapObjContextMenu(CMapView *map)
       case MO_EARTH_SHD:
       {
         str = QObject::tr("Earth shadow");
+
+        if (!g_bHoldObject && !isHoldObjFirst)
+        {
+          strSuf.append(cHoldObj + str);
+          strIdx.append(-4);
+
+          g_HoldObject.objName = str;
+          g_HoldObject.objType = MO_EARTH_SHD;
+          isHoldObjFirst =  true;
+        }
+
         break;
       }
 

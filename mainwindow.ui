@@ -856,7 +856,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -866,7 +866,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>348</width>
+          <width>274</width>
           <height>387</height>
          </rect>
         </property>
@@ -938,48 +938,31 @@
            <property name="bottomMargin">
             <number>2</number>
            </property>
-           <item row="0" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QPushButton" name="pushButton_19">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>Set time to object rise</string>
-               </property>
-               <property name="text">
-                <string>Set time to rise</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_20">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>Set time to object transit</string>
-               </property>
-               <property name="text">
-                <string>Set time to transit</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_21">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>Set time to object set</string>
-               </property>
-               <property name="text">
-                <string>Set time to set</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+           <item row="0" column="1">
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="pushButton_34">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Hold current object</string>
+             </property>
+             <property name="text">
+              <string>Hold object</string>
+             </property>
+            </widget>
            </item>
            <item row="2" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_17">
@@ -996,13 +979,58 @@
                </property>
               </widget>
              </item>
+            </layout>
+           </item>
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
-              <widget class="QPushButton" name="pushButton_34">
+              <widget class="QPushButton" name="pushButton_19">
                <property name="enabled">
                 <bool>false</bool>
                </property>
+               <property name="toolTip">
+                <string>Set time to object rise</string>
+               </property>
                <property name="text">
-                <string>Hold object</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/res/rise_icon.png</normaloff>:/res/rise_icon.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_20">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Set time to object transit</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/res/transit_icon.png</normaloff>:/res/transit_icon.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_21">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Set time to object set</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/res/set_icon.png</normaloff>:/res/set_icon.png</iconset>
                </property>
               </widget>
              </item>
@@ -1085,7 +1113,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>331</width>
+          <width>302</width>
           <height>576</height>
          </rect>
         </property>
@@ -1582,7 +1610,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>350</width>
+          <width>413</width>
           <height>521</height>
          </rect>
         </property>
@@ -1875,7 +1903,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>348</width>
+          <width>264</width>
           <height>387</height>
          </rect>
         </property>
@@ -2327,7 +2355,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>348</width>
+          <width>268</width>
           <height>387</height>
          </rect>
         </property>
@@ -2451,7 +2479,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>348</width>
+          <width>279</width>
           <height>387</height>
          </rect>
         </property>
@@ -2656,7 +2684,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>331</width>
+          <width>237</width>
           <height>431</height>
          </rect>
         </property>
@@ -2759,7 +2787,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>348</width>
+          <width>254</width>
           <height>387</height>
          </rect>
         </property>
@@ -2907,7 +2935,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>348</width>
+          <width>468</width>
           <height>387</height>
          </rect>
         </property>

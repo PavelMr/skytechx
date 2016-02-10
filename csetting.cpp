@@ -519,6 +519,7 @@ void CSetting::setValues()
   ui->checkBox_6->setChecked(set.map.milkyWay.bShow);
   ui->horizontalSlider_13->setValue(set.map.milkyWay.light);
   ui->horizontalSlider_14->setValue(set.map.milkyWay.dark);
+  ui->horizontalSlider_16->setValue(set.map.milkyWay.darkest);
   ui->pushButton_59->setColor(set.map.milkyWay.color);
 
   if (set.map.milkyWay.sameAsBkColor)
@@ -857,6 +858,7 @@ void CSetting::apply()
   g_skSet.map.milkyWay.bShow = ui->checkBox_6->isChecked();
   g_skSet.map.milkyWay.light = ui->horizontalSlider_13->value();
   g_skSet.map.milkyWay.dark = ui->horizontalSlider_14->value();
+  g_skSet.map.milkyWay.darkest = ui->horizontalSlider_16->value();
   g_skSet.map.milkyWay.sameAsBkColor = ui->radioButton->isChecked();
 
   // grid

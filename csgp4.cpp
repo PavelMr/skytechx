@@ -137,7 +137,7 @@ bool CSGP4::solve(int index, const mapView_t *view, satellite_t *out)
 
   catch (SatelliteException &e)
   {
-    qDebug() << "error1" << e.what() << out->name;
+    qDebug() << "error2" << e.what() << out->name;
     return false;
   }
 

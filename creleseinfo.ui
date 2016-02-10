@@ -20,7 +20,7 @@
       <widget class="QPlainTextEdit" name="plainTextEdit">
        <property name="font">
         <font>
-         <family>Times New Roman</family>
+         <family>System</family>
          <pointsize>12</pointsize>
         </font>
        </property>

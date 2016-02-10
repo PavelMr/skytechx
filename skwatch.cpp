@@ -4,6 +4,8 @@
 #include <QResizeEvent>
 #include <QLCDNumber>
 
+#include <QDebug>
+
 SkWatch::SkWatch(QWidget *parent) : QWidget(parent)
 {
   m_background = NULL;
@@ -196,7 +198,7 @@ void SkWatch::paintEvent(QPaintEvent *)
     p.translate(center);
     p.rotate(180 + angSec);
 
-    p.setPen(QPen(Qt::white, 1.5, Qt::SolidLine, Qt::RoundCap));
+    p.setPen(QPen(Qt::red, 1.5, Qt::SolidLine, Qt::RoundCap));
     p.drawLine(0, -radius * 0.2, 0, radius * 0.92);
 
     p.restore();

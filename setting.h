@@ -147,6 +147,7 @@ typedef struct
   QRgb  color;
   float light;
   float dark;
+  float darkest;
 } milkyWay_t;
 
 typedef struct
