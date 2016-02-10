@@ -671,3 +671,27 @@ void CWPosSel::on_pushButton_10_clicked()
 
   m_earthTools.getDST(loc.lon, loc.lat);
 }
+
+void CWPosSel::on_pushButton_11_clicked()
+{
+  QTimeZone tz = QTimeZone::systemTimeZone();
+  QDateTime dt = QDateTime::currentDateTime();
+
+  ui->doubleSpinBox_3->setValue(qAbs(tz.standardTimeOffset(dt) / 3600.));
+  if (tz.standardTimeOffset(dt) >= 0)
+  {
+    ui->radioButton_6->setChecked(true);
+  }
+  else
+  {
+    ui->radioButton_5->setChecked(true);
+  }
+}
+
+void CWPosSel::on_pushButton_12_clicked()
+{
+  QTimeZone tz = QTimeZone::systemTimeZone();
+  QDateTime dt = QDateTime::currentDateTime();
+
+  ui->doubleSpinBox_4->setValue(qAbs(tz.daylightTimeOffset(dt) / 3600.));
+}
