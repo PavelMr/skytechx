@@ -40,7 +40,6 @@ void CLvQInfo::init(QToolBox *parent)
 }
 
 
-
 ////////////////////////////////////////
 void CLvQInfo::fillInfo(ofiItem_t *data)
 ////////////////////////////////////////
@@ -87,10 +86,12 @@ void CLvQInfo::fillInfo(ofiItem_t *data)
     tRow.append(value);
 
     m->appendRow(tRow);
-  }
 
-  //QModelIndex first = m->index(0, 0, QModelIndex());
-  //setCurrentIndex(first);
+    if (item->bIsTitle)
+    {
+      setFirstColumnSpanned(i, QModelIndex(), true);
+    }
+  }
 }
 
 ///////////////////////////

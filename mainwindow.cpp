@@ -1216,7 +1216,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
   {
     if (event->type() == QEvent::NonClientAreaMouseButtonDblClick )
     {
-      qDebug() << obj;
       return true;
     }
   }
@@ -1769,8 +1768,6 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool scroll)
   ui->pushButton_19->setEnabled(!IS_NEAR(item->riseJD, CM_UNDEF, 0.01));
   ui->pushButton_20->setEnabled(!IS_NEAR(item->transitJD, CM_UNDEF, 0.01));
   ui->pushButton_21->setEnabled(!IS_NEAR(item->setJD, CM_UNDEF, 0.01));
-
-  qDebug() << item->type;
 
   if (item->type == MO_EARTH_SHD)
   {
@@ -3714,8 +3711,6 @@ void MainWindow::on_pushButton_dss_all_clicked()
 
     CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
 
-    qDebug() << index <<  f->getOriginalImage()->width();
-
     MEMORYSTATUSEX ex;
 
     ex.dwLength = sizeof(MEMORYSTATUSEX);
@@ -3809,8 +3804,6 @@ void MainWindow::slotSelectionChangedEI(const QItemSelection &, const QItemSelec
   QStandardItem *item = model->itemFromIndex(il.at(0));
   event_t *e = (event_t *)item->data().toLongLong();
 
-  // TODO: nefunguje to pri ukonceni programu
-  //qDebug() << e->geoHash << ui->widget->m_mapView.geo.hash;
   if (e->geoHash != ui->widget->m_mapView.geo.hash)
   {
     ui->treeView_3->setStyleSheet("color : red");

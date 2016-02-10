@@ -424,14 +424,30 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Light time"), QString::number(a->orbit.light * 24.) + tr(" hours"));
   addSeparator(item);
 
-  addLabelItem(item, tr("Heliocentric information"));
+  double lon, lat;
+  double hx, hy, hz;
+
+  if (view->epochJ2000)
+  {
+    addLabelItem(item, tr("Heliocentric information (J2000)"));
+    lon = a->orbit.hLon; // comets lon/lat is J2000
+    lat = a->orbit.hLat;
+  }
+  else
+  {
+    precessLonLat(a->orbit.hLon, a->orbit.hLat, lon, lat, JD2000, view->jd);
+    addLabelItem(item, tr("Heliocentric information"));
+  }
+
+  CAstro::sphToXYZ(lon, lat, a->orbit.r, hx, hy, hz);
+
   addSeparator(item);
-  addTextItem(item, tr("X"), QString::number(a->orbit.hRect[0]));
-  addTextItem(item, tr("Y"), QString::number(a->orbit.hRect[1]));
-  addTextItem(item, tr("Z"), QString::number(a->orbit.hRect[2]));
+  addTextItem(item, tr("X"), QString::number(hx));
+  addTextItem(item, tr("Y"), QString::number(hy));
+  addTextItem(item, tr("Z"), QString::number(hz));
   addSeparator(item);
-  addTextItem(item, tr("Longitude"), QString::number(R2D(a->orbit.hLon), 'f', 8));
-  addTextItem(item, tr("Latitude"), QString::number(R2D(a->orbit.hLat), 'f', 8));
+  addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
+  addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));
   addSeparator(item);
   addTextItem(item, tr("r"), QString::number(a->orbit.r) + tr("AU"));
   addSeparator(item);
@@ -554,14 +570,30 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Light time"), QString::number(a->orbit.light * 24.) + tr(" hours"));
   addSeparator(item);
 
-  addLabelItem(item, tr("Heliocentric information")  + " " + tr("J2000.0"));
+  double lon, lat;
+  double hx, hy, hz;
+
+  if (view->epochJ2000)
+  {
+    addLabelItem(item, tr("Heliocentric information (J2000)"));
+    lon = a->orbit.hLon; // comets lon/lat is J2000
+    lat = a->orbit.hLat;
+  }
+  else
+  {
+    precessLonLat(a->orbit.hLon, a->orbit.hLat, lon, lat, JD2000, view->jd);
+    addLabelItem(item, tr("Heliocentric information"));
+  }
+
+  CAstro::sphToXYZ(lon, lat, a->orbit.r, hx, hy, hz);
+
   addSeparator(item);
-  addTextItem(item, tr("X"), QString::number(a->orbit.hRect[0]));
-  addTextItem(item, tr("Y"), QString::number(a->orbit.hRect[1]));
-  addTextItem(item, tr("Z"), QString::number(a->orbit.hRect[2]));
+  addTextItem(item, tr("X"), QString::number(hx));
+  addTextItem(item, tr("Y"), QString::number(hy));
+  addTextItem(item, tr("Z"), QString::number(hz));
   addSeparator(item);
-  addTextItem(item, tr("Longitude"), QString::number(R2D(a->orbit.hLon), 'f', 8));
-  addTextItem(item, tr("Latitude"), QString::number(R2D(a->orbit.hLat), 'f', 8));
+  addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
+  addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));
   addSeparator(item);
   addTextItem(item, tr("r"), QString::number(a->orbit.r) + tr("AU"));
   addSeparator(item);
@@ -1815,19 +1847,34 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
 
   if (item->par1 != PT_MOON)
   {
-    addLabelItem(item, tr("Heliocentric information"));
+    double lon, lat;
+    double hx, hy, hz;
+
+    if (view->epochJ2000)
+    {
+      precessLonLat(o.hLon, o.hLat, lon, lat, view->jd, JD2000);
+      addLabelItem(item, tr("Heliocentric information (J2000)"));
+    }
+    else
+    {
+      lon = o.hLon;
+      lat = o.hLat;
+      addLabelItem(item, tr("Heliocentric information"));
+    }
+
+    CAstro::sphToXYZ(lon, lat, o.r, hx, hy, hz);
+
     addSeparator(item);
-    addTextItem(item, tr("X"), QString::number(o.hRect[0], 'f', 8));
-    addTextItem(item, tr("Y"), QString::number(o.hRect[1], 'f', 8));
-    addTextItem(item, tr("Z"), QString::number(o.hRect[2], 'f', 8));
+    addTextItem(item, tr("X"), QString::number(hx, 'f', 8));
+    addTextItem(item, tr("Y"), QString::number(hy, 'f', 8));
+    addTextItem(item, tr("Z"), QString::number(hz, 'f', 8));
     addSeparator(item);
-    addTextItem(item, tr("Longitude"), QString::number(R2D(o.hLon), 'f', 8));
-    addTextItem(item, tr("Latitude"), QString::number(R2D(o.hLat), 'f', 8));
+    addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
+    addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));
     addSeparator(item);
     addTextItem(item, tr("r"), QString::number(o.r) + tr("AU"));
     addSeparator(item);
   }
-
 
   addLabelItem(item, tr("Apparent view"));
   addSeparator(item);

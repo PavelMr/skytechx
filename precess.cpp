@@ -1,13 +1,23 @@
 #include <math.h>
+
 #include "skcore.h"
 #include "jd.h"
 #include "precess.h"
+#include <castro.h>
 
 #define	DCOS(x)		cos(DEG2RAD(x))
 #define	DSIN(x)		sin(DEG2RAD(x))
 #define	DASIN(x)	RAD2DEG(asin(x))
 #define	DATAN2(y,x)	RAD2DEG(atan2((y),(x)))
 
+/*
+
+X =  -3.5149906 AU   Y =  -9.3739203 AU   Z =  +0.3028577 AU (J2000)
+
+     -3.47843840          -9.38754851           0.30251295
+X =  -3.4781454 AU   Y =  -9.3876653 AU   Z =  +0.3025034 AU (mean eq.)
+
+*/
 
 ////////////////////////////////////////////////////////////////////
 void precess(radec_t *src, radec_t *dst, double jdFrom, double jdTo)
@@ -17,6 +27,38 @@ void precess(radec_t *src, radec_t *dst, double jdFrom, double jdTo)
   dst->Dec = src->Dec;
 
   precess(&dst->Ra, &dst->Dec, jdFrom, jdTo);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void precessLonLat(double lon, double lat, double &outLon, double &outLat, double jdFrom, double jdTo)
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+{
+  // to rect ecliptic pos
+  double x = cos(lon) * cos(lat);
+  double y = sin(lon) * cos(lat);
+  double z =            sin(lat);
+
+  double eq[3];
+  double obl = CAstro::getEclObl(jdFrom);
+
+  // to equatorial
+  eq[0] = x;
+  eq[1] = y * cos(obl) - z * sin(obl);
+  eq[2] = y * sin(obl) + z * cos(obl);
+
+  precessRect(eq, jdFrom, jdTo);
+
+  // to rect ecliptic
+  obl = CAstro::getEclObl(jdTo);
+  x =  eq[0];
+  y =  cos(obl) * eq[1] + sin(obl) * eq[2];
+  z = -sin(obl) * eq[1] + cos(obl) * eq[2];
+
+  // to sph ecliptic
+  outLon = atan2(y, x);
+  outLat = atan2(z, sqrt(x * x + y * y));
+
+  rangeDbl(&outLon, MPI2);
 }
 
 /////////////////////////////////////////////////////////////////

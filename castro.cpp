@@ -1577,18 +1577,14 @@ void CAstro::calcParallax(radec_t *rd, double R)
   rd->Ra = rd->Ra + DeltaAlpha;
   rd->Dec = atan2((sin(rd->Dec) - m_RhoSinThetaPrime * sinpi) * cos(DeltaAlpha), cosDelta - m_RhoCosThetaPrime * sinpi * cosH);
   rangeDbl(&rd->Ra, MPI2);
-
-  /*
-  double S = m_lst;
-  double mpar = DEG2RAD((8.794/3600) / R);
-
-  double ra  = -mpar * m_curGc * sin(S - rd->Ra) * cos(rd->Dec);
-  double dec =  mpar * (m_curGc * cos(S - rd->Ra) * sin(rd->Dec) - m_curGs * cos(rd->Dec));
-
-  rd->Ra  += ra;
-  rd->Dec += dec;
-
-  rangeDbl(&rd->Ra, MPI2);
-  */
 }
 
+
+void CAstro::sphToXYZ(double l, double b, double r, double &x, double &y, double &z)
+{
+  double cb = r * cos(b);
+
+  x = cb * cos(l);
+  y = cb * sin(l);
+  z = sin(b) * r;
+}

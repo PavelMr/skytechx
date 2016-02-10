@@ -138,6 +138,8 @@ class CAstro
     static double getEclObl(double jd);
     double getPolarisHourAngle(); // v 0..1
 
+    static void sphToXYZ(double l, double b, double r, double &x, double &y, double &z);
+
     static double getAirmass(double alt);
     static double getJupiterGRSLon(double jd);
 

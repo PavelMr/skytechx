@@ -13,7 +13,7 @@ public:
   explicit CLvQInfo(QWidget *parent = 0);
           ~CLvQInfo();
   void     init(QToolBox *parent);
-  
+
   void fillInfo(ofiItem_t *data);
   void removeInfo(void);
 
@@ -23,9 +23,9 @@ signals:
 
 protected:
   QToolBox *m_parent;
-  
+
 public slots:
-  
+
 };
 
 #endif // CLVQINFO_H
