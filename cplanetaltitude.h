@@ -20,7 +20,6 @@ public:
   ~CPlanetAltitude();
 
 protected:
-  void paintEvent(QPaintEvent *);
   void calculate(double jd);
 
 private slots:
@@ -37,10 +36,17 @@ private slots:
 private:
   Ui::CPlanetAltitude *ui;
 
+  typedef struct
+  {
+    double date;
+    double alt;
+  } data_t;
+
   mapView_t m_view;
   double m_step;
   double m_jd;
-  QList <double> m_list[PT_PLANET_COUNT];
+  QList <data_t> m_list[PT_PLANET_COUNT];
+  void makeChart();
 };
 
 #endif // CPLANETALTITUDE_H

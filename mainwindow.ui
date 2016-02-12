@@ -284,8 +284,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>220</y>
+       <x>480</x>
+       <y>150</y>
        <width>172</width>
        <height>181</height>
       </rect>
@@ -775,6 +775,7 @@
    <addaction name="actionFlipX"/>
    <addaction name="separator"/>
    <addaction name="actionLock_FOV"/>
+   <addaction name="separator"/>
    <addaction name="action_zoom_1"/>
    <addaction name="action_zoom_5"/>
    <addaction name="action_zoom_10"/>
@@ -856,7 +857,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -866,7 +867,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>274</width>
+          <width>327</width>
           <height>387</height>
          </rect>
         </property>
@@ -1112,8 +1113,8 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
-          <width>302</width>
+          <y>-189</y>
+          <width>310</width>
           <height>576</height>
          </rect>
         </property>
@@ -1610,7 +1611,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>413</width>
+          <width>350</width>
           <height>521</height>
          </rect>
         </property>
@@ -1903,7 +1904,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
+          <width>327</width>
           <height>387</height>
          </rect>
         </property>
@@ -2355,7 +2356,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
+          <width>327</width>
           <height>387</height>
          </rect>
         </property>
@@ -2479,7 +2480,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
+          <width>327</width>
           <height>387</height>
          </rect>
         </property>
@@ -2684,7 +2685,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>237</width>
+          <width>310</width>
           <height>431</height>
          </rect>
         </property>
@@ -2787,7 +2788,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
+          <width>327</width>
           <height>387</height>
          </rect>
         </property>
@@ -2935,7 +2936,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
+          <width>327</width>
           <height>387</height>
          </rect>
         </property>

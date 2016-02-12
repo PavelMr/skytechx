@@ -428,7 +428,6 @@ MainWindow::MainWindow(QWidget *parent) :
   QShortcut *sh1 = new QShortcut(QKeySequence(Qt::Key_Delete), ui->treeView, 0, 0,  Qt::WidgetShortcut);
   connect(sh1, SIGNAL(activated()), this, SLOT(slotDeleteDSSItem()));
 
-
   // event info ///////////////////////////////////
 
   // load events
@@ -3107,8 +3106,7 @@ void MainWindow::on_actionSetting_triggered()
 {
   if (ui->actionNight_mode->isChecked())
   {
-    msgBoxError(this, tr("You cannot change map setting in night mode!"));
-    return;
+    msgBoxInfo(this, tr("Night mode is enabled!\nThe color settings may be incorrect visually."));
   }
 
   CSetting dlg(this);
@@ -5385,7 +5383,23 @@ void MainWindow::on_actionEpoch_J2000_0_toggled(bool arg1)
 {
   g_quickInfoForced = true;
   ui->widget->m_mapView.epochJ2000 = arg1;
-  ui->widget->repaintMap();
+
+  if (ui->widget->m_mapView.coordType == SMCT_RA_DEC)
+  {
+    double ra = ui->widget->m_mapView.x;
+    double dec = ui->widget->m_mapView.y;
+
+    if (!arg1)
+    {
+      precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
+    }
+
+    ui->widget->centerMap(ra, dec, CM_UNDEF);
+  }
+  else
+  {
+    ui->widget->repaintMap();
+  }
 }
 
 void MainWindow::on_actionCheck_new_version_triggered()

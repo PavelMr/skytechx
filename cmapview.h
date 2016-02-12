@@ -19,7 +19,7 @@
 #define SMCT_COUNT         4
 
 #define MIN_MAP_FOV        DMS2RAD(0, 0, 15)
-#define MAX_MAP_FOV        DMS2RAD(90, 0, 0)
+#define MAX_MAP_FOV        DMS2RAD(100, 0, 0)
 
 class QPrinter;
 class CGetProfile;

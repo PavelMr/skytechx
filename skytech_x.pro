@@ -251,7 +251,8 @@ SOURCES += main.cpp\
     nomad.cpp \
     skwatch.cpp \
     soundmanager.cpp \
-    skserver.cpp
+    skserver.cpp \
+    qcustomplot.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -456,7 +457,8 @@ HEADERS  += mainwindow.h \
     skcalendar.h \
     skwatch.h \
     soundmanager.h \
-    skserver.h
+    skserver.h \
+    qcustomplot.h
 
 
 FORMS    += mainwindow.ui \

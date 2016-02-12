@@ -20,103 +20,12 @@ CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
   m_view = *view;
   m_jd = view->jd;
   calculate(m_jd);
+  makeChart();
 }
 
 CPlanetAltitude::~CPlanetAltitude()
 {
   delete ui;
-}
-
-void CPlanetAltitude::paintEvent(QPaintEvent *)
-{
-  QPainter p(this);
-  int height = ui->frame->height();
-  int width = ui->frame->width();
-  int count = m_list[0].count();
-  double deltax = width / (double)(count - 1);
-
-  p.translate(ui->frame->pos());
-  p.setClipRect(0, 0, width, height);
-  p.setRenderHint(QPainter::Antialiasing);
-  p.setRenderHint(QPainter::SmoothPixmapTransform);
-
-  QPixmap img(count, 1);
-  QPainter imgp;
-
-  imgp.begin(&img);
-
-  for (int j = 0; j < count; j++)
-  {
-    int c;
-    double d = m_list[PT_SUN].at(j);
-
-    if (d < DEG2RAD(-18))
-      c = 0;
-    else
-    if (d < DEG2RAD(-12))
-      c = 32;
-    else
-    if (d < DEG2RAD(-6))
-      c = 64;
-    else
-    if (d < DEG2RAD(0))
-      c = 86;
-    else
-      c = 100;
-
-    imgp.setPen(QColor(c, c, c));
-    imgp.drawLine(j, 0, j, 1);
-  }
-
-  imgp.end();
-
-  p.drawPixmap(QRect(0, 0, width, height), img);
-  p.setPen(QPen(Qt::white, 1, Qt::DotLine));
-  p.drawLine(0, height / 2, width, height / 2);
-  p.drawLine(0, height / 4, width, height / 4);
-  p.drawLine(0, height / 2 + height / 4, width, height / 2 + height / 4);
-
-  int i = ui->comboBox->currentIndex();
-  {
-    for (int j = 0; j < count - 1; j++)
-    {
-      double alt1 = R2D(m_list[i].at(j));
-      double alt2 = R2D(m_list[i].at(j + 1));
-
-      int    x1 = j * deltax;
-      int    x2 = x1 + deltax;
-      double a1 = (height / 180.0) * (180 - (alt1 + 90));
-      double a2 = (height / 180.0) * (180 - (alt2 + 90));
-
-      p.setPen(Qt::white);
-      p.drawLine(x1, a1, x2, a2);
-    }
-  }
-
-  for (int i = 1; i < 24; i++)
-  {
-    int x = ((i / 24.0) * width);
-
-    p.setOpacity(1);
-    p.setPen(Qt::white);
-    p.drawLine(x, height, x, height - 8);
-
-    p.drawText(x - 10, height - 8 - 15, 20, 12, Qt::AlignCenter, QString("%1").arg(qAbs((i  + 12) % 24)));
-
-    p.setOpacity(0.3);
-    p.setPen(QPen(Qt::white, 1, Qt::DotLine));
-    p.drawLine(x, height - 22, x, 0);
-  }
-
-  p.setOpacity(0.5);
-  p.fillRect(0, height / 2.0 , width, height / 2.0, Qt::black);
-  p.setOpacity(1);
-
-  p.drawText(0, height / 4, 20, 20, Qt::AlignCenter, "45°");
-  p.drawText(0, height / 2, 20, 20, Qt::AlignCenter, "0°");
-  p.drawText(0, height / 2 + height / 4, 20, 20, Qt::AlignCenter, "-45°");
-
-
 }
 
 void CPlanetAltitude::calculate(double jd)
@@ -129,28 +38,86 @@ void CPlanetAltitude::calculate(double jd)
     m_list[p].clear();
   }
 
-  jd = (floor(jd + 0.5)) - m_view.geo.tz;
+  double cjd = jd;
 
-  for (double i = 0; i <= 1 + m_step; i += m_step)
+  jd = (floor(cjd + 0.5));
+
+  for (double i = 0; i < 1 + m_step; i += m_step)
   {
-    m_view.jd = jd + i;
+    m_view.jd = (jd + i) - m_view.geo.tz;
     ast.setParam(&m_view);
     for (int p = 0; p < PT_PLANET_COUNT; p++)
     {
       orbit_t o;
+      data_t data;
 
       ast.calcPlanet(p, &o);
 
-      m_list[p].append(o.lAlt);
+      data.alt = o.lAlt;
+      data.date = jd + i;
+      m_list[p].append(data);
     }
   }
 
   setWindowTitle(tr("Planet altitude") + " " + getStrDate(jd, m_view.geo.tz));
 }
 
+void CPlanetAltitude::makeChart()
+{
+  int count = m_list[0].count();
+
+  QVector<double> x;
+  QVector<double> y;
+
+  int i = ui->comboBox->currentIndex();
+  {
+    for (int j = 0; j < count; j++)
+    {
+      double alt = R2D(m_list[i].at(j).alt);
+      double date = m_list[i].at(j).date;
+
+      QDateTime dt;
+
+      jdConvertJDTo_DateTime(date, &dt);
+
+      //qDebug() << alt << getStrTime(date, m_view.geo.tz) << getStrDate(date, m_view.geo.tz);
+
+      x.append(dt.toTime_t());
+      y.append(alt);
+    }
+  }
+
+  ui->widget->clearGraphs();
+  ui->widget->addGraph();
+
+  ui->widget->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+  ui->widget->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, QPen(Qt::black), QBrush(Qt::white), 3));
+
+  ui->widget->yAxis->setRange(-90, 90);
+
+  ui->widget->xAxis->setLabel(tr("Time"));
+  ui->widget->yAxis->setLabel(tr("Alt."));
+
+  ui->widget->xAxis->setAutoSubTicks(true);
+  ui->widget->xAxis->setAutoTickStep(false);
+  ui->widget->xAxis->setTickStep(3600);
+
+  ui->widget->yAxis->setAutoSubTicks(true);
+  ui->widget->yAxis->setAutoTickStep(false);
+  ui->widget->yAxis->setTickStep(10);
+
+  ui->widget->xAxis->setDateTimeFormat("hh");
+  ui->widget->xAxis->setDateTimeSpec(Qt::UTC);
+  ui->widget->xAxis->setTickLabelType(QCPAxis::ltDateTime);
+
+  ui->widget->graph(0)->setData(x, y);
+  ui->widget->xAxis->rescale(true);
+  ui->widget->replot();
+}
+
 void CPlanetAltitude::on_comboBox_currentIndexChanged(int)
 {
-  update();
+  makeChart();
 }
 
 void CPlanetAltitude::on_pushButton_clicked()
@@ -162,19 +129,19 @@ void CPlanetAltitude::on_pushButton_2_clicked()
 {
   m_jd--;
   calculate(m_jd);
-  update();
+  makeChart();
 }
 
 void CPlanetAltitude::on_pushButton_3_clicked()
 {
   m_jd++;
   calculate(m_jd);
-  update();
+  makeChart();
 }
 
 void CPlanetAltitude::on_pushButton_4_clicked()
 {
   m_jd = jdGetCurrentJD();
   calculate(m_jd);
-  update();
+  makeChart();
 }

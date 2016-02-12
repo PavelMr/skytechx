@@ -10,6 +10,7 @@ QFont         setFonts[FONT_COUNT];
 
 setting_t     skSetTmp;
 setting_t     skPrintTmp;
+bool          g_nightConfig = false;
 
 static QString       qssStyle;
 extern QApplication *g_pApp;
@@ -797,10 +798,11 @@ void setDefaultStarMagRanges(setting_t *set)
 
 void restoreFromNightConfig(void)
 {
-  g_skSet = skSetTmp;
-  setCreateFonts();
+  //g_skSet = skSetTmp;
+  //setCreateFonts();
   g_pApp->setStyleSheet(qssStyle);
-  cStarRenderer.open(g_skSet.map.starBitmapName);
+  g_nightConfig = false;
+  //cStarRenderer.open(g_skSet.map.starBitmapName);
 }
 
 void restoreFromPrintConfig(void)
@@ -817,10 +819,13 @@ void setNightConfig(void)
   QRgb lred = MRGB(128,0,0);
   QRgb lred2 = MRGB(100,0,0);
 
-  skSetTmp = g_skSet;
+  //skSetTmp = g_skSet;
 
+  g_nightConfig = true;
   qssStyle = g_pApp->styleSheet();
   g_pApp->setStyleSheet(readAllFile("../data/styles/night.qss"));
+
+  /*
 
   for (int i = 0; i < FONT_COUNT; i++)
   {
@@ -893,6 +898,7 @@ void setNightConfig(void)
 
   // tracking
   g_skSet.map.tracking.color = lred;
+  */
 }
 
 

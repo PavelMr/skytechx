@@ -16,6 +16,7 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 
+class CDSSCurveWidget;
 class QPrinter;
 
 namespace Ui {
@@ -610,6 +611,7 @@ private slots:
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
+  CDSSCurveWidget *m_curve;
 
   void setTitle();
   void restoreDSSList();

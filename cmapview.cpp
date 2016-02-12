@@ -42,6 +42,8 @@ extern bool g_lockFOV;
 extern int g_numStars;
 extern int g_numRegions;
 
+extern bool  g_nightConfig;
+
 QCursor cur_rotate;
 
 MainWindow    *pcMainWnd;
@@ -61,6 +63,8 @@ extern bool    g_ddsSimpleRect;
 extern radec_t g_dssCorner[4];
 extern bool    g_antialiasing;
 extern bool    g_showZoomBar;
+
+bool g_nightRepaint = false;
 
 ///////////////////////////////////
 
@@ -1783,6 +1787,7 @@ void CMapView::repaintMap(bool bRepaint)
     m_mapView.starMag = getStarMagnitudeLevel() + m_mapView.starMagAdd;
     m_mapView.dsoMag = getDsoMagnitudeLevel() + m_mapView.dsoMagAdd;
     smRenderSkyMap(&m_mapView, &p, pBmp);
+    g_nightRepaint = true;
 
     if (g_showFps)
     {
@@ -1857,12 +1862,28 @@ void CMapView::paintEvent(QPaintEvent *)
   p.setRenderHint(QPainter::Antialiasing, g_antialiasing);
   p.setRenderHint(QPainter::SmoothPixmapTransform, g_antialiasing);
 
+  if (g_nightConfig && g_nightRepaint)
+  {
+    for (int ii = 0; ii < pBmp->height(); ii++)
+    {
+      uchar *scan = pBmp->scanLine(ii);
+      int depth = 4;
+      for (int jj = 0; jj < pBmp->width(); jj++)
+      {
+        QRgb* rgbpixel = reinterpret_cast<QRgb*>(scan + jj * depth);
+        int gray = qGray(*rgbpixel);
+        *rgbpixel = (255 << 24) | (gray << 16);
+      }
+    }
+    g_nightRepaint = false;
+  }
+
   p.drawImage(0, 0, *pBmp);
 
   if (m_zoomLens)
   {
-    double scale = 3;
-    int radius = 150;
+    double scale = 4;
+    int radius = 180;
     QPoint pos = mapFromGlobal(cursor().pos());
     QRect rect = QRect(pos.x() - radius, pos.y() - radius, radius * 2, radius * 2);
 
@@ -1875,7 +1896,7 @@ void CMapView::paintEvent(QPaintEvent *)
     p.drawImage(rect,
                 *pBmp, QRect(pos.x() - radius / scale,
                              pos.y() - radius / scale,
-                             2 * radius / scale, 2 * radius / scale), Qt::OrderedDither);
+                             2 * radius / scale, 2 * radius / scale));
     p.setClipping(false);
     p.setBrush(Qt::NoBrush);
     p.setPen(QPen(QColor(g_skSet.map.drawing.color), 3));
