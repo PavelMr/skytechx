@@ -1156,9 +1156,17 @@ int CPlanetRenderer::renderMoon(int id, QImage *pImg, QPainter *p, SKPOINT *pt, 
     if (id == 7) index = 4; // titan
   }
 
-  if (index != -1 && g_planetReal) // texture
+  if ((index != -1 && g_planetReal) && r > g_skSet.map.planet.satRad) // texture
   {
     renderSphere(p, pt, r, 0, 0, m_bmpMoon[index], pImg, view, o->lRD.Ra, o->lRD.Dec, 0);
+
+    QRadialGradient br = QRadialGradient(QPoint(pt->sx, pt->sy), r, QPoint(pt->sx, pt->sy));
+
+    br.setColorAt(1, QColor(0,0,0,100));
+    br.setColorAt(0.8, QColor(0,0,0,0));
+    br.setColorAt(0, QColor(0,0,0,0));
+    p->setBrush(br);
+    p->drawEllipse(QPointF(pt->sx, pt->sy), r + 1, r + 1);
 
     if (!sat->isInLight)
     {
