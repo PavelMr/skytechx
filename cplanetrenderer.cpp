@@ -638,7 +638,7 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   pPainter->save();
   pPainter->translate(QPoint(pt->sx, pt->sy));
   pPainter->rotate(R2D(angle));
-  pPainter->setPen(QColor(g_skSet.map.planet.brColor));
+  pPainter->setPen(QColor(g_skSet.map.planet.penColor));
   pPainter->setBrush(QColor(g_skSet.map.planet.brColor));
   pPainter->drawEllipse(QPointF(0, 0), (qreal)sx, LERP(qAbs(sin(o->cLat)), sy, sx));
   pPainter->restore();

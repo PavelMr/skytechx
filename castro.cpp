@@ -814,7 +814,6 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
   convRD2AANoRef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 }
 
-// TODO: udelat to i bez light corr.
 ////////////////////////////////////////////////////////////////////////////
 void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, bool lightCorrection)
 ////////////////////////////////////////////////////////////////////////////
@@ -845,40 +844,21 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
       orbit->hLon = data[0];
       orbit->hLat = data[1];
       orbit->r = data[2];
+
+      if (planet == PT_SUN)
+      {
+        solveSun(orbit);
+
+        orbit->sRectJ2000[0] = data[3];
+        orbit->sRectJ2000[1] = data[4];
+        orbit->sRectJ2000[2] = data[5];
+
+        return;
+      }
     }
     else
     { // solve moon
       solveMoon(orbit);
-      return;
-    }
-
-    if (planet == PT_SUN)
-    {
-      solveSun(orbit);
-
-      orbit->sRectJ2000[0] = data[3];
-      orbit->sRectJ2000[1] = data[4];
-      orbit->sRectJ2000[2] = data[5];
-
-      if (!lightCorrection)
-      {
-        return;
-      }
-
-      lt = orbit->light;
-
-      de404(planet, m_deltaT + m_jd - lt, data);
-
-      orbit->ephemType = EPT_DE404;
-      orbit->hLon = data[0];
-      orbit->hLat = data[1];
-      orbit->r = data[2];
-
-      orbit->sRectJ2000[0] = data[3];
-      orbit->sRectJ2000[1] = data[4];
-      orbit->sRectJ2000[2] = data[5];
-
-      solveSun(orbit);
       return;
     }
 
@@ -1214,7 +1194,7 @@ void CAstro::solveSun(orbit_t *o)
 
   o->flattening = 0;
   o->mag = -26.74;
-  o->dx = 696010 * 2;
+  o->dx = 696000 * 2;
   o->dy = o->dx * (1 - o->flattening);
   o->phase = 1;
 

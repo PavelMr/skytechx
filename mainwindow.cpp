@@ -407,6 +407,15 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_view->setStyleSheet("font-size: 10pt;");
   */
 
+  QButtonGroup* g1 = new QButtonGroup(this);
+
+  g1->addButton(ui->tb_m1);
+  g1->addButton(ui->tb_m2);
+  g1->addButton(ui->tb_m5);
+  g1->addButton(ui->tb_m10);
+
+  ui->tb_m1->setChecked(true);
+
   // DSS widget
   CLFModel *model2 = new CLFModel(0, 3);
 
@@ -993,14 +1002,29 @@ void MainWindow::slotTimeSliderUpdate()
     return;
   }
 
+  double mul;
+
+  if (ui->tb_m1->isChecked()) mul = 1;
+    else
+  if (ui->tb_m2->isChecked()) mul = 2;
+    else
+  if (ui->tb_m5->isChecked()) mul = 5;
+    else mul = 10;
+
   QEasingCurve curve(QEasingCurve::InQuint);
-  ui->widget->m_mapView.jd += (ui->horizontalSlider->value() > 0 ? +1 : -1) * curve.valueForProgress(qAbs(ui->horizontalSlider->value()) / 100.0) * 0.25;
+  double val = (ui->horizontalSlider->value() > 0 ? +1 : -1) * curve.valueForProgress(qAbs(ui->horizontalSlider->value()) / 100.0) * 0.025 * mul;
+  ui->widget->m_mapView.jd += val;
+
   repaintMap();
+}
+
+void MainWindow::on_horizontalSlider_sliderReleased()
+{
+  ui->horizontalSlider->setValue(0);
 }
 
 void MainWindow::slotCalendaryUpdate()
 {
-  //ui->widget->m_mapView.jd +=
   repaintMap();
 }
 
@@ -5869,11 +5893,6 @@ void MainWindow::on_actionCenter_of_screen_triggered(bool checked)
   repaintMap();
 }
 
-void MainWindow::on_horizontalSlider_sliderReleased()
-{
-  ui->horizontalSlider->setValue(0);
-}
-
 void MainWindow::on_timeEdit_timeChanged(const QTime &/*time*/)
 {
   on_calendarWidget_selectionChanged();
@@ -5987,3 +6006,4 @@ void MainWindow::on_actionAdvanced_search_triggered()
     }
   }
 }
+

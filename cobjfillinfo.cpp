@@ -1869,8 +1869,10 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     addTextItem(item, tr("Y"), QString::number(hy, 'f', 8));
     addTextItem(item, tr("Z"), QString::number(hz, 'f', 8));
     addSeparator(item);
-    addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
-    addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));
+    //addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
+    //addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));
+    addTextItem(item, tr("Longitude"), getStrDeg(lon));
+    addTextItem(item, tr("Latitude"), getStrDeg(lat));
     addSeparator(item);
     addTextItem(item, tr("r"), QString::number(o.r) + tr("AU"));
     addSeparator(item);

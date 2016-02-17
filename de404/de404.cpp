@@ -4,6 +4,7 @@
 #include "plantbl.h"
 #include "skcore.h"
 #include "../castro.h"
+#include "nutation.h"
 
 class GCPlan
 {
@@ -324,6 +325,8 @@ void de404(int pln, double jd, double rect[])
   }
 
   double pol[3];
+
+  //jd = 2446431.5;
 
   cp.gplan (jd, p, pol);
 
