@@ -77,6 +77,7 @@ protected:
   void updateDlg(void);
   void reject() {};
   void fillList(void);
+  void updateAsteroids(const QList <asteroid_t> &list, QList <asteroid_t> &old, int type);
 
   QString cSaveQuest;
 

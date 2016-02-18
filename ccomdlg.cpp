@@ -8,6 +8,8 @@
 #include "setting.h"
 #include "smartlabeling.h"
 #include "cscanrender.h"
+#include "skprogressdialog.h"
+#include "astcomdowntypedlg.h"
 
 extern bool g_comAstChanged;
 extern bool g_onPrinterBW;
@@ -905,12 +907,31 @@ void CComDlg::slotDelete()
 void CComDlg::on_pushButton_7_clicked()
 /////////////////////////////////////////
 {
+  int type;
+
   if (tComets.count() != 0)
   {
-    if (msgBoxQuest(this, cSaveQuest) == QMessageBox::Yes)
+    AstComDownTypeDlg dlg;
+
+    if (dlg.exec() == DL_CANCEL)
     {
-      comSave(curCometCatName, this);
+      return;
     }
+
+    type = dlg.m_type;
+
+    if (type == ACDT_REMOVE)
+    {
+      if (msgBoxQuest(this, cSaveQuest) == QMessageBox::Yes)
+      {
+        astSave(curCometCatName, this);
+      }
+      astClear();
+    }
+  }
+  else
+  {
+    type = ACDT_REMOVE;
   }
 
   deleteTracking(MO_COMET);
@@ -918,18 +939,18 @@ void CComDlg::on_pushButton_7_clicked()
   pcMainWnd->removeQuickInfo(MO_COMET);
   g_comAstChanged = true;
 
-  comClear();
+  QList <comet_t> tNew;
 
-  CDownloadMPC *dlg = new CDownloadMPC(this, &tComets);
+  CDownloadMPC *dlg = new CDownloadMPC(this, &tNew);
 
   if (dlg->exec() == DL_CANCEL)
   {
     delete dlg; // delete dlg before clearing
-    comClear();
   }
   else
   {
     delete dlg;
+    updateComets(tNew, tComets, type);
   }
 
   fillList();
@@ -1059,4 +1080,53 @@ void CComDlg::slotSelChange(QModelIndex &index)
 {
   ui->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
   ui->listView->scrollTo(index);
+}
+
+
+void CComDlg::updateComets(const QList<comet_t> &list, QList<comet_t> &old, int type)
+{
+  SkProgressDialog dlg(tr("Please wait..."), "", 0, 0, this);
+  dlg.setWindowFlags((dlg.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint);
+  dlg.setWindowModality(Qt::WindowModal);
+  dlg.setMinimumDuration(0);
+  dlg.setCancelButton(NULL);
+  dlg.show();
+
+  int newCount = 0;
+  int updateCount = 0;
+
+  int j = 0;
+  foreach (const comet_t &ast, list)
+  {
+    bool found = false;
+    for (int i = 0; i < old.count(); i++)
+    {
+      if (((++j) % 10000) == 0)
+      {
+        QApplication::processEvents();
+      }
+
+      if (old[i].name == ast.name)
+      {
+        if (type == ACDT_UPDATE || type == ACDT_ADD_UPDATE)
+        {
+          old[i] = ast;
+          updateCount++;
+        }
+        found = true;
+        break;
+      }
+    }
+    if (!found)
+    {
+      if (type == ACDT_REMOVE || type == ACDT_ADD || type == ACDT_ADD_UPDATE)
+      {
+        newCount++;
+        old.append(ast);
+      }
+    }
+  }
+
+  dlg.hide();
+  msgBoxInfo(this, QString(tr("The updated comets : %1\nThe new comets : %2")).arg(updateCount).arg(newCount));
 }

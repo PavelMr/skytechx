@@ -103,6 +103,7 @@ private slots:
 
 private:
   Ui::CComDlg *ui;
+  void updateComets(const QList<comet_t> &list, QList<comet_t> &old, int type);
 };
 
 #endif // CCOMDLG_H

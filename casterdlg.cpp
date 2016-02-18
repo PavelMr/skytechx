@@ -7,6 +7,10 @@
 #include "cobjtracking.h"
 #include "setting.h"
 #include "smartlabeling.h"
+#include "astcomdowntypedlg.h"
+#include "skprogressdialog.h"
+
+#include <QProgressDialog>
 
 extern bool g_comAstChanged;
 
@@ -544,7 +548,7 @@ void CAsterDlg::fillList()
   setCursor(Qt::WaitCursor);
   QApplication::processEvents();
 
-  qDebug() << tAsteroids.count();
+  //qDebug() << tAsteroids.count();
 
   for (int i = 0; i < tAsteroids.count(); i++)
   {
@@ -562,6 +566,54 @@ void CAsterDlg::fillList()
   }
 
   setCursor(Qt::ArrowCursor);
+}
+
+void CAsterDlg::updateAsteroids(const QList<asteroid_t> &list, QList<asteroid_t> &old, int type)
+{
+  SkProgressDialog dlg(tr("Please wait..."), "", 0, 0, this);
+  dlg.setWindowFlags((dlg.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint);
+  dlg.setWindowModality(Qt::WindowModal);
+  dlg.setMinimumDuration(0);
+  dlg.setCancelButton(NULL);
+  dlg.show();
+
+  int newCount = 0;
+  int updateCount = 0;
+
+  int j = 0;
+  foreach (const asteroid_t &ast, list)
+  {
+    bool found = false;
+    for (int i = 0; i < old.count(); i++)
+    {
+      if (((++j) % 10000) == 0)
+      {
+        QApplication::processEvents();
+      }
+
+      if (old[i].name == ast.name)
+      {
+        if (type == ACDT_UPDATE || type == ACDT_ADD_UPDATE)
+        {
+          old[i] = ast;
+          updateCount++;
+        }
+        found = true;
+        break;
+      }
+    }
+    if (!found)
+    {
+      if (type == ACDT_REMOVE || type == ACDT_ADD || type == ACDT_ADD_UPDATE)
+      {
+        newCount++;
+        old.append(ast);
+      }
+    }
+  }
+
+  dlg.hide();
+  msgBoxInfo(this, QString(tr("The updated asteroids : %1\nThe new asteroids : %2")).arg(updateCount).arg(newCount));
 }
 
 /////////////////////////////////////////
@@ -674,12 +726,31 @@ void CAsterDlg::slotSelChange(QModelIndex &index)
 void CAsterDlg::on_pushButton_7_clicked()
 /////////////////////////////////////////
 {
+  int type;
+
   if (tAsteroids.count() != 0)
   {
-    if (msgBoxQuest(this, cSaveQuest) == QMessageBox::Yes)
+    AstComDownTypeDlg dlg;
+
+    if (dlg.exec() == DL_CANCEL)
     {
-      astSave(curAsteroidCatName, this);
+      return;
     }
+
+    type = dlg.m_type;
+
+    if (type == ACDT_REMOVE)
+    {
+      if (msgBoxQuest(this, cSaveQuest) == QMessageBox::Yes)
+      {
+        astSave(curAsteroidCatName, this);
+      }
+      astClear();
+    }
+  }
+  else
+  {
+    type = ACDT_REMOVE;
   }
 
   deleteTracking(MO_ASTER);
@@ -687,19 +758,18 @@ void CAsterDlg::on_pushButton_7_clicked()
   pcMainWnd->removeQuickInfo(MO_ASTER);
   g_comAstChanged = true;
 
-  astClear();
+  QList <asteroid_t> tNew;
 
-  CDownloadMPC *dlg = new CDownloadMPC(this, &tAsteroids);
+  CDownloadMPC *dlg = new CDownloadMPC(this, &tNew);
 
   if (dlg->exec() == DL_CANCEL)
   {
     delete dlg; // delete dlg before clearing
-    astClear();
-
   }
   else
   {
     delete dlg;
+    updateAsteroids(tNew, tAsteroids, type);
   }
 
   fillList();

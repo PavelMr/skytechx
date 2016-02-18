@@ -252,7 +252,9 @@ SOURCES += main.cpp\
     skwatch.cpp \
     soundmanager.cpp \
     skserver.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    astcomdowntypedlg.cpp \
+    skprogressdialog.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -458,7 +460,9 @@ HEADERS  += mainwindow.h \
     skwatch.h \
     soundmanager.h \
     skserver.h \
-    qcustomplot.h
+    qcustomplot.h \
+    astcomdowntypedlg.h \
+    skprogressdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -547,7 +551,8 @@ FORMS    += mainwindow.ui \
     moonlessnightsdlg.ui \
     clunarfeaturessearch.ui \
     cplanetsize.ui \
-    cadvsearch.ui
+    cadvsearch.ui \
+    astcomdowntypedlg.ui
 
 
 RESOURCES += \
