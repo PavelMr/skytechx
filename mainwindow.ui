@@ -246,7 +246,7 @@
      <property name="geometry">
       <rect>
        <x>430</x>
-       <y>50</y>
+       <y>20</y>
        <width>211</width>
        <height>81</height>
       </rect>
@@ -1113,7 +1113,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-206</y>
+          <y>0</y>
           <width>302</width>
           <height>576</height>
          </rect>
@@ -3169,6 +3169,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="separator"/>
    <addaction name="actionTPStop"/>
    <addaction name="actionFind_telescope"/>
+   <addaction name="actionSlew_telescope_to_screen_center"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="tb_drawing">
@@ -5075,6 +5076,21 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Alt+F</string>
+   </property>
+  </action>
+  <action name="actionSlew_telescope_to_screen_center">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_slew_center.png</normaloff>:/res/ico_slew_center.png</iconset>
+   </property>
+   <property name="text">
+    <string>Slew telescope to screen center</string>
+   </property>
+   <property name="toolTip">
+    <string>Slew telescope to screen center</string>
    </property>
   </action>
  </widget>

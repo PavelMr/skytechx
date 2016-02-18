@@ -608,6 +608,8 @@ private slots:
 
   void on_actionAdvanced_search_triggered();
 
+  void on_actionSlew_telescope_to_screen_center_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

@@ -137,5 +137,6 @@
         <file>res/rise_icon.png</file>
         <file>res/set_icon.png</file>
         <file>res/transit_icon.png</file>
+        <file>res/ico_slew_center.png</file>
     </qresource>
 </RCC>

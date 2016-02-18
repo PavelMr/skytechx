@@ -1212,7 +1212,11 @@ int CPlanetRenderer::renderMoon(int id, QImage *pImg, QPainter *p, SKPOINT *pt, 
     p->drawEllipse(QPointF(pt->sx, pt->sy), r, r);
   }
 
+  if (sat->isHidden)
+  {
+    return -1;
+  }
 
-  return(r);
+  return r;
 }
 

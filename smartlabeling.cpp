@@ -102,9 +102,19 @@ QRect SmartLabeling::renderLabel(CSkPainter *painter, const QPoint &point, float
 
   if (render)
   {
+    /*
+    double x = trc.center().x() - painter->device()->width() / 2;
+    double y = trc.center().y() - painter->device()->height() / 2;
+    double op = 1 - (sqrt(POW2(x) + POW2(y)) / painter->device()->width() * 2);
+
+    painter->setOpacity(op);
+    */
+
     setSetFont(fontId, painter);
     setSetFontColor(fontId, painter);
     painter->drawText(trc, Qt::AlignCenter, text);
+
+    //painter->setOpacity(1);
   }
   //painter->drawRect(trc);
 

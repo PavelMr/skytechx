@@ -1013,7 +1013,7 @@ static void smRenderMoons(QImage *pImg, CSkPainter *p, planetSatellites_t *sat, 
 
         int r = cPlanetRenderer.renderMoon(i, pImg, p, &pt, ptp, o, &sat->sats[i], bFront, view);
 
-        if (g_showLabels)
+        if (g_showLabels && r > 0)
         {
           g_labeling.addLabel(QPoint(pt.sx, pt.sy), r + 5, sat->sats[i].name, FONT_PLN_SAT, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
         }

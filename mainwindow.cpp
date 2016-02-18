@@ -1278,15 +1278,18 @@ void MainWindow::refillEI()
     {
       if (e->vis == vis || vis == -1)
       {
-        QBrush col;
+        QColor col;
         if (i % 2)
         {
-          col = ui->treeView_2->palette().alternateBase().color().dark(110);
+          col = ui->treeView_2->palette().alternateBase().color();
         }
         else
         {
-          col = ui->treeView_2->palette().base().color().dark(110);
+          col = ui->treeView_2->palette().base().color();
         }
+
+        col.setRed(qMax(col.red() - 32, 0));
+        col.setBlue(qMax(col.blue() - 32, 0));
 
         bool bLastSearch;
         QStandardItem *item = new QStandardItem;
@@ -3359,6 +3362,7 @@ void MainWindow::on_actionConnect_device_triggered()
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionDisconnect, SLOT(setEnabled(bool)));
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionTPStop, SLOT(setEnabled(bool)));
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionFind_telescope, SLOT(setEnabled(bool)));
+      connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionSlew_telescope_to_screen_center, SLOT(setEnabled(bool)));
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionTelescope, SLOT(setEnabled(bool)));
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionVery_fast_100ms, SLOT(setEnabled(bool)));
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionFast_250ms, SLOT(setEnabled(bool)));
@@ -6007,3 +6011,20 @@ void MainWindow::on_actionAdvanced_search_triggered()
   }
 }
 
+
+void MainWindow::on_actionSlew_telescope_to_screen_center_triggered()
+{
+  if (g_pTelePlugin)
+  {
+    if (g_pTelePlugin->getAttributes() & TPI_CAN_SLEW)
+    {
+      double ra, dec;
+
+      trfConvScrPtToXY(ui->widget->width() / 2.0, ui->widget->height() / 2.0, ra, dec);
+
+      double r = R2D(ra) / 15.0;
+      double d = R2D(dec);
+      g_pTelePlugin->slewTo(r, d);
+    }
+  }
+}

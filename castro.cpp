@@ -444,7 +444,6 @@ void CAstro::setParam(const mapView_t *view)
     m_geoTemp = view->geo.temp;
   }
 
-
   if (view->deltaT != CM_UNDEF)
     m_deltaT = view->deltaT;
   else

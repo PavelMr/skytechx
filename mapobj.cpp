@@ -210,7 +210,7 @@ static bool sortObj(mapObj_t &o1, mapObj_t &o2)
 
   if (o1.type == o2.type)
   {
-    if (o1.type == MO_DSO) // sort dso by size
+    if (o1.type == MO_DSO || o1.type == MO_PLANET) // sort by size
       return(o1.size < o2.size);
     else // else by magnitude
       return(o1.mag < o2.mag);
