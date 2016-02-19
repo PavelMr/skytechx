@@ -409,3 +409,9 @@ void C3DSolar::on_checkBox_3_toggled(bool checked)
 {
   ui->frame->setShowRadius(checked);
 }
+
+void C3DSolar::on_pb_clipboard_clicked()
+{
+  QClipboard *clipboard = QApplication::clipboard();
+  clipboard->setPixmap(ui->frame->grab());
+}

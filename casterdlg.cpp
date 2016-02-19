@@ -821,6 +821,11 @@ void CAsterDlg::on_pushButton_4_clicked()
     }
   }
 
+  deleteTracking(MO_ASTER);
+  releaseHoldObject(MO_ASTER);
+  pcMainWnd->removeQuickInfo(MO_ASTER);
+  g_comAstChanged = true;
+
   astClear();
   fillList();
   updateDlg();

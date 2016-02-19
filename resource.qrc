@@ -138,5 +138,6 @@
         <file>res/set_icon.png</file>
         <file>res/transit_icon.png</file>
         <file>res/ico_slew_center.png</file>
+        <file>res/ico_clipboard.png</file>
     </qresource>
 </RCC>

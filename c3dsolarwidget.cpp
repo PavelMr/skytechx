@@ -188,7 +188,7 @@ void C3DSolarWidget::generateOrbits()
 
     do
     {
-      view.jd += steps[i] * 1.0;
+      view.jd += steps[i] * 0.5;
       ast.setParam(&view);
       ast.calcPlanet(i, &o, false, true, false);
 
@@ -542,10 +542,11 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
   double rr = 0, RR = 0;
 
+  QString name;
+
   if (m_index >= 0)
   {
     QVector3D pos;
-    QString name;
 
     if (m_isComet)
     {
@@ -642,20 +643,33 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     }
   }
 
+  QFontMetrics mt(p.font());
+  const int h = mt.height() + 5;
+  const int m = 15;
   p.setPen(Qt::white);
   if (m_pitch > R90)
   {
-    p.renderText(5, 5, 5, tr("Looking from top"), RT_BOTTOM_RIGHT);
+    p.renderText(5, height() - h * 4 - m, 5, tr("Looking from top"), RT_BOTTOM_RIGHT);
   }
   else
   {
-    p.renderText(5, 5, 5, tr("Looking from bottom"), RT_BOTTOM_RIGHT);
+    p.renderText(5, height() - h * 4 - m, 5, tr("Looking from bottom"), RT_BOTTOM_RIGHT);
   }
 
   if (m_index >= 0)
   {
-    p.renderText(5, 25, 5, tr("Distance from Sun : %1 AU").arg(rr, 0, 'f', 8), RT_BOTTOM_RIGHT);
-    p.renderText(5, 42, 5, tr("Distance from Earth : %1 AU / %2 KM").arg(RR, 0, 'f', 8).arg(RR * AU1, 0, 'f', 8), RT_BOTTOM_RIGHT);
+    p.renderText(5, height() - h * 3 - m, 5, tr("Distance from Sun : %1 AU").arg(rr, 0, 'f', 8), RT_BOTTOM_RIGHT);
+    p.renderText(5, height() - h * 2 - m, 5, tr("Distance from Earth : %1 AU / %2 KM").arg(RR, 0, 'f', 8).arg(RR * AU1, 0, 'f', 2), RT_BOTTOM_RIGHT);
+  }
+
+  if (m_index >= 0)
+  {
+    p.save();
+    QFont font(p.font());
+    font.setBold(true);
+    p.setFont(font);
+    p.renderText(width() / 2, 5, 5, tr("Orbit of ") + name, RT_BOTTOM);
+    p.restore();
   }
 
   int ix = 10;

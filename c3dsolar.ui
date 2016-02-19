@@ -268,6 +268,37 @@ Zoom by mouse wheel</string>
          </property>
         </spacer>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="pb_clipboard">
+           <property name="toolTip">
+            <string>Add image to clipboard</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resource.qrc">
+             <normaloff>:/res/ico_clipboard.png</normaloff>:/res/ico_clipboard.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
       </layout>
      </item>
     </layout>
@@ -469,7 +500,7 @@ Zoom by mouse wheel</string>
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="resource.qrc">
          <normaloff>:/res/set_map_time.png</normaloff>:/res/set_map_time.png</iconset>
        </property>
       </widget>
@@ -493,6 +524,8 @@ Zoom by mouse wheel</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
