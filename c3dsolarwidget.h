@@ -23,6 +23,7 @@ public:
   void setLockAt(int index);
   void setViewParam(double yaw = CM_UNDEF, double pitch = CM_UNDEF, double x = CM_UNDEF, double y = CM_UNDEF, double z = CM_UNDEF, bool updateView = true);
   void removeOrbit();
+  QPixmap *getPixmap();
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -51,6 +52,7 @@ protected:
   double    m_yaw;
   double    m_pitch;
   int       m_index;
+  QPixmap  *m_pixmap;
 
 public slots:
 

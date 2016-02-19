@@ -68,6 +68,12 @@ private slots:
 
   void on_pb_clipboard_clicked();
 
+  void on_pb_print_clicked();
+
+  void on_pb_preview_clicked();
+
+  void slotPrintPreview(QPrinter *printer);
+
 private:
   Ui::C3DSolar *ui;
   double m_jd;
@@ -76,6 +82,7 @@ private:
   void showError();
 
   void saveAll();
+  void printWidget(QPrinter *printer);
 };
 
 #endif // C3DSOLAR_H

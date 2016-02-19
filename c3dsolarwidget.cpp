@@ -15,6 +15,7 @@ C3DSolarWidget::C3DSolarWidget(QWidget *parent) :
   setAttribute(Qt::WA_NoSystemBackground, true);
   setMouseTracking(true);
 
+  m_pixmap = NULL;
   objList.clear();
   m_lockAt = -1;
   m_index = -1;
@@ -159,6 +160,11 @@ void C3DSolarWidget::removeOrbit()
   update();
 }
 
+QPixmap *C3DSolarWidget::getPixmap()
+{
+  return m_pixmap;
+}
+
 void C3DSolarWidget::generateOrbits()
 {
   double steps[8] = {8, 1, 4, 10, 20, 25, 30, 40};
@@ -218,7 +224,20 @@ void C3DSolarWidget::generateOrbits()
 
 void C3DSolarWidget::paintEvent(QPaintEvent *)
 {
-  CSkPainter p(this);
+  if ((m_pixmap && m_pixmap->size() != size()) || !m_pixmap)
+  {
+    if (m_pixmap)
+    {
+      delete m_pixmap;
+    }
+    m_pixmap = new QPixmap(size());
+  }
+
+  CSkPainter painter(this);
+  CSkPainter p;
+
+  p.begin(m_pixmap);
+
   CAstro ast;
 
   p.setFont(QFont("arial", 12));
@@ -686,6 +705,10 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
   p.setPen(QPen(Qt::white, 3));
   p.drawLine(ix, iy, ix + au1, iy);
   p.drawText(5 + ix + au1, iy, QString::number(1 / (double)sc, 'f', 2) + tr(" AU"));
+
+  p.end();
+
+  painter.drawPixmap(0, 0, *m_pixmap);
 }
 
 void C3DSolarWidget::wheelEvent(QWheelEvent *e)

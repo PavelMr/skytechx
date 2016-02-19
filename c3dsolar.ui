@@ -269,21 +269,14 @@ Zoom by mouse wheel</string>
         </spacer>
        </item>
        <item>
+        <widget class="Line" name="line_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QPushButton" name="pb_clipboard">
-           <property name="toolTip">
-            <string>Add image to clipboard</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resource.qrc">
-             <normaloff>:/res/ico_clipboard.png</normaloff>:/res/ico_clipboard.png</iconset>
-           </property>
-          </widget>
-         </item>
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
@@ -297,7 +290,56 @@ Zoom by mouse wheel</string>
            </property>
           </spacer>
          </item>
+         <item>
+          <widget class="QPushButton" name="pb_clipboard">
+           <property name="toolTip">
+            <string>Copy image to clipboard</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resource.qrc">
+             <normaloff>:/res/ico_clipboard.png</normaloff>:/res/ico_clipboard.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_print">
+           <property name="toolTip">
+            <string>Print</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resource.qrc">
+             <normaloff>:/res/ico_printer.png</normaloff>:/res/ico_printer.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_preview">
+           <property name="toolTip">
+            <string>Print preview</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resource.qrc">
+             <normaloff>:/res/ico_print_preview.png</normaloff>:/res/ico_print_preview.png</iconset>
+           </property>
+          </widget>
+         </item>
         </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

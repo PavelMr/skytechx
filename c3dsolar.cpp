@@ -3,6 +3,10 @@
 #include "ccomdlg.h"
 #include "casterdlg.h"
 
+#include <QPrintDialog>
+#include <QPrinter>
+#include <QPrintPreviewDialog>
+
 bool g_comAstChanged = false;
 
 static int g_quiet = true;
@@ -414,4 +418,68 @@ void C3DSolar::on_pb_clipboard_clicked()
 {
   QClipboard *clipboard = QApplication::clipboard();
   clipboard->setPixmap(ui->frame->grab());
+}
+
+void C3DSolar::on_pb_print_clicked()
+{
+  QPrinter prn(QPrinter::ScreenResolution);
+  QPrintDialog dlg(&prn, this);
+
+  prn.setOrientation(QPrinter::Landscape);
+  prn.setPageMargins(10, 10, 10, 10, QPrinter::Millimeter);
+
+  if (dlg.exec() == DL_CANCEL)
+  {
+    return;
+  }
+
+  printWidget(&prn);
+}
+
+void C3DSolar::on_pb_preview_clicked()
+{
+  QPrintPreviewDialog dlg(this);
+
+  dlg.setWindowFlags(dlg.windowFlags() | Qt::WindowMaximizeButtonHint);
+  dlg.printer()->setOrientation(QPrinter::Landscape);
+  dlg.printer()->setPageMargins(10, 10, 10, 10, QPrinter::Millimeter);
+  dlg.resize(1000, 1000 / 1.333);
+  dlg.ensurePolished();
+
+  connect(&dlg, SIGNAL(paintRequested(QPrinter*)), SLOT(slotPrintPreview(QPrinter*)));
+  dlg.exec();
+}
+
+void C3DSolar::slotPrintPreview(QPrinter *printer)
+{
+  printWidget(printer);
+}
+
+
+void C3DSolar::printWidget(QPrinter *printer)
+{
+  QPixmap *pixmap = ui->frame->getPixmap();
+  QImage image = pixmap->toImage();
+
+  image = image.convertToFormat(QImage::Format_Grayscale8);
+
+  QPainter p(printer);
+
+  p.setRenderHint(QPainter::Antialiasing, true);
+  p.setRenderHint(QPainter::SmoothPixmapTransform, true);
+
+  //image
+  image.invertPixels();
+  image = image.scaled(p.device()->width(), p.device()->height(),
+                       Qt::KeepAspectRatio,
+                       Qt::SmoothTransformation);
+
+  int px = p.device()->width() / 2 - image.width() / 2;
+  int py = p.device()->height() / 2 - image.height() / 2;
+
+  p.drawImage(px, py, image);
+  p.setPen(Qt::black);
+  p.setBrush(Qt::NoBrush);
+  p.drawRect(QRect(QPoint(px, py), image.size()));
+  p.end();
 }
