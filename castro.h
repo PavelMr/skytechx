@@ -126,7 +126,7 @@ class CAstro
     void   calcParallax(radec_t *rd, double R);
     double getRaDec_NP(double val, double delta);
     double calcDeltaT(double jd);
-    QString getName(int type);
+    static QString getName(int type);
 
     static QString getFileName(int type);
     static double solveKepler(double eccent, double M);

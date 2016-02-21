@@ -13,6 +13,7 @@
 
 extern bool g_comAstChanged;
 extern bool g_onPrinterBW;
+extern bool g_geocentric;
 
 /////////////////////////////////////////////////////////
 extern MainWindow *pcMainWnd;
@@ -317,6 +318,8 @@ bool comSolve(comet_t *a, double jdt, bool lightCorrected)
 void comRender(CSkPainter *p, mapView_t *view, float maxMag)
 ////////////////////////////////////////////////////////////
 {
+  static int lastType = -1;
+
   if (tComets.count() == 0)
     return;
 
@@ -337,12 +340,13 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
     if (!a->selected)
       continue;
 
-    if (a->lastJD != view->jd)
+    if (a->lastJD != view->jd || lastType != g_geocentric)
     {
       if (!comSolve(a, view->jd))
         continue; // TODO: dat nejak najevo chybu vypoctu
 
       a->lastJD = view->jd;
+      lastType = g_geocentric;
     }
 
     if ((a->orbit.mag > maxMag + g_skSet.map.comet.plusMag) || (a->orbit.mag > g_skSet.map.comet.maxMag))

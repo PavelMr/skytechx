@@ -1804,6 +1804,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
 
   addSeparator(item);
+
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);

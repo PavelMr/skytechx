@@ -6,6 +6,8 @@
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
 
+extern bool g_geocentric;
+
 const double g_AAParallax_C1 = sin(DMS2RAD(0, 0, 8.794));
 
 CAstro cAstro;
@@ -1500,12 +1502,12 @@ void CAstro::calcParallax(orbit_t *o)
 {
   double Distance = o->R;
 
-  /*
-  o->lRD.Ra = o->gRD.Ra;
-  o->lRD.Dec = o->gRD.Dec;
-
-  return;
-  */
+  if (g_geocentric)
+  {
+    o->lRD.Ra = o->gRD.Ra;
+    o->lRD.Dec = o->gRD.Dec;
+    return;
+  }
 
   if (o->type == PT_MOON)
   {
@@ -1537,6 +1539,11 @@ void CAstro::calcParallax(orbit_t *o)
 
 void CAstro::calcParallax(radec_t *rd, double R)
 {
+  if (g_geocentric)
+  {
+    return;
+  }
+
   //Calculate the Sidereal time
   double theta = R2D(m_gst) / 15.0;
   double cosDelta = cos(rd->Dec);

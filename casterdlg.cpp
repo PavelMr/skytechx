@@ -13,6 +13,7 @@
 #include <QProgressDialog>
 
 extern bool g_comAstChanged;
+extern bool g_geocentric;
 
 // TODO: priste udelat list view rychlejsi (je to pomaly pri hodne polozkach)
 
@@ -253,6 +254,7 @@ void astRender(CSkPainter *p, mapView_t *view, float maxMag)
 ////////////////////////////////////////////////////////////
 {
   int size = g_skSet.map.aster.radius;
+  static int lastType = -1;
 
   // TODO: naplnit QList checked polozkama (pointer na comet_t ) aby se pres for chodilo jenom pres vybrane (to samy u asteroidu)
 
@@ -265,10 +267,11 @@ void astRender(CSkPainter *p, mapView_t *view, float maxMag)
     if (!a->selected)
       continue;
 
-    if (a->lastJD != view->jd)
+    if (a->lastJD != view->jd || lastType != g_geocentric)
     {
       astSolve(a, view->jd);
       a->lastJD = view->jd;
+      lastType = g_geocentric;
     }
 
     if ((a->orbit.mag > maxMag + g_skSet.map.aster.plusMag) || (a->orbit.mag > g_skSet.map.aster.maxMag))

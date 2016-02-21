@@ -90,6 +90,8 @@
 #include "soundmanager.h"
 #include "cdssdlg.h"
 #include "skserver.h"
+#include "skeventdocument.h"
+#include "cskeventdocdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -115,6 +117,8 @@ bool g_showLabels = false;
 bool g_showDrawings = false;
 bool g_showObjTracking = false;
 bool g_showObjectAxis = false;
+
+bool g_geocentric = false;
 
 bool g_bilinearInt = false;
 bool g_showZoomBar = true;
@@ -1370,6 +1374,8 @@ QString MainWindow::getEventDesc(event_t *e)
 {
   double tz = ui->widget->m_mapView.geo.tz;
   QString str;
+
+  m_currentEvent = *e;
 
   switch (e->type)
   {
@@ -6027,4 +6033,21 @@ void MainWindow::on_actionSlew_telescope_to_screen_center_triggered()
       g_pTelePlugin->slewTo(r, d);
     }
   }
+}
+
+void MainWindow::on_actionGeocentric_triggered(bool checked)
+{
+  g_geocentric = checked;
+  repaintMap();
+}
+
+void MainWindow::on_pushButton_36_clicked()
+{
+  SkEventDocument *event = new SkEventDocument(&m_currentEvent, &ui->widget->m_mapView);
+  QImage image = event->create();//.save("event.png", "PNG");
+  delete event;
+
+  CSkEventDocDialog dlg(this, image);
+
+  dlg.exec();
 }

@@ -254,7 +254,9 @@ SOURCES += main.cpp\
     skserver.cpp \
     qcustomplot.cpp \
     astcomdowntypedlg.cpp \
-    skprogressdialog.cpp
+    skprogressdialog.cpp \
+    skeventdocument.cpp \
+    cskeventdocdialog.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -462,7 +464,9 @@ HEADERS  += mainwindow.h \
     skserver.h \
     qcustomplot.h \
     astcomdowntypedlg.h \
-    skprogressdialog.h
+    skprogressdialog.h \
+    skeventdocument.h \
+    cskeventdocdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -552,7 +556,8 @@ FORMS    += mainwindow.ui \
     clunarfeaturessearch.ui \
     cplanetsize.ui \
     cadvsearch.ui \
-    astcomdowntypedlg.ui
+    astcomdowntypedlg.ui \
+    cskeventdocdialog.ui
 
 
 RESOURCES += \

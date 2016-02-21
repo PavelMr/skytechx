@@ -120,6 +120,7 @@ protected:
   bool            m_isNormal;
   bool            m_noRecalculateView;
   QString         m_dlgProfileName;
+  event_t         m_currentEvent;
 
   QNetworkAccessManager m_versionManager;
 
@@ -609,6 +610,10 @@ private slots:
   void on_actionAdvanced_search_triggered();
 
   void on_actionSlew_telescope_to_screen_center_triggered();
+
+  void on_actionGeocentric_triggered(bool checked);
+
+  void on_pushButton_36_clicked();
 
 private:
   Ui::MainWindow *ui;
