@@ -3269,6 +3269,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionEcliptic"/>
    <addaction name="separator"/>
    <addaction name="actionEpoch_J2000_0"/>
+   <addaction name="actionGeocentric"/>
   </widget>
   <widget class="QToolBar" name="tb_window">
    <property name="windowTitle">
@@ -5091,6 +5092,22 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Slew telescope to screen center</string>
+   </property>
+  </action>
+  <action name="actionGeocentric">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_topo.png</normaloff>
+     <activeon>:/res/ico_geo.png</activeon>:/res/ico_topo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Geocentric</string>
+   </property>
+   <property name="toolTip">
+    <string>If checked then solar system is geocentric</string>
    </property>
   </action>
  </widget>

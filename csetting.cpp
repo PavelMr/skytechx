@@ -33,6 +33,7 @@ static int currentRow = 0;
 extern bool g_showZoomBar;
 extern bool bAlternativeMouse;
 extern bool bParkTelescope;
+extern int g_ephType;
 
 extern CMapView  *pcMapView;
 
@@ -96,6 +97,17 @@ CSetting::CSetting(QWidget *parent) :
   ui->checkBox_21->setChecked(setting.value("sound_enable", false).toBool());
 
   fillGamepad();
+
+  switch (setting.value("eph_type", EPT_PLAN404).toInt())
+  {
+    case EPT_PLAN404:
+      ui->rb_plan404->setChecked(true);
+      break;
+
+    case EPT_VSOP87:
+      ui->rb_vsop87->setChecked(true);
+      break;
+  }
 
   connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
   connect(ui->horizontalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(slotStarMagChange(int)));
@@ -718,6 +730,7 @@ void CSetting::apply()
   getAstComList(ui->treeWidgetSat, strList);
   CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url", &strList);
 
+
   // stars
   g_skSet.map.star.propNamesFromFov = D2R(ui->doubleSpinBox->value());
   g_skSet.map.star.bayerFromFov = D2R(ui->doubleSpinBox_2->value());
@@ -922,9 +935,16 @@ void CSetting::apply()
   g_skSet.map.gsc.fromFOV = D2R(ui->doubleSpinBox_28->value());
   g_skSet.map.gsc.fromMag = ui->doubleSpinBox_29->value();
 
-  // online sun
+
   QSettings settings;
 
+  if (ui->rb_plan404->isChecked()) g_ephType = EPT_PLAN404;
+    else
+  if (ui->rb_vsop87->isChecked()) g_ephType = EPT_VSOP87;
+
+  settings.setValue("eph_type", g_ephType);
+
+  // online sun
   settings.setValue("sun_online_used", ui->cb_useSunOnline->isChecked());
 
   QList<urlItem_t> strList2;

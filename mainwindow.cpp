@@ -126,11 +126,15 @@ bool g_antialiasing;
 bool g_planetReal;
 
 bool g_quickInfoForced;
+bool g_geocentric;
+
+int g_ephType;
 
 CStatusBar *g_statusBar;
 
 QString g_horizonName = "none";
 
+extern bool g_forcedRecalculate;
 extern bool g_bHoldObject;
 extern bool bParkTelescope;
 extern bool g_developMode;
@@ -463,6 +467,7 @@ MainWindow::MainWindow(QWidget *parent) :
           ds >> e->id;
           ds >> e->geoHash;
           ds >> e->locationName;
+          ds >> e->geocentric;
 
           f.read((char *)&e->event_u, sizeof(e->event_u));
 
@@ -784,6 +789,8 @@ MainWindow::MainWindow(QWidget *parent) :
   {
     g_skServer.start();
   }
+
+  g_ephType = settings.value("eph_type", EPT_PLAN404).toInt();
 }
 
 void MainWindow::setToolbarIconSize()
@@ -1214,6 +1221,7 @@ void MainWindow::saveAndExit()
         ds << e->id;
         ds << e->geoHash;
         ds << e->locationName;
+        ds << e->geocentric;
 
         f.write((char *)&e->event_u, sizeof(e->event_u));
       }
@@ -1347,7 +1355,10 @@ void MainWindow::refillEI()
         model->setItem(j, 1, item);
 
         item = new QStandardItem;
-        item->setText(e->locationName);
+        if (e->geocentric)
+          item->setText(tr("Geocentric"));
+        else
+          item->setText(e->locationName);
         if (bLastSearch)
         {
           item->setData(col, Qt::BackgroundColorRole);
@@ -3139,6 +3150,8 @@ void MainWindow::on_actionSetting_triggered()
   CSetting dlg(this);
 
   dlg.exec();
+
+  g_forcedRecalculate = true;
   ui->widget->repaintMap();
   ui->widget->m_zoom->setVisible(g_showZoomBar);
   setToolbarIconSize();
@@ -6027,4 +6040,12 @@ void MainWindow::on_actionSlew_telescope_to_screen_center_triggered()
       g_pTelePlugin->slewTo(r, d);
     }
   }
+}
+
+void MainWindow::on_actionGeocentric_triggered(bool checked)
+{
+  g_geocentric = checked;
+  g_quickInfoForced = true;
+  g_forcedRecalculate = true;
+  repaintMap();
 }

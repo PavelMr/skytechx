@@ -14,6 +14,8 @@
 
 #define FILEREGEXP   QRegExp("\\W")
 
+extern bool g_geocentric;
+
 static QString gscMB[19][3] = {{"IIIaJ","GG395","SERC-J/EJ"},    //0
                                {"IIaD","W12","Pal Quick-V"},     //1
                                {"","",""},                       //2
@@ -45,7 +47,14 @@ CObjFillInfo::CObjFillInfo()
   txObjType  = tr("Object type");
   txDesig    = tr("Designation");
   txDec      = tr("Declination");
-  txLocInfo  = tr("Local information");
+  if (!g_geocentric)
+  {
+    txLocInfo  = tr("Local information (Topocentric)");
+  }
+  else
+  {
+    txLocInfo  = tr("Local information (Geocentric)");
+  }
   txVisMag   = tr("Visual magnitude");
   txMag   = tr("Magnitude");
   txConstel  = tr("Constellation");
@@ -1796,6 +1805,12 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     addTextItem(item, txElongation, QString("%1°").arg(R2D(o.elongation), 0, 'f', 2));
   }
 
+  if (item->par1 == PT_MOON)
+  {
+    addTextItem(item, tr("Dist."), QString::number(o.R * EARTH_DIAM) + tr("Km"));
+    addSeparator(item);
+  }
+
   double azm, alt;
   double nazm, nalt;
   QString diam;
@@ -1956,7 +1971,17 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
-  addTextItem(item, "S. L. Moshier", "Residuals against JPL ephemeris DE404");
+
+  switch (o.ephemType)
+  {
+    case EPT_PLAN404:
+      addTextItem(item, "S. L. Moshier", "PLAN404");
+      break;
+
+    case EPT_VSOP87:
+      addTextItem(item, "Bureau des Longitudes", "VSOP87");
+      break;
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

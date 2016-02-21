@@ -49,7 +49,7 @@
 #define EVLE_PARTIAL_UMBRA     2
 #define EVLE_FULL_UMBRA        3
 
-#define EVENT_HEADER_ID        0xE0000002
+#define EVENT_HEADER_ID        0xE0000003
 
 typedef struct
 {
@@ -59,6 +59,7 @@ typedef struct
   int     id;        // object id
   quint64 geoHash;
   QString locationName;
+  bool    geocentric;
 
   union
   {
@@ -283,6 +284,8 @@ private slots:
     void on_radioButton_8_clicked();
 
     void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
 
 private:
     Ui::CEventSearch *ui;

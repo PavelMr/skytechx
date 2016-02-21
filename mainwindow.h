@@ -610,6 +610,8 @@ private slots:
 
   void on_actionSlew_telescope_to_screen_center_triggered();
 
+  void on_actionGeocentric_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

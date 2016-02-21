@@ -56,7 +56,8 @@
 #define  PT_EARTH_SHADOW  12
 #define  PT_EARTH          0
 
-#define  EPT_DE404         0
+#define  EPT_PLAN404       0
+#define  EPT_VSOP87        1
 
 typedef struct
 {
@@ -122,7 +123,7 @@ class CAstro
 
     static double calcAparentSize(double R, double d);
     double getNPA(double ra, double raD, double dec, double decD, double oRa, double oDec);
-    void   calcParallax(orbit_t *o);
+    double calcParallax(orbit_t *o);
     void   calcParallax(radec_t *rd, double R);
     double getRaDec_NP(double val, double delta);
     double calcDeltaT(double jd);
@@ -167,6 +168,8 @@ class CAstro
 
 protected:
     orbit_t m_sunOrbit;
+
+    int calcPlanetPolar(int planet, double jd, double *data);
 
     void solveMoon(orbit_t *o);
     void solveSun(orbit_t *o);

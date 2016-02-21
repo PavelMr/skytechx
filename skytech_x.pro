@@ -44,6 +44,7 @@ DEPENDPATH += ssl
 
 INCLUDEPATH = core \
               de404 \
+              vsop87 \
               libsgp4 \
               $$PWD \
 
@@ -254,7 +255,16 @@ SOURCES += main.cpp\
     skserver.cpp \
     qcustomplot.cpp \
     astcomdowntypedlg.cpp \
-    skprogressdialog.cpp
+    skprogressdialog.cpp \
+    vsop87/venus_vsop87.cpp \
+    vsop87/vsop87.cpp \
+    vsop87/earth_vsop87.cpp \
+    vsop87/mercury_vsop87.cpp \
+    vsop87/jupiter_vsop87.cpp \
+    vsop87/mars_vsop87.cpp \
+    vsop87/neptune_vsop87.cpp \
+    vsop87/saturn_vsop87.cpp \
+    vsop87/uranus_vsop87.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -462,7 +472,8 @@ HEADERS  += mainwindow.h \
     skserver.h \
     qcustomplot.h \
     astcomdowntypedlg.h \
-    skprogressdialog.h
+    skprogressdialog.h \
+    vsop87/vsop87.h
 
 
 FORMS    += mainwindow.ui \

@@ -11,6 +11,10 @@
 QList <event_t *> tEventList;
 int               nLastEventCount;
 
+extern bool g_geocentric;
+
+static bool   oldGeocentric;
+static bool   geocentric = false;
 static int    evType = 0;
 static bool   highPrec = true;
 static bool   totLEcl = false;
@@ -142,7 +146,18 @@ CEventSearch::CEventSearch(QWidget *parent, mapView_t *view) :
 {
     ui->setupUi(this);
 
+    oldGeocentric = g_geocentric;
+
     m_view = *view;
+
+    if (geocentric)
+    {
+      ui->rb_geo_2->setChecked(true);
+    }
+    else
+    {
+      ui->rb_topo_2->setChecked(true);
+    }
 
     switch (evType)
     {
@@ -214,7 +229,8 @@ CEventSearch::CEventSearch(QWidget *parent, mapView_t *view) :
 
 CEventSearch::~CEventSearch()
 {
-    delete ui;
+  g_geocentric = oldGeocentric;
+  delete ui;
 }
 
 
@@ -390,6 +406,10 @@ void CEventSearch::on_pushButton_2_clicked()
     msgBoxError(this, tr("Invalid date interval!!!"));
     return;
   }
+
+  geocentric = ui->rb_geo_2->isChecked();
+
+  g_geocentric = geocentric;
 
   highPrec = ui->checkBox->checkState();
   totLEcl = ui->checkBox_2->checkState();
@@ -951,6 +971,7 @@ void searchEvent::CCommonEvent::run(void)
               e->jd = tmpJD;
               e->geoHash = CGeoHash::calculate(&m_view.geo);
               e->locationName = m_view.geo.name;
+              e->geocentric = geocentric;
 
               mutex.lock();
               tEventList.append(e);
@@ -988,6 +1009,7 @@ void searchEvent::CCommonEvent::run(void)
             e->id = m_id1;
             e->geoHash = CGeoHash::calculate(&m_view.geo);
             e->locationName = m_view.geo.name;
+            e->geocentric = geocentric;
 
             mutex.lock();
             tEventList.append(e);
@@ -1052,6 +1074,7 @@ void searchEvent::CCommonEvent::run(void)
               e->jd = tmpJD;
               e->geoHash = CGeoHash::calculate(&m_view.geo);
               e->locationName = m_view.geo.name;
+              e->geocentric = geocentric;
 
               mutex.lock();
               tEventList.append(e);
@@ -1088,6 +1111,7 @@ void searchEvent::CCommonEvent::run(void)
               e->jd = tmpJD;
               e->geoHash = CGeoHash::calculate(&m_view.geo);
               e->locationName = m_view.geo.name;
+              e->geocentric = geocentric;
 
               mutex.lock();
               tEventList.append(e);
@@ -1164,6 +1188,7 @@ void searchEvent::CMaxElongation::run(void)
       e->event_u.elongation_u.elong = o.elongation;
       e->geoHash = CGeoHash::calculate(&m_view.geo);
       e->locationName = m_view.geo.name;
+      e->geocentric = geocentric;
 
       tEventList.append(e);
       eventCount++;
@@ -1246,6 +1271,7 @@ void searchEvent::COpposition::run(void)
       e->event_u.opposition_u.R = o.R;
       e->geoHash = CGeoHash::calculate(&m_view.geo);
       e->locationName = m_view.geo.name;
+      e->geocentric = geocentric;
 
       tEventList.append(e);
       eventCount++;
@@ -1384,6 +1410,7 @@ void searchEvent::CConjuction::run(void)
             e->event_u.conjuction_u.idCount = m_idList.count();
             e->geoHash = CGeoHash::calculate(&m_view.geo);
             e->locationName = m_view.geo.name;
+            e->geocentric = geocentric;
 
             tEventList.append(e);
             eventCount++;
@@ -1510,6 +1537,7 @@ void CBigMoon::run()
       e->geoHash = CGeoHash::calculate(&m_view.geo);
       e->locationName = m_view.geo.name;
       e->event_u.bigMoon_u.R = orbit.R;
+      e->geocentric = geocentric;
 
       //qDebug() << getStrDate(jd, 0) << orbit.R;
 
@@ -1537,4 +1565,9 @@ void CEventSearch::on_pushButton_5_clicked()
 {
   ui->dateEdit->setDate(QDate::currentDate());
   ui->dateEdit_2->setDate(QDate::currentDate().addDays(365));
+}
+
+void CEventSearch::on_pushButton_6_clicked()
+{
+  ui->dateEdit_2->setDate(ui->dateEdit->date().addDays(365));
 }

@@ -13,6 +13,7 @@
 #include <QProgressDialog>
 
 extern bool g_comAstChanged;
+extern bool g_forcedRecalculate;
 
 // TODO: priste udelat list view rychlejsi (je to pomaly pri hodne polozkach)
 
@@ -231,7 +232,7 @@ void astSolve(asteroid_t *a, double jdt, bool lightCorrected)
 
   #pragma omp critical
   {
-    if (lastJD != jdt)
+    if (lastJD != jdt || g_forcedRecalculate)
     {
       cAstro.calcPlanet(PT_EARTH, &sunOrbit, true, true, false);
 
@@ -265,7 +266,7 @@ void astRender(CSkPainter *p, mapView_t *view, float maxMag)
     if (!a->selected)
       continue;
 
-    if (a->lastJD != view->jd)
+    if (a->lastJD != view->jd || g_forcedRecalculate)
     {
       astSolve(a, view->jd);
       a->lastJD = view->jd;

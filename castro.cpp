@@ -2,9 +2,13 @@
 #include "plantbl.h"
 #include "nutation.h"
 #include "setting.h"
+#include "vsop87.h"
 
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
+
+extern int g_ephType;
+extern bool g_geocentric;
 
 const double g_AAParallax_C1 = sin(DMS2RAD(0, 0, 8.794));
 
@@ -118,7 +122,7 @@ double CAstro::deltaTTable(double jd)
 
   if (y < 0 || y > 2013)
   {
-    //qDebug("calcDeltaT: error1 %f %f", jd, y);
+    //qDebug("cDeltaT: error1 %f %f", jd, y);
     return(CM_UNDEF);
   }
 
@@ -264,8 +268,8 @@ double CAstro::deltaTEspMeeus06(double jd)
   else
   if (y >= 2005 && y < 2050)
   { // 2005 to 2050
-  t = (y - 2000) / 100.0;
-  dT = 62.92 + 32.217 * t + 55.89 * t * t;
+    t = (y - 2000) / 100.0;
+    dT = 62.92 + 32.217 * t + 55.89 * t * t;
   }
   else
   if (y >= 2050 && y < 2150)
@@ -408,7 +412,6 @@ double CAstro::getJupiterGRSLon(double jd)
   return lon;
 }
 
-
 static double fRhoSinThetaPrime(double GeographicalLatitude, double Height)
 {
   double U = atan(0.99664719 * tan(GeographicalLatitude));
@@ -480,6 +483,8 @@ void CAstro::setParam(const mapView_t *view)
   //qDebug("LST   = %s", qPrintable(getStrTimeFromDayRads(m_lst)));
 
   calcPlanet(PT_EARTH, &m_sunOrbit, false, true, false);
+
+  //qDebug() << getStrDeg(getEclObl(JD2000));
 }
 
 
@@ -813,6 +818,22 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
   convRD2AANoRef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 }
 
+int CAstro::calcPlanetPolar(int planet, double jd, double *data)
+{
+  switch (g_ephType)
+  {
+    case EPT_PLAN404:
+      de404(planet, jd, data);
+      return EPT_PLAN404;
+
+    case EPT_VSOP87:
+      vsop87(planet, jd, data);
+      return EPT_VSOP87;
+  }
+
+  return -1;
+}
+
 ////////////////////////////////////////////////////////////////////////////
 void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, bool lightCorrection)
 ////////////////////////////////////////////////////////////////////////////
@@ -836,9 +857,7 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
   {
     if (planet != PT_MOON)
     {
-      de404(planet, m_deltaT + m_jd - lt, data);
-
-      orbit->ephemType = EPT_DE404;
+      orbit->ephemType = calcPlanetPolar(planet, m_deltaT + m_jd - lt, data);
 
       orbit->hLon = data[0];
       orbit->hLat = data[1];
@@ -1058,7 +1077,7 @@ void CAstro::solveMoon(orbit_t *o)
 
   moon(m_deltaT + m_jd, &lam, &bet, &rho); // light time is counted
 
-  o->ephemType = EPT_DE404;
+  o->ephemType = EPT_PLAN404;
 
   lonecl = lam;
   latecl = bet;
@@ -1094,7 +1113,10 @@ void CAstro::solveMoon(orbit_t *o)
   o->r = r;
   o->R = r;
 
-  calcParallax(o);
+  double q = calcParallax(o);
+
+  o->R *= q;
+
   convRD2AARef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 
   rangeDbl(&lonecl, MPI2);
@@ -1138,23 +1160,24 @@ void CAstro::solveMoon(orbit_t *o)
 
   mLibration(m_jd, &o->cLat, &o->cMer); // optical libration
 
-  /*
   // topocentric libration
-  double H = m_lst - o->gRD.Ra;
-  double pi = o->parallax;
+  if (!g_geocentric)
+  {
+    double H = m_lst - o->gRD.Ra;
+    double pi = o->parallax;
 
-  double Q = atan2((cos(m_geoLat) * sin(H)), (cos(o->gRD.Dec) * sin(m_geoLat) - sin(o->gRD.Dec) * cos(m_geoLat) * cos(H)));
-  double Z = acos(sin(o->gRD.Dec) * sin(m_geoLat) + cos(o->gRD.Dec) * cos(m_geoLat) * cos(H));
-  double pi2 = pi * (sin(Z) + 0.0084 * sin(2 * Z));
+    double Q = atan2((cos(m_geoLat) * sin(H)), (cos(o->gRD.Dec) * sin(m_geoLat) - sin(o->gRD.Dec) * cos(m_geoLat) * cos(H)));
+    double Z = acos(sin(o->gRD.Dec) * sin(m_geoLat) + cos(o->gRD.Dec) * cos(m_geoLat) * cos(H));
+    double pi2 = pi * (sin(Z) + 0.0084 * sin(2 * Z));
 
-  double ll = -pi2 * sin(Q - o->PA) / cos(o->cLat);
-  double lb = pi2 * cos(Q - o->PA);
-  double lP = ll * sin(o->cLat) - pi2 * sin(Q) * tan(o->gRD.Dec);
+    double ll = -pi2 * sin(Q - o->PA) / cos(o->cLat);
+    double lb = pi2 * cos(Q - o->PA);
+    double lP = ll * sin(o->cLat) - pi2 * sin(Q) * tan(o->gRD.Dec);
 
-  o->cLat += lb;
-  o->cMer += ll;
-  o->PA += lP;
-  */
+    o->cLat += lb;
+    o->cMer += ll;
+    o->PA += lP;
+  }
 }
 
 
@@ -1193,7 +1216,7 @@ void CAstro::solveSun(orbit_t *o)
 
   o->flattening = 0;
   o->mag = -26.74;
-  o->dx = 696000 * 2;
+  o->dx = 696010 * 2;
   o->dy = o->dx * (1 - o->flattening);
   o->phase = 1;
 
@@ -1494,22 +1517,23 @@ double CAstro::getRaDec_NP(double val, double delta)
   return(val + delta * T);
 }
 
-/////////////////////////////////////
-void CAstro::calcParallax(orbit_t *o)
-/////////////////////////////////////
+///////////////////////////////////////
+double CAstro::calcParallax(orbit_t *o)
+///////////////////////////////////////
 {
-  double Distance = o->R;
+  double distance = o->R;
 
-  /*
-  o->lRD.Ra = o->gRD.Ra;
-  o->lRD.Dec = o->gRD.Dec;
+  if (g_geocentric)
+  {
+    o->lRD.Ra = o->gRD.Ra;
+    o->lRD.Dec = o->gRD.Dec;
 
-  return;
-  */
+    return 1.0;
+  }
 
   if (o->type == PT_MOON)
   {
-    Distance *= 0.000042587504556; // radii to AU
+    distance *= 0.000042587504556; // radii to AU
   }
 
   //Calculate the Sidereal time
@@ -1517,7 +1541,7 @@ void CAstro::calcParallax(orbit_t *o)
   double cosDelta = cos(o->gRD.Dec);
 
   //Calculate the Parallax
-  double pi = asin(g_AAParallax_C1 / Distance);
+  double pi = asin(g_AAParallax_C1 / distance);
   double sinpi = sin(pi);
 
   //Calculate the hour angle
@@ -1532,11 +1556,23 @@ void CAstro::calcParallax(orbit_t *o)
   o->lRD.Ra = o->gRD.Ra + DeltaAlpha;
   o->lRD.Dec = atan2((sin(o->gRD.Dec) - m_RhoSinThetaPrime * sinpi) * cos(DeltaAlpha), cosDelta - m_RhoCosThetaPrime * sinpi * cosH);
   rangeDbl(&o->lRD.Ra, MPI2);
+
+  double a = cosDelta * sinH;
+  double b = cosDelta * cosH - m_RhoCosThetaPrime * sinpi;
+  double c = sin(o->gRD.Dec) - m_RhoSinThetaPrime * sinpi;
+
+  // return topocentric distance multiplier
+  return sqrt(POW2(a) + POW2(b) + POW2(c));
 }
 
 
 void CAstro::calcParallax(radec_t *rd, double R)
 {
+  if (g_geocentric)
+  {
+    return;
+  }
+
   //Calculate the Sidereal time
   double theta = R2D(m_gst) / 15.0;
   double cosDelta = cos(rd->Dec);

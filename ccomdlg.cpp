@@ -13,6 +13,7 @@
 
 extern bool g_comAstChanged;
 extern bool g_onPrinterBW;
+extern bool g_forcedRecalculate;
 
 /////////////////////////////////////////////////////////
 extern MainWindow *pcMainWnd;
@@ -296,7 +297,7 @@ bool comSolve(comet_t *a, double jdt, bool lightCorrected)
 
   #pragma omp critical
   {
-    if (lastJD != jdt)
+    if (lastJD != jdt || g_forcedRecalculate)
     {
       cAstro.calcPlanet(PT_EARTH, &sunOrbit, true, true, false);
 
@@ -337,7 +338,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
     if (!a->selected)
       continue;
 
-    if (a->lastJD != view->jd)
+    if (a->lastJD != view->jd || g_forcedRecalculate)
     {
       if (!comSolve(a, view->jd))
         continue; // TODO: dat nejak najevo chybu vypoctu
