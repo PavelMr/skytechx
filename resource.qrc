@@ -143,5 +143,6 @@
         <file>res/ico_print_preview.png</file>
         <file>res/ico_geo.png</file>
         <file>res/ico_topo.png</file>
+        <file>res/ico_moon.png</file>
     </qresource>
 </RCC>

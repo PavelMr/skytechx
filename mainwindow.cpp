@@ -90,6 +90,8 @@
 #include "soundmanager.h"
 #include "cdssdlg.h"
 #include "skserver.h"
+#include "skeventdocument.h"
+#include "cskeventdocdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -1668,7 +1670,7 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
                         tr("Greatest eclipse"),
                         tr("U3 : End of the total eclipse"),
                         tr("U4 : End of the partial eclipse"),
-                        tr("P2 : End of the penumbral eclipse")};
+                        tr("P4 : End of the penumbral eclipse")};
 
     for (int i = 0; i < 7; i++)
     {
@@ -4226,6 +4228,9 @@ void MainWindow::on_treeView_2_doubleClicked(const QModelIndex &index)
   // qDebug("hash = %llu / %llu", e->geoHash, ui->widget->m_mapView.geo.hash);
 
   fillEventInfo(e, item1->text(), warning);
+
+  m_currentEvent = *e;
+  ui->pushButton_36->setEnabled(true);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -6048,4 +6053,14 @@ void MainWindow::on_actionGeocentric_triggered(bool checked)
   g_quickInfoForced = true;
   g_forcedRecalculate = true;
   repaintMap();
+}
+
+void MainWindow::on_pushButton_36_clicked()
+{
+  SkEventDocument *event = new SkEventDocument(&m_currentEvent, &ui->widget->m_mapView);
+  CSkEventDocDialog dlg(this, event);
+
+  dlg.exec();
+
+  delete event;
 }

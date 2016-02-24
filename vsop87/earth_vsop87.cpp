@@ -40,7 +40,7 @@
 
 #include <QDebug>
 
-   double Earth_L0 (double t) // 559 terms of order 0
+double Earth_L0 (double t) // 559 terms of order 0
 {
    double L0 = 0;
    L0 += 1.75347045673;
@@ -2607,7 +2607,6 @@
    R5 += 0.00000000001*cos(0.38068797142 + 18849.2275499742*t);
    return R5*t*t*t*t*t;
 }
-
 
 void earth_VSOP87(double jd, double *polar)
 {

@@ -50,6 +50,79 @@ void CSkPainter::drawCross(QPoint p, int size)
   drawLine(p.x() - size, p.y(), p.x() + size, p.y());
 }
 
+//////////////////////////////////////////////////////////////////////////////
+void CSkPainter::drawExtLine(const QPointF &p1, const QPointF &p2, double len)
+//////////////////////////////////////////////////////////////////////////////
+{
+  QVector2D vec(p2.x() - p1.x(), p2.y() - p1.y());
+
+  vec.normalize();
+  vec *= len;
+
+  drawLine(QPointF(p1.x() - vec.x(), p1.y() - vec.y()),
+           QPointF(p2.x() + vec.x(), p2.y() + vec.y()));
+}
+
+QList <QPointF> CSkPainter::drawTickLine(const QPointF &p1, const QPointF &p2, double large, double small, int type, int count, int smallCount)
+{
+  QList <QPointF> list;
+
+  drawLine(p1, p2);
+
+  count += (count * smallCount);
+
+  QVector2D vec(p2.x() - p1.x(), p2.y() - p1.y());
+  double len = (vec.length() + 0.5) / (double)(count);
+
+  vec.normalize();
+
+  double x = p1.x();
+  double y = p1.y();
+  for (int i = 0; i < count + 1; i++)
+  {
+    double x1, y1;
+    double size;
+
+    if ((i % (smallCount + 1)) == 0)
+    {
+      size = large;
+    }
+    else
+    {
+      size = small;
+    }
+
+    if (type & 1)
+    {
+      x1 = x + vec.y() * size;
+      y1 = y - vec.x() * size;
+      drawLine(QPointF(x, y), QPointF(x1, y1));
+
+      if (type & 4 && size == large)
+      {
+        list.append(QPointF(x1, y1));
+      }
+    }
+
+    if (type & 2)
+    {
+      x1 = x - vec.y() * size;
+      y1 = y + vec.x() * size;
+      drawLine(QPointF(x, y), QPointF(x1, y1));
+
+      if (type & 8 && size == large)
+      {
+        list.append(QPointF(x1, y1));
+      }
+    }
+
+    x += vec.x() * len;
+    y += vec.y() * len;
+  }
+
+  return list;
+}
+
 
 //////////////////////////////////////////////////
 void CSkPainter::drawCrossX(int x, int y, int size)

@@ -264,7 +264,9 @@ SOURCES += main.cpp\
     vsop87/mars_vsop87.cpp \
     vsop87/neptune_vsop87.cpp \
     vsop87/saturn_vsop87.cpp \
-    vsop87/uranus_vsop87.cpp
+    vsop87/uranus_vsop87.cpp \
+    cskeventdocdialog.cpp \
+    skeventdocument.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -473,7 +475,9 @@ HEADERS  += mainwindow.h \
     qcustomplot.h \
     astcomdowntypedlg.h \
     skprogressdialog.h \
-    vsop87/vsop87.h
+    vsop87/vsop87.h \
+    cskeventdocdialog.h \
+    skeventdocument.h
 
 
 FORMS    += mainwindow.ui \
@@ -563,7 +567,8 @@ FORMS    += mainwindow.ui \
     clunarfeaturessearch.ui \
     cplanetsize.ui \
     cadvsearch.ui \
-    astcomdowntypedlg.ui
+    astcomdowntypedlg.ui \
+    cskeventdocdialog.ui
 
 
 RESOURCES += \

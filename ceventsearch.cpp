@@ -1041,11 +1041,10 @@ void searchEvent::CCommonEvent::run(void)
 
             if (m_event.event_u.solarEcl_u.i1 == -1 && m_event.event_u.solarEcl_u.i1 == -1)
             {
-              // mag = (rs + rm - ?) / (2 rs)
               double rs = 1;
               double rm = o1.sx / o0.sx;
               double delta = 2 * RAD2DEG(s2) / (o0.sx / 3600.0);
-              qDebug("delta = %f", delta);
+
               m_event.event_u.solarEcl_u.mag = (rs + rm - delta) / (2 * rs);
               m_event.event_u.solarEcl_u.type = EVE_PARTIAL;
             }

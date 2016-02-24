@@ -14,6 +14,7 @@ private:
 
 public:
   QString m_weatherAppId;
+  double  m_sun_radius;
 };
 
 extern SystemSettings *g_systemSettings;

@@ -3,6 +3,7 @@
 #include "nutation.h"
 #include "setting.h"
 #include "vsop87.h"
+#include "systemsettings.h"
 
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
@@ -378,6 +379,7 @@ double CAstro::getEclObl(double jd)
   w +=    27.87*p; p *= t;
   w +=     5.79*p; p *= t;
   w +=     2.45*p;
+
   return(DEG2RAD(w / 3600.0));
 }
 
@@ -696,8 +698,20 @@ double CAstro::getInvAtmRef(double alt, int steps)
   return(ref);
 }
 
-#define THRESH 1.e-10
-#define CUBE_ROOT( X)  (exp( log( X) / 3.))
+QString CAstro::getEphType(int type)
+{
+  switch (type)
+  {
+    case EPT_PLAN404:
+      return "PLAN404";
+
+    case EPT_VSOP87:
+      return "VSOP87";
+  }
+
+  return "???";
+}
+
 
 ////////////////////////////////////
 static double asinhSk( const double z)
@@ -710,6 +724,9 @@ static double asinhSk( const double z)
 double CAstro::solveKepler(double eccent, double M)
 ///////////////////////////////////////////////////
 {
+  #define THRESH        1.e-10
+  #define CUBE_ROOT(X)  (exp( log(X) / 3.))
+
   double curr, err, thresh;
   bool   is_negative = false;
 
@@ -765,34 +782,30 @@ void CAstro::calcEarthShadow(orbit_t *orbit, orbit_t *moon)
 ///////////////////////////////////////////////////////////
 {
   double ERAD = 6378138.12;
-  double erad = ERAD * 1.0161; /* earth equitorial radius, m + atm */
-  double SRAD = 696342000;
-
-  double mr;
   orbit_t sun;
 
   calcPlanet(PT_SUN, &sun);
 
-  orbit->lRD.Ra = sun.lRD.Ra - R180;
-  orbit->lRD.Dec = -sun.lRD.Dec;
+  orbit->lRD.Ra = orbit->gRD.Ra = sun.lRD.Ra - R180;
+  orbit->lRD.Dec = orbit->gRD.Dec = -sun.lRD.Dec;
 
   // todo : zkontrolovat
   orbit->lRD.Ra += moon->lRD.Ra - moon->gRD.Ra;
   orbit->lRD.Dec += moon->lRD.Dec - moon->gRD.Dec;
 
-  mr = moon->R * ERAD;
-
   orbit->name = getName(PT_EARTH_SHADOW);
   orbit->englishName = getFileName(PT_EARTH_SHADOW);
 
-  orbit->sx = erad + mr / (sun.r * AU1 * 1000) * (SRAD - erad);
-  orbit->sy = erad - mr / (sun.r * AU1 * 1000) * (SRAD - erad);
+  double Pm = R2D(moon->parallax);
+  double Ss = sun.sx / 3600 / 2.0;
+  double Ps = R2D(sun.parallax);
 
-  orbit->sx = atan2(orbit->sx, mr) * 2;
-  orbit->sy = atan2(orbit->sy, mr) * 2;
+  // http://eclipse.gsfc.nasa.gov/LEcat5/shadow.html
+  orbit->sx = 1.01 * Pm + Ss + Ps;
+  orbit->sy = 1.01 * Pm - Ss + Ps;
 
-  orbit->sx = RAD2DEG(3600 * orbit->sx);
-  orbit->sy = RAD2DEG(3600 * orbit->sy);
+  orbit->sx *= 2 * 3600.0;
+  orbit->sy *= 2 * 3600.0;
 }
 
 //////////////////////////////////////////
@@ -1216,7 +1229,7 @@ void CAstro::solveSun(orbit_t *o)
 
   o->flattening = 0;
   o->mag = -26.74;
-  o->dx = 696010 * 2;
+  o->dx = g_systemSettings->m_sun_radius * 2;
   o->dy = o->dx * (1 - o->flattening);
   o->phase = 1;
 
@@ -1353,7 +1366,7 @@ void CAstro::solveVenus(orbit_t *orbit)
 {
   orbit->mag = -4.34 + 5 * log10(orbit->r * orbit->R) + 0.013 * (orbit->FV*RAD) + 4.2E-7 * pow((orbit->FV*RAD), 3);
   orbit->flattening = 0;
-  orbit->dx = 12104;
+  orbit->dx = 12103.6;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
   orbit->sy = calcAparentSize(orbit->R, orbit->dy);
@@ -1523,17 +1536,20 @@ double CAstro::calcParallax(orbit_t *o)
 {
   double distance = o->R;
 
+  if (o->type == PT_MOON)
+  {
+    //distance *= 0.000042587504556; // radii to AU
+    distance *= 0.000042634832658281816243871242805372;
+  }
+
+  double pi = asin(g_AAParallax_C1 / distance);
+
   if (g_geocentric)
   {
     o->lRD.Ra = o->gRD.Ra;
     o->lRD.Dec = o->gRD.Dec;
-
+    o->parallax = pi;
     return 1.0;
-  }
-
-  if (o->type == PT_MOON)
-  {
-    distance *= 0.000042587504556; // radii to AU
   }
 
   //Calculate the Sidereal time
@@ -1541,7 +1557,6 @@ double CAstro::calcParallax(orbit_t *o)
   double cosDelta = cos(o->gRD.Dec);
 
   //Calculate the Parallax
-  double pi = asin(g_AAParallax_C1 / distance);
   double sinpi = sin(pi);
 
   //Calculate the hour angle

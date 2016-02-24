@@ -1975,11 +1975,11 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   switch (o.ephemType)
   {
     case EPT_PLAN404:
-      addTextItem(item, "S. L. Moshier", "PLAN404");
+      addTextItem(item, "S. L. Moshier", CAstro::getEphType(EPT_PLAN404));
       break;
 
     case EPT_VSOP87:
-      addTextItem(item, "Bureau des Longitudes", "VSOP87");
+      addTextItem(item, "Bureau des Longitudes", CAstro::getEphType(EPT_VSOP87));
       break;
   }
 }
@@ -2019,16 +2019,16 @@ void CObjFillInfo::fillESInfo(const mapView_t *view, const mapObj_t * /*obj*/, o
   addSeparator(item);
 
   QString str  = QString("%1\"").arg(o.sy * 0.5, 0, 'f', 2);
-  addTextItem(item, tr("Apparent umbra radius"), str);
+  addTextItem(item, tr("Apparent umbra radius"), str + " , " + QString::number(o.sy * 0.5 / 3600.0, 'f', 4) + "°");
   str  = QString("%1\"").arg(o.sx * 0.5, 0, 'f', 2);
-  addTextItem(item, tr("Apparent penumbra radius"), str);
+  addTextItem(item, tr("Apparent penumbra radius"), str + " , " + QString::number(o.sx * 0.5 / 3600.0, 'f', 4) + "°");
 
   addSeparator(item);
 
   str  = QString("%1\"").arg(o.sy, 0, 'f', 2);
-  addTextItem(item, tr("Apparent umbra diameter"), str);
+  addTextItem(item, tr("Apparent umbra diameter"), str + " , " + QString::number(o.sy / 3600.0, 'f', 4) + "°");
   str  = QString("%1\"").arg(o.sx, 0, 'f', 2);
-  addTextItem(item, tr("Apparent penumbra diameter"), str);
+  addTextItem(item, tr("Apparent penumbra diameter"), str + " , " + QString::number(o.sx / 3600.0, 'f', 4) + "°");
 
 }
 

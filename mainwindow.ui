@@ -857,7 +857,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -1610,9 +1610,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-140</y>
           <width>413</width>
-          <height>521</height>
+          <height>527</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1892,6 +1892,19 @@
              </property>
              <property name="checked">
               <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_36">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Show event document.</string>
+             </property>
+             <property name="text">
+              <string>Event Report...</string>
              </property>
             </widget>
            </item>

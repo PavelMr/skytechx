@@ -121,13 +121,14 @@ class CAstro
     double getAtmRef(double alt);
     double getInvAtmRef(double alt, int steps = 6);
 
+    static QString getEphType(int type);
     static double calcAparentSize(double R, double d);
     double getNPA(double ra, double raD, double dec, double decD, double oRa, double oDec);
     double calcParallax(orbit_t *o);
     void   calcParallax(radec_t *rd, double R);
     double getRaDec_NP(double val, double delta);
     double calcDeltaT(double jd);
-    QString getName(int type);
+    static QString getName(int type);
 
     static QString getFileName(int type);
     static double solveKepler(double eccent, double M);

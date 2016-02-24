@@ -612,10 +612,13 @@ private slots:
 
   void on_actionGeocentric_triggered(bool checked);
 
+  void on_pushButton_36_clicked();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
   CDSSCurveWidget *m_curve;
+  event_t m_currentEvent;
 
   void setTitle();
   void restoreDSSList();
