@@ -400,6 +400,8 @@ void CPlanetRenderer::renderRing(int sx, orbit_t *o, CSkPainter *pPainter, float
       pPainter->setClipRect(QRect(-10000, -2, 20000, 10000));
     else
       pPainter->setClipRect(QRect(-10000, 2, 20000, -10000));
+    pPainter->setBrush(QColor(g_skSet.map.planet.brColor));
+    pPainter->setPen(QColor(g_skSet.map.planet.penColor));
     pPainter->drawPath(path);
     pPainter->setClipping(false);
     pPainter->restore();
@@ -427,6 +429,8 @@ void CPlanetRenderer::renderRing(int sx, orbit_t *o, CSkPainter *pPainter, float
       pPainter->setClipRect(QRect(-10000, 2, 20000, -10000));
     else
       pPainter->setClipRect(QRect(-10000, -2, 20000, 10000));
+    pPainter->setBrush(QColor(g_skSet.map.planet.brColor));
+    pPainter->setPen(QColor(g_skSet.map.planet.penColor));
     pPainter->drawPath(path);
     pPainter->setClipping(false);
     pPainter->restore();

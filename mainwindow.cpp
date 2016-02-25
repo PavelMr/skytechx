@@ -1461,6 +1461,9 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
 
   model->removeRows(0, model->rowCount());
 
+  int old = g_geocentric;
+  g_geocentric = e->geocentric;
+
   ui->label_9->setText(tr("Current event : ") + title);
 
   if (e->type == EVT_ELONGATION ||
@@ -1723,6 +1726,8 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
       }
     }
   }
+
+  g_geocentric = old;
 }
 
 ///////////////////////////////////////////
@@ -4230,7 +4235,8 @@ void MainWindow::on_treeView_2_doubleClicked(const QModelIndex &index)
   fillEventInfo(e, item1->text(), warning);
 
   m_currentEvent = *e;
-  ui->pushButton_36->setEnabled(true);
+  bool enabled = e->type == EVT_SOLARECL || e->type == EVT_SUNTRANSIT || e->type == EVT_LUNARECL;
+  ui->pushButton_36->setEnabled(enabled);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -5529,7 +5535,7 @@ void MainWindow::on_pushButton_19_clicked()
   ofiItem_t *item = getQuickInfo();
 
   ui->widget->m_mapView.jd = item->riseJD;
-  repaintMap();
+  on_pushButton_4_clicked();
 }
 
 void MainWindow::on_pushButton_20_clicked()
@@ -5537,7 +5543,7 @@ void MainWindow::on_pushButton_20_clicked()
   ofiItem_t *item = getQuickInfo();
 
   ui->widget->m_mapView.jd = item->transitJD;
-  repaintMap();
+  on_pushButton_4_clicked();
 }
 
 void MainWindow::on_pushButton_21_clicked()
@@ -5545,7 +5551,7 @@ void MainWindow::on_pushButton_21_clicked()
   ofiItem_t *item = getQuickInfo();
 
   ui->widget->m_mapView.jd = item->setJD;
-  repaintMap();
+  on_pushButton_4_clicked();
 }
 
 void MainWindow::on_actionObject_tracking_2_triggered(bool checked)

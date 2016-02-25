@@ -839,7 +839,7 @@ void searchEvent::CCommonEvent::findFirstLastContact(double from,
 
     if (!i1 && (s1 < ir && s2 > ir))
     { // first inner contact
-      qDebug("  first i %f", m_view.jd - add);
+      qDebug() << "first" << m_view.jd - add << ir << s1 << s2 << r << i1;
       *jdI1 = m_view.jd;
       i1 = true;
     }

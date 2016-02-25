@@ -55,11 +55,11 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
   QString str;
 
   str = "<font size=\"6\"><b>" + QString("<p align=\"center\">") +
-        tr("Transit of ") + CAstro::getName(m_event.event_u.sunTransit_u.id) + tr(" of ") +
+        ("Transit of ") + CAstro::getName(m_event.event_u.sunTransit_u.id) + (" of ") +
         getStrDate(m_event.jd, m_view.geo.tz) + "</b></p></font>";
 
-  str += "<font size=\"4\"><p align=\"center\">" + tr("Greatest Transit = ") +
-         getStrTime(m_event.jd, m_view.geo.tz) + " &nbsp;&nbsp; " + tr("JD = ") + QString::number(m_event.jd, 'f', 6) + "</p>";
+  str += "<font size=\"4\"><p align=\"center\">Greatest Transit = " +
+         getStrTime(m_event.jd, m_view.geo.tz) + " &nbsp;&nbsp; " + ("JD = ") + QString::number(m_event.jd, 'f', 6) + "</p>";
 
   if (!m_event.geocentric)
   {
@@ -116,10 +116,10 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
 
   str = "<p align=\"center\"><b>Sun at Greatest Transit</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("R.A."), getStrRA(so.lRD.Ra)) +
-        addTable(tr("Dec."), getStrDeg(so.lRD.Dec)) +
-        addTable(tr("S.D."), getStrDeg(D2R(so.sx * 0.5 / 3600.0))) +
-        addTable(tr("H.P."), getStrDeg(so.parallax)) +
+        addTable(("R.A."), getStrRA(so.lRD.Ra)) +
+        addTable(("Dec."), getStrDeg(so.lRD.Dec)) +
+        addTable(("S.D."), getStrDeg(D2R(so.sx * 0.5 / 3600.0))) +
+        addTable(("H.P."), getStrDeg(so.parallax)) +
         "</table>";
 
   txtLT.setTextFormat(Qt::RichText);
@@ -131,10 +131,10 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
   //////////
   str = "<p align=\"center\"><b>" + CAstro::getName(o.type) + " at Greatest Transit</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("R.A."), getStrRA(o.lRD.Ra)) +
-        addTable(tr("Dec."), getStrDeg(o.lRD.Dec)) +
-        addTable(tr("S.D."), getStrDeg(D2R(o.sx * 0.5 / 3600.0))) +
-        addTable(tr("H.P."), getStrDeg(o.parallax)) +
+        addTable(("R.A."), getStrRA(o.lRD.Ra)) +
+        addTable(("Dec."), getStrDeg(o.lRD.Dec)) +
+        addTable(("S.D."), getStrDeg(D2R(o.sx * 0.5 / 3600.0))) +
+        addTable(("H.P."), getStrDeg(o.parallax)) +
         "</table>";
 
   txtRT.setTextFormat(Qt::RichText);
@@ -148,15 +148,15 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
   //////////
   str = "<p align=\"center\"><b>" + coords + " Data</b></p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("Pos. Ang."), QString::number(R2D(pa), 'f', 1) + "&#186;", 50) +
-        addTable(tr("Separation"), QString::number(sep, 'f', 1) + "\"", 50) +
-        addTable(tr("Duration"), getStrTimeFromDayFrac(m_event.event_u.sunTransit_u.c2 - m_event.event_u.sunTransit_u.c1), 50) +
+        addTable(("Pos. Ang."), QString::number(R2D(pa), 'f', 1) + "&#186;", 50) +
+        addTable(("Separation"), QString::number(sep, 'f', 1) + "\"", 50) +
+        addTable(("Duration"), getStrTimeFromDayFrac(m_event.event_u.sunTransit_u.c2 - m_event.event_u.sunTransit_u.c1), 50) +
         "</table>";
 
   str += "<p align=\"center\"><b>Ephemeris Data</b></p><p></p>"
          "<table width=\"100%\">" +
-         addTable(tr("Eph."), CAstro::getEphType(o.ephemType), 50) +
-         addTable(tr("&Delta;T"), QString::number(ast.m_deltaT * 60 * 60 * 24, 'f', 1), 50) +
+         addTable(("Eph."), CAstro::getEphType(o.ephemType), 50) +
+         addTable(("&Delta;T"), QString::number(ast.m_deltaT * 60 * 60 * 24, 'f', 1), 50) +
          "</table>";
 
 
@@ -169,11 +169,11 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
   //////////
   str = "<p align=\"center\"><b>" + CAstro::getName(o.type) + " Transit Contacts</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("I"), getStrTime(m_event.event_u.sunTransit_u.c1, m_view.geo.tz)) +
-        (m_event.event_u.sunTransit_u.i1 > 0 ? addTable(tr("II"), getStrTime(m_event.event_u.sunTransit_u.i1, m_view.geo.tz)) : "") +
-        addTable(tr("Greatest"), getStrTime(m_event.jd, m_view.geo.tz)) +
-        (m_event.event_u.sunTransit_u.i2 > 0 ? addTable(tr("III"), getStrTime(m_event.event_u.sunTransit_u.i2, m_view.geo.tz)) : "") +
-        addTable(tr("IV"), getStrTime(m_event.event_u.sunTransit_u.c2, m_view.geo.tz)) +
+        addTable(("I"), getStrTime(m_event.event_u.sunTransit_u.c1, m_view.geo.tz)) +
+        (m_event.event_u.sunTransit_u.i1 > 0 ? addTable(("II"), getStrTime(m_event.event_u.sunTransit_u.i1, m_view.geo.tz)) : "") +
+        addTable(("Greatest"), getStrTime(m_event.jd, m_view.geo.tz)) +
+        (m_event.event_u.sunTransit_u.i2 > 0 ? addTable(("III"), getStrTime(m_event.event_u.sunTransit_u.i2, m_view.geo.tz)) : "") +
+        addTable(("IV"), getStrTime(m_event.event_u.sunTransit_u.c2, m_view.geo.tz)) +
         "</table>";
 
   txtRB.setTextFormat(Qt::RichText);
@@ -278,11 +278,11 @@ QImage SkEventDocument::makeSunTransitImage(const QSize &size, double &px)
   QFont fnt = QFont(fontName, 10, QFont::Bold);
   p.setFont(fnt);
 
-  p.renderText(-sunRadius - tick, 0, 4, tr("E"), RT_LEFT);
-  p.renderText(sunRadius + tick, 0, 4, tr("W"), RT_RIGHT);
+  p.renderText(-sunRadius - tick, 0, 4, ("E"), RT_LEFT);
+  p.renderText(sunRadius + tick, 0, 4, ("W"), RT_RIGHT);
 
-  p.renderText(0, -sunRadius - tick, 4, tr("N"), RT_TOP);
-  p.renderText(0, sunRadius + tick, 4, tr("S"), RT_BOTTOM);
+  p.renderText(0, -sunRadius - tick, 4, ("N"), RT_TOP);
+  p.renderText(0, sunRadius + tick, 4, ("S"), RT_BOTTOM);
 
   p.setPen(QPen(Qt::black, 0.5));
   p.drawCross(0, 0, s * 0.01);
@@ -451,8 +451,8 @@ void SkEventDocument::makeLunarEclipse(QPaintDevice *device)
   str = "<font size=\"6\"><b>" + QString("<p align=\"center\">") +
         eclType + " Lunar Eclipse of " + getStrDate(m_event.jd, m_view.geo.tz) + "</b></p></font>";
 
-  str += "<font size=\"4\"><p align=\"center\">" + tr("Greatest Eclipse = ") +
-         getStrTime(m_event.jd, m_view.geo.tz) + " &nbsp;&nbsp; " + tr("JD = ") + QString::number(m_event.jd, 'f', 6) + "</p>";
+  str += "<font size=\"4\"><p align=\"center\">Greatest Eclipse = " +
+         getStrTime(m_event.jd, m_view.geo.tz) + " &nbsp;&nbsp; " + ("JD = ") + QString::number(m_event.jd, 'f', 6) + "</p>";
 
   str += QString("<font size=\"4\"><p align=\"center\">") +
           "P. Radius = " + QString::number(es.sx * 0.5 / 3600., 'f', 4) + "&#186; &nbsp; " +
@@ -508,10 +508,10 @@ void SkEventDocument::makeLunarEclipse(QPaintDevice *device)
   const int blockWidth = rc.width() * 0.25;
   str = "<p align=\"center\"><b>Sun at Greatest Eclipse</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("R.A."), getStrRA(sun.lRD.Ra)) +
-        addTable(tr("Dec."), getStrDeg(sun.lRD.Dec)) +
-        addTable(tr("S.D."), getStrDeg(D2R(sun.sx * 0.5 / 3600.0))) +
-        addTable(tr("H.P."), getStrDeg(sun.parallax)) +
+        addTable(("R.A."), getStrRA(sun.lRD.Ra)) +
+        addTable(("Dec."), getStrDeg(sun.lRD.Dec)) +
+        addTable(("S.D."), getStrDeg(D2R(sun.sx * 0.5 / 3600.0))) +
+        addTable(("H.P."), getStrDeg(sun.parallax)) +
         "</table>";
 
   txt.setTextFormat(Qt::RichText);
@@ -521,10 +521,10 @@ void SkEventDocument::makeLunarEclipse(QPaintDevice *device)
 
   str = "<p align=\"center\"><b>Moon at Greatest Eclipse</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("R.A."), getStrRA(obj.lRD.Ra)) +
-        addTable(tr("Dec."), getStrDeg(obj.lRD.Dec)) +
-        addTable(tr("S.D."), getStrDeg(D2R(obj.sx * 0.5 / 3600.0))) +
-        addTable(tr("H.P."), getStrDeg(obj.parallax)) +
+        addTable(("R.A."), getStrRA(obj.lRD.Ra)) +
+        addTable(("Dec."), getStrDeg(obj.lRD.Dec)) +
+        addTable(("S.D."), getStrDeg(D2R(obj.sx * 0.5 / 3600.0))) +
+        addTable(("H.P."), getStrDeg(obj.parallax)) +
         "</table>";
 
   txt.setTextFormat(Qt::RichText);
@@ -537,13 +537,13 @@ void SkEventDocument::makeLunarEclipse(QPaintDevice *device)
 
   str = "<p align=\"center\"><b>Eclipse Contacts</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("P1"), getStrTime(m_event.event_u.lunarEcl_u.p1, m_view.geo.tz)) +
-        ( m_event.event_u.lunarEcl_u.u1 > 0 ? addTable(tr("U1"), getStrTime( m_event.event_u.lunarEcl_u.u1, m_view.geo.tz)) : "") +
-        ( m_event.event_u.lunarEcl_u.u2 > 0 ? addTable(tr("U2"), getStrTime( m_event.event_u.lunarEcl_u.u2, m_view.geo.tz)) : "") +
-        addTable(tr("Greatest"), getStrTime(m_event.jd, m_view.geo.tz)) +
-        ( m_event.event_u.lunarEcl_u.u3 > 0 ? addTable(tr("U3"), getStrTime( m_event.event_u.lunarEcl_u.u3, m_view.geo.tz)) : "") +
-        ( m_event.event_u.lunarEcl_u.u4 > 0 ? addTable(tr("U4"), getStrTime( m_event.event_u.lunarEcl_u.u4, m_view.geo.tz)) : "") +
-        addTable(tr("P4"), getStrTime( m_event.event_u.lunarEcl_u.p4, m_view.geo.tz)) +
+        addTable(("P1"), getStrTime(m_event.event_u.lunarEcl_u.p1, m_view.geo.tz)) +
+        ( m_event.event_u.lunarEcl_u.u1 > 0 ? addTable(("U1"), getStrTime( m_event.event_u.lunarEcl_u.u1, m_view.geo.tz)) : "") +
+        ( m_event.event_u.lunarEcl_u.u2 > 0 ? addTable(("U2"), getStrTime( m_event.event_u.lunarEcl_u.u2, m_view.geo.tz)) : "") +
+        addTable(("Greatest"), getStrTime(m_event.jd, m_view.geo.tz)) +
+        ( m_event.event_u.lunarEcl_u.u3 > 0 ? addTable(("U3"), getStrTime( m_event.event_u.lunarEcl_u.u3, m_view.geo.tz)) : "") +
+        ( m_event.event_u.lunarEcl_u.u4 > 0 ? addTable(("U4"), getStrTime( m_event.event_u.lunarEcl_u.u4, m_view.geo.tz)) : "") +
+        addTable(("P4"), getStrTime( m_event.event_u.lunarEcl_u.p4, m_view.geo.tz)) +
         "</table>";
   txt.setTextFormat(Qt::RichText);
   txt.setTextWidth(blockWidth);
@@ -552,15 +552,15 @@ void SkEventDocument::makeLunarEclipse(QPaintDevice *device)
 
   str = "<p align=\"center\"><b>Eclipse Durations</b></p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("Penumbral"), getStrTimeFromDayFrac(m_event.event_u.lunarEcl_u.p4 - m_event.event_u.lunarEcl_u.p1)) +
-        ((m_event.event_u.lunarEcl_u.u4 <= 0) ? QString("") : addTable(tr("Umbral"), getStrTimeFromDayFrac(m_event.event_u.lunarEcl_u.u4 - m_event.event_u.lunarEcl_u.u1))) +
-        ((m_event.event_u.lunarEcl_u.u3 <= 0) ? QString("") : addTable(tr("Total"), getStrTimeFromDayFrac(m_event.event_u.lunarEcl_u.u3 - m_event.event_u.lunarEcl_u.u2))) +
+        addTable(("Penumbral"), getStrTimeFromDayFrac(m_event.event_u.lunarEcl_u.p4 - m_event.event_u.lunarEcl_u.p1)) +
+        ((m_event.event_u.lunarEcl_u.u4 <= 0) ? QString("") : addTable(("Umbral"), getStrTimeFromDayFrac(m_event.event_u.lunarEcl_u.u4 - m_event.event_u.lunarEcl_u.u1))) +
+        ((m_event.event_u.lunarEcl_u.u3 <= 0) ? QString("") : addTable(("Total"), getStrTimeFromDayFrac(m_event.event_u.lunarEcl_u.u3 - m_event.event_u.lunarEcl_u.u2))) +
         "</table>";
 
   str += "<p align=\"center\"><b>Ephemeris Data</b></p><p></p>"
          "<table width=\"100%\">" +
-         addTable(tr("Eph."), CAstro::getEphType(sun.ephemType) + " / " + CAstro::getEphType(obj.ephemType), 30) +
-         addTable(tr("&Delta;T"), QString::number(ast.m_deltaT * 60 * 60 * 24, 'f', 1), 30) +
+         addTable(("Eph."), CAstro::getEphType(sun.ephemType) + " / " + CAstro::getEphType(obj.ephemType), 30) +
+         addTable(("&Delta;T"), QString::number(ast.m_deltaT * 60 * 60 * 24, 'f', 1), 30) +
          "</table>";
   txt.setTextFormat(Qt::RichText);
   txt.setTextWidth(blockWidth);
@@ -650,11 +650,11 @@ QImage SkEventDocument::makeLunarEclipseImage(const QSize &size, double &px)
   QFont fnt = QFont(fontName, 10, QFont::Bold);
   p.setFont(fnt);
 
-  p.renderText(-penumbraRadius - tick, 0, 4, tr("E"), RT_LEFT);
-  p.renderText(penumbraRadius + tick, 0, 4, tr("W"), RT_RIGHT);
+  p.renderText(-penumbraRadius - tick, 0, 4, ("E"), RT_LEFT);
+  p.renderText(penumbraRadius + tick, 0, 4, ("W"), RT_RIGHT);
 
-  p.renderText(0, -penumbraRadius - tick, 4, tr("N"), RT_TOP);
-  p.renderText(0, penumbraRadius + tick, 4, tr("S"), RT_BOTTOM);
+  p.renderText(0, -penumbraRadius - tick, 4, ("N"), RT_TOP);
+  p.renderText(0, penumbraRadius + tick, 4, ("S"), RT_BOTTOM);
 
   double alt;
 
@@ -809,8 +809,8 @@ void SkEventDocument::makeSolarEclipse(QPaintDevice *device)
   str = "<font size=\"6\"><b>" + QString("<p align=\"center\">") +
         eclType + " Solar Eclipse of " + getStrDate(m_event.jd, m_view.geo.tz) + "</b></p></font>";
 
-  str += "<font size=\"4\"><p align=\"center\">" + tr("Greatest Eclipse = ") +
-         getStrTime(m_event.jd, m_view.geo.tz) + " &nbsp;&nbsp; " + tr("JD = ") + QString::number(m_event.jd, 'f', 6) + "</p>";
+  str += "<font size=\"4\"><p align=\"center\">Greatest Eclipse = " +
+         getStrTime(m_event.jd, m_view.geo.tz) + " &nbsp;&nbsp; " + ("JD = ") + QString::number(m_event.jd, 'f', 6) + "</p>";
 
   str += QString("<font size=\"4\"><p align=\"center\">") +
           "Magnitude = " + QString::number(m_event.event_u.solarEcl_u.mag, 'f', 4) + " &nbsp; " +
@@ -875,10 +875,10 @@ void SkEventDocument::makeSolarEclipse(QPaintDevice *device)
   const int blockWidth = rc.width() * 0.25;
   str = "<p align=\"center\"><b>Sun at Greatest Eclipse</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("R.A."), getStrRA(sun.lRD.Ra)) +
-        addTable(tr("Dec."), getStrDeg(sun.lRD.Dec)) +
-        addTable(tr("S.D."), getStrDeg(D2R(sun.sx * 0.5 / 3600.0))) +
-        addTable(tr("H.P."), getStrDeg(sun.parallax)) +
+        addTable(("R.A."), getStrRA(sun.lRD.Ra)) +
+        addTable(("Dec."), getStrDeg(sun.lRD.Dec)) +
+        addTable(("S.D."), getStrDeg(D2R(sun.sx * 0.5 / 3600.0))) +
+        addTable(("H.P."), getStrDeg(sun.parallax)) +
         "</table>";
 
   txt.setTextFormat(Qt::RichText);
@@ -888,10 +888,10 @@ void SkEventDocument::makeSolarEclipse(QPaintDevice *device)
 
   str = "<p align=\"center\"><b>Moon at Greatest Eclipse</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("R.A."), getStrRA(obj.lRD.Ra)) +
-        addTable(tr("Dec."), getStrDeg(obj.lRD.Dec)) +
-        addTable(tr("S.D."), getStrDeg(D2R(obj.sx * 0.5 / 3600.0))) +
-        addTable(tr("H.P."), getStrDeg(obj.parallax)) +
+        addTable(("R.A."), getStrRA(obj.lRD.Ra)) +
+        addTable(("Dec."), getStrDeg(obj.lRD.Dec)) +
+        addTable(("S.D."), getStrDeg(D2R(obj.sx * 0.5 / 3600.0))) +
+        addTable(("H.P."), getStrDeg(obj.parallax)) +
         "</table>";
 
   txt.setTextFormat(Qt::RichText);
@@ -904,11 +904,11 @@ void SkEventDocument::makeSolarEclipse(QPaintDevice *device)
 
   str = "<p align=\"center\"><b>Eclipse Contacts</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("First"), getStrTime(m_event.event_u.solarEcl_u.c1, m_view.geo.tz)) +
-        ( m_event.event_u.solarEcl_u.i1 > 0 ? addTable(tr("First Inner"), getStrTime(m_event.event_u.solarEcl_u.i1, m_view.geo.tz)) : "") +
-        addTable(tr("Greatest"), getStrTime(m_event.jd, m_view.geo.tz)) +
-        ( m_event.event_u.solarEcl_u.i1 > 0 ? addTable(tr("Last Inner"), getStrTime(m_event.event_u.solarEcl_u.i1, m_view.geo.tz)) : "") +
-        addTable(tr("Last"), getStrTime(m_event.event_u.solarEcl_u.c2, m_view.geo.tz)) +
+        addTable(("First"), getStrTime(m_event.event_u.solarEcl_u.c1, m_view.geo.tz)) +
+        ( m_event.event_u.solarEcl_u.i1 > 0 ? addTable(("First Inner"), getStrTime(m_event.event_u.solarEcl_u.i1, m_view.geo.tz)) : "") +
+        addTable(("Greatest"), getStrTime(m_event.jd, m_view.geo.tz)) +
+        ( m_event.event_u.solarEcl_u.i1 > 0 ? addTable(("Last Inner"), getStrTime(m_event.event_u.solarEcl_u.i1, m_view.geo.tz)) : "") +
+        addTable(("Last"), getStrTime(m_event.event_u.solarEcl_u.c2, m_view.geo.tz)) +
         "</table>";
 
   double alts[5];
@@ -940,11 +940,11 @@ void SkEventDocument::makeSolarEclipse(QPaintDevice *device)
 
   str += "<p align=\"center\"><b>Sun altitude</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("First"), QString::number(R2D(alts[0]), 'f', 1) + "&#186;") +
-        ( m_event.event_u.solarEcl_u.i1 > 0 ? addTable(tr("First Inner"), QString::number(R2D(alts[1]), 'f', 1) + "&#186;") : "") +
-        addTable(tr("Greatest"), QString::number(R2D(alts[2]), 'f', 1) + "&#186;") +
-        ( m_event.event_u.solarEcl_u.i1 > 0 ? addTable(tr("Last Inner"), QString::number(R2D(alts[3]), 'f', 1) + "&#186;") : "") +
-        addTable(tr("Last"), QString::number(R2D(alts[4]), 'f', 1) + "&#186;") +
+        addTable(("First"), QString::number(R2D(alts[0]), 'f', 1) + "&#186;", 50) +
+        ( m_event.event_u.solarEcl_u.i1 > 0 ? addTable(("First Inner"), QString::number(R2D(alts[1]), 'f', 1) + "&#186;", 50) : "") +
+        addTable(("Greatest"), QString::number(R2D(alts[2]), 'f', 1) + "&#186;", 50) +
+        ( m_event.event_u.solarEcl_u.i1 > 0 ? addTable(("Last Inner"), QString::number(R2D(alts[3]), 'f', 1) + "&#186;", 50) : "") +
+        addTable(("Last"), QString::number(R2D(alts[4]), 'f', 1) + "&#186;", 50) +
         "</table>";
 
   txt.setTextFormat(Qt::RichText);
@@ -954,27 +954,29 @@ void SkEventDocument::makeSolarEclipse(QPaintDevice *device)
 
   str = "<p align=\"center\"><b>Eclipse Durations</b></p><p></p>"
         "<table width=\"100%\">" +
-        addTable(tr("Partial"), getStrTimeFromDayFrac(m_event.event_u.solarEcl_u.c2 - m_event.event_u.solarEcl_u.c1)) +
-        ((m_event.event_u.solarEcl_u.i2 <= 0) ? QString("") : addTable(tr("Total"), getStrTimeFromDayFrac(m_event.event_u.solarEcl_u.i2 - m_event.event_u.solarEcl_u.i1))) +
-        //((m_event.event_u.lunarEcl_u.u3 <= 0) ? QString("") : addTable(tr("Total"), getStrTimeFromDayFrac(m_event.event_u.lunarEcl_u.u3 - m_event.event_u.lunarEcl_u.u2))) +
+        addTable(("Partial"), getStrTimeFromDayFrac(m_event.event_u.solarEcl_u.c2 - m_event.event_u.solarEcl_u.c1)) +
+        ((m_event.event_u.solarEcl_u.i2 <= 0) ? QString("") : addTable(("Total"), getStrTimeFromDayFrac(m_event.event_u.solarEcl_u.i2 - m_event.event_u.solarEcl_u.i1))) +
+        //((m_event.event_u.lunarEcl_u.u3 <= 0) ? QString("") : addTable(("Total"), getStrTimeFromDayFrac(m_event.event_u.lunarEcl_u.u3 - m_event.event_u.lunarEcl_u.u2))) +
         "</table>";
 
   str += "<p align=\"center\"><b>Ephemeris Data</b></p><p></p>"
          "<table width=\"100%\">" +
-         addTable(tr("Eph."), CAstro::getEphType(sun.ephemType) + " / " + CAstro::getEphType(obj.ephemType), 30) +
-         addTable(tr("&Delta;T"), QString::number(ast.m_deltaT * 60 * 60 * 24, 'f', 1), 30) +
+         addTable(("Eph."), CAstro::getEphType(sun.ephemType) + " / " + CAstro::getEphType(obj.ephemType), 30) +
+         addTable(("&Delta;T"), QString::number(ast.m_deltaT * 60 * 60 * 24, 'f', 1), 30) +
          "</table>";
   txt.setTextFormat(Qt::RichText);
   txt.setTextWidth(blockWidth);
   txt.setText(str);
   p.drawStaticText(margin, h, txt);
 
+  h += txt.size().height();
+
   /// draw scale
-  int sw = 15 * 60 * px;
+  int sw = 30 * 60 * px;
   int x1 = rc.width() / 2 - sw / 2;
   int x2 = rc.width()  / 2 + sw / 2;
   int y = h2 + image.height() + 10;
-  QList <QPointF> list = p.drawTickLine(QPointF(x1, y), QPointF(x2, y), 10, 5, 2 | 8, 3, 4);
+  QList <QPointF> list = p.drawTickLine(QPointF(x1, y), QPointF(x2, y), 10, 5, 2 | 8, 6, 4);
 
   int i = 0;
   foreach (const QPointF &point, list)
@@ -1058,11 +1060,11 @@ QImage SkEventDocument::makeSolarEclipseImage(const QSize &size, double &px)
   QFont fnt = QFont(fontName, 10, QFont::Bold);
   p.setFont(fnt);
 
-  p.renderText(-sunRadius - tick, 0, 4, tr("E"), RT_LEFT);
-  p.renderText(sunRadius + tick, 0, 4, tr("W"), RT_RIGHT);
+  p.renderText(-sunRadius - tick, 0, 4, ("E"), RT_LEFT);
+  p.renderText(sunRadius + tick, 0, 4, ("W"), RT_RIGHT);
 
-  p.renderText(0, -sunRadius - tick, 4, tr("N"), RT_TOP);
-  p.renderText(0, sunRadius + tick, 4, tr("S"), RT_BOTTOM);
+  p.renderText(0, -sunRadius - tick, 4, ("N"), RT_TOP);
+  p.renderText(0, sunRadius + tick, 4, ("S"), RT_BOTTOM);
 
   p.setPen(QPen(Qt::black, 0.5));
   p.drawCross(0, 0, s * 0.01);
@@ -1089,6 +1091,21 @@ QImage SkEventDocument::makeSolarEclipseImage(const QSize &size, double &px)
   p.setBrush(Qt::NoBrush);
   p.drawArc(QRect(x - objRadiusPx, y - objRadiusPx, objRadiusPx * 2, objRadiusPx * 2), 16 * (angle - 45), 16 * 90);
 
+  p.restore();
+
+  orbit_t sun;
+  CAstro ast;
+
+  m_view.jd = m_event.jd;
+  ast.setParam(&m_view);
+  ast.calcPlanet(PT_SUN, &sun);
+
+  p.save();
+  p.translate(s / 2, s / 2);
+  p.rotate(R2D(CAstro::getEclObl(m_event.jd) * cos(sun.hLon)));
+
+  p.setPen(QPen(Qt::gray, 1, Qt::DashLine));
+  p.drawExtLine(QPointF(-sunRadius, 0), QPointF(sunRadius, 0), s * 0.025);
 
   p.restore();
 
