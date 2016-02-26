@@ -32,6 +32,10 @@ void SkEventDocument::create(QPaintDevice *device, bool colored)
     case EVT_SOLARECL:
       makeSolarEclipse(device);
       break;
+
+    case EVT_OCCULTATION:
+      makeOccultation(device);
+      break;
   }
 
   g_geocentric = m_oldGeocentric;
@@ -1023,6 +1027,34 @@ double SkEventDocument::getSolarEclXY(double &x, double &y, double &objPx, doubl
   return px;
 }
 
+double SkEventDocument::getOccultationPlnXY(double &x, double &y, double &objPx, double jd, double moonRadius, double &alt, double &angle)
+{
+  CAstro ast;
+
+  orbit_t obj;
+  orbit_t moon;
+
+  m_view.jd = jd;
+  ast.setParam(&m_view);
+
+  ast.calcPlanet(m_event.event_u.moonOcc_u.id, &obj);
+  ast.calcPlanet(PT_MOON, &moon);
+
+  double d = 3600 * R2D(anSep(obj.lRD.Ra, obj.lRD.Dec, moon.lRD.Ra, moon.lRD.Dec));
+  double ang = trfGetPosAngle(moon.lRD.Ra, moon.lRD.Dec, obj.lRD.Ra, obj.lRD.Dec);
+
+  double px = moonRadius * 2 / (moon.sx); // 1 arcsec to px
+  objPx = px * obj.sx * 0.5;
+
+  getPos(ang, px, d, x, y);
+
+  alt = obj.lAlt;
+  angle = R2D(ang) + 90;
+  rangeDbl(&angle, 360);
+
+  return px;
+}
+
 QImage SkEventDocument::makeSolarEclipseImage(const QSize &size, double &px)
 {
   QImage image = QImage(size, QImage::Format_ARGB32);
@@ -1106,6 +1138,283 @@ QImage SkEventDocument::makeSolarEclipseImage(const QSize &size, double &px)
 
   p.setPen(QPen(Qt::gray, 1, Qt::DashLine));
   p.drawExtLine(QPointF(-sunRadius, 0), QPointF(sunRadius, 0), s * 0.025);
+
+  p.restore();
+
+  return image;
+}
+
+void SkEventDocument::makeOccultation(QPaintDevice *device)
+{
+  CSkPainter p(device);
+  static int rcMargin = 10;
+
+  QRect rc = QRect(rcMargin, rcMargin, device->width() - rcMargin * 2, device->height() * rcMargin * 2);
+  QString coords;
+
+  p.fillRect(QRect(0, 0, device->width(), device->height()), Qt::white);
+
+  if (m_event.geocentric)
+  {
+    coords = "Geocentric";
+  }
+  else
+  {
+    coords = "Topocentric";
+  }
+  QString str;
+
+  str = "<font size=\"6\"><b>" + QString("<p align=\"center\">Occultation of ") + CAstro::getName(m_event.event_u.moonOcc_u.id) + " by Moon " + getStrDate(m_event.jd, m_view.geo.tz) + "</b></p></font>";
+
+  if (!m_event.geocentric)
+  {
+    QString visibility;
+
+    switch (m_event.vis)
+    {
+      case EVV_NONE:
+        visibility = "Not visible";
+        break;
+
+      case EVV_PARTIAL:
+        visibility = "Partially visible";
+        break;
+
+      case EVV_FULL:
+        visibility = "Completely visible";
+        break;
+    }
+
+    str += "<p align=\"center\">" + getStrLat(m_view.geo.lat) + " " + getStrLon(m_view.geo.lon) + " , " + m_view.geo.name + " , " +
+        visibility + "</p>";
+    str += "</font>";
+  }
+
+  QStaticText txtHeader;
+  int h = rc.top();
+  const int margin = 10;
+
+  txtHeader.setTextFormat(Qt::RichText);
+  txtHeader.setText(str);
+  txtHeader.setTextWidth(rc.width());
+
+  p.drawStaticText(0, h, txtHeader);
+
+  int h2 = h = txtHeader.size().height();
+
+  int size = rc.width() * 0.8;
+  double px;
+  QImage image = makeOccultationImage(QSize(size, size), px);
+  p.drawImage(rc.width() / 2 - image.width() / 2, h + 20, image);
+
+  CAstro ast;
+
+  orbit_t obj;
+  orbit_t obj1;
+
+  m_view.jd = m_event.jd;
+  ast.setParam(&m_view);
+
+  ast.calcPlanet(PT_MOON, &obj);
+  ast.calcPlanet(m_event.event_u.moonOcc_u.id, &obj1);
+
+  p.setPen(Qt::black);
+
+  const int blockWidth = rc.width() * 0.25;
+  str = "<p align=\"center\"><b>Moon at Greatest Occultation</b><br>(" + coords + " Coordinates)</p><p></p>"
+        "<table width=\"100%\">" +
+        addTable(("R.A."), getStrRA(obj.lRD.Ra)) +
+        addTable(("Dec."), getStrDeg(obj.lRD.Dec)) +
+        addTable(("S.D."), getStrDeg(D2R(obj.sx * 0.5 / 3600.0))) +
+        addTable(("H.P."), getStrDeg(obj.parallax)) +
+        addTable(("Phase"), QString::number(obj.phase * 100, 'f', 1) + "%") +
+        "</table>";
+
+  QStaticText txt;
+  txt.setTextFormat(Qt::RichText);
+  txt.setTextWidth(blockWidth);
+  txt.setText(str);
+  p.drawStaticText(margin, h, txt);
+
+  h += size * 0.90;
+
+  str = "<p align=\"center\"><b>Eclipse Contacts</b><br>(" + coords + " Coordinates)</p><p></p>"
+        "<table width=\"100%\">" +
+        addTable(("First"), getStrTime(m_event.event_u.moonOcc_u.c1, m_view.geo.tz)) +
+        ( m_event.event_u.moonOcc_u.i1 > 0 ? addTable(("First Inner"), getStrTime(m_event.event_u.moonOcc_u.i1, m_view.geo.tz)) : "") +
+        ( m_event.event_u.moonOcc_u.i1 > 0 ? addTable(("Last Inner"), getStrTime(m_event.event_u.moonOcc_u.i1, m_view.geo.tz)) : "") +
+        addTable(("Last"), getStrTime(m_event.event_u.moonOcc_u.c2, m_view.geo.tz)) +
+        "</table>";
+
+  txt.setTextFormat(Qt::RichText);
+  txt.setTextWidth(blockWidth);
+  txt.setText(str);
+  p.drawStaticText(rc.width() - margin - blockWidth, h, txt);
+
+  str = "<p align=\"center\"><b>Occultation Durations</b></p><p></p>"
+        "<table width=\"100%\">" +
+        addTable(("Total"), getStrTimeFromDayFrac(m_event.event_u.moonOcc_u.c2 - m_event.event_u.moonOcc_u.c1)) +
+        "</table>";
+
+  str += "<p align=\"center\"><b>Ephemeris Data</b></p><p></p>"
+         "<table width=\"100%\">" +
+         addTable(("Eph."), CAstro::getEphType(obj1.ephemType) + " / " + CAstro::getEphType(obj.ephemType), 30) +
+         addTable(("&Delta;T"), QString::number(ast.m_deltaT * 60 * 60 * 24, 'f', 1), 30) +
+         "</table>";
+  txt.setTextFormat(Qt::RichText);
+  txt.setTextWidth(blockWidth);
+  txt.setText(str);
+  p.drawStaticText(margin, h, txt);
+
+  /// draw scale
+  int sw = 15 * 60 * px;
+  int x1 = rc.width() / 2 - sw / 2;
+  int x2 = rc.width()  / 2 + sw / 2;
+  int y = h2 + image.height() + 10;
+  QList <QPointF> list = p.drawTickLine(QPointF(x1, y), QPointF(x2, y), 10, 5, 2 | 8, 3, 4);
+
+  int i = 0;
+  foreach (const QPointF &point, list)
+  {
+    p.renderText(point.x(), point.y(), 5, QString::number(i) + "'", RT_BOTTOM);
+    i += 5;
+  }
+
+  //////////
+  str = "<p align=\"center\">Generated by SkytechX &copy; 2016<br>www.skytechx.eu</p><p></p>";
+
+  txt.setTextFormat(Qt::RichText);
+  txt.setTextWidth(rc.width());
+  txt.setText(str);
+
+  p.drawStaticText(margin, y + 45, txt);
+}
+
+
+void SkEventDocument::drawPhase(orbit_t *o, orbit_t *sun, CSkPainter *p, int radius)
+{
+  float rx = radius;
+  float ry = radius;
+  float ph = ((o->phase) - 0.5) * 2;
+  ph *= radius;
+
+  // angle to sun
+  double sa = -trfGetPosAngle(o->lRD.Ra, o->lRD.Dec, sun->lRD.Ra, sun->lRD.Dec);
+  rangeDbl(&sa, R360);
+  double sunAng;
+
+  sunAng = sa - R270 + R180;
+
+  QPainterPath path;
+
+  QRect rc = QRect(-rx, -ry, rx * 2, ry * 2);
+
+  path.moveTo(rx, 0);
+  path.arcTo(rc, 0, 180);
+  path.arcTo(QRect(-rx, -ph, rx * 2, ph * 2), 180, -180);
+
+  p->save();
+  p->translate(0, 0);
+
+  int b;
+
+  if (m_colored)
+    b = 32;
+  else
+    b = 0;
+
+  p->rotate(R2D(sunAng) + 90);
+  p->setPen(QColor(0, 0, b));
+  p->setBrush(QColor(0, 0, b));
+  p->setOpacity(0.1);
+  p->drawPath(path);
+  p->restore();
+}
+
+QImage SkEventDocument::makeOccultationImage(const QSize &size, double &px)
+{
+  QImage image = QImage(size, QImage::Format_ARGB32);
+  image.fill(Qt::transparent);
+
+  CSkPainter p(&image);
+  p.setRenderHint(QPainter::Antialiasing);
+
+  const int s = size.width();
+  const int moonRadius = s * 0.65 * 0.5;
+  const int tick = s * 0.025;
+
+  p.save();
+  p.translate(s / 2, s / 2);
+
+  CAstro ast;
+
+  orbit_t obj;
+  orbit_t sun;
+
+  m_view.jd = m_event.jd;
+  ast.setParam(&m_view);
+
+  ast.calcPlanet(PT_MOON, &obj);
+  ast.calcPlanet(PT_SUN, &sun);
+
+  if (m_colored)
+  {
+    p.setBrush(QColor(220, 220, 220));
+  }
+  else
+  {
+    p.setBrush(Qt::NoBrush);
+  }
+
+  p.setPen(Qt::black);
+  p.drawEllipse(QPoint(0, 0), moonRadius, moonRadius);
+
+  drawPhase(&obj, &sun, &p, moonRadius);
+
+  p.setPen(QPen(Qt::black, 0.5));
+  p.drawCross(0, 0, s * 0.01);
+
+  // NSEW
+  p.drawLine(-moonRadius, 0, -moonRadius - tick, 0);
+  p.drawLine(moonRadius, 0, moonRadius + tick, 0);
+  p.drawLine(0, -moonRadius, 0, -moonRadius - tick);
+  p.drawLine(0, moonRadius, 0, moonRadius + tick);
+
+  QFont fnt = QFont(fontName, 10, QFont::Bold);
+  p.setFont(fnt);
+
+  p.renderText(-moonRadius - tick, 0, 4, ("E"), RT_LEFT);
+  p.renderText(moonRadius + tick, 0, 4, ("W"), RT_RIGHT);
+
+  p.renderText(0, -moonRadius - tick, 4, ("N"), RT_TOP);
+  p.renderText(0, moonRadius + tick, 4, ("S"), RT_BOTTOM);
+
+  double x1, y1, objRadiusPx, alt, angle;
+  double x2, y2;
+
+  p.setBrush(Qt::lightGray);
+
+  getOccultationPlnXY(x1, y1, objRadiusPx, m_event.event_u.moonOcc_u.c1, moonRadius, alt, angle);
+  p.drawEllipse(QPointF(x1, y1), objRadiusPx, objRadiusPx);
+  p.renderText(x1, y1, objRadiusPx + 5, "I", RT_TOP);
+  p.renderText(x1, y1, objRadiusPx + 5,  getStrTime(m_event.event_u.moonOcc_u.i1, m_view.geo.tz), RT_BOTTOM_LEFT);
+
+  getOccultationPlnXY(x2, y2, objRadiusPx, m_event.event_u.moonOcc_u.c2, moonRadius, alt, angle);
+  p.drawEllipse(QPointF(x2, y2), objRadiusPx, objRadiusPx);
+  p.renderText(x2, y2, objRadiusPx + 5, "II", RT_TOP);
+  p.renderText(x2, y2, objRadiusPx + 5,  getStrTime(m_event.event_u.moonOcc_u.i2, m_view.geo.tz), RT_BOTTOM_RIGHT);
+
+  p.drawExtLine(QPointF(x1, y1), QPointF(x2, y2), s * 0.025);
+
+
+  p.restore();
+
+  p.save();
+  p.translate(s / 2, s / 2);
+  p.rotate(R2D(CAstro::getEclObl(m_event.jd) * cos(obj.hLon)));
+
+  p.setPen(QPen(Qt::gray, 1, Qt::DashLine));
+  p.drawExtLine(QPointF(-moonRadius, 0), QPointF(moonRadius, 0), s * 0.025);
 
   p.restore();
 

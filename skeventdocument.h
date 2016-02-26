@@ -5,6 +5,8 @@
 
 #include <QObject>
 
+class CSkPainter;
+
 class SkEventDocument : public QObject
 {
 public:
@@ -27,10 +29,15 @@ protected:
   void makeSolarEclipse(QPaintDevice *device);
   QImage makeSolarEclipseImage(const QSize &size, double &px);
 
+  void makeOccultation(QPaintDevice *device);
+  QImage makeOccultationImage(const QSize &size, double &px);
+
 private:
   double getTransitPlnXY(double &x, double &y, double &objPx, double jd, double sunRadius);
   double getLunarEclXY(double &x, double &y, double &objPx, double jd, double penumbraRadius, double &alt);
   double getSolarEclXY(double &x, double &y, double &objPx, double jd, double sunRadius, double &alt, double &angle);
+  double getOccultationPlnXY(double &x, double &y, double &objPx, double jd, double moonRadius, double &alt, double &angle);
+  void drawPhase(orbit_t *moon, orbit_t *sun, CSkPainter *p, int radius);
 };
 
 #endif // SKEVENTDOCUMENT_H

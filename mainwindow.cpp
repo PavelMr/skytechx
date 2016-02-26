@@ -4235,7 +4235,7 @@ void MainWindow::on_treeView_2_doubleClicked(const QModelIndex &index)
   fillEventInfo(e, item1->text(), warning);
 
   m_currentEvent = *e;
-  bool enabled = e->type == EVT_SOLARECL || e->type == EVT_SUNTRANSIT || e->type == EVT_LUNARECL;
+  bool enabled = e->type == EVT_SOLARECL || e->type == EVT_SUNTRANSIT || e->type == EVT_LUNARECL || e->type == EVT_OCCULTATION;
   ui->pushButton_36->setEnabled(enabled);
 }
 

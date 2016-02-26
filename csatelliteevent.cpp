@@ -211,7 +211,7 @@ void CSatelliteChartWidget::calculate(int height)
 
   m_satCount = 0;
 
-  for (int i = 0; i < 8; i++)
+  for (int i = 0; i < 10; i++)
   {
     m_data[i].clear();
   }

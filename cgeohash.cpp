@@ -1,5 +1,7 @@
 #include "cgeohash.h"
 
+#include <QDebug>
+
 static quint64 doubleToUInt64(double val)
 {
   quint64 i64;
@@ -26,6 +28,8 @@ quint64 CGeoHash::calculate(geoPos_t* geoPos)
   hash += qHash(doubleToUInt64(geoPos->temp));
   hash += qHash(doubleToUInt64(geoPos->tz));
   hash += qHash(doubleToUInt64(geoPos->tzo));
+
+  qDebug() << hash << geoPos->name;
 
   return hash;
 }
