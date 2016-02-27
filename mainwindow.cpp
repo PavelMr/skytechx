@@ -3854,13 +3854,13 @@ void MainWindow::slotSelectionChangedEI(const QItemSelection &, const QItemSelec
   {
     ui->treeView_3->setStyleSheet("color : red");
     ui->label_10->setText(tr("Location was changed! Result may by inaccurate!"));
-    ui->label_10->show();
+    //ui->label_10->show();
   }
   else
   {
     ui->treeView_3->setStyleSheet("");
     ui->label_10->setText("");
-    ui->label_10->hide();
+    //ui->label_10->hide();
   }
 
   ui->lineEdit->setText(getStrTime(e->jd, tz));

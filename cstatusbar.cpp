@@ -313,7 +313,7 @@ void CStatusBar::addItem(int id)
       break;
 
     case SB_SM_MODE:
-      createItem(SB_SM_MODE, label, 50);
+      createItem(SB_SM_MODE, label, 100);
       break;
 
     case SB_SM_MEASURE:

@@ -37,6 +37,7 @@ bool g_forcedRecalculate = true;
 bool  g_onPrinterBW = false;
 bool *g_bMouseMoveMap;
 
+extern bool g_geocentric;
 extern bool g_developMode;
 extern bool g_showFps;
 extern bool g_lockFOV;
@@ -1451,19 +1452,22 @@ void CMapView::updateStatusBar(void)
     pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : %1")).arg(getStrDegNoSign(m_mapView.fov)));
     pcMainWnd->statusBar->setItem(SB_SM_MAGS, QString(tr("Star : %1 mag. / DSO %2 mag.")).arg(m_mapView.starMag, 0, 'f', 1).arg(m_mapView.dsoMag, 0, 'f', 1));
 
+    QString j2000 = m_mapView.epochJ2000 ? tr(" J2000") : tr(" At date");
+    QString geo = g_geocentric ? tr(" Geo.") : " Topo.";
+
     QString mode;
     switch (m_mapView.coordType)
     {
       case SMCT_RA_DEC:
-        mode = tr("Eqt");
+        mode = tr("Eqt") + j2000 + geo;
         break;
 
       case SMCT_ALT_AZM:
-        mode = tr("Hor");
+        mode = tr("Hor") + tr(" At date") + geo;
         break;
 
       case SMCT_ECL:
-        mode = tr("Ecl");
+        mode = tr("Ecl") + tr(" At date") + geo;
         break;
     }
     pcMainWnd->statusBar->setItem(SB_SM_MODE,  QString(tr("%1")).arg(mode));

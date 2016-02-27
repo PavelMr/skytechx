@@ -1238,7 +1238,7 @@ void SkEventDocument::makeOccultation(QPaintDevice *device)
 
   h += size * 0.90;
 
-  str = "<p align=\"center\"><b>Eclipse Contacts</b><br>(" + coords + " Coordinates)</p><p></p>"
+  str = "<p align=\"center\"><b>Ocultation Contacts</b><br>(" + coords + " Coordinates)</p><p></p>"
         "<table width=\"100%\">" +
         addTable(("First"), getStrTime(m_event.event_u.moonOcc_u.c1, m_view.geo.tz)) +
         ( m_event.event_u.moonOcc_u.i1 > 0 ? addTable(("First Inner"), getStrTime(m_event.event_u.moonOcc_u.i1, m_view.geo.tz)) : "") +
@@ -1265,6 +1265,8 @@ void SkEventDocument::makeOccultation(QPaintDevice *device)
   txt.setTextWidth(blockWidth);
   txt.setText(str);
   p.drawStaticText(margin, h, txt);
+
+  qDebug() << px;
 
   /// draw scale
   int sw = 15 * 60 * px;
@@ -1389,23 +1391,27 @@ QImage SkEventDocument::makeOccultationImage(const QSize &size, double &px)
   p.renderText(0, -moonRadius - tick, 4, ("N"), RT_TOP);
   p.renderText(0, moonRadius + tick, 4, ("S"), RT_BOTTOM);
 
+  fnt = QFont(fontName, 8);
+  p.setFont(fnt);
+
   double x1, y1, objRadiusPx, alt, angle;
   double x2, y2;
 
   p.setBrush(Qt::lightGray);
+  p.setPen(QPen(Qt::black));
 
   getOccultationPlnXY(x1, y1, objRadiusPx, m_event.event_u.moonOcc_u.c1, moonRadius, alt, angle);
   p.drawEllipse(QPointF(x1, y1), objRadiusPx, objRadiusPx);
-  p.renderText(x1, y1, objRadiusPx + 5, "I", RT_TOP);
-  p.renderText(x1, y1, objRadiusPx + 5,  getStrTime(m_event.event_u.moonOcc_u.i1, m_view.geo.tz), RT_BOTTOM_LEFT);
+  p.renderText(x1, y1, objRadiusPx + 8, "I", RT_TOP);
+  p.renderText(x1, y1, objRadiusPx + 8,  getStrTime(m_event.event_u.moonOcc_u.i1, m_view.geo.tz), RT_BOTTOM_LEFT);
 
-  getOccultationPlnXY(x2, y2, objRadiusPx, m_event.event_u.moonOcc_u.c2, moonRadius, alt, angle);
+  px = getOccultationPlnXY(x2, y2, objRadiusPx, m_event.event_u.moonOcc_u.c2, moonRadius, alt, angle);
   p.drawEllipse(QPointF(x2, y2), objRadiusPx, objRadiusPx);
-  p.renderText(x2, y2, objRadiusPx + 5, "II", RT_TOP);
-  p.renderText(x2, y2, objRadiusPx + 5,  getStrTime(m_event.event_u.moonOcc_u.i2, m_view.geo.tz), RT_BOTTOM_RIGHT);
+  p.renderText(x2, y2, objRadiusPx + 8, "II", RT_TOP);
+  p.renderText(x2, y2, objRadiusPx + 8,  getStrTime(m_event.event_u.moonOcc_u.i2, m_view.geo.tz), RT_BOTTOM_RIGHT);
 
+  p.setPen(QPen(Qt::black, 0.25));
   p.drawExtLine(QPointF(x1, y1), QPointF(x2, y2), s * 0.025);
-
 
   p.restore();
 

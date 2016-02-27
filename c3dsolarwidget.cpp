@@ -3,6 +3,7 @@
 #include "transform.h"
 #include "ccomdlg.h"
 #include "casterdlg.h"
+#include "smartlabeling.h"
 
 static QList <QVector3D> ptsList[8];
 static QList <QVector3D> objList;
@@ -236,11 +237,13 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
   CSkPainter painter(this);
   CSkPainter p;
 
+  g_labeling.clear();
+
   p.begin(m_pixmap);
 
   CAstro ast;
 
-  p.setFont(QFont("arial", 12));
+  p.setFont(QFont("verdana", 12));
 
   if (m_lockAt == -2 && m_index >= 0)
   { // look at current object
@@ -320,7 +323,8 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     p.setPen(Qt::yellow);
     p.setBrush(Qt::yellow);
     p.drawEllipse(QPointF(p1.sx, p1.sy), r, r);
-    p.renderText(p1.sx, p1.sy, r, tr("Sun"), RT_BOTTOM_RIGHT);
+    //p.renderText(p1.sx, p1.sy, r, tr("Sun"), RT_BOTTOM_RIGHT);
+    g_labeling.addLabel(QPoint(p1.sx, p1.sy), r, tr("Sun"), -1, RT_BOTTOM_RIGHT, SL_AL_ALL);
   }
 
   // axis
@@ -470,7 +474,8 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       p.setBrush(color[i]);
       p.drawEllipse(QPointF(p1.sx, p1.sy), r, r);
       p.setPen(Qt::white);
-      p.renderText(p1.sx, p1.sy, r, (i == 0) ? tr("Earth") : o.name, RT_BOTTOM_RIGHT);
+      //p.renderText(p1.sx, p1.sy, r, (i == 0) ? tr("Earth") : o.name, RT_BOTTOM_RIGHT);
+      g_labeling.addLabel(QPoint(p1.sx, p1.sy), r, (i == 0) ? tr("Earth") : o.name, -1, RT_BOTTOM_RIGHT, SL_AL_ALL);
     }
 
     if (m_showRadius)
@@ -658,9 +663,12 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       }
 
       p.setPen(Qt::white);
-      p.renderText(p1.sx, p1.sy, r, name, RT_BOTTOM_RIGHT);
+      //p.renderText(p1.sx, p1.sy, r, name, RT_BOTTOM_RIGHT);
+      g_labeling.addLabel(QPoint(p1.sx, p1.sy), r, name, -1, RT_BOTTOM_RIGHT, SL_AL_ALL);
     }
   }
+
+  g_labeling.render(&p);
 
   QFontMetrics mt(p.font());
   const int h = mt.height() + 5;

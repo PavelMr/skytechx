@@ -26,8 +26,6 @@ CEphList::CEphList(QWidget *parent, mapView_t *view) :
 {
   ui->setupUi(this);
 
-  setFixedSize(size());
-
   cELColumn[0] = tr("JD");
   cELColumn[1] = tr("Date");
   cELColumn[2] = tr("Time");

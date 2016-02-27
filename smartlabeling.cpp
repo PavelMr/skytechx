@@ -29,7 +29,17 @@ void SmartLabeling::addLabel(const QPoint &point, int distance, const QString &t
 
 QRect SmartLabeling::renderLabel(CSkPainter *painter, const QPoint &point, float offset, const QString &text, int fontId, int align, bool render)
 {
-  QFont fnt = setFonts[fontId];
+  QFont fnt;
+
+  if (fontId == -1)
+  {
+    fnt = painter->font();
+  }
+  else
+  {
+    fnt = setFonts[fontId];
+  }
+
   QFontMetrics fm(fnt);
   QRect trc = fm.boundingRect(text);
   int x = point.x();
@@ -110,8 +120,11 @@ QRect SmartLabeling::renderLabel(CSkPainter *painter, const QPoint &point, float
     painter->setOpacity(op);
     */
 
-    setSetFont(fontId, painter);
-    setSetFontColor(fontId, painter);
+    if (fontId != -1)
+    {
+      setSetFont(fontId, painter);
+      setSetFontColor(fontId, painter);
+    }
     painter->drawText(trc, Qt::AlignCenter, text);
 
     //painter->setOpacity(1);
