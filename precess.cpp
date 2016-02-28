@@ -126,7 +126,6 @@ void precessMatrix(double jdFrom, double jdTo, SKMATRIX *m)
 
   double dT = jdTo - jdFrom;
 
-  // TODO: + nutace
   double zeta = ((2306.2181 + (1.39656 - 0.000139 * jdFrom) * jdFrom) +
                  ((0.30188 - 0.000345 * jdFrom) + 0.017998 * dT) * dT) * dT;
 

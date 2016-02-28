@@ -4,11 +4,13 @@
 #include "setting.h"
 #include "vsop87.h"
 #include "systemsettings.h"
+#include "elp2000.h"
 
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
 
 extern int g_ephType;
+extern int g_ephMoonType;
 extern bool g_geocentric;
 
 const double g_AAParallax_C1 = sin(DMS2RAD(0, 0, 8.794));
@@ -707,6 +709,9 @@ QString CAstro::getEphType(int type)
 
     case EPT_VSOP87:
       return "VSOP87";
+
+    case EPT_ELP2000:
+      return "ELP2000-82B";
   }
 
   return "???";
@@ -781,7 +786,6 @@ double CAstro::solveKepler(double eccent, double M)
 void CAstro::calcEarthShadow(orbit_t *orbit, orbit_t *moon)
 ///////////////////////////////////////////////////////////
 {
-  double ERAD = 6378138.12;
   orbit_t sun;
 
   calcPlanet(PT_SUN, &sun);
@@ -1087,10 +1091,29 @@ void CAstro::solveMoon(orbit_t *o)
   double lonecl,latecl,r,xh,yh,zh,xg,yg,zg,xe,ye,ze;
 
   double lam, bet, rho;
+  double data[3];
 
-  moon(m_deltaT + m_jd, &lam, &bet, &rho); // light time is counted
+  switch (g_ephMoonType)
+  {
+    case EPT_PLAN404:
+      moon(m_deltaT + m_jd, &lam, &bet, &rho); // light time is counted
+      o->ephemType = EPT_PLAN404;
+      break;
 
-  o->ephemType = EPT_PLAN404;
+    case EPT_ELP2000:
+    {
+      ELP2000 elp;
+
+      elp.solve(m_deltaT + m_jd, data);
+      o->ephemType = EPT_ELP2000;
+
+      lam = data[0];
+      bet = data[1];
+      rho = data[2];
+
+      break;
+    }
+  }
 
   lonecl = lam;
   latecl = bet;

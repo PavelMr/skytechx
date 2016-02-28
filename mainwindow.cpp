@@ -131,6 +131,7 @@ bool g_quickInfoForced;
 bool g_geocentric;
 
 int g_ephType;
+int g_ephMoonType;
 
 CStatusBar *g_statusBar;
 
@@ -793,6 +794,7 @@ MainWindow::MainWindow(QWidget *parent) :
   }
 
   g_ephType = settings.value("eph_type", EPT_PLAN404).toInt();
+  g_ephMoonType = settings.value("eph_moon_type", EPT_PLAN404).toInt();
 }
 
 void MainWindow::setToolbarIconSize()
@@ -1777,37 +1779,10 @@ QList<QStandardItem *> MainWindow::createEIRow(event_t *e, QString c1, QString c
 
 
 ////////////////////////////////////////////////////////////
-void MainWindow::fillQuickInfo(ofiItem_t *item, bool scroll)
+void MainWindow::fillQuickInfo(ofiItem_t *item, bool update)
 ////////////////////////////////////////////////////////////
 {
-  QStandardItemModel* model = dynamic_cast<QStandardItemModel*>(ui->lv_quickInfo->model());
-
-  auto visual_row = [](const QTreeView *tv, const QModelIndex &mi) -> int
-  {
-      const QRect visualRect = tv->visualRect(mi);
-      if (visualRect.isValid())
-      {
-        return (visualRect.y() + visualRect.height()) > 0;
-      }
-      return false;
-  };
-
-  int scrollTo = 0;
-  if (scroll)
-  {
-    for (int i = 0; i < model->rowCount(); i++)
-    {
-      QModelIndex index = model->index(i, 0);
-      if (visual_row(ui->lv_quickInfo, index))
-      {
-        scrollTo = i;
-        break;
-      }
-    }
-  }
-
-  ui->lv_quickInfo->fillInfo(item);
-  ui->lv_quickInfo->setCurrentIndex(model->index(scrollTo, 0, QModelIndex()));
+  ui->lv_quickInfo->fillInfo(item, update);
 
   ui->pushButton_19->setEnabled(!IS_NEAR(item->riseJD, CM_UNDEF, 0.01));
   ui->pushButton_20->setEnabled(!IS_NEAR(item->transitJD, CM_UNDEF, 0.01));
@@ -1827,8 +1802,6 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool scroll)
   ui->pushButton_34->setEnabled(true);
   ui->checkBox_5->setEnabled(true);
   ui->action_Last_search_object->setEnabled(true);
-
-  //ui->toolBox->setCurrentIndex(0);
 }
 
 ////////////////////////////////////////
@@ -3158,6 +3131,7 @@ void MainWindow::on_actionSetting_triggered()
 
   dlg.exec();
 
+  g_quickInfoForced = true;
   g_forcedRecalculate = true;
   ui->widget->repaintMap();
   ui->widget->m_zoom->setVisible(g_showZoomBar);

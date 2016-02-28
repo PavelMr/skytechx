@@ -34,6 +34,7 @@ extern bool g_showZoomBar;
 extern bool bAlternativeMouse;
 extern bool bParkTelescope;
 extern int g_ephType;
+extern int g_ephMoonType;
 
 extern CMapView  *pcMapView;
 
@@ -106,6 +107,17 @@ CSetting::CSetting(QWidget *parent) :
 
     case EPT_VSOP87:
       ui->rb_vsop87->setChecked(true);
+      break;
+  }
+
+  switch (setting.value("eph_moon_type", EPT_PLAN404).toInt())
+  {
+    case EPT_PLAN404:
+      ui->rb_mplan404->setChecked(true);
+      break;
+
+    case EPT_ELP2000:
+      ui->rb_elp2000->setChecked(true);
       break;
   }
 
@@ -943,6 +955,12 @@ void CSetting::apply()
   if (ui->rb_vsop87->isChecked()) g_ephType = EPT_VSOP87;
 
   settings.setValue("eph_type", g_ephType);
+
+  if (ui->rb_mplan404->isChecked()) g_ephMoonType = EPT_PLAN404;
+    else
+  if (ui->rb_elp2000->isChecked()) g_ephMoonType = EPT_ELP2000;
+
+  settings.setValue("eph_moon_type", g_ephMoonType);
 
   // online sun
   settings.setValue("sun_online_used", ui->cb_useSunOnline->isChecked());

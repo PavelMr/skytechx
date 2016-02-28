@@ -40,9 +40,9 @@ void CLvQInfo::init(QToolBox *parent)
 }
 
 
-////////////////////////////////////////
-void CLvQInfo::fillInfo(ofiItem_t *data)
-////////////////////////////////////////
+/////////////////////////////////////////////////////
+void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
+/////////////////////////////////////////////////////
 {
   m_bFilled = true;
 
@@ -51,45 +51,55 @@ void CLvQInfo::fillInfo(ofiItem_t *data)
 
   QStandardItemModel *m = (QStandardItemModel *)model();
 
-  m->removeRows(0, m->rowCount());
+  if (!update)
+  {
+    m->removeRows(0, m->rowCount());
+  }
 
   for (int i = 0; i < data->tTextItem.count(); i++)
   {
     ofiTextItem_t *item = &data->tTextItem[i];
 
-    QList <QStandardItem *> tRow;
-    QStandardItem *label = new QStandardItem;
-    QStandardItem *value = new QStandardItem;
-
-    QFont f = label->font();
-    f.setPointSizeF(f.pointSizeF() - 0.25);
-    label->setFont(f);
-    value->setFont(f);
-
-    label->setText(item->label);
-    label->setToolTip(item->label);
-
-    if (item->bBold)
+    if (update)
     {
+      m->item(i, 1)->setText(item->value);
+    }
+    else
+    {
+      QList <QStandardItem *> tRow;
+      QStandardItem *label = new QStandardItem;
+      QStandardItem *value = new QStandardItem;
+
       QFont f = label->font();
-      f.setBold(true);
+      f.setPointSizeF(f.pointSizeF() - 0.25);
       label->setFont(f);
-    }
+      value->setFont(f);
 
-    if (!item->bIsTitle)
-    {
-      value->setText(item->value);
-      value->setToolTip(item->value);
-    }
+      label->setText(item->label);
+      label->setToolTip(item->label);
 
-    tRow.append(label);
-    tRow.append(value);
+      if (item->bBold)
+      {
+        QFont f = label->font();
+        f.setBold(true);
+        label->setFont(f);
+      }
 
-    m->appendRow(tRow);
+      if (!item->bIsTitle)
+      {
+        value->setText(item->value);
+        value->setToolTip(item->value);
+      }
 
-    if (item->bIsTitle)
-    {
-      setFirstColumnSpanned(i, QModelIndex(), true);
+      tRow.append(label);
+      tRow.append(value);
+
+      m->appendRow(tRow);
+
+      if (item->bIsTitle)
+      {
+        setFirstColumnSpanned(i, QModelIndex(), true);
+      }
     }
   }
 }

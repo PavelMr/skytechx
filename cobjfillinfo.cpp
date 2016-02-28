@@ -1981,6 +1981,10 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     case EPT_VSOP87:
       addTextItem(item, "Bureau des Longitudes", CAstro::getEphType(EPT_VSOP87));
       break;
+
+    case EPT_ELP2000:
+      addTextItem(item, "Bureau des Longitudes", CAstro::getEphType(EPT_ELP2000));
+      break;
   }
 }
 

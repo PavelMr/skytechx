@@ -58,6 +58,7 @@
 
 #define  EPT_PLAN404       0
 #define  EPT_VSOP87        1
+#define  EPT_ELP2000       2
 
 typedef struct
 {

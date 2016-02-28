@@ -14,7 +14,7 @@ public:
           ~CLvQInfo();
   void     init(QToolBox *parent);
 
-  void fillInfo(ofiItem_t *data);
+  void fillInfo(ofiItem_t *data, bool update = false);
   void removeInfo(void);
 
   ofiItem_t m_info;

@@ -5,7 +5,7 @@
 #include <QMap>
 #include <QTime>
 
-//#define SK_DEBUG_IN_RELEASE
+#define SK_DEBUG_IN_RELEASE
 
 #if defined(DEBUG) || defined(SK_DEBUG_IN_RELEASE)
 #define SK_DEBUG_COUNTER(name) { static int counter = 0;  qDebug() << (name) << counter; counter++; }

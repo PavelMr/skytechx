@@ -48,7 +48,7 @@ public:
 
   CStatusBar *statusBar;
 
-  void fillQuickInfo(ofiItem_t *item, bool scroll = false);
+  void fillQuickInfo(ofiItem_t *item, bool update = false);
   bool isQuickInfoTimeUpdate();
   ofiItem_t *getQuickInfo(void);
   void setToolBoxPage(int page);

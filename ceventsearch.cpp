@@ -943,7 +943,7 @@ void searchEvent::CCommonEvent::run(void)
             m_event.event_u.lunarEcl_u.u3 = m_event.event_u.lunarEcl_u.u4 = -1;
             m_event.event_u.lunarEcl_u.type = EVLE_PARTIAL_PENUMBRA;
 
-            findFirstLastContact(tmpJD - H2JD(5.0),
+            findFirstLastContact(tmpJD - H2JD(4.0),
                                 &m_event.event_u.lunarEcl_u.p1, &m_event.event_u.lunarEcl_u.p4,
                                 &m_event.event_u.lunarEcl_u.p2, &m_event.event_u.lunarEcl_u.p3, true);
 
@@ -953,7 +953,7 @@ void searchEvent::CCommonEvent::run(void)
             if (s2 < DEG2RAD(((o0.sy + o1.sx) / 2.0) / 3600.0))
             {
               m_event.event_u.lunarEcl_u.type = EVLE_PARTIAL_UMBRA;
-              findFirstLastContact(tmpJD - H2JD(5.0),
+              findFirstLastContact(tmpJD - H2JD(4.0),
                                   &m_event.event_u.lunarEcl_u.u1, &m_event.event_u.lunarEcl_u.u4,
                                   &m_event.event_u.lunarEcl_u.u2, &m_event.event_u.lunarEcl_u.u3, false);
               if (m_event.event_u.lunarEcl_u.u2 != -1 && m_event.event_u.lunarEcl_u.u3 != -1)

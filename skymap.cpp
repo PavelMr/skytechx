@@ -1106,7 +1106,6 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   }
 
   // draw earth shadow
-
   if (g_skSet.map.es.show)
   {
     orbit_t es;
@@ -1191,7 +1190,6 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       addMapObj(pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
     }
   }
-
 }
 
 /////////////////////////////////////////////////////////////////////

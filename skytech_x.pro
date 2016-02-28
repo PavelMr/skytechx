@@ -45,6 +45,7 @@ DEPENDPATH += ssl
 INCLUDEPATH = core \
               de404 \
               vsop87 \
+              elp2000 \
               libsgp4 \
               $$PWD \
 
@@ -266,7 +267,8 @@ SOURCES += main.cpp\
     vsop87/saturn_vsop87.cpp \
     vsop87/uranus_vsop87.cpp \
     cskeventdocdialog.cpp \
-    skeventdocument.cpp
+    skeventdocument.cpp \
+    elp2000/elp2000.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -477,7 +479,8 @@ HEADERS  += mainwindow.h \
     skprogressdialog.h \
     vsop87/vsop87.h \
     cskeventdocdialog.h \
-    skeventdocument.h
+    skeventdocument.h \
+    elp2000/elp2000.h
 
 
 FORMS    += mainwindow.ui \
