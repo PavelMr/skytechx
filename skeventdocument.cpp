@@ -180,6 +180,21 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
         addTable(("IV"), getStrTime(m_event.event_u.sunTransit_u.c2, m_view.geo.tz)) +
         "</table>";
 
+  m_view.jd = m_event.event_u.sunTransit_u.c1;
+  ast.setParam(&m_view);
+  ast.calcPlanet(m_event.event_u.sunTransit_u.id, &o);
+  double c1Alt = R2D(o.lAlt);
+  m_view.jd = m_event.event_u.sunTransit_u.c2;
+  ast.setParam(&m_view);
+  ast.calcPlanet(m_event.event_u.sunTransit_u.id, &o);
+  double c2Alt = R2D(o.lAlt);
+
+  str += "<p align=\"center\"><b>" + CAstro::getName(o.type) + " Contacts Alt.</b><br>(" + coords + " Coordinates)</p><p></p>"
+         "<table width=\"100%\">" +
+         addTable(("I"), QString::number(c1Alt, 'f', 2) + "&#186;") +
+         addTable(("IV"), QString::number(c2Alt,'f', 2) + "&#186;") +
+         "</table>";
+
   txtRB.setTextFormat(Qt::RichText);
   txtRB.setTextWidth(blockWidth);
   txtRB.setText(str);
@@ -306,7 +321,8 @@ QImage SkEventDocument::makeSunTransitImage(const QSize &size, double &px)
 
   double x, y, objRadiusPx;
   getTransitPlnXY(x1, y1, objRadiusPx, m_event.event_u.sunTransit_u.c1, sunRadius);
-  if (objRadiusPx > minSize) p.renderText(x1, y1, objRadiusPx + 5, "I", RT_TOP);
+  //if (objRadiusPx > minSize)
+    p.renderText(x1, y1, objRadiusPx + 5, "I", RT_TOP);
 
   p.setPen(QPen(Qt::black));
   p.setBrush(Qt::lightGray);
@@ -316,15 +332,16 @@ QImage SkEventDocument::makeSunTransitImage(const QSize &size, double &px)
   {
     getTransitPlnXY(x, y, objRadiusPx, m_event.event_u.sunTransit_u.i1, sunRadius);
     p.drawEllipse(QPointF(x, y), objRadiusPx, objRadiusPx);
-    if (objRadiusPx > minSize) p.renderText(x, y, objRadiusPx + 5, "II", RT_TOP);
+    //if (objRadiusPx > minSize)
+      p.renderText(x, y, objRadiusPx + 5, "II", RT_TOP);
   }
 
   getTransitPlnXY(x, y, objRadiusPx, m_event.jd, sunRadius);
   p.drawEllipse(QPointF(x, y), objRadiusPx, objRadiusPx);
-  if (objRadiusPx > minSize)
+  //if (objRadiusPx > minSize)
   {
     p.renderText(x, y, objRadiusPx + p.font().pointSize() + 5 + 4, "Greatest", RT_TOP);
-   p.renderText(x, y, objRadiusPx + 5, "Transit", RT_TOP);
+    p.renderText(x, y, objRadiusPx + 5, "Transit", RT_TOP);
   }
 
   if (m_event.event_u.sunTransit_u.i2 > 0)

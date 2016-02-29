@@ -1780,9 +1780,9 @@ void CMapView::repaintMap(bool bRepaint)
 
       if ((g_quickInfoForced && item) || (item && !equals(m_mapView.jd, item->jd)))
       {
-        g_quickInfoForced = false;
         info.fillInfo(&m_mapView, &item->mapObj, &newItem);
-        pcMainWnd->fillQuickInfo(&newItem, true);
+        pcMainWnd->fillQuickInfo(&newItem, !g_quickInfoForced);
+        g_quickInfoForced = false;
       }
     }
 

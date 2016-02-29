@@ -411,6 +411,8 @@ void CEventSearch::on_pushButton_2_clicked()
 
   g_geocentric = geocentric;
 
+  SK_DEBUG_TIMER_START(1);
+
   highPrec = ui->checkBox->checkState();
   totLEcl = ui->checkBox_2->checkState();
   totSEcl = ui->checkBox_3->checkState();
@@ -553,6 +555,8 @@ void CEventSearch::on_pushButton_2_clicked()
   {
     str = QString(tr("%1 event(s) found!\nThe results are shown in the sidebar tab 'Event information'")).arg(eventCount);
   }
+
+  SK_DEBUG_TIMER_STOP(1);
 
   msgBoxInfo(this, str);
   nLastEventCount = eventCount;
@@ -777,6 +781,8 @@ void searchEvent::CCommonEvent::findFirstLastContact(double from,
   if (m_highPrec)
     step = 1 / 24.0 / 60.0 / 60.0; // 1 sec
 
+  int it = 0;
+
   double add = step;
   orbit_t o0;
   orbit_t o1;
@@ -816,6 +822,8 @@ void searchEvent::CCommonEvent::findFirstLastContact(double from,
 
     s1 = anSep(o0.lRD.Ra, o0.lRD.Dec,
                o1.lRD.Ra, o1.lRD.Dec);
+
+    it++;
 
     double r;
     double ir;
@@ -870,6 +878,8 @@ void searchEvent::CCommonEvent::findFirstLastContact(double from,
 
     m_view.jd += add;
   }
+
+  qDebug() << "it" << it;
 }
 
 // http://hemel.waarnemen.com/Computing/eclipse.html

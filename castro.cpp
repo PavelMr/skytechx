@@ -1110,9 +1110,11 @@ void CAstro::solveMoon(orbit_t *o)
       lam = data[0];
       bet = data[1];
       rho = data[2];
-
       break;
     }
+
+    default:
+      qFatal("invalid moon eph. type");
   }
 
   lonecl = lam;
