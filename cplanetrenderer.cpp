@@ -798,9 +798,9 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     SKMATRIX matScale;
     int lod = 2;
 
-    if (sx > 200) lod = 2;
+    if (sx > 50) lod = 2;
     else
-    if (sx > 50) lod = 1;
+    if (sx > 25) lod = 1;
     else lod = 0;
 
     mesh_t *mesh = m_sphere[lod];

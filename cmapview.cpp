@@ -155,6 +155,8 @@ CMapView::CMapView(QWidget *parent) :
   m_mapView.flipX = false;
   m_mapView.flipY = false;
 
+  m_mapView.epochJ2000 = settings.value("map/epochJ2000", false).toBool();
+
   if (!g_autoSave.mapPosition)
   {
     m_mapView.jd = jdGetCurrentJD();
@@ -175,8 +177,6 @@ CMapView::CMapView(QWidget *parent) :
   m_lastFOV = m_mapView.fov;
   m_lastRA = m_mapView.x;
   m_lastDec = m_mapView.y;
-
-  m_mapView.epochJ2000 = settings.value("map/epochJ2000", jdGetCurrentJD()).toBool();
 
   m_mapView.deltaT = settings.value("delta_t/delta_t", CM_UNDEF).toDouble();
   m_mapView.deltaTAlg = settings.value("delta_t/delta_t_alg", DELTA_T_ESPENAK_MEEUS_06).toInt();

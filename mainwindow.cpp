@@ -241,6 +241,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionFlipX->setChecked(settings.value("flipX", false).toBool());
   ui->actionFlipY->setChecked(settings.value("flipY", false).toBool());
   ui->actionLock_FOV->setChecked(settings.value("lockFov", false).toBool());
+  g_geocentric = settings.value("geocentric", false).toBool();
+  ui->actionGeocentric->setChecked(g_geocentric);
 
   ui->actionAtlas_mode_Pole_Up->trigger();
 
@@ -1187,6 +1189,7 @@ void MainWindow::saveAndExit()
   settings.setValue("flipX", ui->actionFlipX->isChecked());
   settings.setValue("flipY", ui->actionFlipY->isChecked());
   settings.setValue("lockFov", ui->actionLock_FOV->isChecked());
+  settings.setValue("geocentric", ui->actionGeocentric->isChecked());
 
   if (g_autoSave.mapPosition)
   {

@@ -63,7 +63,7 @@ void CSkPainter::drawExtLine(const QPointF &p1, const QPointF &p2, double len)
            QPointF(p2.x() + vec.x(), p2.y() + vec.y()));
 }
 
-QList <QPointF> CSkPainter::drawTickLine(const QPointF &p1, const QPointF &p2, double large, double small, int type, int count, int smallCount)
+QList <QPointF> CSkPainter::drawTickLine(const QPointF &p1, const QPointF &p2, double large, double smallC, int type, int count, int smallCount)
 {
   QList <QPointF> list;
 
@@ -89,7 +89,7 @@ QList <QPointF> CSkPainter::drawTickLine(const QPointF &p1, const QPointF &p2, d
     }
     else
     {
-      size = small;
+      size = smallC;
     }
 
     if (type & 1)
