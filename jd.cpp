@@ -85,35 +85,14 @@ void jdConvertJDTo_DateTime(double JD, QDateTime *t)
   t->setTimeSpec(Qt::UTC);
   t->setDate(QDate((int)Y, (int)M, (int)D));
 
-  dF = ((JD - (int)JD)) - 0.5;
-  if (dF < 0.0) dF += 1;
+  double jdf = JD;
 
-  double d = dF;
-  double min;
+  double decHours = fmod(jdf + 0.5, 1.0);
+  int hours = (int)(decHours / 0.041666666666666666666);
+  int mins = (int)((decHours - (hours * 0.041666666666666666666)) / 0.00069444444444444444444);
+  int secs = 60 * fmod((decHours - (hours * 0.041666666666666666666)) / 0.00069444444444444444444, 1);
 
-  d = fabs(d * 24.0);
-
-  int h, m, s;
-
-  h = (int)d;
-  min = (d - h) * 60.0;
-  m = (int)((d - h) * 60.0);
-  s = (int)((min - m) * 60.0 + 0.5);
-
-  if (s == 60)
-  {
-    if ((m += 1) == 60)
-    {
-      h += 1;
-      m = 0;
-    }
-    s = 0;
-  }
-
-  if (h >= 24)
-    h -= 24;
-
-  t->setTime(QTime(h, m, s));
+  t->setTime(QTime(hours, mins, secs));
 }
 
 // return year

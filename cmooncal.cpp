@@ -4,6 +4,10 @@
 #include "crts.h"
 #include "mapobj.h"
 
+extern int g_ephType;
+extern int g_ephMoonType;
+extern bool g_geocentric;
+
 ///////////////////////////////////////////////////////
 CMoonCal::CMoonCal(QWidget *parent, mapView_t *view) :
   QDialog(parent),
@@ -141,6 +145,15 @@ void CMoonCal::updateTime()
 
   float size = 0.5 * qMin(w, h) * 0.8f;
 
+  int et = g_ephType;
+  int mt = g_ephMoonType;
+  bool gc = g_geocentric;
+
+  g_ephType = EPT_PLAN404;
+  g_ephMoonType = EPT_PLAN404;
+  g_geocentric = false;
+
+
   for (int i = 0; i < cnt; i++)
   {
     QRect r;
@@ -250,6 +263,10 @@ void CMoonCal::updateTime()
       y++;
     }
   }
+
+  g_ephType = et;
+  g_ephMoonType = mt;
+  g_geocentric = gc;
 
   update();
 }

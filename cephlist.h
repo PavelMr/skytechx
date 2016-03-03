@@ -38,6 +38,8 @@ public:
 protected:
   mapView_t m_view;
   bool showNoObjectSelected(int obj);
+  void generateList();
+  void generateGraph();
 
 private slots:
   void on_pushButton_clicked();
@@ -54,8 +56,11 @@ private slots:
 
   void on_listWidget_currentRowChanged(int currentRow);
 
+  void on_pushButton_5_clicked();
+
 private:
   Ui::CEphList *ui;
+  bool m_graph;
 };
 
 #endif // CEPHLIST_H

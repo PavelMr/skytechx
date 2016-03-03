@@ -44,6 +44,7 @@ CObjFillInfo::CObjFillInfo()
 {
   txDateTime = tr("Date & Time");
   txRA       = tr("Right Ascension");
+  txHA       = tr("Hour Angle");
   txObjType  = tr("Object type");
   txDesig    = tr("Designation");
   txDec      = tr("Declination");
@@ -313,6 +314,11 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
   addTextItem(item, txConstel, constGetName(con, 1));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(sats.sats[obj->par2].mag));
@@ -387,6 +393,11 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(a->orbit.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -533,6 +544,11 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(a->orbit.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -715,6 +731,12 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
+
   addTextItem(item, txConstel, constGetName(con, 1));
 
   addSeparator(item);
@@ -823,6 +845,12 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
+
   addTextItem(item, txVisMag, getStrMag(cTYC.getVisMag(t)));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -944,6 +972,11 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(s.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1048,6 +1081,11 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(t.pMag));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -1155,6 +1193,11 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(t->mag / 1000.0));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1252,6 +1295,11 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(s.rMag));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1342,6 +1390,11 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(usnoB1.getVMag(s)));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -1444,7 +1497,11 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
 
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
   addTextItem(item, txMag, getStrMag(g_nomad.getMagnitude(&s)));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1559,6 +1616,11 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(URMAG(s.vMag)));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -1679,6 +1741,11 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
   addTextItem(item, txVisMag, dso->mag == NO_DSO_MAG ? tr("N/A") : getStrMag(dso->DSO_MAG));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1796,6 +1863,13 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+
+  double ha = cAstro.m_lst - ra;
+  rangeDbl(&ha, R360);
+
+  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addSeparator(item);
+
   addTextItem(item, txVisMag, getStrMag(o.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
 

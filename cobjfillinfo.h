@@ -72,6 +72,7 @@ protected:
 
     QString txDateTime;
     QString txRA;
+    QString txHA;
     QString txObjType;
     QString txDesig;
     QString txDec;

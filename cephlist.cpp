@@ -7,6 +7,9 @@
 #include "cephtable.h"
 #include "ccomdlg.h"
 #include "casterdlg.h"
+#include "cchartdialog.h"
+
+#include <QPair>
 
 #define EL_COLUMN_COUNT     25
 
@@ -19,6 +22,8 @@ static int nStep = 1;
 static QDateTime timeFrom;
 static QDateTime timeTo;
 static Qt::CheckState bChecked[EL_COLUMN_COUNT];
+static int cb_g1_index = 1;
+static int cb_g2_index = 2;
 
 CEphList::CEphList(QWidget *parent, mapView_t *view) :
   QDialog(parent),
@@ -51,6 +56,23 @@ CEphList::CEphList(QWidget *parent, mapView_t *view) :
   cELColumn[22] = tr("Helio. rect. Y");
   cELColumn[23] = tr("Helio. rect. Z");
   cELColumn[24] = tr("Light time");
+
+  ui->cb_g1->addItem(tr("Nothing"), -1);
+  ui->cb_g2->addItem(tr("Nothing"), -1);
+
+  for (int i = 3; i < 19; i++)
+  {
+    ui->cb_g1->addItem(cELColumn[i], i);
+    ui->cb_g2->addItem(cELColumn[i], i);
+  }
+
+  ui->cb_g1->setCurrentIndex(cb_g1_index);
+  ui->cb_g2->setCurrentIndex(cb_g2_index);
+
+  ui->dateTimeEdit->calendarWidget()->setLocale(QLocale::system());
+  ui->dateTimeEdit_2->calendarWidget()->setLocale(QLocale::system());
+  ui->dateTimeEdit->setLocale(QLocale::system());
+  ui->dateTimeEdit_2->setLocale(QLocale::system());
 
   if (firstTime)
   {
@@ -147,6 +169,8 @@ CEphList::~CEphList()
   nCombo = ui->comboBox->currentIndex();
   nStep = ui->spinBox->value();
   isUTC = ui->checkBox->isChecked();
+  cb_g1_index = ui->cb_g1->currentIndex();
+  cb_g2_index = ui->cb_g2->currentIndex();
 
   for (int i = 0; i < ui->listWidget_2->count(); i++)
   {
@@ -169,54 +193,7 @@ bool CEphList::showNoObjectSelected(int obj)
   return true;
 }
 
-//////////////////////////////////////
-void CEphList::on_pushButton_clicked()
-//////////////////////////////////////
-{
-  done(DL_CANCEL);
-}
-
-////////////////////////////////////////
-// down
-void CEphList::on_pushButton_3_clicked()
-////////////////////////////////////////
-{
-  int currentRow = ui->listWidget_2->currentRow();
-
-  if ((currentRow > ui->listWidget_2->count() - 1) || currentRow < 0)
-  {
-    return;
-  }
-
-  QListWidgetItem * currentItem = ui->listWidget_2->takeItem(currentRow);
-
-  ui->listWidget_2->insertItem(currentRow + 1, currentItem);
-  ui->listWidget_2->setCurrentRow(currentRow + 1);
-}
-
-
-////////////////////////////////////////
-// up
-void CEphList::on_pushButton_2_clicked()
-////////////////////////////////////////
-{
-  int currentRow = ui->listWidget_2->currentRow();
-
-  if (currentRow <= 0)
-  {
-    return;
-  }
-
-  QListWidgetItem * currentItem = ui->listWidget_2->takeItem(currentRow);
-
-  ui->listWidget_2->insertItem(currentRow - 1, currentItem);
-  ui->listWidget_2->setCurrentRow(currentRow - 1);
-}
-
-
-////////////////////////////////////////
-void CEphList::on_pushButton_4_clicked()
-////////////////////////////////////////
+void CEphList::generateList()
 {
   QList <int> columns;
   QStringList strCol;
@@ -271,6 +248,9 @@ void CEphList::on_pushButton_4_clicked()
       com = ui->listWidget_4->item(obj);
       obj = com->data(Qt::UserRole + 1).toInt();
       break;
+
+    default:
+      qFatal("case");
   }
 
   isUT = ui->checkBox->isChecked();
@@ -316,6 +296,9 @@ void CEphList::on_pushButton_4_clicked()
     case 2:
       mul = 1;
       break;
+
+    default:
+      mul = mul;
   }
 
   step = ui->spinBox->value() * mul;
@@ -395,6 +378,7 @@ void CEphList::on_pushButton_4_clicked()
 
         case 6:
           str = QString::number(o.sx, 'f', 2) + "\"";
+          //chart1.append(qMakePair(m_view.jd, o.sx));
           break;
 
         case 7:
@@ -403,6 +387,7 @@ void CEphList::on_pushButton_4_clicked()
 
         case 8:
           str = getStrRA(o.lRD.Ra);
+          //chart.append(qMakePair(m_view.jd, R2D(o.lRD.Ra)));
           break;
 
         case 9:
@@ -440,7 +425,7 @@ void CEphList::on_pushButton_4_clicked()
           }
           else
           {
-            str = QString::number(o.r * EARTH_DIAM) + tr(" Km");
+            str = QString::number(o.R * EARTH_DIAM) + tr(" Km");
           }
           break;
 
@@ -457,6 +442,7 @@ void CEphList::on_pushButton_4_clicked()
 
         case 18:
           str = ((o.elongation >= 0) ? "+" : "") + QString::number(R2D(o.elongation), 'f', 2) + "°";
+          //chart2.append(qMakePair(m_view.jd, R2D(o.elongation)));
           break;
 
         case 19:
@@ -491,8 +477,305 @@ void CEphList::on_pushButton_4_clicked()
   }
 
   CEphTable dlg(this, name, strCol, rows);
-
   dlg.exec();
+}
+
+void CEphList::generateGraph()
+{
+  int type;
+  int obj;
+  QListWidgetItem *com;
+  bool isUT;
+  double tz;
+  double jdFrom;
+  double jdTo;
+  double step = 1;
+  QList<QPair<double, double> >  chart[2];
+  QString graph1Name;
+  QString graph2Name;
+
+  switch (ui->tabWidget->currentIndex())
+  {
+    case 0:
+      type = MO_PLANET;
+      obj = ui->listWidget->currentRow();
+      if (!showNoObjectSelected(obj)) return;
+      break;
+
+    case 1:
+      type = MO_COMET;
+      obj = ui->listWidget_3->currentRow();
+      if (!showNoObjectSelected(obj)) return;
+      com = ui->listWidget_3->item(obj);
+      obj = com->data(Qt::UserRole + 1).toInt();
+      break;
+
+    case 2:
+      type = MO_ASTER;
+      obj = ui->listWidget_4->currentRow();
+      if (!showNoObjectSelected(obj)) return;
+      com = ui->listWidget_4->item(obj);
+      obj = com->data(Qt::UserRole + 1).toInt();
+      break;
+
+    default:
+      qFatal("case");
+  }
+
+  isUT = ui->checkBox->isChecked();
+
+  if (isUT)
+    tz = 0;
+   else
+     tz = m_view.geo.tz;
+
+  QDateTime dt;
+
+  dt = ui->dateTimeEdit->dateTime();
+  jdFrom = jdGetJDFrom_DateTime(&dt);
+
+  dt = ui->dateTimeEdit_2->dateTime();
+  jdTo = jdGetJDFrom_DateTime(&dt);
+
+  if (jdFrom >= jdTo)
+  {
+    msgBoxError(this, tr("Invalid date/time range!!!"));
+    return;
+  }
+
+  double mul;
+
+  switch (ui->comboBox->currentIndex())
+  {
+    case 0:
+      mul = JD1SEC * 60;
+      break;
+
+    case 1:
+      mul = JD1SEC * 3600;
+      break;
+
+    case 2:
+      mul = 1;
+      break;
+
+    default:
+      mul = mul;
+  }
+
+  step = ui->spinBox->value() * mul;
+
+  int count = (jdTo - jdFrom) / step;
+
+  if (count > 1000)
+  {
+    if (QMessageBox::No == msgBoxQuest(this, tr("Calculation 1000+ positions. Do you want to continue?")))
+      return;
+  }
+
+  QString name;
+
+  if (ui->cb_g1->currentIndex() > 0)
+  {
+    graph1Name = ui->cb_g1->currentText();
+  }
+
+  if (ui->cb_g2->currentIndex() > 0)
+  {
+    graph2Name = ui->cb_g2->currentText();
+  }
+
+  for (double jd = jdFrom; jd <= jdTo; jd += step)
+  {
+    bool isMoon = false;
+    orbit_t o;
+
+    m_view.jd = jd - tz;
+    cAstro.setParam(&m_view);
+
+    switch (type)
+    {
+      case MO_PLANET:
+        cAstro.calcPlanet(obj, &o);
+        name = cAstro.getName(obj);
+        isMoon = (obj == PT_MOON);
+        break;
+
+      case MO_COMET:
+        comSolve(&tComets[obj], m_view.jd);
+        name = tComets[obj].name;
+        o = tComets[obj].orbit;
+        break;
+
+      case MO_ASTER:
+        astSolve(&tAsteroids[obj], m_view.jd);
+        name = tAsteroids[obj].name;
+        o = tAsteroids[obj].orbit;
+        break;
+    }
+
+    double ra2000 = o.lRD.Ra;
+    double dec2000 = o.lRD.Dec;
+
+    precess(&ra2000, &dec2000, m_view.jd, JD2000);
+
+    for (int i = 0; i < 2; i++)
+    {
+      QComboBox *cb;
+
+      if (i == 0)
+      {
+        cb = ui->cb_g1;
+      }
+      else
+      {
+        cb = ui->cb_g2;
+      }
+
+      switch (cb->currentData().toInt())
+      {
+        case -1:
+          break;
+
+        case 3:
+          chart[i].append(qMakePair(m_view.jd, o.mag));
+          break;
+
+        case 4:
+          chart[i].append(qMakePair(m_view.jd, o.phase * 100));
+          break;
+
+        case 5:
+          chart[i].append(qMakePair(m_view.jd, R2D(o.PA)));
+          break;
+
+        case 6:
+          chart[i].append(qMakePair(m_view.jd, o.sx));
+          break;
+
+        case 7:
+          chart[i].append(qMakePair(m_view.jd, o.sy));
+          break;
+
+        case 8:
+          chart[i].append(qMakePair(m_view.jd, R2D(o.lRD.Ra)));
+          break;
+
+        case 9:
+          chart[i].append(qMakePair(m_view.jd, R2D(o.lRD.Dec)));
+          break;
+
+        case 10:
+          chart[i].append(qMakePair(m_view.jd, R2D(ra2000)));
+          break;
+
+        case 11:
+          chart[i].append(qMakePair(m_view.jd, R2D(dec2000)));
+          break;
+
+        case 12:
+          chart[i].append(qMakePair(m_view.jd, R2D(o.gRD.Ra)));
+          break;
+
+        case 13:
+          chart[i].append(qMakePair(m_view.jd, R2D(o.gRD.Dec)));
+          break;
+
+        case 14:
+          chart[i].append(qMakePair(m_view.jd, R2D(o.lAzm)));
+          break;
+
+        case 15:
+          chart[i].append(qMakePair(m_view.jd, R2D(o.lAlt)));
+          break;
+
+        case 16:
+          if (!isMoon)
+          {
+            chart[i].append(qMakePair(m_view.jd, o.R));
+          }
+          else
+          {
+            chart[i].append(qMakePair(m_view.jd, o.R * EARTH_DIAM));
+          }
+          break;
+
+        case 17:
+          if (!isMoon)
+          {
+            chart[i].append(qMakePair(m_view.jd, o.r));
+          }
+          else
+          {
+            chart[i].append(qMakePair(m_view.jd, 0));
+          }
+          break;
+
+        case 18:
+          chart[i].append(qMakePair(m_view.jd, R2D(o.elongation)));
+          break;
+
+        default:
+          qDebug() << "invalid param !";
+      }
+    }
+  }
+
+
+  CChartDialog dlg(this, name, chart[0], chart[1], graph1Name, graph2Name);
+  dlg.exec();
+}
+
+//////////////////////////////////////
+void CEphList::on_pushButton_clicked()
+//////////////////////////////////////
+{
+  done(DL_CANCEL);
+}
+
+////////////////////////////////////////
+// down
+void CEphList::on_pushButton_3_clicked()
+////////////////////////////////////////
+{
+  int currentRow = ui->listWidget_2->currentRow();
+
+  if ((currentRow > ui->listWidget_2->count() - 1) || currentRow < 0)
+  {
+    return;
+  }
+
+  QListWidgetItem * currentItem = ui->listWidget_2->takeItem(currentRow);
+
+  ui->listWidget_2->insertItem(currentRow + 1, currentItem);
+  ui->listWidget_2->setCurrentRow(currentRow + 1);
+}
+
+
+////////////////////////////////////////
+// up
+void CEphList::on_pushButton_2_clicked()
+////////////////////////////////////////
+{
+  int currentRow = ui->listWidget_2->currentRow();
+
+  if (currentRow <= 0)
+  {
+    return;
+  }
+
+  QListWidgetItem * currentItem = ui->listWidget_2->takeItem(currentRow);
+
+  ui->listWidget_2->insertItem(currentRow - 1, currentItem);
+  ui->listWidget_2->setCurrentRow(currentRow - 1);
+}
+
+
+////////////////////////////////////////
+void CEphList::on_pushButton_4_clicked()
+////////////////////////////////////////
+{
+  generateList();
 }
 
 void CEphList::on_checkBox_2_toggled(bool checked)
@@ -541,4 +824,9 @@ void CEphList::on_tabWidget_currentChanged(int index)
 void CEphList::on_listWidget_currentRowChanged(int)
 {
   on_tabWidget_currentChanged(0);
+}
+
+void CEphList::on_pushButton_5_clicked()
+{
+  generateGraph();
 }

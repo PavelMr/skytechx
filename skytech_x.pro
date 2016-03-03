@@ -268,7 +268,8 @@ SOURCES += main.cpp\
     vsop87/uranus_vsop87.cpp \
     cskeventdocdialog.cpp \
     skeventdocument.cpp \
-    elp2000/elp2000.cpp
+    elp2000/elp2000.cpp \
+    cchartdialog.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -480,7 +481,8 @@ HEADERS  += mainwindow.h \
     vsop87/vsop87.h \
     cskeventdocdialog.h \
     skeventdocument.h \
-    elp2000/elp2000.h
+    elp2000/elp2000.h \
+    cchartdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -571,7 +573,8 @@ FORMS    += mainwindow.ui \
     cplanetsize.ui \
     cadvsearch.ui \
     astcomdowntypedlg.ui \
-    cskeventdocdialog.ui
+    cskeventdocdialog.ui \
+    cchartdialog.ui
 
 
 RESOURCES += \

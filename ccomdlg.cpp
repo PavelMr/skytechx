@@ -26,6 +26,7 @@ static double  maxJD = __DBL_MIN__;
 
 static double xs, ys, zs;
 static orbit_t sunOrbit;
+static double sunLon2000;
 
 extern bool g_showLabels;
 /////////////////////////////////////////////////////////
@@ -268,7 +269,16 @@ static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
   a->orbit.mag = a->H + 5 * log10(a->orbit.R) + 2.5 * a->G * log10(a->orbit.r);
 
   a->orbit.elongation = acos((sunOrbit.r * sunOrbit.r + R * R - r * r) / (2 * sunOrbit.r * R));
+
+  /*
   if ((sunOrbit.r * sunOrbit.r + R * R - r*r) < 0)
+  {
+    a->orbit.elongation = -a->orbit.elongation;
+  }
+  */
+
+  if (sunLon2000 > a->orbit.hLon + M_PI ||
+     (sunLon2000 > a->orbit.hLon - M_PI && sunLon2000 < a->orbit.hLon))
   {
     a->orbit.elongation = -a->orbit.elongation;
   }
@@ -304,6 +314,10 @@ bool comSolve(comet_t *a, double jdt, bool lightCorrected)
       xs = sunOrbit.sRectJ2000[0];
       ys = sunOrbit.sRectJ2000[1];
       zs = sunOrbit.sRectJ2000[2];
+
+      double tmp;
+
+      precessLonLat(sunOrbit.hLon, sunOrbit.hLat, sunLon2000, tmp, jdt, JD2000);
 
       lastJD = jdt;
     }

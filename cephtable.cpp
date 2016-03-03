@@ -12,7 +12,7 @@ CEphTable::CEphTable(QWidget *parent, QString name, QStringList header, QList<ta
   ui->setupUi(this);
 
   m_name = name;
-  setWindowTitle(tr("Ephemerides of ") + name);
+  setWindowTitle(tr("Ephemerides of ") + name + QString(tr(" (Records : %1)").arg(row.count())));
 
   QStandardItemModel *m = new QStandardItemModel(0, header.count());
 

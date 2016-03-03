@@ -1610,7 +1610,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-140</y>
+          <y>0</y>
           <width>413</width>
           <height>527</height>
          </rect>
@@ -4458,10 +4458,10 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEphemeride_list">
    <property name="text">
-    <string>Ephemeris list...</string>
+    <string>Ephemeris Tables &amp;&amp; Graphs...</string>
    </property>
    <property name="toolTip">
-    <string>Ephemeris list</string>
+    <string>Ephemeris tables and graph</string>
    </property>
   </action>
   <action name="actionBilinear_interpolation">
