@@ -712,7 +712,7 @@ void CEphList::generateGraph()
           break;
 
         case 18:
-          chart[i].append(qMakePair(m_view.jd, R2D(o.elongation)));
+          chart[i].append(qMakePair(m_view.jd, R2D((o.elongation))));
           break;
 
         default:

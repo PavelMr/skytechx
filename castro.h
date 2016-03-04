@@ -122,6 +122,7 @@ class CAstro
     double getAtmRef(double alt);
     double getInvAtmRef(double alt, int steps = 6);
 
+    static double calcElongation(double sunLon, double objLon, double objLat);
     static QString getEphType(int type);
     static double calcAparentSize(double R, double d);
     double getNPA(double ra, double raD, double dec, double decD, double oRa, double oDec);

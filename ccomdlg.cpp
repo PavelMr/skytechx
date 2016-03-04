@@ -268,20 +268,12 @@ static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
 
   a->orbit.mag = a->H + 5 * log10(a->orbit.R) + 2.5 * a->G * log10(a->orbit.r);
 
-  a->orbit.elongation = acos((sunOrbit.r * sunOrbit.r + R * R - r * r) / (2 * sunOrbit.r * R));
+  double gLon, gLat, gSunLon, gSunLat;
 
-  /*
-  if ((sunOrbit.r * sunOrbit.r + R * R - r*r) < 0)
-  {
-    a->orbit.elongation = -a->orbit.elongation;
-  }
-  */
+  cAstro.convRD2Ecl(a->orbit.gRD.Ra, a->orbit.gRD.Dec, &gLon, &gLat);
+  cAstro.convRD2Ecl(sunOrbit.gRD.Ra, sunOrbit.gRD.Dec, &gSunLon, &gSunLat);
 
-  if (sunLon2000 > a->orbit.hLon + M_PI ||
-     (sunLon2000 > a->orbit.hLon - M_PI && sunLon2000 < a->orbit.hLon))
-  {
-    a->orbit.elongation = -a->orbit.elongation;
-  }
+  a->orbit.elongation = CAstro::calcElongation(gSunLon, gLon, gLat);
 
   a->orbit.sx = 0;
   a->orbit.sy = 0;
@@ -316,7 +308,6 @@ bool comSolve(comet_t *a, double jdt, bool lightCorrected)
       zs = sunOrbit.sRectJ2000[2];
 
       double tmp;
-
       precessLonLat(sunOrbit.hLon, sunOrbit.hLat, sunLon2000, tmp, jdt, JD2000);
 
       lastJD = jdt;

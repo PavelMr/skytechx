@@ -949,13 +949,12 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
   calcParallax(orbit);
   convRD2AARef(orbit->lRD.Ra, orbit->lRD.Dec, &orbit->lAzm, &orbit->lAlt);
 
-  orbit->elongation = acos((m_sunOrbit.r * m_sunOrbit.r + orbit->R * orbit->R - orbit->r * orbit->r) / (2 * m_sunOrbit.r * orbit->R));
+  double gLon, gLat, gSunLon, gSunLat;
 
-  if (m_sunOrbit.hLon > orbit->hLon + M_PI ||
-     (m_sunOrbit.hLon > orbit->hLon - M_PI && m_sunOrbit.hLon < orbit->hLon))
-  {
-    orbit->elongation = -orbit->elongation;
-  }
+  convRD2Ecl(orbit->gRD.Ra, orbit->gRD.Dec, &gLon, &gLat);
+  convRD2Ecl(m_sunOrbit.gRD.Ra, m_sunOrbit.gRD.Dec, &gSunLon, &gSunLat);
+
+  orbit->elongation = calcElongation(gSunLon, gLon, gLat);
 
   orbit->FV = acos((orbit->r * orbit->r + orbit->R * orbit->R - POW2(m_sunOrbit.r)) / (2 * orbit->r * orbit->R));
   orbit->phase = (1 + cos(orbit->FV)) / 2.0;
@@ -1163,13 +1162,12 @@ void CAstro::solveMoon(orbit_t *o)
   o->hLon = lonecl;
   o->hLat = latecl;
 
-  o->elongation = acos(cos(m_sunOrbit.hLon - lonecl) * cos(latecl));
+  double gLon, gLat, gSunLon, gSunLat;
 
-  if (m_sunOrbit.hLon > lonecl + M_PI ||
-     (m_sunOrbit.hLon > lonecl - M_PI && m_sunOrbit.hLon < lonecl))
-  {
-    o->elongation = -o->elongation;
-  }
+  convRD2Ecl(o->gRD.Ra, o->gRD.Dec, &gLon, &gLat);
+  convRD2Ecl(m_sunOrbit.gRD.Ra, m_sunOrbit.gRD.Dec, &gSunLon, &gSunLat);
+
+  o->elongation = calcElongation(gSunLon, gLon, gLat);
 
   o->FV = MPI - fabs(o->elongation);
   o->phase = (1 + cos(o->FV)) / 2;
@@ -1642,4 +1640,17 @@ void CAstro::sphToXYZ(double l, double b, double r, double &x, double &y, double
   x = cb * cos(l);
   y = cb * sin(l);
   z = sin(b) * r;
+}
+
+double CAstro::calcElongation(double sunLon, double objLon, double objLat)
+{
+  double el = acos(cos(objLon - sunLon) * cos(objLat));
+
+  if (sunLon > objLon + M_PI ||
+     (sunLon > objLon - M_PI && sunLon < objLon))
+  {
+    el = -el;
+  }
+
+  return el;
 }

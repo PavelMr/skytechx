@@ -222,10 +222,10 @@ CSetting::CSetting(QWidget *parent) :
   ui->listWidget_2->addItem(tr("PPMXL Catalogue"));
   ui->listWidget_2->addItem(tr("GSC Catalogue"));
   ui->listWidget_2->addItem(tr("USNO A2 Catalogue"));
-  //ui->listWidget_2->addItem(tr("USNO B1 Catalogue"));
+  ui->listWidget_2->addItem(tr("USNO B1 Catalogue"));
   ui->listWidget_2->addItem(tr("UCAC4 Catalogue"));
   ui->listWidget_2->addItem(tr("URAT1 Catalogue"));
-  //ui->listWidget_2->addItem(tr("NOMAD Catalogue"));
+  ui->listWidget_2->addItem(tr("NOMAD Catalogue"));
   ui->listWidget_2->addItem(tr("Other"));
   ui->listWidget_2->setCurrentRow(currentRow);
 

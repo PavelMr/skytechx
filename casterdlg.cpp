@@ -28,6 +28,7 @@ static double  maxJD = __DBL_MIN__;
 
 static double xs, ys, zs;
 static orbit_t sunOrbit;
+static double sunLon2000;
 
 extern bool g_showLabels;
 /////////////////////////////////////////////////////////
@@ -207,9 +208,12 @@ static void astSolve2(asteroid_t *a, double jdt, bool lightCorrected = true)
 
   a->orbit.mag = caclHGMag(a->H, a->G, r, R, sunOrbit.r);
 
-  a->orbit.elongation = acos((sunOrbit.r * sunOrbit.r + R * R - r * r) / (2 * sunOrbit.r * R));
-  if ((sunOrbit.r*sunOrbit.r + R * R - r*r) < 0)
-    a->orbit.elongation = -a->orbit.elongation;
+  double gLon, gLat, gSunLon, gSunLat;
+
+  cAstro.convRD2Ecl(a->orbit.gRD.Ra, a->orbit.gRD.Dec, &gLon, &gLat);
+  cAstro.convRD2Ecl(sunOrbit.gRD.Ra, sunOrbit.gRD.Dec, &gSunLon, &gSunLat);
+
+  a->orbit.elongation = CAstro::calcElongation(gSunLon, gLon, gLat);
 
   a->orbit.sx = 0;
   a->orbit.sy = 0;
@@ -239,6 +243,9 @@ void astSolve(asteroid_t *a, double jdt, bool lightCorrected)
       xs = sunOrbit.sRectJ2000[0];
       ys = sunOrbit.sRectJ2000[1];
       zs = sunOrbit.sRectJ2000[2];
+
+      double tmp;
+      precessLonLat(sunOrbit.hLon, sunOrbit.hLat, sunLon2000, tmp, jdt, JD2000);
 
       lastJD = jdt;
     }

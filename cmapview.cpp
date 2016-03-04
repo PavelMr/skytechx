@@ -1809,6 +1809,7 @@ void CMapView::repaintMap(bool bRepaint)
   pcMainWnd->updateControlInfo();
   QWidget::update();
   g_forcedRecalculate = false;
+  setFocus();
 }
 
 //////////////////////////////////////

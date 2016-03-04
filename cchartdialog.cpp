@@ -50,6 +50,8 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object, QList<QPair<d
     y2.append(pair.second);
   }
 
+  //ui->widget->axisRect()->setupFullAxesBox();
+
   ui->widget->plotLayout()->insertRow(0);
   ui->widget->plotLayout()->addElement(0, 0, new QCPPlotTitle(ui->widget, object));
 
@@ -71,7 +73,7 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object, QList<QPair<d
 
   if (y2.count() > 0)
   {
-    g2 = ui->widget->addGraph(chart1.count() == 0 ? ui->widget->xAxis2 : ui->widget->xAxis, ui->widget->yAxis2);
+    g2 = ui->widget->addGraph(chart1.count() == 0 ? ui->widget->xAxis : ui->widget->xAxis2, ui->widget->yAxis2);
     g2->setData(x, y2);
     g2->setPen(QPen(Qt::red));
     ui->widget->yAxis2->setVisible(true);
@@ -93,7 +95,6 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object, QList<QPair<d
   if (g1) ui->widget->yAxis->setLabel(name1);
   if (g2) ui->widget->yAxis2->setLabel(name2);
 
-  //ui->widget->axisRect()->setupFullAxesBox();
   ui->widget->replot();
 }
 
