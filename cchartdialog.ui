@@ -48,6 +48,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="toolTip">
+        <string>Save to PDF</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/res/ico_pdf.png</normaloff>:/res/ico_pdf.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

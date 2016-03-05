@@ -140,3 +140,15 @@ void CChartDialog::slotPrintPreview(QPrinter *printer)
   QCPPainter painter(printer);
   ui->widget->toPainter(&painter, printer->width(), printer->height());
 }
+
+
+void CChartDialog::on_pushButton_4_clicked()
+{
+  QFileDialog dlg(this);
+
+  QString file = dlg.getSaveFileName(this, tr("Save PDF File"), "", "PDF (*.pdf)");
+  if (!file.isEmpty())
+  {
+    ui->widget->savePdf(file);
+  }
+}

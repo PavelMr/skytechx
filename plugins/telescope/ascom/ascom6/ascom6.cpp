@@ -290,4 +290,28 @@ bool CAscom6::disconnectDev(bool park)
 }
 
 
+bool CAscom6::setDriverProperty(const QString &name, QVariant value)
+{
+  if (m_device == NULL)
+    return false;
+
+  if (m_device->isNull())
+    return false;
+
+  return m_device->setProperty(name.toLatin1(), value);
+}
+
+
+bool CAscom6::getDriverProperty(const QString &name, QVariant &value)
+{
+  if (m_device == NULL)
+    return false;
+
+  if (m_device->isNull())
+    return false;
+
+  value = m_device->property(name.toLatin1());
+
+  return value.isValid();
+}
 

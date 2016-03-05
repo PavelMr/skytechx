@@ -27,6 +27,9 @@ public:
 
   virtual QString getTelescope() = 0;
 
+  virtual bool setDriverProperty(const QString &name, QVariant value) = 0;
+  virtual bool getDriverProperty(const QString &name, QVariant &value) = 0;
+
 signals:
   void sigConnected(bool connected);
   void sigUpdate(double, double);

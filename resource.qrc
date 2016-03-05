@@ -144,5 +144,6 @@
         <file>res/ico_geo.png</file>
         <file>res/ico_topo.png</file>
         <file>res/ico_moon.png</file>
+        <file>res/ico_pdf.png</file>
     </qresource>
 </RCC>

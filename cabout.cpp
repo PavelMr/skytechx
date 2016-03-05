@@ -12,6 +12,12 @@ CAbout::CAbout(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::CAbout)
 {
+  QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+  animation->setDuration(1000);
+  animation->setStartValue(0);
+  animation->setEndValue(1);
+  animation->start();
+
   ui->setupUi(this);
   setFixedWidth(width());
 
@@ -101,6 +107,28 @@ void CAbout::changeEvent(QEvent *e)
   default:
     break;
   }
+}
+
+void CAbout::mouseMoveEvent(QMouseEvent *event)
+{
+  if (m_moving)
+  {
+    move(pos() + (event->pos() - m_lastMousePosition));
+  }
+}
+
+void CAbout::mousePressEvent(QMouseEvent *event)
+{
+  if (event->button() == Qt::LeftButton)
+  {
+     m_moving = true;
+     m_lastMousePosition = event->pos();
+  }
+}
+
+void CAbout::mouseReleaseEvent(QMouseEvent *event)
+{
+  m_moving = false;
 }
 
 void CAbout::on_pushButton_clicked()

@@ -18,15 +18,29 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="pushButton_2">
+       <property name="toolTip">
+        <string>Print</string>
+       </property>
        <property name="text">
-        <string>Print...</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/res/ico_printer.png</normaloff>:/res/ico_printer.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_3">
+       <property name="toolTip">
+        <string>Save to PDF</string>
+       </property>
        <property name="text">
-        <string>Save to PDF...</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resource.qrc">
+         <normaloff>:/res/ico_pdf.png</normaloff>:/res/ico_pdf.png</iconset>
        </property>
       </widget>
      </item>
@@ -90,6 +104,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

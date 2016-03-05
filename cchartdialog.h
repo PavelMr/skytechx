@@ -26,6 +26,8 @@ private slots:
 
   void slotPrintPreview(QPrinter *printer);
 
+  void on_pushButton_4_clicked();
+
 private:
   Ui::CChartDialog *ui;
 };

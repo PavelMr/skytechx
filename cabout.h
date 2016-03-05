@@ -36,12 +36,17 @@ public:
 
 protected:
   void changeEvent(QEvent *e);
+  void mouseMoveEvent(QMouseEvent *event);
+  void mousePressEvent(QMouseEvent *event);
+  void mouseReleaseEvent(QMouseEvent *event);
 
 private slots:
   void on_pushButton_clicked();
 
 private:
   Ui::CAbout *ui;
+  bool   m_moving;
+  QPoint m_lastMousePosition;
 };
 
 #endif // CABOUT_H

@@ -100,14 +100,25 @@
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="dateTimeEdit_2">
-              <property name="calendarPopup">
-               <bool>true</bool>
-              </property>
-              <property name="timeSpec">
-               <enum>Qt::UTC</enum>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+                <property name="timeSpec">
+                 <enum>Qt::UTC</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_6">
+                <property name="text">
+                 <string>Set 1 year interval</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <widget class="Line" name="line_2">

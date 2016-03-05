@@ -148,5 +148,9 @@ void CDSOGaleryList::slotDelete()
 
 void CDSOGaleryList::on_pushButton_4_clicked()
 {
+  if (msgBoxQuest(this, tr("Remove images?")) == QMessageBox::No)
+  {
+    return;
+  }
   slotDelete();
 }

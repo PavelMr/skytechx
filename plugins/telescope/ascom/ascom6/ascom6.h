@@ -36,6 +36,8 @@ public:
   int  getAttributes();
   bool isSlewing();
   QString getTelescope();
+  bool setDriverProperty(const QString &name, QVariant value);
+  bool getDriverProperty(const QString &name, QVariant &value);
 
 protected:
   QAxObject *m_device;

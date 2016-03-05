@@ -830,3 +830,10 @@ void CEphList::on_pushButton_5_clicked()
 {
   generateGraph();
 }
+
+void CEphList::on_pushButton_6_clicked()
+{
+  QDateTime dt = ui->dateTimeEdit->dateTime();
+  dt = dt.addYears(1);
+  ui->dateTimeEdit_2->setDateTime(dt);
+}
