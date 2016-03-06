@@ -323,7 +323,6 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     p.setPen(Qt::yellow);
     p.setBrush(Qt::yellow);
     p.drawEllipse(QPointF(p1.sx, p1.sy), r, r);
-    //p.renderText(p1.sx, p1.sy, r, tr("Sun"), RT_BOTTOM_RIGHT);
     g_labeling.addLabel(QPoint(p1.sx, p1.sy), r, tr("Sun"), -1, RT_BOTTOM_RIGHT, SL_AL_ALL);
   }
 
@@ -474,8 +473,31 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       p.setBrush(color[i]);
       p.drawEllipse(QPointF(p1.sx, p1.sy), r, r);
       p.setPen(Qt::white);
-      //p.renderText(p1.sx, p1.sy, r, (i == 0) ? tr("Earth") : o.name, RT_BOTTOM_RIGHT);
       g_labeling.addLabel(QPoint(p1.sx, p1.sy), r, (i == 0) ? tr("Earth") : o.name, -1, RT_BOTTOM_RIGHT, SL_AL_ALL);
+
+      if (i == 0)
+      { // earth
+        orbit_t o;
+
+        ast.setParam(&m_view);
+        ast.calcPlanet(PT_MOON, &o, false, true, false);
+
+        pos = QVector3D(o.hRect[0], o.hRect[1], o.hRect[2]);
+
+        p1.w.x += pos.x();
+        p1.w.y += pos.y();
+        p1.w.z += pos.z();
+
+        if (trfProjectPoint(&p1))
+        {
+          p.setPen(Qt::gray);
+          p.setBrush(Qt::gray);
+          p.drawEllipse(QPointF(p1.sx, p1.sy), r / 2, r / 2);
+
+          if (m_scale > 6000)
+            g_labeling.addLabel(QPoint(p1.sx, p1.sy), r * 2, tr("Moon"), -1, RT_BOTTOM_RIGHT, SL_AL_ALL);
+        }
+      }
     }
 
     if (m_showRadius)
@@ -663,7 +685,6 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       }
 
       p.setPen(Qt::white);
-      //p.renderText(p1.sx, p1.sy, r, name, RT_BOTTOM_RIGHT);
       g_labeling.addLabel(QPoint(p1.sx, p1.sy), r, name, -1, RT_BOTTOM_RIGHT, SL_AL_ALL);
     }
   }
@@ -730,7 +751,7 @@ void C3DSolarWidget::wheelEvent(QWheelEvent *e)
     m_scale *= 1.2;
   }
 
-  m_scale = CLAMP(m_scale, 4, 3000);
+  m_scale = CLAMP(m_scale, 4, 15000);
 
   update();
 }

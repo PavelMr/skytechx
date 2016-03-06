@@ -730,6 +730,8 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showCenterScreen = settings.value("show_center_of_screen", false).toBool();
   g_showObjectAxis = settings.value("show_object_axis", false).toBool();
 
+  ui->checkBox_5->setChecked(settings.value("info_auto_update", true).toBool());
+
   ui->actionCenter_of_screen->setChecked(g_showCenterScreen);
 
   ui->actionStars->setChecked(g_showStars);
@@ -1190,6 +1192,8 @@ void MainWindow::saveAndExit()
   settings.setValue("flipY", ui->actionFlipY->isChecked());
   settings.setValue("lockFov", ui->actionLock_FOV->isChecked());
   settings.setValue("geocentric", ui->actionGeocentric->isChecked());
+
+  settings.setValue("info_auto_update", ui->checkBox_5->isChecked());
 
   if (g_autoSave.mapPosition)
   {

@@ -1129,6 +1129,10 @@ void CAstro::solveMoon(orbit_t *o)
   yh = r * sin(lonecl) * cos(latecl);
   zh = r               * sin(latecl);
 
+  o->hRect[0] = RADIITOAU(xh);
+  o->hRect[1] = RADIITOAU(yh);
+  o->hRect[2] = RADIITOAU(zh);
+
   xg = xh;
   yg = yh;
   zg = zh;

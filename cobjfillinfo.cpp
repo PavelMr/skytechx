@@ -845,6 +845,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
+
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 

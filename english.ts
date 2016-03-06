@@ -361,17 +361,17 @@ Zoom by mouse wheel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="49"/>
+        <location filename="cabout.cpp" line="55"/>
         <source>&lt;b&gt;Main DSO catalogue&lt;/b&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="63"/>
+        <location filename="cabout.cpp" line="69"/>
         <source>&lt;br&gt;DSO object count : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cabout.cpp" line="65"/>
+        <location filename="cabout.cpp" line="71"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Star catalogues&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -620,33 +620,33 @@ Zoom by mouse wheel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="465"/>
+        <location filename="casterdlg.cpp" line="472"/>
         <source>Save current catalogue to disc?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="508"/>
+        <location filename="casterdlg.cpp" line="515"/>
         <source>Asteroids </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="574"/>
+        <location filename="casterdlg.cpp" line="581"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="617"/>
+        <location filename="casterdlg.cpp" line="624"/>
         <source>The updated asteroids : %1
 The new asteroids : %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="640"/>
+        <location filename="casterdlg.cpp" line="647"/>
         <source>Open a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="686"/>
+        <location filename="casterdlg.cpp" line="693"/>
         <source>Asteroid tracking and holding will be discarded.
 Quick information about asteroid too.
 
@@ -905,6 +905,49 @@ Do you wish show this dialog window next time?</source>
     </message>
 </context>
 <context>
+    <name>CChartDialog</name>
+    <message>
+        <location filename="cchartdialog.ui" line="14"/>
+        <source>Graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cchartdialog.ui" line="25"/>
+        <source>Print graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cchartdialog.ui" line="39"/>
+        <source>Print preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cchartdialog.ui" line="53"/>
+        <source>Save to PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cchartdialog.ui" line="80"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cchartdialog.cpp" line="84"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cchartdialog.cpp" line="93"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cchartdialog.cpp" line="149"/>
+        <source>Save PDF File</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CComDlg</name>
     <message>
         <location filename="ccomdlg.ui" line="17"/>
@@ -972,22 +1015,22 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="702"/>
+        <location filename="ccomdlg.cpp" line="707"/>
         <source>Save current catalogue to disc?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="745"/>
+        <location filename="ccomdlg.cpp" line="750"/>
         <source>Comets </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="827"/>
+        <location filename="ccomdlg.cpp" line="832"/>
         <source>Open a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="873"/>
+        <location filename="ccomdlg.cpp" line="878"/>
         <source>Comet tracking and holding will be discarded.
 Quick information about comets too.
 
@@ -995,12 +1038,12 @@ Do you wish show this dialog window next time?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="1089"/>
+        <location filename="ccomdlg.cpp" line="1094"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ccomdlg.cpp" line="1132"/>
+        <location filename="ccomdlg.cpp" line="1137"/>
         <source>The updated comets : %1
 The new comets : %2</source>
         <translation type="unfinished"></translation>
@@ -1453,7 +1496,7 @@ The new comets : %2</source>
     </message>
     <message>
         <location filename="cdsogalerylist.ui" line="66"/>
-        <source>Cancel</source>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1469,6 +1512,11 @@ The new comets : %2</source>
     <message>
         <location filename="cdsogalerylist.cpp" line="115"/>
         <source>Remove all images?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdsogalerylist.cpp" line="151"/>
+        <source>Remove images?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1596,32 +1644,32 @@ The new comets : %2</source>
 <context>
     <name>CDSSOpenDialog</name>
     <message>
-        <location filename="mainwindow.cpp" line="3167"/>
+        <location filename="mainwindow.cpp" line="3170"/>
         <source>Rescale to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3174"/>
+        <location filename="mainwindow.cpp" line="3177"/>
         <source>Original size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3175"/>
+        <location filename="mainwindow.cpp" line="3178"/>
         <source>128 x 128</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3176"/>
+        <location filename="mainwindow.cpp" line="3179"/>
         <source>256 x 256</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3177"/>
+        <location filename="mainwindow.cpp" line="3180"/>
         <source>512 x 512</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3178"/>
+        <location filename="mainwindow.cpp" line="3181"/>
         <source>1024 x 1024</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2250,32 +2298,62 @@ ESC : Cancel
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.ui" line="182"/>
+        <location filename="cephlist.ui" line="117"/>
+        <source>Set 1 year interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephlist.ui" line="201"/>
+        <source>Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephlist.ui" line="207"/>
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.ui" line="216"/>
+        <location filename="cephlist.ui" line="241"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.ui" line="236"/>
+        <location filename="cephlist.ui" line="261"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.ui" line="197"/>
+        <location filename="cephlist.ui" line="303"/>
+        <source>Graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephlist.ui" line="309"/>
+        <source>First graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephlist.ui" line="319"/>
+        <source>Second graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephlist.ui" line="364"/>
+        <source>Generate graph...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephlist.ui" line="406"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephlist.ui" line="222"/>
         <source>Check/Uncheck all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.ui" line="270"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cephlist.ui" line="254"/>
+        <location filename="cephlist.ui" line="290"/>
         <source>Generate list...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2295,187 +2373,195 @@ ESC : Cancel
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.ui" line="122"/>
+        <location filename="cephlist.ui" line="133"/>
         <source>Use UT time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.ui" line="136"/>
+        <location filename="cephlist.ui" line="147"/>
         <source>Step</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="66"/>
+        <location filename="cephlist.cpp" line="88"/>
         <source>Minute(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="67"/>
+        <location filename="cephlist.cpp" line="89"/>
         <source>Hour(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="68"/>
+        <location filename="cephlist.cpp" line="90"/>
         <source>Day(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="247"/>
+        <location filename="cephlist.cpp" line="224"/>
         <source>There is no selected column!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="165"/>
+        <location filename="cephlist.cpp" line="189"/>
         <source>No object selected!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="29"/>
+        <location filename="cephlist.cpp" line="34"/>
         <source>JD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="30"/>
+        <location filename="cephlist.cpp" line="35"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="31"/>
+        <location filename="cephlist.cpp" line="36"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="32"/>
+        <location filename="cephlist.cpp" line="37"/>
         <source>Magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="33"/>
+        <location filename="cephlist.cpp" line="38"/>
         <source>Phase</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="34"/>
+        <location filename="cephlist.cpp" line="39"/>
         <source>Position angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="35"/>
+        <location filename="cephlist.cpp" line="40"/>
         <source>Size X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="36"/>
+        <location filename="cephlist.cpp" line="41"/>
         <source>Size Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="37"/>
+        <location filename="cephlist.cpp" line="42"/>
         <source>Local R.A.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="38"/>
+        <location filename="cephlist.cpp" line="43"/>
         <source>Local Dec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="39"/>
+        <location filename="cephlist.cpp" line="44"/>
         <source>Local R.A. (J2000.0)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="40"/>
+        <location filename="cephlist.cpp" line="45"/>
         <source>Local Dec. (J2000.0)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="41"/>
+        <location filename="cephlist.cpp" line="46"/>
         <source>Geo. R.A.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="42"/>
+        <location filename="cephlist.cpp" line="47"/>
         <source>Geo. Dec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="43"/>
+        <location filename="cephlist.cpp" line="48"/>
         <source>Azimuth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="44"/>
+        <location filename="cephlist.cpp" line="49"/>
         <source>Altitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="45"/>
+        <location filename="cephlist.cpp" line="50"/>
         <source>Dist. to Earth (R)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="46"/>
+        <location filename="cephlist.cpp" line="51"/>
         <source>Helio. dist. (r)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="47"/>
+        <location filename="cephlist.cpp" line="52"/>
         <source>Elongation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="48"/>
+        <location filename="cephlist.cpp" line="53"/>
         <source>Helio. longitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="49"/>
+        <location filename="cephlist.cpp" line="54"/>
         <source>Helio. latitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="50"/>
+        <location filename="cephlist.cpp" line="55"/>
         <source>Helio. rect. X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="51"/>
+        <location filename="cephlist.cpp" line="56"/>
         <source>Helio. rect. Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="52"/>
+        <location filename="cephlist.cpp" line="57"/>
         <source>Helio. rect. Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="53"/>
+        <location filename="cephlist.cpp" line="58"/>
         <source>Light time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="300"/>
+        <location filename="cephlist.cpp" line="60"/>
+        <location filename="cephlist.cpp" line="61"/>
+        <source>Nothing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephlist.cpp" line="280"/>
+        <location filename="cephlist.cpp" line="542"/>
         <source>Invalid date/time range!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="327"/>
+        <location filename="cephlist.cpp" line="310"/>
+        <location filename="cephlist.cpp" line="572"/>
         <source>Calculation 1000+ positions. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="443"/>
+        <location filename="cephlist.cpp" line="428"/>
         <source> Km</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="454"/>
+        <location filename="cephlist.cpp" line="439"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cephlist.cpp" line="483"/>
+        <location filename="cephlist.cpp" line="469"/>
         <source> mins.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2506,6 +2592,11 @@ ESC : Cancel
         <location filename="cephtable.cpp" line="15"/>
         <source>Ephemerides of </source>
         <oldsource>Ephemerids of </oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cephtable.cpp" line="15"/>
+        <source> (Records : %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3559,13 +3650,13 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1822"/>
-        <location filename="cmapview.cpp" line="1841"/>
+        <location filename="cmapview.cpp" line="1823"/>
+        <location filename="cmapview.cpp" line="1842"/>
         <source>Setting time to epoch J2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmapview.cpp" line="1955"/>
+        <location filename="cmapview.cpp" line="1956"/>
         <source>FOV : </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3637,100 +3728,100 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="37"/>
+        <location filename="cmooncal.cpp" line="41"/>
         <source>Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="38"/>
+        <location filename="cmooncal.cpp" line="42"/>
         <source>Sun2</source>
         <comment>Sun (not Sunday)</comment>
         <translation>Sun</translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="100"/>
+        <location filename="cmooncal.cpp" line="104"/>
         <source>January (I)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="101"/>
+        <location filename="cmooncal.cpp" line="105"/>
         <source>February (II)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="102"/>
+        <location filename="cmooncal.cpp" line="106"/>
         <source>March (III)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="103"/>
+        <location filename="cmooncal.cpp" line="107"/>
         <source>April (IV)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="104"/>
+        <location filename="cmooncal.cpp" line="108"/>
         <source>May (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="105"/>
+        <location filename="cmooncal.cpp" line="109"/>
         <source>June (VI)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="106"/>
+        <location filename="cmooncal.cpp" line="110"/>
         <source>July (VII)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="107"/>
+        <location filename="cmooncal.cpp" line="111"/>
         <source>August (IIX)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="108"/>
+        <location filename="cmooncal.cpp" line="112"/>
         <source>September (IX)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="109"/>
+        <location filename="cmooncal.cpp" line="113"/>
         <source>October (X)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="110"/>
+        <location filename="cmooncal.cpp" line="114"/>
         <source>November (XI)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="111"/>
+        <location filename="cmooncal.cpp" line="115"/>
         <source>December (XII)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="222"/>
+        <location filename="cmooncal.cpp" line="235"/>
         <source>Rise/Set solve ERROR!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="226"/>
+        <location filename="cmooncal.cpp" line="239"/>
         <source>Object is circumpolar.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="230"/>
+        <location filename="cmooncal.cpp" line="243"/>
         <source>Object is never visible!
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="235"/>
+        <location filename="cmooncal.cpp" line="248"/>
         <source>Rise : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmooncal.cpp" line="237"/>
+        <location filename="cmooncal.cpp" line="250"/>
         <source>Set : </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3751,122 +3842,122 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
 <context>
     <name>CObjFillInfo</name>
     <message>
-        <location filename="cobjfillinfo.cpp" line="154"/>
+        <location filename="cobjfillinfo.cpp" line="155"/>
         <source>Atlases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="158"/>
+        <location filename="cobjfillinfo.cpp" line="159"/>
         <source>Hvezdna obloha 2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="162"/>
+        <location filename="cobjfillinfo.cpp" line="163"/>
         <source>Sky Atlas 2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="164"/>
+        <location filename="cobjfillinfo.cpp" line="165"/>
         <source>Uranometria 2000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="181"/>
+        <location filename="cobjfillinfo.cpp" line="182"/>
         <source>Rise/Set solve ERROR!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="181"/>
-        <location filename="cobjfillinfo.cpp" line="411"/>
-        <location filename="cobjfillinfo.cpp" line="557"/>
-        <location filename="cobjfillinfo.cpp" line="843"/>
-        <location filename="cobjfillinfo.cpp" line="964"/>
-        <location filename="cobjfillinfo.cpp" line="1069"/>
-        <location filename="cobjfillinfo.cpp" line="1175"/>
-        <location filename="cobjfillinfo.cpp" line="1272"/>
-        <location filename="cobjfillinfo.cpp" line="1363"/>
-        <location filename="cobjfillinfo.cpp" line="1379"/>
-        <location filename="cobjfillinfo.cpp" line="1380"/>
-        <location filename="cobjfillinfo.cpp" line="1382"/>
-        <location filename="cobjfillinfo.cpp" line="1465"/>
-        <location filename="cobjfillinfo.cpp" line="1483"/>
-        <location filename="cobjfillinfo.cpp" line="1580"/>
-        <location filename="cobjfillinfo.cpp" line="1596"/>
-        <location filename="cobjfillinfo.cpp" line="1597"/>
-        <location filename="cobjfillinfo.cpp" line="1599"/>
-        <location filename="cobjfillinfo.cpp" line="1682"/>
-        <location filename="cobjfillinfo.cpp" line="1699"/>
-        <location filename="cobjfillinfo.cpp" line="1829"/>
+        <location filename="cobjfillinfo.cpp" line="182"/>
+        <location filename="cobjfillinfo.cpp" line="422"/>
+        <location filename="cobjfillinfo.cpp" line="573"/>
+        <location filename="cobjfillinfo.cpp" line="871"/>
+        <location filename="cobjfillinfo.cpp" line="997"/>
+        <location filename="cobjfillinfo.cpp" line="1107"/>
+        <location filename="cobjfillinfo.cpp" line="1218"/>
+        <location filename="cobjfillinfo.cpp" line="1320"/>
+        <location filename="cobjfillinfo.cpp" line="1416"/>
+        <location filename="cobjfillinfo.cpp" line="1432"/>
+        <location filename="cobjfillinfo.cpp" line="1433"/>
+        <location filename="cobjfillinfo.cpp" line="1435"/>
+        <location filename="cobjfillinfo.cpp" line="1522"/>
+        <location filename="cobjfillinfo.cpp" line="1540"/>
+        <location filename="cobjfillinfo.cpp" line="1642"/>
+        <location filename="cobjfillinfo.cpp" line="1658"/>
+        <location filename="cobjfillinfo.cpp" line="1659"/>
+        <location filename="cobjfillinfo.cpp" line="1661"/>
+        <location filename="cobjfillinfo.cpp" line="1749"/>
+        <location filename="cobjfillinfo.cpp" line="1766"/>
+        <location filename="cobjfillinfo.cpp" line="1902"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="187"/>
+        <location filename="cobjfillinfo.cpp" line="188"/>
         <source>Object is circumpolar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="188"/>
-        <location filename="cobjfillinfo.cpp" line="198"/>
-        <location filename="cobjfillinfo.cpp" line="218"/>
+        <location filename="cobjfillinfo.cpp" line="189"/>
+        <location filename="cobjfillinfo.cpp" line="199"/>
+        <location filename="cobjfillinfo.cpp" line="219"/>
         <source>Transit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="188"/>
-        <location filename="cobjfillinfo.cpp" line="198"/>
-        <location filename="cobjfillinfo.cpp" line="218"/>
+        <location filename="cobjfillinfo.cpp" line="189"/>
+        <location filename="cobjfillinfo.cpp" line="199"/>
+        <location filename="cobjfillinfo.cpp" line="219"/>
         <source>Alt : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="197"/>
+        <location filename="cobjfillinfo.cpp" line="198"/>
         <source>Object is never visible!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="213"/>
+        <location filename="cobjfillinfo.cpp" line="214"/>
         <source>Rise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="213"/>
-        <location filename="cobjfillinfo.cpp" line="223"/>
+        <location filename="cobjfillinfo.cpp" line="214"/>
+        <location filename="cobjfillinfo.cpp" line="224"/>
         <source>Azm : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="223"/>
+        <location filename="cobjfillinfo.cpp" line="224"/>
         <source>Set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="255"/>
-        <location filename="cobjfillinfo.cpp" line="360"/>
-        <location filename="cobjfillinfo.cpp" line="505"/>
-        <location filename="cobjfillinfo.cpp" line="687"/>
-        <location filename="cobjfillinfo.cpp" line="767"/>
-        <location filename="cobjfillinfo.cpp" line="908"/>
-        <location filename="cobjfillinfo.cpp" line="1012"/>
-        <location filename="cobjfillinfo.cpp" line="1119"/>
-        <location filename="cobjfillinfo.cpp" line="1216"/>
-        <location filename="cobjfillinfo.cpp" line="1308"/>
-        <location filename="cobjfillinfo.cpp" line="1409"/>
-        <location filename="cobjfillinfo.cpp" line="1525"/>
-        <location filename="cobjfillinfo.cpp" line="1629"/>
-        <location filename="cobjfillinfo.cpp" line="1773"/>
-        <location filename="cobjfillinfo.cpp" line="2016"/>
+        <location filename="cobjfillinfo.cpp" line="256"/>
+        <location filename="cobjfillinfo.cpp" line="366"/>
+        <location filename="cobjfillinfo.cpp" line="516"/>
+        <location filename="cobjfillinfo.cpp" line="703"/>
+        <location filename="cobjfillinfo.cpp" line="789"/>
+        <location filename="cobjfillinfo.cpp" line="936"/>
+        <location filename="cobjfillinfo.cpp" line="1045"/>
+        <location filename="cobjfillinfo.cpp" line="1157"/>
+        <location filename="cobjfillinfo.cpp" line="1259"/>
+        <location filename="cobjfillinfo.cpp" line="1356"/>
+        <location filename="cobjfillinfo.cpp" line="1462"/>
+        <location filename="cobjfillinfo.cpp" line="1582"/>
+        <location filename="cobjfillinfo.cpp" line="1691"/>
+        <location filename="cobjfillinfo.cpp" line="1839"/>
+        <location filename="cobjfillinfo.cpp" line="2089"/>
         <source>JD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="287"/>
-        <location filename="cobjfillinfo.cpp" line="693"/>
+        <location filename="cobjfillinfo.cpp" line="288"/>
+        <location filename="cobjfillinfo.cpp" line="709"/>
         <source>Satellite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="60"/>
+        <location filename="cobjfillinfo.cpp" line="61"/>
         <source>Constellation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3881,691 +3972,696 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="47"/>
+        <location filename="cobjfillinfo.cpp" line="48"/>
         <source>Object type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="48"/>
+        <location filename="cobjfillinfo.cpp" line="49"/>
         <source>Designation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="49"/>
+        <location filename="cobjfillinfo.cpp" line="50"/>
         <source>Declination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="58"/>
-        <location filename="cobjfillinfo.cpp" line="1381"/>
-        <location filename="cobjfillinfo.cpp" line="1598"/>
+        <location filename="cobjfillinfo.cpp" line="59"/>
+        <location filename="cobjfillinfo.cpp" line="1434"/>
+        <location filename="cobjfillinfo.cpp" line="1660"/>
         <source>Visual magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="64"/>
+        <location filename="cobjfillinfo.cpp" line="65"/>
         <source>Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="65"/>
+        <location filename="cobjfillinfo.cpp" line="66"/>
         <source>Galaxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="66"/>
+        <location filename="cobjfillinfo.cpp" line="67"/>
         <source>Unknown object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="67"/>
+        <location filename="cobjfillinfo.cpp" line="68"/>
         <source>Deep sky object / Plate defect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="68"/>
+        <location filename="cobjfillinfo.cpp" line="69"/>
         <source>Unspecified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="69"/>
+        <location filename="cobjfillinfo.cpp" line="70"/>
         <source>Artefact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="366"/>
+        <location filename="cobjfillinfo.cpp" line="372"/>
         <source>Asteroid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="61"/>
+        <location filename="cobjfillinfo.cpp" line="62"/>
         <source>Elongation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="62"/>
+        <location filename="cobjfillinfo.cpp" line="47"/>
+        <source>Hour Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cobjfillinfo.cpp" line="63"/>
         <source> (J2000.0)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="160"/>
+        <location filename="cobjfillinfo.cpp" line="161"/>
         <source>Millennium Star Atlas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="166"/>
+        <location filename="cobjfillinfo.cpp" line="167"/>
         <source>Interstellarum Deep Sky Atlas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="237"/>
+        <location filename="cobjfillinfo.cpp" line="238"/>
         <source>Zones</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="239"/>
+        <location filename="cobjfillinfo.cpp" line="240"/>
         <source>PPMXL Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="319"/>
+        <location filename="cobjfillinfo.cpp" line="325"/>
         <source>Distance from planet center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="324"/>
+        <location filename="cobjfillinfo.cpp" line="330"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="324"/>
+        <location filename="cobjfillinfo.cpp" line="330"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="327"/>
+        <location filename="cobjfillinfo.cpp" line="333"/>
         <source>In sun light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="328"/>
+        <location filename="cobjfillinfo.cpp" line="334"/>
         <source>Is hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="329"/>
+        <location filename="cobjfillinfo.cpp" line="335"/>
         <source>Is transiting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="404"/>
-        <location filename="cobjfillinfo.cpp" line="550"/>
-        <location filename="cobjfillinfo.cpp" line="721"/>
-        <location filename="cobjfillinfo.cpp" line="836"/>
-        <location filename="cobjfillinfo.cpp" line="957"/>
-        <location filename="cobjfillinfo.cpp" line="1062"/>
-        <location filename="cobjfillinfo.cpp" line="1168"/>
-        <location filename="cobjfillinfo.cpp" line="1265"/>
-        <location filename="cobjfillinfo.cpp" line="1356"/>
-        <location filename="cobjfillinfo.cpp" line="1458"/>
-        <location filename="cobjfillinfo.cpp" line="1573"/>
-        <location filename="cobjfillinfo.cpp" line="1692"/>
-        <location filename="cobjfillinfo.cpp" line="1822"/>
+        <location filename="cobjfillinfo.cpp" line="415"/>
+        <location filename="cobjfillinfo.cpp" line="566"/>
+        <location filename="cobjfillinfo.cpp" line="743"/>
+        <location filename="cobjfillinfo.cpp" line="864"/>
+        <location filename="cobjfillinfo.cpp" line="990"/>
+        <location filename="cobjfillinfo.cpp" line="1100"/>
+        <location filename="cobjfillinfo.cpp" line="1211"/>
+        <location filename="cobjfillinfo.cpp" line="1313"/>
+        <location filename="cobjfillinfo.cpp" line="1409"/>
+        <location filename="cobjfillinfo.cpp" line="1515"/>
+        <location filename="cobjfillinfo.cpp" line="1635"/>
+        <location filename="cobjfillinfo.cpp" line="1759"/>
+        <location filename="cobjfillinfo.cpp" line="1895"/>
         <source>Azimuth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="405"/>
-        <location filename="cobjfillinfo.cpp" line="551"/>
-        <location filename="cobjfillinfo.cpp" line="722"/>
-        <location filename="cobjfillinfo.cpp" line="730"/>
-        <location filename="cobjfillinfo.cpp" line="837"/>
-        <location filename="cobjfillinfo.cpp" line="958"/>
-        <location filename="cobjfillinfo.cpp" line="1063"/>
-        <location filename="cobjfillinfo.cpp" line="1169"/>
-        <location filename="cobjfillinfo.cpp" line="1266"/>
-        <location filename="cobjfillinfo.cpp" line="1357"/>
-        <location filename="cobjfillinfo.cpp" line="1459"/>
-        <location filename="cobjfillinfo.cpp" line="1574"/>
-        <location filename="cobjfillinfo.cpp" line="1693"/>
-        <location filename="cobjfillinfo.cpp" line="1823"/>
+        <location filename="cobjfillinfo.cpp" line="416"/>
+        <location filename="cobjfillinfo.cpp" line="567"/>
+        <location filename="cobjfillinfo.cpp" line="744"/>
+        <location filename="cobjfillinfo.cpp" line="752"/>
+        <location filename="cobjfillinfo.cpp" line="865"/>
+        <location filename="cobjfillinfo.cpp" line="991"/>
+        <location filename="cobjfillinfo.cpp" line="1101"/>
+        <location filename="cobjfillinfo.cpp" line="1212"/>
+        <location filename="cobjfillinfo.cpp" line="1314"/>
+        <location filename="cobjfillinfo.cpp" line="1410"/>
+        <location filename="cobjfillinfo.cpp" line="1516"/>
+        <location filename="cobjfillinfo.cpp" line="1636"/>
+        <location filename="cobjfillinfo.cpp" line="1760"/>
+        <location filename="cobjfillinfo.cpp" line="1896"/>
         <source>Altitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="407"/>
-        <location filename="cobjfillinfo.cpp" line="553"/>
-        <location filename="cobjfillinfo.cpp" line="839"/>
-        <location filename="cobjfillinfo.cpp" line="960"/>
-        <location filename="cobjfillinfo.cpp" line="1065"/>
-        <location filename="cobjfillinfo.cpp" line="1171"/>
-        <location filename="cobjfillinfo.cpp" line="1268"/>
-        <location filename="cobjfillinfo.cpp" line="1359"/>
-        <location filename="cobjfillinfo.cpp" line="1461"/>
-        <location filename="cobjfillinfo.cpp" line="1576"/>
-        <location filename="cobjfillinfo.cpp" line="1695"/>
-        <location filename="cobjfillinfo.cpp" line="1825"/>
+        <location filename="cobjfillinfo.cpp" line="418"/>
+        <location filename="cobjfillinfo.cpp" line="569"/>
+        <location filename="cobjfillinfo.cpp" line="867"/>
+        <location filename="cobjfillinfo.cpp" line="993"/>
+        <location filename="cobjfillinfo.cpp" line="1103"/>
+        <location filename="cobjfillinfo.cpp" line="1214"/>
+        <location filename="cobjfillinfo.cpp" line="1316"/>
+        <location filename="cobjfillinfo.cpp" line="1412"/>
+        <location filename="cobjfillinfo.cpp" line="1518"/>
+        <location filename="cobjfillinfo.cpp" line="1638"/>
+        <location filename="cobjfillinfo.cpp" line="1762"/>
+        <location filename="cobjfillinfo.cpp" line="1898"/>
         <source>Altitude without ref.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="408"/>
-        <location filename="cobjfillinfo.cpp" line="554"/>
-        <location filename="cobjfillinfo.cpp" line="840"/>
-        <location filename="cobjfillinfo.cpp" line="961"/>
-        <location filename="cobjfillinfo.cpp" line="1066"/>
-        <location filename="cobjfillinfo.cpp" line="1172"/>
-        <location filename="cobjfillinfo.cpp" line="1269"/>
-        <location filename="cobjfillinfo.cpp" line="1360"/>
-        <location filename="cobjfillinfo.cpp" line="1462"/>
-        <location filename="cobjfillinfo.cpp" line="1577"/>
-        <location filename="cobjfillinfo.cpp" line="1696"/>
-        <location filename="cobjfillinfo.cpp" line="1826"/>
+        <location filename="cobjfillinfo.cpp" line="419"/>
+        <location filename="cobjfillinfo.cpp" line="570"/>
+        <location filename="cobjfillinfo.cpp" line="868"/>
+        <location filename="cobjfillinfo.cpp" line="994"/>
+        <location filename="cobjfillinfo.cpp" line="1104"/>
+        <location filename="cobjfillinfo.cpp" line="1215"/>
+        <location filename="cobjfillinfo.cpp" line="1317"/>
+        <location filename="cobjfillinfo.cpp" line="1413"/>
+        <location filename="cobjfillinfo.cpp" line="1519"/>
+        <location filename="cobjfillinfo.cpp" line="1639"/>
+        <location filename="cobjfillinfo.cpp" line="1763"/>
+        <location filename="cobjfillinfo.cpp" line="1899"/>
         <source>Atm. refraction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="411"/>
-        <location filename="cobjfillinfo.cpp" line="557"/>
-        <location filename="cobjfillinfo.cpp" line="843"/>
-        <location filename="cobjfillinfo.cpp" line="964"/>
-        <location filename="cobjfillinfo.cpp" line="1069"/>
-        <location filename="cobjfillinfo.cpp" line="1175"/>
-        <location filename="cobjfillinfo.cpp" line="1272"/>
-        <location filename="cobjfillinfo.cpp" line="1363"/>
-        <location filename="cobjfillinfo.cpp" line="1465"/>
-        <location filename="cobjfillinfo.cpp" line="1580"/>
-        <location filename="cobjfillinfo.cpp" line="1699"/>
-        <location filename="cobjfillinfo.cpp" line="1829"/>
+        <location filename="cobjfillinfo.cpp" line="422"/>
+        <location filename="cobjfillinfo.cpp" line="573"/>
+        <location filename="cobjfillinfo.cpp" line="871"/>
+        <location filename="cobjfillinfo.cpp" line="997"/>
+        <location filename="cobjfillinfo.cpp" line="1107"/>
+        <location filename="cobjfillinfo.cpp" line="1218"/>
+        <location filename="cobjfillinfo.cpp" line="1320"/>
+        <location filename="cobjfillinfo.cpp" line="1416"/>
+        <location filename="cobjfillinfo.cpp" line="1522"/>
+        <location filename="cobjfillinfo.cpp" line="1642"/>
+        <location filename="cobjfillinfo.cpp" line="1766"/>
+        <location filename="cobjfillinfo.cpp" line="1902"/>
         <source>Airmass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="428"/>
-        <location filename="cobjfillinfo.cpp" line="574"/>
-        <location filename="cobjfillinfo.cpp" line="726"/>
-        <location filename="cobjfillinfo.cpp" line="1846"/>
+        <location filename="cobjfillinfo.cpp" line="439"/>
+        <location filename="cobjfillinfo.cpp" line="590"/>
+        <location filename="cobjfillinfo.cpp" line="748"/>
+        <location filename="cobjfillinfo.cpp" line="1919"/>
         <source>Geocentric information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="432"/>
-        <location filename="cobjfillinfo.cpp" line="578"/>
-        <location filename="cobjfillinfo.cpp" line="1852"/>
+        <location filename="cobjfillinfo.cpp" line="443"/>
+        <location filename="cobjfillinfo.cpp" line="594"/>
+        <location filename="cobjfillinfo.cpp" line="1925"/>
         <source>R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="432"/>
-        <location filename="cobjfillinfo.cpp" line="461"/>
-        <location filename="cobjfillinfo.cpp" line="578"/>
-        <location filename="cobjfillinfo.cpp" line="607"/>
-        <location filename="cobjfillinfo.cpp" line="1852"/>
-        <location filename="cobjfillinfo.cpp" line="1892"/>
+        <location filename="cobjfillinfo.cpp" line="443"/>
+        <location filename="cobjfillinfo.cpp" line="472"/>
+        <location filename="cobjfillinfo.cpp" line="594"/>
+        <location filename="cobjfillinfo.cpp" line="623"/>
+        <location filename="cobjfillinfo.cpp" line="1925"/>
+        <location filename="cobjfillinfo.cpp" line="1965"/>
         <source>AU</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="433"/>
-        <location filename="cobjfillinfo.cpp" line="579"/>
-        <location filename="cobjfillinfo.cpp" line="1853"/>
-        <location filename="cobjfillinfo.cpp" line="1858"/>
+        <location filename="cobjfillinfo.cpp" line="444"/>
+        <location filename="cobjfillinfo.cpp" line="595"/>
+        <location filename="cobjfillinfo.cpp" line="1926"/>
+        <location filename="cobjfillinfo.cpp" line="1931"/>
         <source>Light time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="433"/>
-        <location filename="cobjfillinfo.cpp" line="579"/>
-        <location filename="cobjfillinfo.cpp" line="1853"/>
+        <location filename="cobjfillinfo.cpp" line="444"/>
+        <location filename="cobjfillinfo.cpp" line="595"/>
+        <location filename="cobjfillinfo.cpp" line="1926"/>
         <source> hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="448"/>
-        <location filename="cobjfillinfo.cpp" line="594"/>
-        <location filename="cobjfillinfo.cpp" line="1877"/>
+        <location filename="cobjfillinfo.cpp" line="459"/>
+        <location filename="cobjfillinfo.cpp" line="610"/>
+        <location filename="cobjfillinfo.cpp" line="1950"/>
         <source>Heliocentric information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="454"/>
-        <location filename="cobjfillinfo.cpp" line="600"/>
-        <location filename="cobjfillinfo.cpp" line="1883"/>
+        <location filename="cobjfillinfo.cpp" line="465"/>
+        <location filename="cobjfillinfo.cpp" line="616"/>
+        <location filename="cobjfillinfo.cpp" line="1956"/>
         <source>X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="455"/>
-        <location filename="cobjfillinfo.cpp" line="601"/>
-        <location filename="cobjfillinfo.cpp" line="1884"/>
+        <location filename="cobjfillinfo.cpp" line="466"/>
+        <location filename="cobjfillinfo.cpp" line="617"/>
+        <location filename="cobjfillinfo.cpp" line="1957"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="456"/>
-        <location filename="cobjfillinfo.cpp" line="602"/>
-        <location filename="cobjfillinfo.cpp" line="1885"/>
+        <location filename="cobjfillinfo.cpp" line="467"/>
+        <location filename="cobjfillinfo.cpp" line="618"/>
+        <location filename="cobjfillinfo.cpp" line="1958"/>
         <source>Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="458"/>
-        <location filename="cobjfillinfo.cpp" line="604"/>
-        <location filename="cobjfillinfo.cpp" line="728"/>
-        <location filename="cobjfillinfo.cpp" line="1889"/>
+        <location filename="cobjfillinfo.cpp" line="469"/>
+        <location filename="cobjfillinfo.cpp" line="620"/>
+        <location filename="cobjfillinfo.cpp" line="750"/>
+        <location filename="cobjfillinfo.cpp" line="1962"/>
         <source>Longitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="459"/>
-        <location filename="cobjfillinfo.cpp" line="605"/>
-        <location filename="cobjfillinfo.cpp" line="729"/>
-        <location filename="cobjfillinfo.cpp" line="1890"/>
+        <location filename="cobjfillinfo.cpp" line="470"/>
+        <location filename="cobjfillinfo.cpp" line="621"/>
+        <location filename="cobjfillinfo.cpp" line="751"/>
+        <location filename="cobjfillinfo.cpp" line="1963"/>
         <source>Latitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="461"/>
-        <location filename="cobjfillinfo.cpp" line="607"/>
-        <location filename="cobjfillinfo.cpp" line="1892"/>
+        <location filename="cobjfillinfo.cpp" line="472"/>
+        <location filename="cobjfillinfo.cpp" line="623"/>
+        <location filename="cobjfillinfo.cpp" line="1965"/>
         <source>r</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="469"/>
-        <location filename="cobjfillinfo.cpp" line="643"/>
-        <location filename="cobjfillinfo.cpp" line="851"/>
-        <location filename="cobjfillinfo.cpp" line="972"/>
-        <location filename="cobjfillinfo.cpp" line="1077"/>
-        <location filename="cobjfillinfo.cpp" line="1183"/>
-        <location filename="cobjfillinfo.cpp" line="1280"/>
-        <location filename="cobjfillinfo.cpp" line="1371"/>
-        <location filename="cobjfillinfo.cpp" line="1473"/>
-        <location filename="cobjfillinfo.cpp" line="1588"/>
-        <location filename="cobjfillinfo.cpp" line="1717"/>
-        <location filename="cobjfillinfo.cpp" line="1963"/>
+        <location filename="cobjfillinfo.cpp" line="480"/>
+        <location filename="cobjfillinfo.cpp" line="659"/>
+        <location filename="cobjfillinfo.cpp" line="879"/>
+        <location filename="cobjfillinfo.cpp" line="1005"/>
+        <location filename="cobjfillinfo.cpp" line="1115"/>
+        <location filename="cobjfillinfo.cpp" line="1226"/>
+        <location filename="cobjfillinfo.cpp" line="1328"/>
+        <location filename="cobjfillinfo.cpp" line="1424"/>
+        <location filename="cobjfillinfo.cpp" line="1530"/>
+        <location filename="cobjfillinfo.cpp" line="1650"/>
+        <location filename="cobjfillinfo.cpp" line="1784"/>
+        <location filename="cobjfillinfo.cpp" line="2036"/>
         <source>Position at JD2000.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="506"/>
-        <location filename="cobjfillinfo.cpp" line="688"/>
-        <location filename="cobjfillinfo.cpp" line="768"/>
-        <location filename="cobjfillinfo.cpp" line="909"/>
-        <location filename="cobjfillinfo.cpp" line="1013"/>
-        <location filename="cobjfillinfo.cpp" line="1120"/>
-        <location filename="cobjfillinfo.cpp" line="1217"/>
-        <location filename="cobjfillinfo.cpp" line="1309"/>
-        <location filename="cobjfillinfo.cpp" line="1410"/>
-        <location filename="cobjfillinfo.cpp" line="1526"/>
-        <location filename="cobjfillinfo.cpp" line="1630"/>
-        <location filename="cobjfillinfo.cpp" line="1774"/>
-        <location filename="cobjfillinfo.cpp" line="2017"/>
+        <location filename="cobjfillinfo.cpp" line="517"/>
+        <location filename="cobjfillinfo.cpp" line="704"/>
+        <location filename="cobjfillinfo.cpp" line="790"/>
+        <location filename="cobjfillinfo.cpp" line="937"/>
+        <location filename="cobjfillinfo.cpp" line="1046"/>
+        <location filename="cobjfillinfo.cpp" line="1158"/>
+        <location filename="cobjfillinfo.cpp" line="1260"/>
+        <location filename="cobjfillinfo.cpp" line="1357"/>
+        <location filename="cobjfillinfo.cpp" line="1463"/>
+        <location filename="cobjfillinfo.cpp" line="1583"/>
+        <location filename="cobjfillinfo.cpp" line="1692"/>
+        <location filename="cobjfillinfo.cpp" line="1840"/>
+        <location filename="cobjfillinfo.cpp" line="2090"/>
         <source>Date/Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="511"/>
+        <location filename="cobjfillinfo.cpp" line="522"/>
         <source>Comet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="610"/>
-        <location filename="cobjfillinfo.cpp" line="733"/>
-        <location filename="cobjfillinfo.cpp" line="1083"/>
-        <location filename="cobjfillinfo.cpp" line="1377"/>
-        <location filename="cobjfillinfo.cpp" line="1486"/>
-        <location filename="cobjfillinfo.cpp" line="1594"/>
-        <location filename="cobjfillinfo.cpp" line="1707"/>
+        <location filename="cobjfillinfo.cpp" line="626"/>
+        <location filename="cobjfillinfo.cpp" line="755"/>
+        <location filename="cobjfillinfo.cpp" line="1121"/>
+        <location filename="cobjfillinfo.cpp" line="1430"/>
+        <location filename="cobjfillinfo.cpp" line="1543"/>
+        <location filename="cobjfillinfo.cpp" line="1656"/>
+        <location filename="cobjfillinfo.cpp" line="1774"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="613"/>
-        <location filename="cobjfillinfo.cpp" line="735"/>
+        <location filename="cobjfillinfo.cpp" line="629"/>
+        <location filename="cobjfillinfo.cpp" line="757"/>
         <source>Orbital period</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="619"/>
+        <location filename="cobjfillinfo.cpp" line="635"/>
         <source> years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="623"/>
+        <location filename="cobjfillinfo.cpp" line="639"/>
         <source>Non periodic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="635"/>
+        <location filename="cobjfillinfo.cpp" line="651"/>
         <source>Current speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="635"/>
+        <location filename="cobjfillinfo.cpp" line="651"/>
         <source> km/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="723"/>
+        <location filename="cobjfillinfo.cpp" line="745"/>
         <source>Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="723"/>
-        <location filename="cobjfillinfo.cpp" line="730"/>
-        <location filename="cobjfillinfo.cpp" line="737"/>
+        <location filename="cobjfillinfo.cpp" line="745"/>
+        <location filename="cobjfillinfo.cpp" line="752"/>
+        <location filename="cobjfillinfo.cpp" line="759"/>
         <source> km.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="735"/>
+        <location filename="cobjfillinfo.cpp" line="757"/>
         <source> min.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="736"/>
+        <location filename="cobjfillinfo.cpp" line="758"/>
         <source>Inclination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="737"/>
+        <location filename="cobjfillinfo.cpp" line="759"/>
         <source>Perigee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="738"/>
+        <location filename="cobjfillinfo.cpp" line="760"/>
         <source>Epoch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="741"/>
+        <location filename="cobjfillinfo.cpp" line="763"/>
         <source>Time difference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="741"/>
+        <location filename="cobjfillinfo.cpp" line="763"/>
         <source> day(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="773"/>
+        <location filename="cobjfillinfo.cpp" line="795"/>
         <source>Star (TYC2 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="857"/>
-        <location filename="cobjfillinfo.cpp" line="978"/>
-        <location filename="cobjfillinfo.cpp" line="1496"/>
+        <location filename="cobjfillinfo.cpp" line="885"/>
+        <location filename="cobjfillinfo.cpp" line="1011"/>
+        <location filename="cobjfillinfo.cpp" line="1553"/>
         <source>Proper motion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="863"/>
-        <location filename="cobjfillinfo.cpp" line="1896"/>
+        <location filename="cobjfillinfo.cpp" line="891"/>
+        <location filename="cobjfillinfo.cpp" line="1969"/>
         <source>Apparent view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="874"/>
+        <location filename="cobjfillinfo.cpp" line="902"/>
         <source>Spectral type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="878"/>
+        <location filename="cobjfillinfo.cpp" line="906"/>
         <source>B-V mag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="880"/>
+        <location filename="cobjfillinfo.cpp" line="908"/>
         <source>Johnson BT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="881"/>
+        <location filename="cobjfillinfo.cpp" line="909"/>
         <source>Johnson VT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="745"/>
-        <location filename="cobjfillinfo.cpp" line="887"/>
-        <location filename="cobjfillinfo.cpp" line="987"/>
-        <location filename="cobjfillinfo.cpp" line="1094"/>
-        <location filename="cobjfillinfo.cpp" line="1192"/>
-        <location filename="cobjfillinfo.cpp" line="1289"/>
-        <location filename="cobjfillinfo.cpp" line="1388"/>
-        <location filename="cobjfillinfo.cpp" line="1505"/>
-        <location filename="cobjfillinfo.cpp" line="1605"/>
-        <location filename="cobjfillinfo.cpp" line="1726"/>
-        <location filename="cobjfillinfo.cpp" line="1972"/>
+        <location filename="cobjfillinfo.cpp" line="767"/>
+        <location filename="cobjfillinfo.cpp" line="915"/>
+        <location filename="cobjfillinfo.cpp" line="1020"/>
+        <location filename="cobjfillinfo.cpp" line="1132"/>
+        <location filename="cobjfillinfo.cpp" line="1235"/>
+        <location filename="cobjfillinfo.cpp" line="1337"/>
+        <location filename="cobjfillinfo.cpp" line="1441"/>
+        <location filename="cobjfillinfo.cpp" line="1562"/>
+        <location filename="cobjfillinfo.cpp" line="1667"/>
+        <location filename="cobjfillinfo.cpp" line="1793"/>
+        <location filename="cobjfillinfo.cpp" line="2045"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="52"/>
+        <location filename="cobjfillinfo.cpp" line="53"/>
         <source>Local information (Topocentric)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="56"/>
+        <location filename="cobjfillinfo.cpp" line="57"/>
         <source>Local information (Geocentric)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="59"/>
+        <location filename="cobjfillinfo.cpp" line="60"/>
         <source>Magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="240"/>
+        <location filename="cobjfillinfo.cpp" line="241"/>
         <source>URAT1 / UCAC4 Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="241"/>
+        <location filename="cobjfillinfo.cpp" line="242"/>
         <source>NOMAD / USNO B1 Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="330"/>
+        <location filename="cobjfillinfo.cpp" line="336"/>
         <source>Casting a shadow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="441"/>
-        <location filename="cobjfillinfo.cpp" line="587"/>
-        <location filename="cobjfillinfo.cpp" line="1871"/>
+        <location filename="cobjfillinfo.cpp" line="452"/>
+        <location filename="cobjfillinfo.cpp" line="603"/>
+        <location filename="cobjfillinfo.cpp" line="1944"/>
         <source>Heliocentric information (J2000)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="914"/>
+        <location filename="cobjfillinfo.cpp" line="942"/>
         <source>Star (UCAC4 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1018"/>
+        <location filename="cobjfillinfo.cpp" line="1051"/>
         <source>Star (GSC1.2 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1085"/>
+        <location filename="cobjfillinfo.cpp" line="1123"/>
         <source>Emulsion &amp; Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1088"/>
+        <location filename="cobjfillinfo.cpp" line="1126"/>
         <source>Identification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1125"/>
+        <location filename="cobjfillinfo.cpp" line="1163"/>
         <source>Star (PPMXL cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1222"/>
+        <location filename="cobjfillinfo.cpp" line="1265"/>
         <source>Star (USNO2 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1314"/>
+        <location filename="cobjfillinfo.cpp" line="1362"/>
         <source>Star (USNO B1 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1379"/>
-        <location filename="cobjfillinfo.cpp" line="1488"/>
-        <location filename="cobjfillinfo.cpp" line="1596"/>
+        <location filename="cobjfillinfo.cpp" line="1432"/>
+        <location filename="cobjfillinfo.cpp" line="1545"/>
+        <location filename="cobjfillinfo.cpp" line="1658"/>
         <source>Red magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1380"/>
-        <location filename="cobjfillinfo.cpp" line="1489"/>
-        <location filename="cobjfillinfo.cpp" line="1597"/>
+        <location filename="cobjfillinfo.cpp" line="1433"/>
+        <location filename="cobjfillinfo.cpp" line="1546"/>
+        <location filename="cobjfillinfo.cpp" line="1659"/>
         <source>Blue magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1381"/>
+        <location filename="cobjfillinfo.cpp" line="1434"/>
         <source> (Calc. from R/B)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1382"/>
-        <location filename="cobjfillinfo.cpp" line="1599"/>
+        <location filename="cobjfillinfo.cpp" line="1435"/>
+        <location filename="cobjfillinfo.cpp" line="1661"/>
         <source>B-V Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1382"/>
-        <location filename="cobjfillinfo.cpp" line="1599"/>
+        <location filename="cobjfillinfo.cpp" line="1435"/>
+        <location filename="cobjfillinfo.cpp" line="1661"/>
         <source> (Calc. from B/V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1415"/>
+        <location filename="cobjfillinfo.cpp" line="1468"/>
         <source>Star (NOMAD cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1491"/>
+        <location filename="cobjfillinfo.cpp" line="1548"/>
         <source>H magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1492"/>
+        <location filename="cobjfillinfo.cpp" line="1549"/>
         <source>J magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1493"/>
+        <location filename="cobjfillinfo.cpp" line="1550"/>
         <source>K magnitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1531"/>
+        <location filename="cobjfillinfo.cpp" line="1588"/>
         <source>Star (URAT1 cat.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1711"/>
-        <location filename="cobjfillinfo.cpp" line="1927"/>
+        <location filename="cobjfillinfo.cpp" line="1778"/>
+        <location filename="cobjfillinfo.cpp" line="2000"/>
         <source>P.A.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1713"/>
+        <location filename="cobjfillinfo.cpp" line="1780"/>
         <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1810"/>
-        <location filename="cobjfillinfo.cpp" line="1857"/>
+        <location filename="cobjfillinfo.cpp" line="1883"/>
+        <location filename="cobjfillinfo.cpp" line="1930"/>
         <source>Dist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1810"/>
-        <location filename="cobjfillinfo.cpp" line="1857"/>
+        <location filename="cobjfillinfo.cpp" line="1883"/>
+        <location filename="cobjfillinfo.cpp" line="1930"/>
         <source>Km</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1858"/>
+        <location filename="cobjfillinfo.cpp" line="1931"/>
         <source> sec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1906"/>
-        <location filename="cobjfillinfo.cpp" line="1917"/>
+        <location filename="cobjfillinfo.cpp" line="1979"/>
+        <location filename="cobjfillinfo.cpp" line="1990"/>
         <source>Apparent diameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1911"/>
-        <location filename="cobjfillinfo.cpp" line="1919"/>
+        <location filename="cobjfillinfo.cpp" line="1984"/>
+        <location filename="cobjfillinfo.cpp" line="1992"/>
         <source>Apparent radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1924"/>
+        <location filename="cobjfillinfo.cpp" line="1997"/>
         <source>Phase</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1925"/>
+        <location filename="cobjfillinfo.cpp" line="1998"/>
         <source>Phase angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1934"/>
+        <location filename="cobjfillinfo.cpp" line="2007"/>
         <source>Central Meridian I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1935"/>
+        <location filename="cobjfillinfo.cpp" line="2008"/>
         <source>Central Meridian II</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1936"/>
+        <location filename="cobjfillinfo.cpp" line="2009"/>
         <source>Central Meridian III</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1940"/>
+        <location filename="cobjfillinfo.cpp" line="2013"/>
         <source>Central Meridian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1946"/>
+        <location filename="cobjfillinfo.cpp" line="2019"/>
         <source>Sub-Earth Phi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="1953"/>
+        <location filename="cobjfillinfo.cpp" line="2026"/>
         <source>GRS longitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="2026"/>
+        <location filename="cobjfillinfo.cpp" line="2099"/>
         <source>Apparent umbra radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="2028"/>
+        <location filename="cobjfillinfo.cpp" line="2101"/>
         <source>Apparent penumbra radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="2033"/>
+        <location filename="cobjfillinfo.cpp" line="2106"/>
         <source>Apparent umbra diameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cobjfillinfo.cpp" line="2035"/>
+        <location filename="cobjfillinfo.cpp" line="2108"/>
         <source>Apparent penumbra diameter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7700,21 +7796,22 @@ with magnitude information</source>
     </message>
     <message>
         <location filename="cskeventdocdialog.ui" line="22"/>
-        <source>Print...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cskeventdocdialog.ui" line="29"/>
-        <source>Save to PDF...</source>
+        <source>Print</source>
+        <oldsource>Print...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="cskeventdocdialog.ui" line="36"/>
+        <source>Save to PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cskeventdocdialog.ui" line="50"/>
         <source>Colored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cskeventdocdialog.ui" line="59"/>
+        <location filename="cskeventdocdialog.ui" line="73"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8821,7 +8918,7 @@ with magnitude information</source>
     <message>
         <location filename="mainwindow.ui" line="124"/>
         <location filename="mainwindow.ui" line="3964"/>
-        <location filename="mainwindow.cpp" line="3799"/>
+        <location filename="mainwindow.cpp" line="3802"/>
         <source>Telescope</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9053,8 +9150,8 @@ with magnitude information</source>
         <location filename="mainwindow.ui" line="1763"/>
         <location filename="mainwindow.ui" line="2474"/>
         <location filename="mainwindow.ui" line="3067"/>
-        <location filename="mainwindow.cpp" line="520"/>
-        <location filename="mainwindow.cpp" line="617"/>
+        <location filename="mainwindow.cpp" line="522"/>
+        <location filename="mainwindow.cpp" line="619"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9070,7 +9167,7 @@ with magnitude information</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1834"/>
-        <location filename="mainwindow.cpp" line="1469"/>
+        <location filename="mainwindow.cpp" line="1472"/>
         <source>Current event : </source>
         <translation type="unfinished"></translation>
     </message>
@@ -9450,7 +9547,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="3110"/>
         <location filename="mainwindow.ui" line="3721"/>
-        <location filename="mainwindow.cpp" line="297"/>
+        <location filename="mainwindow.cpp" line="299"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10110,12 +10207,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="4461"/>
-        <source>Ephemeris list...</source>
+        <source>Ephemeris Tables &amp;&amp; Graphs...</source>
+        <oldsource>Ephemeris list...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4464"/>
-        <source>Ephemeris list</source>
+        <source>Ephemeris tables and graph</source>
+        <oldsource>Ephemeris list</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10491,7 +10590,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="5120"/>
-        <location filename="mainwindow.cpp" line="1363"/>
+        <location filename="mainwindow.cpp" line="1366"/>
         <source>Geocentric</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10906,499 +11005,499 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="250"/>
+        <location filename="mainwindow.cpp" line="252"/>
         <source>Time multiplicator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="262"/>
+        <location filename="mainwindow.cpp" line="264"/>
         <source>Time-lapse multiplicator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="294"/>
+        <location filename="mainwindow.cpp" line="296"/>
         <source>[Enter object name]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="312"/>
+        <location filename="mainwindow.cpp" line="314"/>
         <source>R.A./Dec. grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="321"/>
+        <location filename="mainwindow.cpp" line="323"/>
         <source>Alt/Azm. grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="330"/>
+        <location filename="mainwindow.cpp" line="332"/>
         <source>Ecliptical grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="429"/>
+        <location filename="mainwindow.cpp" line="431"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="430"/>
+        <location filename="mainwindow.cpp" line="432"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="431"/>
+        <location filename="mainwindow.cpp" line="433"/>
         <source>File Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="486"/>
-        <location filename="mainwindow.cpp" line="519"/>
+        <location filename="mainwindow.cpp" line="488"/>
+        <location filename="mainwindow.cpp" line="521"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="487"/>
+        <location filename="mainwindow.cpp" line="489"/>
         <source>Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="488"/>
+        <location filename="mainwindow.cpp" line="490"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="496"/>
+        <location filename="mainwindow.cpp" line="498"/>
         <source>Max. elongation of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="497"/>
+        <location filename="mainwindow.cpp" line="499"/>
         <source>Opposition of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="498"/>
+        <location filename="mainwindow.cpp" line="500"/>
         <source>Conjunction of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="499"/>
+        <location filename="mainwindow.cpp" line="501"/>
         <source>Solar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="500"/>
+        <location filename="mainwindow.cpp" line="502"/>
         <source>Transit of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="501"/>
+        <location filename="mainwindow.cpp" line="503"/>
         <source>Occultation of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="502"/>
+        <location filename="mainwindow.cpp" line="504"/>
         <source>Lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="503"/>
+        <location filename="mainwindow.cpp" line="505"/>
         <source>Biggest Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="505"/>
+        <location filename="mainwindow.cpp" line="507"/>
         <source>Show all events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="509"/>
+        <location filename="mainwindow.cpp" line="511"/>
         <source>All events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="510"/>
+        <location filename="mainwindow.cpp" line="512"/>
         <source>Not visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="511"/>
+        <location filename="mainwindow.cpp" line="513"/>
         <source>Partial visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="512"/>
+        <location filename="mainwindow.cpp" line="514"/>
         <source>Full visisble</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="521"/>
+        <location filename="mainwindow.cpp" line="523"/>
         <source>Desc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="544"/>
+        <location filename="mainwindow.cpp" line="546"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="550"/>
+        <location filename="mainwindow.cpp" line="552"/>
         <source>Landing site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="556"/>
+        <location filename="mainwindow.cpp" line="558"/>
         <source>Crater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="562"/>
+        <location filename="mainwindow.cpp" line="564"/>
         <source>Montes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="568"/>
+        <location filename="mainwindow.cpp" line="570"/>
         <source>Mons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="574"/>
+        <location filename="mainwindow.cpp" line="576"/>
         <source>Rima</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="580"/>
+        <location filename="mainwindow.cpp" line="582"/>
         <source>Mare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="586"/>
+        <location filename="mainwindow.cpp" line="588"/>
         <source>Vallis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="592"/>
+        <location filename="mainwindow.cpp" line="594"/>
         <source>Lacus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="598"/>
+        <location filename="mainwindow.cpp" line="600"/>
         <source>Sinus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="613"/>
+        <location filename="mainwindow.cpp" line="615"/>
         <source>Set Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="670"/>
+        <location filename="mainwindow.cpp" line="672"/>
         <source>Open help in default web browser.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="775"/>
+        <location filename="mainwindow.cpp" line="777"/>
         <source>Black clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="776"/>
+        <location filename="mainwindow.cpp" line="778"/>
         <source>White clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="777"/>
+        <location filename="mainwindow.cpp" line="779"/>
         <source>Digital clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="844"/>
+        <location filename="mainwindow.cpp" line="846"/>
         <source>   Location : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="844"/>
+        <location filename="mainwindow.cpp" line="846"/>
         <source>Profile : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="887"/>
+        <location filename="mainwindow.cpp" line="889"/>
         <source>Rename </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="891"/>
+        <location filename="mainwindow.cpp" line="893"/>
         <source>Show FITS header</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="895"/>
+        <location filename="mainwindow.cpp" line="897"/>
         <source>Download new DSS from same location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="899"/>
+        <location filename="mainwindow.cpp" line="901"/>
         <source>Copy image to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="915"/>
+        <location filename="mainwindow.cpp" line="917"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="934"/>
+        <location filename="mainwindow.cpp" line="936"/>
         <source>Cannot rename a file!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1335"/>
+        <location filename="mainwindow.cpp" line="1338"/>
         <source> and </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1393"/>
+        <location filename="mainwindow.cpp" line="1396"/>
         <source>Max. west elongation is </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1395"/>
+        <location filename="mainwindow.cpp" line="1398"/>
         <source>Max. east elongation is </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1399"/>
+        <location filename="mainwindow.cpp" line="1402"/>
         <source>Size : %1&quot;  R = %2 AU</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1403"/>
-        <location filename="mainwindow.cpp" line="1407"/>
+        <location filename="mainwindow.cpp" line="1406"/>
+        <location filename="mainwindow.cpp" line="1410"/>
         <source>Begin : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1403"/>
-        <location filename="mainwindow.cpp" line="1407"/>
+        <location filename="mainwindow.cpp" line="1406"/>
+        <location filename="mainwindow.cpp" line="1410"/>
         <source>, end : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1411"/>
+        <location filename="mainwindow.cpp" line="1414"/>
         <source>Distance : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1415"/>
+        <location filename="mainwindow.cpp" line="1418"/>
         <source>Moon distance : %1 E.radii</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1420"/>
+        <location filename="mainwindow.cpp" line="1423"/>
         <source>Partial penumbral lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1423"/>
+        <location filename="mainwindow.cpp" line="1426"/>
         <source>Penumbral lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1426"/>
+        <location filename="mainwindow.cpp" line="1429"/>
         <source>Partial umbral lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1429"/>
+        <location filename="mainwindow.cpp" line="1432"/>
         <source>Total lunar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1436"/>
+        <location filename="mainwindow.cpp" line="1439"/>
         <source>Total solar eclipse. Dur : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1437"/>
-        <location filename="mainwindow.cpp" line="1441"/>
+        <location filename="mainwindow.cpp" line="1440"/>
         <location filename="mainwindow.cpp" line="1444"/>
+        <location filename="mainwindow.cpp" line="1447"/>
         <source> Mag. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1441"/>
+        <location filename="mainwindow.cpp" line="1444"/>
         <source>Partial solar eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1443"/>
+        <location filename="mainwindow.cpp" line="1446"/>
         <source>Annular (ring) solar eclipse. Dur : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1531"/>
-        <location filename="mainwindow.cpp" line="1602"/>
-        <location filename="mainwindow.cpp" line="1707"/>
+        <location filename="mainwindow.cpp" line="1534"/>
+        <location filename="mainwindow.cpp" line="1605"/>
+        <location filename="mainwindow.cpp" line="1710"/>
         <source>First contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1547"/>
-        <location filename="mainwindow.cpp" line="1618"/>
+        <location filename="mainwindow.cpp" line="1550"/>
+        <location filename="mainwindow.cpp" line="1621"/>
         <source>First inner contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1560"/>
+        <location filename="mainwindow.cpp" line="1563"/>
         <source>Greatest transit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1574"/>
-        <location filename="mainwindow.cpp" line="1645"/>
+        <location filename="mainwindow.cpp" line="1577"/>
+        <location filename="mainwindow.cpp" line="1648"/>
         <source>Last inner contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1587"/>
-        <location filename="mainwindow.cpp" line="1658"/>
-        <location filename="mainwindow.cpp" line="1711"/>
+        <location filename="mainwindow.cpp" line="1590"/>
+        <location filename="mainwindow.cpp" line="1661"/>
+        <location filename="mainwindow.cpp" line="1714"/>
         <source>Last contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1631"/>
+        <location filename="mainwindow.cpp" line="1634"/>
         <source>Greatest occultation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1672"/>
+        <location filename="mainwindow.cpp" line="1675"/>
         <source>P1 : Beginning of the penumbral eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1673"/>
+        <location filename="mainwindow.cpp" line="1676"/>
         <source>U1 : Beginning of the partial eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1674"/>
+        <location filename="mainwindow.cpp" line="1677"/>
         <source>U2 : Beginning of the total eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1675"/>
-        <location filename="mainwindow.cpp" line="1709"/>
+        <location filename="mainwindow.cpp" line="1678"/>
+        <location filename="mainwindow.cpp" line="1712"/>
         <source>Greatest eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1676"/>
+        <location filename="mainwindow.cpp" line="1679"/>
         <source>U3 : End of the total eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1677"/>
+        <location filename="mainwindow.cpp" line="1680"/>
         <source>U4 : End of the partial eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1708"/>
+        <location filename="mainwindow.cpp" line="1711"/>
         <source>Second contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1710"/>
+        <location filename="mainwindow.cpp" line="1713"/>
         <source>Third contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1878"/>
-        <location filename="mainwindow.cpp" line="3920"/>
+        <location filename="mainwindow.cpp" line="1881"/>
+        <location filename="mainwindow.cpp" line="3923"/>
         <source>Total size : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1924"/>
+        <location filename="mainwindow.cpp" line="1927"/>
         <source>Cannot parse version file!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2169"/>
+        <location filename="mainwindow.cpp" line="2172"/>
         <source>Save map to image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2182"/>
+        <location filename="mainwindow.cpp" line="2185"/>
         <source>Cannot create image!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2416"/>
+        <location filename="mainwindow.cpp" line="2419"/>
         <source>Object &apos;%1&apos; not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3211"/>
+        <location filename="mainwindow.cpp" line="3214"/>
         <source>Loading DSS images.
 Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3310"/>
+        <location filename="mainwindow.cpp" line="3313"/>
         <source>Open a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3318"/>
-        <location filename="mainwindow.cpp" line="3676"/>
-        <location filename="mainwindow.cpp" line="3713"/>
+        <location filename="mainwindow.cpp" line="3321"/>
+        <location filename="mainwindow.cpp" line="3679"/>
+        <location filename="mainwindow.cpp" line="3716"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3411"/>
+        <location filename="mainwindow.cpp" line="3414"/>
         <source>Disconnect current telescope?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3785"/>
+        <location filename="mainwindow.cpp" line="3788"/>
         <source>Telescope - </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3830"/>
+        <location filename="mainwindow.cpp" line="3833"/>
         <source>Location was changed! Result may by inaccurate!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4887"/>
+        <location filename="mainwindow.cpp" line="4890"/>
         <source>Copy &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5573"/>
+        <location filename="mainwindow.cpp" line="5576"/>
         <source>FOV : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5574"/>
+        <location filename="mainwindow.cpp" line="5577"/>
         <source>Rot : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5633"/>
+        <location filename="mainwindow.cpp" line="5636"/>
         <source>Can&apos;t do that. Auto adjust is used!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5935"/>
+        <location filename="mainwindow.cpp" line="5938"/>
         <source>You cannot hold static object!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="181"/>
-        <location filename="mainwindow.cpp" line="3842"/>
+        <location filename="mainwindow.cpp" line="3845"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11428,93 +11527,93 @@ Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1678"/>
+        <location filename="mainwindow.cpp" line="1681"/>
         <source>P4 : End of the penumbral eclipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3127"/>
+        <location filename="mainwindow.cpp" line="3130"/>
         <source>Night mode is enabled!
 The color settings may be incorrect visually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3844"/>
+        <location filename="mainwindow.cpp" line="3847"/>
         <source>Partial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3846"/>
+        <location filename="mainwindow.cpp" line="3849"/>
         <source>Full</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3908"/>
+        <location filename="mainwindow.cpp" line="3911"/>
         <source>Do you wand delete all images?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4242"/>
+        <location filename="mainwindow.cpp" line="4245"/>
         <source>Sun altitude : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4245"/>
+        <location filename="mainwindow.cpp" line="4248"/>
         <source>Moon altitude : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4254"/>
+        <location filename="mainwindow.cpp" line="4257"/>
         <source>Object altitude : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4259"/>
+        <location filename="mainwindow.cpp" line="4262"/>
         <source>Altitude of the center conjunctions : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4361"/>
+        <location filename="mainwindow.cpp" line="4364"/>
         <source>Maximal diameter : %1 Km</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4465"/>
+        <location filename="mainwindow.cpp" line="4468"/>
         <source>Clear all drawing on map?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4902"/>
+        <location filename="mainwindow.cpp" line="4905"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4904"/>
+        <location filename="mainwindow.cpp" line="4907"/>
         <source>Skytech const. lines (*.lin)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5038"/>
+        <location filename="mainwindow.cpp" line="5041"/>
         <source>Do you want delete file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5164"/>
+        <location filename="mainwindow.cpp" line="5167"/>
         <source>You can append only deep sky objects!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5200"/>
-        <location filename="mainwindow.cpp" line="5219"/>
-        <location filename="mainwindow.cpp" line="5238"/>
-        <location filename="mainwindow.cpp" line="5257"/>
-        <location filename="mainwindow.cpp" line="5276"/>
-        <location filename="mainwindow.cpp" line="5295"/>
+        <location filename="mainwindow.cpp" line="5203"/>
+        <location filename="mainwindow.cpp" line="5222"/>
+        <location filename="mainwindow.cpp" line="5241"/>
+        <location filename="mainwindow.cpp" line="5260"/>
+        <location filename="mainwindow.cpp" line="5279"/>
+        <location filename="mainwindow.cpp" line="5298"/>
         <source>Can not compute!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5445"/>
+        <location filename="mainwindow.cpp" line="5448"/>
         <source>You cannot track static object!!!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11614,15 +11713,15 @@ The color settings may be incorrect visually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="426"/>
-        <location filename="ccomdlg.cpp" line="663"/>
+        <location filename="casterdlg.cpp" line="433"/>
+        <location filename="ccomdlg.cpp" line="668"/>
         <location filename="csetting.cpp" line="1536"/>
         <source>Save a File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="casterdlg.cpp" line="473"/>
-        <location filename="ccomdlg.cpp" line="710"/>
+        <location filename="casterdlg.cpp" line="480"/>
+        <location filename="ccomdlg.cpp" line="715"/>
         <location filename="ceventsearch.cpp" line="201"/>
         <location filename="csatellitedlg.cpp" line="26"/>
         <location filename="dssheaderdialog.cpp" line="16"/>
@@ -11630,52 +11729,52 @@ The color settings may be incorrect visually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1014"/>
+        <location filename="castro.cpp" line="1013"/>
         <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1015"/>
+        <location filename="castro.cpp" line="1014"/>
         <source>Mercury</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1016"/>
+        <location filename="castro.cpp" line="1015"/>
         <source>Venus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1017"/>
+        <location filename="castro.cpp" line="1016"/>
         <source>Mars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1018"/>
+        <location filename="castro.cpp" line="1017"/>
         <source>Jupiter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1019"/>
+        <location filename="castro.cpp" line="1018"/>
         <source>Saturn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1020"/>
+        <location filename="castro.cpp" line="1019"/>
         <source>Uranus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1021"/>
+        <location filename="castro.cpp" line="1020"/>
         <source>Neptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1022"/>
+        <location filename="castro.cpp" line="1021"/>
         <source>Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="castro.cpp" line="1028"/>
+        <location filename="castro.cpp" line="1027"/>
         <location filename="mapobj.cpp" line="410"/>
         <source>Earth shadow</source>
         <translation type="unfinished"></translation>
