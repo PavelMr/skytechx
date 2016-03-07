@@ -857,7 +857,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -867,8 +867,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>262</width>
-          <height>387</height>
+          <width>354</width>
+          <height>370</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1036,6 +1036,13 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item row="2" column="1">
+            <widget class="QCheckBox" name="cb_extInfo">
+             <property name="text">
+              <string>Show extednded information</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>

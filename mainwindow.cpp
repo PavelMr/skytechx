@@ -123,6 +123,7 @@ bool g_showZoomBar = true;
 bool g_showDSSFrameName = true;
 
 bool g_lockFOV = false;
+bool g_extObjInfo = false;
 
 bool g_antialiasing;
 bool g_planetReal;
@@ -731,6 +732,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showObjectAxis = settings.value("show_object_axis", false).toBool();
 
   ui->checkBox_5->setChecked(settings.value("info_auto_update", true).toBool());
+  ui->cb_extInfo->setChecked(settings.value("show_extra_info", true).toBool());
 
   ui->actionCenter_of_screen->setChecked(g_showCenterScreen);
 
@@ -1194,6 +1196,7 @@ void MainWindow::saveAndExit()
   settings.setValue("geocentric", ui->actionGeocentric->isChecked());
 
   settings.setValue("info_auto_update", ui->checkBox_5->isChecked());
+  settings.setValue("show_extra_info", ui->cb_extInfo->isChecked());
 
   if (g_autoSave.mapPosition)
   {
@@ -2331,6 +2334,8 @@ void MainWindow::on_actionDeltaT_triggered()
 
   if (dlg.exec() == DL_OK)
   {
+    g_forcedRecalculate = true;
+    g_quickInfoForced = true;
     ui->widget->m_mapView.deltaT = dlg.m_delta;
     ui->widget->m_mapView.deltaTAlg = dlg.m_delta_alg;
     ui->widget->repaintMap();
@@ -6016,7 +6021,6 @@ void MainWindow::on_actionAdvanced_search_triggered()
   }
 }
 
-
 void MainWindow::on_actionSlew_telescope_to_screen_center_triggered()
 {
   if (g_pTelePlugin)
@@ -6051,3 +6055,11 @@ void MainWindow::on_pushButton_36_clicked()
 
   delete event;
 }
+
+void MainWindow::on_cb_extInfo_toggled(bool checked)
+{
+  g_extObjInfo = checked;
+  g_quickInfoForced = true;
+  repaintMap();
+}
+

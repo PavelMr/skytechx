@@ -15,6 +15,7 @@
 #define FILEREGEXP   QRegExp("\\W")
 
 extern bool g_geocentric;
+extern bool g_extObjInfo;
 
 static QString gscMB[19][3] = {{"IIIaJ","GG395","SERC-J/EJ"},    //0
                                {"IIaD","W12","Pal Quick-V"},     //1
@@ -56,9 +57,9 @@ CObjFillInfo::CObjFillInfo()
   {
     txLocInfo  = tr("Local information (Geocentric)");
   }
-  txVisMag   = tr("Visual magnitude");
-  txMag   = tr("Magnitude");
-  txConstel  = tr("Constellation");
+  txVisMag     = tr("Visual magnitude");
+  txMag        = tr("Magnitude");
+  txConstel    = tr("Constellation");
   txElongation = tr("Elongation");
   txJ2000      = tr(" (J2000.0)");
 
@@ -150,6 +151,11 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
 void CObjFillInfo::fillAtlas(double ra, double dec, ofiItem_t *item)
 ////////////////////////////////////////////////////////////////////
 {
+  if (!g_extObjInfo)
+  {
+    return;
+  }
+
   QString tmpStr;
 
   addLabelItem(item, tr("Atlases"));
@@ -232,6 +238,11 @@ void CObjFillInfo::fillRTS(rts_t *rts, const mapView_t *view, ofiItem_t *item)
 
 void CObjFillInfo::fillZoneInfo(double ra2000, double dec2000, ofiItem_t *item)
 {
+  if (!g_extObjInfo)
+  {
+    return;
+  }
+
   int ppmxlZone = qAbs(R2D(dec2000));
   char ppmxlChar = 'a' + ((int)qAbs(R2D(dec2000) * 4) % 4);
 
@@ -251,11 +262,15 @@ void CObjFillInfo::fillZoneInfo(double ra2000, double dec2000, ofiItem_t *item)
 void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
 //////////////////////////////////////////////////////////////////////////////////////////////
 {
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, txDateTime, QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, txDateTime, QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   orbit_t  pl;
   orbit_t  s;
@@ -317,8 +332,11 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txConstel, constGetName(con, 1));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(sats.sats[obj->par2].mag));
@@ -361,11 +379,15 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   str = str.remove(FILEREGEXP);
   item->id = "ast_" + str;
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, txDateTime, QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, txDateTime, QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -397,8 +419,11 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, getStrMag(a->orbit.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -415,12 +440,15 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -511,11 +539,15 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   str = str.remove(FILEREGEXP);
   item->id = "com_" + str;
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -548,8 +580,11 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, getStrMag(a->orbit.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -566,12 +601,16 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -698,11 +737,15 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   item->transitJD = CM_UNDEF;
   item->rtsType = RTS_ERR;
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -734,8 +777,11 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
 
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -784,11 +830,15 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   item->id = QString("TYC%1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
   item->simbad = item->id;
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -849,8 +899,11 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
 
   addTextItem(item, txVisMag, getStrMag(cTYC.getVisMag(t)));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -865,12 +918,16 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -932,11 +989,15 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   item->simbad = item->title;
   item->id = QString("UCAC4_%1-%2").arg(s.zone).arg(s.number, 6, 10, QChar('0'));
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -976,8 +1037,11 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, getStrMag(s.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -991,12 +1055,16 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -1040,12 +1108,15 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   item->simbad = item->title;
   item->id = QString("GSC%1-%2").arg(t.reg).arg(t.id);
 
-
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -1086,8 +1157,11 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, getStrMag(t.pMag));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1101,12 +1175,16 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -1153,11 +1231,15 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   item->simbad = item->title;
   item->id = QString("PPMXL%1").arg(t->id);
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -1197,8 +1279,11 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, getStrMag(t->mag / 1000.0));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1212,12 +1297,16 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -1255,11 +1344,15 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   item->simbad = item->title;
   item->id = QString("USNO A2 %1-%2").arg(z->zone).arg(s.id);
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -1299,8 +1392,11 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, getStrMag(s.rMag));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1314,12 +1410,16 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -1352,11 +1452,15 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   item->simbad = item->title;
   item->id = item->title;
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -1395,8 +1499,11 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, getStrMag(usnoB1.getVMag(s)));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1410,12 +1517,16 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -1458,11 +1569,15 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   item->simbad = item->title;
   item->id = item->title;
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -1501,8 +1616,11 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txMag, getStrMag(g_nomad.getMagnitude(&s)));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1516,12 +1634,16 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -1578,11 +1700,15 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   item->simbad = item->title;
   item->id = item->title;
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -1621,8 +1747,11 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, getStrMag(URMAG(s.vMag)));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1636,12 +1765,16 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -1687,11 +1820,15 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   item->simbad = cDSO.getName(dso);
   item->id = QString("DSO%1").arg(item->title.simplified()); //arg(obj->par1);
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   bool ok;
 
@@ -1745,8 +1882,11 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
   addTextItem(item, txVisMag, dso->mag == NO_DSO_MAG ? tr("N/A") : getStrMag(dso->DSO_MAG));
   addTextItem(item, txConstel, constGetName(con, 1));
 
@@ -1760,12 +1900,16 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -1835,11 +1979,15 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   item->simbad = "";//
   item->id = QString("PLN_%1").arg(obj->par1);
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);
@@ -1867,8 +2015,12 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   double ha = cAstro.m_lst - ra;
   rangeDbl(&ha, R360);
 
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addTextItem(item, txHA + jd2000, getStrRA(ha));
+    addSeparator(item);
+  }
+
 
   addTextItem(item, txVisMag, getStrMag(o.mag));
   addTextItem(item, txConstel, constGetName(con, 1));
@@ -1896,12 +2048,16 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
   addTextItem(item, tr("Altitude"), getStrDeg(alt));
   addSeparator(item);
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
-  addSeparator(item);
-  double airmass = CAstro::getAirmass(alt);
-  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
-  addSeparator(item);
+
+  if (g_extObjInfo)
+  {
+    addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+    addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+    addSeparator(item);
+    double airmass = CAstro::getAirmass(alt);
+    addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+    addSeparator(item);
+  }
 
   CRts   cRts;
   rts_t  rts;
@@ -2085,11 +2241,15 @@ void CObjFillInfo::fillESInfo(const mapView_t *view, const mapObj_t * /*obj*/, o
   item->id = QString("PLN_ES");
   item->par1 = PT_EARTH_SHADOW;
 
-  addLabelItem(item, txDateTime);
-  addSeparator(item);
-  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
-  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
-  addSeparator(item);
+  if (g_extObjInfo)
+  {
+    addLabelItem(item, txDateTime);
+    addSeparator(item);
+    addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+    addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+    addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+    addSeparator(item);
+  }
 
   addLabelItem(item, txObjType);
   addSeparator(item);

@@ -614,6 +614,8 @@ private slots:
 
   void on_pushButton_36_clicked();
 
+  void on_cb_extInfo_toggled(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
