@@ -173,12 +173,12 @@ void SkServer::dataReady()
       setRA_Dec(command.mid(6));
     }
     else
-    if (command.startsWith("GetPos", Qt::CaseInsensitive))
+    if (!command.compare("GetPos", Qt::CaseInsensitive))
     {
       getPos();
     }
     else
-    if (command.startsWith("GetJD", Qt::CaseInsensitive))
+    if (!command.compare("GetJD", Qt::CaseInsensitive))
     {
       getJD();
     }
@@ -188,27 +188,27 @@ void SkServer::dataReady()
       setJD(command.mid(5));
     }
     else
-    if (command.startsWith("ZoomIn", Qt::CaseInsensitive))
+    if (!command.compare("ZoomIn", Qt::CaseInsensitive))
     {
       zoom(1);
     }
     else
-    if (command.startsWith("ZoomOut", Qt::CaseInsensitive))
+    if (!command.compare("ZoomOut", Qt::CaseInsensitive))
     {
       zoom(-1);
     }
     else
-    if (command.startsWith("SetMode", Qt::CaseInsensitive))
+    if (command.startsWith("SetMode ", Qt::CaseInsensitive))
     {
-      setMode(command.mid(7));
+      setMode(command.mid(8));
     }
     else
-    if (command.startsWith("ServerVer", Qt::CaseInsensitive))
+    if (!command.compare("ServerVer", Qt::CaseInsensitive))
     {
       sendData(SK_SERVER_VERSION);
     }
     else
-    if (command.startsWith("SwVer", Qt::CaseInsensitive))
+    if (!command.compare("SwVer", Qt::CaseInsensitive))
     {
       sendData(SK_VERSION);
     }
@@ -218,7 +218,7 @@ void SkServer::dataReady()
       setExtFrame(command.mid(11));
     }
     else
-    if (command.startsWith("GetExtFrame", Qt::CaseInsensitive))
+    if (!command.compare("GetExtFrame", Qt::CaseInsensitive))
     {
       getExtFrame();
     }
@@ -228,12 +228,12 @@ void SkServer::dataReady()
       setRTC(command.mid(7));
     }
     else
-    if (command.startsWith("GetRTC", Qt::CaseInsensitive))
+    if (!command.compare("GetRTC", Qt::CaseInsensitive))
     {
       getRTC();
     }
     else
-    if (command.startsWith("Redraw", Qt::CaseInsensitive))
+    if (!command.compare("Redraw", Qt::CaseInsensitive))
     {
       m_mainWin->getView()->repaintMap();
       sendData(SKS_OK);

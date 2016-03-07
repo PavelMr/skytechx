@@ -731,8 +731,8 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showCenterScreen = settings.value("show_center_of_screen", false).toBool();
   g_showObjectAxis = settings.value("show_object_axis", false).toBool();
 
-  ui->checkBox_5->setChecked(settings.value("info_auto_update", true).toBool());
   ui->cb_extInfo->setChecked(settings.value("show_extra_info", true).toBool());
+  ui->checkBox_5->setChecked(settings.value("info_auto_update", true).toBool());
 
   ui->actionCenter_of_screen->setChecked(g_showCenterScreen);
 
@@ -1811,6 +1811,7 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool update)
   ui->pushButton_17->setEnabled(true);
   ui->pushButton_34->setEnabled(true);
   ui->checkBox_5->setEnabled(true);
+  ui->cb_extInfo->setEnabled(true);
   ui->action_Last_search_object->setEnabled(true);
 }
 
@@ -2623,6 +2624,7 @@ void MainWindow::removeQuickInfo(int type)
     ui->pushButton_21->setEnabled(false);
     ui->pushButton_34->setEnabled(false);
     ui->checkBox_5->setEnabled(false);
+    ui->cb_extInfo->setEnabled(false);
     ui->action_Last_search_object->setEnabled(false);
   }
 }

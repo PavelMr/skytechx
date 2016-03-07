@@ -1965,6 +1965,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
 {
   orbit_t o;
 
+  cAstro.setParam(view);
   cAstro.calcPlanet(obj->par1, &o);
 
   double ra  = o.lRD.Ra;
