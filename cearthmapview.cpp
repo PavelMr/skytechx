@@ -1,8 +1,6 @@
 #include "cearthmapview.h"
 #include "cskpainter.h"
 
-#include <QDebug>
-
 CEarthMapView::CEarthMapView(QWidget *parent) :
   QWidget(parent)
 {
@@ -13,6 +11,36 @@ CEarthMapView::CEarthMapView(QWidget *parent) :
 
   setCursor(Qt::CrossCursor);
   setMouseTracking(true);
+
+  QFile fo("../data/maps/world_country.dat");
+  if (fo.open(QFile::ReadOnly))
+  {
+    QDataStream ds(&fo);
+
+    int totalCount;
+    int count;
+    QString ver;
+
+    ds >> ver;
+    ds >> totalCount;
+
+    for (int i = 0; i < totalCount; i++)
+    {
+      QList <QPointF> pts;
+
+      ds >> count;
+      for (int j = 0; j < count; j++)
+      {
+        QPointF pt;
+
+        ds >> pt;
+
+        pts.append(pt);
+      }
+      m_data.append(pts);
+    }
+  }
+
 }
 
 void CEarthMapView::setPixmap(QPixmap *pixmap)
@@ -82,6 +110,38 @@ void CEarthMapView::paintEvent(QPaintEvent *)
     coord2Screen(m_list[i].x(), m_list[i].y(), ox, oy);
     p.drawCross(ox, oy, 1);
   }
+
+  int step;
+
+  if (m_scale > 2)
+    step = 1;
+  else
+  if (m_scale > 1)
+    step = 2;
+  else
+    step = 4;
+
+  // draw world boundaries
+  p.setPen(Qt::lightGray);
+  p.setOpacity(1);
+  for (int i = 0; i < m_data.count(); i++)
+  {
+    int x1, y1;
+    int x2, y2;
+    QList <QPointF> &pts = m_data[i];
+
+    coord2Screen(pts[0].x(), pts[0].y(), x1, y1);
+
+    for (int j = 1; j < pts.count(); j += step)
+    {
+      coord2Screen(pts[j].x(), pts[j].y(), x2, y2);
+      p.drawLine(x1, y1, x2, y2);
+
+      x1 = x2;
+      y1 = y2;
+    }
+  }
+
 }
 
 ///////////////////////////////////////////////////

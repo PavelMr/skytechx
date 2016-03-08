@@ -12,7 +12,7 @@ extern CMapView    *pcMapView;
 void loadTracking(void)
 ///////////////////////
 {
-  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "../data/tracking/tracking.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/tracking/tracking.dat");
   QDataStream s(&f);
 
   if (f.open(SkFile::ReadOnly))
@@ -60,7 +60,7 @@ void loadTracking(void)
 void saveTracking(void)
 ///////////////////////
 {
-  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "../data/tracking/tracking.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/tracking/tracking.dat");
   QDataStream s(&f);
 
   if (f.open(SkFile::WriteOnly))
@@ -151,7 +151,7 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
   SKPOINT p2;
 
   int size = 4;
-  int markPeriod = 1;
+  int markPeriod = 5;
 
   for (int i = 0; i < tTracking.count(); i++)
   {

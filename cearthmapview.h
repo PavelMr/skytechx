@@ -44,7 +44,8 @@ protected:
     void resizeEvent(QResizeEvent *);
     void wheelEvent(QWheelEvent *e);
 
-    QList <QPointF> m_list;
+    QList <QPointF> m_list;         // cities list
+    QList <QList <QPointF>> m_data; // boundaries data
 
     int m_lastX;
     int m_lastY;

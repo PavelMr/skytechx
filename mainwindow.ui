@@ -1043,7 +1043,7 @@
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>Show extednded information</string>
+              <string>Show extended information</string>
              </property>
             </widget>
            </item>

@@ -111,11 +111,12 @@ CMapView::CMapView(QWidget *parent) :
 
   configureGamepad();
 
+  /*
   m_demo = new CDemonstration();
   m_demo->setupPoints();
   connect(m_demo, SIGNAL(sigAnimChanged(curvePoint_t&)), this, SLOT(slotAnimChanged(curvePoint_t&)));
   //m_demo->start();
-
+  */
 
   m_zoom = new SkMapControl(this);
   connect(m_zoom, SIGNAL(sigChange(QVector2D,double,double)), this, SLOT(slotMapControl(QVector2D,double,double)));
