@@ -30,6 +30,9 @@ public:
   virtual bool setDriverProperty(const QString &name, QVariant value) = 0;
   virtual bool getDriverProperty(const QString &name, QVariant &value) = 0;
 
+  virtual bool getAxisRates(QVector<double> &raRate, QVector<double> &decRate) = 0;
+  virtual bool moveAxis(int axis, double rate) = 0;
+
 signals:
   void sigConnected(bool connected);
   void sigUpdate(double, double);

@@ -5,6 +5,8 @@
 #include <QCoreApplication>
 #include <QSettings>
 
+#include <QDebug>
+
 ////////////////////////////////////////////////
 static void msgBoxError(QWidget *w, QString str)
 ////////////////////////////////////////////////
@@ -36,11 +38,6 @@ void CAscom6::init()
   m_timer = new QTimer(this);
   m_timer->start(m_refreshMs);
   QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(slotUpdate()));
-
-  QCoreApplication::setOrganizationDomain("");
-  QCoreApplication::setOrganizationName("PMR");
-  QCoreApplication::setApplicationName("SkytechX");
-  QCoreApplication::setApplicationVersion("1.0.0");
 }
 
 ////////////////////
@@ -315,3 +312,64 @@ bool CAscom6::getDriverProperty(const QString &name, QVariant &value)
   return value.isValid();
 }
 
+bool CAscom6::moveAxis(int axis, double rate)
+{
+  if (m_device == NULL)
+    return false;
+
+  if (m_device->isNull())
+    return false;
+
+  m_device->dynamicCall("MoveAxis(int, double)", QVariant(axis), QVariant(rate));
+
+  return true;
+}
+
+bool CAscom6::getAxisRates(QVector <double> &raRate, QVector <double> &decRate)
+{
+  QVector <double> *list[2] = {&raRate, &decRate};
+
+  if (m_device == NULL)
+    return false;
+
+  if (m_device->isNull())
+    return false;
+
+  QVariant res = m_device->dynamicCall("CanMoveAxis(int)", QVariant(0));
+  if (!res.isValid() || !res.toBool())
+    return false;
+
+  res = m_device->dynamicCall("CanMoveAxis(int)", QVariant(1));
+  if (!res.isValid() || !res.toBool())
+    return false;
+
+  for (int i = 0; i < 2; i++)
+  {
+    QAxObject *o = m_device->querySubObject("AxisRates(int)", QVariant(i));
+
+    if (!o)
+    {
+      return false;
+    }
+
+    res = o->dynamicCall("Count()");
+    int count = res.toInt();
+
+    for (int j = 0; j < count; j++)
+    {
+      QAxObject *cc = o->querySubObject("Item(int)", QVariant(j + 1));
+      if (!cc)
+      {
+        return false;
+      }
+
+      res = cc->dynamicCall("Minimum()");
+      list[i]->append(res.toDouble());
+
+      res = cc->dynamicCall("Maximum()");
+      list[i]->append(res.toDouble());
+    }
+  }
+
+  return true;
+}

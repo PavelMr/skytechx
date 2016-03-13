@@ -662,6 +662,9 @@ MainWindow::MainWindow(QWidget *parent) :
   {
     ui->page_2->hide();
     ui->page_3->hide();
+    ui->page_7->hide();
+
+    ui->toolBox->removeItem(4);
     ui->toolBox->removeItem(6);
     ui->toolBox->removeItem(6);
   }
@@ -1881,7 +1884,6 @@ void MainWindow::updateDSS(bool refill)
       m->setItem(i, 2, item);
 
       ui->treeView->setCurrentIndex(m->index(i, 0));
-
     }
   }
   ui->widget->repaintMap();
@@ -3393,6 +3395,8 @@ void MainWindow::on_actionConnect_device_triggered()
       ui->widget->m_lastTeleRaDec.Ra = CM_UNDEF;
       ui->widget->m_lastTeleRaDec.Dec = CM_UNDEF;
       g_soundManager.play(MC_CONNECT);
+
+      g_pTelePlugin->getAxisRates(m_raRates, m_decRates);
     }
     ui->widget->repaintMap();
     slotTimeUpdate();
@@ -6065,3 +6069,24 @@ void MainWindow::on_cb_extInfo_toggled(bool checked)
   repaintMap();
 }
 
+void MainWindow::on_pb_tc_right_pressed()
+{
+  double rate = tpGetTelePluginRateValue(10, m_raRates);
+  g_pTelePlugin->moveAxis(0, rate);
+}
+
+void MainWindow::on_pb_tc_right_released()
+{
+  g_pTelePlugin->moveAxis(0, 0);
+}
+
+void MainWindow::on_pb_tc_left_pressed()
+{
+  double rate = tpGetTelePluginRateValue(10, m_raRates);
+  g_pTelePlugin->moveAxis(0, -rate);
+}
+
+void MainWindow::on_pb_tc_left_released()
+{
+  g_pTelePlugin->moveAxis(0, 0);
+}

@@ -409,7 +409,6 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
   for (int i = PT_SUN; i <= PT_NEPTUNE; i++)
   {
-    p.setPen(QPen(Qt::white, 0.75));
     for (int j = 0; j < ptsList[i].count(); j++)
     {
       QVector3D pt1 = ptsList[i][j];
@@ -425,6 +424,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
       if (trfProjectLine(&p1, &p2))
       {
+        p.setPen(QPen(Qt::white, 0.5));
         p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
       }
     }

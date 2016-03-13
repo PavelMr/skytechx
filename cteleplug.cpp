@@ -7,6 +7,60 @@ extern bool bParkTelescope;
 CTelePluginInterface   *g_pTelePlugin = NULL;
 QPluginLoader          *tpLoader = NULL;
 
+double tpGetTelePluginRateValue(double percent, QVector <double> list)
+{
+  if (percent < 0.0001 || list.count() < 2)
+  {
+    return 0;
+  }
+
+  percent = CLAMP(percent, 0, 100);
+
+  double maxVal = list.last();
+  double minVal = list.first();
+  double delta = maxVal - minVal;
+  double value = minVal + (delta * percent * 0.01);
+
+  //qDebug() << "value" << value;// << delta;
+
+  for (int i = 0; i < list.count(); i += 2)
+  {
+    if (value >= list[i] && value <= list[i + 1])
+    {
+      return value;
+    }
+  }
+
+  double nearest = 9999;
+  int index = -1;
+  for (int i = 1; i < list.count(); i += 2)
+  {
+    double d1 = qAbs(list[i] - value);
+    double d2 = qAbs(list[i + 1] - value);
+    double v;
+    int    id;
+
+    if (qAbs(d1) < qAbs(d2))
+    {
+      v = d1;
+      id = i;
+    }
+    else
+    {
+      v = d2;
+      id = i + 1;
+    }
+
+    if (v < nearest)
+    {
+      nearest = v;
+      index = id;
+    }
+  }
+
+  return list[index];
+}
+
 ////////////////////////////////////////
 QString tpGetDriverName(QString libName)
 ////////////////////////////////////////
@@ -47,8 +101,12 @@ bool tpLoadDriver(QString libName)
 
   Q_ASSERT(tpLoader == 0);
 
+ qDebug() << "1" << QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+
   tpLoader = new QPluginLoader;
   tpLoader->setFileName(libName);
+
+  qDebug() << "2" << QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 
   if (tpLoader->load())
   {
@@ -61,12 +119,16 @@ bool tpLoadDriver(QString libName)
       tpLoader = NULL;
       return(false);
     }
+
+    qDebug() << "3" << QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+
     return(true);
   }
 
   delete tpLoader;
   tpLoader = NULL;
   g_pTelePlugin = NULL;
+
   return(false);
 }
 

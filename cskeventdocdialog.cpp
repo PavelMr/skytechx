@@ -49,6 +49,7 @@ CSkEventDocDialog::CSkEventDocDialog(QWidget *parent, SkEventDocument *event) :
   updateGeometry();
 
   QGraphicsDropShadowEffect *eff = new QGraphicsDropShadowEffect();
+  eff->setBlurRadius(13);
 
   label->setGraphicsEffect(eff);
   label->setMinimumSize(512, 512);

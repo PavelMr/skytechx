@@ -9,6 +9,8 @@ QString tpGetDriverName(QString libName);
 bool tpLoadDriver(QString libName);
 void tpUnloadDriver(void);
 
+double tpGetTelePluginRateValue(double percent, QVector <double> list);
+
 extern CTelePluginInterface *g_pTelePlugin;
 extern QPluginLoader        *tpLoader;
 

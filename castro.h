@@ -37,7 +37,7 @@
 #define LSPEED                299792.458
 #define EARTH_DIAM              6378.14
 
-#define RADIITOAU(r)      (r * 0.0000425875045560)
+#define RADIITOAU(r)      ((r) * 4.26352325064817808471e-5)
 
 #define  PT_SUN            0
 #define  PT_MERCURY        1

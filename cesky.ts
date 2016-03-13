@@ -1652,17 +1652,17 @@ Nové komety : %2</translation>
     <message>
         <location filename="cdssdlg.ui" line="147"/>
         <source>Download from</source>
-        <translation>Zdroj donwloadu</translation>
+        <translation>Zdroj downloadu</translation>
     </message>
     <message>
         <location filename="cdssdlg.ui" line="157"/>
         <source>Size (arc min.)</source>
-        <translation>Rozměr (v uhl. minitách)</translation>
+        <translation>Rozměr (v úhl. minutách)</translation>
     </message>
     <message>
         <location filename="cdssdlg.ui" line="217"/>
         <source>Orientation of preview frame is only approximate.</source>
-        <translation>Orientace rámečku náhledu je pouze orientační</translation>
+        <translation>Orientace rámečku náhledu je pouze orientační.</translation>
     </message>
     <message>
         <location filename="cdssdlg.ui" line="236"/>
@@ -7988,7 +7988,7 @@ které mají definovanou jasnost.</translation>
     <message>
         <location filename="cskeventdocdialog.ui" line="36"/>
         <source>Save to PDF</source>
-        <translation></translation>
+        <translation>Ulož do PDF</translation>
     </message>
     <message>
         <source>Save to PDF...</source>
@@ -8002,7 +8002,7 @@ které mají definovanou jasnost.</translation>
     <message>
         <location filename="cskeventdocdialog.ui" line="73"/>
         <source>Close</source>
-        <translation>Storno</translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <location filename="cskeventdocdialog.cpp" line="113"/>
@@ -11464,7 +11464,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="901"/>
         <source>Download new DSS from same location</source>
-        <translation>Donwload nového DSS na stejné pozici</translation>
+        <translation>Download nového DSS na stejné pozici</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="905"/>

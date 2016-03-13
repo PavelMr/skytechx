@@ -13,5 +13,6 @@ void SystemSettings::readAll()
 
   m_weatherAppId = set.value("weather_api/appid").toString();
   m_sun_radius = set.value("sol_sys/sun_radius").toDouble();
+  m_moon_radius = set.value("sol_sys/moon_radius").toDouble();
 }
 

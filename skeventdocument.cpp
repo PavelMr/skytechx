@@ -111,7 +111,7 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
   QString str;
 
   str = "<font size=\"6\"><b>" + QString("<p align=\"center\">") +
-      ("Transit of ") + CAstro::getName(m_event.event_u.sunTransit_u.id) + (" of ") +
+      ("Transit of ") + CAstro::getFileName(m_event.event_u.sunTransit_u.id) + (" of ") +
       getStrDate(m_event.jd, m_view.geo.tz) + "</b></p></font>";
 
   str += "<font size=\"4\"><p align=\"center\">Greatest Transit = " +
@@ -185,7 +185,7 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
   p.drawStaticText(margin, h, txtLT);
 
   //////////
-  str = "<p align=\"center\"><b>" + CAstro::getName(o.type) + " at Greatest Transit</b><br>(" + coords + " Coordinates)</p><p></p>"
+  str = "<p align=\"center\"><b>" + CAstro::getFileName(o.type) + " at Greatest Transit</b><br>(" + coords + " Coordinates)</p><p></p>"
                                                                                                          "<table width=\"100%\">" +
       addTable(("R.A."), getStrRA(o.lRD.Ra)) +
       addTable(("Dec."), getStrDeg(o.lRD.Dec)) +
@@ -223,7 +223,7 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
   p.drawStaticText(margin, h, txtLB);
 
   //////////
-  str = "<p align=\"center\"><b>" + CAstro::getName(o.type) + " Transit Contacts</b><br>(" + coords + " Coordinates)</p><p></p>"
+  str = "<p align=\"center\"><b>" + CAstro::getFileName(o.type) + " Transit Contacts</b><br>(" + coords + " Coordinates)</p><p></p>"
                                                                                                       "<table width=\"100%\">" +
       addTable(("I"), getStrTime(m_event.event_u.sunTransit_u.c1, m_view.geo.tz)) +
       (m_event.event_u.sunTransit_u.i1 > 0 ? addTable(("II"), getStrTime(m_event.event_u.sunTransit_u.i1, m_view.geo.tz)) : "") +
@@ -241,7 +241,7 @@ void SkEventDocument::makeSunTransit(QPaintDevice *device)
   ast.calcPlanet(m_event.event_u.sunTransit_u.id, &o);
   double c2Alt = R2D(o.lAlt);
 
-  str += "<p align=\"center\"><b>" + CAstro::getName(o.type) + " Contacts Alt.</b><br>(" + coords + " Coordinates)</p><p></p>"
+  str += "<p align=\"center\"><b>" + CAstro::getFileName(o.type) + " Contacts Alt.</b><br>(" + coords + " Coordinates)</p><p></p>"
                                                                                                     "<table width=\"100%\">" +
       addTable(("I"), QString::number(c1Alt, 'f', 2) + "&#186;") +
       addTable(("IV"), QString::number(c2Alt,'f', 2) + "&#186;") +
@@ -1235,7 +1235,7 @@ void SkEventDocument::makeOccultation(QPaintDevice *device)
   }
   QString str;
 
-  str = "<font size=\"6\"><b>" + QString("<p align=\"center\">Occultation of ") + CAstro::getName(m_event.event_u.moonOcc_u.id) + " by Moon " + getStrDate(m_event.jd, m_view.geo.tz) + "</b></p></font>";
+  str = "<font size=\"6\"><b>" + QString("<p align=\"center\">Occultation of ") + CAstro::getFileName(m_event.event_u.moonOcc_u.id) + " by Moon " + getStrDate(m_event.jd, m_view.geo.tz) + "</b></p></font>";
 
   if (!m_event.geocentric)
   {

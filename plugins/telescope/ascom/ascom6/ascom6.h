@@ -38,6 +38,8 @@ public:
   QString getTelescope();
   bool setDriverProperty(const QString &name, QVariant value);
   bool getDriverProperty(const QString &name, QVariant &value);
+  bool getAxisRates(QVector<double> &raRate, QVector<double> &decRate);
+  bool moveAxis(int axis, double rate);
 
 protected:
   QAxObject *m_device;

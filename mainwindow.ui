@@ -791,7 +791,7 @@
    <property name="minimumSize">
     <size>
      <width>262</width>
-     <height>353</height>
+     <height>369</height>
     </size>
    </property>
    <property name="font">
@@ -857,7 +857,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -867,8 +867,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>354</width>
-          <height>387</height>
+          <width>348</width>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1928,7 +1928,7 @@
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>387</height>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2374,6 +2374,39 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="page_7">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>254</width>
+          <height>360</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Telescope handpad</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_12">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <item>
+            <widget class="QPushButton" name="pb_tc_left">
+             <property name="text">
+              <string>&lt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pb_tc_right">
+             <property name="text">
+              <string>&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
        <widget class="QWidget" name="page_6">
         <property name="geometry">
          <rect>
@@ -2561,7 +2594,7 @@
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>387</height>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2869,7 +2902,7 @@
           <x>0</x>
           <y>0</y>
           <width>254</width>
-          <height>387</height>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3017,7 +3050,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>387</height>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">

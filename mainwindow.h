@@ -123,6 +123,9 @@ protected:
 
   QNetworkAccessManager m_versionManager;
 
+  QVector <double> m_raRates;
+  QVector <double> m_decRates;
+
 private slots:
   void slotVersionFinished(QNetworkReply *reply);
 
@@ -615,6 +618,14 @@ private slots:
   void on_pushButton_36_clicked();
 
   void on_cb_extInfo_toggled(bool checked);
+
+  void on_pb_tc_right_pressed();
+
+  void on_pb_tc_right_released();
+
+  void on_pb_tc_left_pressed();
+
+  void on_pb_tc_left_released();
 
 private:
   Ui::MainWindow *ui;

@@ -1168,7 +1168,7 @@ void CAstro::solveMoon(orbit_t *o)
 
   double gLon, gLat, gSunLon, gSunLat;
 
-  convRD2Ecl(o->gRD.Ra, o->gRD.Dec, &gLon, &gLat);
+  convRD2Ecl(o->lRD.Ra, o->lRD.Dec, &gLon, &gLat);
   convRD2Ecl(m_sunOrbit.gRD.Ra, m_sunOrbit.gRD.Dec, &gSunLon, &gSunLat);
 
   o->elongation = calcElongation(gSunLon, gLon, gLat);
@@ -1183,7 +1183,7 @@ void CAstro::solveMoon(orbit_t *o)
 
   o->sx = 1873.7 * 60 / o->R;
   o->sy = o->sx;
-  o->dx = o->dy = 1737.1 * 2;
+  o->dx = o->dy = g_systemSettings->m_moon_radius * 2;
 
   double d = m_jd - JD2000;
   double T = (m_jd - JD2000) / 36525.0;
