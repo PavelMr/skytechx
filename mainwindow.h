@@ -59,6 +59,7 @@ public:
   bool            m_bRealTime;
   bool            m_bRealTimeLapse;
   CMultiProgress *m_pcDSSProg;
+  bool            m_slewButton;
 
   void centerSearchBox(bool bCenter);
   void removeQuickInfo(int type);
@@ -627,6 +628,18 @@ private slots:
 
   void on_pb_tc_left_released();
 
+  void on_pb_tc_up_pressed();
+
+  void on_pb_tc_up_released();
+
+  void on_pb_tc_down_pressed();
+
+  void on_pb_tc_down_released();
+
+  void on_pb_tp_stop_clicked();
+
+  void on_pb_tc_find_clicked();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
@@ -637,6 +650,7 @@ private:
   void restoreDSSList();
   void saveDSSList();
 
+  int getTelescopeSpeed();
 public slots:
   void repaintMap();
   void slotFilterChanged();

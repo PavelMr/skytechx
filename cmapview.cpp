@@ -110,6 +110,8 @@ CMapView::CMapView(QWidget *parent) :
   g_bMouseMoveMap = &m_bMouseMoveMap;
 
   configureGamepad();
+  m_lastTeleRaDec.Ra = 0;
+  m_lastTeleRaDec.Dec = 0;
 
   /*
   m_demo = new CDemonstration();
@@ -2134,7 +2136,11 @@ void CMapView::paintEvent(QPaintEvent *)
 
   if (g_pTelePlugin && (!g_pTelePlugin->isSlewing() && slew))
   {
-    g_soundManager.play(MC_BEEP);
+    if (!pcMainWnd->m_slewButton)
+    {
+      g_soundManager.play(MC_BEEP);
+    }
+    pcMainWnd->m_slewButton = false;
     slew = false;
   }
 

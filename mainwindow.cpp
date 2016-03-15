@@ -134,6 +134,8 @@ bool g_geocentric;
 int g_ephType;
 int g_ephMoonType;
 
+QString g_tpSpeed[3] = {"1%", "2", "100%"};
+
 CStatusBar *g_statusBar;
 
 QString g_horizonName = "none";
@@ -153,6 +155,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->setupUi(this);
 
+  ui->toolButton_37->setDefaultAction(ui->actionConnect_device);
+
   connect(&m_versionManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotVersionFinished(QNetworkReply*)));
 
   connect(ui->actionSearch_a_Sun, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
@@ -167,6 +171,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   setWindowIcon(QIcon(":/res/ico_app.ico"));
 
+  m_slewButton = false;
   m_DSOCatalogueDlg = NULL;
   ui->dockTime->hide();
   ui->dockTele->hide();
@@ -662,7 +667,7 @@ MainWindow::MainWindow(QWidget *parent) :
   {
     ui->page_2->hide();
     ui->page_3->hide();
-    ui->page_7->hide();
+    ui->page_7->hide(); // telescope handpad
 
     ui->toolBox->removeItem(4);
     ui->toolBox->removeItem(6);
@@ -1445,7 +1450,6 @@ QString MainWindow::getEventDesc(event_t *e)
      case EVT_SOLARECL:
        if (e->event_u.solarEcl_u.type == EVE_FULL)
        {
-         qDebug() << (e->event_u.solarEcl_u.i2 - e->event_u.solarEcl_u.i1);
          str = (tr("Total solar eclipse. Dur : ") + QString("%1").arg(getStrTime(0.5 + (e->event_u.solarEcl_u.i2 - e->event_u.solarEcl_u.i1) ,0)) +
                                                     QString(tr(" Mag. %1")).arg(e->event_u.solarEcl_u.mag, 0, 'f', 3));
        }
@@ -3380,6 +3384,13 @@ void MainWindow::on_actionConnect_device_triggered()
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionSlow_500ms, SLOT(setEnabled(bool)));
       connect(g_pTelePlugin, SIGNAL(sigUpdate(double,double)), ui->widget, SLOT(slotTelePlugChange(double,double)));
 
+      connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->pb_tc_down, SLOT(setEnabled(bool)));
+      connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->pb_tc_up, SLOT(setEnabled(bool)));
+      connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->pb_tc_left, SLOT(setEnabled(bool)));
+      connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->pb_tc_right, SLOT(setEnabled(bool)));
+      connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->pb_tp_stop, SLOT(setEnabled(bool)));
+      connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->pb_tc_find, SLOT(setEnabled(bool)));
+
       if (!g_pTelePlugin->connectDev(this))
       {
         tpUnloadDriver();
@@ -3802,6 +3813,7 @@ void MainWindow::slotTimeUpdate()
     {
       ui->dockTele->setWindowTitle(tr("Telescope - ") + g_pTelePlugin->getTelescope());
       ui->dockTele->setEnabled(true);
+
       ast.convRD2AARef(ui->widget->m_lastTeleRaDec.Ra,
                        ui->widget->m_lastTeleRaDec.Dec,
                        &azm, &alt);
@@ -3821,6 +3833,17 @@ void MainWindow::slotTimeUpdate()
       ui->label_tele3->setText("???");
       ui->label_tele4->setText("???");
     }
+  }
+
+  if (g_pTelePlugin && tpLoader->isLoaded()) // TODO: g_pTelePlugin.isConnected()
+  {
+    ui->label_tp_ra->setText(tr("R.A. : ") + getStrRA(ui->widget->m_lastTeleRaDec.Ra));
+    ui->label_tp_dec->setText(tr("Dec. : ") + getStrDeg(ui->widget->m_lastTeleRaDec.Dec));
+  }
+  else
+  {
+    ui->label_tp_ra->setText("");
+    ui->label_tp_dec->setText("");
   }
 }
 
@@ -6069,10 +6092,25 @@ void MainWindow::on_cb_extInfo_toggled(bool checked)
   repaintMap();
 }
 
+int MainWindow::getTelescopeSpeed()
+{
+  if (ui->rb_tp_1->isChecked())
+    return 0;
+
+  if (ui->rb_tp_2->isChecked())
+    return 1;
+
+  return 2;
+}
+
 void MainWindow::on_pb_tc_right_pressed()
 {
-  double rate = tpGetTelePluginRateValue(10, m_raRates);
-  g_pTelePlugin->moveAxis(0, rate);
+  double m = ui->cb_axis_x_invert->isChecked() ? -1 : 1;
+  int s = getTelescopeSpeed();
+  double rate = tpGetTelePluginSpeed(g_tpSpeed[s], m_raRates);
+
+  m_slewButton = true;
+  g_pTelePlugin->moveAxis(0, -rate * m);
 }
 
 void MainWindow::on_pb_tc_right_released()
@@ -6082,11 +6120,55 @@ void MainWindow::on_pb_tc_right_released()
 
 void MainWindow::on_pb_tc_left_pressed()
 {
-  double rate = tpGetTelePluginRateValue(10, m_raRates);
-  g_pTelePlugin->moveAxis(0, -rate);
+  double m = ui->cb_axis_x_invert->isChecked() ? -1 : 1;
+  int s = getTelescopeSpeed();
+  double rate = tpGetTelePluginSpeed(g_tpSpeed[s], m_raRates);
+
+  m_slewButton = true;
+  g_pTelePlugin->moveAxis(0, rate * m);
 }
 
 void MainWindow::on_pb_tc_left_released()
 {
   g_pTelePlugin->moveAxis(0, 0);
+}
+
+void MainWindow::on_pb_tc_up_pressed()
+{
+  double m = ui->cb_axis_y_invert->isChecked() ? -1 : 1;
+  int s = getTelescopeSpeed();
+  double rate = tpGetTelePluginSpeed(g_tpSpeed[s], m_decRates);
+
+  m_slewButton = true;
+  g_pTelePlugin->moveAxis(1, rate * m);
+}
+
+void MainWindow::on_pb_tc_up_released()
+{
+  g_pTelePlugin->moveAxis(1, 0);
+}
+
+void MainWindow::on_pb_tc_down_pressed()
+{
+  double m = ui->cb_axis_y_invert->isChecked() ? -1 : 1;
+  int s = getTelescopeSpeed();
+  double rate = tpGetTelePluginSpeed(g_tpSpeed[s], m_decRates);
+
+  m_slewButton = true;
+  g_pTelePlugin->moveAxis(1, -rate * m);
+}
+
+void MainWindow::on_pb_tc_down_released()
+{
+  g_pTelePlugin->moveAxis(1, 0);
+}
+
+void MainWindow::on_pb_tp_stop_clicked()
+{
+  g_pTelePlugin->stop();
+}
+
+void MainWindow::on_pb_tc_find_clicked()
+{
+  ui->widget->centerMap(ui->widget->m_lastTeleRaDec.Ra, ui->widget->m_lastTeleRaDec.Dec, CM_UNDEF);
 }
