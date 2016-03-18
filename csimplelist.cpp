@@ -138,6 +138,32 @@ int CSimpleList::getSelectionIndex()
   return list[0].row();
 }
 
+void CSimpleList::swap(int index1, int index2, int selection)
+{
+  if (index1 < 0 || index1 >= count())
+  {
+    return;
+  }
+
+  if (index2 < 0 || index2 >= count())
+  {
+    return;
+  }
+
+  if (index1 == index2)
+  {
+    return;
+  }
+
+  QStandardItem *item1 = m_model->takeItem(index1);
+  QStandardItem *item2 = m_model->takeItem(index2);
+
+  m_model->setItem(index1, item2);
+  m_model->setItem(index2, item1);
+
+  setSelectionIndex(selection);
+}
+
 QVariant CSimpleList::getCustomData(int index)
 {
   return m_model->item(index)->data();

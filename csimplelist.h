@@ -18,6 +18,7 @@ public:
   void removeAt(int index);
   void setSelectionIndex(int i);
   int getSelectionIndex();
+  void swap(int index1, int index2, int selection = -1);
   QVariant getCustomData(int index);
   QVariant getCustomData(const QModelIndex &index);
   int count() { return m_model->rowCount(); }

@@ -24,6 +24,17 @@
 #include "precess.h"
 #include "jd.h"
 #include "cmapview.h"
+#include "jpl_int.h"
+
+typedef struct
+{
+  void     *ephem;
+  char      nams[600][6]; // > ephem.ncon
+  double    vals[600];
+  int       version;
+  double    startJD;
+  double    endJD;
+} jplData_t;
 
 // delta-T alg.
 #define DELTA_T_TABLE                  0
@@ -168,6 +179,14 @@ class CAstro
     double m_gmst0;     // Greenwich Mean 0h Sidereal Time (in rads)
     double m_gst;       // Greenwich Sidereal Time  (in rads)
     double m_lst;       // Local Sidereal Time (in rads)
+
+    static void initJPLEphems();
+    static void releaseJPLEphems();
+    static void *getEphem(double jd, int &version);
+    static bool jplde(int planet, double tjd, double *data, int &deVersion);
+
+    static QList<jplData_t> getJPLEphems();
+    static void setJPLEphems(QList<jplData_t> &ephem);
 
 protected:
     orbit_t m_sunOrbit;

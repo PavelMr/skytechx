@@ -28,7 +28,6 @@ static double  maxJD = __DBL_MIN__;
 
 static double xs, ys, zs;
 static orbit_t sunOrbit;
-static double sunLon2000;
 
 extern bool g_showLabels;
 /////////////////////////////////////////////////////////
@@ -243,9 +242,6 @@ void astSolve(asteroid_t *a, double jdt, bool lightCorrected)
       xs = sunOrbit.sRectJ2000[0];
       ys = sunOrbit.sRectJ2000[1];
       zs = sunOrbit.sRectJ2000[2];
-
-      double tmp;
-      precessLonLat(sunOrbit.hLon, sunOrbit.hLat, sunLon2000, tmp, jdt, JD2000);
 
       lastJD = jdt;
     }

@@ -6,38 +6,61 @@
 double jdGetJDFrom_DateTime(QDateTime *t)
 /////////////////////////////////////////
 {
-  double D ;
-  double J;
-  long D1;
-  double F,S,A;
-  int G = 1;
-  double J1 = 0;
+  int y = t->date().year();
+  int m = t->date().month();
+  int d = t->date().day();
+  int h = t->time().hour();
+  int min = t->time().minute();
+  int s = t->time().second();
 
-  D = (double)t->time().hour() + ((double)t->time().minute() / 60.0f) + ((double)t->time().second() / 3600.0f);
-  D = (double)t->date().day() + (D / 24.0f);
+  static const long IGREG2 = 15+31L*(10+12L*1582);
+  double deltaTime = (h / 24.0) + (min / (24.0*60.0)) + (s / (24.0 * 60.0 * 60.0)) - 0.5;
 
-  D1 = (int)D;
-  F = D - D1 - 0.5;
-  J = - (int)(7 * ((int)((t->date().month() + 9)/12) + t->date().year()) / 4);
+  /*
+   * Algorithm taken from "Stellarium"
+   */
 
-  if ((t->date().year() < 1582 || t->date().year() == 1582) && (t->date().month() < 10 || (t->date().month() == 10 && D < 15)))
-   G = 0;
+  long ljul;
+  long jy, jm;
+  long laa, lbb, lcc, lee;
+
+  jy = y;
+  if (m > 2)
+  {
+    jm = m + 1;
+  }
   else
   {
-    S = ((t->date().month() - 9) < 0) ?	(-1) : (1);
-    A = abs(t->date().month() - 9);
-    J1 = (int)(t->date().year() + S * (int)(A / 7));
-    J1 = -(int)(((int)(J1 / 100) + 1) * 3 / 4);
+    --jy;
+    jm = m + 13;
   }
 
-  J = J + (int)(275 * t->date().month() / 9) + D1 + G * J1;
-  J = J + 1721027 + 2 * G + 367 * t->date().year();
-  if (F < 0)
+  laa = 1461 * jy / 4;
+  if (jy < 0 && jy % 4)
   {
-    F++;
-    J--;
+    --laa;
   }
-  return(J + F);
+  lbb = 306001 * jm / 10000;
+  ljul = laa + lbb + d + 1720995L;
+
+  if (d + 31L*(m + 12L * y) >= IGREG2)
+  {
+    lcc = jy/100;
+    if (jy < 0 && jy % 100)
+    {
+      --lcc;
+    }
+    lee = lcc/4;
+    if (lcc < 0 && lcc % 4)
+    {
+      --lee;
+    }
+    ljul += 2 - lcc + lee;
+  }
+  double jd = (double)ljul;
+  jd += deltaTime;
+
+  return jd;
 }
 
 
@@ -85,6 +108,7 @@ void jdConvertJDTo_DateTime(double JD, QDateTime *t)
   t->setTimeSpec(Qt::UTC);
   t->setDate(QDate((int)Y, (int)M, (int)D));
 
+  /*
   double jdf = JD;
 
   double decHours = fmod(jdf + 0.5, 1.0);
@@ -93,6 +117,37 @@ void jdConvertJDTo_DateTime(double JD, QDateTime *t)
   int secs = 60 * fmod((decHours - (hours * 0.041666666666666666666)) / 0.00069444444444444444444, 1);
 
   t->setTime(QTime(hours, mins, secs));
+  */
+
+  dF = ((JD - (int)JD)) - 0.5;
+    if (dF < 0.0) dF += 1;
+
+    double d = dF;
+    double min;
+
+    d = fabs(d * 24.0);
+
+    int h, m, s;
+
+    h = (int)d;
+    min = (d - h) * 60.0;
+    m = (int)((d - h) * 60.0);
+    s = (int)((min - m) * 60.0 + 0.5);
+
+    if (s == 60)
+    {
+      if ((m += 1) == 60)
+      {
+        h += 1;
+        m = 0;
+      }
+      s = 0;
+    }
+
+    if (h >= 24)
+      h -= 24;
+
+    t->setTime(QTime(h, m, s));
 }
 
 // return year

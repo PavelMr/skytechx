@@ -47,6 +47,7 @@ INCLUDEPATH = core \
               vsop87 \
               elp2000 \
               libsgp4 \
+              jpl \
               $$PWD \
 
 
@@ -269,7 +270,8 @@ SOURCES += main.cpp\
     cskeventdocdialog.cpp \
     skeventdocument.cpp \
     elp2000/elp2000.cpp \
-    cchartdialog.cpp
+    cchartdialog.cpp \
+    jpl/jpl_eph.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -482,7 +484,9 @@ HEADERS  += mainwindow.h \
     cskeventdocdialog.h \
     skeventdocument.h \
     elp2000/elp2000.h \
-    cchartdialog.h
+    cchartdialog.h \
+    jpl/jpl_eph.h \
+    jpl/jpl_int.h
 
 
 FORMS    += mainwindow.ui \

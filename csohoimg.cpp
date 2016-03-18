@@ -172,25 +172,3 @@ void CSohoImg::on_pushButton_clicked()
   done(DL_OK);
 }
 
-////////////////////////////////////////
-void CSohoImg::on_pushButton_3_clicked()
-////////////////////////////////////////
-{
-  if (createSunTexture(ui->widget->getSource()))
-  {
-    msgBoxInfo(this, tr("Using this image as Sun texture!"));
-  }
-  else
-  {
-    msgBoxError(this, "Image error!!!");
-  }
-}
-
-////////////////////////////////////////
-void CSohoImg::on_pushButton_4_clicked()
-////////////////////////////////////////
-{
-  removeSunTexture();
-
-  msgBoxInfo(this, tr("Default Sun texture is used!"));
-}

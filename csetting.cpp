@@ -25,6 +25,7 @@
 #include "cimageview.h"
 #include "soundmanager.h"
 #include "skserver.h"
+#include "csimplelist.h"
 
 #include <QSettings>
 
@@ -35,6 +36,7 @@ extern bool bAlternativeMouse;
 extern bool bParkTelescope;
 extern int g_ephType;
 extern int g_ephMoonType;
+extern bool g_useJPLEphem;
 
 extern CMapView  *pcMapView;
 
@@ -66,6 +68,25 @@ CSetting::CSetting(QWidget *parent) :
   ui->cb_iconSize->addItem(tr("32x32 (Large size)"));
 
   QSettings setting;
+
+  // jpl de
+  QList <jplData_t> jpl;
+
+  ui->checkBox_22->setChecked(g_useJPLEphem);
+
+  jpl = CAstro::getJPLEphems();
+
+  foreach (const jplData_t &item, jpl)
+  {
+    QDateTime dt;
+
+    jdConvertJDTo_DateTime(item.startJD, &dt);
+    int yf = dt.date().year();
+    jdConvertJDTo_DateTime(item.endJD, &dt);
+    int yt = dt.date().year();
+
+    ui->jplList->addRow("DE-" + QString::number(item.version) + " (" + QString::number(yf) + " .. " + QString::number(yt) + ")", item.version);
+  }
 
   // server
   setServerGui();
@@ -726,6 +747,23 @@ void CSetting::apply()
 
   applyGamepad();
 
+  // jpl
+  QList <jplData_t> jplList;
+
+  for (int i = 0; i < ui->jplList->count(); i++)
+  {
+    int version = ui->jplList->getCustomData(i).toInt();
+
+    foreach (const jplData_t &data, CAstro::getJPLEphems())
+    {
+      if (data.version == version)
+      {
+        jplList.append(data);
+      }
+    }
+  }
+  CAstro::setJPLEphems(jplList);
+
   QList<urlItem_t> strList;
   getAstComList(ui->treeWidgetComet, strList);
   CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/comets.url", &strList);
@@ -949,6 +987,9 @@ void CSetting::apply()
 
 
   QSettings settings;
+
+  g_useJPLEphem = ui->checkBox_22->isChecked();
+  settings.setValue("jpl_ephem", g_useJPLEphem);
 
   if (ui->rb_plan404->isChecked()) g_ephType = EPT_PLAN404;
     else
@@ -2365,4 +2406,16 @@ void CSetting::on_pushButton_server_start_clicked()
 void CSetting::on_pushButton_server_stop_clicked()
 {
   g_skServer.stop();
+}
+
+// jpl up
+void CSetting::on_pushButton_67_clicked()
+{
+  ui->jplList->swap(ui->jplList->getSelectionIndex(), ui->jplList->getSelectionIndex() - 1, ui->jplList->getSelectionIndex() - 1);
+}
+
+// jpl down
+void CSetting::on_pushButton_68_clicked()
+{
+  ui->jplList->swap(ui->jplList->getSelectionIndex(), ui->jplList->getSelectionIndex() + 1, ui->jplList->getSelectionIndex() + 1);
 }

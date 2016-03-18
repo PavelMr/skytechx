@@ -1,3 +1,4 @@
+
 #include "cplanetaltitude.h"
 #include "ui_cplanetaltitude.h"
 #include "castro.h"
@@ -46,6 +47,7 @@ void CPlanetAltitude::calculate(double jd)
   {
     m_view.jd = (jd + i) - m_view.geo.tz;
     ast.setParam(&m_view);
+
     for (int p = 0; p < PT_PLANET_COUNT; p++)
     {
       orbit_t o;
@@ -80,9 +82,7 @@ void CPlanetAltitude::makeChart()
 
       jdConvertJDTo_DateTime(date, &dt);
 
-      //qDebug() << alt << getStrTime(date, m_view.geo.tz) << getStrDate(date, m_view.geo.tz);
-
-      x.append(dt.toTime_t());
+      x.append(dt.toTime_t()); // FIXME: not working before 1.1.1970
       y.append(alt);
     }
   }

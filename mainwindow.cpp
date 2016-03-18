@@ -131,6 +131,7 @@ bool g_planetReal;
 bool g_quickInfoForced;
 bool g_geocentric;
 
+bool g_useJPLEphem;
 int g_ephType;
 int g_ephMoonType;
 
@@ -807,6 +808,7 @@ MainWindow::MainWindow(QWidget *parent) :
     g_skServer.start();
   }
 
+  g_useJPLEphem = settings.value("jpl_ephem", true).toBool();
   g_ephType = settings.value("eph_type", EPT_PLAN404).toInt();
   g_ephMoonType = settings.value("eph_moon_type", EPT_PLAN404).toInt();
 }
@@ -1249,6 +1251,8 @@ void MainWindow::saveAndExit()
       }
     }
   }
+
+  CAstro::releaseJPLEphems();
 
   qDebug() << "exiting";
 }
@@ -2844,9 +2848,13 @@ void MainWindow::on_actionSPlus_triggered()
 {
   QDateTime dt;
 
+  //qDebug() << qSetRealNumberPrecision(10) << ui->widget->m_mapView.jd;
   jdConvertJDTo_DateTime(ui->widget->m_mapView.jd, &dt);
+  //qDebug() << dt;
   dt = dt.addSecs(1 * m_timeMul->value());
+  //qDebug() << dt;
   ui->widget->m_mapView.jd = jdGetJDFrom_DateTime(&dt);
+  //qDebug() << qSetRealNumberPrecision(10) << ui->widget->m_mapView.jd;
 
   recenterHoldObject(ui->widget, false);
 

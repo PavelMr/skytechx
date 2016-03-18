@@ -1348,6 +1348,15 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   pPainter->setRenderHint(QPainter::Antialiasing, g_antialiasing);
   pPainter->setRenderHint(QPainter::SmoothPixmapTransform, g_antialiasing);
 
+  // TODO: dynamic proper vector
+  /*
+  if (1)
+  {
+    g_skSet.map.star.properMotionYearVec = (mapView->jd - JD2000) / 365.256;
+  }
+  g_skSet.map.star.properMotionYearVec
+  */
+
   mapObjReset();
 
   cAstro.setParam(mapView);

@@ -2216,6 +2216,10 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     case EPT_ELP2000:
       addTextItem(item, "Bureau des Longitudes", CAstro::getEphType(EPT_ELP2000));
       break;
+
+    default:
+      addTextItem(item, "JPL", CAstro::getEphType(o.ephemType));
+      break;
   }
 }
 

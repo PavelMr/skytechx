@@ -168,6 +168,8 @@ void CLoadingDlg::slotLoad()
   curSatelliteCatName = set.value("satellite_file", "").toString();
   sgp4.loadTLEData(curSatelliteCatName);
 
+  CAstro::initJPLEphems();
+
   usnoB1.setUsnoDir(set.value("usno_b1_path", "").toString());
   usno.setUsnoDir(set.value("usno2_path", "").toString());
   cPPMXL.setDir(set.value("ppmxl_path", "").toString());

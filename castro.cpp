@@ -5,10 +5,15 @@
 #include "vsop87.h"
 #include "systemsettings.h"
 #include "elp2000.h"
+#include "jpl_eph.h"
+
+
+static QList <jplData_t> jplEphemList;
 
 extern void mLibration(double m_jd, double *lat, double *mer);
 extern void moon (double mj, double *lam, double *bet, double *rho);
 
+extern bool g_useJPLEphem;
 extern int g_ephType;
 extern int g_ephMoonType;
 extern bool g_geocentric;
@@ -714,7 +719,7 @@ QString CAstro::getEphType(int type)
       return "ELP2000-82B";
   }
 
-  return "???";
+  return "DE-" + QString::number(type);
 }
 
 
@@ -835,17 +840,318 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
   convRD2AANoRef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 }
 
+static void xyzToSph(double x, double y, double z, double &l, double &b, double &r)
+{
+  double rho = x * x + y * y;
+
+  if (rho > 0)
+  {
+    l = atan2(y, x);
+    rangeDbl(&l, 2 * M_PI);
+    b = atan2(z, sqrt(rho));
+    r = sqrt(rho + z * z);
+  }
+  else
+  {
+    l = 0.0;
+    if (z == 0.0)
+    {
+      b = 0.0;
+    }
+    else
+    {
+      b = (z > 0.0) ? M_PI / 2. : -M_PI / 2.;
+    }
+    r = fabs(z);
+  }
+}
+
+QList <jplData_t> CAstro::getJPLEphems()
+{
+  return jplEphemList;
+}
+
+void CAstro::setJPLEphems(QList <jplData_t> &ephem)
+{
+  jplEphemList = ephem;
+
+  QFile f("../jplde.dat");
+
+  if (f.open(QFile::WriteOnly | QFile::Text))
+  {
+    QTextStream ts(&f);
+    foreach (const jplData_t &data, jplEphemList)
+    {
+      ts << data.version << "\n";
+    }
+  }
+}
+
+static bool jplSort(const jplData_t &a, const jplData_t &b)
+{
+  return a.version > b.version;
+}
+
+void CAstro::initJPLEphems()
+{
+  QString path = "../data/jplde/";
+
+  QDirIterator it(path, QDirIterator::NoIteratorFlags);
+  while (it.hasNext())
+  {
+    QFileInfo fi = it.next();
+    if (fi.isFile())
+    {
+      jplData_t de;
+
+      de.ephem = jpl_init_ephemeris(fi.filePath().toLatin1().data(), de.nams, de.vals);
+
+      if (de.ephem != NULL)
+      {
+        bool found = false;
+
+        de.startJD = jpl_get_double(de.ephem, JPL_EPHEM_START_JD);
+        de.endJD = jpl_get_double(de.ephem, JPL_EPHEM_END_JD);
+        de.version = jpl_get_long(de.ephem, JPL_EPHEM_EPHEMERIS_VERSION);
+
+        // check duplicity
+        foreach (const jplData_t &data, jplEphemList)
+        {
+          if (data.version == de.version)
+          {
+            found = true;
+            break;
+          }
+        }
+
+        if (!found)
+        {
+          jplEphemList.append(de);
+          qDebug() << de.startJD << de.endJD << de.version;
+        }
+      }
+    }
+  }
+
+  // default sort
+  qSort(jplEphemList.begin(), jplEphemList.end(), jplSort);
+
+  QFile f("../jplde.dat");
+  QList <int> order;
+
+  if (f.open(QFile::ReadOnly | QFile::Text))
+  {
+    while (!f.atEnd())
+    {
+      QString line = f.readLine();
+      order.append(line.toInt());
+    }
+  }
+
+  QList <int> tmp1;
+  QList <int> tmp2;
+
+  foreach (const jplData_t &data, jplEphemList)
+  {
+    tmp1.append(data.version);
+  }
+
+  foreach (const int o, order)
+  {
+    if (tmp1.contains(o))
+    {
+      tmp2.append(o);
+      tmp1.removeAll(o);
+    }
+  }
+
+  qSort(tmp1);
+  tmp1 = tmp2 + tmp1;
+
+  qDebug() << "list" << tmp1;
+
+  QList <jplData_t> list;
+  foreach (const int o, tmp1)
+  {
+     foreach (const jplData_t &data, jplEphemList)
+     {
+       if (data.version == o)
+       {
+         list.append(data);
+         break;
+       }
+     }
+  }
+  setJPLEphems(list);
+}
+
+void CAstro::releaseJPLEphems()
+{
+  setJPLEphems(jplEphemList);
+
+  foreach (const jplData_t &data, jplEphemList)
+  {
+    jpl_close_ephemeris(data.ephem);
+  }
+}
+
+void *CAstro::getEphem(double jd, int &version)
+{
+  foreach (const jplData_t &data, jplEphemList)
+  {
+    if (jd >= data.startJD && jd <= data.endJD)
+    {
+      version = data.version;
+      return data.ephem;
+    }
+  }
+
+  return NULL;
+}
+
+
+bool CAstro::jplde(int planet, double tjd, double *data, int &deVersion)
+{
+  void *ephem = 0;
+
+#pragma omp critical // for sharing jpl data
+{
+  ephem = getEphem(tjd, deVersion);
+
+  if (ephem)
+  {
+    double et[2];
+    double dt[6];
+    bool barycentric = false;
+
+    et[0] = (double)(floorl(tjd));
+    et[1] = (double)(tjd - floorl(tjd));
+
+    int pln;
+
+    switch (planet)
+    {
+      case PT_MOON:
+        pln = 10;
+        break;
+
+      case PT_SUN:
+        pln = 3;
+        break;
+
+      case PT_MERCURY:
+        pln = 1;
+        break;
+
+      case PT_VENUS:
+        pln = 2;
+        break;
+
+      case PT_MARS:
+        pln = 4;
+        break;
+
+      case PT_JUPITER:
+        pln = 5;
+        break;
+
+      case PT_SATURN:
+        pln = 6;
+        break;
+
+      case PT_URANUS:
+        pln = 7;
+        break;
+
+      case PT_NEPTUNE:
+        pln = 8;
+        break;
+
+      default:
+       qFatal("error");
+    }
+
+    int err_code;
+
+    if (pln != 10)
+    {
+      err_code = jpl_pleph(ephem, et, pln, barycentric ? 12 : 11, dt, false);
+    }
+    else
+    {
+      err_code = jpl_pleph(ephem, et, pln, barycentric ? 13 : 3, dt, false);
+    }
+
+    if (err_code == 0)
+    {
+      if (planet == PT_SUN)
+      {
+        dt[0] = -dt[0];
+        dt[1] = -dt[1];
+        dt[2] = -dt[2];
+      }
+
+      double polar[3];
+      double obliquity = CAstro::getEclObl(JD2000);
+      double x, y, z;
+
+      x =  dt[0];
+      y =  cos(obliquity) * dt[1] + sin(obliquity) * dt[2];
+      z = -sin(obliquity) * dt[1] + cos(obliquity) * dt[2];
+
+      xyzToSph(x, y, z, polar[0], polar[1], polar[2]);
+
+      data[0] = polar[0];
+      data[1] = polar[1];
+      data[2] = polar[2];
+
+      if (planet == PT_SUN)
+      { // pos at J2000.0 (rect ecliptic)
+        data[3] = x;
+        data[4] = y;
+        data[5] = z;
+      }
+
+      precessLonLat(data[0], data[1], data[0], data[1], JD2000, tjd);
+    }
+    else
+    {
+      ephem = 0;
+    }
+  }
+} // omp critical
+
+  return ephem;
+}
+
+
 int CAstro::calcPlanetPolar(int planet, double jd, double *data)
 {
-  switch (g_ephType)
-  {
-    case EPT_PLAN404:
-      de404(planet, jd, data);
-      return EPT_PLAN404;
+  bool validJPL = false;
 
-    case EPT_VSOP87:
-      vsop87(planet, jd, data);
-      return EPT_VSOP87;
+  if (g_useJPLEphem) // use JPL
+  {
+    int deVersion;
+
+    validJPL = jplde(planet, jd, data, deVersion);
+    if (validJPL)
+    {
+      return deVersion;
+    }
+  }
+
+  if (!validJPL)
+  {
+    switch (g_ephType)
+    {
+      case EPT_PLAN404:
+        de404(planet, jd, data);
+        return EPT_PLAN404;
+
+      case EPT_VSOP87:
+        vsop87(planet, jd, data);
+        return EPT_VSOP87;
+    }
   }
 
   return -1;
@@ -908,6 +1214,19 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
     double xg = xh + xs;
     double yg = yh + ys;
     double zg = zh + zs;
+
+    if (planet == PT_VENUS && i == 0)
+    {
+      //qDebug() << qSetRealNumberPrecision(12) << getStrDeg(data[0]) << getStrDeg(data[1]) << data[2] << getStrDeg(m_sunOrbit.hLon) << getStrDeg(m_sunOrbit.hLat) << m_sunOrbit.r;
+      //qDebug() << qSetRealNumberPrecision(12) << xg << yg << zg;
+    }
+
+    if (planet == PT_VENUS)
+    {
+      //xg = -.5071402;
+      //yg = 0.3015280;
+      //zg = 0.0047570;
+    }
 
     double obl = m_eclObl;
 
@@ -1092,28 +1411,49 @@ void CAstro::solveMoon(orbit_t *o)
   double lam, bet, rho;
   double data[3];
 
-  switch (g_ephMoonType)
+  bool validJPL = false;
+
+  if (g_useJPLEphem) // use JPL
   {
-    case EPT_PLAN404:
-      moon(m_deltaT + m_jd, &lam, &bet, &rho); // light time is counted
-      o->ephemType = EPT_PLAN404;
-      break;
+    int deVersion;
 
-    case EPT_ELP2000:
+    validJPL = jplde(PT_MOON, m_deltaT + m_jd, data, deVersion);
+
+    if (validJPL)
     {
-      ELP2000 elp;
-
-      elp.solve(m_deltaT + m_jd, data);
-      o->ephemType = EPT_ELP2000;
+      o->ephemType = deVersion;
 
       lam = data[0];
       bet = data[1];
       rho = data[2];
-      break;
     }
+  }
 
-    default:
-      qFatal("invalid moon eph. type");
+  if (!validJPL)
+  {
+    switch (g_ephMoonType)
+    {
+      case EPT_PLAN404:
+        moon(m_deltaT + m_jd, &lam, &bet, &rho); // light time is counted
+        o->ephemType = EPT_PLAN404;
+        break;
+
+      case EPT_ELP2000:
+      {
+        ELP2000 elp;
+
+        elp.solve(m_deltaT + m_jd, data);
+        o->ephemType = EPT_ELP2000;
+
+        lam = data[0];
+        bet = data[1];
+        rho = data[2];
+        break;
+      }
+
+      default:
+        qFatal("invalid moon eph. type");
+    }
   }
 
   lonecl = lam;
