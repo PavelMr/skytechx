@@ -776,6 +776,10 @@ double CAstro::solveKepler(double eccent, double M)
   }
   else
   {
+    if (thresh < 1e-14)
+    {
+      thresh = 1e-14;
+    }
     err = eccent * sinh(curr) - curr - M;
     while (fabs(err) > thresh)
     {
@@ -1113,6 +1117,7 @@ bool CAstro::jplde(int planet, double tjd, double *data, int &deVersion)
       }
 
       precessLonLat(data[0], data[1], data[0], data[1], JD2000, tjd);
+
     }
     else
     {
@@ -1162,6 +1167,8 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
 ////////////////////////////////////////////////////////////////////////////
 {
   double data[6];
+
+  //lightCorrection = false;
 
   if (planet == PT_SUN && bSunCopy && lightCorrection == m_sunOrbit.isLightCorrected)
   { // earth geometric pos.
@@ -1246,6 +1253,8 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
 
     orbit->gRD.Ra  = atan2(ye, xe);
     orbit->gRD.Dec = atan2(ze, sqrt(xe * xe + ye * ye));
+
+    //nutationAndAberation(orbit->gRD, m_jd);
 
     orbit->lRD.Ra  = orbit->gRD.Ra;
     orbit->lRD.Dec = orbit->gRD.Dec;

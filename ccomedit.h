@@ -55,6 +55,10 @@ private slots:
 
   void on_dsb_a_valueChanged(double arg1);
 
+  void on_pb_copy_clicked();
+
+  void on_pb_from_clip_clicked();
+
 private:
   Ui::CComEdit *ui;
   void calcA(double q);

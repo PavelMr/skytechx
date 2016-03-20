@@ -12,6 +12,7 @@ static QList <CDSOPluginInterface *> dsoPlugins;
 void loadDSOPlugins()
 /////////////////////
 {
+  QCoreApplication::applicationDirPath();
   QDir dir("../data/plugins/dso/", "*.dll");
   dir.setFilter(QDir::Files);
   QFileInfoList list = dir.entryInfoList();

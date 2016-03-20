@@ -18,7 +18,6 @@ bool CStarRenderer::open(QString filename)
 //////////////////////////////////////////
 {
   if (m_halo) delete m_halo;
-  //m_halo = new QPixmap(":/res/glow.png");
   m_halo = new QPixmap(":/res/star_glow.png");
 
   for (int sp = 0; sp < 8; sp++)

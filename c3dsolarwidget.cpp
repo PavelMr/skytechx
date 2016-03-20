@@ -689,6 +689,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     }
   }
 
+  p.setPen(Qt::white);
   g_labeling.render(&p);
 
   QFontMetrics mt(p.font());

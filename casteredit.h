@@ -51,6 +51,10 @@ private slots:
 
   void on_pushButton_2_clicked();
 
+  void on_pb_copy_clicked();
+
+  void on_pb_from_clip_clicked();
+
 private:
   Ui::CAsterEdit *ui;
 };

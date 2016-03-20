@@ -118,3 +118,57 @@ void CAsterEdit::on_pushButton_2_clicked()
   done(DL_CANCEL);
 }
 
+
+void CAsterEdit::on_pb_copy_clicked()
+{
+  QString str;
+  QTextStream ts(&str);
+
+  ts << ui->lineEdit->text() << ";";
+  ts << ui->spinBox->value() << ";";
+  ts << ui->spinBox_2->value() << ";";
+  ts << ui->spinBox_3->value() << ";";
+
+  ts << QString::number(ui->doubleSpinBox->value(), 'f', 10) << ";";
+  ts << QString::number(ui->doubleSpinBox_2->value(), 'f', 10) << ";";
+  ts << QString::number(ui->doubleSpinBox_3->value(), 'f', 10) << ";";
+  ts << QString::number(ui->doubleSpinBox_4->value(), 'f', 10) << ";";
+  ts << QString::number(ui->doubleSpinBox_5->value(), 'f', 10) << ";";
+  ts << QString::number(ui->doubleSpinBox_6->value(), 'f', 10) << ";";
+  ts << QString::number(ui->doubleSpinBox_7->value(), 'f', 10) << ";";
+  ts << QString::number(ui->doubleSpinBox_8->value(), 'f', 3) << ";";
+  ts << QString::number(ui->doubleSpinBox_9->value(), 'f', 3);
+
+  QApplication::clipboard()->setText(str);
+}
+
+void CAsterEdit::on_pb_from_clip_clicked()
+{
+  QStringList list = QApplication::clipboard()->text().split(";");
+
+  if (list.count() != 13)
+  {
+    msgBoxError(this, tr("Clipboard does not contain the elements data!"));
+    return;
+  }
+
+  if (msgBoxQuest(this, tr("Copy elements from clipboard?")) == QMessageBox::No)
+  {
+    return;
+  }
+
+  ui->lineEdit->setText(list[0]);
+  ui->spinBox->setValue(list[1].toInt());
+  ui->spinBox_2->setValue(list[2].toInt());
+  ui->spinBox_3->setValue(list[3].toInt());
+
+  ui->doubleSpinBox->setValue(list[4].toDouble());
+  ui->doubleSpinBox_2->setValue(list[5].toDouble());
+  ui->doubleSpinBox_3->setValue(list[6].toDouble());
+  ui->doubleSpinBox_4->setValue(list[7].toDouble());
+  ui->doubleSpinBox_5->setValue(list[8].toDouble());
+  ui->doubleSpinBox_6->setValue(list[9].toDouble());
+  ui->doubleSpinBox_7->setValue(list[10].toDouble());
+  ui->doubleSpinBox_8->setValue(list[11].toDouble());
+  ui->doubleSpinBox_9->setValue(list[12].toDouble());
+}
