@@ -11546,7 +11546,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="1446"/>
         <source>Total solar eclipse. Dur : </source>
-        <translation>Úplné zatmění Měsíce. Doba : </translation>
+        <translation>Úplné zatmění Slunce. Doba : </translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="1447"/>
