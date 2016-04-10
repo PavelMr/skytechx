@@ -120,34 +120,34 @@ void jdConvertJDTo_DateTime(double JD, QDateTime *t)
   */
 
   dF = ((JD - (int)JD)) - 0.5;
-    if (dF < 0.0) dF += 1;
+  if (dF < 0.0) dF += 1;
 
-    double d = dF;
-    double min;
+  double d = dF;
+  double min;
 
-    d = fabs(d * 24.0);
+  d = fabs(d * 24.0);
 
-    int h, m, s;
+  int h, m, s;
 
-    h = (int)d;
-    min = (d - h) * 60.0;
-    m = (int)((d - h) * 60.0);
-    s = (int)((min - m) * 60.0 + 0.5);
+  h = (int)d;
+  min = (d - h) * 60.0;
+  m = (int)((d - h) * 60.0);
+  s = (int)((min - m) * 60.0 + 0.5);
 
-    if (s == 60)
+  if (s == 60)
+  {
+    if ((m += 1) == 60)
     {
-      if ((m += 1) == 60)
-      {
-        h += 1;
-        m = 0;
-      }
-      s = 0;
+      h += 1;
+      m = 0;
     }
+    s = 0;
+  }
 
-    if (h >= 24)
-      h -= 24;
+  if (h >= 24)
+    h -= 24;
 
-    t->setTime(QTime(h, m, s));
+  t->setTime(QTime(h, m, s));
 }
 
 // return year

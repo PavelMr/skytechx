@@ -532,6 +532,7 @@ void CSetting::setValues()
   ui->pushButton_58->setFontColor(setFonts[FONT_SATELLITE], set.fonst[FONT_SATELLITE].color);
   ui->doubleSpinBox_38->setValue(set.map.satellite.size);
 
+  ui->cb_comet_symbol->setChecked(!set.map.comet.real);
   ui->pushButton_34->setColor(set.map.comet.color);
   ui->pushButton_33->setFontColor(setFonts[FONT_COMET], set.fonst[FONT_COMET].color);
   ui->spinBox_3->setValue(set.map.comet.radius);
@@ -895,6 +896,7 @@ void CSetting::apply()
   g_skSet.map.planet.plnRad = ui->spinBox->value();
   g_skSet.map.planet.satRad = ui->spinBox_2->value();
 
+  g_skSet.map.comet.real = !ui->cb_comet_symbol->isChecked();
   g_skSet.map.comet.radius = ui->spinBox_3->value();
   g_skSet.map.comet.plusMag = ui->doubleSpinBox_24->value();
   g_skSet.map.comet.maxMag = ui->doubleSpinBox_33->value();

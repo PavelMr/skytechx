@@ -100,6 +100,7 @@ typedef struct
 
 typedef struct
 {
+  bool  real;
   QRgb  color;
   int   radius;
   float plusMag;

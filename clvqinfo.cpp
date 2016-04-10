@@ -51,9 +51,10 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
 
   QStandardItemModel *m = (QStandardItemModel *)model();
 
-  if (!update)
+  if (!update || m->rowCount() != data->tTextItem.count())
   {
     m->removeRows(0, m->rowCount());
+    update = false;
   }
 
   for (int i = 0; i < data->tTextItem.count(); i++)

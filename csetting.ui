@@ -2052,7 +2052,7 @@
              <item>
               <widget class="QTabWidget" name="tabWidget_3">
                <property name="currentIndex">
-                <number>0</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="tab_12">
                 <attribute name="title">
@@ -2545,14 +2545,14 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="0">
+                   <item row="5" column="0">
                     <widget class="QLabel" name="label_37">
                      <property name="text">
                       <string>Symbol radius</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="5" column="0">
+                   <item row="6" column="0">
                     <widget class="QSpinBox" name="spinBox_3">
                      <property name="minimum">
                       <number>1</number>
@@ -2562,14 +2562,14 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="6" column="0">
+                   <item row="7" column="0">
                     <widget class="QLabel" name="label_38">
                      <property name="text">
                       <string>Magnitude as stars +</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="7" column="0">
+                   <item row="8" column="0">
                     <widget class="QDoubleSpinBox" name="doubleSpinBox_24">
                      <property name="suffix">
                       <string> mag.</string>
@@ -2585,17 +2585,17 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="7" column="1">
+                   <item row="8" column="1">
                     <layout class="QHBoxLayout" name="horizontalLayout_16"/>
                    </item>
-                   <item row="8" column="0">
+                   <item row="9" column="0">
                     <widget class="QLabel" name="label_71">
                      <property name="text">
                       <string>Don't use if fainter than</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="9" column="0">
+                   <item row="10" column="0">
                     <widget class="QDoubleSpinBox" name="doubleSpinBox_33">
                      <property name="suffix">
                       <string> mag.</string>
@@ -2608,6 +2608,13 @@
                      </property>
                      <property name="maximum">
                       <double>30.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0">
+                    <widget class="QCheckBox" name="cb_comet_symbol">
+                     <property name="text">
+                      <string>Show comet as symbol</string>
                      </property>
                     </widget>
                    </item>

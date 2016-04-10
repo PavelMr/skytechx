@@ -278,6 +278,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.planet.useCustomMoonTexture", set->map.planet.useCustomMoonTexture, ds);
 
   // comet & aster.
+  writeVal("map.comet.real", set->map.comet.real, ds);
   writeVal("map.comet.color", set->map.comet.color, ds);
   writeVal("map.comet.radius", set->map.comet.radius, ds);
   writeVal("map.comet.plusMag", set->map.comet.plusMag, ds);
@@ -592,6 +593,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.planet.useCustomMoonTexture = readVal("map.planet.useCustomMoonTexture", false, tMap).toBool();
 
   // aster & comets
+  set->map.comet.color = readVal("map.comet.true", true, tMap).toBool();
   set->map.comet.color = readVal("map.comet.color", MRGB(255, 255, 255), tMap).toUInt();
   set->map.comet.radius = readVal("map.comet.radius", 5, tMap).toInt();
   set->map.comet.plusMag = readVal("map.comet.plusMag", 5, tMap).toFloat();

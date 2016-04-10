@@ -355,7 +355,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
       if (sgp4.getName(i).compare(satName, Qt::CaseInsensitive) == 0)
       {
-        if (sgp4.solve(i, mapView, &out))
+        if (sgp4.tleItem(i)->used && sgp4.solve(i, mapView, &out))
         {
           cAstro.convAA2RDRef(out.azimuth, out.elevation, &rd.Ra, &rd.Dec);
 

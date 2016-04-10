@@ -1728,12 +1728,19 @@ void CMapView::printMapView(QPrinter *prn, const QString &profileName)
 
   double ra, dec;
   double azm, alt;
+  QString str;
 
   trfConvScrPtToXY(rc.center().x(), rc.center().y(), ra, dec);
   cAstro.convRD2AARef(ra, dec, &azm, &alt);
 
+  if (m_mapView.epochJ2000 && m_mapView.coordType == SMCT_RA_DEC)
+  {
+    precess(&ra, &dec, m_mapView.jd, JD2000);
+    str = "J2000 ";
+  }
+
   QString space = " / ";
-  QString text = QString(tr("R.A. : %1")).arg(getStrRA(ra)) + space + QString(tr("Dec. : %1")).arg(getStrDeg(dec)) + space +
+  QString text = str + QString(tr("R.A. : %1")).arg(getStrRA(ra)) + space + QString(tr("Dec. : %1")).arg(getStrDeg(dec)) + space +
                  QString(tr("Date : %1")).arg(getStrDate(m_mapView.jd, m_mapView.geo.tz)) + space +
                  QString(tr("Time : %1")).arg(getStrTime(m_mapView.jd, m_mapView.geo.tz));
 

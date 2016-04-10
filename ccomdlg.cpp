@@ -330,7 +330,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
   int offset = lineSize;
 
   // TODO: dat asi cAstro do kazdeho vlakna
-  #pragma omp parallel for shared(size, lineSize, offset, offsetX, offsetY)
+  #pragma omp parallel for shared(size, lineSize, offset, offsetX, offsetY, tComets)
   for (int i = 0; i < tComets.count(); i++)
   {
     int comaSize = 5;
@@ -352,110 +352,199 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
       continue;
     }
 
-    SKPOINT pt;
-
-    SKPOINT pt1;
-    SKPOINT pt2;
-    radec_t tail = {a->orbit.params[0], a->orbit.params[1]};
-
-    trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt1, view->jd, JD2000);
-    trfRaDecToPointCorrectFromTo(&tail, &pt2, view->jd, JD2000);
-    if (trfProjectLine(&pt1, &pt2))
+    if (g_skSet.map.comet.real)
     {
-      float frac = a->orbit.mag / 10.;
+      SKPOINT pt;
 
-      frac = 1 - CLAMP(frac, 0, 1);
-      float opacity = LERP(frac, 0.25, 1);
-      double cs = trfGetArcSecToPix(a->orbit.params[2]);
+      SKPOINT pt1;
+      SKPOINT pt2;
+      radec_t tail = {a->orbit.params[0], a->orbit.params[1]};
 
-      if (!g_onPrinterBW)
+      trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt1, view->jd, JD2000);
+      trfRaDecToPointCorrectFromTo(&tail, &pt2, view->jd, JD2000);
+      if (trfProjectLine(&pt1, &pt2))
       {
-        QImage tailImage = QImage(":/res/comet_tail.png");
-        QImage comaImage = QImage(":/res/comet_coma.png");
+        float frac = a->orbit.mag / 10.;
 
-        trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt1, view->jd, JD2000);
-        trfRaDecToPointCorrectFromTo(&tail, &pt2, view->jd, JD2000);
-        trfProjectLineNoCheck(&pt1, &pt2);
+        frac = 1 - CLAMP(frac, 0, 1);
+        float opacity = LERP(frac, 0.25, 1);
+        double cs = trfGetArcSecToPix(a->orbit.params[2]);
 
-        double vx = pt1.sy - pt2.sy;
-        double vy = -(pt1.sx - pt2.sx);
-        double d = sqrt(POW2(vx) + POW2(vy));
+        if (!g_onPrinterBW)
+        {
+          QImage tailImage = QImage(":/res/comet_tail.png");
+          QImage comaImage = QImage(":/res/comet_coma.png");
 
-        double dx = pt1.sx - pt2.sx;
-        double dy = pt1.sy - pt2.sy;
-        double d1 = sqrt(POW2(dx) + POW2(dy));
+          trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt1, view->jd, JD2000);
+          trfRaDecToPointCorrectFromTo(&tail, &pt2, view->jd, JD2000);
+          trfProjectLineNoCheck(&pt1, &pt2);
 
-        vx /= d;
-        vy /= d;
+          double vx = pt1.sy - pt2.sy;
+          double vy = -(pt1.sx - pt2.sx);
+          double d = sqrt(POW2(vx) + POW2(vy));
 
-        dx /= d1;
-        dy /= d1;
+          double dx = pt1.sx - pt2.sx;
+          double dy = pt1.sy - pt2.sy;
+          double d1 = sqrt(POW2(dx) + POW2(dy));
 
-        double s = d * 0.5 * (tailImage.height() / (double)tailImage.width());
-        double s1 = d * 0.02;
+          vx /= d;
+          vy /= d;
 
-        QPoint pts[4];
+          dx /= d1;
+          dy /= d1;
 
-        // tail
-        pts[0] = QPoint((pt1.sx + (vx * s)) + (dx * s1), (pt1.sy + (vy * s)) + (dy * s1));
-        pts[1] = QPoint((pt1.sx - (vx * s)) + (dx * s1), (pt1.sy - (vy * s)) + (dy * s1));
+          double s = d * 0.5 * (tailImage.height() / (double)tailImage.width());
+          double s1 = d * 0.02;
 
-        pts[2] = QPoint(pt2.sx + vx * s, pt2.sy + vy * s);
-        pts[3] = QPoint(pt2.sx - vx * s, pt2.sy - vy * s);
+          QPoint pts[4];
 
+          // tail
+          pts[0] = QPoint((pt1.sx + (vx * s)) + (dx * s1), (pt1.sy + (vy * s)) + (dy * s1));
+          pts[1] = QPoint((pt1.sx - (vx * s)) + (dx * s1), (pt1.sy - (vy * s)) + (dy * s1));
+
+          pts[2] = QPoint(pt2.sx + vx * s, pt2.sy + vy * s);
+          pts[3] = QPoint(pt2.sx - vx * s, pt2.sy - vy * s);
+
+          #pragma omp critical
+          {
+            scanRender.resetScanPoly(p->image()->width(), p->image()->height());
+
+            scanRender.scanLine(pts[0].x(), pts[0].y(),
+                                pts[2].x(), pts[2].y(), 0, 0, 1, 0);
+            scanRender.scanLine(pts[2].x(), pts[2].y(),
+                                pts[3].x(), pts[3].y(), 1, 0, 1, 1);
+            scanRender.scanLine(pts[3].x(), pts[3].y(),
+                                pts[1].x(), pts[1].y(), 1, 1, 0, 1);
+            scanRender.scanLine(pts[1].x(), pts[1].y(),
+                                pts[0].x(), pts[0].y(), 0, 1, 0, 0);
+
+            scanRender.setOpacity(opacity);
+            scanRender.renderPolygonAlpha(p->image(), &tailImage);
+
+            p->save();
+            p->setOpacity(opacity);
+            p->setRenderHint(QPainter::SmoothPixmapTransform, scanRender.isBillinearInt());
+            p->drawImage(QRect(pt1.sx - cs, pt1.sy - cs, cs * 2, cs * 2), comaImage);
+            p->restore();
+          }
+        }
+        comaSize = qMax(cs, 1.0);
+      }
+
+      trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt, view->jd, JD2000);
+      if (trfProjectPoint(&pt))
+      {
         #pragma omp critical
         {
-          scanRender.resetScanPoly(p->image()->width(), p->image()->height());
+          double sunAng = -trfGetPosAngle(a->orbit.lRD.Ra, a->orbit.lRD.Dec, sunOrbit.lRD.Ra, sunOrbit.lRD.Dec);
+          rangeDbl(&sunAng, R360);
 
-          scanRender.scanLine(pts[0].x(), pts[0].y(),
-                              pts[2].x(), pts[2].y(), 0, 0, 1, 0);
-          scanRender.scanLine(pts[2].x(), pts[2].y(),
-                              pts[3].x(), pts[3].y(), 1, 0, 1, 1);
-          scanRender.scanLine(pts[3].x(), pts[3].y(),
-                              pts[1].x(), pts[1].y(), 1, 1, 0, 1);
-          scanRender.scanLine(pts[1].x(), pts[1].y(),
-                              pts[0].x(), pts[0].y(), 0, 1, 0, 0);
+          p->setBrush(QColor(g_skSet.map.comet.color));
+          p->setPen(g_skSet.map.comet.color);
 
-          scanRender.setOpacity(opacity);
-          scanRender.renderPolygonAlpha(p->image(), &tailImage);
+          float ang = (float)trfGetAngleToNPole(a->orbit.lRD.Ra, a->orbit.lRD.Dec, view->jd);
 
-          p->save();
-          p->setOpacity(opacity);
-          p->setRenderHint(QPainter::SmoothPixmapTransform, scanRender.isBillinearInt());
-          p->drawImage(QRect(pt1.sx - cs, pt1.sy - cs, cs * 2, cs * 2), comaImage);
-          p->restore();
+          if (view->flipX + view->flipY == 1)
+          {
+            ang = R2D(R180 - sunAng + ang);
+          }
+          else
+          {
+            ang = R2D(R180 + sunAng + ang);
+          }
+
+          double sep = anSep(a->orbit.params[0], a->orbit.params[1], a->orbit.lRD.Ra, a->orbit.lRD.Dec);
+          double r2 = trfGetArcSecToPix(R2D(sep) * 3600);
+
+          if (r2 <= 20)
+          {
+            p->save();
+            p->translate(pt.sx, pt.sy);
+            p->rotate(ang);
+
+            p->drawEllipse(QPoint(0, 0), size, size);
+
+            p->drawLine(0, 0, -offsetX, -offsetY);
+            p->drawLine(0, 0, 0, -offset);
+            p->drawLine(0, 0, offsetX, -offsetY);
+
+            p->restore();
+          }
+          else
+          if (g_onPrinterBW)
+          {
+            p->save();
+            p->translate(pt.sx, pt.sy);
+            p->rotate(ang);
+
+            p->drawEllipse(QPoint(0, 0), size, size);
+
+            double r1 = r2 * 0.1;
+            double focus = sqrt(POW2(r2) - POW2(r1));
+
+            p->setBrush(Qt::NoBrush);
+            p->drawEllipse(QPointF(0, -focus), r1, r2);
+
+            p->drawLine(0, 0, -offsetX, -offsetY);
+            p->drawLine(0, 0, 0, -offset);
+            p->drawLine(0, 0, offsetX, -offsetY);
+
+            p->restore();
+          }
+
+          if (g_showLabels)
+          {
+            int align;
+
+            if (sunAng >= 0 && sunAng < R90)
+            {
+              align = SL_AL_BOTTOM_LEFT;
+            }
+            else
+            if (sunAng >= R90 && sunAng < R180)
+            {
+              align = SL_AL_TOP_LEFT;
+            }
+            else
+            if (sunAng >= R180 && sunAng < R270)
+            {
+              align = SL_AL_TOP_RIGHT;
+            }
+            else
+            {
+              align = SL_AL_BOTTOM_RIGHT;
+            }
+            g_labeling.addLabel(QPoint(pt.sx, pt.sy), comaSize + 2, a->name, FONT_COMET, align, SL_AL_ALL);
+          }
+          addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, comaSize + 2, i, (qint64)a, a->orbit.mag);
         }
       }
-      comaSize = qMax(cs, 1.0);
     }
-
-    trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt, view->jd, JD2000);
-    if (trfProjectPoint(&pt))
+    else
     {
-      #pragma omp critical
+      SKPOINT pt;
+      trfRaDecToPointCorrectFromTo(&a->orbit.lRD, &pt, view->jd, JD2000);
+      if (trfProjectPoint(&pt))
       {
         double sunAng = -trfGetPosAngle(a->orbit.lRD.Ra, a->orbit.lRD.Dec, sunOrbit.lRD.Ra, sunOrbit.lRD.Dec);
         rangeDbl(&sunAng, R360);
 
-        p->setBrush(QColor(g_skSet.map.comet.color));
-        p->setPen(g_skSet.map.comet.color);
-
-        float ang = (float)trfGetAngleToNPole(a->orbit.lRD.Ra, a->orbit.lRD.Dec, view->jd);
-
-        if (view->flipX + view->flipY == 1)
+        #pragma omp critical
         {
-          ang = R2D(R180 - sunAng + ang);
-        }
-        else
-        {
-          ang = R2D(R180 + sunAng + ang);
-        }
+          p->setBrush(QColor(g_skSet.map.comet.color));
+          p->setPen(g_skSet.map.comet.color);
 
-        double sep = anSep(a->orbit.params[0], a->orbit.params[1], a->orbit.lRD.Ra, a->orbit.lRD.Dec);
-        double r2 = trfGetArcSecToPix(R2D(sep) * 3600);
+          float ang = (float)trfGetAngleToNPole(a->orbit.lRD.Ra, a->orbit.lRD.Dec, view->jd);
 
-        if (r2 <= 20)
-        {
+          if (view->flipX + view->flipY == 1)
+          {
+            ang = R2D(R180 - sunAng + ang);
+          }
+          else
+          {
+            ang = R2D(R180 + sunAng + ang);
+          }
+
           p->save();
           p->translate(pt.sx, pt.sy);
           p->rotate(ang);
@@ -467,57 +556,35 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
           p->drawLine(0, 0, offsetX, -offsetY);
 
           p->restore();
+
+          if (g_showLabels)
+          {
+            int align;
+
+            if (sunAng >= 0 && sunAng < R90)
+            {
+              align = SL_AL_BOTTOM_LEFT;
+            }
+            else
+            if (sunAng >= R90 && sunAng < R180)
+            {
+              align = SL_AL_TOP_LEFT;
+            }
+            else
+            if (sunAng >= R180 && sunAng < R270)
+            {
+              align = SL_AL_TOP_RIGHT;
+            }
+            else
+            {
+              align = SL_AL_BOTTOM_RIGHT;
+            }
+            g_labeling.addLabel(QPoint(pt.sx, pt.sy), 8, a->name, FONT_COMET, align, SL_AL_ALL);
+          }
+          addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, 8 + 2, i, (qint64)a, a->orbit.mag);
         }
-        else
-        if (g_onPrinterBW)
-        {
-          p->save();
-          p->translate(pt.sx, pt.sy);
-          p->rotate(ang);
-
-          p->drawEllipse(QPoint(0, 0), size, size);
-
-          double r1 = r2 * 0.1;
-          double focus = sqrt(POW2(r2) - POW2(r1));
-
-          p->setBrush(Qt::NoBrush);
-          p->drawEllipse(QPointF(0, -focus), r1, r2);
-
-          p->drawLine(0, 0, -offsetX, -offsetY);
-          p->drawLine(0, 0, 0, -offset);
-          p->drawLine(0, 0, offsetX, -offsetY);
-
-          p->restore();
-        }
-
-        if (g_showLabels)
-        {
-          int align;
-
-          if (sunAng >= 0 && sunAng < R90)
-          {
-            align = SL_AL_BOTTOM_LEFT;
-          }
-          else
-          if (sunAng >= R90 && sunAng < R180)
-          {
-            align = SL_AL_TOP_LEFT;
-          }
-          else
-          if (sunAng >= R180 && sunAng < R270)
-          {
-            align = SL_AL_TOP_RIGHT;
-          }
-          else
-          {
-            align = SL_AL_BOTTOM_RIGHT;
-          }
-          g_labeling.addLabel(QPoint(pt.sx, pt.sy), comaSize + 2, a->name, FONT_COMET, align, SL_AL_ALL);
-        }
-        addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, comaSize + 2, i, (qint64)a, a->orbit.mag);
       }
     }
-
   }
 }
 
