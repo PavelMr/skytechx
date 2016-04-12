@@ -12,6 +12,7 @@ typedef struct
   bool    bBold;
   QString label;
   QString value;
+  bool    extInfo;
 } ofiTextItem_t;
 
 typedef struct
@@ -45,6 +46,8 @@ class CObjFillInfo : public QObject
     CObjFillInfo();
     void fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
 
+    bool m_extInfo;
+
 protected:
 
     void fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
@@ -66,6 +69,9 @@ protected:
     void addTextItem(ofiItem_t *item, QString label, QString value, bool bBold = false);
     void addLabelItem(ofiItem_t *item, QString label);
     void addSeparator(ofiItem_t *item);
+    void beginExtInfo();
+    void endExtInfo();
+
     void fillAtlas(double ra, double dec, ofiItem_t *item);
     void fillRTS(rts_t *rts, const mapView_t *view, ofiItem_t *item);
     void fillZoneInfo(double ra2000, double dec2000, ofiItem_t *item);

@@ -1,6 +1,8 @@
 #include "clvqinfo.h"
 #include "mainwindow.h"
 
+extern bool g_extObjInfo;
+
 CLvQInfo::CLvQInfo(QWidget *parent) :
   QTreeView(parent)
 {
@@ -60,6 +62,11 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
   for (int i = 0; i < data->tTextItem.count(); i++)
   {
     ofiTextItem_t *item = &data->tTextItem[i];
+
+    if (item->extInfo && !g_extObjInfo)
+    {
+      continue;
+    }
 
     if (update)
     {
