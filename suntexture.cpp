@@ -205,10 +205,13 @@ void SunOnlineDaemon::stop()
 
 void SunOnlineDaemon::timer()
 {
+  //qDebug() << "sun daemon timer" << m_period;
   if (m_firstTime || m_startupOnly || (jdGetCurrentJD() > (m_lastJD + (JD1SEC * m_period))))
   {
     SunOnline *online = new SunOnline;
     online->start(m_url, m_radius);
+
+    qDebug() << "sun daemon download";
 
     connect(online, SIGNAL(done()), this, SLOT(done()));
 
@@ -221,6 +224,7 @@ void SunOnlineDaemon::timer()
   if (!m_startupOnly)
   {
     m_timer.singleShot(60000, this, SLOT(timer()));
+    //qDebug() << "sun daemon set timer";
   }
 
   m_firstTime = false;
@@ -228,6 +232,6 @@ void SunOnlineDaemon::timer()
 
 void SunOnlineDaemon::done()
 {
-  qDebug() << "done repaint";
+  qDebug() << "sun daemon repaint";
   emit repaint();
 }

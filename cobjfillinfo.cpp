@@ -639,22 +639,51 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   if (view->epochJ2000)
   {
-    addLabelItem(item, tr("Heliocentric information (J2000)"));
+    addLabelItem(item, tr("Heliocentric ecl. information (J2000)"));
     lon = a->orbit.hLon; // comets lon/lat is J2000
     lat = a->orbit.hLat;
   }
   else
   {
     precessLonLat(a->orbit.hLon, a->orbit.hLat, lon, lat, JD2000, view->jd);
-    addLabelItem(item, tr("Heliocentric information"));
+    addLabelItem(item, tr("Heliocentric ecl. information"));
   }
+
+  // calc speed
+  double vhx, vhy, vhz;
+  double vhx1, vhy1, vhz1;
+  double vhx2, vhy2, vhz2;
+  comet_t o1 = *a;
+  comet_t o2 = *a;
+  mapView_t tmp = *view;
+
+  cAstro.setParam(&tmp);
+  comSolve(&o1, tmp.jd, false);
+  tmp.jd++;
+  cAstro.setParam(&tmp);
+  comSolve(&o2, tmp.jd, false);
+
+  CAstro::sphToXYZ(o1.orbit.hLon, o1.orbit.hLat, o1.orbit.r, vhx1, vhy1, vhz1);
+  CAstro::sphToXYZ(o2.orbit.hLon, o2.orbit.hLat, o2.orbit.r, vhx2, vhy2, vhz2);
+
+  vhx = vhx2 - vhx1;
+  vhy = vhy2 - vhy1;
+  vhz = vhz2 - vhz1;
 
   CAstro::sphToXYZ(lon, lat, a->orbit.r, hx, hy, hz);
 
   addSeparator(item);
-  addTextItem(item, tr("X"), QString::number(hx));
-  addTextItem(item, tr("Y"), QString::number(hy));
-  addTextItem(item, tr("Z"), QString::number(hz));
+  addTextItem(item, tr("X"), QString::number(hx, 'f', 8) + " " + tr("AU"));
+  addTextItem(item, tr("Y"), QString::number(hy, 'f', 8) + " " + tr("AU"));
+  addTextItem(item, tr("Z"), QString::number(hz, 'f', 8) + " " + tr("AU"));
+  if (g_extObjInfo)
+  {
+    addSeparator(item);
+    addTextItem(item, tr("VX"), getStrNumber("", vhx, 8, " " + tr("AU/day"), true));
+    addTextItem(item, tr("VY"), getStrNumber("", vhy, 8, " " + tr("AU/day"), true));
+    addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));
+  }
+
   addSeparator(item);
   addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
   addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));
@@ -2094,29 +2123,55 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   if (item->par1 != PT_MOON)
   {
     double lon, lat;
-    double hx, hy, hz;
+    double hx, hy, hz;    
 
     if (view->epochJ2000)
     {
       precessLonLat(o.hLon, o.hLat, lon, lat, view->jd, JD2000);
-      addLabelItem(item, tr("Heliocentric information (J2000)"));
+      addLabelItem(item, tr("Heliocentric ecl. information (J2000)"));
     }
     else
     {
       lon = o.hLon;
       lat = o.hLat;
-      addLabelItem(item, tr("Heliocentric information"));
+      addLabelItem(item, tr("Heliocentric ecl. information"));
     }
+
+    // calc speed
+    double vhx, vhy, vhz;
+    double vhx1, vhy1, vhz1;
+    double vhx2, vhy2, vhz2;
+    orbit_t o1;
+    orbit_t o2;
+    mapView_t tmp = *view;
+
+    cAstro.setParam(&tmp);
+    cAstro.calcPlanet(obj->par1, &o1);
+    tmp.jd++;
+    cAstro.setParam(&tmp);
+    cAstro.calcPlanet(obj->par1, &o2);
+
+    CAstro::sphToXYZ(o1.hLon, o1.hLat, o1.r, vhx1, vhy1, vhz1);
+    CAstro::sphToXYZ(o2.hLon, o2.hLat, o2.r, vhx2, vhy2, vhz2);
+
+    vhx = vhx2 - vhx1;
+    vhy = vhy2 - vhy1;
+    vhz = vhz2 - vhz1;
 
     CAstro::sphToXYZ(lon, lat, o.r, hx, hy, hz);
 
     addSeparator(item);
-    addTextItem(item, tr("X"), QString::number(hx, 'f', 8));
-    addTextItem(item, tr("Y"), QString::number(hy, 'f', 8));
-    addTextItem(item, tr("Z"), QString::number(hz, 'f', 8));
+    addTextItem(item, tr("X"), QString::number(hx, 'f', 8) + " " + tr("AU"));
+    addTextItem(item, tr("Y"), QString::number(hy, 'f', 8) + " " + tr("AU"));
+    addTextItem(item, tr("Z"), QString::number(hz, 'f', 8) + " " + tr("AU"));
+    if (g_extObjInfo)
+    {
+      addSeparator(item);
+      addTextItem(item, tr("VX"), getStrNumber("", vhx, 8, " " + tr("AU/day"), true));
+      addTextItem(item, tr("VY"), getStrNumber("", vhy, 8, " " + tr("AU/day"), true));
+      addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));
+    }
     addSeparator(item);
-    //addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
-    //addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));
     addTextItem(item, tr("Longitude"), getStrDeg(lon));
     addTextItem(item, tr("Latitude"), getStrDeg(lat));
     addSeparator(item);

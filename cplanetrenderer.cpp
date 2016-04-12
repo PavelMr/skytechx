@@ -816,7 +816,14 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     }
     else
     {
-      SKMATRIXRotateY(&matY, -o->cMer);
+      if (o->type == PT_SUN)
+      {
+        SKMATRIXRotateY(&matY, 0);
+      }
+      else
+      {
+        SKMATRIXRotateY(&matY, -o->cMer);
+      }
     }
 
     double angp;

@@ -7,6 +7,7 @@ CStatusBar::CStatusBar(QStatusBar *pBar)
 {
   pStatusBar = pBar;
   m_movie = new QMovie(":/res/loading._ico.gif");
+  qDebug() << "init" << m_movie->isValid();
 }
 
 //////////////////////////////////////
@@ -32,7 +33,7 @@ QWidget *CStatusBar::createItem(int id, const QString & tooltip, int width, Qt::
   connect(i.pLabel, SIGNAL(sigDoubleClicked(int)), this, SLOT(slotDoubleClicked(int)));
   i.pLabel->setAlignment(align | Qt::AlignVCenter);
 
-  if (width > 0)
+  if (0)//width > 0)
   {
     i.pLabel->setFixedWidth(width);
   }
@@ -84,6 +85,7 @@ void CStatusBar::setDownloadStatus(bool start, bool reset)
     {
       if (counter > 0)
       {
+        qDebug() << "movie start" << m_movie->frameCount();
         m_movie->start();
         tItems[i].pLabel->show();
       }
@@ -116,9 +118,7 @@ void CStatusBar::createSkyMapBar(void)
 //////////////////////////////////////
 {
   deleteStatusBar();
-  restoreStatusBar();
-
-  //pStatusBar->addPermanentWidget(new QLabel("0"), 0);
+  restoreStatusBar();  
 }
 
 void CStatusBar::saveStatusBar()

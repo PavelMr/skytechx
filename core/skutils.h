@@ -31,6 +31,8 @@ QString getStrDeg(double deg, bool simple = false);
 QString getStrDegNoSign(double deg, bool msec = false);
 QString getStrRA(double ra, bool simple = false);
 
+QString getStrNumber(const QString prefix, double value, int precs = 8, const QString postfix = "", bool showSign = false);
+
 QString getStrLon(double deg);
 QString getStrLat(double deg);
 

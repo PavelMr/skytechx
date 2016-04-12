@@ -532,6 +532,14 @@ QString getStrMag(double mag)
   return(str);
 }
 
+QString getStrNumber(const QString prefix, double value, int precs, const QString postfix, bool showSign)
+{
+  QString str;
+
+  str = prefix + (showSign ? (value < 0 ? "-" : "+") : ("")) + QString::number(showSign ? qAbs(value) : value, 'f', precs) + postfix;
+
+  return str;
+}
 
 ////////////////////////////////////////
 QString getStrDate(double jd, double tz)
