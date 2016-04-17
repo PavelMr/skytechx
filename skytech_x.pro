@@ -28,7 +28,7 @@ Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA /FAcs
 
 #Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG /MAP
 Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
-Debug:win32-msvc2013   :  QMAKE_LFLAGS += /INCREMENTAL:NO
+Debug:win32-msvc2013   :  QMAKE_LFLAGS += /INCREMENTAL:NO /debug:FASTLINK
 
 
 TARGET = skytech_x
