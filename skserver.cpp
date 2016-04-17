@@ -498,7 +498,7 @@ void SkServer::setMode(const QString &data)
 
 void SkServer::setRTC(const QString &data)
 {
-  bool start = data.toInt();
+  int start = data.toInt();
 
   if (start < 0 || start > 1)
   {

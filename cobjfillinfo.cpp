@@ -486,14 +486,43 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   {
     precessLonLat(a->orbit.hLon, a->orbit.hLat, lon, lat, JD2000, view->jd);
     addLabelItem(item, tr("Heliocentric information"));
-  }
+  }  
+
+  // calc speed
+  double vhx, vhy, vhz;
+  double vhx1, vhy1, vhz1;
+  double vhx2, vhy2, vhz2;
+  asteroid_t o1 = *a;
+  asteroid_t o2 = *a;
+  mapView_t tmp = *view;
+
+  cAstro.setParam(&tmp);
+  astSolve(&o1, tmp.jd, false);
+  tmp.jd++;
+  cAstro.setParam(&tmp);
+  astSolve(&o2, tmp.jd, false);
+
+  CAstro::sphToXYZ(o1.orbit.hLon, o1.orbit.hLat, o1.orbit.r, vhx1, vhy1, vhz1);
+  CAstro::sphToXYZ(o2.orbit.hLon, o2.orbit.hLat, o2.orbit.r, vhx2, vhy2, vhz2);
+
+  vhx = vhx2 - vhx1;
+  vhy = vhy2 - vhy1;
+  vhz = vhz2 - vhz1;
 
   CAstro::sphToXYZ(lon, lat, a->orbit.r, hx, hy, hz);
 
   addSeparator(item);
-  addTextItem(item, tr("X"), QString::number(hx));
-  addTextItem(item, tr("Y"), QString::number(hy));
-  addTextItem(item, tr("Z"), QString::number(hz));
+  addTextItem(item, tr("X"), QString::number(hx, 'f', 8) + " " + tr("AU"));
+  addTextItem(item, tr("Y"), QString::number(hy, 'f', 8) + " " + tr("AU"));
+  addTextItem(item, tr("Z"), QString::number(hz, 'f', 8) + " " + tr("AU"));
+
+  beginExtInfo();
+  addSeparator(item);
+  addTextItem(item, tr("VX"), getStrNumber("", vhx, 8, " " + tr("AU/day"), true));
+  addTextItem(item, tr("VY"), getStrNumber("", vhy, 8, " " + tr("AU/day"), true));
+  addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));
+  endExtInfo();
+
   addSeparator(item);
   addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
   addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));

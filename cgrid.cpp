@@ -537,7 +537,7 @@ void CGrid::renderRD(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly)
     precessMatrix(mapView->jd, JD2000, &precMat);
   }
 
-  renderGrid(SMCT_RA_DEC, &precMat, mapView, pPainter, eqOnly);
+  renderGrid(SMCT_RA_DEC, &precMat, mapView, pPainter, eqOnly); 
 }
 
 
