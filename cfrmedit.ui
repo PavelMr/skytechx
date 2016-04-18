@@ -61,29 +61,6 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
-            <property name="suffix">
-             <string>mm</string>
-            </property>
-            <property name="minimum">
-             <double>0.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>1200.000000000000000</double>
-            </property>
-            <property name="value">
-             <double>10.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>X</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QDoubleSpinBox" name="doubleSpinBox">
             <property name="suffix">
              <string>mm</string>
@@ -96,6 +73,29 @@
             </property>
             <property name="value">
              <double>15.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>X</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+            <property name="suffix">
+             <string>mm</string>
+            </property>
+            <property name="minimum">
+             <double>0.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>1200.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>10.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -170,7 +170,6 @@
  </widget>
  <tabstops>
   <tabstop>lineEdit</tabstop>
-  <tabstop>doubleSpinBox</tabstop>
   <tabstop>doubleSpinBox_2</tabstop>
  </tabstops>
  <resources/>

@@ -5,7 +5,7 @@
 
 static double val1 = 25;
 static double val2 = 15;
-static double val3 = 800;
+static double val3;
 static double val4 = 1;
 
 static int    lastIndex = 0;
@@ -15,6 +15,10 @@ CInsertFrmField::CInsertFrmField(QWidget *parent) :
   ui(new Ui::CInsertFrmField)
 {
   ui->setupUi(this);
+
+  QSettings set;
+
+  val3 = set.value("dialogs/frame_field/fov", 800).toDouble();
 
   ui->doubleSpinBox->setValue(val1);
   ui->doubleSpinBox_2->setValue(val2);
@@ -62,6 +66,9 @@ CInsertFrmField::~CInsertFrmField()
       delete dev;
     }
   }
+
+  QSettings set;
+  set.setValue("dialogs/frame_field/fov", val3);
 
   delete ui;
 }

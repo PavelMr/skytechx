@@ -25,10 +25,11 @@ win32-msvc2013    : LIBS += winmm.lib
 #-lssl -lcrypto
 
 Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA /FAcs
+Debug:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp
 
 #Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG /MAP
 Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG
-Debug:win32-msvc2013   :  QMAKE_LFLAGS += /INCREMENTAL:NO /debug:FASTLINK
+Debug:win32-msvc2013   :  QMAKE_LFLAGS += /INCREMENTAL:NO
 
 
 TARGET = skytech_x
