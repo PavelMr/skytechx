@@ -12,7 +12,7 @@ CTimeDialog::CTimeDialog(QWidget *parent) :
 {
   m_view = NULL;
 
-  ui->setupUi(this);
+  ui->setupUi(this);  
 
   ui->radioButton->setChecked(true);
 

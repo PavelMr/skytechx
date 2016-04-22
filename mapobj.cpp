@@ -316,7 +316,15 @@ void mapObjContextMenu(CMapView *map)
 
     if (g_pTelePlugin->getAttributes() & TPI_CAN_SYNC)
     {
-      a = myMenu.addAction(QObject::tr("Sync telescope"));
+      ofiItem_t *info = pcMainWnd->getQuickInfo();
+      if (info == NULL)
+      {
+        a = myMenu.addAction(QObject::tr("Sync telescope to cursor position"));
+      }
+      else
+      {
+        a = myMenu.addAction(QObject::tr("Sync telescope to ") + info->title);
+      }
       a->setData(-7);
       myMenu.addSeparator();
     }
@@ -724,8 +732,23 @@ void mapObjContextMenu(CMapView *map)
       {
         if (msgBoxQuest(pcMainWnd, QObject::tr("Do you really want to synchronize the telescope?")) == QMessageBox::Yes)
         {
-          double r = R2D(ra) / 15.0;
-          double d = R2D(dec);
+          ofiItem_t *info = pcMainWnd->getQuickInfo();
+          double r, d;
+          if (info == NULL)
+          {
+            r = R2D(ra) / 15.0;
+            d = R2D(dec);
+          }
+          else
+          {
+            double ra = info->radec.Ra, dec = info->radec.Dec;
+
+            precess(&ra, &dec, JD2000, map->m_mapView.jd);
+
+            r = R2D(ra) / 15.0;
+            d = R2D(dec);
+          }
+
           g_pTelePlugin->syncTo(r, d);
         }
         return;

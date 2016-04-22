@@ -65,8 +65,8 @@
       <rect>
        <x>50</x>
        <y>10</y>
-       <width>331</width>
-       <height>171</height>
+       <width>311</width>
+       <height>241</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -3394,7 +3394,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
+          <width>254</width>
           <height>360</height>
          </rect>
         </property>
@@ -3425,14 +3425,11 @@ p, li { white-space: pre-wrap; }
           <layout class="QHBoxLayout" name="horizontalLayout_10"/>
          </item>
          <item row="3" column="0">
-          <widget class="QWebView" name="webView">
-           <property name="url">
+          <widget class="QWebView" name="webView" native="true">
+           <property name="url" stdset="0">
             <url>
              <string>about:blank</string>
             </url>
-           </property>
-           <property name="renderHints">
-            <set>QPainter::Antialiasing|QPainter::SmoothPixmapTransform|QPainter::TextAntialiasing</set>
            </property>
           </widget>
          </item>

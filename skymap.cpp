@@ -888,7 +888,11 @@ static void smRenderLegends(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   {
     pPainter->setPen(Qt::white);
   }
-  pPainter->setFont(QFont("arial", 8));
+
+  QFont fnt = QFont("arial");
+  fnt.setPixelSize(10);
+  pPainter->setFont(fnt);
+
 
   // draw stars
   for (float i = c - 10; i <= c; i++)

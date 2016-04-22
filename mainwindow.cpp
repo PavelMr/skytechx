@@ -156,6 +156,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->setupUi(this);
 
+
+
   ui->toolButton_37->setDefaultAction(ui->actionConnect_device);
 
   connect(&m_versionManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotVersionFinished(QNetworkReply*)));
@@ -617,15 +619,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
   connect(&g_cDrawing, SIGNAL(sigChange(bool,bool)), this, SLOT(slotDrawingChange(bool,bool)));
 
-  m_timeDialog = new CTimeDialog(ui->dockTimeDialog);
-  ui->dockTimeDialog->setFixedSize(m_timeDialog->size());
+  m_timeDialog = new CTimeDialog();
+  ui->dockTimeDialog->setWidget(m_timeDialog);
+
   ui->dockTimeDialog->setWindowTitle(tr("Set Time"));
 
-  m_timeWidget = new CTimeWidget(ui->dockTime);
-  ui->dockTime->setFixedSize(m_timeWidget->size());
-  ui->dockTime->setWindowTitle(tr("Time"));
-
-  ui->dockTele->setFixedSize(ui->dockTele->size());
+  m_timeWidget = new CTimeWidget();
+  ui->dockTime->setWidget(m_timeWidget);
+  ui->dockTime->setWindowTitle(tr("Time"));  
 
   ui->dockTime->installEventFilter(this);
   ui->dockTimeDialog->installEventFilter(this);
@@ -2648,7 +2649,7 @@ void MainWindow::on_action_Last_search_object_triggered()
 
 
 ////////////////////////////////////////
-// go to object dialog
+// go to object dialogs
 void MainWindow::on_pushButton_clicked()
 ////////////////////////////////////////
 {
