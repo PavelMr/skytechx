@@ -59,6 +59,7 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
     update = false;
   }
 
+  int index = 0;
   for (int i = 0; i < data->tTextItem.count(); i++)
   {
     ofiTextItem_t *item = &data->tTextItem[i];
@@ -106,8 +107,10 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
 
       if (item->bIsTitle)
       {
-        setFirstColumnSpanned(i, QModelIndex(), true);
+        setFirstColumnSpanned(index, QModelIndex(), true);
+        //qDebug() << i << item->label;
       }
+      index++;
     }
   }
 }
