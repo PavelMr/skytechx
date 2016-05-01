@@ -33,6 +33,9 @@ public:
   virtual bool getAxisRates(QVector<double> &raRate, QVector<double> &decRate) = 0;
   virtual bool moveAxis(int axis, double rate) = 0;
 
+  virtual bool setObserverLocation(double lon, double lat, double elev) = 0;
+  virtual bool getObserverLocation(double &lon, double &lat, double &elev) = 0;
+
 signals:
   void sigConnected(bool connected);
   void sigUpdate(double, double);

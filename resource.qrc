@@ -146,5 +146,6 @@
         <file>res/ico_moon.png</file>
         <file>res/ico_pdf.png</file>
         <file>res/ico_clipboard_from.png</file>
+        <file>res/ico_lmeridian.png</file>
     </qresource>
 </RCC>

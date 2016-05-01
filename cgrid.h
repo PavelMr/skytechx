@@ -17,6 +17,7 @@ public:
   void renderRD(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly = false);
   void renderAA(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly = false);
   void renderEcl(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly = false);  
+  void renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip);
   void renderGrid(int type, SKMATRIX *m, mapView_t *mapView, CSkPainter *pPainter, bool eqOnly);
 };
 

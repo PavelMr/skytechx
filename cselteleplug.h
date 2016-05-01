@@ -6,6 +6,12 @@
 #include "skcore.h"
 #include "cteleplug.h"
 
+#define TP_OBS_LOC_MODE_NONE           0
+#define TP_OBS_LOC_MODE_TO             1
+#define TP_OBS_LOC_MODE_FROM           2
+
+extern int g_telePlugObsLocMode;
+
 namespace Ui {
 class CSelTelePlug;
 }

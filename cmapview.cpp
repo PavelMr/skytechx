@@ -174,7 +174,7 @@ CMapView::CMapView(QWidget *parent) :
     m_mapView.x = settings.value("map/x", 0).toDouble();
     m_mapView.y = settings.value("map/y", 0).toDouble();
     m_mapView.roll = settings.value("map/roll", 0).toDouble();
-    m_mapView.fov = settings.value("map/fov", D2R(90)).toDouble();
+    m_mapView.fov = settings.value("map/fov", D2R(90)).toDouble();    
   }
 
   m_lastFOV = m_mapView.fov;
@@ -1307,8 +1307,8 @@ void CMapView::slotTelePlugChange(double ra, double dec)
 
 void CMapView::slotMapControl(QVector2D map, double rotate, double zoom)
 {
-  addX(-map.x() * 0.1);
-  addY(-map.y() * 0.1);
+  addX(-map.x());
+  addY(-map.y());
 
   if (rotate < 50)
   {
@@ -1392,11 +1392,7 @@ void CMapView::addY(double dir, double mul)
 void CMapView::addX(double val)
 //////////////////////////////
 {
-  double asp = width() / (double)height();
-
-  // TODO: udelat to poradne
-  m_mapView.x += val * asp;
-  rangeDbl(&m_mapView.x, R360);
+  addX(val, 1);
 }
 
 
@@ -1404,8 +1400,7 @@ void CMapView::addX(double val)
 void CMapView::addY(double val)
 ///////////////////////////////
 {
-  m_mapView.y += val;
-  m_mapView.y = CLAMP(m_mapView.y, -R90, R90);
+  addY(val, 1);
 }
 
 

@@ -325,6 +325,24 @@ bool CAscom6::moveAxis(int axis, double rate)
   return true;
 }
 
+bool CAscom6::setObserverLocation(double lon, double lat, double elev)
+{
+  m_device->setProperty("SiteLongitude", lon);
+  m_device->setProperty("SiteLatitude", lat);
+  m_device->setProperty("SiteElevation", elev);
+
+  return true;
+}
+
+bool CAscom6::getObserverLocation(double &lon, double &lat, double &elev)
+{
+  lon = m_device->property("SiteLongitude").toDouble();
+  lat = m_device->property("SiteLatitude").toDouble();
+  elev = m_device->property("SiteElevation").toDouble();
+
+  return true;
+}
+
 bool CAscom6::getAxisRates(QVector <double> &raRate, QVector <double> &decRate)
 {
   QVector <double> *list[2] = {&raRate, &decRate};

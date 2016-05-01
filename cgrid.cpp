@@ -17,9 +17,9 @@ CGrid::CGrid()
 }
 
 static bool liangBarsky (double edgeLeft, double edgeRight, double edgeBottom, double edgeTop,   // Define the x/y clipping values for the border.
-                  double x0src, double y0src, double x1src, double y1src,                        // Define the start and end points of the line.
-                  double &x0clip, double &y0clip, double &x1clip, double &y1clip)                // The output values, so declare these outside.
-{
+                         double x0src, double y0src, double x1src, double y1src,                 // Define the start and end points of the line.
+                         double &x0clip, double &y0clip, double &x1clip, double &y1clip)         // The output values, so declare these outside.
+        {
 
     double t0 = 0.0;
     double t1 = 1.0;
@@ -540,4 +540,37 @@ void CGrid::renderRD(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly)
   renderGrid(SMCT_RA_DEC, &precMat, mapView, pPainter, eqOnly); 
 }
 
+void CGrid::renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip)
+{
+  radec_t rd[2];
+  SKPOINT pt[2];
+  QPointF c[2];
+  QColor color = QColor(g_skSet.map.meridianColor);
 
+  cAstro.convAA2RDRef(R180, R90, &rd[0].Ra, &rd[0].Dec);
+  cAstro.convAA2RDRef(R180, 0, &rd[1].Ra, &rd[1].Dec);
+
+  trfRaDecToPointCorrectFromTo(&rd[0], &pt[0], mapView->jd, JD2000);
+  trfRaDecToPointCorrectFromTo(&rd[1], &pt[1], mapView->jd, JD2000);
+
+  if (trfProjectLine(&pt[0], &pt[1]))
+  {
+    if (clip)
+    {
+      pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
+    }
+
+    pPainter->setPen(QPen(color, 3, Qt::DotLine));
+    pPainter->drawLine(pt[0].sx, pt[0].sy,
+                       pt[1].sx, pt[1].sy);    
+
+    if (trfProjectPoint(&pt[0]))
+    {
+      pPainter->setPen(QPen(color, 3));
+      pPainter->setBrush(Qt::NoBrush);
+      pPainter->drawEllipse(QPointF(pt[0].sx, pt[0].sy), 5, 5);
+    }
+
+    pPainter->setClipping(false);
+  }
+}

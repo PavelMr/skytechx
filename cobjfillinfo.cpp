@@ -348,7 +348,7 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
     return val ? tr("Yes") : tr("No");
   };
 
-  addTextItem(item, tr("In sun light"), yesNo(sats.sats[obj->par2].isInLight));
+  addTextItem(item, tr("Eclipse"), yesNo(!sats.sats[obj->par2].isInLight));
   addTextItem(item, tr("Is hidden"), yesNo(sats.sats[obj->par2].isHidden));
   addTextItem(item, tr("Is transiting"), yesNo(sats.sats[obj->par2].isTransit));
   addTextItem(item, tr("Casting a shadow"), yesNo(sats.sats[obj->par2].isThrowShadow));

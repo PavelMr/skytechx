@@ -92,17 +92,17 @@ void CAstComSearch::on_pushButton_clicked()
   if (!m_bComet)
   {
     asteroid_t *a = (asteroid_t *)data.toLongLong();
-    m_fov = DEG2RAD(AST_ZOOM);
+    m_fov = AST_ZOOM;
     m_rd.Ra = a->orbit.lRD.Ra;
     m_rd.Dec = a->orbit.lRD.Dec;
   }
   else
   {
     comet_t *a = (comet_t *)data.toLongLong();
-    m_fov = DEG2RAD(COM_ZOOM);
+    m_fov = COM_ZOOM;
     m_rd.Ra = a->orbit.lRD.Ra;
     m_rd.Dec = a->orbit.lRD.Dec;
-  }
+  }  
 
   done(DL_OK);
 }

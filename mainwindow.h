@@ -128,6 +128,8 @@ protected:
   QVector <double> m_decRates;
 
 private slots:
+  void slotTelePlugTimer();
+
   void slotVersionFinished(QNetworkReply *reply);
 
   void on_action_Exit_2_triggered();
@@ -639,6 +641,10 @@ private slots:
   void on_pb_tp_stop_clicked();
 
   void on_pb_tc_find_clicked();
+
+  void on_actionShow_local_meridian_triggered();
+
+  void on_actionMeridian_triggered();
 
 private:
   Ui::MainWindow *ui;

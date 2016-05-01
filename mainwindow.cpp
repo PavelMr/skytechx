@@ -241,7 +241,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   connect(this, SIGNAL(sigFlipX(bool)), ui->widget, SLOT(slotCheckedFlipX(bool)));
   ui->actionFlipX->setChecked(false);
-  emit sigFlipX(false);
+  emit sigFlipX(false);  
 
   connect(this, SIGNAL(sigFlipY(bool)), ui->widget, SLOT(slotCheckedFlipY(bool)));
   ui->actionFlipY->setChecked(false);
@@ -342,6 +342,9 @@ MainWindow::MainWindow(QWidget *parent) :
   btGrid3->setState(g_skSet.map.grid[SMCT_ECL].type);
   connect(btGrid3, SIGNAL(sigClicked()), this, SLOT(slotGrid3()));
   ui->tb_grid->insertWidget(NULL, btGrid3);
+
+  ui->actionShow_local_meridian->setChecked(g_skSet.map.showMeridian);
+  on_actionShow_local_meridian_triggered();
 
   ui->actionAutomatic_grid->setChecked(g_skSet.map.autoGrid);
   on_actionAutomatic_grid_triggered();
@@ -1212,6 +1215,11 @@ void MainWindow::saveAndExit()
   if (g_autoSave.mapPosition)
   {
     settings.setValue("map/mode", ui->widget->m_mapView.coordType);
+
+    if (ui->widget->m_mapView.epochJ2000 && ui->widget->m_mapView.coordType == SMCT_RA_DEC)
+    {
+      precess(&ui->widget->m_mapView.x, &ui->widget->m_mapView.y, JD2000, ui->widget->m_mapView.jd);
+    }
   }
 
   ui->widget->saveSetting();
@@ -2110,7 +2118,7 @@ void MainWindow::on_actionFlipX_toggled(bool arg1)
 //////////////////////////////////////////////////
 void MainWindow::on_actionFlipY_toggled(bool arg1)
 //////////////////////////////////////////////////
-{
+{  
   emit sigFlipY(arg1);
 }
 
@@ -2940,6 +2948,13 @@ void MainWindow::on_actionPosition_triggered()
   }
 }
 
+void MainWindow::on_actionMeridian_triggered()
+{
+  double ra, dec;
+
+  cAstro.convAA2RDRef(R180, D2R(20), &ra, &dec);
+  ui->widget->centerMap(ra, dec, D2R(60));
+}
 
 ///////////////////////////////////////////
 void MainWindow::on_actionNorth_triggered()
@@ -3417,11 +3432,18 @@ void MainWindow::on_actionConnect_device_triggered()
       g_soundManager.play(MC_CONNECT);
 
       g_pTelePlugin->getAxisRates(m_raRates, m_decRates);
+      //g_pTelePlugin->setObserverLocation(15, 40, 123);
     }
     ui->widget->repaintMap();
     slotTimeUpdate();
   }
 }
+
+void MainWindow::slotTelePlugTimer()
+{
+
+}
+
 
 ///////////////////////////////////////////////////////////
 void MainWindow::on_actionSelect_world_location_triggered()
@@ -6181,3 +6203,12 @@ void MainWindow::on_pb_tc_find_clicked()
 {
   ui->widget->centerMap(ui->widget->m_lastTeleRaDec.Ra, ui->widget->m_lastTeleRaDec.Dec, CM_UNDEF);
 }
+
+void MainWindow::on_actionShow_local_meridian_triggered()
+{
+  g_skSet.map.showMeridian = ui->actionShow_local_meridian->isChecked();
+
+  ui->widget->repaintMap();
+}
+
+

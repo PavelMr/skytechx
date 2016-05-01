@@ -40,6 +40,8 @@ public:
   bool getDriverProperty(const QString &name, QVariant &value);
   bool getAxisRates(QVector<double> &raRate, QVector<double> &decRate);
   bool moveAxis(int axis, double rate);
+  bool setObserverLocation(double lon, double lat, double elev);
+  bool getObserverLocation(double &lon, double &lat, double &elev);
 
 protected:
   QAxObject *m_device;

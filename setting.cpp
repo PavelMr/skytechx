@@ -229,6 +229,9 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.grid.auto", set->map.autoGrid, ds);
   writeVal("map.grid.show.labels", set->map.showGridLabels, ds);
 
+  writeVal("map.grid.show.showMeridian", set->map.showMeridian, ds);
+  writeVal("map.grid.show.meridianColor", set->map.meridianColor, ds);
+
   // background
   writeVal("map.background.bStatic", set->map.background.bStatic, ds);
   writeVal("map.background.staticColor", set->map.background.staticColor, ds);
@@ -546,6 +549,9 @@ bool setLoad(QString name, setting_t *set)
 
   set->map.autoGrid = readVal("map.grid.auto", true, tMap).toBool();
   set->map.showGridLabels = readVal("map.grid.show.labels", true, tMap).toBool();
+
+  set->map.showMeridian = readVal("map.grid.show.showMeridian", false, tMap).toBool();
+  set->map.meridianColor = readVal("map.grid.show.meridianColor", MRGB(128, 150, 128), tMap).toUInt();
 
   // background
   set->map.background.bStatic = readVal("map.background.bStatic", false, tMap).toBool();

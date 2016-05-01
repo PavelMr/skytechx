@@ -3519,6 +3519,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionEast"/>
    <addaction name="actionWest"/>
    <addaction name="actionZenith"/>
+   <addaction name="actionMeridian"/>
   </widget>
   <widget class="QToolBar" name="tb_grid">
    <property name="windowTitle">
@@ -3651,6 +3652,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionCenter_of_screen"/>
    <addaction name="actionShow_Hide_lunar_features"/>
    <addaction name="actionShow_planet_axis"/>
+   <addaction name="actionShow_local_meridian"/>
   </widget>
   <widget class="QToolBar" name="tb_map">
    <property name="windowTitle">
@@ -5506,6 +5508,29 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>If checked then solar system is geocentric</string>
+   </property>
+  </action>
+  <action name="actionShow_local_meridian">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_lmeridian.png</normaloff>:/res/ico_lmeridian.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show local meridian</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/hide local meridian</string>
+   </property>
+  </action>
+  <action name="actionMeridian">
+   <property name="text">
+    <string>M</string>
+   </property>
+   <property name="toolTip">
+    <string>Look at meridian</string>
    </property>
   </action>
  </widget>

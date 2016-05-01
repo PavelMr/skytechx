@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>9</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1732,6 +1732,20 @@
                     </property>
                    </widget>
                   </item>
+                  <item>
+                   <widget class="QLabel" name="label_121">
+                    <property name="text">
+                     <string>Local meridian</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="CPushColorButton" name="pushButton_71">
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
                 </widget>
                </item>
@@ -2799,7 +2813,7 @@
                 <layout class="QVBoxLayout" name="verticalLayout_39">
                  <item>
                   <layout class="QFormLayout" name="formLayout_6">
-                   <item row="0" column="0">
+                   <item row="1" column="0">
                     <widget class="QGroupBox" name="groupBox_19">
                      <property name="title">
                       <string>Great Red Spot</string>
@@ -2864,6 +2878,31 @@
                          <widget class="QDateEdit" name="dateEdit">
                           <property name="calendarPopup">
                            <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_107">
+                        <item>
+                         <widget class="Line" name="line_7">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="pushButton_69">
+                          <property name="text">
+                           <string>Open GRS at CalSky site</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="pushButton_70">
+                          <property name="text">
+                           <string>Open JUPOS GRS site</string>
                           </property>
                          </widget>
                         </item>
@@ -4589,7 +4628,7 @@
             <item>
              <widget class="QLabel" name="label_119">
               <property name="text">
-               <string>The order of use ephemeris</string>
+               <string>The order of use ephemeris (Files must be stored in SkytechX\data\jplde)</string>
               </property>
              </widget>
             </item>

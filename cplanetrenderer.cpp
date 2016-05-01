@@ -257,7 +257,7 @@ void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, fl
     pPainter->drawArc(QRect(-w, -h, w * 2, h * 2), 0, 180 * 16);
     pPainter->restore();
 
-    // meridian
+    // prime meridian
     pPainter->save();
     pPainter->setBrush(Qt::NoBrush);
     pPainter->setPen(QPen(QColor(g_skSet.map.planet.penColor), 2, Qt::DotLine));
@@ -268,7 +268,10 @@ void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, fl
     SKMATRIX matScale;
     SKMATRIX mat;
 
-    SKMATRIXRotateY(&matY, -o->cMer);
+    if (o->type != PT_SUN)
+      SKMATRIXRotateY(&matY, -o->cMer);
+    else
+      SKMATRIXRotateY(&matY, o->cMer);
     double angp;
 
     if (view->flipX + view->flipY == 1)

@@ -7,6 +7,7 @@ CLvQInfo::CLvQInfo(QWidget *parent) :
   QTreeView(parent)
 {
   m_bFilled = false;
+  lastCount = 0;
 }
 
 /////////////////////
@@ -45,7 +46,9 @@ void CLvQInfo::init(QToolBox *parent)
 /////////////////////////////////////////////////////
 void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
 /////////////////////////////////////////////////////
-{
+{  
+  int count = 0;
+
   m_bFilled = true;
 
   m_info = *data;
@@ -53,16 +56,27 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
 
   QStandardItemModel *m = (QStandardItemModel *)model();
 
-  if (!update || m->rowCount() != data->tTextItem.count())
+  for (int i = 0; i < data->tTextItem.count(); i++)
+  {
+    ofiTextItem_t *item = &data->tTextItem[i];
+
+    if (item->extInfo && !g_extObjInfo)
+      continue;
+
+    count++;
+  }
+
+  if (!update || count != lastCount)
   {
     m->removeRows(0, m->rowCount());
+    lastCount = count;
     update = false;
   }
 
   int index = 0;
   for (int i = 0; i < data->tTextItem.count(); i++)
   {
-    ofiTextItem_t *item = &data->tTextItem[i];
+    ofiTextItem_t *item = &data->tTextItem[i];    
 
     if (item->extInfo && !g_extObjInfo)
     {
@@ -70,14 +84,15 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
     }
 
     if (update)
-    {
-      m->item(i, 1)->setText(item->value);
+    {      
+      m->item(index, 1)->setText(item->value);
+      index++;
     }
     else
     {
       QList <QStandardItem *> tRow;
       QStandardItem *label = new QStandardItem;
-      QStandardItem *value = new QStandardItem;
+      QStandardItem *value = new QStandardItem;                  
 
       QFont f = label->font();
       f.setPointSizeF(f.pointSizeF() - 0.25);
@@ -98,7 +113,7 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
       {
         value->setText(item->value);
         value->setToolTip(item->value);
-      }
+      }   
 
       tRow.append(label);
       tRow.append(value);
@@ -107,12 +122,11 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
 
       if (item->bIsTitle)
       {
-        setFirstColumnSpanned(index, QModelIndex(), true);
-        //qDebug() << i << item->label;
+        setFirstColumnSpanned(index, QModelIndex(), true);     
       }
       index++;
     }
-  }
+  }  
 }
 
 ///////////////////////////

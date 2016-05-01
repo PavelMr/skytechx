@@ -19,6 +19,7 @@ public:
 
   ofiItem_t m_info;
   bool      m_bFilled;
+  int       lastCount;
 signals:
 
 protected:

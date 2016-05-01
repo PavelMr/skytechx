@@ -241,6 +241,8 @@ typedef struct
   setGrid_t  grid[SMCT_COUNT];
   bool       autoGrid;
   bool       showGridLabels;
+  bool       showMeridian;
+  QRgb       meridianColor;
 
   bool       smartLabels;
 

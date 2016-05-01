@@ -42,9 +42,10 @@ void CSatEvents::solve(double jd, int pln)
   bool   transit[MAX_XYZ_SATS];
   bool   throwShd[MAX_XYZ_SATS];
   bool   hidden[MAX_XYZ_SATS];
+  bool   inSun[MAX_XYZ_SATS];
   double lastSep1[MAX_XYZ_SATS];
   double lastSep2[MAX_XYZ_SATS];
-  double tz = m_view.geo.tz;
+  double tz = m_view.geo.tz;  
 
   setWindowTitle(QString(tr("Events for %1")).arg(getStrDate(jd, tz)));
 
@@ -75,11 +76,12 @@ void CSatEvents::solve(double jd, int pln)
     {
       for (int i = 0; i < sats.sats.count(); i++)
       {
-        double s = qAbs(sats.sats[i].ex);//sats.sats[i].distance;
+        double s = qAbs(sats.sats[i].ex);
 
         transit[i] = sats.sats[i].isTransit;
         hidden[i] = sats.sats[i].isHidden;
         throwShd[i] = sats.sats[i].isThrowShadow;
+        inSun[i] = sats.sats[i].isInLight;
         lastSep1[i] = lastSep2[i] = s;
       }
       first = false;
@@ -123,6 +125,25 @@ void CSatEvents::solve(double jd, int pln)
           item->setText(QString(tr("Begin transit of %1")).arg(sats.sats[i].name));
         else
           item->setText(QString(tr("End of transit %1")).arg(sats.sats[i].name));
+        m->setItem(row, 1, item);
+
+        row++;
+      }
+
+      if (inSun[i] != sats.sats[i].isInLight && !sats.sats[i].isHidden)
+      {
+        inSun[i] = sats.sats[i].isInLight;
+
+        item = new QStandardItem;
+        item->setText(getStrTime(j, tz, true));
+        item->setData(j);
+        m->setItem(row, 0, item);
+
+        item = new QStandardItem;
+        if (inSun[i])
+          item->setText(QString(tr("End of eclipse %1")).arg(sats.sats[i].name));
+        else
+          item->setText(QString(tr("Begin eclipse of %1")).arg(sats.sats[i].name));
         m->setItem(row, 1, item);
 
         row++;

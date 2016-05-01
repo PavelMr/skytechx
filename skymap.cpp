@@ -738,17 +738,27 @@ static void smRenderGrids(mapView_t *mapView, CSkPainter *pPainter)
 ///////////////////////////////////////////////////////////////////
 {
   CGrid grid;
+  bool clip = false;
 
   if (!g_skSet.map.autoGrid)
   {
     if (g_skSet.map.grid[SMCT_RA_DEC].type != GRID_NONE)
+    {
       grid.renderRD(mapView, pPainter, g_skSet.map.grid[SMCT_RA_DEC].type == GRID_EQ);
+      clip = true;
+    }
 
     if (g_skSet.map.grid[SMCT_ALT_AZM].type != GRID_NONE)
+    {
       grid.renderAA(mapView, pPainter, g_skSet.map.grid[SMCT_ALT_AZM].type == GRID_EQ);
+      clip = true;
+    }
 
     if (g_skSet.map.grid[SMCT_ECL].type != GRID_NONE)
+    {
       grid.renderEcl(mapView, pPainter, g_skSet.map.grid[SMCT_ECL].type == GRID_EQ);
+      clip = true;
+    }
   }
   else
   {
@@ -759,18 +769,21 @@ static void smRenderGrids(mapView_t *mapView, CSkPainter *pPainter)
     {
       draw[0] = true;
       eq[0] = false;
+      clip = true;
     }
 
     if (mapView->coordType == SMCT_ALT_AZM)
     {
       draw[1] = true;
       eq[1] = false;
+      clip = true;
     }
 
     if (mapView->coordType == SMCT_ECL)
     {
       draw[2] = true;
       eq[2] = false;
+      clip = true;
     }
 
     if (draw[0])
@@ -782,6 +795,9 @@ static void smRenderGrids(mapView_t *mapView, CSkPainter *pPainter)
     if (draw[2])
       grid.renderEcl(mapView, pPainter, eq[2]);
   }
+
+  if (g_skSet.map.showMeridian)
+    grid.renderMeridian(mapView, pPainter, clip);
 }
 
 

@@ -467,6 +467,7 @@ void CSetting::setValues()
   ui->pushButton_9->setColor(set.map.grid[SMCT_ALT_AZM].color);
   ui->pushButton_10->setColor(set.map.grid[SMCT_ECL].color);
   ui->pushButton_55->setFontColor(setFonts[FONT_GRID], set.fonst[FONT_GRID].color);
+  ui->pushButton_71->setColor(set.map.meridianColor);
   ui->checkBox_11->setChecked(set.map.showGridLabels);
 
   // horizon
@@ -2420,4 +2421,25 @@ void CSetting::on_pushButton_67_clicked()
 void CSetting::on_pushButton_68_clicked()
 {
   ui->jplList->swap(ui->jplList->getSelectionIndex(), ui->jplList->getSelectionIndex() + 1, ui->jplList->getSelectionIndex() + 1);
+}
+
+void CSetting::on_pushButton_69_clicked()
+{
+  QDesktopServices::openUrl(QUrl("https://www.calsky.com/?Jupiter=&sub=8"));
+}
+
+void CSetting::on_pushButton_70_clicked()
+{
+  QDesktopServices::openUrl(QUrl("http://jupos.privat.t-online.de/rGrs.htm"));
+}
+
+void CSetting::on_pushButton_71_clicked()
+{
+  QColorDialog dlg(set.map.meridianColor, this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    set.map.meridianColor = dlg.currentColor().rgb();
+    ui->pushButton_71->setColor(dlg.currentColor());
+  }
 }
