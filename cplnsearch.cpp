@@ -46,7 +46,9 @@ void CPlnSearch::on_pushButton_2_clicked()
 
     m_ra = o.lRD.Ra;
     m_dec = o.lRD.Dec;
-    m_fov = getOptObjFov(o.sx / 3600., o.sy / 3600.);
+    m_fov = getOptObjFov(o.sx / 3600., o.sy / 3600.);    
+
+    m_mapObj.type = MO_EARTH_SHD;
 
     done(DL_OK);
     return;
@@ -57,6 +59,10 @@ void CPlnSearch::on_pushButton_2_clicked()
   m_ra = o.lRD.Ra;
   m_dec = o.lRD.Dec;
   m_fov = getOptObjFov(o.sx / 3600., o.sy / 3600.);
+
+  m_mapObj.type = MO_PLANET;
+  m_mapObj.par1 = p;
+  m_mapObj.par2 = 0;
 
   done(DL_OK);
 }

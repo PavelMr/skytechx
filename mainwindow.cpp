@@ -2897,6 +2897,16 @@ void MainWindow::on_actionStar_by_proper_name_triggered()
     double dec = dlg.m_tycho->rd.Dec;
 
     precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
+
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
+
     ui->widget->centerMap(ra, dec, D2R(10));
   }
 }
@@ -2910,6 +2920,16 @@ void MainWindow::on_actionDOS_by_common_name_triggered()
   if (dlg.exec())
   {
     precess(&dlg.m_ra, &dlg.m_dec, JD2000, ui->widget->m_mapView.jd);
+
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
+
     ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
   }
 }
@@ -4016,6 +4036,15 @@ void MainWindow::on_actionAsteroid_triggered()
 
   if (dlg.exec() == DL_OK)
   {
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
+
     ui->widget->centerMap(dlg.m_rd.Ra, dlg.m_rd.Dec, dlg.m_fov);
   }
 }
@@ -4228,6 +4257,16 @@ void MainWindow::on_actionStar_in_Tycho_catalogue_triggered()
   if (dlg.exec() == DL_OK)
   {
     precess(&dlg.m_rd.Ra, &dlg.m_rd.Dec, JD2000, ui->widget->m_mapView.jd);
+
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
+
     ui->widget->centerMap(dlg.m_rd.Ra, dlg.m_rd.Dec, D2R(5));
   }
 }
@@ -4381,6 +4420,15 @@ void MainWindow::on_actionComet_triggered()
 
   if (dlg.exec() == DL_OK)
   {
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
+
     ui->widget->centerMap(dlg.m_rd.Ra, dlg.m_rd.Dec, dlg.m_fov);
   }
 }
@@ -4489,6 +4537,15 @@ void MainWindow::on_actionPlanets_Sun_Moon_triggered()
 
   if (dlg.exec() == DL_OK)
   {
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
+
     ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
   }
 }
@@ -5456,6 +5513,14 @@ void MainWindow::on_actionSatellite_2_triggered()
 
   if (dlg.exec() == DL_OK)
   {
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
     ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
   }
 }

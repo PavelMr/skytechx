@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "cmapview.h"
+#include "mapobj.h"
 
 namespace Ui {
 class CSatelliteSearch;
@@ -19,6 +20,8 @@ public:
   double m_ra;
   double m_dec;
   double m_fov;
+  mapObj_t m_mapObj;
+
 
 private slots:
   void on_pushButton_2_clicked();

@@ -54,13 +54,15 @@ void CSatelliteSearch::on_pushButton_clicked()
   }
 
   cAstro.setParam(m_mapView);
-  cAstro.convAA2RDRef(s.azimuth, s.elevation, &rd.Ra, &rd.Dec);
-
-  //qDebug() << index << s.elevation << s.azimuth;
+  cAstro.convAA2RDRef(s.azimuth, s.elevation, &rd.Ra, &rd.Dec);  
 
   m_ra = rd.Ra;
   m_dec = rd.Dec;
   m_fov = getOptObjFov(0, 0, D2R(2.5));
+
+  m_mapObj.type = MO_SATELLITE;
+  m_mapObj.par1 = index;
+  m_mapObj.par2 = 0;
 
   done(DL_OK);
 }

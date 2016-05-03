@@ -92,6 +92,10 @@ void CTychoSearch::getStar()
 
   m_rd.Ra = s->rd.Ra;
   m_rd.Dec = s->rd.Dec;
+
+  m_mapObj.type = MO_TYCSTAR;
+  m_mapObj.par1 = m_reg;
+  m_mapObj.par2 = m_index;
 }
 
 ////////////////////////////////////////////

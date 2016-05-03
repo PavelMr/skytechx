@@ -868,7 +868,7 @@
           <x>0</x>
           <y>0</y>
           <width>348</width>
-          <height>360</height>
+          <height>186</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1621,7 +1621,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>413</width>
+          <width>350</width>
           <height>527</height>
          </rect>
         </property>
@@ -1927,8 +1927,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>360</height>
+          <width>224</width>
+          <height>266</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2939,7 +2939,7 @@ background-color: rgb(0, 0, 0);</string>
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>360</height>
+          <height>329</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3143,7 +3143,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>237</width>
+          <width>157</width>
           <height>431</height>
          </rect>
         </property>
@@ -3246,8 +3246,8 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>360</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3394,8 +3394,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>360</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5530,7 +5530,7 @@ p, li { white-space: pre-wrap; }
     <string>M</string>
    </property>
    <property name="toolTip">
-    <string>Look at meridian</string>
+    <string>Look at local meridian</string>
    </property>
   </action>
  </widget>

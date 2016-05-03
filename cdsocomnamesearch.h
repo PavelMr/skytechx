@@ -25,6 +25,7 @@
 
 #include "skcore.h"
 #include "cmapview.h"
+#include "mapobj.h"
 
 namespace Ui {
     class CDSOComNameSearch;
@@ -37,6 +38,8 @@ class CDSOComNameSearch : public QDialog
 public:
     explicit CDSOComNameSearch(QWidget *parent, mapView_t *view);
     ~CDSOComNameSearch();
+
+    mapObj_t m_mapObj;
     double m_ra;
     double m_dec;
     double m_fov;
@@ -48,8 +51,6 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
-
-    void on_listWidget_doubleClicked(const QModelIndex &);
 
 private:
     Ui::CDSOComNameSearch *ui;

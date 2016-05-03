@@ -64,6 +64,18 @@ void CDlgSrchStarName::on_pushButton_clicked()
 
   m_tycho = (tychoStar_t *)data.toLongLong();
 
+  int reg, index;
+  if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, m_tycho->tyc1, m_tycho->tyc2, m_tycho->tyc3, 0, reg, index))
+  {
+    m_mapObj.type = MO_TYCSTAR;
+    m_mapObj.par1 = reg;
+    m_mapObj.par2 = index;
+  }
+  else
+  {
+    m_mapObj.type = MO_EMPTY;
+  }
+
   done(DL_OK);
 }
 

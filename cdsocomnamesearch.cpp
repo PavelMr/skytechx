@@ -70,6 +70,11 @@ void CDSOComNameSearch::on_pushButton_clicked()
     m_ra = dso->rd.Ra;
     m_dec = dso->rd.Dec;
     m_fov = getOptObjFov(dso->sx / 3600., dso->sy / 3600.);
+
+    m_mapObj.type = MO_DSO;
+    m_mapObj.par1 = (qint64)dso;
+    m_mapObj.par2 = 0;
+
     done(1);
     return;
   }
@@ -84,7 +89,3 @@ void CDSOComNameSearch::on_pushButton_2_clicked()
   done(0);
 }
 
-void CDSOComNameSearch::on_listWidget_doubleClicked(const QModelIndex &)
-{
-  on_pushButton_clicked();
-}

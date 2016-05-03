@@ -22,6 +22,7 @@
 
 #include <QDialog>
 #include "skcore.h"
+#include "mapobj.h"
 
 namespace Ui {
 class CAstComSearch;
@@ -37,6 +38,7 @@ public:
 
   radec_t m_rd;
   double  m_fov;
+  mapObj_t m_mapObj;
 
 protected:
   void changeEvent(QEvent *e);

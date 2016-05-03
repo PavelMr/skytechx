@@ -5,7 +5,9 @@
 
 // TODO: udelat kruh pro absolutni viditelny obzor. ???? uz chapu (kruh pro min deklinaci 90 - lat)
 
+extern bool g_showHorizon;
 extern bool g_showLabels;
+
 static int scrWidth;
 static int scrHeight;
 static int clipSize = 30;
@@ -540,6 +542,7 @@ void CGrid::renderRD(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly)
   renderGrid(SMCT_RA_DEC, &precMat, mapView, pPainter, eqOnly); 
 }
 
+// local meridian
 void CGrid::renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip)
 {
   radec_t rd[2];
@@ -569,7 +572,15 @@ void CGrid::renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip)
       pPainter->setPen(QPen(color, 3));
       pPainter->setBrush(Qt::NoBrush);
       pPainter->drawEllipse(QPointF(pt[0].sx, pt[0].sy), 5, 5);
+    }        
+
+    if (trfProjectPoint(&pt[1]))
+    {
+      pPainter->setPen(QPen(color, 1));
+      pPainter->setBrush(color);
+      pPainter->drawEllipse(QPointF(pt[1].sx, pt[1].sy), 5, 5);
     }
+
 
     pPainter->setClipping(false);
   }

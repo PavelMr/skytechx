@@ -22,7 +22,7 @@ CAstComSearch::CAstComSearch(QWidget *parent, double jd, bool isComet) :
 
       astSolve(a, jd);
 
-      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a, a->orbit.lAlt > 0);
+      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a, a->orbit.lAlt > 0, i);
     }
   }
   else
@@ -38,7 +38,7 @@ CAstComSearch::CAstComSearch(QWidget *parent, double jd, bool isComet) :
 
       comSolve(a, jd);
 
-      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a, a->orbit.lAlt > 0);
+      ui->treeView->addRow(a->name, a->orbit.mag, (qint64)a, a->orbit.lAlt > 0, i);
     }
   }
 
@@ -83,6 +83,7 @@ void CAstComSearch::on_pushButton_clicked()
 ///////////////////////////////////////////
 {
   QVariant data = ui->treeView->getSelectedData();
+  QVariant index = ui->treeView->getSelectedData(2);
 
   if (!data.isValid())
   {
@@ -95,6 +96,10 @@ void CAstComSearch::on_pushButton_clicked()
     m_fov = AST_ZOOM;
     m_rd.Ra = a->orbit.lRD.Ra;
     m_rd.Dec = a->orbit.lRD.Dec;
+
+    m_mapObj.type = MO_ASTER;
+    m_mapObj.par1 = index.toInt();
+    m_mapObj.par2 = (qint64)a;
   }
   else
   {
@@ -102,6 +107,10 @@ void CAstComSearch::on_pushButton_clicked()
     m_fov = COM_ZOOM;
     m_rd.Ra = a->orbit.lRD.Ra;
     m_rd.Dec = a->orbit.lRD.Dec;
+
+    m_mapObj.type = MO_COMET;
+    m_mapObj.par1 = index.toInt();
+    m_mapObj.par2 = (qint64)a;
   }  
 
   done(DL_OK);

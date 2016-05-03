@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "skcore.h"
+#include "mapobj.h"
 
 namespace Ui {
 class CTychoSearch;
@@ -17,14 +18,15 @@ public:
   explicit CTychoSearch(QWidget *parent = 0);
   ~CTychoSearch();
   radec_t m_rd;
+  mapObj_t m_mapObj;
   
 protected:
   void changeEvent(QEvent *e);
   void notFound(QWidget *w);
-  void getStar(void);
+  void getStar(void);  
 
-  int     m_reg;
-  int     m_index;
+  int      m_reg;
+  int      m_index;
 
 private slots:
   void on_pushButton_2_clicked();

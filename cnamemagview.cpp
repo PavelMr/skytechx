@@ -23,7 +23,7 @@ CNameMagView::CNameMagView(QWidget *parent) :
   header()->setSortIndicator(0, Qt::AscendingOrder);
 }
 
-void CNameMagView::addRow(const QString &name, double mag, const QVariant &data, bool boldFont)
+void CNameMagView::addRow(const QString &name, double mag, const QVariant &data, bool boldFont, const QVariant &data2)
 {
   QStandardItem *itemName = new QStandardItem;
   QStandardItem *itemMag = new QStandardItem;
@@ -31,6 +31,7 @@ void CNameMagView::addRow(const QString &name, double mag, const QVariant &data,
 
   itemName->setText(name);
   itemName->setData(data);
+  itemName->setData(data2, Qt::UserRole + 2);
   itemName->setEditable(false);
 
   QFont fnt = itemName->font();
@@ -54,7 +55,7 @@ void CNameMagView::setHeaderSize(int c1, int c2)
   header()->resizeSection(1, c2);
 }
 
-QVariant CNameMagView::getSelectedData()
+QVariant CNameMagView::getSelectedData(int dataIndex)
 {
   QModelIndexList il = selectionModel()->selectedIndexes();
 
@@ -66,5 +67,5 @@ QVariant CNameMagView::getSelectedData()
   QModelIndex index = m_proxy->mapToSource(il.at(0));
   QStandardItem *item = m_model->item(index.row(), 0);
 
-  return item->data();
+  return item->data(Qt::UserRole + dataIndex);
 }
