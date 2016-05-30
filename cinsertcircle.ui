@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>283</width>
-    <height>168</height>
+    <height>196</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,30 +16,21 @@
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
    <item>
     <layout class="QGridLayout" name="gridLayout" columnstretch="0">
-     <item row="5" column="0">
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label">
+     <item row="2" column="0">
+      <widget class="QRadioButton" name="radioButton_2">
        <property name="text">
-        <string>Diameter (arc min.)</string>
+        <string>Show diameter</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLineEdit" name="lineEdit"/>
+     <item row="1" column="0">
+      <widget class="QRadioButton" name="radioButton">
+       <property name="text">
+        <string>Show text</string>
+       </property>
+      </widget>
      </item>
-     <item row="4" column="0">
+     <item row="7" column="0">
       <widget class="QDoubleSpinBox" name="doubleSpinBox">
        <property name="suffix">
         <string>'</string>
@@ -52,17 +43,40 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QRadioButton" name="radioButton">
+     <item row="8" column="0">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Show text</string>
+        <string>Diameter (arc min.)</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QRadioButton" name="radioButton_2">
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Show diameter</string>
+        <string>Text</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLineEdit" name="lineEdit"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
@@ -105,7 +119,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>radioButton_2</tabstop>
   <tabstop>radioButton</tabstop>
   <tabstop>lineEdit</tabstop>
   <tabstop>doubleSpinBox</tabstop>

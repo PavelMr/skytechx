@@ -21,6 +21,8 @@
 #define CDBSTARSDLG_H
 
 #include "skcore.h"
+#include "mapobj.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -35,6 +37,7 @@ typedef struct
   double  sep;
   float   mag1;
   float   mag2;
+  int     tyc[3];
 } dblStar_t;
 
 class MyProxyDblModel: public QSortFilterProxyModel
@@ -64,6 +67,7 @@ public:
 
   radec_t m_rd;
   double m_fov;
+  mapObj_t m_mapObj;
 
 protected:
   QList <dblStar_t> tList;

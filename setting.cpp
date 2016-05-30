@@ -805,12 +805,9 @@ void setDefaultStarMagRanges(setting_t *set)
 }
 
 void restoreFromNightConfig(void)
-{
-  //g_skSet = skSetTmp;
-  //setCreateFonts();
+{  
   g_pApp->setStyleSheet(qssStyle);
-  g_nightConfig = false;
-  //cStarRenderer.open(g_skSet.map.starBitmapName);
+  g_nightConfig = false; 
 }
 
 void restoreFromPrintConfig(void)
@@ -821,92 +818,10 @@ void restoreFromPrintConfig(void)
 }
 
 void setNightConfig(void)
-{
-  QRgb black = MRGB(0,0,0);
-  QRgb dred = MRGB(64,0,0);
-  QRgb lred = MRGB(128,0,0);
-  QRgb lred2 = MRGB(100,0,0);
-
-  //skSetTmp = g_skSet;
-
+{    
   g_nightConfig = true;
   qssStyle = g_pApp->styleSheet();
-  g_pApp->setStyleSheet(readAllFile("../data/styles/night.qss"));
-
-  /*
-
-  for (int i = 0; i < FONT_COUNT; i++)
-  {
-    g_skSet.fonst[i].color = lred;
-  }
-
-  // earth shadow
-  g_skSet.map.es.color = dred;
-
-  g_skSet.map.starBitmapName = "../data/stars/bitmaps/night.png";
-  cStarRenderer.open(g_skSet.map.starBitmapName);
-
-  // horizon
-  g_skSet.map.hor.color = dred;
-
-  // dso
-  g_skSet.map.dsoColors[DSO_COL_NEBULA] = dred;
-  g_skSet.map.dsoColors[DSO_COL_BRIGHT_NEB] = dred;;
-  g_skSet.map.dsoColors[DSO_COL_DARK_NEB] = dred;
-  g_skSet.map.dsoColors[DSO_COL_OPEN_CLS] = dred;;
-  g_skSet.map.dsoColors[DSO_COL_GLOB_CLS] = dred;
-  g_skSet.map.dsoColors[DSO_COL_PLN_NEB] = dred;
-  g_skSet.map.dsoColors[DSO_COL_GALAXY] = dred;
-  g_skSet.map.dsoColors[DSO_COL_GAL_CLS] = dred;
-  g_skSet.map.dsoColors[DSO_COL_STAR] = dred;
-  g_skSet.map.dsoColors[DSO_COL_OTHER] = dred;
-  g_skSet.map.dsoShapeColor[0] = lred;
-  g_skSet.map.dsoShapeColor[1] = dred;
-  g_skSet.map.dsoShapeColor[2] = lred;
-
-  // grids
-  g_skSet.map.grid[SMCT_RA_DEC].color = dred;
-  g_skSet.map.grid[SMCT_ALT_AZM].color = dred;
-  g_skSet.map.grid[SMCT_ECL].color = dred;
-  g_skSet.map.grid[SMCT_GAL].color = dred;
-
-  // background
-  g_skSet.map.background.bStatic = true;
-  g_skSet.map.background.staticColor = black;
-
-  // constellation
-  g_skSet.map.constellation.main.color = lred;
-  g_skSet.map.constellation.sec.color = lred;
-  g_skSet.map.constellation.bnd.color = lred;
-
-  g_skSet.map.measurePoint.color = lred;
-
-  // planets
-  g_skSet.map.planet.penColor = lred;
-  g_skSet.map.planet.brColor = lred2;
-  g_skSet.map.planet.satColor = lred;
-  g_skSet.map.planet.satColorShd = dred;
-  g_skSet.map.planet.lunarFeatures = lred;
-
-  // comet & aster.
-  g_skSet.map.comet.color = lred;
-  g_skSet.map.aster.color = lred;
-
-  // milky way
-  //g_skSet.map.milkyWay.bShow = true;
-  g_skSet.map.milkyWay.light = 30;
-  g_skSet.map.milkyWay.dark = 15;
-  g_skSet.map.milkyWay.darkest = 8;
-
-  // drawing
-  g_skSet.map.drawing.color = lred;
-
-  // object selection
-  g_skSet.map.objSelectionColor = lred;
-
-  // tracking
-  g_skSet.map.tracking.color = lred;
-  */
+  g_pApp->setStyleSheet(readAllFile("../data/styles/night.qss"));  
 }
 
 

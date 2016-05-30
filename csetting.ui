@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>5</number>
+            <number>9</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2893,13 +2893,6 @@
                          </widget>
                         </item>
                         <item>
-                         <widget class="QPushButton" name="pushButton_69">
-                          <property name="text">
-                           <string>Open GRS at CalSky site</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
                          <widget class="QPushButton" name="pushButton_70">
                           <property name="text">
                            <string>Open JUPOS GRS site</string>
@@ -5567,12 +5560,12 @@ then PLAN404 or VSOP87 is used</string>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>69</y>
+     <x>417</x>
+     <y>192</y>
     </hint>
     <hint type="destinationlabel">
-     <x>51</x>
-     <y>69</y>
+     <x>455</x>
+     <y>192</y>
     </hint>
    </hints>
   </connection>
@@ -5583,12 +5576,12 @@ then PLAN404 or VSOP87 is used</string>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>69</y>
+     <x>417</x>
+     <y>241</y>
     </hint>
     <hint type="destinationlabel">
-     <x>51</x>
-     <y>69</y>
+     <x>455</x>
+     <y>241</y>
     </hint>
    </hints>
   </connection>
@@ -5599,12 +5592,12 @@ then PLAN404 or VSOP87 is used</string>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>69</y>
+     <x>417</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
-     <x>51</x>
-     <y>69</y>
+     <x>455</x>
+     <y>290</y>
     </hint>
    </hints>
   </connection>

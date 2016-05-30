@@ -2423,11 +2423,6 @@ void CSetting::on_pushButton_68_clicked()
   ui->jplList->swap(ui->jplList->getSelectionIndex(), ui->jplList->getSelectionIndex() + 1, ui->jplList->getSelectionIndex() + 1);
 }
 
-void CSetting::on_pushButton_69_clicked()
-{
-  QDesktopServices::openUrl(QUrl("https://www.calsky.com/?Jupiter=&sub=8"));
-}
-
 void CSetting::on_pushButton_70_clicked()
 {
   QDesktopServices::openUrl(QUrl("http://jupos.privat.t-online.de/rGrs.htm"));

@@ -58,6 +58,11 @@ CDbStarsDlg::CDbStarsDlg(QWidget *parent) :
       {
         dbl.mag1 = cTYC.getVisMag(t1);
         dbl.mag2 = cTYC.getVisMag(t2);
+
+        dbl.tyc[0] = t1->tyc1;
+        dbl.tyc[1] = t1->tyc2;
+        dbl.tyc[2] = t1->tyc3;
+
         float sep = anSep(t1->rd.Ra, t1->rd.Dec, t2->rd.Ra, t2->rd.Dec);
         float pa = trfGetPosAngle(t2->rd.Ra, t2->rd.Dec, t1->rd.Ra, t1->rd.Dec);
         getRDCenter(&dbl.rd, &t1->rd, &t2->rd);
@@ -158,6 +163,18 @@ void CDbStarsDlg::on_pushButton_2_clicked()
 
   m_rd = dbl->rd;
   m_fov = dbl->sep * 20;
+
+  int reg, tycIndex;
+  if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, dbl->tyc[0], dbl->tyc[1], dbl->tyc[2], 0, reg, tycIndex))
+  {
+    m_mapObj.type = MO_TYCSTAR;
+    m_mapObj.par1 = reg;
+    m_mapObj.par2 = tycIndex;
+  }
+  else
+  {
+    m_mapObj.type = MO_EMPTY;
+  }
 
   done(DL_OK);
 }

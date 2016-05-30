@@ -4521,6 +4521,16 @@ void MainWindow::on_actionDoube_star_triggered()
   if (dlg.exec() == DL_OK)
   {
     precess(&dlg.m_rd.Ra, &dlg.m_rd.Dec, JD2000, ui->widget->m_mapView.jd);
+
+    if (dlg.m_mapObj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_mapObj, &item);
+      fillQuickInfo(&item);
+    }
+
     ui->widget->centerMap(dlg.m_rd.Ra, dlg.m_rd.Dec, dlg.m_fov);
   }
 }

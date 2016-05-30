@@ -28,8 +28,8 @@ C3DSolarWidget::C3DSolarWidget(QWidget *parent) :
   m_translate = QVector3D(0, 0, 20);
   cometTail[0] = QVector3D(-0.1f, 0, 0);
   cometTail[1] = QVector3D(+0.1f, 0, 0);
-  cometTail[2] = QVector3D(-0.1f, 0, 0.1);
-  cometTail[3] = QVector3D(+0.1f, 0, 0.1);
+  cometTail[2] = QVector3D(-0.1f, 0, 0.1f);
+  cometTail[3] = QVector3D(+0.1f, 0, 0.1f);
 }
 
 void C3DSolarWidget::setView(mapView_t *view, bool genOrbit)

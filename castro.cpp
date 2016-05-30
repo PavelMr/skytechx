@@ -26,7 +26,7 @@ static double Rearth = 4.26352325064817808471e-5;
 
 // delta T table 0..2013
 static double deltaTable[][2] =
-                         {0,    +10600,
+                         {1,    +10600,
                           50,  	+10100,
                           100,	+9600,
                           150,	+9100,
