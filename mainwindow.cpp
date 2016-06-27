@@ -2972,8 +2972,8 @@ void MainWindow::on_actionMeridian_triggered()
 {
   double ra, dec;
 
-  cAstro.convAA2RDRef(R180, D2R(20), &ra, &dec);
-  ui->widget->centerMap(ra, dec, D2R(60));
+  cAstro.convAA2RDRef(R180, D2R(20), &ra, &dec);  
+  ui->widget->centerMap(ra, dec, CM_UNDEF);
 }
 
 ///////////////////////////////////////////

@@ -4,6 +4,8 @@ CGSCReg cGSCReg;
 
 extern int g_ocTreeDepth;
 
+static int mem = 0;
+
 //////////////////
 CGSCReg::CGSCReg()
 //////////////////
@@ -14,16 +16,16 @@ CGSCReg::CGSCReg()
 ///////////////////////////////////////////////////////////////////
 void CGSCReg::getVisibleRegions(QList<int> *list, SKPLANE *frustum)
 ///////////////////////////////////////////////////////////////////
-{
+{  
   m_frustum = frustum;
   m_visList = list;
-  getVisibleRec(m_head);
+  getVisibleRec(m_head);  
 }
 
 ////////////////////////////////////////////////////////
 bool CGSCReg::isRegionVisible(int reg, SKPLANE *frustum)
 ////////////////////////////////////////////////////////
-{
+{  
   return(gscRegionBBox[reg].checkFrustum(frustum));
 }
 
@@ -39,6 +41,7 @@ regNode_t *CGSCReg::createNode(const SKVECTOR *pos, const SKVECTOR &size)
 /////////////////////////////////////////////////////////////////////////
 {
   regNode_t *node = new regNode_t;
+  mem += sizeof(regNode_t);
 
   for (int i = 0; i < 8; i++)
   {
@@ -76,11 +79,11 @@ void CGSCReg::createOcTreeRec(regNode_t *node, int depth)
 /////////////////////////////////////////////////////////
 {
   if (depth == g_ocTreeDepth)
-  {
+  {        
     for (int i = 0; i < NUM_GSC_REGS; i++)
     {
       if (node->bbox.intersect(gscRegionBBox[i]))
-      {
+      {        
         node->tRegList.append(i);
         test[i]++;
       }
@@ -90,9 +93,9 @@ void CGSCReg::createOcTreeRec(regNode_t *node, int depth)
 
   SKVECTOR size;
 
-  size.x = node->bbox.size(0) / 2.0f;
-  size.y = node->bbox.size(1) / 2.0f;
-  size.z = node->bbox.size(2) / 2.0f;
+  size.x = node->bbox.size(0) * 0.5f;
+  size.y = node->bbox.size(1) * 0.5f;
+  size.z = node->bbox.size(2) * 0.5f;
 
   SKVECTOR vec0(node->bbox.mins[0], node->bbox.mins[1], node->bbox.mins[2]);
   SKVECTOR vec1(node->bbox.mins[0], node->bbox.mins[1], node->bbox.mins[2] + size.z);
@@ -158,6 +161,12 @@ void CGSCReg::loadRegions(void)
     }
   }
 
+  QElapsedTimer tm;
+
+  tm.start();
+
   createOcTree();
+
+  qDebug() << "el" << tm.elapsed() << mem;
 }
 

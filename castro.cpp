@@ -556,6 +556,7 @@ void CAstro::convRD2AANoRef(double ra, double dec, double *azm, double *alt)
 void CAstro::convRD2AARef(double ra, double dec, double *azm, double *alt, double r)
 ////////////////////////////////////////////////////////////////////////////////////
 {
+
   double HA = m_lst - ra;
   double cDec = cos(dec);
   double sDec = sin(dec);

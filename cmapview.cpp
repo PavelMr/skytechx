@@ -1428,8 +1428,7 @@ void CMapView::updateStatusBar(void)
   double azm, alt;
   double epoch;
 
-  trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), ra, dec);
-
+  trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), ra, dec);  
   cAstro.convRD2AARef(ra, dec, &azm, &alt);
 
   if (m_mapView.epochJ2000 && m_mapView.coordType == SMCT_RA_DEC)

@@ -83,6 +83,8 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
   item->par2 = obj->par2;
   item->jd = view->jd;
 
+  cAstro.setParam(view);
+
   switch (obj->type)
   {
     case MO_PLN_SAT:
@@ -311,8 +313,11 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   int con = constWhatConstel(sats.sats[obj->par2].lRD.Ra,
                              sats.sats[obj->par2].lRD.Dec, view->jd);
 
-  double ra = sats.sats[obj->par2].lRD.Ra;
-  double dec = sats.sats[obj->par2].lRD.Dec;
+  double raAtDate;
+  double decAtDate;
+
+  double ra = raAtDate = sats.sats[obj->par2].lRD.Ra;
+  double dec = decAtDate = sats.sats[obj->par2].lRD.Dec;
   QString jd2000;
 
   if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
@@ -324,16 +329,18 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -400,8 +407,11 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, a->name, "");
   addSeparator(item);
 
-  ra = a->orbit.lRD.Ra;
-  dec = a->orbit.lRD.Dec;
+  double raAtDate;
+  double decAtDate;
+
+  ra = raAtDate = a->orbit.lRD.Ra;
+  dec = decAtDate = a->orbit.lRD.Dec;
 
   int con = constWhatConstel(ra, dec, view->jd);
   QString jd2000;
@@ -421,7 +431,7 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -431,8 +441,8 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, txElongation, QString("%1").arg(R2D(a->orbit.elongation), 0, 'f', 2));
@@ -588,8 +598,11 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, a->name, "");
   addSeparator(item);
 
-  ra = a->orbit.lRD.Ra;
-  dec = a->orbit.lRD.Dec;
+  double raAtDate;
+  double decAtDate;
+
+  ra = raAtDate = a->orbit.lRD.Ra;
+  dec = decAtDate = a->orbit.lRD.Dec;
 
   int con = constWhatConstel(ra, dec, view->jd);
 
@@ -606,11 +619,11 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -623,8 +636,8 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -816,8 +829,9 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
 
   int con = constWhatConstel(rd.Ra, rd.Dec, view->jd);
   QString jd2000;
-  double ra = rd.Ra;
-  double dec = rd.Dec;
+  double raAtDate, decAtDate;
+  double ra = raAtDate = rd.Ra;
+  double dec = decAtDate = rd.Dec;
 
   if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
   {
@@ -830,11 +844,11 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -929,11 +943,12 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, str, "");
   addSeparator(item);
 
+  double raAtDate, decAtDate;
   double ra, dec;
   QString jd2000;
 
-  ra = t->rd.Ra;
-  dec = t->rd.Dec;
+  ra = raAtDate = t->rd.Ra;
+  dec = decAtDate = t->rd.Dec;
 
   if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
   {
@@ -944,17 +959,19 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
 
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -964,8 +981,8 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -983,7 +1000,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Position at JD2000.0"));
@@ -1064,9 +1081,10 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   double ra, dec;
+  double raAtDate, decAtDate;
 
-  ra = item->radec.Ra;
-  dec = item->radec.Dec;
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
 
   QString jd2000;
 
@@ -1080,16 +1098,18 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -1099,8 +1119,8 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -1118,7 +1138,7 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Position at JD2000.0"));
@@ -1182,9 +1202,10 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
 
   double ra, dec;
+  double raAtDate, decAtDate;
 
-  ra = t.Ra;
-  dec = t.Dec;
+  ra = raAtDate = t.Ra;
+  dec = decAtDate = t.Dec;
 
   QString jd2000;
 
@@ -1198,16 +1219,18 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -1217,8 +1240,8 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -1236,7 +1259,7 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Position at JD2000.0"));
@@ -1303,9 +1326,10 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   double ra, dec;
+  double raAtDate, decAtDate;
 
-  ra = item->radec.Ra;
-  dec = item->radec.Dec;
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
   QString jd2000;
 
   if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
@@ -1318,16 +1342,18 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -1337,8 +1363,8 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -1356,7 +1382,7 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Position at JD2000.0"));
@@ -1413,10 +1439,11 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   addTextItem(item, str, "");
   addSeparator(item);
 
+  double raAtDate, decAtDate;
   double ra, dec;
 
-  ra = item->radec.Ra;
-  dec = item->radec.Dec;
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
 
   QString jd2000;
 
@@ -1429,16 +1456,18 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -1448,8 +1477,8 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -1467,7 +1496,7 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Position at JD2000.0"));
@@ -1518,10 +1547,11 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, item->title, "");
   addSeparator(item);
 
+  double raAtDate, decAtDate;
   double ra, dec;
 
-  ra = item->radec.Ra;
-  dec = item->radec.Dec;
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
 
   QString jd2000;
 
@@ -1534,16 +1564,18 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -1553,8 +1585,8 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -1572,7 +1604,7 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Position at JD2000.0"));
@@ -1634,9 +1666,10 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   double ra, dec;
+  double raAtDate, decAtDate;
 
-  ra = item->radec.Ra;
-  dec = item->radec.Dec;
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
 
   QString jd2000;
 
@@ -1649,16 +1682,18 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -1668,8 +1703,8 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -1687,7 +1722,7 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Position at JD2000.0"));
@@ -1763,9 +1798,10 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   double ra, dec;
+  double raAtDate, decAtDate;
 
-  ra = item->radec.Ra;
-  dec = item->radec.Dec;
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
 
   QString jd2000;
 
@@ -1778,16 +1814,18 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -1797,8 +1835,8 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -1816,7 +1854,7 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Position at JD2000.0"));
@@ -1846,7 +1884,7 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 ///////////////////////////////////////////////////////////////////////////////////////////
 {
   dso_t *dso = (dso_t *)obj->par1;
-  QString str;
+  QString str;  
 
   item->radec.Ra = dso->rd.Ra;
   item->radec.Dec = dso->rd.Dec;
@@ -1891,9 +1929,10 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   }
 
   double ra, dec;
+  double raAtDate, decAtDate;
 
-  ra = dso->rd.Ra;
-  dec = dso->rd.Dec;
+  ra = raAtDate = dso->rd.Ra;
+  dec = decAtDate = dso->rd.Dec;
 
   addSeparator(item);
 
@@ -1911,16 +1950,18 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     precess(&ra, &dec, JD2000, view->jd);
   }
 
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
   addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -1930,8 +1971,8 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   double azm, alt;
   double nazm, nalt;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
@@ -1949,7 +1990,7 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   CRts   cRts;
   rts_t  rts;
-  cRts.calcFixed(&rts, ra, dec, view);
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
   fillRTS(&rts, view, item);
 
   addLabelItem(item, tr("Other"));
@@ -2030,8 +2071,10 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, txObjType, item->title);
   addSeparator(item);
 
-  ra  = o.lRD.Ra;
-  dec = o.lRD.Dec;
+  double raAtDate, decAtDate;
+
+  ra  = raAtDate = o.lRD.Ra;
+  dec = decAtDate = o.lRD.Dec;
   int con = constWhatConstel(ra, dec, view->jd);
 
   QString jd2000;
@@ -2048,11 +2091,11 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
   addSeparator(item);
 
-  double ha = cAstro.m_lst - ra;
+  double ha = cAstro.m_lst - raAtDate;
   rangeDbl(&ha, R360);
 
   beginExtInfo();
-  addTextItem(item, txHA + jd2000, getStrRA(ha));
+  addTextItem(item, txHA, getStrRA(ha));
   addSeparator(item);
   endExtInfo();
 
@@ -2075,8 +2118,8 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   double nazm, nalt;
   QString diam;
 
-  cAstro.convRD2AARef(ra, dec, &azm, &alt);
-  cAstro.convRD2AANoRef(ra, dec, &nazm, &nalt);
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
   addTextItem(item, tr("Azimuth"), getStrDeg(azm));
