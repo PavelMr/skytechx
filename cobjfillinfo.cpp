@@ -1009,11 +1009,13 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, txDec, getStrDeg(t->rd.Dec));
   addSeparator(item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Proper motion"));
   addSeparator(item);
   addTextItem(item, txRA, QString::number(t->pmRa) + " " + "mas/yr");
   addTextItem(item, txDec, QString::number(t->pmDec) + " " + "mas/yr");
   addSeparator(item);
+  endExtInfo();
 
   addLabelItem(item, tr("Apparent view"));
   addSeparator(item);
@@ -1147,11 +1149,13 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, txDec, getStrDeg(item->radec.Dec));
   addSeparator(item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Proper motion"));
   addSeparator(item);
   addTextItem(item, txRA, QString::number(s.rdPm[0] / 10.0) + " " + "mas/yr");
   addTextItem(item, txDec, QString::number(s.rdPm[1] / 10.0) + " " + "mas/yr");
   addSeparator(item);
+  endExtInfo();
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
@@ -1748,11 +1752,13 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("K magnitude"), mag(s.magK));
   addSeparator(item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Proper motion"));
   addSeparator(item);
   addTextItem(item, txRA, QString::number(s.pmRa, 'f', 2) + " " + "mas/yr");
   addTextItem(item, txDec, QString::number(s.pmDec, 'f', 2) + " " + "mas/yr");
   addSeparator(item);
+  endExtInfo();
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);

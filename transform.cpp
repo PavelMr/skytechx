@@ -243,14 +243,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
 
   SKMATRIXProjection(&proj, mapView->fov, scrx / scry, NEAR_PLANE_DIST, 1);
   SKMATRIXProjection(&fproj, mapView->fov * 1.2, scrx / scry, NEAR_PLANE_DIST, 1);
-  SKMATRIXScale(&scale, mapView->flipX ? -1 : 1, mapView->flipY ? -1 : 1, 1);
-
-  qDebug() << proj.m_11 << proj.m_21 << proj.m_31 << proj.m_41;
-  qDebug() << proj.m_12 << proj.m_22 << proj.m_32 << proj.m_42;
-  qDebug() << proj.m_13 << proj.m_23 << proj.m_33 << proj.m_43;
-  qDebug() << proj.m_14 << proj.m_24 << proj.m_34 << proj.m_44;
-  qDebug() << "------------";
-
+  SKMATRIXScale(&scale, mapView->flipX ? -1 : 1, mapView->flipY ? -1 : 1, 1);  
 
   if (mapView->coordType == SMCT_RA_DEC)
   {

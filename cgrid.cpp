@@ -545,24 +545,40 @@ void CGrid::renderRD(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly)
 // local meridian
 void CGrid::renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip)
 {
-  radec_t rd[2];
-  SKPOINT pt[2];
-  QPointF c[2];
+  radec_t rd[3];
+  SKPOINT pt[3];
+  QPointF c[3];
   QColor color = QColor(g_skSet.map.meridianColor);
 
   cAstro.convAA2RDRef(R180, R90, &rd[0].Ra, &rd[0].Dec);
   cAstro.convAA2RDRef(R180, 0, &rd[1].Ra, &rd[1].Dec);
+  cAstro.convAA2RDRef(0, 0, &rd[2].Ra, &rd[2].Dec);
 
   trfRaDecToPointCorrectFromTo(&rd[0], &pt[0], mapView->jd, JD2000);
   trfRaDecToPointCorrectFromTo(&rd[1], &pt[1], mapView->jd, JD2000);
+  trfRaDecToPointCorrectFromTo(&rd[2], &pt[2], mapView->jd, JD2000);
+
+  if (clip)
+  {
+    pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
+  }
+
+  if (trfProjectLine(&pt[0], &pt[2]))
+  {
+    pPainter->setPen(QPen(color, 3, Qt::DotLine));
+    pPainter->drawLine(pt[0].sx, pt[0].sy,
+                       pt[2].sx, pt[2].sy);
+
+    if (trfProjectPoint(&pt[2]))
+    {
+      pPainter->setPen(QPen(color, 1));
+      pPainter->setBrush(color);
+      pPainter->drawEllipse(QPointF(pt[2].sx, pt[2].sy), 5, 5);
+    }
+  }
 
   if (trfProjectLine(&pt[0], &pt[1]))
-  {
-    if (clip)
-    {
-      pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
-    }
-
+  {  
     pPainter->setPen(QPen(color, 3, Qt::DotLine));
     pPainter->drawLine(pt[0].sx, pt[0].sy,
                        pt[1].sx, pt[1].sy);    
@@ -579,9 +595,8 @@ void CGrid::renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip)
       pPainter->setPen(QPen(color, 1));
       pPainter->setBrush(color);
       pPainter->drawEllipse(QPointF(pt[1].sx, pt[1].sy), 5, 5);
-    }
-
-
-    pPainter->setClipping(false);
+    }  
   }
+
+  pPainter->setClipping(false);
 }
