@@ -40,8 +40,6 @@ QString loadNormalStyle(void)
 {
   QString str = readAllFile("../data/styles/normal.qss");
 
-  qDebug() << str;
-
   return(str);
 }
 
