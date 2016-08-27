@@ -369,7 +369,7 @@ void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, fl
       }
     }
     pPainter->restore();
-  }
+  }  
 }
 
 void CPlanetRenderer::renderRing(int sx, orbit_t *o, CSkPainter *pPainter, float angle, mapView_t *mapView, SKPOINT *pt, bool isFront)

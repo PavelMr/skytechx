@@ -246,7 +246,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
   double A = acos((c*c + a*a - 1) / (2 * c * a));
   fov = A * 2;
 
-  dxArcSec = scrx / R2D(fov);
+  dxArcSec = scrx / R2D(mapView->fov);
 
   SKMATRIXProjection(&proj, fov, scrx / scry, NEAR_PLANE_DIST, 2);
   SKMATRIXProjection(&fproj, fov * 1.2, scrx / scry, NEAR_PLANE_DIST, 2);
@@ -264,8 +264,8 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     SKMATRIXRotateZ(&mz, mapView->roll);
 
     view = (precMat) * (my * mx * mz) * translate;
-    m_rot = my * mx * mz;
-    mat = view * proj;
+    m_rot = my * mx * mz * scale;
+    mat = view * scale * proj;
 
     m_matTransf = mat;
     m_matView = view;
@@ -289,7 +289,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     SKMATRIXRotateZ(&mz, mapView->roll);
 
     view =  precMat * (gmy * gmx) * (my * mx * mz) * translate;
-    m_rot = (gmy * gmx) * my * mx * mz;
+    m_rot = (gmy * gmx) * my * mx * mz * scale;
     mat = view * scale * proj;
 
     m_matTransf = mat;
@@ -312,7 +312,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     SKMATRIXRotateZ(&mz, mapView->roll);
 
     view =  precMat * (gmz) * (my * mx * mz) * translate;
-    m_rot = (gmz) * my * mx * mz;
+    m_rot = (gmz) * my * mx * mz * scale;
     mat = view * scale * proj;
 
     m_matTransf = mat;

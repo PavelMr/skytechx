@@ -325,6 +325,7 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
 
       double ang = atan2(vec[0], -vec[1]);
       calcAngularDistance(o.lRD.Ra, o.lRD.Dec, ang, sqrt(POW2(out.x) + POW2(out.y)) * rad, ra, dec);
+
       fov = D2R(0.001 * lf->rad);
       if (fov < D2R(0.2))
       {
