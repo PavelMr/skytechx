@@ -4345,6 +4345,55 @@
                 </property>
                </widget>
               </item>
+              <item row="5" column="1">
+               <widget class="QLabel" name="label_122">
+                <property name="text">
+                 <string>Volume</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_34">
+                <item>
+                 <widget class="QSlider" name="horizontalSlider_17">
+                  <property name="minimumSize">
+                   <size>
+                    <width>128</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>256</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="pageStep">
+                   <number>10</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBelow</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_24">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
              </layout>
             </item>
             <item>
@@ -5560,12 +5609,12 @@ then PLAN404 or VSOP87 is used</string>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>417</x>
-     <y>192</y>
+     <x>416</x>
+     <y>60</y>
     </hint>
     <hint type="destinationlabel">
-     <x>455</x>
-     <y>192</y>
+     <x>349</x>
+     <y>60</y>
     </hint>
    </hints>
   </connection>
@@ -5576,12 +5625,12 @@ then PLAN404 or VSOP87 is used</string>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>417</x>
-     <y>241</y>
+     <x>416</x>
+     <y>65</y>
     </hint>
     <hint type="destinationlabel">
-     <x>455</x>
-     <y>241</y>
+     <x>349</x>
+     <y>65</y>
     </hint>
    </hints>
   </connection>
@@ -5592,12 +5641,28 @@ then PLAN404 or VSOP87 is used</string>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>417</x>
-     <y>290</y>
+     <x>416</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
-     <x>455</x>
-     <y>290</y>
+     <x>349</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_21</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>horizontalSlider_17</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>93</x>
+     <y>156</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>184</y>
     </hint>
    </hints>
   </connection>

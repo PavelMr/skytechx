@@ -28,8 +28,9 @@ public:
 private:
   void registerSound(eMC_TYPE type, const QString &filePath);
 
-  QMap <eMC_TYPE, QSound *> m_map;
-  double                    m_enabled;
+  QMap <eMC_TYPE, QSoundEffect *> m_map;
+  bool                            m_enabled;
+  double                          m_volume;
 
 signals:
 

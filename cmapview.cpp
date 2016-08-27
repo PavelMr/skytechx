@@ -1642,7 +1642,7 @@ bool CMapView::isRaDecOnScreen(double ra, double dec)
 void CMapView::printMap()
 /////////////////////////
 {
-  // TODO: defaulni profil neexistuje pri prvni spusteni!!!!
+  // FIXME: defaulni profil neexistuje pri prvni spusteni!!!! zkontrolovat
 
   CGetProfile dlgProfile(this);
 

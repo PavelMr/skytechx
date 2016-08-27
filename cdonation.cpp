@@ -39,7 +39,7 @@ void CDonation::on_pushButton_2_clicked()
   q.addQueryItem("bn", "PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest");
 
   QUrl url("https://www.paypal.com/us/cgi-bin/webscr");
-  url.setQuery(q);
+  url.setQuery(q); 
 
   QDesktopServices::openUrl(url);
 }

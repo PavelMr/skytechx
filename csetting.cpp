@@ -116,7 +116,11 @@ CSetting::CSetting(QWidget *parent) :
 
   ui->checkBox_13->setChecked(bAlternativeMouse);
   ui->checkBox_14->setChecked(bParkTelescope);
+
   ui->checkBox_21->setChecked(setting.value("sound_enable", false).toBool());
+  ui->horizontalSlider_17->setRange(0, 100);
+  ui->horizontalSlider_17->setEnabled(ui->checkBox_21->isChecked());
+  ui->horizontalSlider_17->setValue(setting.value("sound_volume", 80.0).toDouble());
 
   fillGamepad();
 
@@ -1168,6 +1172,7 @@ void CSetting::on_pushButton_clicked()
   QSettings setting;
 
   setting.setValue("sound_enable", ui->checkBox_21->isChecked());
+  setting.setValue("sound_volume", ui->horizontalSlider_17->value());
   g_soundManager.configure();
 
   if (ui->cb_iconSize->currentIndex() == 0)
