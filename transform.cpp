@@ -3,12 +3,12 @@
 #include "jd.h"
 #include "castro.h"
 
-static SKMATRIX m_matTransfNoPrecess;
+double spherify = 0.75;
+
 static SKMATRIX m_matTransf;
 static SKMATRIX m_matProj;
 static SKMATRIX m_matView;
-
-static SKMATRIX m_matViewNoPrec;
+static SKMATRIX m_rot;
 
 static SKPLANE  m_frustum[5];
 
@@ -24,7 +24,6 @@ static bool   bFlipY;
 static SKMATRIX m_matTransfSave;
 static SKMATRIX m_matProjSave;
 static SKMATRIX m_matViewSave;
-static SKMATRIX m_matViewNoPrecSave;
 
 static double scrxSave;
 static double scrySave;
@@ -46,8 +45,7 @@ void trfSave(void)
 {
   m_matTransfSave = m_matTransf;
   m_matProjSave = m_matProj;
-  m_matViewSave = m_matView;
-  m_matViewNoPrecSave = m_matViewNoPrec;
+  m_matViewSave = m_matView;  
   scrxSave = scrx2;
   scrySave = scry2;
 
@@ -61,8 +59,7 @@ void trfRestore(void)
 {
   m_matTransf = m_matTransfSave;
   m_matProj = m_matProjSave;
-  m_matView = m_matViewSave;
-  m_matViewNoPrec = m_matViewNoPrecSave;
+  m_matView = m_matViewSave;  
   scrx2 = scrxSave;
   scry2 = scrySave;
 
@@ -201,7 +198,7 @@ void rtfCreateOrthoView(double w, double h, double nearPlane, double farPlane, d
   SKPLANEFromPoint(&m_frustum[2], &vecFrustum[2], &vecFrustum[3], &vecFrustum[6]); // Top
   SKPLANEFromPoint(&m_frustum[3], &vecFrustum[1], &vecFrustum[0], &vecFrustum[4]); // Bottom
   //SKPLANEFromPoint(&m_frustum[4], &vecFrustum[0], &vecFrustum[1], &vecFrustum[2]); // near
-  m_numFrustums = 4;
+  m_numFrustums = 4;    
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -219,9 +216,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
   m_jd = mapView->jd;
 
   bFlipX = mapView->flipX;
-  bFlipY = mapView->flipY;
-
-  dxArcSec = scrx / RAD2DEG(mapView->fov);
+  bFlipY = mapView->flipY;  
 
   currentMapView = *mapView;
 
@@ -238,12 +233,25 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
   SKMATRIX fproj;
   SKMATRIX scale;
   SKMATRIX precMat;
+  SKMATRIX translate;
 
   precessMatrix(JD2000, mapEpoch, &precMat);
 
-  SKMATRIXProjection(&proj, mapView->fov, scrx / scry, NEAR_PLANE_DIST, 1);
-  SKMATRIXProjection(&fproj, mapView->fov * 1.2, scrx / scry, NEAR_PLANE_DIST, 1);
+  double fov;
+
+  double c = spherify;
+  double an = R180 - (mapView->fov / 2.0);
+
+  double a = sqrt(1 + c*c - 2 * c * cos(an));
+  double A = acos((c*c + a*a - 1) / (2 * c * a));
+  fov = A * 2;
+
+  dxArcSec = scrx / R2D(fov);
+
+  SKMATRIXProjection(&proj, fov, scrx / scry, NEAR_PLANE_DIST, 2);
+  SKMATRIXProjection(&fproj, fov * 1.2, scrx / scry, NEAR_PLANE_DIST, 2);
   SKMATRIXScale(&scale, mapView->flipX ? -1 : 1, mapView->flipY ? -1 : 1, 1);  
+  SKMATRIXTranslate(&translate, 0, 0, spherify);
 
   if (mapView->coordType == SMCT_RA_DEC)
   {
@@ -255,11 +263,10 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     SKMATRIXRotateY(&my, mapView->x);
     SKMATRIXRotateZ(&mz, mapView->roll);
 
-    m_matViewNoPrec = (my * mx * mz) * scale;
-    view = (precMat) * (my * mx * mz);
-    mat = view * scale * proj;
+    view = (precMat) * (my * mx * mz) * translate;
+    m_rot = my * mx * mz;
+    mat = view * proj;
 
-    m_matTransfNoPrecess = m_matViewNoPrec * scale * proj;
     m_matTransf = mat;
     m_matView = view;
     m_matProj = proj;
@@ -281,8 +288,8 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     SKMATRIXRotateY(&my, mapView->x);
     SKMATRIXRotateZ(&mz, mapView->roll);
 
-    m_matViewNoPrec = (gmy * gmx) * (my * mx * mz) * scale;
-    view =  precMat * (gmy * gmx) * (my * mx * mz);
+    view =  precMat * (gmy * gmx) * (my * mx * mz) * translate;
+    m_rot = (gmy * gmx) * my * mx * mz;
     mat = view * scale * proj;
 
     m_matTransf = mat;
@@ -304,8 +311,8 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
     SKMATRIXRotateY(&my, mapView->x);
     SKMATRIXRotateZ(&mz, mapView->roll);
 
-    m_matViewNoPrec = (gmz) * (my * mx * mz) * scale;
-    view =  precMat * (gmz) * (my * mx * mz);
+    view =  precMat * (gmz) * (my * mx * mz) * translate;
+    m_rot = (gmz) * my * mx * mz;
     mat = view * scale * proj;
 
     m_matTransf = mat;
@@ -337,12 +344,8 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
   SKPLANEFromPoint(&m_frustum[1], &vecFrustum[7], &vecFrustum[3], &vecFrustum[5]); // Right
   SKPLANEFromPoint(&m_frustum[2], &vecFrustum[2], &vecFrustum[3], &vecFrustum[6]); // Top
   SKPLANEFromPoint(&m_frustum[3], &vecFrustum[1], &vecFrustum[0], &vecFrustum[4]); // Bottom
-  SKPLANEFromPoint(&m_frustum[4], &vecFrustum[0], &vecFrustum[1], &vecFrustum[2]); // near
+  SKPLANEFromPoint(&m_frustum[4], &vecFrustum[0], &vecFrustum[1], &vecFrustum[2]); // near  
   m_numFrustums = 5;
-
-  //for (int i = 0; i < 5; i++)
-//    qDebug() << m_frustum[i].x << m_frustum[i].y << m_frustum[i].z << m_frustum[i].dist;
-
 }
 
 
@@ -438,7 +441,7 @@ bool trfProjectLine(SKPOINT *p1, SKPOINT *p2)
   SKPOINT *p[2] = {p1, p2};
 
   if (!SKPLANECheckFrustumToLine(m_frustum, &p1->w, &p2->w))
-  {
+  {    
     return(false);
   }
 
@@ -580,30 +583,66 @@ bool trfPointOnScr(int x, int y, double rad)
   return(true);
 }
 
+//////////////////////////////////////////////////////////////////
+static float intersect_sphere(double *o, double *ray, double *hit)
+//////////////////////////////////////////////////////////////////
+{
+  SKVECTOR sub = SKVECTOR(o[0], o[1], o[2]);
+
+  double a = SKVecDot((SKVECTOR *)ray, (SKVECTOR *)ray);
+  double b = 2 * SKVecDot((SKVECTOR *)ray, &sub);
+  double c = SKVecDot(&sub, &sub) - 1.0;
+
+  double dt = b * b - 4 * a * c;
+
+  if (dt < 0)
+  {
+    return -1.0;
+  }
+  else
+  {
+    double t0 = (-b - sqrt(dt)) / (a * 2);
+    if (t0 > 0)
+    {
+        return -1.0;
+    }
+
+    hit[0] = o[0] + t0 * ray[0];
+    hit[1] = o[1] + t0 * ray[1];
+    hit[2] = o[2] + t0 * ray[2];
+
+    SKVECTOR v = { hit[0] - o[0], hit[1] - o[1], hit[2] - o[2] };
+    return SKVECLength(&v);
+  }
+}
+
+
 /////////////////////////////////////////////////////////////////
 void trfConvScrPtToXY(double sx, double sy, double &x, double &y)
 /////////////////////////////////////////////////////////////////
-{
+{ 
   // Compute the vector of the pick ray in screen space
   SKVECTOR v;
   SKVECTOR out;
 
   v.x =  ( ( ( 2.0f * sx ) / scrx ) - 1.0 ) / m_matProj.m_11;
   v.y =  ( ( ( 2.0f * sy ) / scry ) - 1.0 ) / m_matProj.m_22;
-  v.z =  1.0f;
+  v.z =  1.0f;    
 
-  // Get the inverse view matrix with no precession
+  double pos[3] = {0, 0, -spherify};
+  double vec[3] = {-v.x, -v.y, -v.z};
+  double hit[3] = {0, 0, 0};
+
+  float b = intersect_sphere(pos, vec, hit);
+  Q_ASSERT(b >= 0);
+  Q_UNUSED(b);
+
   SKMATRIX m;
-  SKMATRIXInverse(&m, &m_matViewNoPrec);
+  SKMATRIXInverse(&m, &m_rot);
+  SKVECProject(hit[0], hit[1], hit[2], &m, &out);
 
-  // Transform the screen space ray into 3D space
-  out.x  = v.x * m.m_11 + v.y * m.m_21 + v.z * m.m_31;
-  out.y  = v.x * m.m_12 + v.y * m.m_22 + v.z * m.m_32;
-  out.z  = v.x * m.m_13 + v.y * m.m_23 + v.z * m.m_33;
-
-  double tx  =  atan2(out.z, out.x) - R90;
-  double ty  = -atan2(out.y, sqrt(out.x * out.x + out.z * out.z));
-
+  double tx  =   atan2(out.z, out.x) - R90;
+  double ty  =  -atan2(out.y, sqrt(out.x * out.x + out.z * out.z));
   rangeDbl(&tx, R360);
 
   if (currentMapView.epochJ2000 && currentMapView.coordType == SMCT_RA_DEC)

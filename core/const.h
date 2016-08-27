@@ -59,7 +59,7 @@
 
 #define FAHRENHEIT_TO_DEG(f)   (((f) - 32.0) / 1.8)
 
-#define NEAR_PLANE_DIST    0.01
+#define NEAR_PLANE_DIST    0.1
 #define PLANE_EPSILON      0.0001
 #define MAX_POLYGON_PTS    32
 

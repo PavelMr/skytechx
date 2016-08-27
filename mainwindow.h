@@ -646,6 +646,8 @@ private slots:
 
   void on_actionMeridian_triggered();
 
+  void on_action_zoom_100_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

@@ -742,10 +742,6 @@ double CMapView::calcNewPos(QRect *rc, double *x, double *y)
   return(fov);
 }
 
-/*
-extern double gxxx;
-extern double gyyy;
-*/
 
 ///////////////////////////////////////////////////////
 void CMapView::keyEvent(int key, Qt::KeyboardModifiers)

@@ -160,6 +160,35 @@ inline static bool drawInterpolatedLineRD(SKMATRIX *mat, int c, radec_t *rd1, ra
   return cliped;
 }
 
+inline static void drawInterpolatedLineAA(int c, radec_t *rd1, radec_t *rd2, CSkPainter *pPainter, mapView_t *mapView)
+{
+  double dx = (rd2->Ra - rd1->Ra) / (double)(c - 1);
+  double dy = (rd2->Dec - rd1->Dec) / (double)(c - 1);
+  radec_t rd = {rd1->Ra, rd1->Dec};
+
+  SKPOINT pt1;
+  SKPOINT pt2;
+  radec_t tmp;
+
+  cAstro.convAA2RDRef(rd.Ra, rd.Dec, &tmp.Ra, &tmp.Dec);
+  trfRaDecToPointCorrectFromTo(&tmp, &pt1, mapView->jd, JD2000);
+
+  for (int i = 0; i < c - 1; i++)
+  {
+    rd.Ra += dx;
+    rd.Dec += dy;
+
+    cAstro.convAA2RDRef(rd.Ra, rd.Dec, &tmp.Ra, &tmp.Dec);
+    trfRaDecToPointCorrectFromTo(&tmp, &pt2, mapView->jd, JD2000);
+
+    if (trfProjectLine(&pt1, &pt2))
+    {
+      pPainter->drawLine(pt1.sx, pt1.sy, pt2.sx, pt2.sy);
+    }
+    pt1 = pt2;
+  }
+}
+
 static int depth;
 static int ren;
 static QSet <qint64> mSet;
@@ -254,11 +283,11 @@ static void render(int type, SKMATRIX *mat, mapView_t *mapView, CSkPainter *pPai
   {
     if ((y + spcy < 64800000 && y > 0) || (x == 0 || x == FROMRA(90) || x == FROMRA(180) || x == FROMRA(270)))
     {
-      pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
-      pPainter->drawLine(pt[0].sx, pt[0].sy, pt[3].sx, pt[3].sy);
-      pPainter->setClipping(false);
-
       int cx, cy;
+
+      pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);      
+      drawInterpolatedLineRD(mat, 3, &rd[0], &rd[3], pPainter, cx, cy);
+      pPainter->setClipping(false);      
 
       if (getClipPoint(cx, cy, pt[0].sx, pt[0].sy, pt[3].sx, pt[3].sy))
       {
@@ -545,12 +574,18 @@ void CGrid::renderRD(mapView_t *mapView, CSkPainter *pPainter, bool eqOnly)
 // local meridian
 void CGrid::renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip)
 {
+  radec_t aa[4];
   radec_t rd[3];
   SKPOINT pt[3];
   QPointF c[3];
   QColor color = QColor(g_skSet.map.meridianColor);
 
-  cAstro.convAA2RDRef(R180, R90, &rd[0].Ra, &rd[0].Dec);
+  aa[0].Ra = R180; aa[0].Dec = R90;
+  aa[1].Ra = R180; aa[1].Dec = 0;
+  aa[2].Ra = 0;    aa[2].Dec = R90;
+  aa[3].Ra = 0;    aa[3].Dec = 0;
+
+  cAstro.convAA2RDRef(0, R90, &rd[0].Ra, &rd[0].Dec);
   cAstro.convAA2RDRef(R180, 0, &rd[1].Ra, &rd[1].Dec);
   cAstro.convAA2RDRef(0, 0, &rd[2].Ra, &rd[2].Dec);
 
@@ -561,13 +596,12 @@ void CGrid::renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip)
   if (clip)
   {
     pPainter->setClipRect(clipSize, clipSize, scrWidth - clipSize * 2, scrHeight - clipSize * 2);
-  }
+  }  
 
-  if (trfProjectLine(&pt[0], &pt[2]))
+  trfProjectLineNoCheck(&pt[0], &pt[2]);
   {
     pPainter->setPen(QPen(color, 3, Qt::DotLine));
-    pPainter->drawLine(pt[0].sx, pt[0].sy,
-                       pt[2].sx, pt[2].sy);
+    drawInterpolatedLineAA(15, &aa[0], &aa[1], pPainter, mapView);
 
     if (trfProjectPoint(&pt[2]))
     {
@@ -575,13 +609,12 @@ void CGrid::renderMeridian(mapView_t *mapView, CSkPainter *pPainter, bool clip)
       pPainter->setBrush(color);
       pPainter->drawEllipse(QPointF(pt[2].sx, pt[2].sy), 5, 5);
     }
-  }
+  }  
 
-  if (trfProjectLine(&pt[0], &pt[1]))
+  trfProjectLineNoCheck(&pt[0], &pt[1]);
   {  
     pPainter->setPen(QPen(color, 3, Qt::DotLine));
-    pPainter->drawLine(pt[0].sx, pt[0].sy,
-                       pt[1].sx, pt[1].sy);    
+    drawInterpolatedLineAA(15, &aa[2], &aa[3], pPainter, mapView);
 
     if (trfProjectPoint(&pt[0]))
     {

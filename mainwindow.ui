@@ -782,6 +782,7 @@
    <addaction name="action_zoom_20"/>
    <addaction name="action_zoom_45"/>
    <addaction name="action_zoom_90"/>
+   <addaction name="action_zoom_100"/>
    <addaction name="separator"/>
    <addaction name="actionRelease_object"/>
    <addaction name="separator"/>
@@ -868,7 +869,7 @@
           <x>0</x>
           <y>0</y>
           <width>348</width>
-          <height>186</height>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1621,7 +1622,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>350</width>
+          <width>413</width>
           <height>527</height>
          </rect>
         </property>
@@ -1927,8 +1928,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>224</width>
-          <height>266</height>
+          <width>264</width>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2939,7 +2940,7 @@ background-color: rgb(0, 0, 0);</string>
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>329</height>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3143,7 +3144,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>157</width>
+          <width>237</width>
           <height>431</height>
          </rect>
         </property>
@@ -3246,8 +3247,8 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>254</width>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3394,8 +3395,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>254</width>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5531,6 +5532,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Look at local meridian</string>
+   </property>
+  </action>
+  <action name="action_zoom_100">
+   <property name="text">
+    <string>180°</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to 180°</string>
    </property>
   </action>
  </widget>

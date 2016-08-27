@@ -2181,6 +2181,13 @@ void MainWindow::on_action_zoom_90_triggered()
   ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(90));
 }
 
+///////////////////////////////////////////////
+void MainWindow::on_action_zoom_100_triggered()
+///////////////////////////////////////////////
+{
+  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(180));
+}
+
 /////////////////////////////////////////////////////////
 void MainWindow::on_actionExport_map_to_image_triggered()
 /////////////////////////////////////////////////////////
@@ -6285,5 +6292,7 @@ void MainWindow::on_actionShow_local_meridian_triggered()
 
   ui->widget->repaintMap();
 }
+
+
 
 

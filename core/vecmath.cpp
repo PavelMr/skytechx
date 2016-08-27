@@ -149,11 +149,19 @@ SKVECTOR *SKVECTransform3(SKVECTOR *out, SKVECTOR *vec, SKMATRIX *mat)
 
   double pz = vec->x * mat->m_13 +
               vec->y * mat->m_23 +
-              vec->z * mat->m_33;
+              vec->z * mat->m_33;  
 
   out->x = px;
   out->y = py;
   out->z = pz;
 
   return(out);
+}
+
+
+SKVECTOR *SKVECProject(double x, double y, double z, SKMATRIX *m, SKVECTOR *out)
+{
+  SKVECTOR in = SKVECTOR(x, y, z);
+
+  return SKVECTransform(out, &in, m);
 }

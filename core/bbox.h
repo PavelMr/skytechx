@@ -96,7 +96,7 @@ typedef struct BBox
     {
       double fDist =  ((p->x < 0) ? mins[0] : maxs[0]) * p->x +
                       ((p->y < 0) ? mins[1] : maxs[1]) * p->y +
-                      ((p->z < 0) ? mins[2] : maxs[2]) * p->z + p->dist;
+                      ((p->z < 0) ? mins[2] : maxs[2]) * p->z - p->dist;
 
       return fDist >= 0.f;
     }

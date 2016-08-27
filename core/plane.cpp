@@ -28,9 +28,9 @@ SKPLANE *SKPLANEFromPoint(SKPLANE *out, SKVECTOR *a, SKVECTOR *b, SKVECTOR *c)
   SKVecCross(&normal, &d1, &d2);
   SKVecNormalize(&normal, &normal);
 
-  out->dist = -(a->x * normal.x +
-                a->y * normal.y +
-                a->z * normal.z);
+  out->dist =  (a->x * normal.x +
+                 a->y * normal.y +
+                 a->z * normal.z);
 
   out->x = normal.x;
   out->y = normal.y;
@@ -47,7 +47,7 @@ bool SKPLANECheckFrustumToPoint(SKPLANE *frustum, SKVECTOR *point)
   {
     double dist = point->x * frustum[i].x +
                   point->y * frustum[i].y +
-                  point->z * frustum[i].z + frustum[i].dist;
+                  point->z * frustum[i].z - frustum[i].dist;
     if (dist < 0)
       return(false);
   }
@@ -65,7 +65,7 @@ bool SKPLANECheckFrustumToSphere(SKPLANE *frustum, SKVECTOR *point, double radiu
   {
     double dist = point->x * frustum[i].x +
                   point->y * frustum[i].y +
-                  point->z * frustum[i].z + frustum[i].dist;
+                  point->z * frustum[i].z - frustum[i].dist;
     if (dist < -radius)
       return(false);
   }
@@ -102,7 +102,7 @@ bool SKPLANECheckFrustumToPolygon(SKPLANE *frustum, SKPOINT *pts, int count, dou
     {
       double dist = pts[p].w.x * frustum[i].x +
                     pts[p].w.y * frustum[i].y +
-                    pts[p].w.z * frustum[i].z + frustum[i].dist;
+                    pts[p].w.z * frustum[i].z - frustum[i].dist;
       if (dist > offset)
         break;
     }
@@ -121,11 +121,11 @@ bool SKPLANECheckFrustumToLine(SKPLANE *frustum, SKVECTOR *p1, SKVECTOR *p2, boo
   {
     double dist1 = p1->x * frustum[i].x +
                    p1->y * frustum[i].y +
-                   p1->z * frustum[i].z + frustum[i].dist;
+                   p1->z * frustum[i].z - frustum[i].dist;
 
     double dist2 = p2->x * frustum[i].x +
                    p2->y * frustum[i].y +
-                   p2->z * frustum[i].z + frustum[i].dist;
+                   p2->z * frustum[i].z - frustum[i].dist;
 
     if(dist1 < 0 && dist2 < 0)
       return(false); // completely outside
@@ -169,7 +169,7 @@ void SKPLANEClipPolygonToPlane(SKPLANE *plane, SKPOINT *in, int countIn, SKPOINT
   {
     double d = in[a].w.x * plane->x +
                in[a].w.y * plane->y +
-               in[a].w.z * plane->z + plane->dist;
+               in[a].w.z * plane->z - plane->dist;
 
     if (d > PLANE_EPSILON)
     {
