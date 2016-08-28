@@ -22,7 +22,7 @@ CVersionCheck::CVersionCheck(QWidget *parent, const QString &newVersion, int bui
     ui->label_3->setText(errorString);
   }
   else
-  if (_BUILD_NO_ == buildID)
+  if (_BUILD_NO_ >= buildID)
   {
     ui->label_3->setText(tr("SkytechX is up to date."));
   }

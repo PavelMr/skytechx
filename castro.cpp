@@ -1718,7 +1718,7 @@ void CAstro::solveMercury(orbit_t *orbit)
 {
   orbit->mag = -0.36 + 5 * log10(orbit->r * orbit->R) + 0.027 * (orbit->FV * RAD) + 2.2E-13 * pow((orbit->FV*RAD), 6);
   orbit->flattening = 0;
-  orbit->dx = 2439.7 * 2;
+  orbit->dx = g_systemSettings->m_mercury_radius * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
   orbit->sy = calcAparentSize(orbit->R, orbit->dy);
@@ -1743,7 +1743,7 @@ void CAstro::solveVenus(orbit_t *orbit)
 {
   orbit->mag = -4.34 + 5 * log10(orbit->r * orbit->R) + 0.013 * (orbit->FV*RAD) + 4.2E-7 * pow((orbit->FV*RAD), 3);
   orbit->flattening = 0;
-  orbit->dx = 12103.6;
+  orbit->dx = g_systemSettings->m_venus_radius * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
   orbit->sy = calcAparentSize(orbit->R, orbit->dy);
@@ -1768,7 +1768,7 @@ void CAstro::solveMars(orbit_t *orbit)
 
   orbit->flattening = 0.00589;
 
-  orbit->dx = 3396.2 * 2;
+  orbit->dx = g_systemSettings->m_mars_radius * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
 
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
@@ -1791,7 +1791,7 @@ void CAstro::solveJupiter(orbit_t *orbit)
   orbit->mag = -9.4 + 5*log10(orbit->r*orbit->R) + 0.014 * (orbit->FV*RAD);
   orbit->flattening = 0.064874;
 
-  orbit->dx = 71492 * 2;
+  orbit->dx = g_systemSettings->m_jupiter_radius * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
   orbit->sy = calcAparentSize(orbit->R, orbit->dy);
@@ -1804,9 +1804,6 @@ void CAstro::solveJupiter(orbit_t *orbit)
 
   solveJupiterMer(orbit);
 }
-
-double gxxx = 0;
-double gyyy = 0;
 
 ////////////////////////////////////////
 void CAstro::solveSaturn(orbit_t *orbit)
@@ -1828,7 +1825,7 @@ void CAstro::solveSaturn(orbit_t *orbit)
   orbit->mag = mag1 + mag2;
 
   orbit->flattening = 0.097962;
-  orbit->dx = 60268 * 2;
+  orbit->dx = g_systemSettings->m_saturn_radius * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
   orbit->sy = calcAparentSize(orbit->R, orbit->dy);
@@ -1856,7 +1853,7 @@ void CAstro::solveUranus(orbit_t *orbit)
 {
   orbit->mag = -7.15 + 5*log10(orbit->r*orbit->R) + 0.001 * (orbit->FV*RAD);
   orbit->flattening = 0.022927;
-  orbit->dx = 25559 * 2;
+  orbit->dx = g_systemSettings->m_uranus_radius * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
   orbit->sy = calcAparentSize(orbit->R, orbit->dy);
@@ -1880,7 +1877,7 @@ void CAstro::solveNeptune(orbit_t *orbit)
 {
   orbit->mag = -6.90 + 5*log10(orbit->r*orbit->R) + 0.001 * (orbit->FV*RAD);
   orbit->flattening = 0.017082;
-  orbit->dx = 24764 * 2;
+  orbit->dx = g_systemSettings->m_neptune_radius * 2;
   orbit->dy = orbit->dx * (1 - orbit->flattening);
   orbit->sx = calcAparentSize(orbit->R, orbit->dx);
   orbit->sy = calcAparentSize(orbit->R, orbit->dy);

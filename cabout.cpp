@@ -32,7 +32,7 @@ CAbout::CAbout(QWidget *parent) :
   ui->textBrowser_about->setOpenExternalLinks(true);
   ui->textBrowser_about->setHtml(QString("<html><body><b>SkytechX</b><br>"
                                       "Version %1<br><br>"
-                                      "Copyright (C) 2015, Pavel Mráz<br>"
+                                      "Copyright (C) %2, Pavel Mráz<br>"
                                       "Homepage : <a href=\"http://www.skytechx.eu\">www.skytechx.eu</a><br>"
                                       "eMail : <a href=\"mailto:skytechx@seznam.cz\">skytechx@seznam.cz</a><br>"
                                       "Source code : <a href=\"https://github.com/PavelMr/skytechx.git\">https://github.com/PavelMr/skytechx.git</a><br>"
@@ -40,12 +40,13 @@ CAbout::CAbout(QWidget *parent) :
                                       "This program is free software; you can redistribute it and/or modify it "
                                       "under the term of the GNU General Public License."
                                       "<br><br>"
-                                      "Release date : %2 %3<br>"
-                                      "Based on Qt v%4<br>"
-                                      "Release build no : %5<br></body><html>")
+                                      "Release date : %3 %4<br>"
+                                      "Based on Qt v%5<br>"
+                                      "Release build no : %6<br></body><html>")
                                       .arg(SK_VERSION)
+                                      .arg(_BUILD_YEAR_)
                                       .arg(__DATE__).arg(__TIME__)
-                                      .arg(QT_VERSION_STR + winVer)
+                                      .arg(QT_VERSION_STR + winVer)                                      
                                       .arg(_BUILD_NO_));
 
 

@@ -803,6 +803,12 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
         return;
       }
     }
+
+    if (key == Qt::Key_0) {
+      m_mapView.fov = R180;
+      repaintMap();
+      return;
+    }
   }
 
   if (bConstEdit)
@@ -1637,9 +1643,7 @@ bool CMapView::isRaDecOnScreen(double ra, double dec)
 /////////////////////////
 void CMapView::printMap()
 /////////////////////////
-{
-  // FIXME: defaulni profil neexistuje pri prvni spusteni!!!! zkontrolovat
-
+{  
   CGetProfile dlgProfile(this);
 
   if (dlgProfile.exec() == DL_CANCEL)

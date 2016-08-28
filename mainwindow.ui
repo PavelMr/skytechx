@@ -858,7 +858,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -868,7 +868,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>348</width>
+          <width>433</width>
           <height>360</height>
          </rect>
         </property>
@@ -953,7 +953,7 @@
              </property>
             </spacer>
            </item>
-           <item row="0" column="2">
+           <item row="0" column="3">
             <widget class="QPushButton" name="pushButton_34">
              <property name="enabled">
               <bool>false</bool>
@@ -966,7 +966,7 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="4" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_17">
              <item>
               <widget class="QCheckBox" name="checkBox_5">
@@ -1038,13 +1038,26 @@
              </item>
             </layout>
            </item>
-           <item row="2" column="1">
+           <item row="4" column="1">
             <widget class="QCheckBox" name="cb_extInfo">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="text">
               <string>Show extended information</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QPushButton" name="pushButton_unselect">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Unselect object</string>
+             </property>
+             <property name="text">
+              <string>Unselect</string>
              </property>
             </widget>
            </item>
@@ -1064,7 +1077,7 @@
            <property name="bottomMargin">
             <number>2</number>
            </property>
-           <item row="2" column="0">
+           <item row="3" column="0">
             <widget class="QPushButton" name="pushButton_4">
              <property name="enabled">
               <bool>false</bool>
@@ -1077,7 +1090,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
+           <item row="2" column="1">
             <widget class="QPushButton" name="pushButton_16">
              <property name="enabled">
               <bool>false</bool>
@@ -1090,7 +1103,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QPushButton" name="pushButton">
              <property name="enabled">
               <bool>false</bool>
@@ -1103,7 +1116,7 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
+           <item row="3" column="1">
             <widget class="QPushButton" name="pushButton_17">
              <property name="enabled">
               <bool>false</bool>
@@ -1125,7 +1138,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>302</width>
+          <width>416</width>
           <height>576</height>
          </rect>
         </property>
@@ -1622,7 +1635,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>413</width>
+          <width>416</width>
           <height>527</height>
          </rect>
         </property>
@@ -1928,7 +1941,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
+          <width>433</width>
           <height>360</height>
          </rect>
         </property>
@@ -2380,7 +2393,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
+          <width>416</width>
           <height>397</height>
          </rect>
         </property>
@@ -2758,7 +2771,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
+          <width>416</width>
           <height>402</height>
          </rect>
         </property>
@@ -2939,7 +2952,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
+          <width>433</width>
           <height>360</height>
          </rect>
         </property>
@@ -3144,7 +3157,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>237</width>
+          <width>416</width>
           <height>431</height>
          </rect>
         </property>
@@ -3247,7 +3260,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
+          <width>433</width>
           <height>360</height>
          </rect>
         </property>
@@ -3395,7 +3408,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
+          <width>433</width>
           <height>360</height>
          </rect>
         </property>

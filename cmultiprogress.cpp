@@ -9,7 +9,7 @@ CMultiProgress::CMultiProgress(QWidget *parent) :
 
 void CMultiProgress::paintEvent(QPaintEvent *)
 {
-  QPainter p(this);
+  QPainter p(this);  
 
   p.fillRect(rect(), QColor(255, 255, 255));
 

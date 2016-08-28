@@ -648,6 +648,8 @@ private slots:
 
   void on_action_zoom_100_triggered();
 
+  void on_pushButton_unselect_clicked();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

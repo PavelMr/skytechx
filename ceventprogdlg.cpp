@@ -17,6 +17,7 @@ CEventProgDlg::CEventProgDlg(QWidget *parent) :
     ui->label->setMovie(movie);
     movie->start();
     ui->label_2->setText(tr("Events found : ") + QString::number(0));
+
 }
 
 CEventProgDlg::~CEventProgDlg()

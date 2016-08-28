@@ -672,11 +672,10 @@ MainWindow::MainWindow(QWidget *parent) :
   {
     ui->page_2->hide();
     ui->page_3->hide();
-    ui->page_7->hide(); // telescope handpad
+    //ui->page_7->hide(); // telescope handpad
 
-    ui->toolBox->removeItem(4);
-    ui->toolBox->removeItem(6);
-    ui->toolBox->removeItem(6);
+    ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_2));
+    ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_3));
   }
 
   QAction *openWebHelp = new QAction(QIcon(":/res/ico_web_help.png"), "web", this);
@@ -1830,6 +1829,7 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool update)
   ui->pushButton_16->setEnabled(true);
   ui->pushButton_17->setEnabled(true);
   ui->pushButton_34->setEnabled(true);
+  ui->pushButton_unselect->setEnabled(true);
   ui->checkBox_5->setEnabled(true);
   ui->cb_extInfo->setEnabled(true);
   ui->action_Last_search_object->setEnabled(true);
@@ -2647,8 +2647,9 @@ void MainWindow::removeQuickInfo(int type)
     ui->pushButton_17->setEnabled(false);
     ui->pushButton_19->setEnabled(false);
     ui->pushButton_20->setEnabled(false);
-    ui->pushButton_21->setEnabled(false);
+    ui->pushButton_21->setEnabled(false);    
     ui->pushButton_34->setEnabled(false);
+    ui->pushButton_unselect->setEnabled(false);
     ui->checkBox_5->setEnabled(false);
     ui->cb_extInfo->setEnabled(false);
     ui->action_Last_search_object->setEnabled(false);
@@ -3486,6 +3487,7 @@ void MainWindow::on_actionSelect_world_location_triggered()
     ui->lv_quickInfo->m_info.jd = CM_UNDEF;
   }
 
+  g_forcedRecalculate = true;
   setTitle();
   ui->widget->repaintMap();
 }
@@ -4352,9 +4354,7 @@ void MainWindow::on_treeView_3_clicked(const QModelIndex &index)
   mapView_t v = ui->widget->m_mapView;
 
   v.jd = jd;
-  a.setParam(&v);
-
-  // TODO:  OBJ altitude nebo Altitude of the OBJ ??????????
+  a.setParam(&v); 
 
   a.calcPlanet(PT_SUN, &o);
   ui->textEdit->append(tr("Sun altitude : ") + getStrDeg(o.lAlt));
@@ -6293,6 +6293,9 @@ void MainWindow::on_actionShow_local_meridian_triggered()
   ui->widget->repaintMap();
 }
 
-
-
+void MainWindow::on_pushButton_unselect_clicked()
+{
+  removeQuickInfo(-1);
+  ui->widget->repaintMap();
+}
 
