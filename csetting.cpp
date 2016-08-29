@@ -44,6 +44,8 @@ extern QString g_horizonName;
 
 static QString g_horizonNameOld;
 
+extern QString g_tpSpeed[3];
+
 CSetting::CSetting(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::CSetting)
@@ -93,6 +95,11 @@ CSetting::CSetting(QWidget *parent) :
   connect(&g_skServer, SIGNAL(stateChange()), this, SLOT(setServerGui()));
   ui->checkBox_server->setChecked(setting.value("server_run_startup", false).toBool());
   ui->spinBox_server_port->setValue(setting.value("server_port", SK_SERVER_DEFAULT_PORT).toInt());
+
+  // telescope
+  ui->lineEdit_6->setText(g_tpSpeed[0]);
+  ui->lineEdit_7->setText(g_tpSpeed[1]);
+  ui->lineEdit_8->setText(g_tpSpeed[2]);
 
   // toolbar
   int tbIconSize = setting.value("toolbar_icon_size", 24).toInt();
@@ -1060,6 +1067,11 @@ void CSetting::apply()
 
   // other
   g_skSet.map.smartLabels = ui->checkBox_18->isChecked();
+
+  // telescope
+  g_tpSpeed[0] = ui->lineEdit_6->text().replace(",", ".");
+  g_tpSpeed[1] = ui->lineEdit_7->text().replace(",", ".");
+  g_tpSpeed[2] = ui->lineEdit_8->text().replace(",", ".");
 
   // status bar
   QSettings set;

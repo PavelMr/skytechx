@@ -135,7 +135,7 @@ bool g_useJPLEphem;
 int g_ephType;
 int g_ephMoonType;
 
-QString g_tpSpeed[3] = {"1%", "2", "100%"};
+QString g_tpSpeed[3] = {"0.5", "25%", "100%"};
 
 CStatusBar *g_statusBar;
 
@@ -156,9 +156,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->setupUi(this);
 
-
-
-  ui->toolButton_37->setDefaultAction(ui->actionConnect_device);
+  ui->toolButton_37->setDefaultAction(ui->actionConnect_device);  
+  ui->toolButton_38->setDefaultAction(ui->actionDisconnect);
 
   connect(&m_versionManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotVersionFinished(QNetworkReply*)));
 

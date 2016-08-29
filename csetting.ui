@@ -23,7 +23,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>6</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -4331,54 +4331,40 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
-               <widget class="QCheckBox" name="checkBox_14">
-                <property name="text">
-                 <string>Parking telescope before disconnection</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QCheckBox" name="checkBox_21">
-                <property name="text">
-                 <string>Enable sounds</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1">
+              <item row="6" column="0">
                <widget class="QLabel" name="label_122">
                 <property name="text">
                  <string>Volume</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
+              <item row="7" column="0">
+               <widget class="QSlider" name="horizontalSlider_17">
+                <property name="minimumSize">
+                 <size>
+                  <width>128</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>256</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="pageStep">
+                 <number>10</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition">
+                 <enum>QSlider::TicksBelow</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
                <layout class="QHBoxLayout" name="horizontalLayout_34">
-                <item>
-                 <widget class="QSlider" name="horizontalSlider_17">
-                  <property name="minimumSize">
-                   <size>
-                    <width>128</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>256</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="pageStep">
-                   <number>10</number>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="tickPosition">
-                   <enum>QSlider::TicksBelow</enum>
-                  </property>
-                 </widget>
-                </item>
                 <item>
                  <spacer name="horizontalSpacer_24">
                   <property name="orientation">
@@ -4393,6 +4379,13 @@
                  </spacer>
                 </item>
                </layout>
+              </item>
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="checkBox_21">
+                <property name="text">
+                 <string>Enable sounds</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -5085,6 +5078,88 @@ then PLAN404 or VSOP87 is used</string>
           </size>
          </property>
         </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_20">
+      <attribute name="title">
+       <string>Telescope</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_109">
+       <item>
+        <widget class="QGroupBox" name="groupBox_34">
+         <property name="title">
+          <string>Telescope control</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_111">
+          <item>
+           <layout class="QFormLayout" name="formLayout_20">
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="checkBox_14">
+              <property name="text">
+               <string>Parking telescope before disconnection</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_123">
+              <property name="text">
+               <string>Minimum speed</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLineEdit" name="lineEdit_6">
+              <property name="toolTip">
+               <string>In percent or deg/s eg. 10%  or 0.2 </string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_124">
+              <property name="text">
+               <string>Medium speed</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLineEdit" name="lineEdit_7">
+              <property name="toolTip">
+               <string>In percent or deg/s eg. 10%  or 0.2 </string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_125">
+              <property name="text">
+               <string>Maximum speed</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLineEdit" name="lineEdit_8">
+              <property name="toolTip">
+               <string>In percent or deg/s eg. 10%  or 0.2 </string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <spacer name="verticalSpacer_18">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
