@@ -858,7 +858,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>1</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -1137,7 +1137,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-216</y>
           <width>416</width>
           <height>576</height>
          </rect>
@@ -1601,6 +1601,19 @@
              </property>
              <property name="text">
               <string>Auto adjust</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="tb_histogram">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>H</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
              </property>
             </widget>
            </item>

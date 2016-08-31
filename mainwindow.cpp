@@ -65,6 +65,7 @@
 #include "cgetprofile.h"
 #include "caddcustomobject.h"
 #include "csgp4.h"
+#include "chistogram.h"
 #include "csatellitedlg.h"
 #include "csatellitesearch.h"
 #include "csearchdsocat.h"
@@ -221,10 +222,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
   pcMainWnd = this;
 
+  m_dockHistogram = new QDockWidget("Histogram", this);
+  m_dockHistogram->setAllowedAreas(Qt::NoDockWidgetArea);
+  m_dockHistogram->setFloating(true);
+  m_dockHistogram->resize(320, 240);
+  m_dockHistogram->hide();
+  m_histogram = new CHistogram(m_dockHistogram);
+  m_dockHistogram->setWidget(m_histogram);
+
+
   connect(ui->dockWidget, SIGNAL(visibilityChanged(bool)), this, SLOT(slotDockBarVis(bool)));
   connect(ui->dockTime, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTimeVis(bool)));
   connect(ui->dockTele, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTeleVis(bool)));
   connect(ui->dockTimeDialog, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTimeDialogVis(bool)));
+  connect(m_dockHistogram, SIGNAL(visibilityChanged(bool)), this, SLOT(slotHistogramVis(bool)));
 
   ui->dockWidget->setWindowTitle(tr("Sidebar"));
   ui->lv_quickInfo->init(ui->toolBox);
@@ -2012,6 +2023,7 @@ void MainWindow::checkDSS()
   ui->cb_showDSS_FN->setEnabled(m->rowCount() > 0);
   ui->checkBox_aa->setEnabled(m->rowCount() > 0);
   ui->tb_filter->setEnabled(m->rowCount() > 0);
+  ui->tb_histogram->setEnabled(m->rowCount() > 0);
 
   int i = getCurDSS();
 
@@ -2031,6 +2043,12 @@ void MainWindow::checkDSS()
     ui->spinBox_f20->setValue(bkImg.m_tImgList[i].param.matrix[2][0]);
     ui->spinBox_f21->setValue(bkImg.m_tImgList[i].param.matrix[2][1]);
     ui->spinBox_f22->setValue(bkImg.m_tImgList[i].param.matrix[2][2]);
+
+    int histogram[256];
+    CFits *fits = (CFits *)bkImg.m_tImgList[i].ptr;
+
+    CImageManip::getHistogram(fits->getImage(), histogram);
+    m_histogram->setData(histogram);
   }
 
   if (m->rowCount() > 0)
@@ -2409,6 +2427,13 @@ void MainWindow::slotTimeDialogVis(bool vis)
   if (isMinimized())
     return;
   ui->actionTime_dialog->setChecked(vis);
+}
+
+void MainWindow::slotHistogramVis(bool vis)
+{
+  if (isMinimized())
+    return;
+  ui->tb_histogram->setChecked(vis);
 }
 
 /////////////////////////////////
@@ -3327,6 +3352,9 @@ void MainWindow::restoreDSSList()
 
          CFits *f = (CFits *)bkImg.m_tImgList[i].ptr;
          CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[i].param);
+         int histogram[256];
+         CImageManip::getHistogram(f->getImage(), histogram);
+         m_histogram->setData(histogram);
          i++;
       }
 
@@ -3334,6 +3362,8 @@ void MainWindow::restoreDSSList()
 
     } while (1);
   }
+
+  checkDSS();
 }
 
 void MainWindow::saveDSSList()
@@ -3664,8 +3694,11 @@ void MainWindow::on_horizontalSlider_br_valueChanged(int value)
   bkImg.m_tImgList[index].param.brightness = value;
 
   CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+  int histogram[256];
 
   CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
+  CImageManip::getHistogram(f->getImage(), histogram);
+  m_histogram->setData(histogram);
   ui->widget->repaintMap();
 }
 
@@ -3678,8 +3711,11 @@ void MainWindow::on_horizontalSlider_con_valueChanged(int value)
   bkImg.m_tImgList[index].param.contrast = value;
 
   CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+  int histogram[256];
 
   CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
+  CImageManip::getHistogram(f->getImage(), histogram);
+  m_histogram->setData(histogram);
   ui->widget->repaintMap();
 }
 
@@ -3692,8 +3728,11 @@ void MainWindow::on_horizontalSlider_gm_valueChanged(int value)
   bkImg.m_tImgList[index].param.gamma = value;
 
   CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+  int histogram[256];
 
   CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
+  CImageManip::getHistogram(f->getImage(), histogram);
+  m_histogram->setData(histogram);
   ui->widget->repaintMap();
 }
 
@@ -3706,8 +3745,11 @@ void MainWindow::on_checkBox_inv_clicked(bool checked)
   bkImg.m_tImgList[index].param.invert = checked;
 
   CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+  int histogram[256];
 
   CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
+  CImageManip::getHistogram(f->getImage(), histogram);
+  m_histogram->setData(histogram);
   ui->widget->repaintMap();
 }
 
@@ -3720,8 +3762,11 @@ void MainWindow::on_checkBox_aa_clicked(bool checked)
   bkImg.m_tImgList[index].param.autoAdjust = checked;
 
   CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+  int histogram[256];
 
   CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
+  CImageManip::getHistogram(f->getImage(), histogram);
+  m_histogram->setData(histogram);
   ui->widget->repaintMap();
 
   ui->horizontalSlider_br->setEnabled(!checked);
@@ -3748,8 +3793,11 @@ void MainWindow::on_pushButton_dss_reset_clicked()
   checkDSS();
 
   CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+  int histogram[256];
 
   CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
+  CImageManip::getHistogram(f->getImage(), histogram);
+  m_histogram->setData(histogram);
   ui->widget->repaintMap();
 }
 
@@ -3783,7 +3831,7 @@ void MainWindow::on_pushButton_dss_reset_all_clicked()
     QApplication::processEvents();
 
     CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
-    CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
+    CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);    
   }
 
   checkDSS();
@@ -3824,7 +3872,7 @@ void MainWindow::on_pushButton_dss_all_clicked()
     ex.dwLength = sizeof(MEMORYSTATUSEX);
     GlobalMemoryStatusEx(&ex);
 
-    CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);
+    CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);    
   }
 
   checkDSS();
@@ -5763,6 +5811,17 @@ CMapView *MainWindow::getView()
   return ui->widget;
 }
 
+void MainWindow::on_tb_histogram_clicked()
+{
+  if (m_dockHistogram->isVisible()) {
+    m_dockHistogram->hide();
+  }
+  else
+  {
+    m_dockHistogram->show();
+  }
+}
+
 void MainWindow::on_tb_filter_clicked()
 {
   if (ui->dockFilter->isVisible())
@@ -5817,8 +5876,12 @@ void MainWindow::on_pushButton_22_clicked()
   }
 
   CFits *f = (CFits *)bkImg.m_tImgList[i].ptr;
+  int histogram[256];
 
   CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[i].param);
+  CImageManip::getHistogram(f->getImage(), histogram);
+  m_histogram->setData(histogram);
+
   ui->widget->repaintMap();
 }
 
@@ -6297,4 +6360,5 @@ void MainWindow::on_pushButton_unselect_clicked()
   removeQuickInfo(-1);
   ui->widget->repaintMap();
 }
+
 

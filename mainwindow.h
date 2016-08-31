@@ -18,6 +18,7 @@
 
 class CDSSCurveWidget;
 class QPrinter;
+class CHistogram;
 
 namespace Ui {
 class MainWindow;
@@ -116,6 +117,8 @@ protected:
   QTimer          m_realTimer;
   QStringList     m_wordList;
 
+  CHistogram     *m_histogram;
+  QDockWidget    *m_dockHistogram;
   CTimeWidget    *m_timeWidget;
   CTimeDialog    *m_timeDialog;
   bool            m_isNormal;
@@ -650,6 +653,8 @@ private slots:
 
   void on_pushButton_unselect_clicked();
 
+  void on_tb_histogram_clicked();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
@@ -675,6 +680,7 @@ public slots:
   void slotTimeVis(bool vis);
   void slotTeleVis(bool vis);
   void slotTimeDialogVis(bool vis);
+  void slotHistogramVis(bool vis);
   void slotSearchDone(void);
   void slotSearchChange(QString str);
   void slotGrid1(void);

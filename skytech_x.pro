@@ -279,7 +279,8 @@ SOURCES += main.cpp\
     skeventdocument.cpp \
     elp2000/elp2000.cpp \
     cchartdialog.cpp \
-    jpl/jpl_eph.cpp
+    jpl/jpl_eph.cpp \
+    chistogram.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -494,7 +495,8 @@ HEADERS  += mainwindow.h \
     elp2000/elp2000.h \
     cchartdialog.h \
     jpl/jpl_eph.h \
-    jpl/jpl_int.h
+    jpl/jpl_int.h \
+    chistogram.h
 
 
 FORMS    += mainwindow.ui \

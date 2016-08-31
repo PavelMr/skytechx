@@ -1,5 +1,6 @@
 #include "cimagemanip.h"
 #include "skcore.h"
+#include "skutils.h"
 
 static int contrastTable[256];
 static int gammaTable[256];
@@ -149,8 +150,41 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
         }
       }
     }
-  }
+  }  
+}
 
+/////////////////////////////////////////////////////////////////
+void CImageManip::getHistogram(const QImage *src, int *histogram)
+/////////////////////////////////////////////////////////////////
+{
+  bool bw = src->format() == QImage::Format_Indexed8;
+
+  memset(histogram, 0, sizeof(int) * 256);
+
+  int c = 0;
+
+  if (bw)
+  {
+    const uchar *p = (uchar *)src->bits();
+
+    for (int i = 0; i < src->width() * src->height(); i++, p++)
+    {
+      int val = *p;
+
+      histogram[val]++;
+    }
+  }
+  else
+  {
+    const QRgb *p = (QRgb *)src->bits();
+    for (int i = 0; i < src->width() * src->height(); i++, p++)
+    {
+      QRgb rgb = *p;
+      int val = rgb & 0xff;
+
+      histogram[val]++;
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
