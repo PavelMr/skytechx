@@ -342,6 +342,12 @@
            </item>
            <item row="1" column="0">
             <widget class="QSpinBox" name="spinBox_f00">
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+             <property name="buttonSymbols">
+              <enum>QAbstractSpinBox::UpDownArrows</enum>
+             </property>
              <property name="minimum">
               <number>-32</number>
              </property>
@@ -868,7 +874,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>433</width>
+          <width>348</width>
           <height>360</height>
          </rect>
         </property>
@@ -1137,8 +1143,8 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-216</y>
-          <width>416</width>
+          <y>0</y>
+          <width>302</width>
           <height>576</height>
          </rect>
         </property>
@@ -1648,7 +1654,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>416</width>
+          <width>413</width>
           <height>527</height>
          </rect>
         </property>
@@ -1954,7 +1960,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>433</width>
+          <width>264</width>
           <height>360</height>
          </rect>
         </property>
@@ -2406,7 +2412,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>416</width>
+          <width>299</width>
           <height>397</height>
          </rect>
         </property>
@@ -2797,7 +2803,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>416</width>
+          <width>268</width>
           <height>402</height>
          </rect>
         </property>
@@ -2978,7 +2984,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>433</width>
+          <width>279</width>
           <height>360</height>
          </rect>
         </property>
@@ -3183,7 +3189,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>416</width>
+          <width>237</width>
           <height>431</height>
          </rect>
         </property>
@@ -3286,7 +3292,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>433</width>
+          <width>254</width>
           <height>360</height>
          </rect>
         </property>
@@ -3434,7 +3440,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>433</width>
+          <width>254</width>
           <height>360</height>
          </rect>
         </property>

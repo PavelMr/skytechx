@@ -49,6 +49,7 @@ void mapObjReset(void);
 void addMapObj(int x, int y, int type, int selType, int size, qint64 par1, qint64 par2, double mag = 255);
 void mapObjContextMenu(CMapView *map);
 bool mapObjSnap(int x, int y, radec_t *rd);
+bool mapObjSnap(int x, int y, double &sx, double &sy);
 bool mapObjSearch(int x, int y, mapObj_t *obj);
 void recenterHoldObject(CMapView *p, bool bRepaint = true);
 void releaseHoldObject(int type);

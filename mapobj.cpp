@@ -218,6 +218,25 @@ static bool sortObj(mapObj_t &o1, mapObj_t &o2)
   return(false);
 }
 
+/////////////////////////////////////////////////////
+bool mapObjSnap(int x, int y, double &sx, double &sy)
+/////////////////////////////////////////////////////
+{
+  for (int i = 0; i < tObj.count(); i++)
+  {
+    if (checkMapObjPos(QPoint(x, y), &tObj[i]))
+    {
+      mapObj_t     o = tObj[i];
+
+      sx = o.x;
+      sy = o.y;
+
+      return(true);
+    }
+  }
+
+  return(false);
+}
 
 //////////////////////////////////////////
 bool mapObjSnap(int x, int y, radec_t *rd)

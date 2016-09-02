@@ -9,7 +9,7 @@ class CHistogram : public QWidget
 public:
   explicit CHistogram(QWidget *parent = 0);
 
-  void setData(int* histogram);
+  void setData(int* histogram);  
 
 protected:
   void paintEvent(QPaintEvent *e);

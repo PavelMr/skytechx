@@ -458,12 +458,12 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->treeView->setRootIsDecorated(false);
   ui->treeView->header()->resizeSection(0, 150);
   ui->treeView->header()->resizeSection(1, 50);
-  ui->treeView->header()->resizeSection(2, 100);
+  ui->treeView->header()->resizeSection(2, 100);  
 
   connect(ui->treeView->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
           this, SLOT(slotDSSChange(const QModelIndex&, const QModelIndex&)));
 
-  //connect(ui->treeView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(slotDSSChange(QModelIndex, QModelIndex)));
+  connect(ui->treeView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(slotDSSChange(QModelIndex, QModelIndex)));
 
   QShortcut *sh1 = new QShortcut(QKeySequence(Qt::Key_Delete), ui->treeView, 0, 0,  Qt::WidgetShortcut);
   connect(sh1, SIGNAL(activated()), this, SLOT(slotDeleteDSSItem()));
@@ -2005,7 +2005,7 @@ void MainWindow::checkDSS()
 {
   QStandardItemModel *m = (QStandardItemModel *)ui->treeView->model();
   if (m == NULL)
-    return;
+    return;  
 
   ui->pushButton_15->setEnabled(m->rowCount() > 0);
   ui->pushButton_13->setEnabled(m->rowCount() > 0);
@@ -2025,11 +2025,11 @@ void MainWindow::checkDSS()
   ui->tb_filter->setEnabled(m->rowCount() > 0);
   ui->tb_histogram->setEnabled(m->rowCount() > 0);
 
-  int i = getCurDSS();
+  int i = getCurDSS();  
 
   if (i >= 0)
-  {
-    ui->horizontalSlider_br->setValue(bkImg.m_tImgList[i].param.brightness);
+  {    
+    ui->horizontalSlider_br->setValue(bkImg.m_tImgList[i].param.brightness);   
     ui->horizontalSlider_con->setValue(bkImg.m_tImgList[i].param.contrast);
     ui->horizontalSlider_gm->setValue(bkImg.m_tImgList[i].param.gamma);
     ui->checkBox_inv->setChecked(bkImg.m_tImgList[i].param.invert);
@@ -2049,6 +2049,7 @@ void MainWindow::checkDSS()
 
     CImageManip::getHistogram(fits->getImage(), histogram);
     m_histogram->setData(histogram);
+    m_dockHistogram->setWindowTitle(tr("Histogram : ") + fits->m_name);
   }
 
   if (m->rowCount() > 0)
@@ -2057,7 +2058,7 @@ void MainWindow::checkDSS()
     ui->horizontalSlider_br->setEnabled(!checked);
     ui->horizontalSlider_con->setEnabled(!checked);
     ui->horizontalSlider_gm->setEnabled(!checked);
-  }
+  }  
 }
 
 ///////////////////////////////////////////
@@ -2080,14 +2081,15 @@ void MainWindow::slotDeleteDSSItem()
   if (il.count() == 0)
     return;
 
+  int row = il.at(0).row();
   QStandardItem *item = model->itemFromIndex(il.at(0));
-  int index = item->row();
+  int index = item->row();  
 
-  bkImg.deleteItem(index);
-
-  model->removeRow(il.at(0).row());
+  model->removeRow(row);
   checkDSS();
   updateDSS(false);
+
+  bkImg.deleteItem(index);
 
   ui->widget->repaintMap();
 }
@@ -3308,16 +3310,19 @@ void MainWindow::restoreDSSList()
   progress.setWindowFlags(( progress.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint);
   progress.setWindowModality(Qt::WindowModal);
   progress.setMinimumDuration(0);
+  progress.setRange(0, 0);
+  progress.setValue(0);
   progress.setCancelButton(NULL);
-  progress.show();
+  progress.show();  
 
   if (file.open(QFile::ReadOnly | QFile::Text))
-  {
+  {    
     QString     str;
     QStringList list;
     int i = 0;
     do
     {
+      QApplication::processEvents();
       str = file.readLine();
       if (str.isEmpty())
       {
@@ -3350,18 +3355,19 @@ void MainWindow::restoreDSSList()
          bkImg.m_tImgList[i].param.useMatrix = list[16].toInt();
          bkImg.m_tImgList[i].param.dlgSize = list[17].toInt();
 
+         /*
          CFits *f = (CFits *)bkImg.m_tImgList[i].ptr;
          CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[i].param);
          int histogram[256];
          CImageManip::getHistogram(f->getImage(), histogram);
          m_histogram->setData(histogram);
+         */
          i++;
-      }
-
-      QApplication::processEvents();
-
+      }      
     } while (1);
   }
+
+  progress.close();
 
   checkDSS();
 }
@@ -3620,6 +3626,11 @@ void MainWindow::on_actionVery_slow_1000ms_triggered()
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 //////////////////////////////////////////////////////////////
 {
+  if (!index.isValid())
+  {
+    return;
+  }
+
   QStandardItemModel *m = (QStandardItemModel *)ui->treeView->model();
 
   int i = m->itemFromIndex(index)->row();
@@ -3882,9 +3893,14 @@ void MainWindow::on_pushButton_dss_all_clicked()
 
 
 //////////////////////////////////////////////////////////////////////////
-void MainWindow::slotDSSChange(const QModelIndex &i1, const QModelIndex &)
+void MainWindow::slotDSSChange(const QModelIndex &i1, const QModelIndex &i2)
 //////////////////////////////////////////////////////////////////////////
 {
+  if (!i1.isValid())
+  {
+    return;
+  }
+
   on_treeView_clicked(i1);
 }
 

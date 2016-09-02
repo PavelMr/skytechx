@@ -653,7 +653,7 @@ private slots:
 
   void on_pushButton_unselect_clicked();
 
-  void on_tb_histogram_clicked();
+  void on_tb_histogram_clicked();  
 
 private:
   Ui::MainWindow *ui;

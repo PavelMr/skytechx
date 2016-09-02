@@ -156,12 +156,10 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
 /////////////////////////////////////////////////////////////////
 void CImageManip::getHistogram(const QImage *src, int *histogram)
 /////////////////////////////////////////////////////////////////
-{
+{  
   bool bw = src->format() == QImage::Format_Indexed8;
 
-  memset(histogram, 0, sizeof(int) * 256);
-
-  int c = 0;
+  memset(histogram, 0, sizeof(int) * 256);  
 
   if (bw)
   {

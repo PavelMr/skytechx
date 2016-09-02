@@ -7,6 +7,7 @@ CHistogram::CHistogram(QWidget *parent) : QWidget(parent)
 {
 }
 
+
 void CHistogram::setData(int *histogram)
 {
   memcpy(m_histogram, histogram, sizeof(m_histogram));
@@ -22,7 +23,7 @@ void CHistogram::setData(int *histogram)
 
 void CHistogram::paintEvent(QPaintEvent *)
 {
-  QPainter p(this);
+  QPainter p(this);  
 
   double deltay = (m_max - m_min) / (double)height();
   double deltax = width() / 256.;
@@ -31,11 +32,13 @@ void CHistogram::paintEvent(QPaintEvent *)
 
   p.fillRect(rect(), Qt::black);
 
-  p.setPen(Qt::darkGray);
+  p.setRenderHint(QPainter::Antialiasing);
+  p.setPen(QPen(Qt::darkGray, 1, Qt::DotLine));
   for (int i = 0; i < 8; i++) {
     p.drawLine(0, i * dy, width(), i * dy);
     p.drawLine(i * dx, 0, i * dx, height());
   }
+  p.setRenderHint(QPainter::Antialiasing, false);
 
   double x = 0;
   for (int i = 0; i < 256; i++) {
