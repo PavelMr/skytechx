@@ -516,7 +516,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
             }
             g_labeling.addLabel(QPoint(pt.sx, pt.sy), comaSize + 2, a->name, FONT_COMET, align, SL_AL_ALL);
           }
-          addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, comaSize + 2, i, (qint64)a, a->orbit.mag);
+          addMapObj(a->orbit.lRD, pt.sx, pt.sy, MO_COMET, MO_CIRCLE, comaSize + 2, i, (qint64)a, a->orbit.mag);
         }
       }
     }
@@ -581,7 +581,7 @@ void comRender(CSkPainter *p, mapView_t *view, float maxMag)
             }
             g_labeling.addLabel(QPoint(pt.sx, pt.sy), 8, a->name, FONT_COMET, align, SL_AL_ALL);
           }
-          addMapObj(pt.sx, pt.sy, MO_COMET, MO_CIRCLE, 8 + 2, i, (qint64)a, a->orbit.mag);
+          addMapObj(a->orbit.lRD, pt.sx, pt.sy, MO_COMET, MO_CIRCLE, 8 + 2, i, (qint64)a, a->orbit.mag);
         }
       }
     }

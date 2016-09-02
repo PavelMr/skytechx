@@ -108,7 +108,7 @@ static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
           #pragma omp critical
           {
             int r = cStarRenderer.renderStar(&pt, spIndex, vMag, pPainter);
-            addMapObj(pt.sx, pt.sy, MO_URAT1, MO_CIRCLE, r + 4, star.zone, star.id, vMag);
+            addMapObj(star.rd, pt.sx, pt.sy, MO_URAT1, MO_CIRCLE, r + 4, star.zone, star.id, vMag);
             g_numStars++;
           }
         }
@@ -163,7 +163,7 @@ static void smRenderNomadStars(mapView_t *mapView, CSkPainter *pPainter, int reg
           #pragma omp critical
           {
             int r = cStarRenderer.renderStar(&pt, spIndex, mag, pPainter);
-            addMapObj(pt.sx, pt.sy, MO_NOMAD, MO_CIRCLE, r + 4, star.zone, star.id, mag);
+            addMapObj(rd, pt.sx, pt.sy, MO_NOMAD, MO_CIRCLE, r + 4, star.zone, star.id, mag);
             g_numStars++;
           }
         }
@@ -217,7 +217,7 @@ static void smRenderUSNOB1Stars(mapView_t *mapView, CSkPainter *pPainter, int re
           #pragma omp critical
           {
             int r = cStarRenderer.renderStar(&pt, spIndex, star.vMag, pPainter);
-            addMapObj(pt.sx, pt.sy, MO_USNOB1, MO_CIRCLE, r + 4, star.zone, star.id, star.vMag);
+            addMapObj(rd, pt.sx, pt.sy, MO_USNOB1, MO_CIRCLE, r + 4, star.zone, star.id, star.vMag);
             g_numStars++;
           }
         }
@@ -277,7 +277,7 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
             }
 
             int r = cStarRenderer.renderStar(&pt, star.spIndex, star.mag, pPainter);
-            addMapObj(pt.sx, pt.sy, MO_UCAC4, MO_CIRCLE, r + 4, region, i, star.mag);
+            addMapObj(star.rd, pt.sx, pt.sy, MO_UCAC4, MO_CIRCLE, r + 4, region, i, star.mag);
             g_numStars++;
           }
         }
@@ -321,7 +321,7 @@ static void smRenderUSNO2Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
         if (trfProjectPoint(&pt))
         {
             int r = cStarRenderer.renderStar(&pt, 0, star.rMag, pPainter);
-            addMapObj(pt.sx, pt.sy, MO_USNO2, MO_CIRCLE, r + 4, region, i, star.rMag);
+            addMapObj(star.rd, pt.sx, pt.sy, MO_USNO2, MO_CIRCLE, r + 4, region, i, star.rMag);
             g_numStars++;
         }
       }
@@ -371,7 +371,7 @@ static void smRenderPPMXLStars(mapView_t *mapView, CSkPainter *pPainter, int reg
               //pPainter->setPen(g_skSet.fonst[FONT_STAR_PNAME].color);
               //pPainter->drawTextLR(pt.sx + r, pt.sy + r, QString("%1 %2").arg(j).arg(region));
 
-              addMapObj(pt.sx, pt.sy, MO_PPMXLSTAR, MO_CIRCLE, r + 4, region, j, mag);
+              addMapObj(rd, pt.sx, pt.sy, MO_PPMXLSTAR, MO_CIRCLE, r + 4, region, j, mag);
               g_numStars++;
             }
           }
@@ -418,7 +418,7 @@ static void smRenderGSCStars(mapView_t *mapView, CSkPainter *pPainter, int regio
         if (trfProjectPoint(&pt))
         {
           int r = cStarRenderer.renderStar(&pt, 0, g[j].pMag, pPainter);
-          addMapObj(pt.sx, pt.sy, MO_GSCSTAR, MO_CIRCLE, r + 4, region, j, g[j].pMag);
+          addMapObj(rd, pt.sx, pt.sy, MO_GSCSTAR, MO_CIRCLE, r + 4, region, j, g[j].pMag);
           g_numStars++;
         }
         id = g[j].id;
@@ -491,7 +491,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
       }
 
       int r = 3 + cStarRenderer.renderStar(&pt, sp, mag, pPainter);
-      addMapObj(pt.sx, pt.sy, MO_TYCSTAR, MO_CIRCLE, r + 4, region, j, mag);
+      addMapObj(s->rd, pt.sx, pt.sy, MO_TYCSTAR, MO_CIRCLE, r + 4, region, j, mag);
       g_numStars++;
 
       if (!g_showLabels)
@@ -1037,7 +1037,7 @@ static void smRenderMoons(QImage *pImg, CSkPainter *p, planetSatellites_t *sat, 
         {
           g_labeling.addLabel(QPoint(pt.sx, pt.sy), r + 5, sat->sats[i].name, FONT_PLN_SAT, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
         }
-        addMapObj(pt.sx, pt.sy, MO_PLN_SAT, MO_CIRCLE, r + 2, pid, i, sat->sats[i].mag);
+        addMapObj(sat->sats[i].lRD, pt.sx, pt.sy, MO_PLN_SAT, MO_CIRCLE, r + 2, pid, i, sat->sats[i].mag);
       }
     }
   }
@@ -1116,7 +1116,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     {
       trfProjectPointNoCheck(&pt);
       int s = cPlanetRenderer.renderSymbol(&pt, &o[order[i]], sun, mapView, pPainter, pImg);
-      addMapObj(pt.sx, pt.sy, MO_PLANET, MO_CIRCLE, s, o[order[i]].type, 0, o[order[i]].mag);
+      addMapObj(o[order[i]].lRD, pt.sx, pt.sy, MO_PLANET, MO_CIRCLE, s, o[order[i]].type, 0, o[order[i]].mag);
     }
 
     if (moons)
@@ -1207,7 +1207,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       p = tr.map(QPoint(r1 + fs, 0));
       pPainter->drawCText(p.x(), p.y(), labels[idx[3]]);
 
-      addMapObj(pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
+      addMapObj(es.lRD, pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
     }
   }
 }
@@ -1230,7 +1230,7 @@ static void renderTelescope(mapView_t *mapView, CSkPainter *pPainter)
       r = g_cDrawing.drawCircle(pt, pPainter, &rd, pcMapView->m_customTeleRad, g_pTelePlugin->getTelescope());
 
     if (r > 0)
-      addMapObj(pt.x(), pt.y(), MO_TELESCOPE, MO_CIRCLE, r, 0, 0);
+      addMapObj(rd, pt.x(), pt.y(), MO_TELESCOPE, MO_CIRCLE, r, 0, 0);
   }
 }
 
@@ -1283,7 +1283,7 @@ static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
           {
             g_labeling.addLabel(QPoint(pt.sx, pt.sy), 15 * g_skSet.map.satellite.size, out.name, FONT_SATELLITE, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
           }
-          addMapObj(pt.sx, pt.sy, MO_SATELLITE, MO_CIRCLE, 10, i, 0);
+          addMapObj(rd, pt.sx, pt.sy, MO_SATELLITE, MO_CIRCLE, 10, i, 0);
         }
       }
     }

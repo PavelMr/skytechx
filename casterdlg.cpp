@@ -294,7 +294,7 @@ void astRender(CSkPainter *p, mapView_t *view, float maxMag)
         {
           g_labeling.addLabel(QPoint(pt.sx, pt.sy), size + 1, a->name, FONT_ASTER, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
         }
-        addMapObj(pt.sx, pt.sy, MO_ASTER, MO_CIRCLE, size + 2, i, (qint64)a, a->orbit.mag);
+        addMapObj(a->orbit.lRD, pt.sx, pt.sy, MO_ASTER, MO_CIRCLE, size + 2, i, (qint64)a, a->orbit.mag);
       }
     }
   }

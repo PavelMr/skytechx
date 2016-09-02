@@ -1039,16 +1039,14 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
 
     if (QApplication::keyboardModifiers() & Qt::CTRL)
     {
-      double x, y;
       radec_t rd;
-      if (!mapObjSnap(m_lastMousePos.x(), m_lastMousePos.y(), x, y))
+      if (!mapObjSnapAll(m_lastMousePos.x(), m_lastMousePos.y(), &rd))
       {
         trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), rd.Ra, rd.Dec);
       }
       else
       {
-        trfConvScrPtToXY(x, y, rd.Ra, rd.Dec);
-        //precess(&rd, &rd, JD2000, m_mapView.jd);
+        precess(&rd, &rd, JD2000, m_mapView.jd);
       }
       m_measurePoint.Ra = rd.Ra;
       m_measurePoint.Dec = rd.Dec;

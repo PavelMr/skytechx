@@ -151,12 +151,13 @@ void mapObjReset(void)
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-void addMapObj(int x, int y, int type, int selType, int size, qint64 par1, qint64 par2, double mag)
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void addMapObj(const radec_t &rd, int x, int y, int type, int selType, int size, qint64 par1, qint64 par2, double mag)
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   mapObj_t o;
 
+  o.rd = rd; // J2000
   o.x = x;
   o.y = y;
   o.type = type;
@@ -218,18 +219,18 @@ static bool sortObj(mapObj_t &o1, mapObj_t &o2)
   return(false);
 }
 
-/////////////////////////////////////////////////////
-bool mapObjSnap(int x, int y, double &sx, double &sy)
-/////////////////////////////////////////////////////
+//////////////////////////////////////////
+bool mapObjSnapAll(int x, int y, radec_t *rd)
+///////////////////////////////////////////
 {
   for (int i = 0; i < tObj.count(); i++)
   {
-    if (checkMapObjPos(QPoint(x, y), &tObj[i]))
-    {
-      mapObj_t     o = tObj[i];
+    mapObj_t o = tObj[i];
 
-      sx = o.x;
-      sy = o.y;
+    if (o.type != MO_INSERT && checkMapObjPos(QPoint(x, y), &tObj[i]))
+    {
+      rd->Ra = o.rd.Ra;
+      rd->Dec = o.rd.Dec;
 
       return(true);
     }
@@ -238,9 +239,9 @@ bool mapObjSnap(int x, int y, double &sx, double &sy)
   return(false);
 }
 
-//////////////////////////////////////////
+//////////////////////////////////////////////
 bool mapObjSnap(int x, int y, radec_t *rd)
-//////////////////////////////////////////
+//////////////////////////////////////////////
 {
   for (int i = 0; i < tObj.count(); i++)
   {
@@ -254,7 +255,7 @@ bool mapObjSnap(int x, int y, radec_t *rd)
         cTYC.getStar(&t, o.par1, o.par2);
 
         rd->Ra = t->rd.Ra;
-        rd->Dec = t->rd.Dec;
+        rd->Dec = t->rd.Dec;        
 
         return(true);
       }

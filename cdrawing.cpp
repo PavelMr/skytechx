@@ -502,7 +502,7 @@ int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, Q
     {
       if (id >= 0)
       {
-        addMapObj(pt.sx, pt.sy, MO_INSERT, MO_CIRCLE, r, id, 0);
+        addMapObj(*rd, pt.sx, pt.sy, MO_INSERT, MO_CIRCLE, r, id, 0);
       }
     }
 
@@ -571,7 +571,7 @@ int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited
     {
       if (id >= 0)
       {
-        addMapObj(pt.sx, pt.sy, MO_INSERT, MO_CIRCLE, r1, id, 0);
+        addMapObj(*rd, pt.sx, pt.sy, MO_INSERT, MO_CIRCLE, r1, id, 0);
       }
     }
 
@@ -628,7 +628,7 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
 
       if (id >= 0)
       {
-        addMapObj(rc.center().x(), rc.center().y(), MO_INSERT, MO_CIRCLE, rc.height(), id, 0);
+        addMapObj(drw->rd, rc.center().x(), rc.center().y(), MO_INSERT, MO_CIRCLE, rc.height(), id, 0);
       }
     }
 
@@ -818,7 +818,7 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
     {
       if (id >= 0)
       {
-        addMapObj(rc.center().x(), rc.center().y(), MO_INSERT, MO_CIRCLE, rc.width() / 2, id, 0);
+        addMapObj(drw->rd, rc.center().x(), rc.center().y(), MO_INSERT, MO_CIRCLE, rc.width() / 2, id, 0);
       }
     }
 
