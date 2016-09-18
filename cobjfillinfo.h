@@ -65,6 +65,7 @@ protected:
     void fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
+    void fillShowerInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
 
     void addTextItem(ofiItem_t *item, QString label, QString value, bool bBold = false);
     void addLabelItem(ofiItem_t *item, QString label);

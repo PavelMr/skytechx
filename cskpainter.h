@@ -30,6 +30,7 @@ class CSkPainter : public QPainter
     void drawCText(int x, int y, QString str);
     void drawCornerBox(int x, int y, int halfSize, int cornerSize);
     void drawCross(QPoint p, int size);
+    void drawCircle(QPoint p, int radius);
     void drawExtLine(const QPointF &p1, const QPointF &p2, double len);
     QList<QPointF> drawTickLine(const QPointF &p1, const QPointF &p2, double large, double smallC, int type, int count, int smallCount);
     void drawRotatedText(float degrees, int x, int y, const QString &text);

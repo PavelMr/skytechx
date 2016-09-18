@@ -54,7 +54,8 @@ typedef struct
 #define FONT_LUNAR_FEATURES    13
 #define FONT_GRID              14
 #define FONT_SATELLITE         15
-#define FONT_COUNT             16
+#define FONT_SHOWER            16
+#define FONT_COUNT             17
 
 #define GRID_NONE               0
 #define GRID_EQ                 1

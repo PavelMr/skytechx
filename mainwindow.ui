@@ -864,7 +864,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -959,36 +959,6 @@
              </property>
             </spacer>
            </item>
-           <item row="0" column="3">
-            <widget class="QPushButton" name="pushButton_34">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="toolTip">
-              <string>Hold current object</string>
-             </property>
-             <property name="text">
-              <string>Hold object</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_17">
-             <item>
-              <widget class="QCheckBox" name="checkBox_5">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>Update with actual map time.</string>
-               </property>
-               <property name="text">
-                <string>Autoupdate</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
            <item row="0" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
@@ -1042,35 +1012,48 @@
                </property>
               </widget>
              </item>
+             <item>
+              <spacer name="horizontalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_5">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Update with actual map time.</string>
+               </property>
+               <property name="text">
+                <string>Autoupdate</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="cb_extInfo">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Extra info.</string>
+               </property>
+              </widget>
+             </item>
             </layout>
-           </item>
-           <item row="4" column="1">
-            <widget class="QCheckBox" name="cb_extInfo">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Show extended information</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="3">
-            <widget class="QPushButton" name="pushButton_unselect">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="toolTip">
-              <string>Unselect object</string>
-             </property>
-             <property name="text">
-              <string>Unselect</string>
-             </property>
-            </widget>
            </item>
           </layout>
          </item>
          <item row="3" column="0">
-          <layout class="QGridLayout" name="gridLayout_6">
+          <layout class="QHBoxLayout" name="horizontalLayout_20">
            <property name="leftMargin">
             <number>2</number>
            </property>
@@ -1083,33 +1066,7 @@
            <property name="bottomMargin">
             <number>2</number>
            </property>
-           <item row="3" column="0">
-            <widget class="QPushButton" name="pushButton_4">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="toolTip">
-              <string>Center this object to screen</string>
-             </property>
-             <property name="text">
-              <string>Go to object</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_16">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="toolTip">
-              <string>Add this object to custom DSO catalogue</string>
-             </property>
-             <property name="text">
-              <string>Add to list...</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
+           <item>
             <widget class="QPushButton" name="pushButton">
              <property name="enabled">
               <bool>false</bool>
@@ -1118,11 +1075,67 @@
               <string>Open dialog with additional features</string>
              </property>
              <property name="text">
-              <string>Go to information dialog...</string>
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/dialog.png</normaloff>:/res/dialog.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
+           <item>
+            <widget class="QPushButton" name="pushButton_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Center this object to screen</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/ico_slew_center.png</normaloff>:/res/ico_slew_center.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_34">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Hold current object</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/holdobj.png</normaloff>:/res/holdobj.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="pushButton_17">
              <property name="enabled">
               <bool>false</bool>
@@ -1131,7 +1144,76 @@
               <string>Open dialog with object tracking</string>
              </property>
              <property name="text">
-              <string>Tracking object path...</string>
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/tracking_dialog.png</normaloff>:/res/tracking_dialog.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_16">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Add this object to custom DSO catalogue</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/add_to_list.png</normaloff>:/res/add_to_list.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_12">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_unselect">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Unselect object</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/empty_list.png</normaloff>:/res/empty_list.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -5522,7 +5604,7 @@ p, li { white-space: pre-wrap; }
     <string>Advanced search...</string>
    </property>
    <property name="shortcut">
-    <string>Alt+F</string>
+    <string>Ctrl+W</string>
    </property>
   </action>
   <action name="actionSlew_telescope_to_screen_center">

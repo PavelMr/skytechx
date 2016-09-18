@@ -147,5 +147,9 @@
         <file>res/ico_pdf.png</file>
         <file>res/ico_clipboard_from.png</file>
         <file>res/ico_lmeridian.png</file>
+        <file>res/dialog.png</file>
+        <file>res/tracking_dialog.png</file>
+        <file>res/add_to_list.png</file>
+        <file>res/empty_list.png</file>
     </qresource>
 </RCC>

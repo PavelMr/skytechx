@@ -11,6 +11,7 @@
 #include "usnob1.h"
 #include "urat1.h"
 #include "nomad.h"
+#include "cmeteorshower.h"
 
 #define FILEREGEXP   QRegExp("\\W")
 
@@ -145,6 +146,10 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
 
     case MO_SATELLITE:
       fillSatelliteInfo(view, obj, item);
+      break;
+
+    case MO_SHOWER:
+      fillShowerInfo(view, obj, item);
       break;
   }
 }
@@ -302,7 +307,7 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
 
   addLabelItem(item, txObjType);
   addSeparator(item);
-  addTextItem(item, txObjType, tr("Satellite"));
+  addTextItem(item, txObjType, tr("Planetary satellite"));
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -347,6 +352,7 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, txConstel, constGetName(con, 1));
   addSeparator(item);
   addTextItem(item, txVisMag, getStrMag(sats.sats[obj->par2].mag));
+  addTextItem(item, tr("Apparent diameter"), QString("%1\"").arg(sats.sats[obj->par2].size, 0, 'f', 4));
   addTextItem(item, tr("Distance from planet center"), getStrDeg(sats.sats[obj->par2].distance));
   addSeparator(item);
 
@@ -882,6 +888,78 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "SGP4 C++ Satellite Library", "");
+}
+
+void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
+{
+  CMeteorShowerItem *m = (CMeteorShowerItem *)obj->par1;
+
+  item->radec.Ra = obj->rd.Ra;
+  item->radec.Dec = obj->rd.Dec;
+  item->zoomFov = getOptObjFov(0, 0, D2R(45));
+  item->id = m->name;
+  item->simbad = m->name;
+  item->title = m->name;
+
+  beginExtInfo();
+  addLabelItem(item, txDateTime);
+  addSeparator(item);
+  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+  addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+  addSeparator(item);
+  endExtInfo();
+
+  addLabelItem(item, txObjType);
+  addSeparator(item);
+  addTextItem(item, txObjType, tr("Meteor shower"));
+  addSeparator(item);
+
+  addLabelItem(item, txDesig);
+  addSeparator(item);
+  addTextItem(item, m->name, "");
+  addSeparator(item);
+
+  addLabelItem(item, tr("Radian position"));
+
+  double ra, dec;
+  QString jd2000;
+
+  ra = m->rd.Ra;
+  dec = m->rd.Dec;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
+
+  double raAtDate = item->radec.Ra;
+  double decAtDate = item->radec.Dec;
+
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
+  addLabelItem(item, txLocInfo);
+  addSeparator(item);
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+
+  CRts   cRts;
+  rts_t  rts;
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
+  fillRTS(&rts, view, item);
+  addSeparator(item);
+
+  addLabelItem(item, tr("Other"));
+  addSeparator(item);
+  addTextItem(item, tr("ZHR"), m->rate);
+  addTextItem(item, tr("Speed"), QString("%1 km/h").arg(m->speed, 0, 'f', 2));
+  addTextItem(item, tr("Source"), m->source);
+  addSeparator(item);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -2168,7 +2246,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   { // moon
     addTextItem(item, tr("Dist."), QString::number(o.r * EARTH_DIAM) + tr("Km"));
     addTextItem(item, tr("Light time"), QString::number(o.light * 24. * 3600.) + tr(" sec."));
-  }
+  }    
 
   addSeparator(item);
 
@@ -2212,12 +2290,12 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
 
     CAstro::sphToXYZ(lon, lat, o.r, hx, hy, hz);
 
+    beginExtInfo();
     addSeparator(item);
     addTextItem(item, tr("X"), QString::number(hx, 'f', 8) + " " + tr("AU"));
     addTextItem(item, tr("Y"), QString::number(hy, 'f', 8) + " " + tr("AU"));
     addTextItem(item, tr("Z"), QString::number(hz, 'f', 8) + " " + tr("AU"));
 
-    beginExtInfo();
     addSeparator(item);
     addTextItem(item, tr("VX"), getStrNumber("", vhx, 8, " " + tr("AU/day"), true));
     addTextItem(item, tr("VY"), getStrNumber("", vhy, 8, " " + tr("AU/day"), true));

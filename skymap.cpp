@@ -28,6 +28,7 @@
 #include "smartlabeling.h"
 #include "usnob1.h"
 #include "nomad.h"
+#include "cmeteorshower.h"
 
 static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region);
 
@@ -64,6 +65,8 @@ QColor currentSkyColor;
 
 int g_numStars;
 int g_numRegions;
+
+CMeteorShower g_meteorShower;
 
 ////////////////////////////////////////////////////////////////////////////////////
 static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
@@ -1446,12 +1449,14 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   if (g_showSS)
   {
     smRenderPlanets(mapView, pPainter, pImg);
-  }
+  }  
+
+  g_meteorShower.render(pPainter, mapView);
 
   if (g_showSatellites)
   {
     renderSatellites(mapView, pPainter);
-  }
+  }  
 
   g_labeling.render(pPainter);
 

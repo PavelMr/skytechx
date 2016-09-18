@@ -245,6 +245,7 @@ CSetting::CSetting(QWidget *parent) :
   ui->listWidget_2->addItem(tr("DSO magnitude"));
   ui->listWidget_2->addItem(tr("Grids"));
   ui->listWidget_2->addItem(tr("Constellations"));
+  ui->listWidget_2->addItem(tr("Meteor showers"));
   ui->listWidget_2->addItem(tr("Horizon"));
   ui->listWidget_2->addItem(tr("Background"));
   ui->listWidget_2->addItem(tr("Solar system"));

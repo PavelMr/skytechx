@@ -165,8 +165,6 @@ void CGSCReg::loadRegions(void)
 
   tm.start();
 
-  createOcTree();
-
-  qDebug() << "el" << tm.elapsed() << mem;
+  createOcTree();  
 }
 

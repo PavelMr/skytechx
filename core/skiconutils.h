@@ -15,36 +15,17 @@ You should have received a copy of the GNU General Public License
 along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
-#ifndef CABOUT_H
-#define CABOUT_H
+#ifndef SKICONUTILS_H
+#define SKICONUTILS_H
 
-#include <QDialog>
+#include <QPainter>
 
-namespace Ui {
-class CAbout;
-}
-
-class CAbout : public QDialog
+class SkIconUtils
 {
-  Q_OBJECT
-
 public:
-  explicit CAbout(QWidget *parent = 0);
-  ~CAbout();
+  SkIconUtils();
 
-protected:
-  void changeEvent(QEvent *e);
-  void mouseMoveEvent(QMouseEvent *event);
-  void mousePressEvent(QMouseEvent *event);
-  void mouseReleaseEvent(QMouseEvent *event);
-
-private slots:
-  void on_pushButton_clicked();
-
-private:
-  Ui::CAbout *ui;
-  bool   m_moving;
-  QPoint m_lastMousePosition;
+  static QIcon createFromText(int sx, int sy, const QString &text);  
 };
 
-#endif // CABOUT_H
+#endif // SKICONUTILS_H

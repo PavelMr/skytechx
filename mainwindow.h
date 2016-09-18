@@ -20,6 +20,13 @@ class CDSSCurveWidget;
 class QPrinter;
 class CHistogram;
 
+class ItemDelegate : public QItemDelegate
+{
+  Q_OBJECT
+public:
+  QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+};
+
 namespace Ui {
 class MainWindow;
 }

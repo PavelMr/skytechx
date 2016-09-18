@@ -23,7 +23,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>6</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>9</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1876,6 +1876,98 @@
                 </widget>
                </item>
               </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_12">
+            <layout class="QVBoxLayout" name="verticalLayout_108">
+             <item>
+              <widget class="QGroupBox" name="groupBox_35">
+               <property name="title">
+                <string>Meteor showers</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_110">
+                <item>
+                 <layout class="QFormLayout" name="formLayout_21">
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="checkBox_23">
+                    <property name="text">
+                     <string>Show all</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_126">
+                    <property name="text">
+                     <string>Show before/after </string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QSpinBox" name="spinBox_7">
+                    <property name="suffix">
+                     <string> day(s)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_127">
+                    <property name="text">
+                     <string>Font &amp; color</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="CFontColorButton" name="pushButton_69">
+                    <property name="text">
+                     <string>PushButton</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_128">
+                    <property name="text">
+                     <string>Symbol color</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="CPushColorButton" name="pushButton_72">
+                    <property name="text">
+                     <string>PushButton</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QLabel" name="label_129">
+                    <property name="text">
+                     <string>Symbol scale</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="0">
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_42">
+                    <property name="suffix">
+                     <string notr="true">x</string>
+                    </property>
+                    <property name="minimum">
+                     <double>0.100000000000000</double>
+                    </property>
+                    <property name="maximum">
+                     <double>5.000000000000000</double>
+                    </property>
+                    <property name="singleStep">
+                     <double>0.100000000000000</double>
+                    </property>
+                    <property name="value">
+                     <double>1.000000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
              </item>
             </layout>
            </widget>

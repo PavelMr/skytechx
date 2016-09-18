@@ -93,6 +93,7 @@
 #include "skserver.h"
 #include "skeventdocument.h"
 #include "cskeventdocdialog.h"
+#include "skiconutils.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -147,6 +148,19 @@ extern bool g_bHoldObject;
 extern bool bParkTelescope;
 extern bool g_developMode;
 extern QApplication *g_pApp;
+
+
+QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+  QStandardItemModel * model = (QStandardItemModel *)index.model();
+
+  if (model->item(index.row(), 0)->text().isEmpty())
+  {
+    return QSize(32, 8);
+  }
+  return QItemDelegate::sizeHint(option, index);
+}
+
 
 ////////////////////////////////////////////
 MainWindow::MainWindow(QWidget *parent) :
@@ -230,6 +244,9 @@ MainWindow::MainWindow(QWidget *parent) :
   m_histogram = new CHistogram(m_dockHistogram);
   m_dockHistogram->setWidget(m_histogram);
 
+  ItemDelegate *delegate = new ItemDelegate();
+  ui->lv_quickInfo->setItemDelegate(delegate);
+
 
   connect(ui->dockWidget, SIGNAL(visibilityChanged(bool)), this, SLOT(slotDockBarVis(bool)));
   connect(ui->dockTime, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTimeVis(bool)));
@@ -282,7 +299,7 @@ MainWindow::MainWindow(QWidget *parent) :
   m_timeLapseMul->setSuffix("x");
   m_timeLapseMul->setToolTip(tr("Time-lapse multiplicator"));
   m_timeLapseMul->setEnabled(false);
-  m_timeLapseMul->setMaximumWidth(60);
+  m_timeLapseMul->setMaximumWidth(50);
   m_timeLapseUpdate = DEFAULT_TIME_LAPSE_UPDATE;
 
   ui->tb_time->addWidget(m_timeLapseMul);
@@ -686,7 +703,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_2));
     ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_3));
-  }
+  }  
 
   QAction *openWebHelp = new QAction(QIcon(":/res/ico_web_help.png"), "web", this);
   QToolBar *tb = new QToolBar;
@@ -823,7 +840,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
   g_useJPLEphem = settings.value("jpl_ephem", true).toBool();
   g_ephType = settings.value("eph_type", EPT_PLAN404).toInt();
-  g_ephMoonType = settings.value("eph_moon_type", EPT_PLAN404).toInt();
+  g_ephMoonType = settings.value("eph_moon_type", EPT_PLAN404).toInt();    
+
+  setToolBoxPage(0);
 }
 
 void MainWindow::setToolbarIconSize()
@@ -831,6 +850,39 @@ void MainWindow::setToolbarIconSize()
   QSettings set;
 
   int size = set.value("toolbar_icon_size", 24).toInt();
+
+  // TODO: zkontrolovat pri zmene DPI
+  ui->actionNorth->setIcon(SkIconUtils::createFromText(size, size, tr("N")));
+  ui->actionSouth->setIcon(SkIconUtils::createFromText(size, size, tr("S")));
+  ui->actionEast->setIcon(SkIconUtils::createFromText(size, size, tr("E")));
+  ui->actionWest->setIcon(SkIconUtils::createFromText(size, size, tr("W")));
+  ui->actionZenith->setIcon(SkIconUtils::createFromText(size, size, tr("Z")));
+  ui->actionMeridian->setIcon(SkIconUtils::createFromText(size, size, tr("M")));
+
+  ui->action_zoom_1->setIcon(SkIconUtils::createFromText(size, size, tr("1°")));
+  ui->action_zoom_5->setIcon(SkIconUtils::createFromText(size, size, tr("5°")));
+  ui->action_zoom_10->setIcon(SkIconUtils::createFromText(size, size, tr("10°")));
+  ui->action_zoom_20->setIcon(SkIconUtils::createFromText(size, size, tr("20°")));
+  ui->action_zoom_45->setIcon(SkIconUtils::createFromText(size, size, tr("45°")));
+  ui->action_zoom_90->setIcon(SkIconUtils::createFromText(size, size, tr("90°")));
+  ui->action_zoom_100->setIcon(SkIconUtils::createFromText(size, size, tr("180°")));
+
+  ui->actionYPlus->setIcon(SkIconUtils::createFromText(size, size, tr("Y+")));
+  ui->actionYMinus->setIcon(SkIconUtils::createFromText(size, size, tr("Y-")));
+  ui->actionMPlus->setIcon(SkIconUtils::createFromText(size, size, tr("M+")));
+  ui->actionMMinus->setIcon(SkIconUtils::createFromText(size, size, tr("M-")));
+  ui->actionDPlus->setIcon(SkIconUtils::createFromText(size, size, tr("D+")));
+  ui->actionDMinus->setIcon(SkIconUtils::createFromText(size, size, tr("D-")));
+
+  ui->actionSDPlus->setIcon(SkIconUtils::createFromText(size, size, tr("SD+")));
+  ui->actionSDMinus->setIcon(SkIconUtils::createFromText(size, size, tr("SD-")));
+
+  ui->actionHPlus->setIcon(SkIconUtils::createFromText(size, size, tr("H+")));
+  ui->actionHMinus->setIcon(SkIconUtils::createFromText(size, size, tr("H-")));
+  ui->actionMinPlus->setIcon(SkIconUtils::createFromText(size, size, tr("Mi+")));
+  ui->actionMinMinus->setIcon(SkIconUtils::createFromText(size, size, tr("Mi-")));
+  ui->actionSPlus->setIcon(SkIconUtils::createFromText(size, size, tr("S+")));
+  ui->actionSMinus->setIcon(SkIconUtils::createFromText(size, size, tr("S-")));
 
   ui->tb_alt_azm->setIconSize(QSize(size, size));
   ui->tb_grid->setIconSize(QSize(size, size));

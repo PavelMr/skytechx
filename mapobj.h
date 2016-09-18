@@ -29,6 +29,7 @@
 #define MO_CONSTELL     15
 #define MO_EARTH_SHD    16
 #define MO_INSERT       17
+#define MO_SHOWER       18
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

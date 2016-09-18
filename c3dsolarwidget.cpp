@@ -504,7 +504,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     {
       p1.w.x = pos.x();
       p1.w.y = pos.y();
-      p1.w.z = pos.z();
+      p1.w.z = pos.z();            
 
       p2.w.x = 0;
       p2.w.y = 0;

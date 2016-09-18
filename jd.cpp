@@ -2,6 +2,13 @@
 
 // TODO: mozna predelat QDatetime QDate a Qtime na svoje
 
+double jdGetJDFrom_DateTime(int year, int month, int day)
+{
+  QDateTime dt = QDateTime(QDate(year, month, day), QTime(0, 0, 0));
+
+  return jdGetJDFrom_DateTime(&dt);
+}
+
 /////////////////////////////////////////
 double jdGetJDFrom_DateTime(QDateTime *t)
 /////////////////////////////////////////

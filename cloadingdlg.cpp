@@ -19,10 +19,12 @@
 #include "constellation.h"
 #include "build.h"
 #include "suntexture.h"
+#include "cmeteorshower.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
 extern QString g_horizonName;
+extern CMeteorShower g_meteorShower;
 
 CLoadingDlg::CLoadingDlg(QWidget *parent) :
   QDialog(parent),
@@ -169,6 +171,8 @@ void CLoadingDlg::slotLoad()
   sgp4.loadTLEData(curSatelliteCatName);
 
   CAstro::initJPLEphems();
+
+  g_meteorShower.load(2016);
 
   usnoB1.setUsnoDir(set.value("usno_b1_path", "").toString());
   usno.setUsnoDir(set.value("usno2_path", "").toString());

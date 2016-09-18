@@ -74,7 +74,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
                                 obj->type == MO_PLN_SAT ||
                                 obj->type == MO_SATELLITE);
 
-  ui->pushButton_3->setEnabled(obj->type == MO_ASTER);
+  ui->pushButton_3->setEnabled(obj->type == MO_ASTER || obj->type == MO_COMET);
 
 
   info.fillInfo(view, obj, &m_infoItem);

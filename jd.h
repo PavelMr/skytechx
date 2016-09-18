@@ -22,5 +22,6 @@ double jdGetJDFrom_DateTime(QDateTime *t);
 void   jdConvertJDTo_DateTime(double JD, QDateTime *t);
 double jdGetYearFromJD(double jd);
 double jdGetJDFromYear(int year);
+double jdGetJDFrom_DateTime(int year, int month, int day);
 
 #endif

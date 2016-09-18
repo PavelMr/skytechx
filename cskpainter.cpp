@@ -50,6 +50,11 @@ void CSkPainter::drawCross(QPoint p, int size)
   drawLine(p.x() - size, p.y(), p.x() + size, p.y());
 }
 
+void CSkPainter::drawCircle(QPoint p, int radius)
+{
+  drawEllipse(p, radius, radius);
+}
+
 //////////////////////////////////////////////////////////////////////////////
 void CSkPainter::drawExtLine(const QPointF &p1, const QPointF &p2, double len)
 //////////////////////////////////////////////////////////////////////////////

@@ -280,7 +280,9 @@ SOURCES += main.cpp\
     elp2000/elp2000.cpp \
     cchartdialog.cpp \
     jpl/jpl_eph.cpp \
-    chistogram.cpp
+    chistogram.cpp \
+    cmeteorshower.cpp \
+    core/skiconutils.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -496,7 +498,9 @@ HEADERS  += mainwindow.h \
     cchartdialog.h \
     jpl/jpl_eph.h \
     jpl/jpl_int.h \
-    chistogram.h
+    chistogram.h \
+    cmeteorshower.h \
+    core/skiconutils.h
 
 
 FORMS    += mainwindow.ui \

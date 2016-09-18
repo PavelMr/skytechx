@@ -12,6 +12,7 @@
 #include "csgp4.h"
 #include "c3dsolar.h"
 #include "cdrawing.h"
+#include "cmeteorshower.h"
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
@@ -563,6 +564,13 @@ void mapObjContextMenu(CMapView *map)
           g_HoldObject.objType = MO_SATELLITE;
           isHoldObjFirst =  true;
         }
+      }
+      break;
+
+      case MO_SHOWER:
+      {
+        CMeteorShowerItem *item = (CMeteorShowerItem *)o.par1;
+        str = item->name;
       }
       break;
 
