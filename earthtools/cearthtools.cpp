@@ -85,8 +85,7 @@ void CEarthTools::getHeight(double lon, double lat)
     }
   }
 
-  QSslConfiguration config = QSslConfiguration::defaultConfiguration();
-  config.setProtocol(QSsl::SslV3);
+  QSslConfiguration config = QSslConfiguration::defaultConfiguration();  
 
   QNetworkRequest request;
   request.setSslConfiguration(config);
@@ -127,8 +126,7 @@ void CEarthTools::getTimeZone(double lon, double lat)
     }
   }
 
-  QSslConfiguration config(QSslConfiguration::defaultConfiguration());
-  config.setProtocol(QSsl::SslV3);
+  QSslConfiguration config(QSslConfiguration::defaultConfiguration());  
 
   QNetworkRequest request;
   request.setSslConfiguration(config);
@@ -165,8 +163,7 @@ void CEarthTools::getDST(double lon, double lat)
     }
   }
 
-  QSslConfiguration config(QSslConfiguration::defaultConfiguration());
-  config.setProtocol(QSsl::SslV3);
+  QSslConfiguration config(QSslConfiguration::defaultConfiguration());  
 
   QNetworkRequest request;
   request.setSslConfiguration(config);
@@ -260,7 +257,7 @@ void CEarthTools::slotDownloadFinished(QNetworkReply *reply)
   }
   else
   {
-    qDebug("Error '%s'", qPrintable(reply->url().toString()));
+    qDebug() << "Error" << reply->url().toString() << reply->errorString();
     emit sigDone(false, 0, m_downloadType);
   }
   reply->deleteLater();

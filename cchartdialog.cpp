@@ -8,94 +8,74 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QDateTimeAxis>
+#include <QtCharts/QValueAxis>
+
 
 static QSize l_size = QSize(800, 600);
 
-CChartDialog::CChartDialog(QWidget *parent, const QString &object, QList<QPair<double, double> > &chart1, QList<QPair<double, double> > &chart2, const QString &name1, const QString &name2) :
+CChartDialog::CChartDialog(QWidget *parent, const QString &object,
+                           QList<QPair<double, double> > &chart1, QList<QPair<double, double> > &chart2,
+                           const QString &name1, const QString &name2) :
   QDialog(parent),
   ui(new Ui::CChartDialog)
 {
-  ui->setupUi(this);
+  ui->setupUi(this);  
 
-  resize(l_size);
-
-  QVector<double> x;
-  QVector<double> y;
-  QVector<double> y2;
+  QLineSeries *series1 = new QLineSeries();
+  QLineSeries *series2 = new QLineSeries();
 
   QPair<double, double> pair;
-
   foreach (pair, chart1)
   {
     QDateTime dt;
-    double jd = pair.first;
-
-    jdConvertJDTo_DateTime(jd, &dt);
-
-    x.append(dt.toTime_t());
-    y.append(pair.second);
+    jdConvertJDTo_DateTime(pair.first, &dt);
+    series1->append(dt.toMSecsSinceEpoch(), pair.second);
   }
-
   foreach (pair, chart2)
   {
-    if (chart1.count() == 0)
-    {
-      QDateTime dt;
-      double jd = pair.first;
-
-      jdConvertJDTo_DateTime(jd, &dt);
-
-      x.append(dt.toTime_t());
-    }
-    y2.append(pair.second);
+    QDateTime dt;
+    jdConvertJDTo_DateTime(pair.first, &dt);
+    series2->append(dt.toMSecsSinceEpoch(), pair.second);
   }
 
-  //ui->widget->axisRect()->setupFullAxesBox();
+  QChart *chart = new QChart();
+  chart->addSeries(series1);
+  chart->addSeries(series2);
+  chart->legend()->hide();
+  chart->setTitle(object);
 
-  ui->widget->plotLayout()->insertRow(0);
-  ui->widget->plotLayout()->addElement(0, 0, new QCPPlotTitle(ui->widget, object));
+  QLocale locale(QLocale::system());
+  QDateTimeAxis *axisX = new QDateTimeAxis;
+  axisX->setTickCount(10);
+  //axisX->setFormat("dd/MM/yyyy");
+  axisX->setFormat(locale.dateFormat(QLocale::ShortFormat));
+  axisX->setTitleText(tr("Date"));
+  chart->addAxis(axisX, Qt::AlignBottom);
+  series1->attachAxis(axisX);
+  series2->attachAxis(axisX);
 
-  QCPGraph *g1 = 0;
-  QCPGraph *g2 = 0;
+  QValueAxis *axisY = new QValueAxis;
+  axisY->setLabelFormat("%0.2f");
+  axisY->setTitleBrush(series1->pen().color());
+  axisY->setTitleText(name1);
+  chart->addAxis(axisY, Qt::AlignLeft);
+  series1->attachAxis(axisY);
 
-  if (y.count() > 0)
-  {
-    g1 = ui->widget->addGraph();
-    g1->setData(x, y);
-    g1->setPen(QPen(Qt::blue));
-    ui->widget->yAxis->setLabelColor(Qt::blue);
-    ui->widget->yAxis->setTickLabelColor(Qt::blue);
-  }
-  else
-  {
-    ui->widget->yAxis->setVisible(false);
-  }
+  QValueAxis *axisY1 = new QValueAxis;
+  axisY1->setLabelFormat("%0.2f");
+  axisY1->setTitleBrush(series2->pen().color());
+  axisY1->setTitleText(name2);
+  chart->addAxis(axisY1, Qt::AlignRight);
+  series2->attachAxis(axisY1);
 
-  if (y2.count() > 0)
-  {
-    g2 = ui->widget->addGraph(chart1.count() == 0 ? ui->widget->xAxis : ui->widget->xAxis2, ui->widget->yAxis2);
-    g2->setData(x, y2);
-    g2->setPen(QPen(Qt::red));
-    ui->widget->yAxis2->setVisible(true);
-    ui->widget->yAxis2->setLabelColor(Qt::red);
-    ui->widget->yAxis2->setTickLabelColor(Qt::red);
-  }
+  m_chartView = new QChartView(chart);
+  m_chartView->setRenderHint(QPainter::Antialiasing);
+  ui->verticalLayout_2->addWidget(m_chartView);
 
-  ui->widget->xAxis->setLabel(tr("Date"));
-
-  ui->widget->xAxis->setDateTimeFormat("dd/MM/yy");
-  ui->widget->xAxis->setDateTimeSpec(Qt::UTC);
-  ui->widget->xAxis->setTickLabelType(QCPAxis::ltDateTime);
-
-  if (g1) g1->rescaleAxes();
-  if (g2) g2->rescaleAxes();
-
-  ui->widget->xAxis->setLabel(tr("Time"));
-
-  if (g1) ui->widget->yAxis->setLabel(name1);
-  if (g2) ui->widget->yAxis2->setLabel(name2);
-
-  ui->widget->replot();
+  resize(l_size);  
 }
 
 CChartDialog::~CChartDialog()
@@ -116,8 +96,8 @@ void CChartDialog::on_pushButton_2_clicked()
   QPrintDialog *dialog = new QPrintDialog(&printer, this);
   if (dialog->exec() == QDialog::Accepted)
   {
-    QCPPainter painter(&printer);
-    ui->widget->toPainter(&painter, printer.width(), printer.height());
+    QPainter painter(&printer);
+    m_chartView->render(&painter);
   }
 
   delete dialog;
@@ -137,8 +117,9 @@ void CChartDialog::on_pushButton_3_clicked()
 
 void CChartDialog::slotPrintPreview(QPrinter *printer)
 {
-  QCPPainter painter(printer);
-  ui->widget->toPainter(&painter, printer->width(), printer->height());
+  QPainter painter(printer);
+  painter.setRenderHint(QPainter::Antialiasing);
+  m_chartView->render(&painter);
 }
 
 
@@ -149,6 +130,19 @@ void CChartDialog::on_pushButton_4_clicked()
   QString file = dlg.getSaveFileName(this, tr("Save PDF File"), "", "PDF (*.pdf)");
   if (!file.isEmpty())
   {
-    ui->widget->savePdf(file);
+    if (QFileInfo(file).suffix().isEmpty())
+    {
+      file.append(".pdf");
+    }
+
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setOutputFileName(file);
+
+    QPainter painter(&printer);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    m_chartView->render(&painter);
   }
 }

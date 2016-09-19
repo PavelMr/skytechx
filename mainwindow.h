@@ -15,6 +15,7 @@
 
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
+#include <QWebEngineView>
 
 class CDSSCurveWidget;
 class QPrinter;
@@ -136,6 +137,8 @@ protected:
 
   QVector <double> m_raRates;
   QVector <double> m_decRates;
+
+  QWebEngineView *m_webView;
 
 private slots:
   void slotTelePlugTimer();

@@ -26,7 +26,7 @@ CAbout::CAbout(QWidget *parent) :
 #ifdef _WIN64
   winVer = " (64 bits) MSVC 2013";
 #else
-  winVer = " (32 bits) MinGW";
+  winVer = " (32 bits) MSVC 2013";
 #endif
 
   ui->textBrowser_about->setOpenExternalLinks(true);
@@ -67,6 +67,7 @@ CAbout::CAbout(QWidget *parent) :
     i++;
   }
   QString count = QLocale(QLocale::English).toString((qlonglong)cDSO.dsoHead.numDso);
+  ui->textEdit_source->append("\n");
   ui->textEdit_source->append(QString(tr("<br>DSO object count : %1")).arg(count));
 
   ui->textEdit_source->append(tr("<br><br><b>Star catalogues</b>"));

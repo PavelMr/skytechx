@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network webkit webkitwidgets xml sql widgets printsupport script multimedia
+QT       += core gui network webenginewidgets xml sql widgets printsupport script multimedia charts
 
 CONFIG   += openssl-linked
 CONFIG   += qxt
@@ -16,19 +16,13 @@ DEFINES += NOMINMAX
 
 #Release:DEFINES  += QT_NO_DEBUG_OUTPUT QT_FATAL_WARNINGS
 
-Release:win32-g++ : QMAKE_CXXFLAGS += -fopenmp -O1 -std=c++11  -Wl,--stack,16777216
-Debug:win32-g++   : QMAKE_CXXFLAGS += -Wall -Wextra -fopenmp  -Wl,--stack,16777216
-
-win32-g++         : LIBS += -lgomp -lpsapi -lwinmm -lws2_32 -lcrypt32
 win32-msvc2013    : LIBS += winmm.lib
 
 #-lssl -lcrypto
 
 # final release /ltcg
-#Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GL /GS- /GA /FAcs
 Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GS- /GA /FAcs
-
-Debug:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp
+Debug:win32-msvc2013 :    QMAKE_CXXFLAGS += /openmp
 
 #Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG /MAP
 
@@ -40,7 +34,6 @@ Debug:win32-msvc2013   :  QMAKE_LFLAGS += /INCREMENTAL:NO
 
 TARGET = skytech_x
 TEMPLATE = app
-
 
 DEPENDPATH += rc
 DEPENDPATH += ssl

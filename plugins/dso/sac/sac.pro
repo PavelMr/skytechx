@@ -11,8 +11,11 @@ CONFIG   += plugin
 INCLUDEPATH += "../../.."
 
 
-win32-msvc2013:TARGET = "sac_x64"
-win32-g++:TARGET = "sac"
+win32:contains(QMAKE_HOST.arch, x86_64) {
+  win32-msvc2013:TARGET = "sac_x64"
+} else {
+  win32-msvc2013:TARGET = "sac"
+}
 
 TARGET = $$qtLibraryTarget($$TARGET)
 

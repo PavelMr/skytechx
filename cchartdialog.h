@@ -2,12 +2,15 @@
 #define CCHARTDIALOG_H
 
 #include <QDialog>
+#include <QtCharts/QChartView>
 
 class QPrinter;
 
 namespace Ui {
 class CChartDialog;
 }
+
+QT_CHARTS_USE_NAMESPACE
 
 class CChartDialog : public QDialog
 {
@@ -30,6 +33,7 @@ private slots:
 
 private:
   Ui::CChartDialog *ui;
+  QChartView *m_chartView;
 };
 
 #endif // CCHARTDIALOG_H

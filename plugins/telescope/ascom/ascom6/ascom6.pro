@@ -5,8 +5,11 @@
 #-------------------------------------------------
 
 
-win32-msvc2013:TARGET = "ascom6_x64"
-win32-g++:TARGET = "ascom6"
+win32:contains(QMAKE_HOST.arch, x86_64) {
+  win32-msvc2013:TARGET = "ascom6_x64"
+} else {
+  win32-msvc2013:TARGET = "ascom6"
+}
 
 TARGET = $$qtLibraryTarget($$TARGET)
 

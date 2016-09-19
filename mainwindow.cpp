@@ -705,23 +705,27 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_3));
   }  
 
+  m_webView = new QWebEngineView(this);
+
+  ui->verticalLayout_15->addWidget(m_webView);
+
   QAction *openWebHelp = new QAction(QIcon(":/res/ico_web_help.png"), "web", this);
   QToolBar *tb = new QToolBar;
   ui->horizontalLayout_10->addWidget(tb);
 
   openWebHelp->setToolTip(tr("Open help in default web browser."));
 
-  tb->addAction(ui->webView->pageAction(QWebPage::Back));
-  tb->addAction(ui->webView->pageAction(QWebPage::Forward));
-  tb->addAction(ui->webView->pageAction(QWebPage::Reload));
-  tb->addAction(ui->webView->pageAction(QWebPage::Stop));
+  tb->addAction(m_webView->pageAction(QWebEnginePage::Back));
+  tb->addAction(m_webView->pageAction(QWebEnginePage::Forward));
+  tb->addAction(m_webView->pageAction(QWebEnginePage::Reload));
+  tb->addAction(m_webView->pageAction(QWebEnginePage::Stop));
   tb->addAction(ui->actionShow_help);
   tb->addSeparator();
   tb->addAction(openWebHelp);
 
   connect(openWebHelp, SIGNAL(triggered()), this, SLOT(slotOpenWebHelp()));
 
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/main.htm"));
+  m_webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/main.htm"));
 
   if (g_autoSave.mapPosition)
   {
@@ -927,7 +931,7 @@ void MainWindow::setTitle()
 
 void MainWindow::slotOpenWebHelp()
 {
-  QDesktopServices::openUrl(QUrl::fromLocalFile(ui->webView->url().toString()));
+  QDesktopServices::openUrl(QUrl::fromLocalFile(m_webView->url().toString()));
 }
 
 void MainWindow::slotStatusBarDoubleClick(int id)
@@ -5044,7 +5048,7 @@ void MainWindow::on_actionKeyboard_reference_triggered()
   on_actionShow_sidebar_toggled(true);
 
   ui->toolBox->setCurrentWidget(ui->page_4);
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/keyboard.htm"));
+  m_webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/keyboard.htm"));
 }
 
 void MainWindow::on_checkBox_5_clicked(bool checked)
@@ -5095,7 +5099,7 @@ void MainWindow::on_actionShow_help_triggered()
   on_actionShow_sidebar_toggled(true);
 
   ui->toolBox->setCurrentWidget(ui->page_4);
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/main.htm"));
+  m_webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/main.htm"));
 }
 
 // select all L.F.
@@ -6243,7 +6247,7 @@ void MainWindow::on_actionSearch_help_triggered()
 {
   on_actionShow_sidebar_toggled(true);
 
-  ui->webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/edit_search.htm"));
+  m_webView->load(QUrl::fromLocalFile(QDir::currentPath() + "/../help/edit_search.htm"));
   ui->toolBox->setCurrentWidget(ui->page_4);
 }
 

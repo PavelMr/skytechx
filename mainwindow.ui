@@ -864,7 +864,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>9</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -874,7 +874,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>348</width>
+          <width>364</width>
           <height>360</height>
          </rect>
         </property>
@@ -3542,22 +3542,16 @@ p, li { white-space: pre-wrap; }
          <property name="bottomMargin">
           <number>0</number>
          </property>
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_10"/>
+         </item>
+         <item row="2" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_15"/>
+         </item>
          <item row="1" column="0">
           <widget class="Line" name="line_14">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_10"/>
-         </item>
-         <item row="3" column="0">
-          <widget class="QWebView" name="webView" native="true">
-           <property name="url" stdset="0">
-            <url>
-             <string>about:blank</string>
-            </url>
            </property>
           </widget>
          </item>
@@ -5672,11 +5666,6 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
-  </customwidget>
   <customwidget>
    <class>CMapView</class>
    <extends>QWidget</extends>

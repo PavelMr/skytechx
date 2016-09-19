@@ -18,10 +18,12 @@ QIcon SkIconUtils::createFromText(int sx, int sy, const QString &text)
 
   p.begin(&pixmap);  
   font.setBold(true);
-  font.setFamily("verdana");
-  font.setPointSize(sy * 0.32);
+  font.setFamily("arial");
+  font.setPixelSize(sy * 0.48);
+  font.setWeight(99);
   p.setFont(font);
-  p.setPen(Qt::black);
+  //p.setPen(Qt::black);
+  p.setPen(QColor(64, 64, 64));
   p.drawText(QRect(0, 0, sx, sy), Qt::AlignCenter, text);
   p.end();
 
