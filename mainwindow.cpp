@@ -407,7 +407,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   bool rt = settings.value("use_real_time", false).toBool();
   ui->actionRealtime->setChecked(rt);
-  ui->actionRealtime->triggered(rt);
+  ui->actionRealtime->triggered(rt);    
 
   ui->tb_window->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_alt_azm->setToolButtonStyle(Qt::ToolButtonIconOnly);

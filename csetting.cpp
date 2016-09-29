@@ -495,6 +495,7 @@ void CSetting::setValues()
   ui->pushButton_14->setColor(set.map.constellation.main.color);
   ui->pushButton_15->setColor(set.map.constellation.sec.color);
   ui->pushButton_16->setColor(set.map.constellation.bnd.color);
+  ui->checkBox_24->setChecked(set.map.constellation.showNames);
 
   ui->pushButton_53->setColor(set.map.measurePoint.color);
 
@@ -901,8 +902,10 @@ void CSetting::apply()
   //constellations
   g_skSet.map.constellation.linesFile = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toString();
   g_skSet.map.constellation.language = ui->cb_con_names->currentData().toString();
+  g_skSet.map.constellation.longNames = ui->cb_con_names->currentIndex() == 1;
   constLinesLoad(g_skSet.map.constellation.linesFile);
   loadConstelNonLatinNames("../data/constellation/" + g_skSet.map.constellation.language);
+  g_skSet.map.constellation.showNames = ui->checkBox_24->isChecked();
 
   // solar system
   g_skSet.map.planet.phaseAlpha = ui->horizontalSlider_12->value();
@@ -2035,7 +2038,8 @@ void CSetting::fillConstNames()
 
   qDebug() << "set" << set.map.constellation.language;
 
-  ui->cb_con_names->addItem(tr("Latin"), "");
+  ui->cb_con_names->addItem(tr("Latin abbr."), "");
+  ui->cb_con_names->addItem(tr("Latin long"), "");
 
   for (int i = 0; i < list.count(); i++)
   {
@@ -2052,6 +2056,10 @@ void CSetting::fillConstNames()
   }
 
   ui->cb_con_names->setCurrentIndex(ui->cb_con_names->findData(set.map.constellation.language));
+  if (g_skSet.map.constellation.longNames)
+  {
+    ui->cb_con_names->setCurrentIndex(1);
+  }
 }
 
 void CSetting::on_pushButton_47_clicked()

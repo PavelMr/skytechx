@@ -415,7 +415,8 @@ void constRenderConstellationNames(CSkPainter *p, mapView_t *view)
         continue;
       tList.append(con);
 
-      QString text =  nonLatinLoaded ? constelNonLatinNames[con] : constelShort[con];
+      //QString text =  nonLatinLoaded ? constelNonLatinNames[con] : constelShort[con];
+      QString text =  nonLatinLoaded ? constelNonLatinNames[con] : (g_skSet.map.constellation.longNames ? constelLongNames[con] : constelShort[con]);
 
       switch (i)
       {
@@ -447,7 +448,8 @@ void constRenderConstellationNames(CSkPainter *p, mapView_t *view)
       trfRaDecToPointNoCorrect(&constelRD[i], &pt);
       if (trfProjectPoint(&pt))
       {
-        g_labeling.addLabel(QPoint(pt.sx, pt.sy), 0, nonLatinLoaded ? constelNonLatinNames[i] : constelShort[i], FONT_CONST, SL_AL_CENTER, SL_AL_ALL);
+        QString text =  nonLatinLoaded ? constelNonLatinNames[i] : (g_skSet.map.constellation.longNames ? constelLongNames[i] : constelShort[i]);
+        g_labeling.addLabel(QPoint(pt.sx, pt.sy), 0, text, FONT_CONST, SL_AL_CENTER, SL_AL_ALL);
       }
     }
   }

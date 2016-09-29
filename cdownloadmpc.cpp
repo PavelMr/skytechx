@@ -90,8 +90,8 @@ void CDownloadMPC::readData()
 
       if ((m_count % 50) == 0)
       {
-        ui->lineEdit_2->setText(QString("%1").arg(m_count));
-      }
+        ui->lineEdit_2->setText(QString("%1").arg(m_count));        
+      }      
 
       lastOffset = i;
       str.clear();
@@ -217,7 +217,7 @@ void CDownloadMPC::on_pushButton_2_clicked()
   QNetworkRequest request(qurl);
   QNetworkReply *reply = m_manager.get(request);
 
-  reply->setReadBufferSize(64000);
+  //reply->setReadBufferSize(64000);
 
   m_reply = reply;
 

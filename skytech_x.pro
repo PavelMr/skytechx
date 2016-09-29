@@ -21,6 +21,12 @@ win32-msvc2013    : LIBS += winmm.lib
 #-lssl -lcrypto
 
 # final release /ltcg
+
+# /openmp      Enables #pragma omp in source code.
+# /O2          Creates fast code.
+# /GS-         Disable Buffers security check.
+# /GA          Optimizes code for Windows application.
+
 Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GS- /GA /FAcs
 Debug:win32-msvc2013 :    QMAKE_CXXFLAGS += /openmp
 

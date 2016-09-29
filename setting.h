@@ -131,6 +131,8 @@ typedef struct
   penStyle_t bnd;
   QString   linesFile;
   QString   language;
+  bool      longNames;
+  bool      showNames;
 } const_t;
 
 typedef struct

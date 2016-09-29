@@ -198,7 +198,7 @@ bool CBackground::makeHorizon(QList <QPointF> *list, double *alt)
   return(true);
 }
 
-void CBackground::renderTexture(mapView_t *mapView, CSkPainter */*p*/, QImage *pImg)
+void CBackground::renderTexture(mapView_t *mapView, CSkPainter * /*p*/, QImage *pImg)
 {
   SKMATRIX mat;
   SKMATRIX gmx, gmy;

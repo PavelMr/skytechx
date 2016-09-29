@@ -643,7 +643,7 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
   return(rc.width());
 }
 
-void CDrawing::calcFrmField(CSkPainter */*p*/, drawing_t *drw)
+void CDrawing::calcFrmField(CSkPainter * /*p*/, drawing_t *drw)
 {
   radec_t rd[4];
   SKMATRIX matRot;

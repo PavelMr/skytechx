@@ -10,7 +10,6 @@ CONFIG   += plugin
 
 INCLUDEPATH += "../../.."
 
-
 win32:contains(QMAKE_HOST.arch, x86_64) {
   win32-msvc2013:TARGET = "sac_x64"
 } else {

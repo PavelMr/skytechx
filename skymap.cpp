@@ -1416,8 +1416,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
   if (g_showConstBnd)
   {
-    constRenderConstellationBnd(pPainter, mapView);
-    constRenderConstellationNames(pPainter, mapView);
+    constRenderConstellationBnd(pPainter, mapView);    
   }
 
   if (g_showStars)
@@ -1425,7 +1424,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     smRenderStars(mapView, pPainter, pImg);
   }
 
-  if (g_showConstBnd)
+  if (g_skSet.map.constellation.showNames)
   {
     constRenderConstellationNames(pPainter, mapView);
   }

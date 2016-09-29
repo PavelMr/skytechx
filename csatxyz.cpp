@@ -2003,9 +2003,7 @@ void CPlanetSatellite::solveSaturnSat(double jd, planetSatellites_t *sats, orbit
             const double cf = cos(fle);
             const double sf = sin(fle);
 
-            const double dlf = -rk * sf + rh * cf;
-            const double rsam1 = -rk * cf - rh * sf;
-            const double asr = 1/(1 + rsam1);
+            const double dlf = -rk * sf + rh * cf;            
             const double phi = sqrt(1 - rk*rk - rh*rh);
             const double psi = 1/(1+phi);
 

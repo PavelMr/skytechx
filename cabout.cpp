@@ -128,7 +128,7 @@ void CAbout::mousePressEvent(QMouseEvent *event)
   }
 }
 
-void CAbout::mouseReleaseEvent(QMouseEvent *event)
+void CAbout::mouseReleaseEvent(QMouseEvent *)
 {
   m_moving = false;
 }
