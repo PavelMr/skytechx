@@ -234,22 +234,23 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-CObjTracking::CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view) :
+CObjTracking::CObjTracking(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::CObjTracking),
   m_done(true)
 ///////////////////////////////////////////////////////////////////////////////
 {
-  ui->setupUi(this);
-  setWindowTitle(tr("Track of ") + item->title);
+  ui->setupUi(this);  
 
   QDateTime dt;
 
-  jdConvertJDTo_DateTime(view->jd + view->geo.tz, &dt);
+  double jd = jdGetCurrentJD();
+
+  jdConvertJDTo_DateTime(jd + 0, &dt);
   ui->dateTimeEdit->setDate(dt.date());
   ui->dateTimeEdit->setTime(dt.time());
 
-  jdConvertJDTo_DateTime(view->jd + view->geo.tz + 10, &dt);
+  jdConvertJDTo_DateTime(jd + 30, &dt);
   ui->dateTimeEdit_2->setDate(dt.date());
   ui->dateTimeEdit_2->setTime(dt.time());
 
@@ -257,10 +258,8 @@ CObjTracking::CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view) :
   ui->comboBox->addItem(tr("Minute(s)"));
   ui->comboBox->addItem(tr("Hour(s)"));
   ui->comboBox->addItem(tr("Day(s)"));
-  ui->comboBox->setCurrentIndex(2);
+  ui->comboBox->setCurrentIndex(3);
 
-  m_item = item;
-  m_view = *view;
 
   // TODO: zeptat se na smazani predchoziho trackingu
   /*
@@ -271,13 +270,23 @@ CObjTracking::CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view) :
   */
 
   move(pcMapView->mapToGlobal(QPoint(pcMapView->x(), pcMapView->y())));
+
+  m_isPreview = false;
 }
 
 /////////////////////////////
 CObjTracking::~CObjTracking()
 /////////////////////////////
 {
+  qDebug() << "dect";
   delete ui;
+}
+
+void CObjTracking::setParams(ofiItem_t *item, mapView_t *view)
+{
+  m_item = item;
+  m_view = *view;
+  setWindowTitle(tr("Track of ") + item->title);
 }
 
 /////////////////////////////////////////
@@ -292,6 +301,20 @@ void CObjTracking::changeEvent(QEvent *e)
   default:
     break;
   }
+}
+
+void CObjTracking::closeEvent(QCloseEvent *)
+{
+  if (m_isPreview)
+  {
+    if (!tTracking.isEmpty())
+    {
+      tTracking.removeLast();
+    }
+  }
+
+  m_isPreview = false;
+  pcMapView->repaintMap();
 }
 
 ////////////////////////////////////////////
@@ -314,6 +337,14 @@ void CObjTracking::on_pushButton_2_clicked()
   asteroid_t *ast;
   comet_t    *com;
   satellite_t sat;
+
+  if (m_isPreview)
+  {
+    if (!tTracking.isEmpty())
+    {
+      tTracking.removeLast();
+    }
+  }
 
   if (jdFrom >= jdTo)
   {
@@ -427,8 +458,10 @@ void CObjTracking::on_pushButton_2_clicked()
   if (m_done)
   {
     done(DL_OK);
+    m_isPreview = false;
+    pcMapView->repaintMap();
   }
-  m_done = true;
+  m_done = true;  
 }
 
 
@@ -437,17 +470,23 @@ void CObjTracking::on_pushButton_2_clicked()
 void CObjTracking::on_pushButton_clicked()
 //////////////////////////////////////////
 {
-  done(DL_CANCEL);
+  if (m_isPreview)
+  {
+    if (!tTracking.isEmpty())
+    {
+      tTracking.removeLast();
+    }
+  }
+
+  m_isPreview = false;
+  pcMapView->repaintMap();
+  done(DL_CANCEL);  
 }
 
 void CObjTracking::on_pushButton_3_clicked()
-{
-  m_done = false;
+{    
+  m_done = false;  
   on_pushButton_2_clicked();
-  pcMapView->repaintMap();
-
-  if (!tTracking.isEmpty())
-  {
-    tTracking.removeLast();
-  }
+  m_isPreview = true;
+  pcMapView->repaintMap();  
 }

@@ -48,8 +48,7 @@ private slots:
   void on_clb_center_zoom_clicked();
   void on_pushButton_clicked();
   void on_clb_slew_clicked();
-  void on_clb_gallery_clicked();
-  void on_clb_tracking_clicked();
+  void on_clb_gallery_clicked();  
   void on_clb_sync_clicked();
   void on_cb_print_clicked();
   void on_cb_simbad_clicked();

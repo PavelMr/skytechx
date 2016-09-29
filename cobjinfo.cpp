@@ -56,11 +56,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
 
   ui->pushButton_3->setEnabled(false);
   ui->clb_slew->setEnabled(g_pTelePlugin && (g_pTelePlugin->getAttributes() & TPI_CAN_SLEW));
-  ui->clb_sync->setEnabled(g_pTelePlugin && (g_pTelePlugin->getAttributes() & TPI_CAN_SYNC));
-  ui->clb_tracking->setEnabled(obj->type == MO_PLANET ||
-                               obj->type == MO_ASTER ||
-                               obj->type == MO_COMET ||
-                               obj->type == MO_SATELLITE);
+  ui->clb_sync->setEnabled(g_pTelePlugin && (g_pTelePlugin->getAttributes() & TPI_CAN_SYNC));  
 
   ui->cb_simbad->setDisabled(obj->type == MO_PLANET ||
                              obj->type == MO_ASTER ||
@@ -338,19 +334,6 @@ void CObjInfo::on_clb_gallery_clicked()
   CGalery dlg(this, m_infoItem.id, m_infoItem.title);
 
   dlg.exec();
-}
-
-
-////////////////////////////////////////
-void CObjInfo::on_clb_tracking_clicked()
-////////////////////////////////////////
-{
-  CObjTracking dlg(this, &m_infoItem, &m_map->m_mapView);
-
-  // TODO: udelat to ne takhle prasacky
-  setWindowOpacity(0);
-  dlg.exec();
-  setWindowOpacity(1);
 }
 
 

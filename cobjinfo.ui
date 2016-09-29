@@ -176,26 +176,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="clb_tracking">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>28</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Object tracking...</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="Line" name="line_5">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -486,7 +466,6 @@
   <tabstop>clb_center_zoom</tabstop>
   <tabstop>clb_gallery</tabstop>
   <tabstop>clb_slew</tabstop>
-  <tabstop>clb_tracking</tabstop>
   <tabstop>cb_print</tabstop>
  </tabstops>
  <resources/>

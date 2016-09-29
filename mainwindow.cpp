@@ -70,7 +70,6 @@
 #include "csatellitesearch.h"
 #include "csearchdsocat.h"
 #include "cversioncheck.h"
-#include "cobjtracking.h"
 #include "chorizoneditor.h"
 #include "csatelliteevent.h"
 #include "creleseinfo.h"
@@ -187,6 +186,8 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->actionSearch_a_Neptune, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
 
   setWindowIcon(QIcon(":/res/ico_app.ico"));
+
+  m_dlgTracking = nullptr;
 
   m_slewButton = false;
   m_DSOCatalogueDlg = NULL;
@@ -1262,7 +1263,13 @@ void MainWindow::saveAndExit()
   setSave(g_setName);
 
   if (g_autoSave.tracking)
+  {
+    if (m_dlgTracking && !m_dlgTracking->isHidden())
+    {
+      m_dlgTracking->close();
+    }
     saveTracking();
+  }
 
   if (g_autoSave.drawing)
     drawingSave();
@@ -1869,6 +1876,11 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool update)
   ui->checkBox_5->setEnabled(true);
   ui->cb_extInfo->setEnabled(true);
   ui->action_Last_search_object->setEnabled(true);
+
+  if (m_dlgTracking)
+  {
+    m_dlgTracking->setParams(item, &ui->widget->m_mapView);
+  }
 }
 
 ////////////////////////////////////////
@@ -5677,7 +5689,13 @@ void MainWindow::on_actionCheck_new_version_triggered()
 }
 
 void MainWindow::on_pushButton_17_clicked()
-{
+{  
+  if (m_dlgTracking && !m_dlgTracking->isHidden())
+  {
+    m_dlgTracking->close();
+    return;
+  }
+
   ofiItem_t *info = getQuickInfo();
 
   if (info->type != MO_PLANET &&
@@ -5689,9 +5707,14 @@ void MainWindow::on_pushButton_17_clicked()
     return;
   }
 
-  CObjTracking dlg(this, info, &ui->widget->m_mapView);
+  if (!m_dlgTracking)
+  {
+    m_dlgTracking = new CObjTracking(this);
+    m_dlgTracking->setModal(false);
+    m_dlgTracking->setParams(info, &ui->widget->m_mapView);
+  }
 
-  dlg.exec();
+  m_dlgTracking->show();
 
   ui->widget->repaintMap();
 }

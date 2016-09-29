@@ -39,11 +39,13 @@ class CObjTracking : public QDialog
   Q_OBJECT
 
 public:
-  explicit CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view);
-  ~CObjTracking();
+  explicit CObjTracking(QWidget *parent);
+  ~CObjTracking();  
 
 protected:
   void changeEvent(QEvent *e);
+  void closeEvent(QCloseEvent *e);
+
   ofiItem_t *m_item;
   mapView_t  m_view;
 
@@ -54,9 +56,13 @@ private slots:
 
   void on_pushButton_3_clicked();
 
+public slots:
+  void setParams(ofiItem_t *item, mapView_t *view);
+
 private:
   Ui::CObjTracking *ui;
   bool m_done;
+  bool m_isPreview;
 };
 
 void trackRender(mapView_t *view, CSkPainter *p);

@@ -12,6 +12,7 @@
 #include "ctimewidget.h"
 #include "ctimedialog.h"
 #include "cdsocatalogue.h"
+#include "cobjtracking.h"
 
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
@@ -115,6 +116,8 @@ protected:
   CLineEditComp  *m_search;
   QSpinBox       *m_timeLapseMul;
   int             m_timeLapseUpdate;
+
+  CObjTracking   *m_dlgTracking;
 
   CTriStateButton *btGrid1;
   CTriStateButton *btGrid2;
