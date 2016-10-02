@@ -220,18 +220,19 @@ static bool sortObj(mapObj_t &o1, mapObj_t &o2)
   return(false);
 }
 
-//////////////////////////////////////////
-bool mapObjSnapAll(int x, int y, radec_t *rd)
-///////////////////////////////////////////
+////////////////////////////////////////////////////////
+bool mapObjSnapAll(int x, int y, radec_t *rd, int &type)
+////////////////////////////////////////////////////////
 {
   for (int i = 0; i < tObj.count(); i++)
   {
     mapObj_t o = tObj[i];
 
     if (o.type != MO_INSERT && checkMapObjPos(QPoint(x, y), &tObj[i]))
-    {
+    {      
       rd->Ra = o.rd.Ra;
-      rd->Dec = o.rd.Dec;
+      rd->Dec = o.rd.Dec;            
+      type = o.type;
 
       return(true);
     }

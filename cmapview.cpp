@@ -1040,13 +1040,18 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
     if (QApplication::keyboardModifiers() & Qt::CTRL)
     {
       radec_t rd;
-      if (!mapObjSnapAll(m_lastMousePos.x(), m_lastMousePos.y(), &rd))
+      int type;
+      if (!mapObjSnapAll(m_lastMousePos.x(), m_lastMousePos.y(), &rd, type))
       {
         trfConvScrPtToXY(m_lastMousePos.x(), m_lastMousePos.y(), rd.Ra, rd.Dec);
       }
       else
-      {
-        precess(&rd, &rd, JD2000, m_mapView.jd);
+      {       
+        if (type != MO_PLANET && type != MO_COMET && type != MO_ASTER && type != MO_SATELLITE &&
+            type != MO_EARTH_SHD)
+        {
+          precess(&rd, &rd, JD2000, m_mapView.jd);
+        }
       }
       m_measurePoint.Ra = rd.Ra;
       m_measurePoint.Dec = rd.Dec;

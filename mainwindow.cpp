@@ -119,6 +119,7 @@ bool g_showLabels = false;
 bool g_showDrawings = false;
 bool g_showObjTracking = false;
 bool g_showObjectAxis = false;
+bool g_showShower = false;
 
 bool g_bilinearInt = false;
 bool g_showZoomBar = true;
@@ -743,6 +744,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showObjTracking = settings.value("show_obj_tracking", true).toBool();
   g_showCenterScreen = settings.value("show_center_of_screen", false).toBool();
   g_showObjectAxis = settings.value("show_object_axis", false).toBool();
+  g_showShower = settings.value("show_showers", false).toBool();
 
   ui->cb_extInfo->setChecked(settings.value("show_extra_info", true).toBool());
   ui->checkBox_5->setChecked(settings.value("info_auto_update", true).toBool());
@@ -770,8 +772,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_grid->setEnabled(g_showGrids);
   ui->actionDrawings->setChecked(g_showDrawings);
   ui->actionObject_tracking_2->setChecked(g_showObjTracking);
-
   ui->actionShow_planet_axis->setChecked(g_showObjectAxis);
+  ui->actionShow_meteor_showers->setChecked(g_showShower);
 
   int mapAutoRptInterval = 5;
   ui->pushButton_28->setAutoRepeatInterval(mapAutoRptInterval);
@@ -1223,6 +1225,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_legends", g_showLegends);
   settings.setValue("show_labels", g_showLabels);
   settings.setValue("show_drawings", g_showDrawings);
+  settings.setValue("show_showers", g_showShower);
   settings.setValue("show_obj_tracking", g_showObjTracking);
   settings.setValue("show_center_of_screen", g_showCenterScreen);
   settings.setValue("show_object_axis", g_showObjectAxis);
@@ -4323,6 +4326,9 @@ void MainWindow::on_actionShow_all_triggered()
   ui->actionSatellite_3->setChecked(true);
   g_showSatellites = true;
 
+  ui->actionShow_meteor_showers->setChecked(true);
+  g_showShower = true;
+
   ui->actionLegends->setChecked(true);
   g_showLegends = true;
 
@@ -4330,7 +4336,7 @@ void MainWindow::on_actionShow_all_triggered()
   g_showLabels = true;
 
   ui->actionDrawings->setChecked(true);
-  g_showDrawings = true;
+  g_showDrawings = true;  
 
   ui->actionObject_tracking_2->setChecked(true);
   g_showObjTracking = true;
@@ -4742,6 +4748,9 @@ void MainWindow::on_actionHide_all_triggered()
 
   ui->actionSatellite_3->setChecked(false);
   g_showSatellites = false;
+
+  ui->actionShow_meteor_showers->setChecked(false);
+  g_showShower = false;
 
   ui->actionLegends->setChecked(false);
   g_showLegends = false;
@@ -6404,3 +6413,9 @@ void MainWindow::on_pushButton_unselect_clicked()
 }
 
 
+
+void MainWindow::on_actionShow_meteor_showers_triggered(bool checked)
+{
+  g_showShower = checked;
+  ui->widget->repaintMap();
+}

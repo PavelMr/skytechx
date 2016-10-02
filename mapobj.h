@@ -50,7 +50,7 @@ typedef struct
 void mapObjReset(void);
 void addMapObj(const radec_t &rd, int x, int y, int type, int selType, int size, qint64 par1, qint64 par2, double mag = 255);
 void mapObjContextMenu(CMapView *map);
-bool mapObjSnapAll(int x, int y, radec_t *rd);
+bool mapObjSnapAll(int x, int y, radec_t *rd, int &type);
 bool mapObjSnap(int x, int y, radec_t *rd);
 bool mapObjSearch(int x, int y, mapObj_t *obj);
 void recenterHoldObject(CMapView *p, bool bRepaint = true);

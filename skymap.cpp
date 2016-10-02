@@ -56,6 +56,7 @@ extern bool g_showObjTracking;
 extern bool g_showAsteroids;
 extern bool g_showComets;
 extern bool g_showSatellites;
+extern bool g_showShower;
 
 extern bool g_antialiasing;
 
@@ -1450,7 +1451,10 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     smRenderPlanets(mapView, pPainter, pImg);
   }  
 
-  g_meteorShower.render(pPainter, mapView);
+  if (g_showShower)
+  {
+    g_meteorShower.render(pPainter, mapView);
+  }
 
   if (g_showSatellites)
   {

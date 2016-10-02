@@ -17,6 +17,7 @@ public:
   double  jdEnd;
   QString rate;
   double  speed;
+  double  epoch;
 };
 
 class CMeteorShower

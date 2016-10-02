@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>6</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1898,6 +1898,9 @@
                  <layout class="QFormLayout" name="formLayout_21">
                   <item row="0" column="0">
                    <widget class="QCheckBox" name="checkBox_23">
+                    <property name="statusTip">
+                     <string/>
+                    </property>
                     <property name="text">
                      <string>Show all</string>
                     </property>
@@ -5831,12 +5834,28 @@ then PLAN404 or VSOP87 is used</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>93</x>
-     <y>156</y>
+     <x>116</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
-     <x>305</x>
-     <y>184</y>
+     <x>159</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_23</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>spinBox_7</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>282</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>127</y>
     </hint>
    </hints>
   </connection>

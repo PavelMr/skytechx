@@ -158,6 +158,7 @@ int main(int argc, char *argv[])
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/comets");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/asteroids");
+  checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/showers");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/catalogue/tle");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/default");

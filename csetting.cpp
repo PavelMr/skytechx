@@ -603,6 +603,13 @@ void CSetting::setValues()
   ui->pushButton_39->setColor(set.map.tracking.color);
   ui->pushButton_40->setFontColor(setFonts[FONT_TRACKING], set.fonst[FONT_TRACKING].color);
 
+  // shower
+  ui->checkBox_23->setChecked(set.map.shower.bShowAll);
+  ui->spinBox_7->setValue(set.map.shower.daysBeforeAfterDate);
+  ui->doubleSpinBox_42->setValue(set.map.shower.scale);
+  ui->pushButton_69->setFontColor(setFonts[FONT_SHOWER], set.fonst[FONT_SHOWER].color);
+  ui->pushButton_72->setColor(set.map.shower.color);
+
   QSettings rset;
 
   //PPMXL
@@ -941,6 +948,13 @@ void CSetting::apply()
   g_skSet.map.milkyWay.dark = ui->horizontalSlider_14->value();
   g_skSet.map.milkyWay.darkest = ui->horizontalSlider_16->value();
   g_skSet.map.milkyWay.sameAsBkColor = ui->radioButton->isChecked();
+
+  // shower
+  g_skSet.map.shower.bShowAll = ui->checkBox_23->isChecked();
+  g_skSet.map.shower.daysBeforeAfterDate = ui->spinBox_7->value();
+  g_skSet.map.shower.scale = ui->doubleSpinBox_42->value();
+  //ui->pushButton_69->setFontColor(setFonts[FONT_SHOWER], set.fonst[FONT_SHOWER].color);
+  //ui->pushButton_72->setColor(set.map.shower.color);
 
   // grid
   g_skSet.map.showGridLabels = ui->checkBox_11->isChecked();
@@ -2462,5 +2476,21 @@ void CSetting::on_pushButton_71_clicked()
   {
     set.map.meridianColor = dlg.currentColor().rgb();
     ui->pushButton_71->setColor(dlg.currentColor());
+  }
+}
+
+void CSetting::on_pushButton_69_clicked()
+{
+  setFontColor(FONT_SHOWER, ui->pushButton_69);
+}
+
+void CSetting::on_pushButton_72_clicked()
+{
+  QColorDialog dlg(set.map.shower.color, this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    set.map.shower.color = dlg.currentColor().rgb();
+    ui->pushButton_72->setColor(dlg.currentColor());
   }
 }

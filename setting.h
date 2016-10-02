@@ -156,6 +156,14 @@ typedef struct
 
 typedef struct
 {
+  bool   bShowAll;
+  double daysBeforeAfterDate;
+  double scale;
+  QRgb   color;
+} shower_t;
+
+typedef struct
+{
   QRgb  color;
 } setDraw_t;
 
@@ -259,6 +267,7 @@ typedef struct
   horizon_t  hor;
   const_t    constellation;
   planet_t   planet;
+  shower_t   shower;
   astCom_t   comet;
   astCom_t   aster;
   setSatellite_t satellite;

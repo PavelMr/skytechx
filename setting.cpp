@@ -283,6 +283,12 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.planet.moonImage", set->map.planet.moonImage, ds);
   writeVal("map.planet.useCustomMoonTexture", set->map.planet.useCustomMoonTexture, ds);
 
+  // shower
+  writeVal("map.shower.bShowAll", set->map.shower.bShowAll, ds);
+  writeVal("map.shower.daysBeforeAfterDate", set->map.shower.daysBeforeAfterDate, ds);
+  writeVal("map.shower.scale", set->map.shower.scale, ds);
+  writeVal("map.shower.color", set->map.shower.color, ds);
+
   // comet & aster.
   writeVal("map.comet.real", set->map.comet.real, ds);
   writeVal("map.comet.color", set->map.comet.color, ds);
@@ -603,6 +609,12 @@ bool setLoad(QString name, setting_t *set)
   set->map.planet.jupGRSDate = readVal("map.planet.jupGRSDate", 2457388.5, tMap).toDouble();
   set->map.planet.moonImage = readVal("map.planet.moonImage", "", tMap).toString();
   set->map.planet.useCustomMoonTexture = readVal("map.planet.useCustomMoonTexture", false, tMap).toBool();
+
+  // shower
+  set->map.shower.bShowAll = readVal("map.shower.bShowAll", true, tMap).toBool();
+  set->map.shower.scale = readVal("map.shower.scale", 1.0, tMap).toDouble();
+  set->map.shower.daysBeforeAfterDate = readVal("map.shower.daysBeforeAfterDate", 10.0, tMap).toDouble();
+  set->map.shower.color = readVal("map.shower.color", MRGB(220, 220, 220), tMap).toUInt();
 
   // aster & comets
   set->map.comet.color = readVal("map.comet.true", true, tMap).toBool();

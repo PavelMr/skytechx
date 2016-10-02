@@ -170,9 +170,7 @@ void CLoadingDlg::slotLoad()
   curSatelliteCatName = set.value("satellite_file", "").toString();
   sgp4.loadTLEData(curSatelliteCatName);
 
-  CAstro::initJPLEphems();
-
-  g_meteorShower.load(2016);
+  CAstro::initJPLEphems();  
 
   usnoB1.setUsnoDir(set.value("usno_b1_path", "").toString());
   usno.setUsnoDir(set.value("usno2_path", "").toString());

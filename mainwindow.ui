@@ -688,6 +688,7 @@
     <addaction name="action_Asteroids1"/>
     <addaction name="actionComets_2"/>
     <addaction name="actionSatellite_3"/>
+    <addaction name="actionShow_meteor_showers"/>
     <addaction name="separator"/>
     <addaction name="actionMilkyway"/>
     <addaction name="separator"/>
@@ -874,8 +875,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>284</width>
-          <height>141</height>
+          <width>364</width>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1736,7 +1737,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>350</width>
+          <width>413</width>
           <height>527</height>
          </rect>
         </property>
@@ -2042,8 +2043,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>224</width>
-          <height>266</height>
+          <width>264</width>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3067,7 +3068,7 @@ background-color: rgb(0, 0, 0);</string>
           <x>0</x>
           <y>0</y>
           <width>279</width>
-          <height>329</height>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3271,7 +3272,7 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>157</width>
+          <width>237</width>
           <height>431</height>
          </rect>
         </property>
@@ -3374,8 +3375,8 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>254</width>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3760,6 +3761,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="action_Asteroids1"/>
    <addaction name="actionComets_2"/>
    <addaction name="actionSatellite_3"/>
+   <addaction name="actionShow_meteor_showers"/>
    <addaction name="separator"/>
    <addaction name="actionMilkyway"/>
    <addaction name="separator"/>
@@ -5661,6 +5663,21 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Zoom to 180°</string>
+   </property>
+  </action>
+  <action name="actionShow_meteor_showers">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/sh_shower.png</normaloff>:/res/sh_shower.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show meteor showers</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/hide meteor showers</string>
    </property>
   </action>
  </widget>

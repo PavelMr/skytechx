@@ -665,6 +665,8 @@ private slots:
 
   void on_tb_histogram_clicked();  
 
+  void on_actionShow_meteor_showers_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

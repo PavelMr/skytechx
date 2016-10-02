@@ -920,7 +920,7 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, m->name, "");
   addSeparator(item);
 
-  addLabelItem(item, tr("Radian position"));
+  addLabelItem(item, tr("Radiant position"));
 
   double ra, dec;
   QString jd2000;
@@ -942,7 +942,7 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
 
   precess(&raAtDate, &decAtDate, JD2000, view->jd);
 
-  addLabelItem(item, txLocInfo);
+  //addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
@@ -956,8 +956,15 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
 
   addLabelItem(item, tr("Other"));
   addSeparator(item);
+  addTextItem(item, tr("Begin"), getStrDate(m->jdBegin, view->geo.tz));
+  addTextItem(item, tr("Maximum"), getStrDate(m->jdMax, view->geo.tz));
+  addTextItem(item, tr("End"), getStrDate(m->jdEnd, view->geo.tz));
+  addSeparator(item);
   addTextItem(item, tr("ZHR"), m->rate);
-  addTextItem(item, tr("Speed"), QString("%1 km/h").arg(m->speed, 0, 'f', 2));
+  if (m->speed > 0)
+  {
+    addTextItem(item, tr("Speed"), QString("%1 km/h").arg(m->speed, 0, 'f', 2));
+  }
   addTextItem(item, tr("Source"), m->source);
   addSeparator(item);
 }
