@@ -91,6 +91,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QRadioButton" name="radioButton_10">
+            <property name="text">
+             <string>Meteor showers</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QRadioButton" name="radioButton_9">
             <property name="text">
              <string>Lunar feature</string>

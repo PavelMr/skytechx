@@ -8,6 +8,7 @@
 #include "cucac4.h"
 #include "tycho.h"
 #include "setting.h"
+#include "cmeteorshower.h"
 
 //////////////////
 CSearch::CSearch()
@@ -387,8 +388,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         continue;
 
       if (QString(a->name).contains(reg) || a->name == str)
-      {
-        qDebug() << a->name << reg;
+      {        
         astSolve(a, mapView->jd);
         ra = a->orbit.lRD.Ra;
         dec = a->orbit.lRD.Dec;
@@ -436,6 +436,26 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
         return(true);
       }
+    }
+  }
+
+  QApplication::processEvents();
+
+  if (SS_CHECK_OR(SS_SHOWER, what))
+  {
+    const CMeteorShowerItem *item = g_meteorShower.search(str);
+
+    if (item)
+    {
+      obj.type = MO_SHOWER;
+      obj.par1 = (qint64)item;
+
+      ra = item->rd.Ra;
+      dec = item->rd.Dec;
+      fov = D2R(45);
+      precess(&ra, &dec, JD2000, mapView->jd);
+
+      return true;
     }
   }
 

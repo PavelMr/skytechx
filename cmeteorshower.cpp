@@ -7,14 +7,44 @@
 
 extern MainWindow *pcMainWnd;
 
+CMeteorShower g_meteorShower;
+
 CMeteorShower::CMeteorShower() :
   m_year(-1)
 {
 }
 
-void CMeteorShower::render(CSkPainter *p, mapView_t *view)
+
+QStringList CMeteorShower::getNameList()
 {
-  QColor color = g_skSet.map.shower.color;
+  QStringList list;
+
+  for (const CMeteorShowerItem &item : m_list)
+  {
+    list << item.name;
+    list.append(item.name);
+    list += item.name;
+  }
+
+  return list;
+}
+
+const CMeteorShowerItem *CMeteorShower::search(const QString &text) const
+{
+  for (const CMeteorShowerItem &item : m_list)
+  {
+    if (item.name.compare(text, Qt::CaseInsensitive) == 0)
+    {
+      return &item;
+    }
+  }
+
+  return nullptr;
+}
+
+
+void CMeteorShower::render(CSkPainter *p, mapView_t *view)
+{  
   double scale = g_skSet.map.shower.scale;
   bool showAll = g_skSet.map.shower.bShowAll;
   double beforeAfterDate = g_skSet.map.shower.daysBeforeAfterDate;
@@ -27,13 +57,25 @@ void CMeteorShower::render(CSkPainter *p, mapView_t *view)
   for (const CMeteorShowerItem &item : m_list)
   {
     SKPOINT pt;
+    bool isActive = (view->jd >= item.jdBegin - beforeAfterDate) && (view->jd <= item.jdEnd + beforeAfterDate);
 
-    if (showAll || ((view->jd >= item.jdBegin - beforeAfterDate) && (view->jd <= item.jdEnd + beforeAfterDate)))
+    if (showAll || isActive)
     {
-      trfRaDecToPointNoCorrect(&item.rd, &pt);
+      trfRaDecToPointNoCorrect(&item.rd, &pt);            
 
       if (trfProjectPoint(&pt))
       {
+        QColor color;
+
+        if (isActive)
+        {
+          color = g_skSet.map.shower.color;
+        }
+        else
+        {
+          color = QColor(120, 120, 120);
+        }
+
         p->setPen(QPen(color, 3));
         p->drawCircle(QPoint(pt.sx, pt.sy), 10 * scale);
 

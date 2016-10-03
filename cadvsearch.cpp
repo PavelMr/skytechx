@@ -4,6 +4,7 @@
 #include "ccomdlg.h"
 #include "casterdlg.h"
 #include "csgp4.h"
+#include "cmeteorshower.h"
 
 #include "csearch.h"
 
@@ -50,6 +51,9 @@ CAdvSearch::CAdvSearch(QWidget *parent, mapView_t *view) :
     case 9:
       ui->radioButton_9->setChecked(true);
       break;
+    case 10:
+      ui->radioButton_10->setChecked(true);
+      break;
   }
 
   connect(ui->radioButton_all , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
@@ -62,6 +66,7 @@ CAdvSearch::CAdvSearch(QWidget *parent, mapView_t *view) :
   connect(ui->radioButton_7, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
   connect(ui->radioButton_8, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
   connect(ui->radioButton_9 , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_10 , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
 
   slotRadioChange();
 }
@@ -100,6 +105,8 @@ void CAdvSearch::on_pushButton_2_clicked()
     prefix = SS_COMET;
   else if (ui->radioButton_9->isChecked())
     prefix = SS_LUNAR_FEAT;
+  else if (ui->radioButton_10->isChecked())
+    prefix = SS_SHOWER;
 
   QString text;
 
@@ -209,6 +216,12 @@ void CAdvSearch::slotRadioChange()
   {
     lastRadio = 9;
     ui->lineEdit->addWords(cLunarFeatures.getNames());
+  }
+
+  if (ui->radioButton_10->isChecked() || isAll)
+  {
+    lastRadio = 10;
+    ui->lineEdit->addWords(g_meteorShower.getNameList());
   }
 
   if (ui->radioButton_all->isChecked())

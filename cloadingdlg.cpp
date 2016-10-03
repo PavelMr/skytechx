@@ -24,7 +24,6 @@
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
 extern QString g_horizonName;
-extern CMeteorShower g_meteorShower;
 
 CLoadingDlg::CLoadingDlg(QWidget *parent) :
   QDialog(parent),

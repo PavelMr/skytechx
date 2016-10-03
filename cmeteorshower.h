@@ -7,7 +7,8 @@
 
 #include <QList>
 
-class CMeteorShowerItem{
+class CMeteorShowerItem
+{
 public:
   QString name;
   QString source;
@@ -22,15 +23,20 @@ public:
 
 class CMeteorShower
 {
-public:
+public:  
   CMeteorShower();
   void render(CSkPainter *p, mapView_t*view);
-  void load(int year);
+  void load(int year);  
+  QStringList getNameList();
+  const CMeteorShowerItem *search(const QString &text) const;
+
 
 private:
   QList <CMeteorShowerItem> m_list;
   int m_year;
 };
+
+extern CMeteorShower g_meteorShower;
 
 #endif // CMETEORSHOWER_H
 

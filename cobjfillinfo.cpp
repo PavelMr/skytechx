@@ -942,7 +942,6 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
 
   precess(&raAtDate, &decAtDate, JD2000, view->jd);
 
-  //addLabelItem(item, txLocInfo);
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
   addTextItem(item, txDec + jd2000, getStrDeg(dec));
