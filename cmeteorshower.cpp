@@ -49,8 +49,6 @@ void CMeteorShower::render(CSkPainter *p, mapView_t *view)
   bool showAll = g_skSet.map.shower.bShowAll;
   double beforeAfterDate = g_skSet.map.shower.daysBeforeAfterDate;
 
-  load((int)jdGetYearFromJD(view->jd));
-
   p->setBrush(Qt::NoBrush);
 
   int i = 0;

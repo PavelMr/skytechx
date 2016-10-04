@@ -28,6 +28,7 @@
 #include "cgetprofile.h"
 #include "cucac4.h"
 #include "soundmanager.h"
+#include "cmeteorshower.h"
 
 double m_lastFOV;
 double m_lastRA;
@@ -1792,6 +1793,8 @@ void CMapView::repaintMap(bool bRepaint)
 
   m_mapView.jd = CLAMP(m_mapView.jd, MIN_JD, MAX_JD);
   m_mapView.roll = CLAMP(m_mapView.roll, D2R(-90), D2R(90));
+
+  g_meteorShower.load((int)jdGetYearFromJD(m_mapView.jd));
 
   pcMainWnd->timeDialogUpdate();
 

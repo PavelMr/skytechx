@@ -144,6 +144,9 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
   int w = pStars[spt][s].width();
   int h = pStars[spt][s].height();
 
+  p->drawPixmap(pt->sx - (w >> 1),
+                pt->sy - (h >> 1), pStars[spt][s]);
+
   if (m_showHalo)
   {
     float op = (1 - CLAMP(s / (float)(numStars * 0.5f), 0, 1)) * m_haloFactor;
@@ -159,8 +162,7 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
     }
   }
 
-  p->drawPixmap(pt->sx - (w >> 1),
-                pt->sy - (h >> 1), pStars[spt][s]);
+
 
   return(pStars[spt][s].width() >> 1);
 }
@@ -219,7 +221,7 @@ void CStarRenderer::setConfig(setting_t *set)
             a = qAlpha(val);
             h = pix.hsvHue();
             s = pix.hsvSaturation();
-            s = CLAMP(s * (m_saturation / 100.0), 0, 255);// (2.3 * (m_saturation - 100)), 0, 255);
+            s = CLAMP(s * (m_saturation / 100.0), 0, 255);
             v = pix.value();
             pix = pix.fromHsv(h, s, v, a);
             img.setPixel(x, y, pix.rgba());
