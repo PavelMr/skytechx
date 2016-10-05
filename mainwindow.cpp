@@ -94,6 +94,7 @@
 #include "skeventdocument.h"
 #include "cskeventdocdialog.h"
 #include "skiconutils.h"
+#include "choreditorwidget.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -873,6 +874,11 @@ void MainWindow::setToolbarIconSize()
   ui->tb_show->setIconSize(QSize(size, size));
   ui->tb_map->setIconSize(QSize(size, size));
   ui->tb_window->setIconSize(QSize(size, size));
+
+  //QWidget *w = ui->toolBox->widget(10);
+
+  m_horizonEditor = new CHorEditorWidget();
+  ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
 }
 
 void MainWindow::checkNewVersion(bool forced)

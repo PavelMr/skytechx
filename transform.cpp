@@ -250,6 +250,7 @@ void trfCreateMatrixView(CAstro *ast, mapView_t *mapView, double w, double h)
 
   SKMATRIXProjection(&proj, fov, scrx / scry, NEAR_PLANE_DIST, 2);
   SKMATRIXProjection(&fproj, fov * 1.2, scrx / scry, NEAR_PLANE_DIST, 2);
+
   SKMATRIXScale(&scale, mapView->flipX ? -1 : 1, mapView->flipY ? -1 : 1, 1);  
   SKMATRIXTranslate(&translate, 0, 0, spherify);
 

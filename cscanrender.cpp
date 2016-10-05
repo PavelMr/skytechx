@@ -290,9 +290,12 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
     int px1 = scan[y].scan[0];
     int px2 = scan[y].scan[1];
 
+    col = Qt::green;
+
     if (px1 > px2)
     {
       qSwap(px1, px2);
+      col = Qt::red;
     }
 
     if (px1 < 0)

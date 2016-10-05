@@ -281,7 +281,8 @@ SOURCES += main.cpp\
     jpl/jpl_eph.cpp \
     chistogram.cpp \
     cmeteorshower.cpp \
-    core/skiconutils.cpp
+    core/skiconutils.cpp \
+    choreditorwidget.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -499,7 +500,8 @@ HEADERS  += mainwindow.h \
     jpl/jpl_int.h \
     chistogram.h \
     cmeteorshower.h \
-    core/skiconutils.h
+    core/skiconutils.h \
+    choreditorwidget.h
 
 
 FORMS    += mainwindow.ui \
@@ -591,7 +593,8 @@ FORMS    += mainwindow.ui \
     cadvsearch.ui \
     astcomdowntypedlg.ui \
     cskeventdocdialog.ui \
-    cchartdialog.ui
+    cchartdialog.ui \
+    choreditorwidget.ui
 
 
 RESOURCES += \

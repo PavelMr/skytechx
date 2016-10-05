@@ -799,7 +799,7 @@
    <property name="minimumSize">
     <size>
      <width>262</width>
-     <height>369</height>
+     <height>396</height>
     </size>
    </property>
    <property name="font">
@@ -865,7 +865,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -2494,7 +2494,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-70</y>
           <width>299</width>
           <height>430</height>
          </rect>

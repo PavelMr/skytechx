@@ -268,11 +268,48 @@ void CBackground::renderTexture(mapView_t *mapView, CSkPainter * /*p*/, QImage *
   }
 }
 
-/////////////////////////////////////////////////////////////////////
-void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
-/////////////////////////////////////////////////////////////////////
+QList <radec_t> split(radec_t *triangle, double top, double bottom, double ra1, double ra2)
 {
-  CScanRender scan;
+  // TODO: udelat to normalne ne pres intersect
+  QList <radec_t> out;
+  QPolygonF poly;
+
+  poly.append(QPointF(triangle[0].Ra, triangle[0].Dec));
+  poly.append(QPointF(triangle[1].Ra, triangle[1].Dec));
+  poly.append(QPointF(triangle[2].Ra, triangle[2].Dec));
+  poly.append(QPointF(triangle[3].Ra, triangle[3].Dec));
+
+  QPolygonF clip;
+
+  clip.append(QPointF(ra1, top));
+  clip.append(QPointF(ra2, top));
+  clip.append(QPointF(ra2, bottom));
+  clip.append(QPointF(ra1, bottom));
+
+  QPolygonF result = clip.intersected(poly);
+
+  if (result.count() < 3)
+  {
+    return out;
+  }
+
+  for (int i = 0; i < result.count(); i++)
+  {
+    radec_t rd;
+
+    rd.Ra = result.at(i).x();
+    rd.Dec = result.at(i).y();
+
+    out.append(rd);
+  }
+
+  return out;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pImg)
+//////////////////////////////////////////////////////////////////////////////////
+{  
   SKPOINT     newPts[MAX_POLYGON_PTS];
   int         newCount;
   QColor      color = g_skSet.map.hor.color;
@@ -289,9 +326,9 @@ void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pIm
   {
     for (int d = 0; d < 360; d++)
     {
-      int     d1 = (d + 1) % 360;
-      radec_t aa[3];
-      SKPOINT pt[3];
+      int     d1 = (d + 1) % 360;      
+      radec_t aa[4];
+      SKPOINT pt[12];
 
       aa[0].Ra = D2R(d);
       aa[0].Dec = altHorizon[d];
@@ -299,34 +336,56 @@ void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pIm
       aa[1].Ra = D2R(d + 1);
       aa[1].Dec = altHorizon[d1];
 
-      aa[2].Ra = 0;
-      aa[2].Dec = D2R(-90);
+      aa[2].Ra = D2R(d + 1);
+      aa[2].Dec = -R90;
 
-      for (int i = 0; i < 3; i++)
+      aa[3].Ra = D2R(d);
+      aa[3].Dec = -R90;
+
+      double step = 45;
+
+      for (int y = 90; y > -90; y -= step)
       {
-        radec_t rd;
+        QList <radec_t> quad;
 
-        cAstro.convAA2RDRef(aa[i].Ra, aa[i].Dec, &rd.Ra, &rd.Dec);
-        trfRaDecToPointCorrectFromTo(&rd, &pt[i], mapView->jd, JD2000);
-      }
-
-      if (SKPLANEClipPolygonToFrustum(trfGetFrustum(), pt, 3, newPts, newCount))
-      {
-        scanRender.resetScanPoly(pImg->width(), pImg->height());
-
-        for (int t = 0; t < newCount; t++)
-          trfProjectPointNoCheck(&newPts[t]);
-
-        for (int t = 0; t < newCount; t++)
+        quad = split(aa, D2R(y), D2R(y - step), aa[0].Ra - 1.0, aa[1].Ra + 1.0);
+        if (quad.count() == 0)
         {
-          int t1 = (t + 1) % newCount;
-          scanRender.scanLine(newPts[t].sx, newPts[t].sy, newPts[t1].sx, newPts[t1].sy);
+          continue;
         }
 
-        if (color.alpha() == 255)
-          scanRender.renderPolygon(color, pImg);
-        else
-          scanRender.renderPolygonAlpha(color, pImg);
+        for (int i = 0; i < quad.count(); i++)
+        {
+          radec_t rd;
+
+          cAstro.convAA2RDRef(quad[i].Ra, quad[i].Dec, &rd.Ra, &rd.Dec);
+          trfRaDecToPointCorrectFromTo(&rd, &pt[i], mapView->jd, JD2000);
+        }
+
+        if (SKPLANEClipPolygonToFrustum(trfGetFrustum(), pt, quad.count(), newPts, newCount))
+        {
+          for (int t = 0; t < newCount; t++)
+          {
+            trfProjectPointNoCheck(&newPts[t]);
+          }
+
+          scanRender.resetScanPoly(pImg->width(), pImg->height());
+
+          for (int t = 0; t < newCount; t++)
+          {
+            int t1 = (t + 1) % newCount;
+            scanRender.scanLine(newPts[t].sx, newPts[t].sy, newPts[t1].sx, newPts[t1].sy);
+          }
+
+          if (color.alpha() == 255)
+          {
+            scanRender.renderPolygon(color, pImg);
+          }
+          else
+          {
+            scanRender.renderPolygonAlpha(color, pImg);
+          }
+        }
       }
     }
   }
@@ -413,6 +472,6 @@ void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pIm
 
       drawText(&pt1, &pt2, azmText[i], p);
     }
-  }
+  }  
 }
 

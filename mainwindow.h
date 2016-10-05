@@ -20,6 +20,7 @@
 class CDSSCurveWidget;
 class QPrinter;
 class CHistogram;
+class CHorEditorWidget;
 
 class ItemDelegate : public QItemDelegate
 {
@@ -124,6 +125,8 @@ protected:
   QTimer          m_realTimerLapse;
   QTimer          m_realTimer;
   QStringList     m_wordList;
+
+  CHorEditorWidget *m_horizonEditor;
 
   CHistogram     *m_histogram;
   QDockWidget    *m_dockHistogram;
