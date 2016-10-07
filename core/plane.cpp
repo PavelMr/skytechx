@@ -8,12 +8,6 @@
 
 extern int m_numFrustums;
 
-enum
-{
-    polygonInterior = 1,
-    polygonBoundary = 0,
-    polygonExterior = -1
-};
 
 //////////////////////////////////////////////////////////////////////////////
 SKPLANE *SKPLANEFromPoint(SKPLANE *out, SKVECTOR *a, SKVECTOR *b, SKVECTOR *c)

@@ -2494,3 +2494,14 @@ void CSetting::on_pushButton_72_clicked()
     ui->pushButton_72->setColor(dlg.currentColor());
   }
 }
+
+void CSetting::on_pushButton_75_clicked()
+{
+  QColorDialog dlg(set.map.shower.nonActiveColor, this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    set.map.shower.nonActiveColor = dlg.currentColor().rgb();
+    ui->pushButton_75->setColor(dlg.currentColor());
+  }
+}

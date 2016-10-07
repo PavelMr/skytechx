@@ -873,12 +873,10 @@ void MainWindow::setToolbarIconSize()
   ui->tb_planets->setIconSize(QSize(size, size));
   ui->tb_show->setIconSize(QSize(size, size));
   ui->tb_map->setIconSize(QSize(size, size));
-  ui->tb_window->setIconSize(QSize(size, size));
+  ui->tb_window->setIconSize(QSize(size, size));  
 
-  //QWidget *w = ui->toolBox->widget(10);
-
-  m_horizonEditor = new CHorEditorWidget();
-  ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
+  //m_horizonEditor = new CHorEditorWidget();
+  //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
 }
 
 void MainWindow::checkNewVersion(bool forced)

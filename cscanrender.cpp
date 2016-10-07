@@ -579,8 +579,7 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
   int sh = src->height();
   float tsx = src->width() - 1;
   float tsy = src->height() - 1;
-  const quint32 *bitsSrc = (quint32 *)src->constBits();
-  //const uchar *bitsSrc8 = (uchar *)src->constBits();
+  const quint32 *bitsSrc = (quint32 *)src->constBits();  
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
   bool bw = src->format() == QImage::Format_Indexed8;

@@ -288,6 +288,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.shower.daysBeforeAfterDate", set->map.shower.daysBeforeAfterDate, ds);
   writeVal("map.shower.scale", set->map.shower.scale, ds);
   writeVal("map.shower.color", set->map.shower.color, ds);
+  writeVal("map.shower.nonActiveColor", set->map.shower.nonActiveColor, ds);
 
   // comet & aster.
   writeVal("map.comet.real", set->map.comet.real, ds);
@@ -615,6 +616,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.shower.scale = readVal("map.shower.scale", 1.0, tMap).toDouble();
   set->map.shower.daysBeforeAfterDate = readVal("map.shower.daysBeforeAfterDate", 10.0, tMap).toDouble();
   set->map.shower.color = readVal("map.shower.color", MRGB(220, 220, 220), tMap).toUInt();
+  set->map.shower.nonActiveColor = readVal("map.shower.nonActiveColor", MRGB(120, 120, 120), tMap).toUInt();
 
   // aster & comets
   set->map.comet.color = readVal("map.comet.true", true, tMap).toBool();

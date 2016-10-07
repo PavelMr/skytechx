@@ -55,9 +55,10 @@ void CMeteorShower::render(CSkPainter *p, mapView_t *view)
   for (const CMeteorShowerItem &item : m_list)
   {
     SKPOINT pt;
-    bool isActive = (view->jd >= item.jdBegin - beforeAfterDate) && (view->jd <= item.jdEnd + beforeAfterDate);
+    bool show = (view->jd >= item.jdBegin - beforeAfterDate) && (view->jd <= item.jdEnd + beforeAfterDate);
+    bool isActive = (view->jd >= item.jdBegin) && (view->jd <= item.jdEnd);
 
-    if (showAll || isActive)
+    if (showAll || show)
     {
       trfRaDecToPointNoCorrect(&item.rd, &pt);            
 
@@ -71,7 +72,7 @@ void CMeteorShower::render(CSkPainter *p, mapView_t *view)
         }
         else
         {
-          color = QColor(120, 120, 120);
+          color = g_skSet.map.shower.nonActiveColor;
         }
 
         p->setPen(QPen(color, 3));

@@ -30,7 +30,7 @@ class CScanRender
 
     void renderPolygonAlpha(QImage *dst, QImage *src);
     void renderPolygonAlphaBI(QImage *dst, QImage *src);
-    void renderPolygonAlphaNI(QImage *dst, QImage *src);
+    void renderPolygonAlphaNI(QImage *dst, QImage *src);    
 
 
     void renderPolygonAlpha(QColor col, QImage *dst);

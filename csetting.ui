@@ -1937,25 +1937,18 @@
                   <item row="5" column="0">
                    <widget class="QLabel" name="label_128">
                     <property name="text">
-                     <string>Symbol color</string>
+                     <string>Shower color</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="6" column="0">
-                   <widget class="CPushColorButton" name="pushButton_72">
-                    <property name="text">
-                     <string>PushButton</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="0">
+                  <item row="9" column="0">
                    <widget class="QLabel" name="label_129">
                     <property name="text">
                      <string>Symbol scale</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="8" column="0">
+                  <item row="10" column="0">
                    <widget class="QDoubleSpinBox" name="doubleSpinBox_42">
                     <property name="suffix">
                      <string notr="true">x</string>
@@ -1971,6 +1964,27 @@
                     </property>
                     <property name="value">
                      <double>1.000000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="CPushColorButton" name="pushButton_72">
+                    <property name="text">
+                     <string>PushButton</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QLabel" name="label_130">
+                    <property name="text">
+                     <string>Non active shower color</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="0">
+                   <widget class="CPushColorButton" name="pushButton_75">
+                    <property name="text">
+                     <string>PushButton</string>
                     </property>
                    </widget>
                   </item>

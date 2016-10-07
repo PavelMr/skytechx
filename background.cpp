@@ -53,6 +53,7 @@ bool CBackground::loadBackground(QString name)
   QScriptEngine eng;
   QString code;
   QFileInfo fi(name);
+  double north = 0;
 
   resetBackground();
 
@@ -119,6 +120,11 @@ bool CBackground::loadBackground(QString name)
   {
     it.next();
 
+    if (!it.name().compare("_north"))
+    {
+      north = it.value().toVariant().toDouble();
+    }
+    else
     if (!it.name().compare("_texture"))
     {
       QString name = fi.absolutePath() + "/" + it.value().toString();
@@ -152,16 +158,32 @@ bool CBackground::loadBackground(QString name)
   if (bkTexture && !bkTexture->isNull())
   {
     isTexture = true;
-  }
 
-  //qDebug() << "tex" << textureName << isTexture;
+    QImage *newImage = new QImage(bkTexture->size(), bkTexture->format());
+
+    newImage->fill(Qt::transparent);
+
+    QPainter painter(newImage);
+
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QBrush(*bkTexture));
+    painter.setBrushOrigin(bkTexture->width() / 360.0 * north, 0);
+    painter.drawRect(0, 0, bkTexture->width(), bkTexture->height());
+
+    painter.end();
+
+    newImage->save("bk.png", "PNG");
+
+    delete bkTexture;
+    bkTexture = newImage;
+  }  
 
   return true;
 }
 
-////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 bool CBackground::makeHorizon(QList <QPointF> *list, double *alt)
-////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 {
   if (list->count() < 2)
     return(false);
@@ -198,8 +220,10 @@ bool CBackground::makeHorizon(QList <QPointF> *list, double *alt)
   return(true);
 }
 
-void CBackground::renderTexture(mapView_t *mapView, CSkPainter * /*p*/, QImage *pImg)
+void CBackground::renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg)
 {
+  Q_UNUSED(p);
+
   SKMATRIX mat;
   SKMATRIX gmx, gmy;
   SKMATRIX precMat;
@@ -211,29 +235,31 @@ void CBackground::renderTexture(mapView_t *mapView, CSkPainter * /*p*/, QImage *
 
   mat = gmx * gmy * precMat;
 
-  double tw = 1 / 36.0;
-  double th = 1 / 18.0;
+  double step = 10;
+
+  double tw = 1 / (360.0 / step);
+  double th = 1 / (180.0 / step);
   double ox;
   double oy = 0;
 
   SKPOINT pt[4];
-  radec_t rd[4];
+  radec_t rd[4];  
 
-  for (int y = 9; y > -9; y--)
+  for (double y = 90; y > -90; y -= step)
   {
     ox = 1;
-    for (int x = 0; x < 36; x++, ox -= tw)
+    for (double x = 0; x < 360; x+= step, ox -= tw)
     {
-      rd[0].Ra = D2R(x * 10);
-      rd[0].Dec = D2R(y * 10);
+      rd[0].Ra = D2R(x);
+      rd[0].Dec = D2R(y);
 
-      rd[1].Ra = D2R(x * 10) - D2R(10);
-      rd[1].Dec = D2R(y * 10);
+      rd[1].Ra = D2R(x) - D2R(step);
+      rd[1].Dec = D2R(y);
 
       rd[2].Ra = rd[1].Ra;
-      rd[2].Dec = D2R(y * 10) - D2R(10);
+      rd[2].Dec = D2R(y) - D2R(step);
 
-      rd[3].Ra = D2R(x * 10);
+      rd[3].Ra = D2R(x);
       rd[3].Dec = rd[2].Dec;
 
       for (int i = 0; i < 4; i++)
@@ -253,57 +279,112 @@ void CBackground::renderTexture(mapView_t *mapView, CSkPainter * /*p*/, QImage *
         scanRender.scanLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy, ox, oy, ox + tw, oy);
         scanRender.scanLine(pt[1].sx, pt[1].sy, pt[2].sx, pt[2].sy, ox + tw, oy, ox + tw, oy + th);
         scanRender.scanLine(pt[2].sx, pt[2].sy, pt[3].sx, pt[3].sy, ox + tw, oy + th, ox, oy + th);
-        scanRender.scanLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy, ox, oy + th, ox, oy);
+        scanRender.scanLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy, ox, oy + th, ox, oy);        
         scanRender.renderPolygonAlpha(pImg, bkTexture);
 
-        /*
-        p->drawLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy);
-        p->drawLine(pt[1].sx, pt[1].sy, pt[2].sx, pt[2].sy);
-        p->drawLine(pt[2].sx, pt[2].sy, pt[3].sx, pt[3].sy);
-        p->drawLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy);
-        */
+        //p->drawLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy);
+        //p->drawLine(pt[1].sx, pt[1].sy, pt[2].sx, pt[2].sy);
+        //p->drawLine(pt[2].sx, pt[2].sy, pt[3].sx, pt[3].sy);
+        //p->drawLine(pt[3].sx, pt[3].sy, pt[0].sx, pt[0].sy);
       }
     }
     oy += th;
   }
 }
 
-QList <radec_t> split(radec_t *triangle, double top, double bottom, double ra1, double ra2)
+void CBackground::intersect(double y, radec_t &v1, radec_t &v2, radec_t *out)
 {
-  // TODO: udelat to normalne ne pres intersect
-  QList <radec_t> out;
-  QPolygonF poly;
+  double d = FRAC(y, v1.Dec, v2.Dec);
+  double r = v2.Ra - v1.Ra;
 
-  poly.append(QPointF(triangle[0].Ra, triangle[0].Dec));
-  poly.append(QPointF(triangle[1].Ra, triangle[1].Dec));
-  poly.append(QPointF(triangle[2].Ra, triangle[2].Dec));
-  poly.append(QPointF(triangle[3].Ra, triangle[3].Dec));
+  out->Ra = v1.Ra + r * d;
+  out->Dec = y;
+}
 
-  QPolygonF clip;
+int CBackground::splitY(int countIn, radec_t *in, double y, double side, radec_t *out)
+{
+  int countOut;
+  int positive = 0;
+  int negative = 0;
+  int location[MAX_POLYGON_PTS];
+  double epsilon = 0.00001;
 
-  clip.append(QPointF(ra1, top));
-  clip.append(QPointF(ra2, top));
-  clip.append(QPointF(ra2, bottom));
-  clip.append(QPointF(ra1, bottom));
-
-  QPolygonF result = clip.intersected(poly);
-
-  if (result.count() < 3)
+  for (int i = 0; i < countIn; i++)
   {
-    return out;
+    double d = (in[i].Dec - y) * side;
+
+    if (d > epsilon)
+    {
+      location[i] = polygonInterior;
+      positive++;
+    }
+    else
+    {
+      if (d < -epsilon)
+      {
+        location[i] = polygonExterior;
+        negative++;
+      }
+      else
+      {
+        location[i] = polygonBoundary;
+      }
+    }
   }
 
-  for (int i = 0; i < result.count(); i++)
+  if (negative == 0)
   {
-    radec_t rd;
+    for (int a = 0; a < countIn; a++)
+      out[a] = in[a];
 
-    rd.Ra = result.at(i).x();
-    rd.Dec = result.at(i).y();
-
-    out.append(rd);
+    return countIn;
+  }
+  else if (positive == 0)
+  {
+    return 0;
   }
 
-  return out;
+  int count = 0;
+  int previous = countIn - 1;
+
+  for (int index = 0; index < countIn; index++)
+  {
+    long loc = location[index];
+
+    if (loc == polygonExterior)
+    {
+      if (location[previous] == polygonInterior)
+      {
+        radec_t v1 = in[previous];
+        radec_t v2 = in[index];
+        intersect(y, v1, v2, &out[count++]);
+      }
+    }
+    else
+    {
+      radec_t v1 = in[index];
+
+      if ((loc == polygonInterior) && (location[previous] == polygonExterior))
+      {
+        radec_t v2 = in[previous];
+        intersect(y, v1, v2, &out[count++]);
+      }
+      out[count++] = v1;
+    }
+    previous = index;
+  }
+
+  return count;
+}
+
+int CBackground::split(radec_t *triangle, double top, double bottom, radec_t *out)
+{
+  radec_t pts[MAX_POLYGON_PTS];
+
+  int c = splitY(4, triangle, top, -1.0, pts);
+  c = splitY(c, pts, bottom, 1.0, out);
+
+  return c;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -317,7 +398,7 @@ void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pIm
   if (!g_horizonName.compare("none"))
   {
     return;
-  }
+  }  
 
   color.setAlpha(g_skSet.map.hor.alpha);
   setSetFont(FONT_HORIZON, p);
@@ -346,23 +427,24 @@ void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pIm
 
       for (int y = 90; y > -90; y -= step)
       {
-        QList <radec_t> quad;
+        int clippedCount;
+        radec_t clipped[MAX_POLYGON_PTS];
 
-        quad = split(aa, D2R(y), D2R(y - step), aa[0].Ra - 1.0, aa[1].Ra + 1.0);
-        if (quad.count() == 0)
+        clippedCount = split(aa, D2R(y), D2R(y - step), clipped);
+        if (clippedCount == 0)
         {
           continue;
         }
 
-        for (int i = 0; i < quad.count(); i++)
+        for (int i = 0; i < clippedCount; i++)
         {
           radec_t rd;
 
-          cAstro.convAA2RDRef(quad[i].Ra, quad[i].Dec, &rd.Ra, &rd.Dec);
+          cAstro.convAA2RDRef(clipped[i].Ra, clipped[i].Dec, &rd.Ra, &rd.Dec);
           trfRaDecToPointCorrectFromTo(&rd, &pt[i], mapView->jd, JD2000);
         }
 
-        if (SKPLANEClipPolygonToFrustum(trfGetFrustum(), pt, quad.count(), newPts, newCount))
+        if (SKPLANEClipPolygonToFrustum(trfGetFrustum(), pt, clippedCount, newPts, newCount))
         {
           for (int t = 0; t < newCount; t++)
           {
@@ -384,6 +466,8 @@ void CBackground::renderHorizonBk(mapView_t *mapView, CSkPainter *p, QImage *pIm
           else
           {
             scanRender.renderPolygonAlpha(color, pImg);
+            //p->drawLine(newPts[0].sx, newPts[0].sy, newPts[1].sx, newPts[1].sy);
+            //p->drawLine(newPts[1].sx, newPts[1].sy, newPts[2].sx, newPts[2].sy);
           }
         }
       }

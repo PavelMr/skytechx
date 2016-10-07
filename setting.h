@@ -160,6 +160,7 @@ typedef struct
   double daysBeforeAfterDate;
   double scale;
   QRgb   color;
+  QRgb   nonActiveColor;
 } shower_t;
 
 typedef struct

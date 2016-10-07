@@ -38,9 +38,6 @@ public:
   void resetBackground(void);
   void renderHorizonBk(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg);
 
-protected:
-  void renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg);
-
 public:
   QString            textureName;
   bool               isTexture;
@@ -50,6 +47,12 @@ public:
   QList <bkNames_t>  bkNames;
 
   QImage  *bkTexture;
+
+private:
+  int split(radec_t *triangle, double top, double bottom, radec_t *out);
+  int splitY(int countIn, radec_t *in, double y, double side, radec_t *out);
+  void intersect(double y, radec_t &v1, radec_t &v2, radec_t *out);
+  void renderTexture(mapView_t *mapView, CSkPainter *p, QImage *pImg);
 };
 
 extern CBackground background;

@@ -26,6 +26,13 @@ typedef struct
   double dist;
 } SKPLANE;
 
+enum
+{
+  polygonInterior = 1,
+  polygonBoundary = 0,
+  polygonExterior = -1
+};
+
 SKPLANE *SKPLANEFromPoint(SKPLANE *out, SKVECTOR *a, SKVECTOR *b, SKVECTOR *c);
 
 bool SKPLANECheckFrustumToPoint(SKPLANE *frustum, SKVECTOR *point);
