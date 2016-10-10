@@ -609,6 +609,7 @@ void CSetting::setValues()
   ui->doubleSpinBox_42->setValue(set.map.shower.scale);
   ui->pushButton_69->setFontColor(setFonts[FONT_SHOWER], set.fonst[FONT_SHOWER].color);
   ui->pushButton_72->setColor(set.map.shower.color);
+  ui->pushButton_75->setColor(set.map.shower.nonActiveColor);
 
   QSettings rset;
 
@@ -1222,7 +1223,7 @@ void CSetting::on_pushButton_clicked()
 
   apply();
 
-  setSave(g_setName, &g_skSet);
+  setSave(g_setName, &g_skSet);    
 
   done(DL_OK);
 }

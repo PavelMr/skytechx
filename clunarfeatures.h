@@ -30,11 +30,11 @@ typedef struct
 
 typedef struct
 {
-  bool bShowLF;
-  bool bShowDiam;
-  int  minDetail;
-  int  maxKmDiam;
-  int  filter;
+  bool    bShowLF;
+  bool    bShowDiam;
+  qint32  minDetail;
+  qint32  maxKmDiam;
+  qint32  filter;
 } lfParam_t;
 
 class CLunarFeatures : public QObject

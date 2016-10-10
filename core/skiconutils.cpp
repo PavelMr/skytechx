@@ -7,7 +7,7 @@ SkIconUtils::SkIconUtils()
 
 }
 
-QIcon SkIconUtils::createFromText(int sx, int sy, const QString &text)
+QIcon SkIconUtils::createFromText(int sx, int sy, const QString &text, qreal mul)
 {
   QPixmap pixmap(sx, sy);
 
@@ -19,7 +19,7 @@ QIcon SkIconUtils::createFromText(int sx, int sy, const QString &text)
   p.begin(&pixmap);  
   font.setBold(true);
   font.setFamily("arial");
-  font.setPixelSize(sy * 0.48);
+  font.setPixelSize(sy * mul);
   font.setWeight(99);
   p.setFont(font);  
   p.setPen(QColor(32, 32, 32));

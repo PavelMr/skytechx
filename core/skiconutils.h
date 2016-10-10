@@ -25,7 +25,7 @@ class SkIconUtils
 public:
   SkIconUtils();
 
-  static QIcon createFromText(int sx, int sy, const QString &text);  
+  static QIcon createFromText(int sx, int sy, const QString &text, qreal mul = 0.48);
 };
 
 #endif // SKICONUTILS_H

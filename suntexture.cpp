@@ -1,6 +1,7 @@
 #include "suntexture.h"
 #include "jd.h"
 #include "cstatusbar.h"
+#include "skutils.h"
 
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -144,8 +145,16 @@ void SunOnline::slotDownFinished(QNetworkReply *reply)
   {
     QImage img;
     QPixmap pix;
+    QByteArray data = reply->readAll();
 
-    img = QImage::fromData(reply->readAll());
+    img = QImage::fromData(data);
+
+    qDebug() << img;
+    if (img.isNull())
+    {
+      msgBoxError(nullptr, data);
+    }    
+
     pix = pix.fromImage(img);
 
     createSunTexture(&pix, m_radius);

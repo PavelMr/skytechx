@@ -614,7 +614,17 @@ MainWindow::MainWindow(QWidget *parent) :
   lfmodel->setItem(8, 0, item);
 
   ui->hr_lf_detail_2->setSliderPosition(5);
-  on_hr_lf_detail_2_valueChanged(ui->hr_lf_detail_2->value());
+  on_hr_lf_detail_2_valueChanged(ui->hr_lf_detail_2->value());  
+
+  QByteArray data;
+
+  data = settings.value("lunar_features_opt").toByteArray();
+
+  if (data.count() == sizeof(lfParam_t))
+  {
+    const lfParam_t *lfp = (const lfParam_t *)data.constData();
+    lfSetParam(lfp);
+  }
 
   ///////////////////////////////////
   ui->toolBox->setCurrentIndex(0);
@@ -623,16 +633,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
   m_timeDialog = new CTimeDialog();
   ui->dockTimeDialog->setWidget(m_timeDialog);
-
   ui->dockTimeDialog->setWindowTitle(tr("Set Time"));
+  ui->dockTimeDialog->installEventFilter(this);
+  ui->dockTimeDialog->adjustSize();
 
   m_timeWidget = new CTimeWidget();
   ui->dockTime->setWidget(m_timeWidget);
   ui->dockTime->setWindowTitle(tr("Time"));  
-
+  ui->dockTime->adjustSize();
   ui->dockTime->installEventFilter(this);
-  ui->dockTimeDialog->installEventFilter(this);
+
+
   ui->dockTele->installEventFilter(this);
+  ui->dockTele->adjustSize();
 
   QTimer *t = new QTimer(this);
 
@@ -829,12 +842,12 @@ void MainWindow::setToolbarIconSize()
   int size = set.value("toolbar_icon_size", 24).toInt();
 
   // TODO: zkontrolovat pri zmene DPI
-  ui->actionNorth->setIcon(SkIconUtils::createFromText(size, size, tr("N")));
-  ui->actionSouth->setIcon(SkIconUtils::createFromText(size, size, tr("S")));
-  ui->actionEast->setIcon(SkIconUtils::createFromText(size, size, tr("E")));
-  ui->actionWest->setIcon(SkIconUtils::createFromText(size, size, tr("W")));
-  ui->actionZenith->setIcon(SkIconUtils::createFromText(size, size, tr("Z")));
-  ui->actionMeridian->setIcon(SkIconUtils::createFromText(size, size, tr("M")));
+  ui->actionNorth->setIcon(SkIconUtils::createFromText(size, size, tr("N"), 0.6));
+  ui->actionSouth->setIcon(SkIconUtils::createFromText(size, size, tr("S"), 0.6));
+  ui->actionEast->setIcon(SkIconUtils::createFromText(size, size, tr("E"), 0.6));
+  ui->actionWest->setIcon(SkIconUtils::createFromText(size, size, tr("W"), 0.6));
+  ui->actionZenith->setIcon(SkIconUtils::createFromText(size, size, tr("Z"), 0.6));
+  ui->actionMeridian->setIcon(SkIconUtils::createFromText(size, size, tr("M"), 0.6));
 
   ui->action_zoom_1->setIcon(SkIconUtils::createFromText(size, size, tr("1°")));
   ui->action_zoom_5->setIcon(SkIconUtils::createFromText(size, size, tr("5°")));
@@ -1253,6 +1266,14 @@ void MainWindow::saveAndExit()
 
   settings.setValue("info_auto_update", ui->checkBox_5->isChecked());
   settings.setValue("show_extra_info", ui->cb_extInfo->isChecked());
+
+  lfParam_t lfp;
+  QByteArray data;
+
+  lfGetParam(&lfp);
+
+  data.setRawData((const char *)&lfp, sizeof (lfParam_t));
+  settings.setValue("lunar_features_opt", data);
 
   if (g_autoSave.mapPosition)
   {
@@ -1802,6 +1823,27 @@ void MainWindow::fillEventInfo(event_t *e, QString title, bool /*warning*/)
   }
 
   g_geocentric = old;
+}
+
+/////////////////////////////////////////////////
+void MainWindow::lfSetParam(const lfParam_t *lfp)
+/////////////////////////////////////////////////
+{
+  ui->hr_lf_detail->setValue(lfp->minDetail);
+  ui->checkBox_4->setChecked(lfp->bShowLF);
+  ui->hr_lf_detail_2->setValue(lfp->maxKmDiam);
+  ui->checkBox_lfDiam->setChecked(lfp->bShowDiam);
+
+  CLFModel *m = (CLFModel *)ui->treeView_4->model();
+  for (int i = 0; i < m->rowCount(); i++)
+  {
+    QStandardItem *item = m->item(i, 0);
+
+    if (lfp->filter & (1 << i))
+      item->setCheckState(Qt::Checked);
+    else
+      item->setCheckState(Qt::Unchecked);
+  }
 }
 
 ///////////////////////////////////////////
@@ -6422,4 +6464,9 @@ void MainWindow::on_actionShow_meteor_showers_triggered(bool checked)
 {
   g_showShower = checked;
   ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionLunar_features_triggered()
+{
+  on_pushButton_35_clicked();
 }

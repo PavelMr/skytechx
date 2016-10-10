@@ -74,6 +74,7 @@ public:
   void centerSearchBox(bool bCenter);
   void removeQuickInfo(int type);
   void lfGetParam(lfParam_t *lfp);
+  void lfSetParam(const lfParam_t *lfp);
 
   void saveAndExit();
   void timeDialogUpdate();
@@ -669,6 +670,8 @@ private slots:
   void on_tb_histogram_clicked();  
 
   void on_actionShow_meteor_showers_triggered(bool checked);
+
+  void on_actionLunar_features_triggered();
 
 private:
   Ui::MainWindow *ui;
