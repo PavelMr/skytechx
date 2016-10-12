@@ -833,6 +833,9 @@ MainWindow::MainWindow(QWidget *parent) :
   g_ephMoonType = settings.value("eph_moon_type", EPT_PLAN404).toInt();    
 
   setToolBoxPage(0);
+
+  //m_horizonEditor = new CHorEditorWidget();
+  //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
 }
 
 void MainWindow::setToolbarIconSize()
@@ -886,10 +889,7 @@ void MainWindow::setToolbarIconSize()
   ui->tb_planets->setIconSize(QSize(size, size));
   ui->tb_show->setIconSize(QSize(size, size));
   ui->tb_map->setIconSize(QSize(size, size));
-  ui->tb_window->setIconSize(QSize(size, size));  
-
-  //m_horizonEditor = new CHorEditorWidget();
-  //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
+  ui->tb_window->setIconSize(QSize(size, size));    
 }
 
 void MainWindow::checkNewVersion(bool forced)

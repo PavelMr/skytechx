@@ -1005,6 +1005,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   if (t->supIndex != -1)
   {
+    bool         bayer = false;
     bool         found;
     tychoSupp_t *supp = &cTYC.pSupplement[t->supIndex];
 
@@ -1016,10 +1017,20 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     }
     str = cTYC.getBayerFullStr(supp, found);
     if (found)
+    {
       addTextItem(item, str + " " + constGetName(con, 2), "");
+      item->title = str + " " + constGetName(con, 2);
+      bayer = true;
+    }
     str = cTYC.getFlamsteedStr(supp, found);
     if (found)
+    {
       addTextItem(item, str + " " + constGetName(con, 2), "");
+      if (!bayer)
+      {
+        item->title = str + " " + constGetName(con, 2);
+      }
+    }
     addTextItem(item, "HD " + QString::number(supp->hd), "");
   }
 
