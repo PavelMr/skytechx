@@ -295,14 +295,17 @@ void CSetting::setValues()
   ui->doubleSpinBox->setValue(R2D(set.map.star.propNamesFromFov));
   ui->doubleSpinBox_2->setValue(R2D(set.map.star.bayerFromFov));
   ui->doubleSpinBox_3->setValue(R2D(set.map.star.flamsFromFov));
+  ui->doubleSpinBox_43->setValue(R2D(set.map.star.varsFromFov));
 
   ui->checkBox->setChecked(set.map.star.bayerPriority);
   ui->checkBox_2->setChecked(set.map.star.namePriority);
   ui->checkBox_3->setChecked(set.map.star.useSpectralTp);
+  ui->checkBox_25->setChecked(set.map.star.showVarLabels);
 
   ui->pushButton_4->setFontColor(setFonts[FONT_STAR_PNAME], set.fonst[FONT_STAR_PNAME].color);
   ui->pushButton_5->setFontColor(setFonts[FONT_STAR_BAYER], set.fonst[FONT_STAR_BAYER].color);
   ui->pushButton_6->setFontColor(setFonts[FONT_STAR_FLAMS], set.fonst[FONT_STAR_FLAMS].color);
+  ui->pushButton_73->setFontColor(setFonts[FONT_STAR_VARS], set.fonst[FONT_STAR_VARS].color);
 
   ui->doubleSpinBox_30->setValue(set.map.star.starSizeFactor);
 
@@ -808,10 +811,12 @@ void CSetting::apply()
   g_skSet.map.star.propNamesFromFov = D2R(ui->doubleSpinBox->value());
   g_skSet.map.star.bayerFromFov = D2R(ui->doubleSpinBox_2->value());
   g_skSet.map.star.flamsFromFov = D2R(ui->doubleSpinBox_3->value());
+  g_skSet.map.star.varsFromFov = D2R(ui->doubleSpinBox_43->value());
 
   g_skSet.map.star.bayerPriority = ui->checkBox->isChecked();
   g_skSet.map.star.namePriority = ui->checkBox_2->isChecked();
   g_skSet.map.star.useSpectralTp = ui->checkBox_3->isChecked();
+  g_skSet.map.star.showVarLabels = ui->checkBox_25->isChecked();
 
   g_skSet.map.star.starSizeFactor = ui->doubleSpinBox_30->value();
 
@@ -2505,4 +2510,9 @@ void CSetting::on_pushButton_75_clicked()
     set.map.shower.nonActiveColor = dlg.currentColor().rgb();
     ui->pushButton_75->setColor(dlg.currentColor());
   }
+}
+
+void CSetting::on_pushButton_73_clicked()
+{
+  setFontColor(FONT_STAR_VARS, ui->pushButton_73);
 }

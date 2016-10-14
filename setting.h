@@ -121,6 +121,7 @@ typedef struct
   double starSizeFactor;
   int    saturation;
   double properMotionYearVec;
+  bool   showVarLabels;
   bool   showProperMotion;
   bool   showGlow;
   float  glowAlpha;

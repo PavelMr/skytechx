@@ -69,9 +69,9 @@ gcvs_t *GCVS::getStar(qint16 tyc1, qint16 tyc2, qint8 tyc3)
 }
 
 bool GCVS::findStar(const QString &name, gcvs_t *star)
-{
+{  
   foreach (const gcvs_t &item, m_list)
-  {
+  {        
     if (name.compare(item.name, Qt::CaseInsensitive) == 0)
     {
       *star = item;

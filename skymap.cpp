@@ -527,7 +527,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
         isName = true;
       }
 
-      if (!isName)
+      if (!isName && g_skSet.map.star.showVarLabels)
       {        
         gcvs_t *gcvs;
         if (mapView->fov <= g_skSet.map.star.varsFromFov && ((gcvs = g_GCVS.getStar(s->tyc1, s->tyc2, s->tyc3)) != nullptr))

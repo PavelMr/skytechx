@@ -1949,8 +1949,8 @@ void CMapView::paintEvent(QPaintEvent *)
     trfRaDecToPointNoCorrect(&info->radec, &pt);
     if (trfProjectPoint(&pt))
     {
-      p.setPen(QPen(QColor(g_skSet.map.objSelectionColor), 3));
-      p.drawCornerBox(pt.sx, pt.sy, 10, 4);
+      p.setPen(QPen(QColor(g_skSet.map.objSelectionColor), 3));      
+      p.drawCornerBox(pt.sx, pt.sy, 10, 4);      
     }
   }
 
@@ -1971,7 +1971,6 @@ void CMapView::paintEvent(QPaintEvent *)
     rc = rc.normalized();
 
     p.setFont(QFont("arial",  11, QFont::Bold));
-
 
     if (fov != 0)
     {

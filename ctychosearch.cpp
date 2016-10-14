@@ -2,6 +2,7 @@
 #include "ui_ctychosearch.h"
 #include "constellation.h"
 #include "tycho.h"
+#include "gcvs.h"
 
 static int cb1 = 0;
 static int cb2 = 0;
@@ -165,3 +166,20 @@ void CTychoSearch::on_pushButton_5_clicked()
   done(DL_CANCEL);
 }
 
+////////////////////////////////////////////
+void CTychoSearch::on_pushButton_6_clicked()
+////////////////////////////////////////////
+{
+  gcvs_t gcvs;
+  if (g_GCVS.findStar(ui->lineEdit->text().simplified(), &gcvs))
+  {
+    if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, gcvs.tyc1, gcvs.tyc2, gcvs.tyc3, 0, m_reg, m_index))
+    {
+      getStar();
+      done(DL_OK);
+      return;
+    }
+  }
+
+  notFound(ui->lineEdit);
+}

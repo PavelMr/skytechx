@@ -130,6 +130,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.star.showGlow", set->map.star.showGlow, ds);
   writeVal("map.star.glowAlpha", set->map.star.glowAlpha, ds);
   writeVal("map.star.varsFromFov", set->map.star.varsFromFov, ds);
+  writeVal("map.star.showVarLabels", set->map.star.showVarLabels, ds);
 
   writeVal("map.starBitmapName", set->map.starBitmapName, ds);
 
@@ -443,7 +444,9 @@ bool setLoad(QString name, setting_t *set)
   set->map.star.showGlow = readVal("map.star.showGlow", false, tMap).toBool();
   set->map.star.glowAlpha = readVal("map.star.glowAlpha", 1.0, tMap).toFloat();
   set->map.star.varsFromFov = readVal("map.star.varsFromFov", D2R(25), tMap).toDouble();
-  set->map.starBitmapName = readVal("map.starBitmapName", "../data/stars/bitmaps/stars2.png", tMap).toString();
+  set->map.star.showVarLabels = readVal("map.star.showVarLabels", true, tMap).toBool();
+  set->map.starBitmapName = readVal("map.starBitmapName", "../data/stars/bitmaps/stars2.png", tMap).toString();  
+
 
   // horizon
   set->map.hor.color = readVal("map.hor.color", MRGB(48, 68, 48), tMap).toUInt();
