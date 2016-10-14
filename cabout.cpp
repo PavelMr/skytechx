@@ -66,11 +66,10 @@ CAbout::CAbout(QWidget *parent) :
     ui->textEdit_source->append(text);
     i++;
   }
-  QString count = QLocale(QLocale::English).toString((qlonglong)cDSO.dsoHead.numDso);
-  ui->textEdit_source->append("\n");
+  QString count = QLocale(QLocale::English).toString((qlonglong)cDSO.dsoHead.numDso);  
   ui->textEdit_source->append(QString(tr("<br>DSO object count : %1")).arg(count));
 
-  ui->textEdit_source->append(tr("<br><br><b>Star catalogues</b>"));
+  ui->textEdit_source->append(tr("<br><b>Star catalogues</b>"));
 
   ui->textEdit_source->append("<br>The Tycho-2 Catalogue (Hog+ 2000) (Internal)");
   ui->textEdit_source->append("The HST Guide Star Catalogue, Version 1.2 (Lasker+ 1996) (Optional)");
@@ -79,7 +78,8 @@ CAbout::CAbout(QWidget *parent) :
   ui->textEdit_source->append("The USNO B1.0 Catalog (Monet+ 2003) (Optional)");
   ui->textEdit_source->append("The UCAC4 Catalogue (Zacharias+ 2012) (Optional)");
   ui->textEdit_source->append("The URAT1 Catalog (Zacharias+ 2015) (Optional)");
-  ui->textEdit_source->append("The NOMAD Catalog (Zacharias+ 2005) (Optional)");
+  ui->textEdit_source->append("The NOMAD Catalog (Zacharias+ 2005) (Optional)");  
+  ui->textEdit_source->append("Selection of The General Catalogue of Variable Stars (Samus+ 2007-2013) (Internal)");
   ui->textEdit_source->moveCursor(QTextCursor::Start) ;
   ui->textEdit_source->ensureCursorVisible();
 

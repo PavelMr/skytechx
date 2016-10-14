@@ -29,6 +29,7 @@
 #include "usnob1.h"
 #include "nomad.h"
 #include "cmeteorshower.h"
+#include "gcvs.h"
 
 static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region);
 
@@ -457,6 +458,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
       QString propName;
       bool    bBayer = false;
       bool    bFlamsteed = false;
+      bool    isName = false;
 
       if (s->supIndex != -1)
       {
@@ -510,16 +512,31 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
           bFlamsteed = false;
         }
         g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, propName, FONT_STAR_PNAME, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
+        isName = true;
       }
 
       if (bBayer && mapView->fov <= g_skSet.map.star.bayerFromFov)
       {
         g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, bayer, FONT_STAR_BAYER, SL_AL_BOTTOM_LEFT, SL_AL_ALL);
+        isName = true;
       }
 
       if (bFlamsteed && mapView->fov <= g_skSet.map.star.flamsFromFov)
       {
         g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, flamsteed, FONT_STAR_FLAMS, SL_AL_TOP_LEFT, SL_AL_ALL);
+        isName = true;
+      }
+
+      if (!isName)
+      {        
+        gcvs_t *gcvs;
+        if (mapView->fov <= g_skSet.map.star.varsFromFov && ((gcvs = g_GCVS.getStar(s->tyc1, s->tyc2, s->tyc3)) != nullptr))
+        {
+          QString name = gcvs->name;
+
+          name.chop(4); // remove constellation name
+          g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, name, FONT_STAR_VARS, SL_AL_TOP_RIGHT, SL_AL_ALL);
+        }
       }
     }
   }

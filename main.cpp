@@ -97,21 +97,23 @@ void messageHandler(QtMsgType type, const QMessageLogContext & /*context*/, cons
 
 static void copyPath(const QString &src, const QString &dst)
 {
-    QDir dir(src);
-    if (! dir.exists())
-        return;
+  QDir dir(src);
+  if (!dir.exists())
+  {
+    return;
+  }
 
-    foreach (QString d, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
-    {
-      QString dst_path = dst + QDir::separator() + d;
-      dir.mkpath(dst_path);
-      copyPath(src+ QDir::separator() + d, dst_path);
-    }
+  foreach (QString d, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+  {
+    QString dst_path = dst + QDir::separator() + d;
+    dir.mkpath(dst_path);
+    copyPath(src+ QDir::separator() + d, dst_path);
+  }
 
-    foreach (QString f, dir.entryList(QDir::Files))
-    {
-      QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
-    }
+  foreach (QString f, dir.entryList(QDir::Files))
+  {
+    QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
+  }
 }
 
 void copyAppData()
@@ -146,8 +148,7 @@ int main(int argc, char *argv[])
   }
 
   LOG_FILE = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log/log.txt";
-  checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log");
-
+  checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log");   
 
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope");

@@ -30,7 +30,7 @@ void CLineEditComp::setMaxCompleterWords(int nMax)
 void CLineEditComp::addWord(QString word)
 /////////////////////////////////////////
 {
-  QStringList list = m_model->stringList();
+  QStringList list = m_model->stringList(); 
 
   if (!list.contains(word, Qt::CaseInsensitive))
   {
@@ -53,11 +53,17 @@ void CLineEditComp::addWord(QString word)
 }
 
 void CLineEditComp::addWords(QStringList words)
-{
+{   
   foreach (QString word, words)
   {
     addWord(word);
   }
+}
+
+void CLineEditComp::addWordsAlways(QStringList words)
+{
+  QStringList list = m_model->stringList();
+  m_model->setStringList(list + words);
 }
 
 void CLineEditComp::removeWords()

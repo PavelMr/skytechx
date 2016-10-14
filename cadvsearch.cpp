@@ -5,6 +5,7 @@
 #include "casterdlg.h"
 #include "csgp4.h"
 #include "cmeteorshower.h"
+#include "gcvs.h"
 
 #include "csearch.h"
 
@@ -151,6 +152,8 @@ void CAdvSearch::slotRadioChange()
     ui->lineEdit->addWord("USNO2");
     ui->lineEdit->addWord("GSC");
     ui->lineEdit->addWord("HD");
+
+    ui->lineEdit->addWordsAlways(g_GCVS.nameList());
   }
 
   if (ui->radioButton_3->isChecked() || isAll)

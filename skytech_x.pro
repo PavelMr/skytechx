@@ -282,7 +282,8 @@ SOURCES += main.cpp\
     chistogram.cpp \
     cmeteorshower.cpp \
     core/skiconutils.cpp \
-    choreditorwidget.cpp
+    choreditorwidget.cpp \
+    gcvs.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -501,7 +502,8 @@ HEADERS  += mainwindow.h \
     chistogram.h \
     cmeteorshower.h \
     core/skiconutils.h \
-    choreditorwidget.h
+    choreditorwidget.h \
+    gcvs.h
 
 
 FORMS    += mainwindow.ui \

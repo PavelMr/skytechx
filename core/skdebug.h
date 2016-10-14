@@ -20,7 +20,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QDebug>
 #include <QMap>
-#include <QTime>
+#include <QElapsedTimer>
 
 #define SK_DEBUG_IN_RELEASE
 
@@ -36,6 +36,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #define SK_DEBUG_TIMER_START(id) { skDebugTimer.start(id); }
 #define SK_DEBUG_TIMER_STOP(id) { skDebugTimer.stop(id); }
+#define SK_DEBUG_TIMER_STOP_NS(id) { skDebugTimer.stopNS(id); }
 
 class SkDebugTimer : public QObject
 {
@@ -45,9 +46,10 @@ public:
   ~SkDebugTimer();
   void start(int id);
   int stop(int id);
+  int stopNS(int id);
 
 private:
-  QMap <int, QTime*> idMap;
+  QMap <int, QElapsedTimer *> idMap;
 };
 
 extern SkDebugTimer skDebugTimer;

@@ -12,6 +12,7 @@ public:
   void setMaxCompleterWords(int nMax = 100);
   void addWord(QString word);
   void addWords(QStringList words);
+  void addWordsAlways(QStringList words);
   void removeWords();
 
 protected:

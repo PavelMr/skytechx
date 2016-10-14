@@ -9,6 +9,7 @@
 #include "tycho.h"
 #include "setting.h"
 #include "cmeteorshower.h"
+#include "gcvs.h"
 
 //////////////////
 CSearch::CSearch()
@@ -47,7 +48,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
   }
 
   if (SS_CHECK_OR(SS_STAR, what))
-  {
+  {        
     if (str.startsWith("HD", Qt::CaseInsensitive))
     {
       str = str.mid(2);
@@ -192,6 +193,28 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         }
       }
       return false;
+    }
+
+    gcvs_t gcvs;
+    if (g_GCVS.findStar(str, &gcvs))
+    {
+      int reg, index;
+      tychoStar_t *star;
+
+      if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, gcvs.tyc1, gcvs.tyc2, gcvs.tyc3, 0, reg, index))
+      {
+        cTYC.getStar(&star, reg, index);
+        ra = star->rd.Ra;
+        dec = star->rd.Dec;
+        precess(&ra, &dec, JD2000, mapView->jd);
+        fov = DMS2RAD(10, 0, 0);
+
+        obj.type = MO_TYCSTAR;
+        obj.par1 = reg;
+        obj.par2 = index;
+
+        return true;
+      }
     }
   }
 

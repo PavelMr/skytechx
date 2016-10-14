@@ -12,6 +12,7 @@
 #include "urat1.h"
 #include "nomad.h"
 #include "cmeteorshower.h"
+#include "gcvs.h"
 
 #define FILEREGEXP   QRegExp("\\W")
 
@@ -974,8 +975,14 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 {
   tychoStar_t *t;
   QString      str;
+  gcvs_t       *gcvs;
+  bool         isVariable;
+  bool         isTitle = false;
 
   cTYC.getStar(&t, obj->par1, obj->par2);
+
+  gcvs = g_GCVS.getStar(t->tyc1, t->tyc2, t->tyc3);
+  isVariable = gcvs != nullptr;
 
   item->radec.Ra = t->rd.Ra;
   item->radec.Dec = t->rd.Dec;
@@ -1014,24 +1021,40 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     {
       addTextItem(item, str, "");
       item->title = str;
+      isTitle = true;
     }
     str = cTYC.getBayerFullStr(supp, found);
     if (found)
     {
       addTextItem(item, str + " " + constGetName(con, 2), "");
-      item->title = str + " " + constGetName(con, 2);
+      if (!isTitle)
+      {
+        item->title = str + " " + constGetName(con, 2);
+        isTitle = true;
+      }
       bayer = true;
     }
     str = cTYC.getFlamsteedStr(supp, found);
     if (found)
     {
       addTextItem(item, str + " " + constGetName(con, 2), "");
-      if (!bayer)
+      if (!isTitle)
       {
         item->title = str + " " + constGetName(con, 2);
+        isTitle = true;
       }
     }
     addTextItem(item, "HD " + QString::number(supp->hd), "");
+  }
+
+  if (isVariable)
+  {
+    addTextItem(item, gcvs->name, "");
+    if (!isTitle)
+    {
+      item->title = gcvs->name;
+      isTitle = true;
+    }
   }
 
   str = QString("TYC %1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
@@ -1132,6 +1155,36 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addTextItem(item, tr("Johnson BT"), getStrMag(TYC_SHORT_TO_MAG(t->BTmag)));
   addTextItem(item, tr("Johnson VT"), getStrMag(TYC_SHORT_TO_MAG(t->VTmag)));
   addSeparator(item);
+
+  if (isVariable)
+  {
+    addLabelItem(item, tr("General Catalogue of Variable Stars"));
+    addSeparator(item);
+    if (!gcvs->type.isEmpty()) addTextItem(item, tr("Type"), gcvs->type);
+
+    addTextItem(item, tr("Max. mag."), getStrMag(gcvs->magMax));
+
+    if (gcvs->magMinSymbol == 0)
+      addTextItem(item, tr("Min. mag."), getStrMag(gcvs->magMin));
+    else
+      addTextItem(item, tr("Amplitude"), getStrMag(gcvs->magMin));
+
+    if (gcvs->epoch > 0) addTextItem(item, tr("Epoch"), getStrDate(gcvs->epoch, 0) + " " + QString("%1").arg(gcvs->epoch, 0, 'f', 10));
+    if (gcvs->period > 0) addTextItem(item, tr("Period"), QString::number(gcvs->period));
+
+    if (gcvs->epoch > 0 && gcvs->period > 0)
+    {
+      addSeparator(item);
+
+      double jd = g_GCVS.solveNextMaximum(gcvs->epoch, gcvs->period, view->jd);
+      addTextItem(item, "Next maximum", getStrDate(jd, view->geo.tz) + " " + getStrTime(jd, view->geo.tz, true));
+
+      jd = g_GCVS.solveNextMinimum(gcvs->epoch, gcvs->period, view->jd);
+      addTextItem(item, "Next minimum", getStrDate(jd, view->geo.tz) + " " + getStrTime(jd, view->geo.tz, true));
+    }
+
+    addSeparator(item);
+  }
 
   fillAtlas(t->rd.Ra, t->rd.Dec, item);
   fillZoneInfo(t->rd.Ra, t->rd.Dec, item);

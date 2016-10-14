@@ -109,6 +109,7 @@ bool setSave(QString name, setting_t *set)
   writeFont("font.grid", &set->fonst[FONT_GRID], ds);
   writeFont("font.satellite", &set->fonst[FONT_SATELLITE], ds);
   writeFont("font.shower", &set->fonst[FONT_SHOWER], ds);
+  writeFont("font.star.vars", &set->fonst[FONT_STAR_VARS], ds);
 
   // earth shadow
   writeVal("map.es.show", set->map.es.show, ds);
@@ -128,6 +129,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.star.showProperMotion", set->map.star.showProperMotion, ds);
   writeVal("map.star.showGlow", set->map.star.showGlow, ds);
   writeVal("map.star.glowAlpha", set->map.star.glowAlpha, ds);
+  writeVal("map.star.varsFromFov", set->map.star.varsFromFov, ds);
 
   writeVal("map.starBitmapName", set->map.starBitmapName, ds);
 
@@ -416,6 +418,7 @@ bool setLoad(QString name, setting_t *set)
   set->fonst[FONT_GRID] = readFont("font.grid", tMap, "arial", false, QFont::Normal, 10, MRGB(150, 180, 150));
   set->fonst[FONT_SATELLITE] = readFont("font.satellite", tMap, "arial", false, QFont::Normal, 10, MRGB(150, 150, 150));
   set->fonst[FONT_SHOWER] = readFont("font.shower", tMap, "arial", false, QFont::Normal, 12, MRGB(220, 220, 220));
+  set->fonst[FONT_STAR_VARS] = readFont("font.star.vars", tMap, "arial", false, QFont::Normal, 11, MRGB(220, 220, 220));
 
   // satellite
   set->map.satellite.color = readVal("map.satellite.color", MRGB(150, 160, 150), tMap).toUInt();
@@ -439,6 +442,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.star.showProperMotion = readVal("map.star.showProperMotion", false, tMap).toBool();
   set->map.star.showGlow = readVal("map.star.showGlow", false, tMap).toBool();
   set->map.star.glowAlpha = readVal("map.star.glowAlpha", 1.0, tMap).toFloat();
+  set->map.star.varsFromFov = readVal("map.star.varsFromFov", D2R(25), tMap).toDouble();
   set->map.starBitmapName = readVal("map.starBitmapName", "../data/stars/bitmaps/stars2.png", tMap).toString();
 
   // horizon

@@ -55,7 +55,8 @@ typedef struct
 #define FONT_GRID              14
 #define FONT_SATELLITE         15
 #define FONT_SHOWER            16
-#define FONT_COUNT             17
+#define FONT_STAR_VARS         17
+#define FONT_COUNT             18
 
 #define GRID_NONE               0
 #define GRID_EQ                 1
@@ -116,6 +117,7 @@ typedef struct
   bool   namePriority;
   bool   useSpectralTp;
   double flamsFromFov;
+  double varsFromFov;
   double starSizeFactor;
   int    saturation;
   double properMotionYearVec;

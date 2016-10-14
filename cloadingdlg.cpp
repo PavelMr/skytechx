@@ -20,6 +20,7 @@
 #include "build.h"
 #include "suntexture.h"
 #include "cmeteorshower.h"
+#include "gcvs.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
@@ -42,7 +43,7 @@ CLoadingDlg::CLoadingDlg(QWidget *parent) :
   setFixedSize(size());
   ui->label_3->setText(SK_VERSION);
 
-  ui->progressBar->setRange(0, 14);
+  ui->progressBar->setRange(0, 15);
 
   ui->progressBar->setStyleSheet("QProgressBar { border: 1px; border-color: white; background-color: #81d4fa;  height: 1px; }  QProgressBar::chunk {  background-color: #0277bd }");
 
@@ -166,6 +167,9 @@ void CLoadingDlg::slotLoad()
   loadDSOPlugins();
 
   sigProgress(14);
+  g_GCVS.load();
+
+  sigProgress(15);
   curSatelliteCatName = set.value("satellite_file", "").toString();
   sgp4.loadTLEData(curSatelliteCatName);
 
