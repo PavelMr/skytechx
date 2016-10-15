@@ -251,7 +251,9 @@ typedef struct
   magRange_t dsoRange[MAG_RNG_COUNT];
   double     dsoNoMagShapeFOV;
   double     dsoNoMagOtherFOV;
-  QString    dsoFilter;
+  double     dsoNoMagFadeFOV;
+  bool       dsoFadeTo;
+  QString    dsoFilter;  
 
   setGrid_t  grid[SMCT_COUNT];
   bool       autoGrid;

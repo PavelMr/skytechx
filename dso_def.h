@@ -76,7 +76,9 @@ typedef struct
 
   unsigned short  galType;   // index to galaxy class
 
+  // not in data file
   bool            show;
+  float           opacity;
 } dso_t;
 
 

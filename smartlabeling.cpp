@@ -13,7 +13,7 @@ void SmartLabeling::clear()
   m_list.clear();
 }
 
-void SmartLabeling::addLabel(const QPoint &point, int distance, const QString &text, int fontId, int defaultAlign, int allowedAlign)
+void SmartLabeling::addLabel(const QPoint &point, int distance, const QString &text, int fontId, int defaultAlign, int allowedAlign, double opacity)
 {
   SmartLabel label;
 
@@ -23,11 +23,12 @@ void SmartLabeling::addLabel(const QPoint &point, int distance, const QString &t
   label.m_fontId = fontId;
   label.m_defaultAlign = defaultAlign;
   label.m_allowedAlign = allowedAlign;
+  label.m_opacity = opacity;
 
   m_list.append(label);
 }
 
-QRect SmartLabeling::renderLabel(CSkPainter *painter, const QPoint &point, float offset, const QString &text, int fontId, int align, bool render)
+QRect SmartLabeling::renderLabel(CSkPainter *painter, const QPoint &point, float offset, const QString &text, int fontId, int align, bool render, double opacity)
 {
   QFont fnt;
 
@@ -125,9 +126,9 @@ QRect SmartLabeling::renderLabel(CSkPainter *painter, const QPoint &point, float
       setSetFont(fontId, painter);
       setSetFontColor(fontId, painter);
     }
-    painter->drawText(trc, Qt::AlignCenter, text);
-
-    //painter->setOpacity(1);
+    painter->setOpacity(opacity);
+    painter->drawText(trc, Qt::AlignCenter, text);    
+    painter->setOpacity(1);
   }
   //painter->drawRect(trc);
 
@@ -172,7 +173,7 @@ void SmartLabeling::render(CSkPainter *painter)
       setSetFont(label.m_fontId, painter);
       setSetFontColor(label.m_fontId, painter);
 
-      renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, label.m_defaultAlign, true);
+      renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, label.m_defaultAlign, true, label.m_opacity);
     }
   }
   else
@@ -186,7 +187,7 @@ void SmartLabeling::render(CSkPainter *painter)
       {
         break;
       }
-      doneList << renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, getAlign(label.m_defaultAlign), true);
+      doneList << renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, getAlign(label.m_defaultAlign), true, label.m_opacity);
     }
 
     foreach (const SmartLabel &label, m_list)
@@ -214,7 +215,7 @@ void SmartLabeling::render(CSkPainter *painter)
 
         for (double d = 0; d < label.m_distance; d++)
         {
-          QRect rc = renderLabel(painter, label.m_point, label.m_distance + d, label.m_text, label.m_fontId, align, false);
+          QRect rc = renderLabel(painter, label.m_point, label.m_distance + d, label.m_text, label.m_fontId, align, false, label.m_opacity);
 
           int hits = 0;
           foreach (const QRect &rect, doneList)
@@ -227,7 +228,7 @@ void SmartLabeling::render(CSkPainter *painter)
 
           if (hits == 0)
           {
-            doneList << renderLabel(painter, label.m_point, label.m_distance + d, label.m_text, label.m_fontId, align, true);
+            doneList << renderLabel(painter, label.m_point, label.m_distance + d, label.m_text, label.m_fontId, align, true, label.m_opacity);
             done = true;
             break;
           }
@@ -236,7 +237,7 @@ void SmartLabeling::render(CSkPainter *painter)
 
       if (!done)
       {
-        doneList << renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, getAlign(label.m_defaultAlign), true);
+        doneList << renderLabel(painter, label.m_point, label.m_distance, label.m_text, label.m_fontId, getAlign(label.m_defaultAlign), true, label.m_opacity);
       }
     }
   }

@@ -636,7 +636,7 @@ void CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bo
 
   if (s > m_minSize && g_showLabels)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
   }
   if (addToList)
   {
@@ -658,7 +658,7 @@ void CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
 
   if (s > m_minSize && g_showLabels)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
   }
   if (addToList)
   {
@@ -681,7 +681,7 @@ void CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
 
   if (s > m_minSize && g_showLabels)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
   }
   if (addToList)
   {
@@ -704,7 +704,7 @@ void CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
 
   if (s > m_minSize && g_showLabels)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
   }
   if (addToList)
   {
@@ -760,7 +760,7 @@ void CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, ma
     float vy = sx * sin( - ang + MPI/2);
     int y = sqrt(uy*uy + vy*vy);
 
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + y + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + y + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
   }
   if (addToList)
   {
@@ -782,7 +782,7 @@ void CDso::renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter,
 
   if (s > m_minSize && g_showLabels)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
   }
   if (addToList)
   {
@@ -805,7 +805,7 @@ void CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, b
 
   if (s > m_minSize && g_showLabels)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
   }
   if (addToList)
   {
@@ -827,7 +827,7 @@ void CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, boo
 
   if (s > m_minSize && g_showLabels)
   {
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
   }
   if (addToList)
   {
@@ -850,7 +850,7 @@ void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool
   {
     if (g_showLabels)
     {
-      g_labeling.addLabel(QPoint(rc.center().x(), rc.bottom() + m_fntHeight), 0, getName(dso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED);
+      g_labeling.addLabel(QPoint(rc.center().x(), rc.bottom() + m_fntHeight), 0, getName(dso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
     }
     if (addToList)
     {
@@ -860,9 +860,9 @@ void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool
 }
 
 
-/////////////////////////////////////////////////////////////////
-void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList)
-/////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList, double opacity)
+//////////////////////////////////////////////////////////////////////////////////////////////////
 {
   if (pDso->shape != NO_DSO_SHAPE)
   {
@@ -872,6 +872,8 @@ void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToLis
       return;
     }
   }
+
+  pPainter->setOpacity(opacity);
 
   QFontMetrics fmt(setFonts[FONT_DSO]);
   m_fntHeight = fmt.height();
@@ -993,6 +995,8 @@ void CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToLis
       renderOtherSymbol(pt, pDso, pPainter, addToList);
       break;
   }
+
+  pPainter->setOpacity(1);
 }
 
 

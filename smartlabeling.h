@@ -38,6 +38,7 @@ public:
 
   QRect   m_rect;
   bool    m_done;
+  double  m_opacity;
 };
 
 class SmartLabeling
@@ -45,8 +46,8 @@ class SmartLabeling
 public:
   SmartLabeling();
   void clear();
-  void addLabel(const QPoint &point, int distance, const QString &text, int fontId, int defaultAlign, int allowedAlign);
-  QRect renderLabel(CSkPainter *painter, const QPoint &point, float offset, const QString &text, int fontId, int align, bool render = true);
+  void addLabel(const QPoint &point, int distance, const QString &text, int fontId, int defaultAlign, int allowedAlign, double opacity = 1.0);
+  QRect renderLabel(CSkPainter *painter, const QPoint &point, float offset, const QString &text, int fontId, int align, bool render = true, double opacity = 1.0);
   void render(CSkPainter *painter);
 
 private:

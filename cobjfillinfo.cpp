@@ -959,6 +959,15 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
   addTextItem(item, tr("Begin"), getStrDate(m->jdBegin, view->geo.tz));
   addTextItem(item, tr("Maximum"), getStrDate(m->jdMax, view->geo.tz));
   addTextItem(item, tr("End"), getStrDate(m->jdEnd, view->geo.tz));
+  addSeparator(item);    
+  if ((view->jd >= m->jdBegin) && (view->jd <= m->jdEnd))
+  {
+    addTextItem(item, tr("Status"), tr("Currently active"));
+  }
+  else
+  {
+    addTextItem(item, tr("Status"), tr("Non active"));
+  }
   addSeparator(item);
   addTextItem(item, tr("ZHR"), m->rate);
   if (m->speed > 0)
@@ -1161,6 +1170,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     addLabelItem(item, tr("General Catalogue of Variable Stars"));
     addSeparator(item);
     if (!gcvs->type.isEmpty()) addTextItem(item, tr("Type"), gcvs->type);
+    if (!gcvs->typeDesc.isEmpty()) addTextItem(item, tr("Desc"), gcvs->typeDesc);
 
     addTextItem(item, tr("Max. mag."), getStrMag(gcvs->magMax));
 
@@ -1169,18 +1179,23 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     else
       addTextItem(item, tr("Amplitude"), getStrMag(gcvs->magMin));
 
-    if (gcvs->epoch > 0) addTextItem(item, tr("Epoch"), getStrDate(gcvs->epoch, 0) + " " + QString("%1").arg(gcvs->epoch, 0, 'f', 10));
-    if (gcvs->period > 0) addTextItem(item, tr("Period"), QString::number(gcvs->period));
+    if (gcvs->epoch > 0) addTextItem(item, tr("Epoch"), getStrDate(gcvs->epoch, 0));
+    if (gcvs->period > 0) addTextItem(item, tr("Period"), QString::number(gcvs->period) + " " + tr("day(s)"));
 
     if (gcvs->epoch > 0 && gcvs->period > 0)
     {
       addSeparator(item);
 
       double jd = g_GCVS.solveNextMaximum(gcvs->epoch, gcvs->period, view->jd);
-      addTextItem(item, "Next maximum", getStrDate(jd, view->geo.tz) + " " + getStrTime(jd, view->geo.tz, true));
+      addTextItem(item, "Next maximum", getStrDate(jd, view->geo.tz) + " / " + getStrTime(jd, view->geo.tz, true));
+
+      qDebug() << "------------";
+      qDebug() << jd;
 
       jd = g_GCVS.solveNextMinimum(gcvs->epoch, gcvs->period, view->jd);
-      addTextItem(item, "Next minimum", getStrDate(jd, view->geo.tz) + " " + getStrTime(jd, view->geo.tz, true));
+      addTextItem(item, "Next minimum", getStrDate(jd, view->geo.tz) + " / " + getStrTime(jd, view->geo.tz, true));
+
+      qDebug() << jd;
     }
 
     addSeparator(item);

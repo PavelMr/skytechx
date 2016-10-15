@@ -1,6 +1,7 @@
 #ifndef GCVS_H
 #define GCVS_H
 
+#include <QObject>
 #include <QtGlobal>
 #include <QList>
 #include <QMap>
@@ -21,10 +22,14 @@ typedef struct
   qint8   magMinSymbol;
   double  epoch;
   double  period;
+
+  // not part of data file
+  QString typeDesc;
 } gcvs_t;
 
-class GCVS
+class GCVS : public QObject
 {
+  Q_OBJECT
 public:
   GCVS();
   void load();
@@ -37,6 +42,8 @@ public:
 private:
   QList <gcvs_t> m_list;
   QMap  <qint64, int> m_map;
+
+  QString getTypeDesc(const QString &type);
 };
 
 extern GCVS g_GCVS;

@@ -129,6 +129,7 @@ void CMeteorShower::load(int year)
 
   if (!f.open(QFile::ReadOnly | QFile::Text))
   {
+    pcMainWnd->removeQuickInfo(MO_SHOWER);
     m_year = -1;
     return;
   }
@@ -137,7 +138,7 @@ void CMeteorShower::load(int year)
 
   pcMainWnd->removeQuickInfo(MO_SHOWER);
 
-  qDebug() << "loading" << year;
+  qDebug() << "loading shower" << year;
 
   while (true)
   {

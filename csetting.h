@@ -211,7 +211,9 @@ private slots:
 
    void on_pushButton_75_clicked();
 
-   void on_pushButton_73_clicked();
+   void on_pushButton_73_clicked();   
+
+   void on_doubleSpinBox_b_valueChanged(double arg1);
 
 private:
    Ui::CSetting *ui;

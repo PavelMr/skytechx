@@ -449,6 +449,9 @@ void CSetting::setValues()
   ui->pushButton_7->setFontColor(setFonts[FONT_DSO], set.fonst[FONT_DSO].color);
   ui->doubleSpinBox_a->setValue(R2D(set.map.dsoNoMagShapeFOV));
   ui->doubleSpinBox_b->setValue(R2D(set.map.dsoNoMagOtherFOV));
+  ui->doubleSpinBox_64->setValue(R2D(set.map.dsoNoMagFadeFOV));
+  ui->checkBox_26->setChecked(set.map.dsoFadeTo);
+  ui->doubleSpinBox->setEnabled(set.map.dsoFadeTo);
 
   ui->pushButton_43->setColor(set.map.dsoShapeColor[0]);
   ui->pushButton_44->setColor(set.map.dsoShapeColor[1]);
@@ -901,6 +904,8 @@ void CSetting::apply()
 
   g_skSet.map.dsoNoMagShapeFOV = D2R(ui->doubleSpinBox_a->value());
   g_skSet.map.dsoNoMagOtherFOV = D2R(ui->doubleSpinBox_b->value());
+  g_skSet.map.dsoNoMagFadeFOV = D2R(ui->doubleSpinBox_64->value());
+  g_skSet.map.dsoFadeTo = ui->checkBox_26->isChecked();
 
   // horizon
   g_skSet.map.hor.alpha = ui->horizontalSlider_11->value();
@@ -2515,4 +2520,9 @@ void CSetting::on_pushButton_75_clicked()
 void CSetting::on_pushButton_73_clicked()
 {
   setFontColor(FONT_STAR_VARS, ui->pushButton_73);
+}
+
+void CSetting::on_doubleSpinBox_b_valueChanged(double arg1)
+{
+  ui->doubleSpinBox_64->setRange(1, arg1);
 }

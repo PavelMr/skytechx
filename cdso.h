@@ -55,7 +55,7 @@ class CDso : public QObject
     void load();
     void createSectors();
     void setPainter(CSkPainter *p, QImage *pImg);
-    void renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList = true);
+    void renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList = true, double opacity = 1);
     int  findDSO(char *pszName, dso_t **pDso, int &index);
     int  findDSOFirstName(char *pszName);
     QString getTypeName(int type, bool &ok);

@@ -8,6 +8,8 @@ CLvQInfo::CLvQInfo(QWidget *parent) :
 {
   m_bFilled = false;
   lastCount = 0;
+
+  setAccessibleName("lv_quickInfo");
 }
 
 /////////////////////
@@ -17,7 +19,7 @@ CLvQInfo::~CLvQInfo()
   QByteArray array = header()->saveState();
   QSettings setting;
 
-  setting.setValue("side_bar_column_width", array);
+  setting.setValue("side_bar_column_width", array);  
 }
 
 
@@ -115,8 +117,14 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
         value->setToolTip(item->value);
       }   
 
+      if (label->text().isEmpty() && value->text().isEmpty())
+      {
+        label->setSelectable(false);
+        value->setSelectable(false);
+      }
+
       tRow.append(label);
-      tRow.append(value);
+      tRow.append(value);            
 
       m->appendRow(tRow);
 

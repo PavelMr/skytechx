@@ -107,7 +107,7 @@ static void copyPath(const QString &src, const QString &dst)
   {
     QString dst_path = dst + QDir::separator() + d;
     dir.mkpath(dst_path);
-    copyPath(src+ QDir::separator() + d, dst_path);
+    copyPath(src + QDir::separator() + d, dst_path);
   }
 
   foreach (QString f, dir.entryList(QDir::Files))

@@ -535,7 +535,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
           QString name = gcvs->name;
 
           name.chop(4); // remove constellation name
-          g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, name, FONT_STAR_VARS, SL_AL_TOP_RIGHT, SL_AL_ALL);
+          g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, name, FONT_STAR_VARS, SL_AL_BOTTOM_RIGHT, SL_AL_ALL);
         }
       }
     }
@@ -675,25 +675,37 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 {
   cDSO.setPainter(pPainter, pImg);
 
-  QList <dso_t *> tList;
+  QList <dso_t *> tList;  
 
   SKPLANE *frustum = trfGetFrustum();
+
+  float op = 1;
+
+  if (g_skSet.map.dsoFadeTo)
+  {
+    op = FRAC(mapView->fov, g_skSet.map.dsoNoMagOtherFOV, g_skSet.map.dsoNoMagFadeFOV);
+    op = CLAMP(op, 0, 1);
+    QEasingCurve curve(QEasingCurve::InQuad);
+    op = curve.valueForProgress(op);
+  }
 
   for (int y = 0; y < NUM_DSO_SEG_Y; y++)
   {
     for (int x = 0; x < NUM_DSO_SEG_X; x++)
-    {
+    {      
       if (!SKPLANECheckFrustumToPolygon(frustum, (SKPOINT *)&cDSO.sector[y][x], 4, -0.1))
         continue;
 
       for (int i = 0; i < cDSO.tDsoSectors[y][x].count(); i++)
-      {
+      {        
         dso_t *d = &cDSO.dso[cDSO.tDsoSectors[y][x][i]];
         SKPOINT pt;
         float mag;
 
         if (!g_skSet.map.dsoTypeShow[d->type])
           continue;
+
+        double opacity = 1;
 
         if (d->mag == NO_DSO_MAG)
         {
@@ -703,7 +715,9 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
           if (d->shape == NO_DSO_SHAPE)
           {
             if (mapView->fov > g_skSet.map.dsoNoMagOtherFOV)
-              continue;
+              continue;                        
+
+            opacity = op;
           }
           else
           {
@@ -724,16 +738,19 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
           continue;
         }
 
-        tList.append(d);
+        d->opacity = opacity;
+        tList.append(d);        
       }
     }
   }
 
   qSort(tList.begin(), tList.end(), dsoComp);
 
-  dso_t *d;
-  foreach (d, tList)
+
+  for (int i = 0; i < tList.count(); i++)
   {
+    dso_t *d = tList[i];
+
     SKPOINT pt;
     double mul;
 
@@ -746,7 +763,7 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     if (SKPLANECheckFrustumToSphere(frustum, &pt.w, mul * D2R(qMax(d->sx, d->sy) / 3600.0 * 0.9)))
     {
       trfProjectPointNoCheck(&pt);
-      cDSO.renderObj(&pt, d, mapView);
+      cDSO.renderObj(&pt, d, mapView, true, d->opacity);
     }
   }
 }

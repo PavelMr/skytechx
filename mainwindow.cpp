@@ -157,7 +157,7 @@ QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
   QStandardItemModel * model = (QStandardItemModel *)index.model();
 
   if (model->item(index.row(), 0)->text().isEmpty())
-  {
+  {    
     return QSize(32, 8);
   }
   return QItemDelegate::sizeHint(option, index);
