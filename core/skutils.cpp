@@ -66,6 +66,17 @@ void getRDCenter(radec_t *out, radec_t *rd1, radec_t *rd2)
   }
 }
 
+void getRDCenter4(radec_t *out, radec_t *in)
+{
+  radec_t rd1;
+  radec_t rd2;
+
+  getRDCenter(&rd1, &in[0], &in[1]);
+  getRDCenter(&rd2, &in[3], &in[2]);
+
+  getRDCenter(out, &rd1, &rd2);
+}
+
 /////////////////////////////////////////////////////////
 void getRDCenter(radec_t *out, const QList <radec_t>& in)
 /////////////////////////////////////////////////////////

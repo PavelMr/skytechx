@@ -30,6 +30,7 @@
 #include "nomad.h"
 #include "cmeteorshower.h"
 #include "gcvs.h"
+#include "aladinrenderer.h"
 
 static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region);
 
@@ -1421,21 +1422,33 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 
   cStarRenderer.setMaxMag(mapView->starMag);
   cStarRenderer.setConfig(&g_skSet);
-  smRenderBackground(mapView, pPainter, pImg);
+  smRenderBackground(mapView, pPainter, pImg);    
 
   if (g_showMW)
   {
     cMilkyWay.render(mapView, pPainter, pImg);
   }
 
-  bkImg.renderAll(pImg, pPainter);
+  aladinParams_t al;
+
+  al.imageExtension = "jpg";
+  al.memoryCacheSize = 200;
+
+  //al.url = "http://127.0.0.1:8887/aladin";
+  //al.url = "http://alasky.u-strasbg.fr/DSS/DSSColor";
+  al.url = "http://alasky.u-strasbg.fr/MellingerRGB";
+
+  g_aladinRenderer.setParam(al);
+  g_aladinRenderer.render(mapView, pPainter, pImg);
+
+  bkImg.renderAll(pImg, pPainter);  
 
   if (g_showDSO)
   {
     smRenderDSO(mapView, pPainter, pImg);
   }
 
-  g_labeling.render(pPainter);
+  g_labeling.render(pPainter);  
 
   if (g_showGrids)
   {
@@ -1501,7 +1514,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     {
       background.renderHorizonBk(mapView, pPainter, pImg);
     }
-  }
+  }  
 
   if (g_showDrawings)
   {

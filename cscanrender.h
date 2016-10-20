@@ -4,6 +4,8 @@
 #include <QtCore>
 #include <QtGui>
 
+#include "vecmath.h"
+
 #define MAX_BK_SCANLINES      32000
 
 typedef struct
@@ -24,6 +26,7 @@ class CScanRender
     void scanLine(int x1, int y1, int x2, int y2, float u1, float v1, float u2, float v2);
     void renderPolygon(QColor col, QImage *dst);
     void renderPolygon(QImage *dst, QImage *src);
+    void renderPolygon(QPainter *p, int interpolation, SKPOINT *pts, QImage *pDest, QImage *pSrc, QPointF *uv);
 
     void renderPolygonNI(QImage *dst, QImage *src);
     void renderPolygonBI(QImage *dst, QImage *src);

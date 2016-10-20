@@ -26,6 +26,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #define RAD       (180 / MPI)
 #define MPI2      (MPI * 2)
 #define MPI_2     (MPI * 0.5)
+#define MPI_HALF   MPI_2
 
 #define INVRAD    (1 / (180 / MPI))
 
@@ -90,9 +91,21 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
   #define ULONG unsigned long
 #endif
 
-typedef struct
+class radec_t
 {
+public:
+
+  radec_t()
+  {
+  }
+
+  radec_t(double r, double d)
+  {
+    Ra = r;
+    Dec = d;
+  }
+
   double Ra, Dec;
-} radec_t;
+};
 
 #endif // CONST_H

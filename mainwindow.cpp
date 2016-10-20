@@ -95,6 +95,7 @@
 #include "cskeventdocdialog.h"
 #include "skiconutils.h"
 #include "choreditorwidget.h"
+#include "aladinrenderer.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -836,6 +837,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   //m_horizonEditor = new CHorEditorWidget();
   //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
+
+  connect(g_aladinRenderer.manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()));
 }
 
 void MainWindow::setToolbarIconSize()

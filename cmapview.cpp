@@ -30,6 +30,8 @@
 #include "soundmanager.h"
 #include "cmeteorshower.h"
 
+extern bool xxxx;
+
 double m_lastFOV;
 double m_lastRA;
 double m_lastDec;
@@ -749,6 +751,13 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
 ///////////////////////////////////////////////////////
 {
   double mul = 1;
+
+  if (key == Qt::Key_P)
+  {
+    xxxx = !xxxx;
+    repaintMap();
+    return;
+  }
 
   /*
   if (key == Qt::Key_A)

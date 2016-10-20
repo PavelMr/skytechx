@@ -55,6 +55,7 @@ INCLUDEPATH = core \
               elp2000 \
               libsgp4 \
               jpl \
+              aladin \
               $$PWD \
 
 
@@ -283,7 +284,12 @@ SOURCES += main.cpp\
     cmeteorshower.cpp \
     core/skiconutils.cpp \
     choreditorwidget.cpp \
-    gcvs.cpp
+    gcvs.cpp \
+    healpix.cpp \
+    aladin/aladinmanager.cpp \
+    aladin/aladinrenderer.cpp \
+    aladin/urlfiledownload.cpp \
+    pixcache.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -503,7 +509,13 @@ HEADERS  += mainwindow.h \
     cmeteorshower.h \
     core/skiconutils.h \
     choreditorwidget.h \
-    gcvs.h
+    gcvs.h \
+    healpix.h \
+    aladin/aladinmanager.h \
+    aladin/aladinrenderer.h \
+    aladin/urlfiledownload.h \
+    aladin/aladin.h \
+    pixcache.h
 
 
 FORMS    += mainwindow.ui \

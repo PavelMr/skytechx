@@ -30,6 +30,7 @@ int min4(int v1, int v2, int v3, int v4);
 double anSep(double R1, double D1, double R2, double D2);
 void getRDCenter(radec_t *out, radec_t *rd1, radec_t *rd2);
 void getRDCenter(radec_t *out, const QList<radec_t> &in);
+void getRDCenter4(radec_t *out, radec_t *in);
 
 bool compareName(const char *str1, const char *str2);
 

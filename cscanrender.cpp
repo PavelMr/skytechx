@@ -339,6 +339,79 @@ void CScanRender::renderPolygon(QImage *dst, QImage *src)
     renderPolygonNI(dst, src);
 }
 
+void CScanRender::renderPolygon(QPainter *p, int interpolation, SKPOINT *pts, QImage *pDest, QImage *pSrc, QPointF *uv)
+{
+  QPointF Auv = uv[0];
+  QPointF Buv = uv[1];
+  QPointF Cuv = uv[2];
+  QPointF Duv = uv[3];
+
+  //QPointF Auv = QPointF(1, 1);
+  //QPointF Buv = QPointF(1, 0);
+  //QPointF Cuv = QPointF(0, 0);
+  //QPointF Duv = QPointF(0, 1);
+
+  if (interpolation < 2)
+  {
+    resetScanPoly(pDest->width(), pDest->height());
+    scanLine(pts[0].sx, pts[0].sy, pts[1].sx, pts[1].sy, 1, 1, 1, 0);
+    scanLine(pts[1].sx, pts[1].sy, pts[2].sx, pts[2].sy, 1, 0, 0, 0);
+    scanLine(pts[2].sx, pts[2].sy, pts[3].sx, pts[3].sy, 0, 0, 0, 1);
+    scanLine(pts[3].sx, pts[3].sy, pts[0].sx, pts[0].sy, 0, 1, 1, 1);
+    renderPolygon(pDest, pSrc);
+    return;
+  }
+
+  QPointF A = QPointF(pts[0].sx, pts[0].sy);
+  QPointF B = QPointF(pts[1].sx, pts[1].sy);
+  QPointF C = QPointF(pts[2].sx, pts[2].sy);
+  QPointF D = QPointF(pts[3].sx, pts[3].sy);
+
+  p->setPen(Qt::green);
+
+  for (int i = 0; i < interpolation; i++)
+  {
+    QPointF P1 = A + i * (D - A) / interpolation;
+    QPointF P1uv = Auv + i * (Duv - Auv) / interpolation;
+
+    QPointF P2 = B + i * (C - B) / interpolation;
+    QPointF P2uv = Buv + i * (Cuv - Buv) / interpolation;
+
+    QPointF Q1 = A + (i + 1) * (D - A) / interpolation;
+    QPointF Q1uv = Auv + (i + 1) * (Duv - Auv) / interpolation;
+
+    QPointF Q2 = B + (i + 1) * (C - B) / interpolation;
+    QPointF Q2uv = Buv + (i + 1) * (Cuv - Buv) / interpolation;
+
+    for (int j = 0; j < interpolation; j++)
+    {
+      QPointF A1 = P1 + j * (P2 - P1) / interpolation;
+      QPointF A1uv = P1uv + j * (P2uv - P1uv) / interpolation;
+
+      QPointF B1 = P1 + (j + 1) * (P2 - P1) / interpolation;
+      QPointF B1uv = P1uv + (j + 1) * (P2uv - P1uv) / interpolation;
+
+      QPointF C1 = Q1 + (j + 1) * (Q2 - Q1) / interpolation;
+      QPointF C1uv = Q1uv + (j + 1) * (Q2uv - Q1uv) / interpolation;
+
+      QPointF D1 = Q1 + j * (Q2 - Q1) / interpolation;
+      QPointF D1uv = Q1uv + j * (Q2uv - Q1uv) / interpolation;
+
+      resetScanPoly(pDest->width(), pDest->height());
+      scanLine(A1.x(), A1.y(), B1.x(), B1.y(), A1uv.x(), A1uv.y(), B1uv.x(), B1uv.y());
+      scanLine(B1.x(), B1.y(), C1.x(), C1.y(), B1uv.x(), B1uv.y(), C1uv.x(), C1uv.y());
+      scanLine(C1.x(), C1.y(), D1.x(), D1.y(), C1uv.x(), C1uv.y(), D1uv.x(), D1uv.y());
+      scanLine(D1.x(), D1.y(), A1.x(), A1.y(), D1uv.x(), D1uv.y(), A1uv.x(), A1uv.y());
+      renderPolygon(pDest, pSrc);
+
+      //p->drawLine(A1, B1);
+      //p->drawLine(B1, C1);
+      //p->drawLine(C1, D1);
+      //p->drawLine(D1, A1);
+    }
+  }
+}
+
 ///////////////////////////////////////////////////////////
 void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
 ///////////////////////////////////////////////////////////
