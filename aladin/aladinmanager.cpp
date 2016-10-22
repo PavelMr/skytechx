@@ -3,8 +3,12 @@
 
 #include <QTime>
 #include <QHash>
+#include <QNetworkDiskCache>
 
 QImage *load;
+
+static QNetworkDiskCache *m_discCache = nullptr;
+static UrlFileDownload *download = nullptr;
 
 int g_cacheHits;
 int g_cacheMiss;
@@ -21,7 +25,7 @@ inline bool operator==(const pixCacheKey_t &k1, const pixCacheKey_t &k2)
 }
 
 AladinManager::AladinManager()
-{    
+{      
   load = new QImage(32, 32, QImage::Format_RGB32);
   load->fill(Qt::red);
 
@@ -33,6 +37,25 @@ void AladinManager::setParam(const aladinParams_t &param)
 {
   m_param = param;
   m_uid = qHash(param.url);
+
+  static bool init = false;
+
+  if (!init)
+  {
+    m_discCache = new QNetworkDiskCache();
+    //m_netManager = new QNetworkAccessManager(this);
+
+    m_discCache->setCacheDirectory(param.cachePath);
+    m_discCache->setMaximumCacheSize(200 * 1024 * 1024);
+    //m_netManager->setCache(m_discCache);
+
+    download = new UrlFileDownload(this, m_discCache);
+
+    connect(download, SIGNAL(sigDownloadDone(QNetworkReply::NetworkError,QByteArray&,pixCacheKey_t&)),
+                this, SLOT(slotDone(QNetworkReply::NetworkError,QByteArray&,pixCacheKey_t&)));
+
+    init = true;
+  }
 
   m_cache.setMaxCost(param.memoryCacheSize);
 }
@@ -58,7 +81,7 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
   {
     // downloading
 
-    return 0;
+    //return 0;
 
       // try render level - 1 while downloading
       key.level = level - 1;
@@ -124,6 +147,7 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
     path = "/Norder3/Allsky." + m_param.imageExtension;
   }
 
+  /*
   // from local hdd
   QImage *img = new QImage(m_param.cachePath + path);
 
@@ -140,11 +164,9 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
     }
     delete img; // invalid image
     QFile::remove(m_param.cachePath + path);
-  }    
+  }
+  */
 
-  UrlFileDownload *download = new UrlFileDownload;
-  connect(download, SIGNAL(sigDownloadDone(QNetworkReply::NetworkError,QByteArray&,pixCacheKey_t&)),
-                this, SLOT(slotDone(QNetworkReply::NetworkError,QByteArray&,pixCacheKey_t&)));
   download->begin(m_param.url + path, key);
   m_downloadMap.insert(key);
 
@@ -163,6 +185,8 @@ int AladinManager::getMemoryCacheSize()
 // TODO: zrusit vsechny downloady pri zmene serveru
 void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
 {  
+  //qDebug() << "done" << key.level << key.pix << error;
+
   if (error == QNetworkReply::NoError)
   {
     m_downloadMap.remove(key);
@@ -172,8 +196,9 @@ void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data
     item->image = new QImage();
     if (item->image->loadFromData(data))
     {
-      addToMemoryCache(key, item);
+      addToMemoryCache(key, item);      
 
+      /*
       // Add to hdd cache
       QString path;
       QString file;
@@ -197,10 +222,15 @@ void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data
       {
         f.write(data);
         f.close();
-        g_HDDCacheManager.checkCache();
+        //g_HDDCacheManager.checkCache();
       }
+      */
 
       emit sigRepaint();
+    }
+    else
+    {
+      qDebug() << "no image" << data;
     }
   }
   else

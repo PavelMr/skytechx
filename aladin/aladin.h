@@ -38,4 +38,6 @@ typedef struct
   qint64 uid;  
 } pixCacheKey_t;
 
+Q_DECLARE_METATYPE(pixCacheKey_t)
+
 #endif // ALADIN_H

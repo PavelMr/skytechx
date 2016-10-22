@@ -55,12 +55,15 @@ void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
 
   //qDebug() << "-----------------------";
 
+  m_all = true;
+
   int centerPix = m_HEALpix.getPix(level, ra, dec);
   renderRec(allSky, level, centerPix, view, painter, pDest);
 
-  //m_manager.getMemoryCacheSize();
-  //m_manager.getCache()->size();
-  //qDebug() << "render" << m_blocks << m_size; // cache hit/miss
+  if (!m_all)
+  {
+    //emit
+  }
 }
 
 void AladinRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view, CSkPainter *painter, QImage *pDest)
@@ -81,8 +84,8 @@ void AladinRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view,
     renderRec(allsky, level, dirs[0], view, painter, pDest);
     renderRec(allsky, level, dirs[2], view, painter, pDest);
     renderRec(allsky, level, dirs[4], view, painter, pDest);
-    renderRec(allsky, level, dirs[6], view, painter, pDest);
-  }
+    renderRec(allsky, level, dirs[6], view, painter, pDest);        
+  }    
 }
 
 bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix, CSkPainter *painter, QImage *pDest)
@@ -156,6 +159,10 @@ bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix,
       {
         delete image;
       }
+    }
+    else
+    {
+      m_all = false;
     }
 
 #if 0

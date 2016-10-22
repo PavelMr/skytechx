@@ -25,6 +25,7 @@ private:
   AladinManager m_manager;
   int m_blocks;
   int m_size;
+  bool m_all;
 };
 
 extern AladinRenderer g_aladinRenderer;

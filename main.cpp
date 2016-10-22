@@ -175,8 +175,9 @@ int main(int argc, char *argv[])
 
   copyAppData();
 
-  g_HDDCacheManager.setRoot(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache/aladin");
-  g_HDDCacheManager.start();
+  //g_HDDCacheManager.setRoot(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache/aladin");
+  //g_HDDCacheManager.start();
+
   g_soundManager.init();
 
   g_systemSettings = new SystemSettings("../skytechx.cfg");

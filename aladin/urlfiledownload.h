@@ -9,7 +9,7 @@ class UrlFileDownload : public QObject
 {
   Q_OBJECT
 public:
-  explicit UrlFileDownload(QObject *parent = 0);
+  explicit UrlFileDownload(QObject *parent, QNetworkDiskCache *cache);
   void begin(const QString &urlName, const pixCacheKey_t &key);
 
 signals:
@@ -20,9 +20,9 @@ public slots:
 private slots:
   void downloadFinished(QNetworkReply *reply);
 
-private:
-  QNetworkAccessManager m_manager;
-  pixCacheKey_t m_key;
+private:  
+  //pixCacheKey_t m_key;
+  QNetworkAccessManager qmanager;
 };
 
 #endif // URLFILEDOWNLOAD_H
