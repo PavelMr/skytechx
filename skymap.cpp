@@ -1432,8 +1432,8 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   aladinParams_t al;
 
   al.imageExtension = "jpg";
-  al.memoryCacheSize = 200000000; //
-  al.cachePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache";
+  al.memoryCacheSize = 100 * 1024 * 1024; //
+  al.cachePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache/aladin";
 
   //al.url = "http://127.0.0.1:8887/aladin";
   al.url = "http://alasky.u-strasbg.fr/DSS/DSSColor";

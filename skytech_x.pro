@@ -289,7 +289,8 @@ SOURCES += main.cpp\
     aladin/aladinmanager.cpp \
     aladin/aladinrenderer.cpp \
     aladin/urlfiledownload.cpp \
-    pixcache.cpp
+    pixcache.cpp \
+    hddcachemanager.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -515,7 +516,8 @@ HEADERS  += mainwindow.h \
     aladin/aladinrenderer.h \
     aladin/urlfiledownload.h \
     aladin/aladin.h \
-    pixcache.h
+    pixcache.h \
+    hddcachemanager.h
 
 
 FORMS    += mainwindow.ui \

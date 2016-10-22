@@ -7,6 +7,30 @@
 
 #include <QObject>
 
+class RemoveTimer : public QTimer
+{
+  Q_OBJECT
+public:
+  RemoveTimer()
+  {
+    connect(this, SIGNAL(timeout()), this, SLOT(done()));
+    start(5000);
+  }
+
+  void setKey(const pixCacheKey_t &key);
+
+  pixCacheKey_t m_key;
+
+signals:
+  void remove(pixCacheKey_t &key);
+
+private slots:
+  void done()
+  {
+    emit remove(m_key);
+  }
+};
+
 class AladinManager : public QObject
 {
   Q_OBJECT
@@ -24,13 +48,16 @@ signals:
 
 private slots:
   void slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key);
+  void removeTimer(pixCacheKey_t &key);
 
 private:
   qint64         m_uid;
   aladinParams_t m_param;  
   PixCache       m_cache;
 
-  void addToMemoryCache(pixCacheKey_t &key, pixCacheItem_t &item);
+  QSet <pixCacheKey_t> m_downloadMap;
+
+  void addToMemoryCache(pixCacheKey_t &key, pixCacheItem_t *item);
   pixCacheItem_t *getCacheItem(pixCacheKey_t &key);
 
 };

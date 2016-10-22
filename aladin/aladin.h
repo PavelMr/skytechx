@@ -13,11 +13,23 @@ typedef struct
   int     memoryCacheSize;   // count  
 } aladinParams_t;
 
-typedef struct
+class pixCacheItem_t
 {  
-  QImage *image;
-  int     cost;
-} pixCacheItem_t;
+public:
+   pixCacheItem_t()
+   {
+     image = nullptr;
+   }
+
+  ~pixCacheItem_t()
+   {
+     //qDebug() << "delete";
+     Q_ASSERT(image);
+     delete image;
+   }
+
+  QImage *image;  
+};
 
 typedef struct
 {

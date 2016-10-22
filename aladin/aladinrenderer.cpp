@@ -5,6 +5,9 @@
 #include "precess.h"
 #include "skutils.h"
 
+extern int g_cacheHits;
+extern int g_cacheMiss;
+
 AladinRenderer g_aladinRenderer;
 
 bool xxxx = false;
@@ -48,14 +51,16 @@ void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
     allSky = false;
   }
 
+  //qDebug() << g_cacheHits << g_cacheMiss << (g_cacheHits / (double)g_cacheMiss);
+
   //qDebug() << "-----------------------";
 
   int centerPix = m_HEALpix.getPix(level, ra, dec);
   renderRec(allSky, level, centerPix, view, painter, pDest);
 
   //m_manager.getMemoryCacheSize();
-  m_manager.getCache()->size();
-  qDebug() << "render" << m_blocks << m_size; // cache hit/miss
+  //m_manager.getCache()->size();
+  //qDebug() << "render" << m_blocks << m_size; // cache hit/miss
 }
 
 void AladinRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view, CSkPainter *painter, QImage *pDest)

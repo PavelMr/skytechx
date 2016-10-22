@@ -1,9 +1,32 @@
 #include "aladinmanager.h"
+#include "hddcachemanager.h"
 
 #include <QTime>
+#include <QHash>
+
+QImage *load;
+
+int g_cacheHits;
+int g_cacheMiss;
+
+static int qHash(const pixCacheKey_t &key, uint seed)
+{
+  return qHash(QString("%1_%2_%3").arg(key.level).arg(key.pix).arg(key.uid), seed);
+}
+
+
+inline bool operator==(const pixCacheKey_t &k1, const pixCacheKey_t &k2)
+{
+  return (k1.uid == k2.uid) && (k1.level == k2.level) && (k1.pix == k2.pix);
+}
 
 AladinManager::AladinManager()
 {    
+  load = new QImage(32, 32, QImage::Format_RGB32);
+  load->fill(Qt::red);
+
+  g_cacheHits = 0;
+  g_cacheMiss = 0;
 }
 
 void AladinManager::setParam(const aladinParams_t &param)
@@ -15,9 +38,8 @@ void AladinManager::setParam(const aladinParams_t &param)
 }
 
 QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
-{
-  int origPix = pix;
-
+{  
+  int origPix = pix;  
   freeImage = false;
 
   if (allsky)
@@ -32,11 +54,46 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
   key.pix = pix;
   key.uid = m_uid;
 
+  if (m_downloadMap.contains(key))
+  {
+    // downloading
+
+    return 0;
+
+      // try render level - 1 while downloading
+      key.level = level - 1;
+      key.pix = pix / 4;
+      pixCacheItem_t *item = getCacheItem(key);
+
+      if (item)
+      {
+        QImage *cacheImage = item->image;
+        int size = 256;
+        int offset = cacheImage->width() / size;
+        QImage *image = cacheImage;
+
+        int index[4] = {0, 2, 1, 3};
+
+        int ox = index[pix % 4] % offset;
+        int oy = index[pix % 4] / offset;
+
+        QImage *newImage = new QImage(image->copy(ox * size, oy * size, size, size));
+        freeImage = true;
+        return newImage;
+      }
+
+    return nullptr;
+  }
+
   pixCacheItem_t *item = getCacheItem(key);
 
   if (item)
   {    
+    g_cacheHits++;
+
     QImage *cacheImage = item->image;
+
+    Q_ASSERT(!item->image->isNull());
 
     if (allsky && cacheImage != nullptr)
     { // all sky
@@ -74,57 +131,91 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
   {
     if (!img->isNull())
     {
-      pixCacheItem_t item;
-      item.image = img;
+      pixCacheItem_t *item = new pixCacheItem_t;
+      item->image = img;
 
       addToMemoryCache(key, item);
 
       return img;
     }
-    delete img;
-  }
-
-  //qDebug() << "download begin" << level << pix;
+    delete img; // invalid image
+    QFile::remove(m_param.cachePath + path);
+  }    
 
   UrlFileDownload *download = new UrlFileDownload;
   connect(download, SIGNAL(sigDownloadDone(QNetworkReply::NetworkError,QByteArray&,pixCacheKey_t&)),
                 this, SLOT(slotDone(QNetworkReply::NetworkError,QByteArray&,pixCacheKey_t&)));
   download->begin(m_param.url + path, key);
+  m_downloadMap.insert(key);
 
-  pixCacheItem_t emptyItem;
-  emptyItem.image = nullptr;
+  //qDebug() << "downlod" << key.level << key.pix;
 
-  addToMemoryCache(key, emptyItem);
+  g_cacheMiss++;
 
-  return nullptr;
+  return nullptr; 
 }
 
 int AladinManager::getMemoryCacheSize()
 {
-  return m_cache.size();
+  return 0;
 }
-
 
 // TODO: zrusit vsechny downloady pri zmene serveru
 void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
-{
+{  
   if (error == QNetworkReply::NoError)
   {
-    pixCacheItem_t item;
+    m_downloadMap.remove(key);
 
-    item.image = new QImage();
-    item.image->loadFromData(data);
+    pixCacheItem_t *item = new pixCacheItem_t;
 
-    addToMemoryCache(key, item);
+    item->image = new QImage();
+    if (item->image->loadFromData(data))
+    {
+      addToMemoryCache(key, item);
 
-    // TODO: add to hdd cache
+      // Add to hdd cache
+      QString path;
+      QString file;
 
-    emit sigRepaint();
+      if (key.level >= 3)
+      {
+        int dir = (key.pix / 10000) * 10000;
+        path = "/Norder" + QString::number(key.level) + "/Dir" + QString::number(dir);
+        file = "Npix" + QString::number(key.pix) + "." + m_param.imageExtension;
+      }
+      else
+      {
+        path = "/Norder3";
+        file = "Allsky." + m_param.imageExtension;
+      }
+
+      QDir dir;
+      dir.mkpath(m_param.cachePath + path);
+      QFile f(m_param.cachePath + path + "/" + file);
+      if (f.open(QFile::WriteOnly))
+      {
+        f.write(data);
+        f.close();
+        g_HDDCacheManager.checkCache();
+      }
+
+      emit sigRepaint();
+    }
   }
   else
-  {
-
+  {        
+    RemoveTimer *timer = new RemoveTimer();
+    timer->setKey(key);
+    connect(timer, SIGNAL(remove(pixCacheKey_t&)), this, SLOT(removeTimer(pixCacheKey_t&)));
   }
+}
+
+void AladinManager::removeTimer(pixCacheKey_t &key)
+{
+  m_downloadMap.remove(key);
+  sender()->deleteLater();
+  emit sigRepaint();
 }
 
 PixCache *AladinManager::getCache()
@@ -132,27 +223,21 @@ PixCache *AladinManager::getCache()
   return &m_cache;
 }
 
-void AladinManager::addToMemoryCache(pixCacheKey_t &key, pixCacheItem_t &item)
-{
-  int cost;
+void AladinManager::addToMemoryCache(pixCacheKey_t &key, pixCacheItem_t *item)
+{    
+  Q_ASSERT(item);
+  Q_ASSERT(item->image);
 
-  if (item.image)
-  {
-    cost = item.image->byteCount();
-  }
-  else
-  {
-    cost = 0;//sizeof(void *);
-  }
-
+  int cost = item->image->byteCount();
   m_cache.add(key, item, cost);
 }
 
 pixCacheItem_t *AladinManager::getCacheItem(pixCacheKey_t &key)
-{
+{  
   return m_cache.get(key);
 }
 
-
-
-
+void RemoveTimer::setKey(const pixCacheKey_t &key)
+{
+  m_key = key;
+}

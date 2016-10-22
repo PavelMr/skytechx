@@ -15,6 +15,7 @@
 #include "clog.h"
 #include "systemsettings.h"
 #include "soundmanager.h"
+#include "hddcachemanager.h"
 
 static QString LOG_FILE;
 
@@ -170,10 +171,12 @@ int main(int argc, char *argv[])
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/db");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/horizons");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/gamepad");
-  checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dso");
+  checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dso");  
 
   copyAppData();
 
+  g_HDDCacheManager.setRoot(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache/aladin");
+  g_HDDCacheManager.start();
   g_soundManager.init();
 
   g_systemSettings = new SystemSettings("../skytechx.cfg");
@@ -271,6 +274,8 @@ int main(int argc, char *argv[])
   {
     qDebug() << "ERROR2";
   }
+
+  g_HDDCacheManager.setFinish();
 
   return ret;
 }
