@@ -26,6 +26,8 @@ void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
   while( level < 9 && view->fov < minfov) { minfov /= 2; level++; }
 
   m_renderedMap.clear();
+  m_blocks = 0;
+  m_size = 0;
 
   double ra, dec;
   double cx, cy;
@@ -44,12 +46,16 @@ void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
   else
   {
     allSky = false;
-  }  
+  }
+
+  //qDebug() << "-----------------------";
 
   int centerPix = m_HEALpix.getPix(level, ra, dec);
   renderRec(allSky, level, centerPix, view, painter, pDest);
 
-  m_manager.getMemoryCacheSize();
+  //m_manager.getMemoryCacheSize();
+  m_manager.getCache()->size();
+  qDebug() << "render" << m_blocks << m_size; // cache hit/miss
 }
 
 void AladinRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view, CSkPainter *painter, QImage *pDest)
@@ -84,15 +90,21 @@ bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix,
 
   if (SKPLANECheckFrustumToPolygon(trfGetFrustum(), pts, 4))
   {
+    m_blocks++;
+
     for (int i = 0; i < 4; i++)
     {
       trfProjectPointNoCheck(&pts[i]);
     }
 
+    //qDebug() << "render" << level << pix;
+
     QImage *image = m_manager.getPix(allsky, level, pix, freeImage);
 
     if (image)      
     {
+      m_size += image->byteCount();
+
       QPointF uvo[4] = {QPointF(1, 1), QPointF(1, 0), QPointF(0, 0),QPointF(0, 1)};
       QPointF uv[16][4] = {{QPointF(.25, .25), QPointF(0.25, 0), QPointF(0, .0),QPointF(0, .25)},
                            {QPointF(.25, .5), QPointF(0.25, 0.25), QPointF(0, .25),QPointF(0, .5)},
@@ -141,7 +153,7 @@ bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix,
       }
     }
 
-#if 1
+#if 0
     painter->setPen(Qt::darkGray);
     painter->drawLine(pts[0].sx, pts[0].sy, pts[1].sx, pts[1].sy);
     painter->drawLine(pts[1].sx, pts[1].sy, pts[2].sx, pts[2].sy);

@@ -23,6 +23,8 @@ public slots:
 
 private:
   AladinManager m_manager;
+  int m_blocks;
+  int m_size;
 };
 
 extern AladinRenderer g_aladinRenderer;

@@ -17,6 +17,8 @@ public:
   QImage *getPix(bool allsky, int level, int pix, bool &freeImage);
   int getMemoryCacheSize();
 
+  PixCache *getCache();
+
 signals:
   void sigRepaint();
 

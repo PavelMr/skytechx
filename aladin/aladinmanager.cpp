@@ -11,7 +11,7 @@ void AladinManager::setParam(const aladinParams_t &param)
   m_param = param;
   m_uid = qHash(param.url);
 
-  m_cache.setMaxCount(param.memoryCacheSize);
+  m_cache.setMaxCost(param.memoryCacheSize);
 }
 
 QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
@@ -55,7 +55,7 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
     return cacheImage;
   }
 
-  QString path;
+  QString path;          
 
   if (!allsky)
   {
@@ -66,6 +66,25 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
   {
     path = "/Norder3/Allsky." + m_param.imageExtension;
   }
+
+  // from local hdd
+  QImage *img = new QImage(m_param.cachePath + path);
+
+  if (img)
+  {
+    if (!img->isNull())
+    {
+      pixCacheItem_t item;
+      item.image = img;
+
+      addToMemoryCache(key, item);
+
+      return img;
+    }
+    delete img;
+  }
+
+  //qDebug() << "download begin" << level << pix;
 
   UrlFileDownload *download = new UrlFileDownload;
   connect(download, SIGNAL(sigDownloadDone(QNetworkReply::NetworkError,QByteArray&,pixCacheKey_t&)),
@@ -85,6 +104,8 @@ int AladinManager::getMemoryCacheSize()
   return m_cache.size();
 }
 
+
+// TODO: zrusit vsechny downloady pri zmene serveru
 void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
 {
   if (error == QNetworkReply::NoError)
@@ -92,10 +113,11 @@ void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data
     pixCacheItem_t item;
 
     item.image = new QImage();
-
     item.image->loadFromData(data);
 
     addToMemoryCache(key, item);
+
+    // TODO: add to hdd cache
 
     emit sigRepaint();
   }
@@ -105,9 +127,25 @@ void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data
   }
 }
 
+PixCache *AladinManager::getCache()
+{
+  return &m_cache;
+}
+
 void AladinManager::addToMemoryCache(pixCacheKey_t &key, pixCacheItem_t &item)
 {
-  m_cache.add(key, item);
+  int cost;
+
+  if (item.image)
+  {
+    cost = item.image->byteCount();
+  }
+  else
+  {
+    cost = 0;//sizeof(void *);
+  }
+
+  m_cache.add(key, item, cost);
 }
 
 pixCacheItem_t *AladinManager::getCacheItem(pixCacheKey_t &key)
