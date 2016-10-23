@@ -1,6 +1,109 @@
 #include "healpix.h"
 #include "transform.h"
 
+////////////////
+/// \brief HEALPix::getPix
+/// \param level
+/// \param ra
+/// \param dec
+/// \return
+////////////////////
+///
+
+#define	EQtoGAL	1
+#define	GALtoEQ	(-1)
+#define	SMALL	(1e-20)
+
+static void galeq_aux (int sw, double x, double y, double *p, double *q);
+static void galeq_init (void);
+
+static double an = DEG2RAD(32.93192);    /* G lng of asc node on equator */
+static double gpr = DEG2RAD(192.85948);  /* RA of North Gal Pole, 2000 */
+static double gpd = DEG2RAD(27.12825);   /* Dec of  " */
+static double cgpd, sgpd;		/* cos() and sin() of gpd */
+static double mj2000;			/* mj of 2000 */
+static int before;			/* whether these have been set yet */
+
+/* given ra and dec, each in radians, for the given epoch, find the
+ * corresponding galactic latitude, *lt, and longititude, *lg, also each in
+ * radians.
+ */
+void
+eq_gal (double mj, double ra, double dec, double *lt, double *lg)
+{
+  galeq_init();
+  //precess (mj, mj2000, &ra, &dec);
+  galeq_aux (EQtoGAL, ra, dec, lg, lt);
+}
+
+/* given galactic latitude, lt, and longititude, lg, each in radians, find
+ * the corresponding equitorial ra and dec, also each in radians, at the
+ * given epoch.
+ */
+void
+gal_eq (double mj, double lt, double lg, double *ra, double *dec)
+{
+  galeq_init();
+  galeq_aux (GALtoEQ, lg, lt, ra, dec);
+  //precess (mj2000, mj, ra, dec);
+}
+
+static void
+galeq_aux (
+int sw,			/* +1 for eq to gal, -1 for vv. */
+double x, double y,	/* sw==1: x==ra, y==dec.  sw==-1: x==lg, y==lt. */
+double *p, double *q)	/* sw==1: p==lg, q==lt. sw==-1: p==ra, q==dec. */
+{
+  double sy, cy, a, ca, sa, b, sq, c, d;
+
+  cy = cos(y);
+  sy = sin(y);
+  a = x - an;
+  if (sw == EQtoGAL)
+      a = x - gpr;
+  ca = cos(a);
+  sa = sin(a);
+  b = sa;
+  if (sw == EQtoGAL)
+      b = ca;
+  sq = (cy*cgpd*b) + (sy*sgpd);
+  *q = asin (sq);
+
+  if (sw == GALtoEQ) {
+      c = cy*ca;
+      d = (sy*cgpd) - (cy*sgpd*sa);
+      if (fabs(d) < SMALL)
+    d = SMALL;
+      *p = atan (c/d) + gpr;
+  } else {
+      c = sy - (sq*sgpd);
+      d = cy*sa*cgpd;
+      if (fabs(d) < SMALL)
+    d = SMALL;
+      *p = atan (c/d) + an;
+  }
+
+  if (d < 0) *p += MPI;
+  if (*p < 0) *p += 2*MPI;
+  if (*p > 2*MPI) *p -= 2*MPI;
+}
+
+/* set up the definitions */
+static void
+galeq_init()
+{
+  if (!before) {
+      cgpd = cos (gpd);
+      sgpd = sin (gpd);
+      //mj2000 = J2000;
+      before = 1;
+  }
+}
+
+
+///
+///
+
 static const double twothird=2.0/3.0;
 static const double pi=3.141592653589793238462643383279502884197;
 static const double twopi=6.283185307179586476925286766559005768394;
@@ -71,8 +174,18 @@ HEALPix::HEALPix()
 {
 }
 
+void HEALPix::setParam(aladinParams_t *param)
+{
+  m_param = param;
+}
+
 void HEALPix::getCornerPoints(int level, int pix, SKPOINT *points)
 {
+  static QMatrix4x4 gl(-0.0548755f,  0.494109f, -0.867666f,  0.f,
+                       -0.873437f,  -0.444830f, -0.198076f,  0.f,
+                       -0.483835f,   0.746982f,  0.455984f,  0.f,
+                              0.f,         0.f,        0.f,  1.f);
+
   SKVECTOR v[4];
   int nside = 1 << level;
 
@@ -80,10 +193,26 @@ void HEALPix::getCornerPoints(int level, int pix, SKPOINT *points)
 
   for (int i = 0; i < 4; i++)
   {
-    points[i].w.x = -v[i].y;
-    points[i].w.y = -v[i].z;
-    points[i].w.z = v[i].x;
-  }
+    if (m_param->frame == HIPS_FRAME_EQT)
+    {
+      points[i].w.x = -v[i].y;
+      points[i].w.y = -v[i].z;
+      points[i].w.z = v[i].x;
+    }
+    else if (m_param->frame == HIPS_FRAME_GAL)
+    {
+      points[i].w.x = v[i].x;
+      points[i].w.y = v[i].y;
+      points[i].w.z = v[i].z;
+
+      QVector3D tmp = QVector3D(v[i].x, v[i].y, v[i].z);
+      tmp = gl.mapVector(tmp);
+
+      points[i].w.x = -tmp.y();
+      points[i].w.z =  tmp.x();
+      points[i].w.y = -tmp.z();
+    }
+  }        
 }
 
 void HEALPix::boundaries(long nside, long pix, int step, SKVECTOR *out)
@@ -317,14 +446,21 @@ int HEALPix::ang2pix_nest_z_phi (long nside_, double z, double phi)
   return xyf2nest(nside_,ix,iy,face_num);
 }
 
-
 int HEALPix::getPix(int level, double ra, double dec)
 {    
   int nside = 1 << level;
-  double polar[2];
+  double polar[2];    
 
-  polar[0] = dec;
-  polar[1] = ra;
+  if (m_param->frame == HIPS_FRAME_EQT)
+  {
+    polar[0] = dec;
+    polar[1] = ra;
+  }
+  else if (m_param->frame == HIPS_FRAME_GAL)
+  {
+    // TODO: pouzit jinou funkci
+    eq_gal(0, ra, dec, &polar[0], &polar[1]);
+  }
 
   return ang2pix_nest_z_phi(nside, sin(polar[0]), polar[1]);
 }

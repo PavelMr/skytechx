@@ -59,6 +59,11 @@ SKMATRIX operator *(SKMATRIX m1, SKMATRIX m2);
 
 SKMATRIX *SKMATRIXIdentity(SKMATRIX *m);
 
+void SKMATRIXSet(double m0, double m1, double m3, double m4,
+                 double m5, double m6, double m7, double m8,
+                 double m9, double m10, double m11, double m12,
+                 double m13, double m14, double m15, double m16, SKMATRIX *m);
+
 SKMATRIX *SKMATRIXMultiply(SKMATRIX *out, SKMATRIX *m1, SKMATRIX *m2);
 
 SKMATRIX *SKMATRIXTranslate(SKMATRIX *out, double x, double y, double z);

@@ -5,6 +5,18 @@
 
 #include "skmatrix.h"
 
+///////////////////////////////////////////////////////////////////////
+void SKMATRIXSet(double m0, double m1, double m3, double m4,
+                 double m5, double m6, double m7, double m8,
+                 double m9, double m10, double m11, double m12,
+                 double m13, double m14, double m15, double m16, SKMATRIX *m)
+///////////////////////////////////////////////////////////////////////
+{
+  m->m_11 = m0; m->m_12 = m1; m->m_13 = m3; m->m_14 = m4;
+  m->m_21 = m5; m->m_22 = m6; m->m_23 = m7; m->m_24 = m8;
+  m->m_31 = m9; m->m_32 = m10; m->m_33 = m11; m->m_34 = m12;
+  m->m_41 = m13; m->m_42 = m14; m->m_43 = m15; m->m_44 = m16;
+}
 
 ///////////////////////////////////////
 SKMATRIX *SKMATRIXIdentity(SKMATRIX *m)

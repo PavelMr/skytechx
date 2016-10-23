@@ -8,7 +8,7 @@
 extern int g_cacheHits;
 extern int g_cacheMiss;
 
-AladinRenderer g_aladinRenderer;
+AladinRenderer *g_aladinRenderer;
 
 bool xxxx = false;
 double rrr;
@@ -19,16 +19,25 @@ QSet <int> m_renderedMap;
 
 AladinRenderer::AladinRenderer()
 {
+  m_manager.init();
 }
 
 void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
 {
+  m_HEALpix.setParam(m_manager.getParam());
+
   int level = 2;
 
   double minfov = D2R(40);
   while( level < 9 && view->fov < minfov) { minfov /= 2; level++; }
 
+  if (level > m_manager.getParam()->max_level)
+  {
+    level = m_manager.getParam()->max_level;
+  }
+
   m_renderedMap.clear();
+  m_rendered = 0;
   m_blocks = 0;
   m_size = 0;
 
@@ -49,21 +58,17 @@ void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
   else
   {
     allSky = false;
-  }
-
-  //qDebug() << g_cacheHits << g_cacheMiss << (g_cacheHits / (double)g_cacheMiss);
-
-  //qDebug() << "-----------------------";
-
-  m_all = true;
+  }   
 
   int centerPix = m_HEALpix.getPix(level, ra, dec);
   renderRec(allSky, level, centerPix, view, painter, pDest);
 
-  if (!m_all)
-  {
-    //emit
+  if (m_blocks != m_rendered)
+  { // repaint
+    //emit m_manager.sigRepaint(); // it is slow
   }
+
+  //m_manager.getCache()->printCache();
 }
 
 void AladinRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view, CSkPainter *painter, QImage *pDest)
@@ -84,7 +89,7 @@ void AladinRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view,
     renderRec(allsky, level, dirs[0], view, painter, pDest);
     renderRec(allsky, level, dirs[2], view, painter, pDest);
     renderRec(allsky, level, dirs[4], view, painter, pDest);
-    renderRec(allsky, level, dirs[6], view, painter, pDest);        
+    renderRec(allsky, level, dirs[6], view, painter, pDest);
   }    
 }
 
@@ -107,10 +112,13 @@ bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix,
 
     //qDebug() << "render" << level << pix;
 
+
+
     QImage *image = m_manager.getPix(allsky, level, pix, freeImage);
 
     if (image)      
     {
+      m_rendered++;
       m_size += image->byteCount();
 
       QPointF uvo[4] = {QPointF(1, 1), QPointF(1, 0), QPointF(0, 0),QPointF(0, 1)};
@@ -159,11 +167,7 @@ bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix,
       {
         delete image;
       }
-    }
-    else
-    {
-      m_all = false;
-    }
+    }        
 
 #if 0
     painter->setPen(Qt::darkGray);

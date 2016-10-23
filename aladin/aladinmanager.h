@@ -37,11 +37,17 @@ class AladinManager : public QObject
 
 public:  
   explicit AladinManager();
+  void init();
+  QVariant setting(const QString &name);
   void setParam(const aladinParams_t &param);
   QImage *getPix(bool allsky, int level, int pix, bool &freeImage);
   int getMemoryCacheSize();
+  bool parseProperties(aladinParams_t *param, const QString &filename);
+  void cancelAll();
 
   PixCache *getCache();
+
+  aladinParams_t *getParam();
 
 signals:
   void sigRepaint();

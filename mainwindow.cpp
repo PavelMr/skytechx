@@ -838,7 +838,7 @@ MainWindow::MainWindow(QWidget *parent) :
   //m_horizonEditor = new CHorEditorWidget();
   //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
 
-  connect(g_aladinRenderer.manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()));
+  connect(g_aladinRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);
 }
 
 void MainWindow::setToolbarIconSize()

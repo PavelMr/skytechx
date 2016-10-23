@@ -5,12 +5,24 @@
 #include <QImage>
 #include <QDebug>
 
+#define HIPS_FRAME_EQT          0
+#define HIPS_FRAME_GAL          1
+
 typedef struct
 {
-  QString imageExtension; // JPG, PNG, etc.
-  QString url;
   QString cachePath;
-  int     memoryCacheSize;   // count  
+  qint64  discCacheSize;
+  int     memoryCacheSize;   // count
+} aladinCache_t;
+
+typedef struct
+{
+  QString name;
+  QString imageExtension; // JPG, PNG, etc.
+  QString url;  
+  int     max_level;
+  int     frame;          // HIPS_FRAME_xxx
+  int     tileWidth;
 } aladinParams_t;
 
 class pixCacheItem_t

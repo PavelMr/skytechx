@@ -11,18 +11,19 @@ class UrlFileDownload : public QObject
 public:
   explicit UrlFileDownload(QObject *parent, QNetworkDiskCache *cache);
   void begin(const QString &urlName, const pixCacheKey_t &key);
+  void abortAll();
 
 signals:
   void sigDownloadDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key);
+  void sigAbort();
 
-public slots:
+public slots:    
 
 private slots:
   void downloadFinished(QNetworkReply *reply);
 
-private:  
-  //pixCacheKey_t m_key;
-  QNetworkAccessManager qmanager;
+private:    
+  QNetworkAccessManager m_manager;
 };
 
 #endif // URLFILEDOWNLOAD_H

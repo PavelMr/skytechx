@@ -15,7 +15,7 @@
 #include "clog.h"
 #include "systemsettings.h"
 #include "soundmanager.h"
-#include "hddcachemanager.h"
+#include "aladinrenderer.h"
 
 static QString LOG_FILE;
 
@@ -175,9 +175,6 @@ int main(int argc, char *argv[])
 
   copyAppData();
 
-  //g_HDDCacheManager.setRoot(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache/aladin");
-  //g_HDDCacheManager.start();
-
   g_soundManager.init();
 
   g_systemSettings = new SystemSettings("../skytechx.cfg");
@@ -249,6 +246,8 @@ int main(int argc, char *argv[])
   qDebug("SSL support %d", QSslSocket::supportsSsl());
   qDebug("Sound support %d", !QAudioDeviceInfo::availableDevices(QAudio::AudioOutput).isEmpty());
 
+  g_aladinRenderer = new AladinRenderer();
+
   CLoadingDlg *dlg = new CLoadingDlg;
   dlg->exec();
   delete dlg;
@@ -274,9 +273,7 @@ int main(int argc, char *argv[])
   catch (...)
   {
     qDebug() << "ERROR2";
-  }
-
-  g_HDDCacheManager.setFinish();
+  }  
 
   return ret;
 }
