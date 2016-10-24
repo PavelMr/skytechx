@@ -1429,20 +1429,23 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     cMilkyWay.render(mapView, pPainter, pImg);
   }
 
+  /*
   aladinParams_t al;
 
+  al.render = true;
   al.imageExtension = "jpg";
   //al.memoryCacheSize = 100 * 1024 * 1024; //
   //al.cachePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache/aladin";
 
-  //al.url = "http://127.0.0.1:8887/aladin";
-  al.url = "http://alasky.u-strasbg.fr/DSS/DSSColor";
+  al.url = "http://127.0.0.1:8887/aladin";
+  //al.url = "http://alasky.u-strasbg.fr/DSS/DSSColor";
   //al.url = "http://alasky.u-strasbg.fr/MellingerRGB";
   al.max_level = 9;
   al.frame = HIPS_FRAME_EQT;
   al.tileWidth = 512;
 
   g_aladinRenderer->setParam(al);
+  */
   g_aladinRenderer->render(mapView, pPainter, pImg);
 
   bkImg.renderAll(pImg, pPainter);  

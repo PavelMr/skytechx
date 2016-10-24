@@ -24,6 +24,11 @@ AladinRenderer::AladinRenderer()
 
 void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
 {
+  if (!m_manager.getParam()->render || m_manager.getParam()->url.isEmpty())
+  {
+    return;
+  }
+
   m_HEALpix.setParam(m_manager.getParam());
 
   int level = 2;
@@ -60,8 +65,13 @@ void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
     allSky = false;
   }   
 
+  bool old = scanRender.isBillinearInt();
+  scanRender.enableBillinearInt(getParam()->billinear);
+
   int centerPix = m_HEALpix.getPix(level, ra, dec);
   renderRec(allSky, level, centerPix, view, painter, pDest);
+
+  scanRender.enableBillinearInt(old);
 
   if (m_blocks != m_rendered)
   { // repaint
@@ -169,15 +179,16 @@ bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix,
       }
     }        
 
-#if 0
-    painter->setPen(Qt::darkGray);
-    painter->drawLine(pts[0].sx, pts[0].sy, pts[1].sx, pts[1].sy);
-    painter->drawLine(pts[1].sx, pts[1].sy, pts[2].sx, pts[2].sy);
-    painter->drawLine(pts[2].sx, pts[2].sy, pts[3].sx, pts[3].sy);
-    painter->drawLine(pts[3].sx, pts[3].sy, pts[0].sx, pts[0].sy);
-    painter->drawCText((pts[0].sx + pts[1].sx + pts[2].sx + pts[3].sx) / 4,
-                       (pts[0].sy + pts[1].sy + pts[2].sy + pts[3].sy) / 4, QString::number(pix) + " / " + QString::number(level));
-#endif    
+    if (getParam()->showGrid)
+    {
+      painter->setPen(Qt::darkGray);
+      painter->drawLine(pts[0].sx, pts[0].sy, pts[1].sx, pts[1].sy);
+      painter->drawLine(pts[1].sx, pts[1].sy, pts[2].sx, pts[2].sy);
+      painter->drawLine(pts[2].sx, pts[2].sy, pts[3].sx, pts[3].sy);
+      painter->drawLine(pts[3].sx, pts[3].sy, pts[0].sx, pts[0].sy);
+      painter->drawCText((pts[0].sx + pts[1].sx + pts[2].sx + pts[3].sx) / 4,
+                         (pts[0].sy + pts[1].sy + pts[2].sy + pts[3].sy) / 4, QString::number(pix) + " / " + QString::number(level));
+    }
 
     return true;
   }
@@ -188,6 +199,11 @@ bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix,
 void AladinRenderer::setParam(const aladinParams_t &param)
 {
   m_manager.setParam(param);
+}
+
+aladinParams_t *AladinRenderer::getParam()
+{
+  return m_manager.getParam();
 }
 
 AladinManager *AladinRenderer::manager()

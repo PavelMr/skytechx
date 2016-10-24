@@ -189,7 +189,7 @@ int AladinManager::getMemoryCacheSize()
   return 0;
 }
 
-bool AladinManager::parseProperties(aladinParams_t *param, const QString &filename)
+bool AladinManager::parseProperties(aladinParams_t *param, const QString &filename, const QString &url)
 {
   QFile f(filename);
 
@@ -212,18 +212,15 @@ bool AladinManager::parseProperties(aladinParams_t *param, const QString &filena
     }
   }
 
+  param->url = url;
+  qDebug() << url;
+
   int count = 0;
   QString tmp;
 
   if (map.contains("obs_collection"))
   {
     param->name = map["obs_collection"];
-    count++;
-  }
-
-  if (map.contains("hips_service_url"))
-  {
-    param->url = map["hips_service_url"];
     count++;
   }
 
@@ -242,12 +239,15 @@ bool AladinManager::parseProperties(aladinParams_t *param, const QString &filena
   if (map.contains("hips_tile_format"))
   {
     tmp = map["hips_tile_format"];
-    if (tmp == "jpeg")
+
+    QStringList list = tmp.split(" ");
+
+    if (list.contains("jpeg"))
     {
       param->imageExtension = "jpg";
       count++;
     }
-    else if (tmp == "png") // TODO: check
+    else if (list.contains("png")) // TODO: check
     {
       param->imageExtension = "png";
       count++;
@@ -270,7 +270,7 @@ bool AladinManager::parseProperties(aladinParams_t *param, const QString &filena
     }
   }
 
-  return count == 6; // all items have been loaded
+  return count == 5; // all items have been loaded
 }
 
 void AladinManager::cancelAll()

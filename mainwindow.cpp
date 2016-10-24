@@ -96,6 +96,8 @@
 #include "skiconutils.h"
 #include "choreditorwidget.h"
 #include "aladinrenderer.h"
+#include "cdownload.h"
+#include "aladinpropertiesdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -425,6 +427,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_planets->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_show->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_map->setToolButtonStyle(Qt::ToolButtonIconOnly);
+  ui->tb_aladin->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
   setToolbarIconSize(); 
 
@@ -838,8 +841,57 @@ MainWindow::MainWindow(QWidget *parent) :
   //m_horizonEditor = new CHorEditorWidget();
   //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
 
-  connect(g_aladinRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);
+  // aladin source //////////////////////////////////
+
+  m_aladinMenu = new QMenu();
+  fillAladinSources();
+
+  QToolButton *toolButton = dynamic_cast<QToolButton *>(ui->tb_aladin->widgetForAction(ui->actionAladin));
+  toolButton->setMenu(m_aladinMenu);  
+  toolButton->setPopupMode(QToolButton::MenuButtonPopup);  
+
+  connect(toolButton, SIGNAL(toggled(bool)), ui->actionHEALPix_grid, SLOT(setEnabled(bool)));
+  connect(toolButton, SIGNAL(toggled(bool)), ui->actionAladin_billinear, SLOT(setEnabled(bool)));
+  connect(toolButton, SIGNAL(toggled(bool)), ui->actionAladin_properties, SLOT(setEnabled(bool)));
+
+  connect(g_aladinRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);      
 }
+
+void MainWindow::fillAladinSources()
+{
+  CUrlFile url;
+
+  QList <urlItem_t> items;
+
+  url.readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/aladin.url", &items);
+
+  QActionGroup *group = new QActionGroup(this);
+
+  m_aladinMenu->clear();
+
+  QAction *action = new QAction(tr("None"), this);
+  action->setCheckable(true);
+  action->setData("");
+  m_aladinMenu->addAction(action);
+  group->addAction(action);
+  connect(action, SIGNAL(triggered()), SLOT(slotAladin()));
+  m_actionAladinNone = action;
+
+  m_aladinMenu->addSeparator();
+
+  foreach (const urlItem_t &item, items)
+  {
+    QAction *action = new QAction(item.name, this);
+    action->setCheckable(true);
+    action->setData(item.url);
+    m_aladinMenu->addAction(action);
+    group->addAction(action);
+    connect(action, SIGNAL(triggered()), SLOT(slotAladin()));
+  }
+
+  m_actionAladinNone->trigger();
+}
+
 
 void MainWindow::setToolbarIconSize()
 {
@@ -893,6 +945,7 @@ void MainWindow::setToolbarIconSize()
   ui->tb_show->setIconSize(QSize(size, size));
   ui->tb_map->setIconSize(QSize(size, size));
   ui->tb_window->setIconSize(QSize(size, size));    
+  ui->tb_aladin->setIconSize(QSize(size, size));
 }
 
 void MainWindow::checkNewVersion(bool forced)
@@ -1055,6 +1108,83 @@ void MainWindow::slotPluginError()
   {
     msgBoxError(this, string);
   }
+}
+
+void MainWindow::slotAladin()
+{
+  QAction *action = dynamic_cast<QAction *>(sender());
+  QString urlPath = action->data().toString();
+
+  if (urlPath.isEmpty())
+  {
+    qDebug() << "none";
+
+    aladinParams_t param;
+    param.billinear = ui->actionAladin_billinear->isChecked();
+    param.showGrid = ui->actionHEALPix_grid->isChecked();
+    param.render = false;
+    param.url = "";
+    ui->actionAladin->setChecked(false);
+    g_aladinRenderer->setParam(param);
+    repaintMap();
+    return;
+  }
+
+  QUrl url(urlPath);
+
+  m_aladinUrl = urlPath;
+  QString file = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/aladin" + url.path() + "/properties";
+  m_aladinProperties = file;
+
+  ui->actionAladin->setDisabled(true);
+
+  if (!QFile::exists(file))
+  {
+    CDownload *download = new CDownload();
+
+    m_aladinTmpUrl = urlPath + "/properties";
+    connect(download, SIGNAL(sigFileDone(bool)), this, SLOT(slotAladinPropertiesDone(bool)));
+    download->beginFile(m_aladinTmpUrl, file);
+  }
+  else
+  {
+    slotAladinPropertiesDone(true);
+  }
+}
+
+void MainWindow::slotAladinPropertiesDone(bool ok)
+{
+  //qDebug() << "done" << ok;
+
+  ui->actionAladin->setEnabled(true);
+
+  if (!ok)
+  {
+    msgBoxError(this, tr("Error downloading file : ") + m_aladinTmpUrl);
+    m_actionAladinNone->trigger();    
+    return;
+  }
+
+  aladinParams_t param;
+
+  if (g_aladinRenderer->manager()->parseProperties(&param, m_aladinProperties, m_aladinUrl))
+  {
+    param.showGrid = ui->actionHEALPix_grid->isChecked();
+    param.billinear = ui->actionAladin_billinear->isChecked();
+    param.render = true;
+    g_aladinRenderer->manager()->cancelAll();
+    g_aladinRenderer->setParam(param);
+    ui->actionAladin->setChecked(true);
+  }
+  else
+  {
+    msgBoxError(this, tr("Properties file is invalid"));
+    QFile::remove(m_aladinProperties);
+    m_actionAladinNone->trigger();
+    return;
+  }
+
+  repaintMap();
 }
 
 void MainWindow::slotCheckFirstTime()
@@ -6462,7 +6592,6 @@ void MainWindow::on_pushButton_unselect_clicked()
 }
 
 
-
 void MainWindow::on_actionShow_meteor_showers_triggered(bool checked)
 {
   g_showShower = checked;
@@ -6472,4 +6601,38 @@ void MainWindow::on_actionShow_meteor_showers_triggered(bool checked)
 void MainWindow::on_actionLunar_features_triggered()
 {
   on_pushButton_35_clicked();
+}
+
+void MainWindow::on_actionAladin_toggled(bool arg1)
+{
+  aladinParams_t *param = g_aladinRenderer->getParam();
+
+  param->render = arg1;
+
+  repaintMap();
+}
+
+void MainWindow::on_actionHEALPix_grid_toggled(bool arg1)
+{
+  aladinParams_t *param = g_aladinRenderer->getParam();
+
+  param->showGrid = arg1;
+
+  repaintMap();
+}
+
+void MainWindow::on_actionAladin_billinear_toggled(bool arg1)
+{
+  aladinParams_t *param = g_aladinRenderer->getParam();
+
+  param->billinear = arg1;
+
+  repaintMap();
+}
+
+void MainWindow::on_actionAladin_properties_triggered()
+{
+  AladinPropertiesDialog dlg(this, m_aladinProperties);
+
+  dlg.exec();
 }

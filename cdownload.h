@@ -32,7 +32,8 @@ class CDownload : public QObject
   Q_OBJECT
 public:
   explicit CDownload(QObject *parent = 0);
-  void     begin(QString url, QString fileName);
+  void     beginBkImage(QString url, QString fileName);
+  void     beginFile(QString url, QString fileName);
 
 protected:
   QNetworkAccessManager manager;
@@ -41,11 +42,13 @@ protected:
 signals:
   void sigFinished(void);
   void sigProgress(qint64 id, int val);
-  void sigError(QString str);
+  void sigError(QString str);  
+  void sigFileDone(bool ok);
 
 public slots:
   void slotProgress(qint64 recv ,qint64 total);
-  void slotDownloadFinished(QNetworkReply*reply);
+  void slotDownloadFinished(QNetworkReply*reply);  
+  void slotDownloadFileFinished(QNetworkReply*reply);
 
 };
 

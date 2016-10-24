@@ -42,7 +42,7 @@ public:
   void setParam(const aladinParams_t &param);
   QImage *getPix(bool allsky, int level, int pix, bool &freeImage);
   int getMemoryCacheSize();
-  bool parseProperties(aladinParams_t *param, const QString &filename);
+  bool parseProperties(aladinParams_t *param, const QString &filename, const QString &url = "");
   void cancelAll();
 
   PixCache *getCache();

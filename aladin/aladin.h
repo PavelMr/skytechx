@@ -16,7 +16,10 @@ typedef struct
 } aladinCache_t;
 
 typedef struct
-{
+{  
+  bool    render;
+  bool    showGrid;
+  bool    billinear;
   QString name;
   QString imageExtension; // JPG, PNG, etc.
   QString url;  

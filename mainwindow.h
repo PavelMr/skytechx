@@ -89,6 +89,7 @@ public:
   void setChartMode(int mode);
   void setRTC(bool start);
   bool getRTC();
+  void fillAladinSources();
 
   CMapView *getView();
 
@@ -673,17 +674,31 @@ private slots:
 
   void on_actionLunar_features_triggered();
 
+  void on_actionAladin_toggled(bool arg1);
+
+  void on_actionHEALPix_grid_toggled(bool arg1);
+
+  void on_actionAladin_billinear_toggled(bool arg1);
+
+  void on_actionAladin_properties_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
   CDSSCurveWidget *m_curve;
   event_t m_currentEvent;
+  QMenu *m_aladinMenu;
+  QAction *m_actionAladinNone;
+  QString m_aladinTmpUrl;
+  QString m_aladinProperties;
+  QString m_aladinUrl;
 
   void setTitle();
   void restoreDSSList();
   void saveDSSList();
 
   int getTelescopeSpeed();
+
 public slots:
   void repaintMap();
   void slotFilterChanged();
@@ -723,7 +738,9 @@ signals:
   void sigFlipY(bool checked);
 
 protected slots:
-  void slotPluginError();
+  void slotPluginError();  
+  void slotAladin();
+  void slotAladinPropertiesDone(bool ok);
 };
 
 extern MainWindow *pcMainWnd;

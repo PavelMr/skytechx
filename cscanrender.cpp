@@ -513,6 +513,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
   bkScan_t *scan = scLR;
   bool bw = src->format() == QImage::Format_Indexed8 || src->format() == QImage::Format_Grayscale8;
 
+  #pragma omp parallel for
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])

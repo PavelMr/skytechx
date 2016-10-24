@@ -13,9 +13,9 @@ CDownload::CDownload(QObject *parent) :
 {
 }
 
-////////////////////////////////////////////////////
-void CDownload::begin(QString url, QString fileName)
-////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+void CDownload::beginBkImage(QString url, QString fileName)
+///////////////////////////////////////////////////////////
 {
   QUrl qurl(url);
 
@@ -33,6 +33,20 @@ void CDownload::begin(QString url, QString fileName)
 
   pcMainWnd->setToolBoxPage(1);
   g_statusBar->setDownloadStatus(true);
+}
+
+void CDownload::beginFile(QString url, QString fileName)
+{
+  QUrl qurl(url);
+
+  qDebug("url '%s'", qPrintable(url));
+
+  QNetworkRequest request(qurl);
+  QNetworkReply *reply = manager.get(request);
+
+  m_fileName = fileName;
+
+  connect(&manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotDownloadFileFinished(QNetworkReply*)));
 }
 
 ///////////////////////////////////////////////////////
@@ -62,14 +76,15 @@ void CDownload::slotDownloadFinished(QNetworkReply *reply)
 {
   //qDebug("done %s", qPrintable(reply->errorString()));
   if (reply->error() == QNetworkReply::NoError)
-  {
-    QByteArray data = reply->readAll();
-
+  {    
     SkFile f(m_fileName);
+    QFileInfo fi(m_fileName);
+
+    checkAndCreateFolder(fi.path());
 
     if (f.open(SkFile::WriteOnly))
     {
-      f.write(data);
+      f.write(reply->readAll());
       f.close();
     }
 
@@ -84,5 +99,27 @@ void CDownload::slotDownloadFinished(QNetworkReply *reply)
   reply->deleteLater();
   deleteLater();
   g_statusBar->setDownloadStatus(false);
+}
+
+void CDownload::slotDownloadFileFinished(QNetworkReply *reply)
+{
+  if (reply->error() == QNetworkReply::NoError)
+  {
+    SkFile f(m_fileName);
+
+    if (f.open(SkFile::WriteOnly))
+    {
+      f.write(reply->readAll());
+      f.close();
+    }
+    emit sigFileDone(true);
+  }
+  else
+  { // error
+    emit sigFileDone(false);
+  }
+
+  reply->deleteLater();
+  deleteLater();
 }
 

@@ -289,7 +289,8 @@ SOURCES += main.cpp\
     aladin/aladinmanager.cpp \
     aladin/aladinrenderer.cpp \
     aladin/urlfiledownload.cpp \
-    pixcache.cpp
+    pixcache.cpp \
+    aladinpropertiesdialog.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -515,7 +516,8 @@ HEADERS  += mainwindow.h \
     aladin/aladinrenderer.h \
     aladin/urlfiledownload.h \
     aladin/aladin.h \
-    pixcache.h
+    pixcache.h \
+    aladinpropertiesdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -608,7 +610,8 @@ FORMS    += mainwindow.ui \
     astcomdowntypedlg.ui \
     cskeventdocdialog.ui \
     cchartdialog.ui \
-    choreditorwidget.ui
+    choreditorwidget.ui \
+    aladinpropertiesdialog.ui
 
 
 RESOURCES += \

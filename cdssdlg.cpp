@@ -658,7 +658,7 @@ void CDSSDlg::on_pushButton_3_clicked()
     }
 
     CDownload *d = new CDownload;
-    d->begin(url, m_file);
+    d->beginBkImage(url, m_file);
 
     qDebug("%s", qPrintable(m_file));
 

@@ -14,6 +14,7 @@ public:
   void renderRec(bool allsky, int level, int pix, mapView_t *view, CSkPainter *painter, QImage *pDest);
   bool renderPix(mapView_t *view, bool allsky, int level, int pix, CSkPainter *painter, QImage *pDest);
   void setParam(const aladinParams_t &param);
+  aladinParams_t *getParam();
 
   AladinManager *manager();
 
