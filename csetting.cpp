@@ -72,9 +72,9 @@ CSetting::CSetting(QWidget *parent) :
 
   QSettings setting;
 
-  // aladin
-  ui->spinBox_8->setValue(g_hipsRenderer->manager()->setting("aladin_mem_cache").toInt() / ONE_MB);
-  ui->spinBox_9->setValue(g_hipsRenderer->manager()->setting("aladin_net_cache").toInt() / ONE_MB);
+  // HIPS
+  ui->spinBox_8->setValue(g_hipsRenderer->manager()->setting("hips_mem_cache").toInt() / ONE_MB);
+  ui->spinBox_9->setValue(g_hipsRenderer->manager()->setting("hips_net_cache").toInt() / ONE_MB);
   ui->label_c1->setText(tr("Used : %1 MB").arg(g_hipsRenderer->manager()->getCache()->used() / ONE_MB));
   ui->label_c2->setText(tr("Used : %1 MB").arg(g_hipsRenderer->manager()->getDiscCacheSize() / ONE_MB));
 
@@ -1036,8 +1036,8 @@ void CSetting::apply()
   g_skSet.map.gsc.fromMag = ui->doubleSpinBox_29->value();
 
   // aladin
-  g_hipsRenderer->manager()->writeSetting("aladin_mem_cache", (int)(ui->spinBox_8->value() * ONE_MB));
-  g_hipsRenderer->manager()->writeSetting("aladin_net_cache", (qint64)(ui->spinBox_9->value() * ONE_MB));
+  g_hipsRenderer->manager()->writeSetting("hips_mem_cache", (int)(ui->spinBox_8->value() * ONE_MB));
+  g_hipsRenderer->manager()->writeSetting("hips_net_cache", (qint64)(ui->spinBox_9->value() * ONE_MB));
   g_hipsRenderer->manager()->init();
 
   QSettings settings;
