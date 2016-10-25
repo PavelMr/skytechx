@@ -14,6 +14,7 @@ public:
   pixCacheItem_t *get(pixCacheKey_t &key);
   void setMaxCost(int maxCost);
   void printCache();
+  int  used();
 
 private:  
   QCache <pixCacheKey_t, pixCacheItem_t> m_cache;

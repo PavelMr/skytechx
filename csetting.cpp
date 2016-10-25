@@ -26,6 +26,7 @@
 #include "soundmanager.h"
 #include "skserver.h"
 #include "csimplelist.h"
+#include "aladinrenderer.h"
 
 #include <QSettings>
 
@@ -67,9 +68,15 @@ CSetting::CSetting(QWidget *parent) :
 
   ui->cb_iconSize->addItem(tr("24x24 (Default size)"));
   ui->cb_iconSize->addItem(tr("18x18 (Small size)"));
-  ui->cb_iconSize->addItem(tr("32x32 (Large size)"));
+  ui->cb_iconSize->addItem(tr("32x32 (Large size)"));    
 
   QSettings setting;
+
+  // aladin
+  ui->spinBox_8->setValue(g_aladinRenderer->manager()->setting("aladin_mem_cache").toInt() / ONE_MB);
+  ui->spinBox_9->setValue(g_aladinRenderer->manager()->setting("aladin_net_cache").toInt() / ONE_MB);
+  ui->label_c1->setText(tr("Used : %1 MB").arg(g_aladinRenderer->manager()->getCache()->used() / ONE_MB));
+  ui->label_c2->setText(tr("Used : %1 MB").arg(g_aladinRenderer->manager()->getDiscCacheSize() / ONE_MB));
 
   // jpl de
   QList <jplData_t> jpl;
@@ -451,7 +458,7 @@ void CSetting::setValues()
   ui->doubleSpinBox_b->setValue(R2D(set.map.dsoNoMagOtherFOV));
   ui->doubleSpinBox_64->setValue(R2D(set.map.dsoNoMagFadeFOV));
   ui->checkBox_26->setChecked(set.map.dsoFadeTo);
-  ui->doubleSpinBox->setEnabled(set.map.dsoFadeTo);
+  ui->doubleSpinBox_64->setEnabled(set.map.dsoFadeTo);
 
   ui->pushButton_43->setColor(set.map.dsoShapeColor[0]);
   ui->pushButton_44->setColor(set.map.dsoShapeColor[1]);
@@ -661,7 +668,7 @@ void CSetting::setValues()
   ui->doubleSpinBox_29->setValue(set.map.gsc.fromMag);
 
   // other
-  ui->checkBox_18->setChecked(set.map.smartLabels);
+  ui->checkBox_18->setChecked(set.map.smartLabels);  
 
   QList<urlItem_t> strList;
   CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/comets.url", &strList);
@@ -1028,6 +1035,10 @@ void CSetting::apply()
   g_skSet.map.gsc.fromFOV = D2R(ui->doubleSpinBox_28->value());
   g_skSet.map.gsc.fromMag = ui->doubleSpinBox_29->value();
 
+  // aladin
+  g_aladinRenderer->manager()->writeSetting("aladin_mem_cache", (int)(ui->spinBox_8->value() * ONE_MB));
+  g_aladinRenderer->manager()->writeSetting("aladin_net_cache", (qint64)(ui->spinBox_9->value() * ONE_MB));
+  g_aladinRenderer->manager()->init();
 
   QSettings settings;
 
@@ -2525,4 +2536,12 @@ void CSetting::on_pushButton_73_clicked()
 void CSetting::on_doubleSpinBox_b_valueChanged(double arg1)
 {
   ui->doubleSpinBox_64->setRange(1, arg1);
+}
+
+void CSetting::on_pushButton_74_clicked()
+{
+  if (msgBoxQuest(this, tr("Empty disc cache?")) == QMessageBox::Yes)
+  {
+    g_aladinRenderer->manager()->clearDiscCache();
+  }
 }

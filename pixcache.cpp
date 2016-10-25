@@ -53,3 +53,8 @@ void PixCache::printCache()
   qDebug() << " -- cache ---------------";
   qDebug() << m_cache.size() << m_cache.totalCost() << m_cache.maxCost();
 }
+
+int PixCache::used()
+{
+  return m_cache.totalCost();
+}

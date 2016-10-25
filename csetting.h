@@ -215,6 +215,8 @@ private slots:
 
    void on_doubleSpinBox_b_valueChanged(double arg1);
 
+   void on_pushButton_74_clicked();
+
 private:
    Ui::CSetting *ui;
    void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList, bool sun = false);

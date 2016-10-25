@@ -30,8 +30,6 @@
 #include "soundmanager.h"
 #include "cmeteorshower.h"
 
-extern bool xxxx;
-
 double m_lastFOV;
 double m_lastRA;
 double m_lastDec;
@@ -738,7 +736,6 @@ double CMapView::calcNewPos(QRect *rc, double *x, double *y)
   cy = rc->top() + ((rc->bottom() - rc->top()) / 2.);
   trfConvScrPtToXY(cx, cy, RA2, DEC2);
 
-  // todo : opravit o refrakci (mozna???) KONTROLA!!!!!
   *x = RA2;
   *y = DEC2;
 
@@ -750,14 +747,7 @@ double CMapView::calcNewPos(QRect *rc, double *x, double *y)
 void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
 ///////////////////////////////////////////////////////
 {
-  double mul = 1;
-
-  if (key == Qt::Key_P)
-  {
-    xxxx = !xxxx;
-    repaintMap();
-    return;
-  }
+  double mul = 1;  
 
   /*
   if (key == Qt::Key_A)

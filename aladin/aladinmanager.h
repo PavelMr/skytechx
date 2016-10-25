@@ -39,11 +39,13 @@ public:
   explicit AladinManager();
   void init();
   QVariant setting(const QString &name);
+  void writeSetting(const QString &name, const QVariant &value);
   void setParam(const aladinParams_t &param);
   QImage *getPix(bool allsky, int level, int pix, bool &freeImage);
-  int getMemoryCacheSize();
+  qint64 getDiscCacheSize();
   bool parseProperties(aladinParams_t *param, const QString &filename, const QString &url = "");
   void cancelAll();
+  void clearDiscCache();
 
   PixCache *getCache();
 

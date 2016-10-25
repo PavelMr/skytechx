@@ -6604,8 +6604,14 @@ void MainWindow::on_actionLunar_features_triggered()
 }
 
 void MainWindow::on_actionAladin_toggled(bool arg1)
-{
+{    
   aladinParams_t *param = g_aladinRenderer->getParam();
+
+  if (param->url.isEmpty())
+  {
+    ui->actionAladin->setChecked(false);
+    return;
+  }
 
   param->render = arg1;
 

@@ -172,7 +172,7 @@ bool CBackground::loadBackground(QString name)
 
     painter.end();
 
-    newImage->save("bk.png", "PNG");
+    //newImage->save("bk.png", "PNG");
 
     delete bkTexture;
     bkTexture = newImage;

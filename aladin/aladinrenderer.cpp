@@ -10,10 +10,6 @@ extern int g_cacheMiss;
 
 AladinRenderer *g_aladinRenderer;
 
-bool xxxx = false;
-double rrr;
-double ddd;
-
 HEALPix m_HEALpix;
 QSet <int> m_renderedMap;
 
@@ -71,14 +67,12 @@ void AladinRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
   int centerPix = m_HEALpix.getPix(level, ra, dec);
   renderRec(allSky, level, centerPix, view, painter, pDest);
 
-  scanRender.enableBillinearInt(old);
+  scanRender.enableBillinearInt(old);  
 
   if (m_blocks != m_rendered)
   { // repaint
     //emit m_manager.sigRepaint(); // it is slow
-  }
-
-  //m_manager.getCache()->printCache();
+  }  
 }
 
 void AladinRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view, CSkPainter *painter, QImage *pDest)
@@ -118,13 +112,9 @@ bool AladinRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix,
     for (int i = 0; i < 4; i++)
     {
       trfProjectPointNoCheck(&pts[i]);
-    }
+    }    
 
-    //qDebug() << "render" << level << pix;
-
-
-
-    QImage *image = m_manager.getPix(allsky, level, pix, freeImage);
+    QImage *image = m_manager.getPix(allsky, level, pix, freeImage);    
 
     if (image)      
     {

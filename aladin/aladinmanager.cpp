@@ -3,6 +3,7 @@
 #include <QTime>
 #include <QHash>
 #include <QNetworkDiskCache>
+#include <QPainter>
 
 static QNetworkDiskCache *g_discCache = nullptr;
 static UrlFileDownload *g_download = nullptr;
@@ -59,11 +60,26 @@ QVariant AladinManager::setting(const QString &name)
   return QVariant();
 }
 
-void AladinManager::setParam(const aladinParams_t &param)
+void AladinManager::writeSetting(const QString &name, const QVariant &value)
 {
-  //aladinParams_t al;
-  //parseProperties(&al, QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/aladin/dss.properties");
+  QSettings set;
 
+  qDebug() << name << value;
+
+
+  if (name == "aladin_mem_cache")
+  {
+    set.setValue("aladin_mem_cache", value);
+  }
+
+  if (name == "aladin_net_cache")
+  {
+    set.setValue("aladin_net_cache", value);
+  }
+}
+
+void AladinManager::setParam(const aladinParams_t &param)
+{  
   m_param = param;
   m_uid = qHash(param.url);  
 }
@@ -84,6 +100,8 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
   key.level = level;
   key.pix = pix;
   key.uid = m_uid;
+
+  pixCacheItem_t *item = getCacheItem(key);
 
   if (m_downloadMap.contains(key))
   { // downloading
@@ -108,40 +126,11 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
       QImage *newImage = new QImage(image->copy(ox * size, oy * size, size, size));
       freeImage = true;
       return newImage;
-    }
-    /*
-    else
-    {
-      // allsky level
-      key.level = 0;
-      key.pix = 0;
-      pixCacheItem_t *item = getCacheItem(key);
-
-      if (item)
-      {
-        QImage *image = item->image;
-        int pix3 = pix / (4 * (level - 3));
-        int size = 64;
-        int offset = image->width() / size;
-
-        //int index[4] = {0, 2, 1, 3};
-
-        int ox = pix % offset;
-        int oy = pix / offset;
-
-        QImage *newImage = new QImage(image->copy(ox * size, oy * size, size, size));
-        freeImage = true;
-        return newImage;
-
-        //return item->image;
-      }
-    }
-    */
-
+    }        
     return nullptr;
-  }
+  }    
 
-  pixCacheItem_t *item = getCacheItem(key);
+
 
   if (item)
   {        
@@ -179,14 +168,14 @@ QImage *AladinManager::getPix(bool allsky, int level, int pix, bool &freeImage)
   } 
 
   g_download->begin(m_param.url + path, key);
-  m_downloadMap.insert(key);  
+  m_downloadMap.insert(key);    
 
   return nullptr; 
 }
 
-int AladinManager::getMemoryCacheSize()
+qint64 AladinManager::getDiscCacheSize()
 {
-  return 0;
+  return g_discCache->cacheSize();
 }
 
 bool AladinManager::parseProperties(aladinParams_t *param, const QString &filename, const QString &url)
@@ -278,6 +267,11 @@ void AladinManager::cancelAll()
   g_download->abortAll();
 }
 
+void AladinManager::clearDiscCache()
+{
+  g_discCache->clear();
+}
+
 // TODO: zrusit vsechny downloady pri zmene serveru
 void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
 {    
@@ -289,7 +283,7 @@ void AladinManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data
 
     item->image = new QImage();
     if (item->image->loadFromData(data))
-    {
+    {      
       addToMemoryCache(key, item);
 
       emit sigRepaint();
