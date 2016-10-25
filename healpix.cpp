@@ -174,7 +174,7 @@ HEALPix::HEALPix()
 {
 }
 
-void HEALPix::setParam(aladinParams_t *param)
+void HEALPix::setParam(hipsParams_t *param)
 {
   m_param = param;
 }

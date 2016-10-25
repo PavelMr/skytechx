@@ -55,7 +55,7 @@ INCLUDEPATH = core \
               elp2000 \
               libsgp4 \
               jpl \
-              aladin \
+              hips \
               $$PWD \
 
 
@@ -286,11 +286,11 @@ SOURCES += main.cpp\
     choreditorwidget.cpp \
     gcvs.cpp \
     healpix.cpp \
-    aladin/aladinmanager.cpp \
-    aladin/aladinrenderer.cpp \
-    aladin/urlfiledownload.cpp \
+    hips/hipsmanager.cpp \
+    hips/urlfiledownload.cpp \
     pixcache.cpp \
-    aladinpropertiesdialog.cpp
+    hipspropertiesdialog.cpp \
+    hips/hipsrenderer.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -512,12 +512,12 @@ HEADERS  += mainwindow.h \
     choreditorwidget.h \
     gcvs.h \
     healpix.h \
-    aladin/aladinmanager.h \
-    aladin/aladinrenderer.h \
-    aladin/urlfiledownload.h \
-    aladin/aladin.h \
+    hips/hipsmanager.h \
+    hips/urlfiledownload.h \
+    hips/hips.h \
     pixcache.h \
-    aladinpropertiesdialog.h
+    hipspropertiesdialog.h \
+    hips/hipsrenderer.h
 
 
 FORMS    += mainwindow.ui \
@@ -611,7 +611,7 @@ FORMS    += mainwindow.ui \
     cskeventdocdialog.ui \
     cchartdialog.ui \
     choreditorwidget.ui \
-    aladinpropertiesdialog.ui
+    hipspropertiesdialog.ui
 
 
 RESOURCES += \

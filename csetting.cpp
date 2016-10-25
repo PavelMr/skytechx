@@ -26,7 +26,7 @@
 #include "soundmanager.h"
 #include "skserver.h"
 #include "csimplelist.h"
-#include "aladinrenderer.h"
+#include "hipsrenderer.h"
 
 #include <QSettings>
 
@@ -73,10 +73,10 @@ CSetting::CSetting(QWidget *parent) :
   QSettings setting;
 
   // aladin
-  ui->spinBox_8->setValue(g_aladinRenderer->manager()->setting("aladin_mem_cache").toInt() / ONE_MB);
-  ui->spinBox_9->setValue(g_aladinRenderer->manager()->setting("aladin_net_cache").toInt() / ONE_MB);
-  ui->label_c1->setText(tr("Used : %1 MB").arg(g_aladinRenderer->manager()->getCache()->used() / ONE_MB));
-  ui->label_c2->setText(tr("Used : %1 MB").arg(g_aladinRenderer->manager()->getDiscCacheSize() / ONE_MB));
+  ui->spinBox_8->setValue(g_hipsRenderer->manager()->setting("aladin_mem_cache").toInt() / ONE_MB);
+  ui->spinBox_9->setValue(g_hipsRenderer->manager()->setting("aladin_net_cache").toInt() / ONE_MB);
+  ui->label_c1->setText(tr("Used : %1 MB").arg(g_hipsRenderer->manager()->getCache()->used() / ONE_MB));
+  ui->label_c2->setText(tr("Used : %1 MB").arg(g_hipsRenderer->manager()->getDiscCacheSize() / ONE_MB));
 
   // jpl de
   QList <jplData_t> jpl;
@@ -1036,9 +1036,9 @@ void CSetting::apply()
   g_skSet.map.gsc.fromMag = ui->doubleSpinBox_29->value();
 
   // aladin
-  g_aladinRenderer->manager()->writeSetting("aladin_mem_cache", (int)(ui->spinBox_8->value() * ONE_MB));
-  g_aladinRenderer->manager()->writeSetting("aladin_net_cache", (qint64)(ui->spinBox_9->value() * ONE_MB));
-  g_aladinRenderer->manager()->init();
+  g_hipsRenderer->manager()->writeSetting("aladin_mem_cache", (int)(ui->spinBox_8->value() * ONE_MB));
+  g_hipsRenderer->manager()->writeSetting("aladin_net_cache", (qint64)(ui->spinBox_9->value() * ONE_MB));
+  g_hipsRenderer->manager()->init();
 
   QSettings settings;
 
@@ -2542,6 +2542,6 @@ void CSetting::on_pushButton_74_clicked()
 {
   if (msgBoxQuest(this, tr("Empty disc cache?")) == QMessageBox::Yes)
   {
-    g_aladinRenderer->manager()->clearDiscCache();
+    g_hipsRenderer->manager()->clearDiscCache();
   }
 }

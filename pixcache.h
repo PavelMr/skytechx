@@ -1,7 +1,7 @@
 #ifndef PIXCACHE_H
 #define PIXCACHE_H
 
-#include "aladin.h"
+#include "hips.h"
 
 #include <QCache>
 

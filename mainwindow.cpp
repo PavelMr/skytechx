@@ -95,9 +95,9 @@
 #include "cskeventdocdialog.h"
 #include "skiconutils.h"
 #include "choreditorwidget.h"
-#include "aladinrenderer.h"
+#include "hipsrenderer.h"
 #include "cdownload.h"
-#include "aladinpropertiesdialog.h"
+#include "hipspropertiesdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -854,7 +854,7 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(toolButton, SIGNAL(toggled(bool)), ui->actionAladin_billinear, SLOT(setEnabled(bool)));
   connect(toolButton, SIGNAL(toggled(bool)), ui->actionAladin_properties, SLOT(setEnabled(bool)));
 
-  connect(g_aladinRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);      
+  connect(g_hipsRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);
 }
 
 void MainWindow::fillAladinSources()
@@ -1119,13 +1119,13 @@ void MainWindow::slotAladin()
   {
     qDebug() << "none";
 
-    aladinParams_t param;
+    hipsParams_t param;
     param.billinear = ui->actionAladin_billinear->isChecked();
     param.showGrid = ui->actionHEALPix_grid->isChecked();
     param.render = false;
     param.url = "";
     ui->actionAladin->setChecked(false);
-    g_aladinRenderer->setParam(param);
+    g_hipsRenderer->setParam(param);
     repaintMap();
     return;
   }
@@ -1165,15 +1165,15 @@ void MainWindow::slotAladinPropertiesDone(bool ok)
     return;
   }
 
-  aladinParams_t param;
+  hipsParams_t param;
 
-  if (g_aladinRenderer->manager()->parseProperties(&param, m_aladinProperties, m_aladinUrl))
+  if (g_hipsRenderer->manager()->parseProperties(&param, m_aladinProperties, m_aladinUrl))
   {
     param.showGrid = ui->actionHEALPix_grid->isChecked();
     param.billinear = ui->actionAladin_billinear->isChecked();
     param.render = true;
-    g_aladinRenderer->manager()->cancelAll();
-    g_aladinRenderer->setParam(param);
+    g_hipsRenderer->manager()->cancelAll();
+    g_hipsRenderer->setParam(param);
     ui->actionAladin->setChecked(true);
   }
   else
@@ -6605,7 +6605,7 @@ void MainWindow::on_actionLunar_features_triggered()
 
 void MainWindow::on_actionAladin_toggled(bool arg1)
 {    
-  aladinParams_t *param = g_aladinRenderer->getParam();
+  hipsParams_t *param = g_hipsRenderer->getParam();
 
   if (param->url.isEmpty())
   {
@@ -6620,7 +6620,7 @@ void MainWindow::on_actionAladin_toggled(bool arg1)
 
 void MainWindow::on_actionHEALPix_grid_toggled(bool arg1)
 {
-  aladinParams_t *param = g_aladinRenderer->getParam();
+  hipsParams_t *param = g_hipsRenderer->getParam();
 
   param->showGrid = arg1;
 
@@ -6629,7 +6629,7 @@ void MainWindow::on_actionHEALPix_grid_toggled(bool arg1)
 
 void MainWindow::on_actionAladin_billinear_toggled(bool arg1)
 {
-  aladinParams_t *param = g_aladinRenderer->getParam();
+  hipsParams_t *param = g_hipsRenderer->getParam();
 
   param->billinear = arg1;
 

@@ -15,7 +15,7 @@
 #include "clog.h"
 #include "systemsettings.h"
 #include "soundmanager.h"
-#include "aladinrenderer.h"
+#include "hipsrenderer.h"
 
 static QString LOG_FILE;
 
@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
   qDebug("SSL support %d", QSslSocket::supportsSsl());
   qDebug("Sound support %d", !QAudioDeviceInfo::availableDevices(QAudio::AudioOutput).isEmpty());
 
-  g_aladinRenderer = new AladinRenderer();
+  g_hipsRenderer = new HiPSRenderer();
 
   CLoadingDlg *dlg = new CLoadingDlg;
   dlg->exec();
