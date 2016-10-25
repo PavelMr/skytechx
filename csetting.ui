@@ -4625,7 +4625,7 @@
               <item>
                <widget class="QGroupBox" name="groupBox_38">
                 <property name="title">
-                 <string>Aladin sky overlay</string>
+                 <string>HiPS</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_117">
                  <item>

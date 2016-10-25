@@ -2543,5 +2543,6 @@ void CSetting::on_pushButton_74_clicked()
   if (msgBoxQuest(this, tr("Empty disc cache?")) == QMessageBox::Yes)
   {
     g_hipsRenderer->manager()->clearDiscCache();
+    ui->label_c2->setText(tr("Used : %1 MB").arg(g_hipsRenderer->manager()->getDiscCacheSize() / ONE_MB));
   }
 }
