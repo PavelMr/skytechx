@@ -272,7 +272,6 @@ void HiPSManager::clearDiscCache()
   g_discCache->clear();
 }
 
-// TODO: zrusit vsechny downloady pri zmene serveru
 void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
 {    
   if (error == QNetworkReply::NoError)
@@ -283,7 +282,16 @@ void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, 
 
     item->image = new QImage();
     if (item->image->loadFromData(data))
-    {      
+    {
+      /*
+      if (m_param.imageExtension == "png")
+      { // remove transparency
+        QImage *rgb = new QImage(item->image->convertToFormat(QImage::Format_RGB32));
+        delete item->image;
+        item->image = rgb;
+      }
+      */
+
       addToMemoryCache(key, item);
 
       emit sigRepaint();

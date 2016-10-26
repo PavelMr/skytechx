@@ -3,6 +3,7 @@
 #include <QPrintDialog>
 #include <omp.h>
 
+#include "cgeohash.h"
 #include "cmapview.h"
 #include "skcore.h"
 #include "tycho.h"
@@ -24,7 +25,6 @@
 #include "precess.h"
 #include "cteleplug.h"
 #include "cdrawing.h"
-#include "cgeohash.h"
 #include "cgetprofile.h"
 #include "cucac4.h"
 #include "soundmanager.h"

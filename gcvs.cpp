@@ -95,10 +95,11 @@ void GCVS::load()
     i++;
   } while (true);
 
+  /*
   test.removeDuplicates();
   qDebug() << test;
-
   qDebug() << "reading" << m_list.count() << "GCVS stars";
+  */
 }
 
 gcvs_t *GCVS::getStar(qint16 tyc1, qint16 tyc2, qint8 tyc3)

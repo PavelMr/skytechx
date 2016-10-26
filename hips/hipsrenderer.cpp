@@ -65,7 +65,7 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
   scanRender.enableBillinearInt(getParam()->billinear);
 
   int centerPix = m_HEALpix.getPix(level, ra, dec);
-  renderRec(allSky, level, centerPix, view, painter, pDest);
+  renderRec(allSky, level, centerPix, painter, pDest);
 
   scanRender.enableBillinearInt(old);  
 
@@ -75,14 +75,14 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
   }  
 }
 
-void HiPSRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view, CSkPainter *painter, QImage *pDest)
+void HiPSRenderer::renderRec(bool allsky, int level, int pix, CSkPainter *painter, QImage *pDest)
 {
   if (m_renderedMap.contains(pix))
   {
     return;
   }
 
-  if (renderPix(view, allsky, level ,pix, painter, pDest))
+  if (renderPix(allsky, level ,pix, painter, pDest))
   {
     m_renderedMap.insert(pix);
     int dirs[8];
@@ -90,14 +90,14 @@ void HiPSRenderer::renderRec(bool allsky, int level, int pix, mapView_t *view, C
 
     m_HEALpix.neighbours(nside, pix, dirs);    
 
-    renderRec(allsky, level, dirs[0], view, painter, pDest);
-    renderRec(allsky, level, dirs[2], view, painter, pDest);
-    renderRec(allsky, level, dirs[4], view, painter, pDest);
-    renderRec(allsky, level, dirs[6], view, painter, pDest);
+    renderRec(allsky, level, dirs[0], painter, pDest);
+    renderRec(allsky, level, dirs[2], painter, pDest);
+    renderRec(allsky, level, dirs[4], painter, pDest);
+    renderRec(allsky, level, dirs[6], painter, pDest);
   }    
 }
 
-bool HiPSRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix, CSkPainter *painter, QImage *pDest)
+bool HiPSRenderer::renderPix(bool allsky, int level, int pix, CSkPainter *painter, QImage *pDest)
 {  
   SKPOINT pts[4];
   bool freeImage;
@@ -121,7 +121,6 @@ bool HiPSRenderer::renderPix(mapView_t *view, bool allsky, int level, int pix, C
       m_rendered++;
       m_size += image->byteCount();
 
-      QPointF uvo[4] = {QPointF(1, 1), QPointF(1, 0), QPointF(0, 0),QPointF(0, 1)};
       QPointF uv[16][4] = {{QPointF(.25, .25), QPointF(0.25, 0), QPointF(0, .0),QPointF(0, .25)},
                            {QPointF(.25, .5), QPointF(0.25, 0.25), QPointF(0, .25),QPointF(0, .5)},
                            {QPointF(.5, .25), QPointF(0.5, 0), QPointF(.25, .0),QPointF(.25, .25)},

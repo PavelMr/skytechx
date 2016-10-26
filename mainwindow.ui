@@ -63,7 +63,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>40</x>
        <y>10</y>
        <width>311</width>
        <height>241</height>
@@ -1538,7 +1538,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_reset.png</normaloff>:/res/ico_reset.png</iconset>
              </property>
             </widget>
@@ -3826,7 +3826,7 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QToolBar" name="tb_aladin">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>HiPS (Hierarchical Progressive Surveys)</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>

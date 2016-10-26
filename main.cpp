@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 
   QCoreApplication::setOrganizationDomain("Frostware");
   QCoreApplication::setOrganizationName("PMR");
-  QCoreApplication::setApplicationName("SkytechX");
+  QCoreApplication::setApplicationName("SkytechX_beta");
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   QApplication a(argc, argv);
@@ -229,12 +229,30 @@ int main(int argc, char *argv[])
 
   QString languagePath = settings.value("language").toString();
 
-  QTranslator translator;
+  QTranslator translator;  
 
   if (!languagePath.isEmpty())
   {
     translator.load(languagePath);
     a.installTranslator(&translator);
+  }
+  else
+  {
+    QLocale loc;
+    QSettings set;
+    switch (loc.language())
+    {
+      case QLocale::Czech:
+        languagePath = "../languages/cesky.qm";
+        set.setValue("language", languagePath);
+        break;
+    }
+
+    if (!languagePath.isEmpty())
+    {
+      translator.load(languagePath);
+      a.installTranslator(&translator);
+    }
   }
 
   QLocale::setDefault(QLocale::c());

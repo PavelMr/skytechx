@@ -487,7 +487,7 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
       for (int x = px1; x < px2; x++)
       {
         const quint32 *pSrc = bitsSrc + ((int)(uv[0]) + (int)(uv[1]) * sw);
-        *pDst = *pSrc;
+        *pDst = (*pSrc) | (0xFF << 24);
         pDst++;
 
         uv[0] += duv[0];

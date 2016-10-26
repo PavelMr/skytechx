@@ -845,7 +845,7 @@ static void smRenderBackground(mapView_t *mapView, CSkPainter*, QImage *pImg)
   if (g_skSet.map.background.bStatic || (mapView->coordType != SMCT_ALT_AZM && g_skSet.map.background.useAltAzmOnly))
   {
     currentSkyColor = g_skSet.map.background.staticColor;
-    pImg->fill(g_skSet.map.background.staticColor);
+    pImg->fill(g_skSet.map.background.staticColor);    
     return;
   }
 
@@ -1427,7 +1427,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   if (g_showMW)
   {
     cMilkyWay.render(mapView, pPainter, pImg);
-  }
+  }  
 
   g_hipsRenderer->render(mapView, pPainter, pImg);
 

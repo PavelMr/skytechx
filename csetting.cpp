@@ -1035,7 +1035,7 @@ void CSetting::apply()
   g_skSet.map.gsc.fromFOV = D2R(ui->doubleSpinBox_28->value());
   g_skSet.map.gsc.fromMag = ui->doubleSpinBox_29->value();
 
-  // aladin
+  // HIPS
   g_hipsRenderer->manager()->writeSetting("hips_mem_cache", (int)(ui->spinBox_8->value() * ONE_MB));
   g_hipsRenderer->manager()->writeSetting("hips_net_cache", (qint64)(ui->spinBox_9->value() * ONE_MB));
   g_hipsRenderer->manager()->init();

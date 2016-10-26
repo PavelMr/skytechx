@@ -98,6 +98,7 @@
 #include "hipsrenderer.h"
 #include "cdownload.h"
 #include "hipspropertiesdialog.h"
+#include "cgeohash.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -172,7 +173,7 @@ MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
-  QSettings settings;
+  QSettings settings;  
 
   ui->setupUi(this);
 
@@ -3702,8 +3703,29 @@ void MainWindow::on_actionConnect_device_triggered()
       ui->widget->m_lastTeleRaDec.Dec = CM_UNDEF;
       g_soundManager.play(MC_CONNECT);
 
-      g_pTelePlugin->getAxisRates(m_raRates, m_decRates);
-      //g_pTelePlugin->setObserverLocation(15, 40, 123);
+      g_pTelePlugin->getAxisRates(m_raRates, m_decRates);      
+
+      switch (g_telePlugObsLocMode)
+      {
+        case TP_OBS_LOC_MODE_TO:
+          g_pTelePlugin->setObserverLocation(R2D(ui->widget->m_mapView.geo.lon),
+                                             R2D(ui->widget->m_mapView.geo.lat),
+                                             ui->widget->m_mapView.geo.alt);
+          break;
+
+        case TP_OBS_LOC_MODE_FROM:
+          {
+            double lon, lat, elev;
+            g_pTelePlugin->getObserverLocation(lon, lat, elev);
+            ui->widget->m_mapView.geo.name = "ASCOM Hand Pad";
+            ui->widget->m_mapView.geo.lon = D2R(lon);
+            ui->widget->m_mapView.geo.lat = D2R(lat);
+            ui->widget->m_mapView.geo.alt = elev;
+            ui->widget->m_mapView.geo.hash = CGeoHash::calculate(&ui->widget->m_mapView.geo);
+            setTitle();
+          }
+          break;
+      }
     }
     ui->widget->repaintMap();
     slotTimeUpdate();

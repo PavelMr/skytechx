@@ -13,22 +13,22 @@ CSelTelePlug::CSelTelePlug(QWidget *parent) :
 
   QSettings set;
 
-  ui->groupBox->hide();
+  //ui->groupBox->hide();
 
   g_telePlugObsLocMode = set.value("tp_obs_loc_mode", TP_OBS_LOC_MODE_NONE).toInt();
 
   switch (g_telePlugObsLocMode)
   {
     case TP_OBS_LOC_MODE_NONE:
-      ui->radioButton->setChecked(true);
+      ui->radioButton_3->setChecked(true);
       break;
 
     case TP_OBS_LOC_MODE_TO:
-      ui->radioButton_2->setChecked(true);
+      ui->radioButton->setChecked(true);
       break;
 
     case TP_OBS_LOC_MODE_FROM:
-      ui->radioButton_3->setChecked(true);
+      ui->radioButton_2->setChecked(true);
       break;
   }
 
@@ -84,16 +84,16 @@ void CSelTelePlug::on_pushButton_clicked()
 
   m_libName = item->data(Qt::UserRole).toString();
 
-  if (ui->radioButton->isChecked())
-    g_telePlugObsLocMode = TP_OBS_LOC_MODE_NONE;
-  else if (ui->radioButton_2->isChecked())
-    g_telePlugObsLocMode = TP_OBS_LOC_MODE_TO;
   if (ui->radioButton_3->isChecked())
+    g_telePlugObsLocMode = TP_OBS_LOC_MODE_NONE;
+  else if (ui->radioButton->isChecked())
+    g_telePlugObsLocMode = TP_OBS_LOC_MODE_TO;
+  if (ui->radioButton_2->isChecked())
     g_telePlugObsLocMode = TP_OBS_LOC_MODE_FROM;
 
   QSettings set;
 
-  set.setValue("tp_obs_loc_mode", g_telePlugObsLocMode);
+  set.setValue("tp_obs_loc_mode", g_telePlugObsLocMode);  
 
   done(DL_OK);
 }

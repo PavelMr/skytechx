@@ -880,7 +880,7 @@ void CAstro::setJPLEphems(QList <jplData_t> &ephem)
 {
   jplEphemList = ephem;
 
-  QFile f("../jplde.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/jplde/jplde.dat");
 
   if (f.open(QFile::WriteOnly | QFile::Text))
   {
@@ -899,12 +899,13 @@ static bool jplSort(const jplData_t &a, const jplData_t &b)
 
 void CAstro::initJPLEphems()
 {
-  QString path = "../data/jplde/";
+  QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/jplde/";
 
   QDirIterator it(path, QDirIterator::NoIteratorFlags);
   while (it.hasNext())
   {
     QFileInfo fi = it.next();
+
     if (fi.isFile())
     {
       jplData_t de;
@@ -941,7 +942,7 @@ void CAstro::initJPLEphems()
   // default sort
   qSort(jplEphemList.begin(), jplEphemList.end(), jplSort);
 
-  QFile f("../jplde.dat");
+  SkFile f(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/jplde/jplde.dat");
   QList <int> order;
 
   if (f.open(QFile::ReadOnly | QFile::Text))
