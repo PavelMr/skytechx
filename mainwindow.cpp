@@ -864,11 +864,25 @@ void MainWindow::fillAladinSources()
 
   QList <urlItem_t> items;
 
-  url.readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/aladin.url", &items);
+  url.readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/hips.url", &items);
 
   QActionGroup *group = new QActionGroup(this);
 
+  QList <QAction *> actionList = m_aladinMenu->actions();
+  QString lastUrl;
+
+  // get selection
+  foreach (const QAction *a, actionList)
+  {
+    if (a->isChecked())
+    {
+      lastUrl = a->data().toString();
+      break;
+    }
+  }
+
   m_aladinMenu->clear();
+  QAction *selAction = nullptr;
 
   QAction *action = new QAction(tr("None"), this);
   action->setCheckable(true);
@@ -877,6 +891,10 @@ void MainWindow::fillAladinSources()
   group->addAction(action);
   connect(action, SIGNAL(triggered()), SLOT(slotAladin()));
   m_actionAladinNone = action;
+  if (lastUrl == "")
+  {
+    selAction = action;
+  }
 
   m_aladinMenu->addSeparator();
 
@@ -884,13 +902,25 @@ void MainWindow::fillAladinSources()
   {
     QAction *action = new QAction(item.name, this);
     action->setCheckable(true);
+    if (lastUrl == item.url)
+    {
+      selAction = action;
+    }
     action->setData(item.url);
     m_aladinMenu->addAction(action);
     group->addAction(action);
-    connect(action, SIGNAL(triggered()), SLOT(slotAladin()));
+    connect(action, SIGNAL(triggered()), SLOT(slotAladin()));            
   }
 
-  m_actionAladinNone->trigger();
+  // restore selection
+  if (selAction)
+  {
+    selAction->trigger();
+  }
+  else
+  {
+    m_actionAladinNone->trigger();
+  }
 }
 
 
@@ -3444,6 +3474,7 @@ void MainWindow::on_actionSetting_triggered()
   ui->widget->m_zoom->setVisible(g_showZoomBar);
   setToolbarIconSize();
   setTitle();
+  fillAladinSources();
 }
 
 ///////////////////////////////////////////////////

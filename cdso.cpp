@@ -593,13 +593,20 @@ bool CDso::addAddon(const QString /*name*/)
 
 void CDso::applyNameFilter()
 {
+  bool param = g_skSet.map.dsoFilterType;
+
+  if (g_skSet.map.dsoFilter.isEmpty())
+  {
+    param = false;
+  }
+
   QStringList dsoFilterList = g_skSet.map.dsoFilter.remove(" ").split(";");
 
   for (qint32 i = 0; i < dsoHead.numDso; i++)
   {
     QString name = cDSO.getName(&dso[i]);
 
-    dso[i].show = true;
+    dso[i].show = !param;
 
     foreach (const QString &filter, dsoFilterList)
     {
@@ -613,7 +620,7 @@ void CDso::applyNameFilter()
 
       if (name.indexOf(re) == 0)
       {
-        dso[i].show = false;
+        dso[i].show = param;//g_skSet.map.dsoFilterType;
         break;
       }
     }

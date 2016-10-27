@@ -1,17 +1,11 @@
 #include "hipsrenderer.h"
-#include "healpix.h"
 #include "cscanrender.h"
 #include "transform.h"
 #include "precess.h"
 #include "skutils.h"
-
-extern int g_cacheHits;
-extern int g_cacheMiss;
+#include "setting.h"
 
 HiPSRenderer *g_hipsRenderer;
-
-HEALPix m_HEALpix;
-QSet <int> m_renderedMap;
 
 HiPSRenderer::HiPSRenderer()
 {
@@ -29,7 +23,7 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
 
   int level = 2;
 
-  double minfov = D2R(40);
+  double minfov = D2R(45);
   while( level < 9 && view->fov < minfov) { minfov /= 2; level++; }
 
   if (level > m_manager.getParam()->max_level)
@@ -170,7 +164,7 @@ bool HiPSRenderer::renderPix(bool allsky, int level, int pix, CSkPainter *painte
 
     if (getParam()->showGrid)
     {
-      painter->setPen(Qt::darkGray);
+      painter->setPen(g_skSet.map.drawing.color);
       painter->drawLine(pts[0].sx, pts[0].sy, pts[1].sx, pts[1].sy);
       painter->drawLine(pts[1].sx, pts[1].sy, pts[2].sx, pts[2].sy);
       painter->drawLine(pts[2].sx, pts[2].sy, pts[3].sx, pts[3].sy);

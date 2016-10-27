@@ -344,12 +344,7 @@ void CScanRender::renderPolygon(QPainter *p, int interpolation, SKPOINT *pts, QI
   QPointF Auv = uv[0];
   QPointF Buv = uv[1];
   QPointF Cuv = uv[2];
-  QPointF Duv = uv[3];
-
-  //QPointF Auv = QPointF(1, 1);
-  //QPointF Buv = QPointF(1, 0);
-  //QPointF Cuv = QPointF(0, 0);
-  //QPointF Duv = QPointF(0, 1);
+  QPointF Duv = uv[3];  
 
   if (interpolation < 2)
   {
@@ -418,41 +413,42 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
 {
   int w = dst->width();
   int sw = src->width();
-  double tsx = src->width() - 1;
-  double tsy = src->height() - 1;
+  float tsx = src->width() - 1;
+  float tsy = src->height() - 1;
   const quint32 *bitsSrc = (quint32 *)src->constBits();
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
-  bool bw = src->format() == QImage::Format_Indexed8 || src->format() == QImage::Format_Grayscale8;
+  bool bw = src->format() == QImage::Format_Indexed8 || src->format() == QImage::Format_Grayscale8;  
 
+  //#pragma omp parallel for
   for (int y = plMinY; y <= plMaxY; y++)
-  {
+  {   
     if (scan[y].scan[0] > scan[y].scan[1])
     {
       qSwap(scan[y].scan[0], scan[y].scan[1]);
       qSwap(scan[y].uv[0][0], scan[y].uv[1][0]);
       qSwap(scan[y].uv[0][1], scan[y].uv[1][1]);
-    }
+    }    
 
     int px1 = scan[y].scan[0];
     int px2 = scan[y].scan[1];
 
-    double dx = px2 - px1;
+    float dx = px2 - px1;
     if (dx == 0)
       continue;
 
-    double duv[2];
-    double uv[2];
+    float duv[2];
+    float uv[2];
 
-    duv[0] = (double)(scan[y].uv[1][0] - scan[y].uv[0][0]) / dx;
-    duv[1] = (double)(scan[y].uv[1][1] - scan[y].uv[0][1]) / dx;
+    duv[0] = (float)(scan[y].uv[1][0] - scan[y].uv[0][0]) / dx;
+    duv[1] = (float)(scan[y].uv[1][1] - scan[y].uv[0][1]) / dx;
 
     uv[0] = scan[y].uv[0][0];
     uv[1] = scan[y].uv[0][1];
 
     if (px1 < 0)
     {
-      double m = (double)-px1;
+      float m = (float)-px1;
 
       px1 = 0;
       uv[0] += duv[0] * m;
@@ -471,7 +467,7 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
     quint32 *pDst = bitsDst + (y * w) + px1;
 
     if (bw)
-    {
+    {            
       for (int x = px1; x < px2; x++)
       {
         const uchar *pSrc = (uchar *)bitsSrc + ((int)(uv[0]) + (int)(uv[1]) * sw);
@@ -480,13 +476,14 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
 
         uv[0] += duv[0];
         uv[1] += duv[1];
-      }
+      }      
     }
     else
     {
       for (int x = px1; x < px2; x++)
       {
-        const quint32 *pSrc = bitsSrc + ((int)(uv[0]) + (int)(uv[1]) * sw);
+        int offset = ((int)(uv[0]) + (int)(uv[1]) * sw);
+        const quint32 *pSrc = bitsSrc + offset;
         *pDst = (*pSrc) | (0xFF << 24);
         pDst++;
 
@@ -505,8 +502,8 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
   int w = dst->width();
   int sw = src->width();
   int sh = src->height();
-  double tsx = src->width() - 1;
-  double tsy = src->height() - 1;
+  float tsx = src->width() - 1;
+  float tsy = src->height() - 1;
   const quint32 *bitsSrc = (quint32 *)src->constBits();
   const uchar *bitsSrc8 = (uchar *)src->constBits();
   quint32 *bitsDst = (quint32 *)dst->bits();
@@ -526,22 +523,22 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
     int px1 = scan[y].scan[0];
     int px2 = scan[y].scan[1];
 
-    double dx = px2 - px1;
+    float dx = px2 - px1;
     if (dx == 0)
       continue;
 
-    double duv[2];
-    double uv[2];
+    float duv[2];
+    float uv[2];
 
-    duv[0] = (double)(scan[y].uv[1][0] - scan[y].uv[0][0]) / dx;
-    duv[1] = (double)(scan[y].uv[1][1] - scan[y].uv[0][1]) / dx;
+    duv[0] = (float)(scan[y].uv[1][0] - scan[y].uv[0][0]) / dx;
+    duv[1] = (float)(scan[y].uv[1][1] - scan[y].uv[0][1]) / dx;
 
     uv[0] = scan[y].uv[0][0];
     uv[1] = scan[y].uv[0][1];
 
     if (px1 < 0)
     {
-      double m = (float)-px1;
+      float m = (float)-px1;
 
       px1 = 0;
       uv[0] += duv[0] * m;
@@ -564,10 +561,10 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
     {
       for (int x = px1; x < px2; x++)
       {
-        double x_diff = uv[0] - static_cast<int>(uv[0]);
-        double y_diff = uv[1] - static_cast<int>(uv[1]);
-        double x_1diff = 1 - x_diff;
-        double y_1diff = 1 - y_diff;
+        float x_diff = uv[0] - static_cast<int>(uv[0]);
+        float y_diff = uv[1] - static_cast<int>(uv[1]);
+        float x_1diff = 1 - x_diff;
+        float y_1diff = 1 - y_diff;
 
         int index = ((int)uv[0] + ((int)uv[1] * sw));
 
@@ -594,10 +591,10 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
     {
       for (int x = px1; x < px2; x++)
       {
-        double x_diff = uv[0] - static_cast<int>(uv[0]);
-        double y_diff = uv[1] - static_cast<int>(uv[1]);
-        double x_1diff = 1 - x_diff;
-        double y_1diff = 1 - y_diff;
+        float x_diff = uv[0] - static_cast<int>(uv[0]);
+        float y_diff = uv[1] - static_cast<int>(uv[1]);
+        float x_1diff = 1 - x_diff;
+        float y_1diff = 1 - y_diff;
 
         int index = ((int)uv[0] + ((int)uv[1] * sw));
 
@@ -606,29 +603,22 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
         quint32 c = bitsSrc[(index + sw) % size];
         quint32 d = bitsSrc[(index + sw + 1) % size];
 
-        double xy1 = x_1diff * y_1diff;
-        double xy2 = x_diff * y_1diff;
-        double xy = x_diff * y_diff;
-        double yx1 = y_diff * x_1diff;
+        int qxy1 = (x_1diff * y_1diff) * 65536;
+        int qxy2 =(x_diff * y_1diff) * 65536;
+        int qxy = (x_diff * y_diff) * 65536;
+        int qyx1 = (y_diff * x_1diff) * 65536;
 
         // blue element
-        int blue = (a&0xff)*(xy1) + (b&0xff)*(xy2) +
-                   (c&0xff)*(yx1)  + (d&0xff)*(xy);
+        int blue = ((a&0xff)*(qxy1) + (b&0xff)*(qxy2) + (c&0xff)*(qyx1)  + (d&0xff)*(qxy)) >> 16;
 
         // green element
-        int green = ((a>>8)&0xff)*(xy1) + ((b>>8)&0xff)*(xy2) +
-                    ((c>>8)&0xff)*(yx1)  + ((d>>8)&0xff)*(xy);
+        int green = (((a>>8)&0xff)*(qxy1) + ((b>>8)&0xff)*(qxy2) + ((c>>8)&0xff)*(qyx1)  + ((d>>8)&0xff)*(qxy)) >> 16;
 
         // red element
-        int red = ((a>>16)&0xff)*(xy1) + ((b>>16)&0xff)*(xy2) +
-                  ((c>>16)&0xff)*(yx1)  + ((d>>16)&0xff)*(xy);
+        int red = (((a>>16)&0xff)*(qxy1) + ((b>>16)&0xff)*(qxy2) +((c>>16)&0xff)*(qyx1)  + ((d>>16)&0xff)*(qxy)) >> 16;
 
-        // ????: pretypovani to zrychly
+        *pDst = 0xff000000 |  (((red)<<16)&0xff0000) | (((green)<<8)&0xff00) | (blue) ;
 
-        *pDst = 0xff000000 |
-                ((((int)red)<<16)&0xff0000) |
-                ((((int)green)<<8)&0xff00) |
-                ((int)blue) ;
         pDst++;
 
         uv[0] += duv[0];
@@ -646,6 +636,7 @@ void CScanRender::renderPolygonAlpha(QImage *dst, QImage *src)
     renderPolygonAlphaNI(dst, src);
 }
 
+
 void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
 {
   int w = dst->width();
@@ -657,6 +648,7 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
   bool bw = src->format() == QImage::Format_Indexed8;
+  float opacity = (m_opacity / 65536.) * 0.00390625f;
 
   #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
   for (int y = plMinY; y <= plMaxY; y++)
@@ -738,7 +730,7 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
       */
     }
     else
-    {
+    {      
       for (int x = px1; x < px2; x++)
       {
         float x_diff = uv[0] - static_cast<int>(uv[0]);
@@ -753,32 +745,35 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
         quint32 c = bitsSrc[(index + sw) % size];
         quint32 d = bitsSrc[(index + sw + 1) % size];
 
-        float x1y1 = x_1diff * y_1diff;
-        float xy = x_diff * y_diff;
-        float x1y = y_diff * x_1diff;
-        float xy1 = x_diff *y_1diff;
+        int x1y1 = (x_1diff * y_1diff) * 65536;
+        int xy = (x_diff * y_diff) * 65536;
+        int x1y = (y_diff * x_1diff) * 65536;
+        int xy1 = (x_diff *y_1diff) * 65536;
 
-        float alpha = 0.00390625f * (((a>>24)&0xff)*(x1y1) + ((b>>24)&0xff)*(xy1) +
-                     ((c>>24)&0xff)*(x1y) + ((d>>24)&0xff)*(xy)) * m_opacity;
+        float alpha = ((((a>>24)&0xff)*(x1y1) + ((b>>24)&0xff)*(xy1) +
+                        ((c>>24)&0xff)*(x1y) + ((d>>24)&0xff)*(xy)) * opacity);
 
         if (alpha > 0.00390625f) // > 1 / 256.
         {
           // blue element
-          int blue = (a&0xff)*(x1y1) + (b&0xff)* (xy1) +
-                     (c&0xff)*(x1y)  + (d&0xff)*(xy);
+          int blue = ((a&0xff)*(x1y1) + (b&0xff)* (xy1) +
+                     (c&0xff)*(x1y)  + (d&0xff)*(xy)) >> 16;
 
           // green element
-          int green = ((a>>8)&0xff)*(x1y1) + ((b>>8)&0xff)*(xy1) +
-                      ((c>>8)&0xff)*(x1y)  + ((d>>8)&0xff)*(xy);
+          int green = (((a>>8)&0xff)*(x1y1) + ((b>>8)&0xff)*(xy1) +
+                      ((c>>8)&0xff)*(x1y)  + ((d>>8)&0xff)*(xy)) >> 16;
 
           // red element
-          int red = ((a>>16)&0xff)*(x1y1) + ((b>>16)&0xff)*(xy1) +
-                    ((c>>16)&0xff)*(x1y)  + ((d>>16)&0xff)*(xy);
+          int red = (((a>>16)&0xff)*(x1y1) + ((b>>16)&0xff)*(xy1) +
+                    ((c>>16)&0xff)*(x1y)  + ((d>>16)&0xff)*(xy)) >> 16;
 
-          *pDst = qRgb(LERP(alpha, qRed(*pDst),  red),
-                       LERP(alpha, qGreen(*pDst), green),
-                       LERP(alpha, qBlue(*pDst), blue)
-                       );
+          int rd = qRed(*pDst);
+          int gd = qGreen(*pDst);
+          int bd = qBlue(*pDst);
+
+          *pDst = qRgb(LERP(alpha, rd,  red),
+                       LERP(alpha, gd, green),
+                       LERP(alpha, bd, blue));
         }
 
         pDst++;
@@ -802,6 +797,7 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
   const quint32 *bitsSrc = (quint32 *)src->constBits();
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
+  float opacity = 0.00390625f * m_opacity;
 
   #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
   for (int y = plMinY; y <= plMaxY; y++)
@@ -854,7 +850,7 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
       const quint32 *pSrc = bitsSrc + ((int)(uv[0])) + ((int)(uv[1]) * sw);
       QRgb rgbs = *pSrc;
       QRgb rgbd = *pDst;
-      float a = qAlpha(*pSrc) * 0.00390625f * m_opacity;
+      float a = qAlpha(*pSrc) * opacity;
 
       if (a > 0.00390625f)
       {

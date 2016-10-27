@@ -21,6 +21,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "const.h"
 
 void rangeDbl(double *val, double rng);
+void xyz2sph(const QVector3D &vec, double &l, double &b);
 
 inline bool equals(double a, double b, double tolerance = SECTODAY(0.1))
 {

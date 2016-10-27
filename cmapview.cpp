@@ -2062,7 +2062,7 @@ void CMapView::paintEvent(QPaintEvent *)
     if (trfProjectPoint(&pt))
     { // draw meassure cross
       p.setPen(QPen(QBrush(g_skSet.map.measurePoint.color), g_skSet.map.measurePoint.width, (Qt::PenStyle)g_skSet.map.measurePoint.style));
-      p.drawCross(pt.sx, pt.sy, 10);
+      p.drawHalfCross(pt.sx, pt.sy, 12, 8);
     }
   }
 

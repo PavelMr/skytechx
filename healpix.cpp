@@ -1,114 +1,11 @@
 #include "healpix.h"
 #include "transform.h"
 
-////////////////
-/// \brief HEALPix::getPix
-/// \param level
-/// \param ra
-/// \param dec
-/// \return
-////////////////////
-///
-
-#define	EQtoGAL	1
-#define	GALtoEQ	(-1)
-#define	SMALL	(1e-20)
-
-static void galeq_aux (int sw, double x, double y, double *p, double *q);
-static void galeq_init (void);
-
-static double an = DEG2RAD(32.93192);    /* G lng of asc node on equator */
-static double gpr = DEG2RAD(192.85948);  /* RA of North Gal Pole, 2000 */
-static double gpd = DEG2RAD(27.12825);   /* Dec of  " */
-static double cgpd, sgpd;		/* cos() and sin() of gpd */
-static double mj2000;			/* mj of 2000 */
-static int before;			/* whether these have been set yet */
-
-/* given ra and dec, each in radians, for the given epoch, find the
- * corresponding galactic latitude, *lt, and longititude, *lg, also each in
- * radians.
- */
-void
-eq_gal (double mj, double ra, double dec, double *lt, double *lg)
-{
-  galeq_init();
-  //precess (mj, mj2000, &ra, &dec);
-  galeq_aux (EQtoGAL, ra, dec, lg, lt);
-}
-
-/* given galactic latitude, lt, and longititude, lg, each in radians, find
- * the corresponding equitorial ra and dec, also each in radians, at the
- * given epoch.
- */
-void
-gal_eq (double mj, double lt, double lg, double *ra, double *dec)
-{
-  galeq_init();
-  galeq_aux (GALtoEQ, lg, lt, ra, dec);
-  //precess (mj2000, mj, ra, dec);
-}
-
-static void
-galeq_aux (
-int sw,			/* +1 for eq to gal, -1 for vv. */
-double x, double y,	/* sw==1: x==ra, y==dec.  sw==-1: x==lg, y==lt. */
-double *p, double *q)	/* sw==1: p==lg, q==lt. sw==-1: p==ra, q==dec. */
-{
-  double sy, cy, a, ca, sa, b, sq, c, d;
-
-  cy = cos(y);
-  sy = sin(y);
-  a = x - an;
-  if (sw == EQtoGAL)
-      a = x - gpr;
-  ca = cos(a);
-  sa = sin(a);
-  b = sa;
-  if (sw == EQtoGAL)
-      b = ca;
-  sq = (cy*cgpd*b) + (sy*sgpd);
-  *q = asin (sq);
-
-  if (sw == GALtoEQ) {
-      c = cy*ca;
-      d = (sy*cgpd) - (cy*sgpd*sa);
-      if (fabs(d) < SMALL)
-    d = SMALL;
-      *p = atan (c/d) + gpr;
-  } else {
-      c = sy - (sq*sgpd);
-      d = cy*sa*cgpd;
-      if (fabs(d) < SMALL)
-    d = SMALL;
-      *p = atan (c/d) + an;
-  }
-
-  if (d < 0) *p += MPI;
-  if (*p < 0) *p += 2*MPI;
-  if (*p > 2*MPI) *p -= 2*MPI;
-}
-
-/* set up the definitions */
-static void
-galeq_init()
-{
-  if (!before) {
-      cgpd = cos (gpd);
-      sgpd = sin (gpd);
-      //mj2000 = J2000;
-      before = 1;
-  }
-}
-
-
-///
-///
-
-static const double twothird=2.0/3.0;
-static const double pi=3.141592653589793238462643383279502884197;
-static const double twopi=6.283185307179586476925286766559005768394;
-static const double halfpi=1.570796326794896619231321691639751442099;
-static const double inv_halfpi=0.6366197723675813430755350534900574;
+static const double twothird = 2.0/3.0;
+static const double pi = 3.141592653589793238462643383279502884197;
+static const double twopi = 6.283185307179586476925286766559005768394;
+static const double halfpi = 1.570796326794896619231321691639751442099;
+static const double inv_halfpi = 0.6366197723675813430755350534900574;
 
 static const int jrll[] = { 2,2,2,2,3,3,3,3,4,4,4,4 };
 static const int jpll[] = { 1,3,5,7,0,2,4,6,1,3,5,7 };
@@ -147,7 +44,7 @@ static short facearray[9][12] =
           {  3, 0, 1, 2, 3, 0, 1, 2, 4, 5, 6, 7 },   // NW
           {  2, 3, 0, 1,-1,-1,-1,-1, 0, 1, 2, 3 } }; // N
 
-  static uchar swaparray[9][12] =
+static uchar swaparray[9][12] =
         { { 0,0,3 },   // S
           { 0,0,6 },   // SE
           { 0,0,0 },   // E
@@ -310,7 +207,7 @@ static int xyf2nest (int nside, int ix, int iy, int face_num)
 }
 
 
-int static LeadingZeros(long value)
+int static leadingZeros(long value)
 {
   int leadingZeros = 0;
   while(value != 0)
@@ -324,7 +221,7 @@ int static LeadingZeros(long value)
 
 static int ilog2(long arg)
 {
-  return 32 - LeadingZeros(qMax(arg, 1L));
+  return 32 - leadingZeros(qMax(arg, 1L));
 }
 
 static int nside2order(long nside)
@@ -457,9 +354,19 @@ int HEALPix::getPix(int level, double ra, double dec)
     polar[1] = ra;
   }
   else if (m_param->frame == HIPS_FRAME_GAL)
-  {
-    // TODO: pouzit jinou funkci
-    eq_gal(0, ra, dec, &polar[0], &polar[1]);
+  {    
+    static QMatrix4x4 gl(-0.0548762f, -0.873437f, -0.483835f,  0,
+                          0.4941100f, -0.444830f,  0.746982f,  0,
+                         -0.8676660f, -0.198076f,  0.455984f,  0,
+                          0,           0,          0,          1);
+
+    double rcb = cos(dec);
+    QVector3D xyz = QVector3D(rcb * cos(ra),
+                              rcb * sin(ra),
+                              sin(dec));
+
+    xyz = gl.mapVector(xyz);
+    xyz2sph(xyz, polar[1], polar[0]);
   }
 
   return ang2pix_nest_z_phi(nside, sin(polar[0]), polar[1]);

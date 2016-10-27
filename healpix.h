@@ -22,7 +22,6 @@ private:
   int ang2pix_nest_z_phi(long nside_, double z, double phi);
 
   hipsParams_t *m_param;
-
 };
 
 #endif // HEALPIX_H

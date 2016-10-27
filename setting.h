@@ -254,6 +254,7 @@ typedef struct
   double     dsoNoMagFadeFOV;
   bool       dsoFadeTo;
   QString    dsoFilter;  
+  bool       dsoFilterType;
 
   setGrid_t  grid[SMCT_COUNT];
   bool       autoGrid;

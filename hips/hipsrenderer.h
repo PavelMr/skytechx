@@ -4,6 +4,7 @@
 #include "cmapview.h"
 #include "cskpainter.h"
 #include "hipsmanager.h"
+#include "healpix.h"
 
 class HiPSRenderer : public QObject
 {
@@ -24,9 +25,11 @@ public slots:
 
 private:
   HiPSManager m_manager;
-  int m_blocks;
-  int m_rendered;
-  int m_size;  
+  int         m_blocks;
+  int         m_rendered;
+  int         m_size;
+  QSet <int>  m_renderedMap;
+  HEALPix     m_HEALpix;
 };
 
 extern HiPSRenderer *g_hipsRenderer;

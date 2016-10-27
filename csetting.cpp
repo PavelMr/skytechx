@@ -367,6 +367,8 @@ void CSetting::setValues()
 
   // DSO
   ui->le_dso_filter->setText(g_skSet.map.dsoFilter);
+  ui->radioButton_5->setChecked(set.map.dsoFilterType);
+  ui->radioButton_6->setChecked(!set.map.dsoFilterType);
 
   QStandardItemModel *model = new QStandardItemModel(0, 2, NULL);
   ui->treeView->setRootIsDecorated(false);
@@ -686,6 +688,9 @@ void CSetting::setValues()
   CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url", &strList);
   fillAstComList(ui->treeWidgetSat, strList);
 
+  CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/hips.url", &strList);
+  fillAstComList(ui->treeWidgetHiPS, strList);
+
   on_tabWidget_currentChanged(0); // fill urls
 }
 
@@ -816,6 +821,8 @@ void CSetting::apply()
   getAstComList(ui->treeWidgetSat, strList);
   CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/art_sat.url", &strList);
 
+  getAstComList(ui->treeWidgetHiPS, strList);
+  CUrlFile::writeFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/hips.url", &strList);
 
   // stars
   g_skSet.map.star.propNamesFromFov = D2R(ui->doubleSpinBox->value());
@@ -833,10 +840,7 @@ void CSetting::apply()
   g_skSet.map.starBitmapName = ui->comboBox->itemData(ui->comboBox->currentIndex()).toString();
   g_skSet.map.star.saturation = ui->spinBox_5->value();
 
-  qDebug() << "1";
-  cStarRenderer.open(g_skSet.map.starBitmapName);
-  qDebug() << "2";
-  //cStarRenderer.setConfig(&g_skSet);
+  cStarRenderer.open(g_skSet.map.starBitmapName);  
 
   g_skSet.map.star.showProperMotion = ui->cb_properMotion->isChecked();
   g_skSet.map.star.properMotionYearVec = ui->sb_pmYears->value();
@@ -868,7 +872,8 @@ void CSetting::apply()
   g_skSet.map.starRange[9].fromFov = D2R(ui->doubleSpinBox_23->value());
 
   // DSO
-  g_skSet.map.dsoFilter = ui->le_dso_filter->text();
+  g_skSet.map.dsoFilter = ui->le_dso_filter->text().simplified();
+  g_skSet.map.dsoFilterType = ui->radioButton_5->isChecked();
   cDSO.applyNameFilter();
 
   QStandardItemModel *model = (QStandardItemModel *)ui->treeView->model();
@@ -2544,5 +2549,22 @@ void CSetting::on_pushButton_74_clicked()
   {
     g_hipsRenderer->manager()->clearDiscCache();
     ui->label_c2->setText(tr("Used : %1 MB").arg(g_hipsRenderer->manager()->getDiscCacheSize() / ONE_MB));
+  }
+}
+
+void CSetting::on_toolButton_3_clicked()
+{
+  ui->le_dso_filter->clear();
+}
+
+void CSetting::on_pushButton_76_clicked()
+{
+  if (resetQuestion())
+  {
+    copyFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/default/hips.url",
+             QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/hips.url");
+    QList<urlItem_t> strList;
+    CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/hips.url", &strList);
+    fillAstComList(ui->treeWidgetHiPS, strList);
   }
 }
