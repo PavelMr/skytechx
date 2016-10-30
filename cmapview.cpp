@@ -69,6 +69,7 @@ extern bool    g_showZoomBar;
 
 bool g_nightRepaint = false;
 
+
 ///////////////////////////////////
 
 
@@ -1918,7 +1919,7 @@ void CMapView::paintEvent(QPaintEvent *)
   if (m_zoomLens)
   {
     double scale = 4;
-    int radius = 180;
+    int radius = 0.5 * height() * 0.35; // TODO: do nastaveni
     QPoint pos = mapFromGlobal(cursor().pos());
     QRect rect = QRect(pos.x() - radius, pos.y() - radius, radius * 2, radius * 2);
 

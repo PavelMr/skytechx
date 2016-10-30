@@ -2335,6 +2335,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
 
   addSeparator(item);
 
+  beginExtInfo();
   if (item->par1 != PT_MOON)
   {
     double lon, lat;
@@ -2375,7 +2376,6 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
 
     CAstro::sphToXYZ(lon, lat, o.r, hx, hy, hz);
 
-    beginExtInfo();
     addSeparator(item);
     addTextItem(item, tr("X"), QString::number(hx, 'f', 8) + " " + tr("AU"));
     addTextItem(item, tr("Y"), QString::number(hy, 'f', 8) + " " + tr("AU"));
@@ -2384,8 +2384,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     addSeparator(item);
     addTextItem(item, tr("VX"), getStrNumber("", vhx, 8, " " + tr("AU/day"), true));
     addTextItem(item, tr("VY"), getStrNumber("", vhy, 8, " " + tr("AU/day"), true));
-    addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));
-    endExtInfo();
+    addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));    
 
     addSeparator(item);
     addTextItem(item, tr("Longitude"), getStrDeg(lon));
@@ -2394,6 +2393,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     addTextItem(item, tr("r"), QString::number(o.r) + tr("AU"));
     addSeparator(item);
   }
+  endExtInfo();
 
   addLabelItem(item, tr("Apparent view"));
   addSeparator(item);

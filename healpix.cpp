@@ -1,5 +1,4 @@
 #include "healpix.h"
-#include "transform.h"
 
 static const double twothird = 2.0/3.0;
 static const double pi = 3.141592653589793238462643383279502884197;

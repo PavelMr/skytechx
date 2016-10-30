@@ -21,15 +21,11 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
 
   m_HEALpix.setParam(m_manager.getParam());
 
-  int level = 2;
+  int level = 1;
 
-  double minfov = D2R(45);
-  while( level < 9 && view->fov < minfov) { minfov /= 2; level++; }
+  double minfov = D2R(58.5);
 
-  if (level > m_manager.getParam()->max_level)
-  {
-    level = m_manager.getParam()->max_level;
-  }
+  while( level < m_manager.getParam()->max_level  && view->fov < minfov) { minfov /= 2; level++; }
 
   m_renderedMap.clear();
   m_rendered = 0;
@@ -53,20 +49,22 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
   else
   {
     allSky = false;
-  }   
-
-  bool old = scanRender.isBillinearInt();
-  scanRender.enableBillinearInt(getParam()->billinear);
+  }         
 
   int centerPix = m_HEALpix.getPix(level, ra, dec);
+
+  // calculate healpix grid edge in pixels
+  SKPOINT pts[4];
+  m_HEALpix.getCornerPoints(level, centerPix, pts);
+  for (int i = 0; i < 2; i++) trfProjectPointNoCheck(&pts[i]);
+  int size = sqrt(POW2(pts[0].sx - pts[1].sx) + POW2(pts[0].sy - pts[1].sy));
+
+  bool old = scanRender.isBillinearInt();
+  scanRender.enableBillinearInt(getParam()->billinear && (size >= getParam()->tileWidth || allSky));
+
   renderRec(allSky, level, centerPix, painter, pDest);
 
-  scanRender.enableBillinearInt(old);  
-
-  if (m_blocks != m_rendered)
-  { // repaint
-    //emit m_manager.sigRepaint(); // it is slow
-  }  
+  scanRender.enableBillinearInt(old);    
 }
 
 void HiPSRenderer::renderRec(bool allsky, int level, int pix, CSkPainter *painter, QImage *pDest)

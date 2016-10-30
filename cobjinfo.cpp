@@ -416,7 +416,7 @@ void CObjInfo::on_cb_copy1_clicked()
 
   precess(&ra, &dec, JD2000, m_map->m_mapView.jd);
 
-  QString     str = getStrRA(ra) + " "  + getStrDeg(dec);
+  QString str = getStrRA(ra) + " "  + getStrDeg(dec);
 
   clipboard->setText(str);
 }
@@ -434,7 +434,6 @@ void CObjInfo::on_tabWidget_currentChanged(int)
 {
   m_pixmapWidget->setPixmap(getPlanetPixmap(m_pixmapWidget->width(), m_pixmapWidget->height()));
 }
-
 
 
 void CObjInfo::on_pushButton_3_clicked()

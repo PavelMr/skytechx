@@ -130,8 +130,6 @@ QImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
     return nullptr;
   }    
 
-
-
   if (item)
   {        
     QImage *cacheImage = item->image;
@@ -317,7 +315,7 @@ void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, 
 }
 
 void HiPSManager::removeTimer(pixCacheKey_t &key)
-{
+{  
   m_downloadMap.remove(key);
   sender()->deleteLater();
   emit sigRepaint();

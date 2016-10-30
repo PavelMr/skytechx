@@ -844,16 +844,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // aladin source //////////////////////////////////
 
-  m_aladinMenu = new QMenu();
+  m_aladinMenu = new QMenu();  
+
+  m_hipsToolButton = dynamic_cast<QToolButton *>(ui->tb_aladin->widgetForAction(ui->actionAladin));
+  m_hipsToolButton->setMenu(m_aladinMenu);
+  m_hipsToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+
   fillAladinSources();
 
-  QToolButton *toolButton = dynamic_cast<QToolButton *>(ui->tb_aladin->widgetForAction(ui->actionAladin));
-  toolButton->setMenu(m_aladinMenu);  
-  toolButton->setPopupMode(QToolButton::MenuButtonPopup);  
+  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHEALPix_grid, SLOT(setEnabled(bool)));
+  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionAladin_billinear, SLOT(setEnabled(bool)));
+  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionAladin_properties, SLOT(setEnabled(bool)));
 
-  connect(toolButton, SIGNAL(toggled(bool)), ui->actionHEALPix_grid, SLOT(setEnabled(bool)));
-  connect(toolButton, SIGNAL(toggled(bool)), ui->actionAladin_billinear, SLOT(setEnabled(bool)));
-  connect(toolButton, SIGNAL(toggled(bool)), ui->actionAladin_properties, SLOT(setEnabled(bool)));
+  ui->actionAladin_billinear->setChecked(settings.value("hips_bi", false).toBool());
 
   connect(g_hipsRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);
 }
@@ -910,15 +913,18 @@ void MainWindow::fillAladinSources()
     m_aladinMenu->addAction(action);
     group->addAction(action);
     connect(action, SIGNAL(triggered()), SLOT(slotAladin()));            
-  }
+  }  
 
   // restore selection
   if (selAction)
   {
-    selAction->trigger();
+    if (m_hipsToolButton->isChecked())
+    {
+      selAction->trigger();
+    }
   }
   else
-  {
+  {    
     m_actionAladinNone->trigger();
   }
 }
@@ -1430,6 +1436,8 @@ void MainWindow::saveAndExit()
 
   settings.setValue("info_auto_update", ui->checkBox_5->isChecked());
   settings.setValue("show_extra_info", ui->cb_extInfo->isChecked());
+
+  settings.setValue("hips_bi", ui->actionAladin_billinear->isChecked());
 
   lfParam_t lfp;
   QByteArray data;

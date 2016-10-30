@@ -692,6 +692,7 @@ private:
   QString m_aladinTmpUrl;
   QString m_aladinProperties;
   QString m_aladinUrl;
+  QToolButton *m_hipsToolButton;
 
   void setTitle();
   void restoreDSSList();
