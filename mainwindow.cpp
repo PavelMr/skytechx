@@ -253,7 +253,6 @@ MainWindow::MainWindow(QWidget *parent) :
   ItemDelegate *delegate = new ItemDelegate();
   ui->lv_quickInfo->setItemDelegate(delegate);
 
-
   connect(ui->dockWidget, SIGNAL(visibilityChanged(bool)), this, SLOT(slotDockBarVis(bool)));
   connect(ui->dockTime, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTimeVis(bool)));
   connect(ui->dockTele, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTeleVis(bool)));
@@ -693,7 +692,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_2));
     ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_3));
-  }  
+  }    
 
   m_webView = new QWebEngineView(this);
 
@@ -711,7 +710,7 @@ MainWindow::MainWindow(QWidget *parent) :
   tb->addAction(m_webView->pageAction(QWebEnginePage::Stop));
   tb->addAction(ui->actionShow_help);
   tb->addSeparator();
-  tb->addAction(openWebHelp);
+  tb->addAction(openWebHelp);  
 
   connect(openWebHelp, SIGNAL(triggered()), this, SLOT(slotOpenWebHelp()));
 
@@ -818,10 +817,9 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->comboBox_4, SIGNAL(currentIndexChanged(int)), ui->widget_2, SLOT(setStyle(int)));
   int index = settings.value("clock_type", 0).toInt();
   ui->comboBox_4->setCurrentIndex(index);
-  ui->widget_2->setStyle(index);
+  ui->widget_2->setStyle(index);  
 
   cDSO.applyNameFilter();
-
   restoreDSSList();
 
   setTitle();
@@ -893,11 +891,7 @@ void MainWindow::fillAladinSources()
   m_aladinMenu->addAction(action);
   group->addAction(action);
   connect(action, SIGNAL(triggered()), SLOT(slotAladin()));
-  m_actionAladinNone = action;
-  if (lastUrl == "")
-  {
-    selAction = action;
-  }
+  m_actionAladinNone = action;  
 
   m_aladinMenu->addSeparator();
 
@@ -905,7 +899,7 @@ void MainWindow::fillAladinSources()
   {
     QAction *action = new QAction(item.name, this);
     action->setCheckable(true);
-    if (lastUrl == item.url)
+    if (lastUrl == item.url && !action->isSeparator())
     {
       selAction = action;
     }
@@ -917,7 +911,7 @@ void MainWindow::fillAladinSources()
 
   // restore selection
   if (selAction)
-  {
+  {    
     if (m_hipsToolButton->isChecked())
     {
       selAction->trigger();

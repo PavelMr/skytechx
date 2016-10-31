@@ -7,7 +7,7 @@ CStatusBar::CStatusBar(QStatusBar *pBar)
 {
   pStatusBar = pBar;
   m_movie = new QMovie(":/res/loading._ico.gif");
-  qDebug() << "init" << m_movie->isValid();
+  qDebug() << "init sb" << m_movie->isValid();
 }
 
 //////////////////////////////////////
