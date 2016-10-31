@@ -75,7 +75,13 @@ class CTycho : public QObject
     CTycho();
     bool load();
 
-    float getVisMag(tychoStar_t *s)
+    inline void getStarPos(radec_t &rd, tychoStar_t *s, double yr)
+    {
+      rd.Ra = s->rd.Ra + (D2R(s->pmRa / 1000.0 / 3600.0) * yr * cos(s->rd.Dec));
+      rd.Dec = s->rd.Dec + D2R(s->pmDec / 1000.0 / 3600.0) * yr;
+    }
+
+    inline float getVisMag(tychoStar_t *s)
     {
       float bt = TYC_SHORT_TO_MAG(s->BTmag);
       float vt = TYC_SHORT_TO_MAG(s->VTmag);
@@ -86,6 +92,7 @@ class CTycho : public QObject
     tychoRegion2_t *getRegion(int reg);
     QString         getStarName(tychoSupp_t *supp);
     bool            getStar(tychoStar_t **p, int reg, int no);
+    tychoStar_t    *getStar(int reg, int no);
     QString         getFlamsteedStr(tychoSupp_t *supp, bool &found);
     QString         getBayerStr(tychoSupp_t *supp, bool &found);
     QString         getBayerFullStr(tychoSupp_t *supp, bool &found);
@@ -97,7 +104,7 @@ class CTycho : public QObject
     QList   <tychoStar_t *>  tNames;         // list ptrs. to stars with proper name
 
     static QString getGreekChar(int i);
-protected:
+//protected:
     tychoHead_t       m_head;
     tychoRegion2_t   *m_region;
     QByteArray        m_names;

@@ -78,6 +78,11 @@ public:
   ucac4Region_t *getStar(ucac4Star_t &s, int reg, int index);
   ucac4Region_t *loadGSCRegion(int region);
   static int getZone(double dec);
+  void getStarPos(radec_t &rd, const ucac4Star_t &s, double yr)
+  {
+    rd.Ra = s.rd.Ra + (D2R(s.rdPm[0] / 10000.0 / 3600.0) * yr * cos(s.rd.Dec));
+    rd.Dec = s.rd.Dec + D2R(s.rdPm[1] / 10000.0 / 3600.0) * yr;
+  }
 
 private:
   bool readAccFile(QFile &file);

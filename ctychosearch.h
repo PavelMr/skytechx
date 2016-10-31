@@ -15,7 +15,7 @@ class CTychoSearch : public QDialog
   Q_OBJECT
   
 public:
-  explicit CTychoSearch(QWidget *parent = 0);
+  explicit CTychoSearch(QWidget *parent, double epoch);
   ~CTychoSearch();
   radec_t m_rd;
   mapObj_t m_mapObj;
@@ -27,6 +27,7 @@ protected:
 
   int      m_reg;
   int      m_index;
+  double   m_yr;
 
 private slots:
   void on_pushButton_2_clicked();

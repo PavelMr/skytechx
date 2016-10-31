@@ -108,6 +108,8 @@ bool CTycho::load()
 
     f.read((char *)&reg, sizeof(reg));
 
+    cGSCReg.resetRegion();
+
     m_region[i].region.numStars = reg.numStars;
     m_region[i].stars = (tychoStar_t *)malloc(reg.numStars * sizeof(tychoStar_t));
 
@@ -115,6 +117,24 @@ bool CTycho::load()
 
     for (int j = 0; j < reg.numStars; j++)
     {
+      tychoStar_t *star = &m_region[i].stars[j];
+
+      radec_t rd1;
+      radec_t rd2;
+
+      double yrMin = -2000;
+      double yrMax = 1000;
+
+      rd1.Ra = star->rd.Ra + (D2R(star->pmRa / 1000.0 / 3600.0) * yrMin * cos(star->rd.Dec));
+      rd1.Dec = star->rd.Dec + D2R(star->pmDec / 1000.0 / 3600.0) * yrMin;
+
+      rd2.Ra = star->rd.Ra + (D2R(star->pmRa / 1000.0 / 3600.0) * yrMax * cos(star->rd.Dec));
+      rd2.Dec = star->rd.Dec + D2R(star->pmDec / 1000.0 / 3600.0) * yrMax;
+
+      cGSCReg.addPoint(rd1);
+      cGSCReg.addPoint(rd2);
+
+
       if (m_region[i].stars[j].supIndex >= 0)
       {
         int supp = m_region[i].stars[j].supIndex;
@@ -133,7 +153,10 @@ bool CTycho::load()
         }
       }
     }
+    cGSCReg.createRegion(i);
   }
+
+  cGSCReg.createOcTree();
 
   f.close();
 
@@ -175,6 +198,13 @@ bool CTycho::getStar(tychoStar_t **p, int reg, int no)
   *p = &m_region[reg].stars[no];
 
   return(true);
+}
+
+/////////////////////////////////////////////
+tychoStar_t *CTycho::getStar(int reg, int no)
+/////////////////////////////////////////////
+{
+  return &m_region[reg].stars[no];
 }
 
 

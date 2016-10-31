@@ -19,6 +19,7 @@ CSearch::CSearch()
 
 bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, double &fov, mapObj_t &obj)
 {
+  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;
   QString what = str.mid(0, 4);
   str = str.mid(4);
 
@@ -61,8 +62,13 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       if (cTYC.findStar(NULL, TS_HD, 0, hd, 0, 0, 0, 0, 0, 0, reg, index))
       {
         cTYC.getStar(&star, reg, index);
-        ra = star->rd.Ra;
-        dec = star->rd.Dec;
+
+        radec_t rdpm;
+        cTYC.getStarPos(rdpm, star, yr);
+
+        ra = rdpm.Ra;
+        dec = rdpm.Dec;
+
         precess(&ra, &dec, JD2000, mapView->jd);
         fov = DMS2RAD(10, 0, 0);
 
@@ -90,8 +96,13 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, t1, t2, t3, 0, reg, index))
         {
           cTYC.getStar(&star, reg, index);
-          ra = star->rd.Ra;
-          dec = star->rd.Dec;
+
+          radec_t rdpm;
+          cTYC.getStarPos(rdpm, star, yr);
+
+          ra = rdpm.Ra;
+          dec = rdpm.Dec;
+
           precess(&ra, &dec, JD2000, mapView->jd);
           fov = DMS2RAD(10, 0, 0);
 
@@ -117,12 +128,16 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
 
         if (cUcac4.searchStar(zone, num, &star))
         {
-          ra = star.rd.Ra;
-          dec = star.rd.Dec;
+          radec_t rdpm;
+          cUcac4.getStarPos(rdpm, star, yr);
+
+          ra = rdpm.Ra;
+          dec = rdpm.Dec;
+
           precess(&ra, &dec, JD2000, mapView->jd);
           fov = DMS2RAD(0, 30, 0);
 
-           // FIX: region a poradi v GSC regionu
+           // FIXME: region a poradi v GSC regionu
           /*
           obj.type = MO_UCAC4;
           obj.par1 = star.zone;
@@ -153,7 +168,7 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
           precess(&ra, &dec, JD2000, mapView->jd);
           fov = DMS2RAD(0, 30, 0);
 
-          // FIX: region a poradi v GSC regionu
+          // FIXME: region a poradi v GSC regionu
           /*
           obj.type = MO_USNO2;
           obj.par1 = star.zone;
@@ -204,8 +219,13 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, gcvs.tyc1, gcvs.tyc2, gcvs.tyc3, 0, reg, index))
       {
         cTYC.getStar(&star, reg, index);
-        ra = star->rd.Ra;
-        dec = star->rd.Dec;
+
+        radec_t rdpm;
+        cTYC.getStarPos(rdpm, star, yr);
+
+        ra = rdpm.Ra;
+        dec = rdpm.Dec;
+
         precess(&ra, &dec, JD2000, mapView->jd);
         fov = DMS2RAD(10, 0, 0);
 
@@ -294,22 +314,29 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);
 
       if (!str.compare(name, Qt::CaseInsensitive))
-      {
-        ra = cTYC.tNames[i]->rd.Ra;
-        dec = cTYC.tNames[i]->rd.Dec;
-        precess(&ra, &dec, JD2000, mapView->jd);
-        fov = D2R(30);
-
+      {        
         int reg, index;
 
         if (cTYC.findStar(NULL, TS_TYC, 0, 0, 0, 0, cTYC.tNames[i]->tyc1, cTYC.tNames[i]->tyc2, cTYC.tNames[i]->tyc3, 0, reg, index))
-        {
+        {          
+          tychoStar_t *star;
+          radec_t rdpm;
+
+          cTYC.getStar(&star, reg, index);
+          cTYC.getStarPos(rdpm, star, yr);
+
+          ra = rdpm.Ra;
+          dec = rdpm.Dec;
+
+          precess(&ra, &dec, JD2000, mapView->jd);
+          fov = D2R(30);
+
           obj.type = MO_TYCSTAR;
           obj.par1 = reg;
           obj.par2 = index;
-        }
 
-        return(true);
+          return(true);
+        }        
       }
     }
   }

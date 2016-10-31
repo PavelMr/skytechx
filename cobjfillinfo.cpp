@@ -987,14 +987,18 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   gcvs_t       *gcvs;
   bool         isVariable;
   bool         isTitle = false;
+  double       yr = jdGetYearFromJD(view->mapEpoch) - 2000;  
 
   cTYC.getStar(&t, obj->par1, obj->par2);
 
   gcvs = g_GCVS.getStar(t->tyc1, t->tyc2, t->tyc3);
   isVariable = gcvs != nullptr;
 
-  item->radec.Ra = t->rd.Ra;
-  item->radec.Dec = t->rd.Dec;
+  radec_t rdpm;
+  cTYC.getStarPos(rdpm, t, yr);
+
+  item->radec.Ra = rdpm.Ra;
+  item->radec.Dec = rdpm.Dec;
   item->zoomFov = getOptObjFov(0, 0, D2R(2.5));
   item->id = QString("TYC%1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
   item->simbad = item->id;
@@ -1072,10 +1076,10 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   double raAtDate, decAtDate;
   double ra, dec;
-  QString jd2000;
+  QString jd2000;  
 
-  ra = raAtDate = t->rd.Ra;
-  dec = decAtDate = t->rd.Dec;
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
 
   if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
   {
@@ -1212,12 +1216,16 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
 void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
 {
+  double      yr = jdGetYearFromJD(view->mapEpoch) - 2000;
   ucac4Star_t s;
 
   cUcac4.getStar(s, obj->par1, obj->par2);
 
-  item->radec.Ra = s.rd.Ra;
-  item->radec.Dec = s.rd.Dec;
+  radec_t rdpm;
+  cUcac4.getStarPos(rdpm, s, yr);
+
+  item->radec.Ra = rdpm.Ra;
+  item->radec.Dec = rdpm.Dec;
   item->zoomFov = getOptObjFov(0, 0, D2R(0.15));
   item->title = QString("UCAC4 %1-%2").arg(s.zone).arg(s.number, 6, 10, QChar('0'));
   item->simbad = item->title;
@@ -1934,11 +1942,15 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
 void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
 {
-  QString      str;
-  urat1Star_t s = urat1.getStar(obj->par1, obj->par2);
+  double      yr = jdGetYearFromJD(view->mapEpoch) - 2000;
+  QString     str;
+  urat1Star_t s = urat1.getStar(obj->par1, obj->par2);    
 
-  item->radec.Ra = s.rd.Ra;
-  item->radec.Dec = s.rd.Dec;
+  radec_t rdpm;
+  urat1.getStarPos(rdpm, s, yr);
+
+  item->radec.Ra = rdpm.Ra;
+  item->radec.Dec = rdpm.Dec;
   item->zoomFov = getOptObjFov(0, 0, D2R(0.15));
   item->title = QString("URAT1 %1-%2").arg(obj->par1).arg(obj->par2);
   item->simbad = item->title;
@@ -2039,6 +2051,14 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Visual magnitude"), getStrMag(URMAG(s.vMag)));
   addTextItem(item, tr("B-V Index"), (URMAG(s.bMag) < 25) ? getStrMag(URMAG(s.bMag - s.vMag)) : tr("N/A") + tr(" (Calc. from B/V)"));
   addSeparator(item);
+
+  beginExtInfo();
+  addLabelItem(item, tr("Proper motion"));
+  addSeparator(item);
+  addTextItem(item, txRA, QString::number(s.pm[0] / 10.0) + " " + "mas/yr");
+  addTextItem(item, txDec, QString::number(s.pm[1] / 10.0) + " " + "mas/yr");
+  addSeparator(item);
+  endExtInfo();
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);

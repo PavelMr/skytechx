@@ -63,6 +63,8 @@ typedef struct
 
   double   dsoMag;
   double   dsoMagAdd;
+
+  double   mapEpoch;
 } mapView_t;
 
 class CMapView : public QWidget

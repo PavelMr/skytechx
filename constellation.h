@@ -10,9 +10,11 @@
 #include "cskpainter.h"
 
 typedef struct
-{
-  radec_t pt;
+{  
+  radec_t pt;      // NOTE: now is not used
    qint32 cmd;     // 0-data, 1-main line to, 2-sec. line to
+    short region;  // tyc region star
+    int   index;   // index to tyc star
 } constelLine_t;
 
 QStringList constGetNameList();

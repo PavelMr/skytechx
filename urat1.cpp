@@ -253,6 +253,8 @@ bool Urat1::setStar(urat1Star_t &star, const urat1CatStar_t &urat, int z, int id
   star.rMag = urat.rMag;
   star.zone = z;
   star.id = id;
+  star.pm[0] = urat.pmRa;
+  star.pm[1] = urat.pmDec;
 
   return true;
 }

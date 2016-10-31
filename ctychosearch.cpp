@@ -15,11 +15,13 @@ static int sb4 = 1;
 static int sb5 = 1;
 static int sb6 = 1;
 
-CTychoSearch::CTychoSearch(QWidget *parent) :
+CTychoSearch::CTychoSearch(QWidget *parent, double epoch) :
   QDialog(parent),
   ui(new Ui::CTychoSearch)
 {
   ui->setupUi(this);
+
+  m_yr = jdGetYearFromJD(epoch) - 2000;
 
   for (int i = 0; i < 88; i++)
   {
@@ -88,11 +90,13 @@ void CTychoSearch::getStar()
 ////////////////////////////
 {
   tychoStar_t *s;
+  radec_t rd;
 
   cTYC.getStar(&s, m_reg, m_index);
+  cTYC.getStarPos(rd, s, m_yr);
 
-  m_rd.Ra = s->rd.Ra;
-  m_rd.Dec = s->rd.Dec;
+  m_rd.Ra = rd.Ra;
+  m_rd.Dec = rd.Dec;
 
   m_mapObj.type = MO_TYCSTAR;
   m_mapObj.par1 = m_reg;

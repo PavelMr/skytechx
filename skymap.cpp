@@ -73,6 +73,8 @@ int g_numRegions;
 static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
+  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;
+
   if (!g_skSet.map.urat1.show)
   {
     return;
@@ -104,7 +106,11 @@ static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
       {
         SKPOINT pt;
 
-        trfRaDecToPointNoCorrect(&star.rd, &pt);
+        radec_t rdpm;
+
+        urat1.getStarPos(rdpm, star, yr);
+
+        trfRaDecToPointNoCorrect(&rdpm, &pt);
         if (trfProjectPoint(&pt))
         {
           int spIndex = (URMAG(star.bMag) < 25) ? CStarRenderer::getSPIndex(URMAG(star.bMag - star.vMag)) : 0;
@@ -114,6 +120,25 @@ static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
             int r = cStarRenderer.renderStar(&pt, spIndex, vMag, pPainter);
             addMapObj(star.rd, pt.sx, pt.sy, MO_URAT1, MO_CIRCLE, r + 4, star.zone, star.id, vMag);
             g_numStars++;
+
+            if (g_skSet.map.star.showProperMotion)
+            {
+              radec_t rd;
+              SKPOINT p1;
+              SKPOINT p2;
+
+              double yr = g_skSet.map.star.properMotionYearVec;
+              rd.Ra = rdpm.Ra + (D2R(star.pm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
+              rd.Dec = rdpm.Dec + D2R(star.pm[1] / 10000.0 / 3600.0) * yr;
+
+              trfRaDecToPointNoCorrect(&rdpm, &p1);
+              trfRaDecToPointNoCorrect(&rd, &p2);
+              if (trfProjectLine(&p1, &p2))
+              {
+                pPainter->setPen(g_skSet.map.drawing.color);
+                pPainter->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+              }
+            }
           }
         }
       }
@@ -234,6 +259,8 @@ static void smRenderUSNOB1Stars(mapView_t *mapView, CSkPainter *pPainter, int re
 static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
+  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;
+
   if (!g_skSet.map.ucac4.show)
   {
     return;
@@ -258,7 +285,11 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
       {
         if ((star.mag >= g_skSet.map.ucac4.fromMag))
         {
-          trfRaDecToPointNoCorrect(&star.rd, &pt);
+          radec_t rdpm;
+
+          cUcac4.getStarPos(rdpm, star, yr);
+
+          trfRaDecToPointNoCorrect(&rdpm, &pt);
           if (trfProjectPoint(&pt))
           {
             if (g_skSet.map.star.showProperMotion)
@@ -268,10 +299,10 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
               SKPOINT p2;
 
               double yr = g_skSet.map.star.properMotionYearVec;
-              rd.Ra = star.rd.Ra + (D2R(star.rdPm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
-              rd.Dec = star.rd.Dec + D2R(star.rdPm[1] / 10000.0 / 3600.0) * yr;
+              rd.Ra = rdpm.Ra + (D2R(star.rdPm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
+              rd.Dec = rdpm.Dec + D2R(star.rdPm[1] / 10000.0 / 3600.0) * yr;
 
-              trfRaDecToPointNoCorrect(&star.rd, &p1);
+              trfRaDecToPointNoCorrect(&rdpm, &p1);
               trfRaDecToPointNoCorrect(&rd, &p2);
               if (trfProjectLine(&p1, &p2))
               {
@@ -436,6 +467,8 @@ static void smRenderGSCStars(mapView_t *mapView, CSkPainter *pPainter, int regio
 static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
+  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;
+
   tychoRegion2_t *tycReg = cTYC.getRegion(region);
 
   for (int j = 0; j < tycReg->region.numStars; j++)
@@ -450,7 +483,11 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
     bool bayerPriority = g_skSet.map.star.bayerPriority;
     bool propNamePriority = g_skSet.map.star.namePriority;
 
-    trfRaDecToPointNoCorrect(&s->rd, &pt);
+    radec_t rdpm;
+
+    cTYC.getStarPos(rdpm, s, yr);
+
+    trfRaDecToPointNoCorrect(&rdpm, &pt);
     if (trfProjectPoint(&pt))
     {
       int     sp; // spectral color
@@ -483,10 +520,10 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
         SKPOINT p2;
 
         double yr = g_skSet.map.star.properMotionYearVec;
-        rd.Ra = s->rd.Ra + (D2R(s->pmRa / 1000.0 / 3600.0) * yr * cos(s->rd.Dec));
-        rd.Dec = s->rd.Dec + D2R(s->pmDec / 1000.0 / 3600.0) * yr;
+        rd.Ra = rdpm.Ra + (D2R(s->pmRa / 1000.0 / 3600.0) * yr * cos(rd.Dec));
+        rd.Dec = rdpm.Dec + D2R(s->pmDec / 1000.0 / 3600.0) * yr;
 
-        trfRaDecToPointNoCorrect(&s->rd, &p1);
+        trfRaDecToPointNoCorrect(&rdpm, &p1);
         trfRaDecToPointNoCorrect(&rd, &p2);
         if (trfProjectLine(&p1, &p2))
         {
@@ -550,6 +587,12 @@ static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
 {
   SKPOINT pt[2];
 
+//  if (region != 425 - 1)
+  //  return;
+
+  //if (region != 3168 - 1)
+    //return;
+
   gscRegion_t *reg = cGSCReg.getRegion(region);
 
   if (!cGSCReg.isRegionVisible(region, trfGetFrustum()))
@@ -557,13 +600,13 @@ static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
 
   pPainter->setPen(Qt::blue);
 
-  pt[0].w.x = reg->p[0][0];
-  pt[0].w.y = reg->p[0][1];
-  pt[0].w.z = reg->p[0][2];
+  pt[0].w.x = reg->p[0].x;
+  pt[0].w.y = reg->p[0].y;
+  pt[0].w.z = reg->p[0].z;
 
-  pt[1].w.x = reg->p[1][0];
-  pt[1].w.y = reg->p[1][1];
-  pt[1].w.z = reg->p[1][2];
+  pt[1].w.x = reg->p[1].x;
+  pt[1].w.y = reg->p[1].y;
+  pt[1].w.z = reg->p[1].z;
 
   if (trfProjectLine(&pt[0], &pt[1]))
   {
@@ -571,33 +614,33 @@ static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
     pPainter->drawText(pt[0].sx, pt[0].sy, QString::number(region));
   }
 
-  pt[0].w.x = reg->p[1][0];
-  pt[0].w.y = reg->p[1][1];
-  pt[0].w.z = reg->p[1][2];
+  pt[0].w.x = reg->p[1].x;
+  pt[0].w.y = reg->p[1].y;
+  pt[0].w.z = reg->p[1].z;
 
-  pt[1].w.x = reg->p[2][0];
-  pt[1].w.y = reg->p[2][1];
-  pt[1].w.z = reg->p[2][2];
+  pt[1].w.x = reg->p[2].x;
+  pt[1].w.y = reg->p[2].y;
+  pt[1].w.z = reg->p[2].z;
   if (trfProjectLine(&pt[0], &pt[1]))
     pPainter->drawLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy);
 
-  pt[0].w.x = reg->p[2][0];
-  pt[0].w.y = reg->p[2][1];
-  pt[0].w.z = reg->p[2][2];
+  pt[0].w.x = reg->p[2].x;
+  pt[0].w.y = reg->p[2].y;
+  pt[0].w.z = reg->p[2].z;
 
-  pt[1].w.x = reg->p[3][0];
-  pt[1].w.y = reg->p[3][1];
-  pt[1].w.z = reg->p[3][2];
+  pt[1].w.x = reg->p[3].x;
+  pt[1].w.y = reg->p[3].y;
+  pt[1].w.z = reg->p[3].z;
   if (trfProjectLine(&pt[0], &pt[1]))
     pPainter->drawLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy);
 
-  pt[0].w.x = reg->p[3][0];
-  pt[0].w.y = reg->p[3][1];
-  pt[0].w.z = reg->p[3][2];
+  pt[0].w.x = reg->p[3].x;
+  pt[0].w.y = reg->p[3].y;
+  pt[0].w.z = reg->p[3].z;
 
-  pt[1].w.x = reg->p[0][0];
-  pt[1].w.y = reg->p[0][1];
-  pt[1].w.z = reg->p[0][2];
+  pt[1].w.x = reg->p[0].x;
+  pt[1].w.y = reg->p[0].y;
+  pt[1].w.z = reg->p[0].z;
   if (trfProjectLine(&pt[0], &pt[1]))
     pPainter->drawLine(pt[0].sx, pt[0].sy, pt[1].sx, pt[1].sy);
 }
@@ -632,9 +675,9 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
     SKPOINT pt[4];
     for (int i= 0; i < 4; i++)
     {
-      pt[i].w.x = regPtr->p[i][0];
-      pt[i].w.y = regPtr->p[i][1];
-      pt[i].w.z = regPtr->p[i][2];
+      pt[i].w.x = regPtr->p[i].x;
+      pt[i].w.y = regPtr->p[i].y;
+      pt[i].w.z = regPtr->p[i].z;
     }
 
     if (!SKPLANECheckFrustumToPolygon(trfGetFrustum(), pt, 4))
@@ -656,10 +699,10 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
     smRenderUSNOB1Stars(mapView, pPainter, region);
     smRenderUSNO2Stars(mapView, pPainter, region);
     smRenderPPMXLStars(mapView, pPainter, region);
-    smRenderURAT1Stars(mapView, pPainter, region);
-    smRenderUCAC4Stars(mapView, pPainter, region);
+    smRenderURAT1Stars(mapView, pPainter, region);  // Prop. mot
+    smRenderUCAC4Stars(mapView, pPainter, region);  // Prop. mot.
     smRenderGSCStars(mapView, pPainter, region);
-    smRenderTychoStars(mapView, pPainter, region);
+    smRenderTychoStars(mapView, pPainter, region);  // Prop. mot.
   }
 }
 

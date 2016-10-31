@@ -101,7 +101,7 @@ void CLoadingDlg::slotLoad()
   loadConstelNonLatinNames("../data/constellation/" + g_skSet.map.constellation.language);
 
   qDebug() << "L1";
-  constLoad();
+  //constLoad();
   sigProgress(1);
 
   qDebug() << "L2";
@@ -114,6 +114,7 @@ void CLoadingDlg::slotLoad()
 
   qDebug() << "L4";
   cTYC.load();
+  constLoad();
   sigProgress(4);
 
   qDebug() << "L5";

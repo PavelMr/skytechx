@@ -4,6 +4,7 @@
 #include "skcore.h"
 #include "setting.h"
 #include "smartlabeling.h"
+#include "tycho.h"
 
 #define NBNDRIES 357
 
@@ -256,27 +257,27 @@ void loadConstelNonLatinNames(const QString &name)
   }
 }
 
+
 /////////////////////////////////
 void constLinesLoad(QString name)
 /////////////////////////////////
 {
-  SkFile f;
+  SkFile f(name);
 
-  tConstLines.clear();
+  tConstLines.clear();  
 
-  f.setFileName(name);
   if (f.open(SkFile::ReadOnly))
   {
     qint32 cnt;
-    f.read((char *)&cnt, sizeof(qint32));
+    f.read((char *)&cnt, sizeof(qint32));    
 
     for (int i = 0; i < cnt; i++)
     {
       constelLine_t l;
 
-      f.read((char *)&l.pt.Ra, sizeof(double));
-      f.read((char *)&l.pt.Dec, sizeof(double));
-      f.read((char *)&l.cmd, sizeof(qint32));
+      f.read((char *)&l.cmd, sizeof(qint32));      
+      f.read((char *)&l.region, sizeof(short));
+      f.read((char *)&l.index, sizeof(qint32));
 
       tConstLines.append(l);
     }
@@ -309,8 +310,7 @@ static void constLoadBoundLines(void)
 ////////////////////
 void constLoad(void)
 ////////////////////
-{
-  qDebug() << "pack" << sizeof(constelLine_t);
+{  
   constLinesLoad(g_skSet.map.constellation.linesFile);
   constLoadBoundLines();
   constLoadNames();
@@ -510,41 +510,50 @@ void constRenderConstellationBnd(QPainter *p, mapView_t *view)
 void constRenderConstelationLines(QPainter *p, const mapView_t *view)
 /////////////////////////////////////////////////////////////////////
 {
+  double yr = jdGetYearFromJD(view->mapEpoch) - 2000;
+
   constelLine_t l;
-  SKPOINT pt1;
+  SKPOINT pt1;  
   SKPOINT pt2;
-  radec_t from;
-  radec_t to;
+  tychoStar_t *star;
+  radec_t rdFrom;
+  radec_t rdTo;
   QPen    pn1(QColor(g_skSet.map.constellation.main.color),
               g_skSet.map.constellation.main.width,
               (Qt::PenStyle)g_skSet.map.constellation.main.style);
   QPen    pn2(QColor(g_skSet.map.constellation.sec.color),
               g_skSet.map.constellation.sec.width,
-              (Qt::PenStyle)g_skSet.map.constellation.sec.style);
+              (Qt::PenStyle)g_skSet.map.constellation.sec.style);  
 
   foreach (l, tConstLines)
   {
     switch (l.cmd)
     {
       case 0: // data from
-        from = l.pt;
+        //from = l.pt;
+        star = cTYC.getStar(l.region, l.index);
+        cTYC.getStarPos(rdFrom, star, yr);
         break;
 
       case 1: // 1-main line to
-        to = l.pt;
+        //to = l.pt;
+        star = cTYC.getStar(l.region, l.index);
+        cTYC.getStarPos(rdTo, star, yr);
         p->setPen(pn1);
         break;
 
       case 2: // 2-sec. line to
-        to = l.pt;
+        //to = l.pt;
+        star = cTYC.getStar(l.region, l.index);
+        cTYC.getStarPos(rdTo, star, yr);
         p->setPen(pn2);
         break;
     }
 
     if (l.cmd > 0)
-    {
-      trfRaDecToPointNoCorrect(&from, &pt1);
-      trfRaDecToPointNoCorrect(&to, &pt2);
+    {          
+      trfRaDecToPointNoCorrect(&rdFrom, &pt1);
+      trfRaDecToPointNoCorrect(&rdTo, &pt2);
 
       if (trfProjectLine(&pt1, &pt2))
       {
@@ -583,7 +592,7 @@ void constRenderConstelationLines(QPainter *p, const mapView_t *view)
 
         p->drawLine(x3, y3, x4, y4);
       }
-      from = to;
+      rdFrom = rdTo;
     }
   }
 }

@@ -4,7 +4,7 @@
 #include "transform.h"
 #include "constellation.h"
 
-CDbStarsDlg::CDbStarsDlg(QWidget *parent) :
+CDbStarsDlg::CDbStarsDlg(QWidget *parent, double yr) :
   QDialog(parent),
   ui(new Ui::CDbStarsDlg)
 {
@@ -63,9 +63,15 @@ CDbStarsDlg::CDbStarsDlg(QWidget *parent) :
         dbl.tyc[1] = t1->tyc2;
         dbl.tyc[2] = t1->tyc3;
 
-        float sep = anSep(t1->rd.Ra, t1->rd.Dec, t2->rd.Ra, t2->rd.Dec);
-        float pa = trfGetPosAngle(t2->rd.Ra, t2->rd.Dec, t1->rd.Ra, t1->rd.Dec);
-        getRDCenter(&dbl.rd, &t1->rd, &t2->rd);
+        radec_t rd1;
+        radec_t rd2;
+
+        cTYC.getStarPos(rd1, t1, yr);
+        cTYC.getStarPos(rd2, t2, yr);
+
+        float sep = anSep(rd1.Ra, rd1.Dec, rd2.Ra, rd2.Dec);
+        float pa = trfGetPosAngle(rd2.Ra, rd2.Dec, rd1.Ra, rd1.Dec);
+        getRDCenter(&dbl.rd, &rd1, &rd2);
         dbl.sep = sep;
 
         tList.append(dbl);

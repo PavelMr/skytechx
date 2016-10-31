@@ -1,4 +1,5 @@
 #include "cgscreg.h"
+#include "transform.h"
 
 CGSCReg cGSCReg;
 
@@ -34,6 +35,68 @@ gscRegion_t *CGSCReg::getRegion(int reg)
 ////////////////////////////////////////
 {
   return(&gscRegionSector[reg]);
+}
+
+void CGSCReg::resetRegion()
+{
+  m_raMin = 9999999;
+  m_raMax = -9999999;
+  m_decMin = 9999999;
+  m_decMax = -9999999;
+}
+
+void CGSCReg::addPoint(const radec_t &rd)
+{
+  if (rd.Ra < m_raMin) m_raMin = rd.Ra;
+  if (rd.Ra > m_raMax) m_raMax = rd.Ra;
+  if (rd.Dec < m_decMin) m_decMin = rd.Dec;
+  if (rd.Dec > m_decMax) m_decMax = rd.Dec;
+}
+
+void CGSCReg::createRegion(int region)
+{
+  SKPOINT p0;
+  SKPOINT p1;
+  SKPOINT p2;
+  SKPOINT p3;
+
+  m_decMax += 0.001;
+  m_decMin -= 0.001;
+  m_raMax += 0.001;
+  m_raMin -= 0.001;
+
+  trfRaDecToPointNoCorrect(&radec_t(m_raMin, m_decMin), &p1);
+  trfRaDecToPointNoCorrect(&radec_t(m_raMin, m_decMax), &p0);
+  trfRaDecToPointNoCorrect(&radec_t(m_raMax, m_decMin), &p2);
+  trfRaDecToPointNoCorrect(&radec_t(m_raMax, m_decMax), &p3);
+
+  gscRegionSector[region].DecMax = m_decMax;
+  gscRegionSector[region].DecMin = m_decMin;
+  gscRegionSector[region].RaMax = m_raMax;
+  gscRegionSector[region].RaMin = m_raMin;
+
+  gscRegionSector[region].p[0].x = p0.w.x;
+  gscRegionSector[region].p[0].y = p0.w.y;
+  gscRegionSector[region].p[0].z = p0.w.z;
+
+  gscRegionSector[region].p[1].x = p1.w.x;
+  gscRegionSector[region].p[1].y = p1.w.y;
+  gscRegionSector[region].p[1].z = p1.w.z;
+
+  gscRegionSector[region].p[2].x = p2.w.x;
+  gscRegionSector[region].p[2].y = p2.w.y;
+  gscRegionSector[region].p[2].z = p2.w.z;
+
+  gscRegionSector[region].p[3].x = p3.w.x;
+  gscRegionSector[region].p[3].y = p3.w.y;
+  gscRegionSector[region].p[3].z = p3.w.z;
+
+  for (int j = 0; j < 4; j++)
+  {
+    gscRegionBBox[region].addPt(gscRegionSector[region].p[j].x,
+                                gscRegionSector[region].p[j].y,
+                                gscRegionSector[region].p[j].z);
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -155,9 +218,9 @@ void CGSCReg::loadRegions(void)
     gscRegionBBox[i].reset();
     for (int j = 0; j < 4; j++)
     {
-      gscRegionBBox[i].addPt(gscRegionSector[i].p[j][0],
-                             gscRegionSector[i].p[j][1],
-                             gscRegionSector[i].p[j][2]);
+      gscRegionBBox[i].addPt(gscRegionSector[i].p[j].x,
+                             gscRegionSector[i].p[j].y,
+                             gscRegionSector[i].p[j].z);
     }
   }
 

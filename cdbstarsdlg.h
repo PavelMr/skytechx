@@ -62,7 +62,7 @@ class CDbStarsDlg : public QDialog
   Q_OBJECT
 
 public:
-  explicit CDbStarsDlg(QWidget *parent = 0);
+  explicit CDbStarsDlg(QWidget *parent, double yr);
   ~CDbStarsDlg();
 
   radec_t m_rd;

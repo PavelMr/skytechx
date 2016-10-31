@@ -3174,8 +3174,11 @@ void MainWindow::on_actionStar_by_proper_name_triggered()
 
   if (dlg.exec())
   {
-    double ra = dlg.m_tycho->rd.Ra;
-    double dec = dlg.m_tycho->rd.Dec;
+    radec_t rd;
+    cTYC.getStarPos(rd, dlg.m_tycho, jdGetYearFromJD(ui->widget->m_mapView.mapEpoch) - 2000);
+
+    double ra = rd.Ra;
+    double dec = rd.Dec;
 
     precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
 
@@ -4596,7 +4599,7 @@ void MainWindow::on_actionShow_all_triggered()
 void MainWindow::on_actionStar_in_Tycho_catalogue_triggered()
 /////////////////////////////////////////////////////////////
 {
-  CTychoSearch dlg(this);
+  CTychoSearch dlg(this, ui->widget->m_mapView.mapEpoch);
 
   if (dlg.exec() == DL_OK)
   {
@@ -4858,7 +4861,7 @@ void MainWindow::on_actionComets_2_triggered(bool checked)
 
 void MainWindow::on_actionDoube_star_triggered()
 {
-  CDbStarsDlg dlg(this);
+  CDbStarsDlg dlg(this, jdGetYearFromJD(ui->widget->m_mapView.mapEpoch) - 2000);
 
   if (dlg.exec() == DL_OK)
   {

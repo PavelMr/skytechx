@@ -37,6 +37,7 @@ typedef struct
 {
   radec_t rd;
   int     id;
+  short   pm[2];
   short   zone;
   short   vMag;
   short   rMag;
@@ -67,6 +68,12 @@ public:
   urat1Region_t *getRegion(int gscRegion);
   urat1Star_t getStar(int zone, int id);
   void setUratDir(const QString &name);
+  void getStarPos(radec_t &rd, const urat1Star_t &s, double yr)
+  {
+    rd.Ra = s.rd.Ra + (D2R(s.pm[0] / 10000.0 / 3600.0) * yr * cos(s.rd.Dec));
+    rd.Dec = s.rd.Dec + D2R(s.pm[1] / 10000.0 / 3600.0) * yr;
+  }
+
 
 private:
   bool loadRegion(int gscRegion, urat1Region_t *region);
