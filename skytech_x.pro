@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network webenginewidgets xml sql widgets printsupport script multimedia charts
+QT       += core gui network xml sql widgets printsupport script multimedia charts
 
 CONFIG   += openssl-linked
 CONFIG   += qxt
