@@ -256,6 +256,9 @@ void astSolve(asteroid_t *a, double jdt, bool lightCorrected)
 void astRender(CSkPainter *p, mapView_t *view, float maxMag)
 ////////////////////////////////////////////////////////////
 {
+  if (tAsteroids.count() == 0)
+    return;
+
   int size = g_skSet.map.aster.radius;
 
   // TODO: naplnit QList checked polozkama (pointer na comet_t ) aby se pres for chodilo jenom pres vybrane (to samy u asteroidu)

@@ -295,10 +295,7 @@ void CEphList::generateList()
 
     case 2:
       mul = 1;
-      break;
-
-    default:
-      mul = mul;
+      break;   
   }
 
   step = ui->spinBox->value() * mul;
@@ -558,9 +555,6 @@ void CEphList::generateGraph()
     case 2:
       mul = 1;
       break;
-
-    default:
-      mul = mul;
   }
 
   step = ui->spinBox->value() * mul;

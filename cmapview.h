@@ -143,6 +143,8 @@ protected:
   double getStarMagnitudeLevel(void);
   double getDsoMagnitudeLevel(void);
 
+private:
+
   QImage   *pBmp;
 
   double    m_lastStarMag;
@@ -161,6 +163,10 @@ protected:
   int       m_dto;
   QPoint    m_lastMousePos;
   radec_t   m_measurePoint;
+
+  double m_lastFOV;
+  double m_lastRA;
+  double m_lastDec;
 
 signals:
 

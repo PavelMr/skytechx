@@ -30,10 +30,6 @@
 #include "soundmanager.h"
 #include "cmeteorshower.h"
 
-double m_lastFOV;
-double m_lastRA;
-double m_lastDec;
-
 bool g_forcedRecalculate = true;
 bool  g_onPrinterBW = false;
 bool *g_bMouseMoveMap;
