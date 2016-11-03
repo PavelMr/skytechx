@@ -13,6 +13,7 @@
 #include "c3dsolar.h"
 #include "cdrawing.h"
 #include "cmeteorshower.h"
+#include "gcvs.h"
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
@@ -656,6 +657,8 @@ void mapObjContextMenu(CMapView *map)
 
         QString mag = getStrMag(cTYC.getVisMag(t));
 
+        gcvs_t *gcvs = g_GCVS.getStar(t->tyc1, t->tyc2, t->tyc3);
+
         if (t->supIndex != -1)
         {
           bool bayer, flam;
@@ -671,6 +674,7 @@ void mapObjContextMenu(CMapView *map)
           else
           {
             tmp = cTYC.getBayerFullStr(supp, bayer);
+
             if (tmp.length() > 0)
             {
               str = tmp + " " + constGetName(con, 2);
@@ -682,6 +686,10 @@ void mapObjContextMenu(CMapView *map)
               {
                 str = tmp + " " + constGetName(con, 2);
               }
+              else if (gcvs)
+              {
+                str = gcvs->name;
+              }
               else
               {
                 str = QString("HD %1").arg(supp->hd);
@@ -690,8 +698,15 @@ void mapObjContextMenu(CMapView *map)
           }
         }
         else
-        {
-          str = QString("TYC %1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
+        {          
+          if (gcvs == nullptr)
+          {
+            str = QString("TYC %1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
+          }
+          else
+          {
+            str = gcvs->name;
+          }
         }
         str += " " + mag;
         break;

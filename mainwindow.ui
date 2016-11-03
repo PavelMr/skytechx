@@ -879,7 +879,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>5</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -1258,6 +1258,16 @@
              </property>
              <property name="text">
               <string>Open...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/qt/diropen-16.png</normaloff>:/res/qt/diropen-16.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -2108,7 +2118,7 @@
              </property>
              <property name="icon">
               <iconset resource="resource.qrc">
-               <normaloff>:/res/arrow_left.png</normaloff>:/res/arrow_left.png</iconset>
+               <normaloff>:/res/qt/left-32.png</normaloff>:/res/qt/left-32.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2143,7 +2153,7 @@
              </property>
              <property name="icon">
               <iconset resource="resource.qrc">
-               <normaloff>:/res/arrow_up.png</normaloff>:/res/arrow_up.png</iconset>
+               <normaloff>:/res/qt/up-32.png</normaloff>:/res/qt/up-32.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2229,7 +2239,7 @@
              </property>
              <property name="icon">
               <iconset resource="resource.qrc">
-               <normaloff>:/res/arrow_right.png</normaloff>:/res/arrow_right.png</iconset>
+               <normaloff>:/res/qt/right-32.png</normaloff>:/res/qt/right-32.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2366,7 +2376,7 @@
              </property>
              <property name="icon">
               <iconset resource="resource.qrc">
-               <normaloff>:/res/arrow_down.png</normaloff>:/res/arrow_down.png</iconset>
+               <normaloff>:/res/qt/down-32.png</normaloff>:/res/qt/down-32.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2509,7 +2519,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>299</width>
+          <width>262</width>
           <height>430</height>
          </rect>
         </property>
@@ -2527,7 +2537,7 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_16">
            <item>
-            <widget class="QLabel" name="label_tp_dec">
+            <widget class="QLabel" name="label_tp_ra">
              <property name="font">
               <font>
                <weight>75</weight>
@@ -2553,7 +2563,7 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_tp_ra">
+            <widget class="QLabel" name="label_tp_dec">
              <property name="font">
               <font>
                <weight>75</weight>
@@ -2589,7 +2599,39 @@ background-color: rgb(0, 0, 0);</string>
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout_9">
-           <item row="2" column="0">
+           <item row="4" column="1">
+            <widget class="QPushButton" name="pb_tc_down">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>38</horstretch>
+               <verstretch>38</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>38</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/qt/down-32.png</normaloff>:/res/qt/down-32.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
             <widget class="QPushButton" name="pb_tc_left">
              <property name="enabled">
               <bool>false</bool>
@@ -2611,37 +2653,11 @@ background-color: rgb(0, 0, 0);</string>
              </property>
              <property name="icon">
               <iconset resource="resource.qrc">
-               <normaloff>:/res/arrow_left.png</normaloff>:/res/arrow_left.png</iconset>
+               <normaloff>:/res/qt/left-32.png</normaloff>:/res/qt/left-32.png</iconset>
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
-            <widget class="QPushButton" name="pb_tc_right">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>38</horstretch>
-               <verstretch>38</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>38</width>
-               <height>38</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="resource.qrc">
-               <normaloff>:/res/arrow_right.png</normaloff>:/res/arrow_right.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
+           <item row="3" column="1">
             <widget class="QPushButton" name="pb_tp_stop">
              <property name="enabled">
               <bool>false</bool>
@@ -2667,7 +2683,58 @@ background-color: rgb(0, 0, 0);</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
+           <item row="1" column="3">
+            <widget class="QPushButton" name="pb_tc_find">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>38</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>38</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Find telescope</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/ico_find_tele.png</normaloff>:/res/ico_find_tele.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="1">
             <widget class="QPushButton" name="pb_tc_up">
              <property name="enabled">
               <bool>false</bool>
@@ -2695,7 +2762,7 @@ background-color: rgb(0, 0, 0);</string>
              </property>
              <property name="icon">
               <iconset resource="resource.qrc">
-               <normaloff>:/res/arrow_up.png</normaloff>:/res/arrow_up.png</iconset>
+               <normaloff>:/res/qt/up-32.png</normaloff>:/res/qt/up-32.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -2705,43 +2772,8 @@ background-color: rgb(0, 0, 0);</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="3">
-            <widget class="QPushButton" name="pb_tc_find">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>38</width>
-               <height>38</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>38</width>
-               <height>38</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="resource.qrc">
-               <normaloff>:/res/ico_find_tele.png</normaloff>:/res/ico_find_tele.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="flat">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QPushButton" name="pb_tc_down">
+           <item row="3" column="2">
+            <widget class="QPushButton" name="pb_tc_right">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -2762,33 +2794,14 @@ background-color: rgb(0, 0, 0);</string>
              </property>
              <property name="icon">
               <iconset resource="resource.qrc">
-               <normaloff>:/res/arrow_down.png</normaloff>:/res/arrow_down.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>16</width>
-               <height>16</height>
-              </size>
+               <normaloff>:/res/qt/right-32.png</normaloff>:/res/qt/right-32.png</iconset>
              </property>
             </widget>
            </item>
-           <item row="2" column="5">
-            <spacer name="horizontalSpacer_10">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="4">
-            <widget class="QToolButton" name="toolButton_37">
+           <item row="3" column="3">
+            <widget class="QToolButton" name="toolButton">
              <property name="text">
-              <string>PushButton</string>
+              <string>...</string>
              </property>
              <property name="iconSize">
               <size>
@@ -2798,10 +2811,23 @@ background-color: rgb(0, 0, 0);</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="5">
+           <item row="3" column="5">
             <widget class="QToolButton" name="toolButton_38">
              <property name="text">
-              <string>...</string>
+              <string>PB1</string>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QToolButton" name="toolButton_37">
+             <property name="text">
+              <string>PB</string>
              </property>
              <property name="iconSize">
               <size>

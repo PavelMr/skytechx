@@ -129,7 +129,9 @@ void CAdvSearch::on_lineEdit_textChanged(const QString &)
 
 void CAdvSearch::slotRadioChange()
 {
-  ui->lineEdit->removeWords();
+  QStringList list;
+
+  ui->lineEdit->removeWords();  
 
   bool isAll = ui->radioButton_all->isChecked();
 
@@ -138,22 +140,22 @@ void CAdvSearch::slotRadioChange()
     lastRadio = 1;
     CAstro astro;
     for (int i = PT_SUN; i <= PT_MOON; i++)
-    {
-      ui->lineEdit->addWord(astro.getName(i));
-      ui->lineEdit->addWord(astro.getFileName(i));
+    {      
+      list << astro.getName(i);
+      list << astro.getFileName(i);
     }
   }
 
   if (ui->radioButton_2->isChecked() || isAll)
   {
     lastRadio = 2;
-    ui->lineEdit->addWord("TYC");
-    ui->lineEdit->addWord("UCAC4");
-    ui->lineEdit->addWord("USNO2");
-    ui->lineEdit->addWord("GSC");
-    ui->lineEdit->addWord("HD");
+    list << "TYC";
+    list << "UCAC4";
+    list << "USNO2";
+    list << "GSC";
+    list << "HD";
 
-    ui->lineEdit->addWordsAlways(g_GCVS.nameList());
+    list << (g_GCVS.nameList());
   }
 
   if (ui->radioButton_3->isChecked() || isAll)
@@ -163,20 +165,20 @@ void CAdvSearch::slotRadioChange()
     {
       int offs = cTYC.tNames[i]->supIndex;
       QString name = cTYC.getStarName(&cTYC.pSupplement[offs]);
-      ui->lineEdit->addWord(name);
+      list << name;
     }
   }
 
   if (ui->radioButton_4->isChecked() || isAll)
   {
     lastRadio = 4;
-    ui->lineEdit->addWords(constGetNameList());
+    list << constGetNameList();
   }
 
   if (ui->radioButton_5->isChecked() || isAll)
   {
     lastRadio = 5;
-    ui->lineEdit->addWords(cDSO.getCommonNameList());
+    list << cDSO.getCommonNameList();
   }
 
   if (ui->radioButton_6->isChecked() || isAll)
@@ -186,7 +188,7 @@ void CAdvSearch::slotRadioChange()
     {
       if (sgp4.tleItem(i)->used)
       {
-        ui->lineEdit->addWord(sgp4.getName(i));
+        list << sgp4.getName(i);
       }
     }
   }
@@ -198,7 +200,7 @@ void CAdvSearch::slotRadioChange()
     {
       if (tAsteroids[i].selected)
       {
-        ui->lineEdit->addWord(tAsteroids[i].name);
+        list << tAsteroids[i].name;
       }
     }
   }
@@ -210,7 +212,7 @@ void CAdvSearch::slotRadioChange()
     {
       if (tComets[i].selected)
       {
-        ui->lineEdit->addWord(tComets[i].name);
+        list << tComets[i].name;
       }
     }
   }
@@ -218,17 +220,21 @@ void CAdvSearch::slotRadioChange()
   if (ui->radioButton_9->isChecked() || isAll)
   {
     lastRadio = 9;
-    ui->lineEdit->addWords(cLunarFeatures.getNames());
+    list << cLunarFeatures.getNames();
   }
 
   if (ui->radioButton_10->isChecked() || isAll)
   {
     lastRadio = 10;
-    ui->lineEdit->addWords(g_meteorShower.getNameList());
+    list << g_meteorShower.getNameList();
   }
 
   if (ui->radioButton_all->isChecked())
   {
     lastRadio = 0;
-  }
+  }    
+
+  list.removeDuplicates();
+
+  ui->lineEdit->addWordsAlways(list);
 }

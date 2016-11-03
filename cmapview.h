@@ -92,7 +92,7 @@ public:
   void addDsoMag(int dir);
 
   double calcNewPos(QRect *rc, double *x, double *y);
-  void centerMap(double ra, double dec, double fov = CM_UNDEF);
+  void centerMap(double ra, double dec, double fov = CM_UNDEF, bool forceFOV = false);
   void getMapRaDec(double &ra, double &dec, double &fov);
   bool isRaDecOnScreen(double ra, double dec);
 

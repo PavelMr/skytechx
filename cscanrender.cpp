@@ -362,7 +362,7 @@ void CScanRender::renderPolygon(QPainter *p, int interpolation, SKPOINT *pts, QI
   QPointF C = QPointF(pts[2].sx, pts[2].sy);
   QPointF D = QPointF(pts[3].sx, pts[3].sy);
 
-  p->setPen(Qt::green);
+  //p->setPen(Qt::green);
 
   for (int i = 0; i < interpolation; i++)
   {
@@ -617,7 +617,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
         // red element
         int red = (((a>>16)&0xff)*(qxy1) + ((b>>16)&0xff)*(qxy2) +((c>>16)&0xff)*(qyx1)  + ((d>>16)&0xff)*(qxy)) >> 16;
 
-        *pDst = 0xff000000 |  (((red)<<16)&0xff0000) | (((green)<<8)&0xff00) | (blue) ;
+        *pDst = 0xff000000 | (((red)<<16)&0xff0000) | (((green)<<8)&0xff00) | (blue) ;
 
         pDst++;
 
@@ -771,9 +771,7 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
           int gd = qGreen(*pDst);
           int bd = qBlue(*pDst);
 
-          *pDst = qRgb(LERP(alpha, rd,  red),
-                       LERP(alpha, gd, green),
-                       LERP(alpha, bd, blue));
+          *pDst = qRgb(LERP(alpha, rd,  red), LERP(alpha, gd, green),  LERP(alpha, bd, blue));
         }
 
         pDst++;

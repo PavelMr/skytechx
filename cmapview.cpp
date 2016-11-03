@@ -460,6 +460,11 @@ void CMapView::mouseMoveEvent(QMouseEvent *e)
       cAstro.convRD2Ecl(rd1.Ra, rd1.Dec, &rd1.Ra, &rd1.Dec);
       cAstro.convRD2Ecl(rd2.Ra, rd2.Dec, &rd2.Ra, &rd2.Dec);
     }
+    else if (m_mapView.coordType == SMCT_RA_DEC && m_mapView.epochJ2000)
+    {
+      precess(&rd1, &rd1, m_mapView.jd, JD2000);
+      precess(&rd2, &rd2, m_mapView.jd, JD2000);
+    }
 
     double rad = rd1.Ra - rd2.Ra;
     double ded = rd1.Dec - rd2.Dec;
@@ -1158,9 +1163,9 @@ void CMapView::gotoMeasurePoint()
 }
 
 
-///////////////////////////////////////////////////////////
-void CMapView::centerMap(double ra, double dec, double fov)
-///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+void CMapView::centerMap(double ra, double dec, double fov, bool forceFOV)
+//////////////////////////////////////////////////////////////////////////
 {
   cAstro.setParam(&m_mapView);
 
@@ -1206,7 +1211,7 @@ void CMapView::centerMap(double ra, double dec, double fov)
   if (dec != CM_UNDEF)
     m_mapView.y = dec;
 
-  if ((fov != CM_UNDEF && !g_lockFOV) || (m_bZoomByMouse && fov != CM_UNDEF))
+  if ((fov != CM_UNDEF && !g_lockFOV) || (m_bZoomByMouse && fov != CM_UNDEF) || (forceFOV && fov != CM_UNDEF))
     m_mapView.fov = fov;
 
   m_mapView.fov = CLAMP(m_mapView.fov, MIN_MAP_FOV, MAX_MAP_FOV);

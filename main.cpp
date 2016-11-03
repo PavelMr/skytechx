@@ -225,7 +225,7 @@ int main(int argc, char *argv[])
   {
     QFile::remove(LOG_FILE);
     qInstallMessageHandler(messageHandler);
-  }
+  } 
 
   QString languagePath = settings.value("language").toString();
 
@@ -250,8 +250,10 @@ int main(int argc, char *argv[])
 
     if (!languagePath.isEmpty())
     {
-      translator.load(languagePath);
-      a.installTranslator(&translator);
+      if (translator.load(languagePath))
+      {
+        a.installTranslator(&translator);
+      }
     }
   }
 

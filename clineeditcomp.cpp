@@ -30,7 +30,7 @@ void CLineEditComp::setMaxCompleterWords(int nMax)
 void CLineEditComp::addWord(QString word)
 /////////////////////////////////////////
 {
-  QStringList list = m_model->stringList(); 
+  QStringList list = m_model->stringList();
 
   if (!list.contains(word, Qt::CaseInsensitive))
   {

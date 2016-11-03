@@ -106,7 +106,7 @@ QImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
   if (m_downloadMap.contains(key))
   { // downloading
 
-    // try render level - 1 while downloading
+    // try render (level - 1) while downloading
     key.level = level - 1;
     key.pix = pix / 4;
     pixCacheItem_t *item = getCacheItem(key);
@@ -234,16 +234,19 @@ bool HiPSManager::parseProperties(hipsParams_t *param, const QString &filename, 
       param->imageExtension = "jpg";
       count++;
     }
-    else if (list.contains("png")) // TODO: check
+    else if (list.contains("png"))
     {
       param->imageExtension = "png";
       count++;
     }
   }
 
-  if (map.contains("hips_frame"))
+  if (map.contains("hips_frame") || map.contains("ohips_frame"))
   {
-    tmp = map["hips_frame"];
+    if (map.contains("hips_frame"))
+      tmp = map["hips_frame"];
+    else
+      tmp = map["ohips_frame"];
 
     if (tmp == "equatorial")
     {
@@ -270,6 +273,8 @@ void HiPSManager::clearDiscCache()
   g_discCache->clear();
 }
 
+#include "skutils.h"
+
 void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
 {    
   if (error == QNetworkReply::NoError)
@@ -280,16 +285,7 @@ void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, 
 
     item->image = new QImage();
     if (item->image->loadFromData(data))
-    {
-      /*
-      if (m_param.imageExtension == "png")
-      { // remove transparency
-        QImage *rgb = new QImage(item->image->convertToFormat(QImage::Format_RGB32));
-        delete item->image;
-        item->image = rgb;
-      }
-      */
-
+    {      
       addToMemoryCache(key, item);
 
       emit sigRepaint();

@@ -180,6 +180,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->toolButton_37->setDefaultAction(ui->actionConnect_device);  
   ui->toolButton_38->setDefaultAction(ui->actionDisconnect);
+  ui->toolButton->setDefaultAction(ui->actionSlew_telescope_to_screen_center);
 
   connect(&m_versionManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotVersionFinished(QNetworkReply*)));
 
@@ -688,14 +689,16 @@ MainWindow::MainWindow(QWidget *parent) :
   if (!g_developMode)
   {
     ui->page_2->hide();
-    ui->page_3->hide();
-    //ui->page_7->hide(); // telescope handpad
+    ui->page_3->hide();   
 
     ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_2));
     ui->toolBox->removeItem(ui->toolBox->indexOf(ui->page_3));
   }    
 
   m_webView = new QTextBrowser(this);
+  m_webView->setOpenLinks(false);
+
+  connect(m_webView, SIGNAL(anchorClicked(QUrl)), this, SLOT(slotHelpClick(QUrl)));
 
   ui->verticalLayout_15->addWidget(m_webView);
 
@@ -862,6 +865,10 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionAladin_billinear->setChecked(settings.value("hips_bi", false).toBool());
 
   connect(g_hipsRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);
+
+  // handpad
+  ui->cb_axis_x_invert->setChecked(settings.value("tel_axis_x_invert", false).toBool());
+  ui->cb_axis_y_invert->setChecked(settings.value("tel_axis_y_invert", false).toBool());  
 }
 
 void MainWindow::fillAladinSources()
@@ -1169,7 +1176,7 @@ void MainWindow::slotAladin()
   QUrl url(urlPath);
 
   m_aladinUrl = urlPath;
-  QString file = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/aladin" + url.path() + "/properties";
+  QString file = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/hips" + url.path() + "/properties";
   m_aladinProperties = file;
 
   ui->actionAladin->setDisabled(true);
@@ -1280,6 +1287,18 @@ void MainWindow::on_horizontalSlider_sliderReleased()
 void MainWindow::slotCalendaryUpdate()
 {
   repaintMap();
+}
+
+void MainWindow::slotHelpClick(const QUrl &url)
+{
+  if (!url.toString().startsWith("file://"))
+  {
+    QDesktopServices::openUrl(url);
+  }
+  else
+  {
+    m_webView->setSource(url);
+  }
 }
 
 /////////////////////////
@@ -1435,6 +1454,9 @@ void MainWindow::saveAndExit()
 
   settings.setValue("info_auto_update", ui->checkBox_5->isChecked());
   settings.setValue("show_extra_info", ui->cb_extInfo->isChecked());
+
+  settings.setValue("tel_axis_x_invert", ui->cb_axis_x_invert->isChecked());
+  settings.setValue("tel_axis_y_invert", ui->cb_axis_y_invert->isChecked());
 
   settings.setValue("hips_bi", ui->actionAladin_billinear->isChecked());
 
@@ -2408,49 +2430,49 @@ void MainWindow::on_actionDec_dso_mag_triggered()
 void MainWindow::on_action_zoom_1_triggered()
 /////////////////////////////////////////////
 {
-  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(1));
+  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(1), true);
 }
 
 /////////////////////////////////////////////
 void MainWindow::on_action_zoom_5_triggered()
 /////////////////////////////////////////////
 {
-  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(5));
+  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(5), true);
 }
 
 //////////////////////////////////////////////
 void MainWindow::on_action_zoom_10_triggered()
 //////////////////////////////////////////////
 {
-  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(10));
+  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(10), true);
 }
 
 //////////////////////////////////////////////
 void MainWindow::on_action_zoom_20_triggered()
 //////////////////////////////////////////////
 {
-  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(20));
+  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(20), true);
 }
 
 //////////////////////////////////////////////
 void MainWindow::on_action_zoom_45_triggered()
 //////////////////////////////////////////////
 {
-  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(45));
+  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(45), true);
 }
 
 //////////////////////////////////////////////
 void MainWindow::on_action_zoom_90_triggered()
 //////////////////////////////////////////////
 {
-  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(90));
+  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(90), true);
 }
 
 ///////////////////////////////////////////////
 void MainWindow::on_action_zoom_100_triggered()
 ///////////////////////////////////////////////
 {
-  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(180));
+  ui->widget->centerMap(CM_UNDEF, CM_UNDEF, D2R(180), true);
 }
 
 /////////////////////////////////////////////////////////
@@ -3471,7 +3493,7 @@ void MainWindow::on_actionSetting_triggered()
 {
   if (ui->actionNight_mode->isChecked())
   {
-    msgBoxInfo(this, tr("Night mode is enabled!\nThe color settings may be incorrect visually."));
+    msgBoxInfo(this, tr("Night mode is enabled!\nThe color setting will be may be incorrect."));
   }
 
   CSetting dlg(this);

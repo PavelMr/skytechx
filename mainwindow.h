@@ -731,6 +731,7 @@ public slots:
   void slotCheckFirstTime();
   void slotTimeSliderUpdate();
   void slotCalendaryUpdate();
+  void slotHelpClick(const QUrl &url);
 
 signals:
   void sigMagLock(bool checked);
