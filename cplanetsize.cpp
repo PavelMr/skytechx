@@ -73,9 +73,6 @@ void CWidget::paintEvent(QPaintEvent *)
   pt.sy = h / 2.;
   int space = 8;
 
-  // TODO: trf class
-  //trfSave();
-
   for (int i = PT_MERCURY; i <= PT_NEPTUNE; i++)
   {
     orbit_t o, s;
@@ -103,9 +100,7 @@ void CWidget::paintEvent(QPaintEvent *)
     cPlanetRenderer.renderPlanet(&pt, &o, &s, &view, &p, &img, 0, true);
 
     pt.sx += trfGetArcSecToPix(o.sx) * (i == PT_SATURN ? 2.5 : 1) + space;
-  }
-
-  //trfRestore();
+  }  
 
   painter.drawImage(0, 0, blurredImage(img, 2, false));
   painter.setOpacity(0.25);

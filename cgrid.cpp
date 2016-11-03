@@ -3,8 +3,6 @@
 #include "castro.h"
 #include "setting.h"
 
-// TODO: udelat kruh pro absolutni viditelny obzor. ???? uz chapu (kruh pro min deklinaci 90 - lat)
-
 extern bool g_showHorizon;
 extern bool g_showLabels;
 

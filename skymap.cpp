@@ -1446,16 +1446,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   g_labeling.clear();
 
   pPainter->setRenderHint(QPainter::Antialiasing, g_antialiasing);
-  pPainter->setRenderHint(QPainter::SmoothPixmapTransform, g_antialiasing);
-
-  // TODO: dynamic proper vector
-  /*
-  if (1)
-  {
-    g_skSet.map.star.properMotionYearVec = (mapView->jd - JD2000) / 365.256;
-  }
-  g_skSet.map.star.properMotionYearVec
-  */
+  pPainter->setRenderHint(QPainter::SmoothPixmapTransform, g_antialiasing);  
 
   mapObjReset();
 
@@ -1554,9 +1545,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
     g_cDrawing.drawObjects(pPainter);
   }
 
-  renderTelescope(mapView, pPainter);
-
-  // TODO: kontrola moc objektu na obrazovce???
+  renderTelescope(mapView, pPainter);  
 
   if (g_showLegends)
   {

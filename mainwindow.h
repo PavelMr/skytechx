@@ -88,7 +88,7 @@ public:
   void setChartMode(int mode);
   void setRTC(bool start);
   bool getRTC();
-  void fillAladinSources();
+  void fillHIPSSources();
 
   CMapView *getView();
 
@@ -673,24 +673,24 @@ private slots:
 
   void on_actionLunar_features_triggered();
 
-  void on_actionAladin_toggled(bool arg1);
+  void on_actionHIPS_toggled(bool arg1);
 
   void on_actionHEALPix_grid_toggled(bool arg1);
 
-  void on_actionAladin_billinear_toggled(bool arg1);
+  void on_actionHIPS_billinear_toggled(bool arg1);
 
-  void on_actionAladin_properties_triggered();
+  void on_actionHIPS_properties_triggered();
 
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
   CDSSCurveWidget *m_curve;
   event_t m_currentEvent;
-  QMenu *m_aladinMenu;
-  QAction *m_actionAladinNone;
-  QString m_aladinTmpUrl;
-  QString m_aladinProperties;
-  QString m_aladinUrl;
+  QMenu *m_HIPSMenu;
+  QAction *m_actionHIPSNone;
+  QString m_HIPSTmpUrl;
+  QString m_HIPSProperties;
+  QString m_HIPSUrl;
   QToolButton *m_hipsToolButton;
 
   void setTitle();
@@ -740,8 +740,8 @@ signals:
 
 protected slots:
   void slotPluginError();  
-  void slotAladin();
-  void slotAladinPropertiesDone(bool ok);
+  void slotHIPS();
+  void slotHIPSPropertiesDone(bool ok);
 };
 
 extern MainWindow *pcMainWnd;

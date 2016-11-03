@@ -2,9 +2,9 @@
 #include "ui_hipspropertiesdialog.h"
 #include "skutils.h"
 
-AladinPropertiesDialog::AladinPropertiesDialog(QWidget *parent, const QString &file) :
+HIPSPropertiesDialog::HIPSPropertiesDialog(QWidget *parent, const QString &file) :
   QDialog(parent),
-  ui(new Ui::AladinPropertiesDialog)
+  ui(new Ui::HIPSPropertiesDialog)
 {
   ui->setupUi(this);
 
@@ -63,17 +63,17 @@ AladinPropertiesDialog::AladinPropertiesDialog(QWidget *parent, const QString &f
   ui->textBrowser->setOpenLinks(false);
 }
 
-AladinPropertiesDialog::~AladinPropertiesDialog()
+HIPSPropertiesDialog::~HIPSPropertiesDialog()
 {
   delete ui;
 }
 
-void AladinPropertiesDialog::clickedUrl(const QUrl &url)
+void HIPSPropertiesDialog::clickedUrl(const QUrl &url)
 {
   QDesktopServices::openUrl(url);
 }
 
-void AladinPropertiesDialog::on_pushButton_clicked()
+void HIPSPropertiesDialog::on_pushButton_clicked()
 {
   done(DL_OK);
 }

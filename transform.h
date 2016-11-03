@@ -14,7 +14,6 @@ void trfRaDecToPointNoCorrect(radec_t *rd, SKPOINT *p, SKMATRIX *mat);
 
 void trfRaDecToPointCorrectFromTo(const radec_t *rd, SKPOINT *p, double jdFrom, double jdTo);
 
-bool trfProjectLineGetClip(SKPOINT *p1, SKPOINT *p2, bool &bClipped, int &sx, int &sy);
 bool trfProjectLine(SKPOINT *p1, SKPOINT *p2);
 bool trfProjectLine(SKPOINT *p1, SKPOINT *p2, SKPOINT &out1, SKPOINT &out2);
 void trfProjectLineNoCheck(SKPOINT *p1, SKPOINT *p2);

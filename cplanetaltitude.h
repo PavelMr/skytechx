@@ -6,6 +6,13 @@
 
 #include <QDialog>
 #include <QPainter>
+#include <QtCharts/QChartView>
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QDateTimeAxis>
+#include <QtCharts/QValueAxis>
+
+using namespace QtCharts;
 
 namespace Ui {
   class CPlanetAltitude;
@@ -42,6 +49,7 @@ private:
     double alt;
   } data_t;
 
+  QChartView *m_chartView;
   mapView_t m_view;
   double m_step;
   double m_jd;

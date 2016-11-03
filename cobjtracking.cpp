@@ -260,15 +260,7 @@ CObjTracking::CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view) :
   ui->comboBox->setCurrentIndex(2);
 
   m_item = item;
-  m_view = *view;
-
-  // TODO: zeptat se na smazani predchoziho trackingu
-  /*
-  for (int i = 0; i < tTracking.count(); i++)
-  {
-    //if (tTracking[i].objName)
-  }
-  */
+  m_view = *view;  
 
   move(pcMapView->mapToGlobal(QPoint(pcMapView->x(), pcMapView->y())));
 }

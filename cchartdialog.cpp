@@ -13,7 +13,6 @@
 #include <QtCharts/QDateTimeAxis>
 #include <QtCharts/QValueAxis>
 
-
 static QSize l_size = QSize(800, 600);
 
 CChartDialog::CChartDialog(QWidget *parent, const QString &object,
@@ -32,12 +31,14 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object,
   {
     QDateTime dt;
     jdConvertJDTo_DateTime(pair.first, &dt);
+    dt.setTimeSpec(Qt::LocalTime);
     series1->append(dt.toMSecsSinceEpoch(), pair.second);
   }
   foreach (pair, chart2)
   {
     QDateTime dt;
     jdConvertJDTo_DateTime(pair.first, &dt);
+    dt.setTimeSpec(Qt::LocalTime);
     series2->append(dt.toMSecsSinceEpoch(), pair.second);
   }
 

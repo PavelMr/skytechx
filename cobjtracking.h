@@ -57,6 +57,7 @@ private slots:
 private:
   Ui::CObjTracking *ui;
   bool m_done;
+  QString getName(ofiItem_t *item);
 };
 
 void trackRender(mapView_t *view, CSkPainter *p);

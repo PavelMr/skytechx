@@ -349,7 +349,7 @@ void CObjInfo::on_clb_tracking_clicked()
 
   // TODO: udelat to ne takhle prasacky
   setWindowOpacity(0);
-  dlg.exec();
+  dlg.exec();  
   setWindowOpacity(1);
 }
 

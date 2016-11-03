@@ -1,26 +1,26 @@
-#ifndef ALADINPROPERTIESDIALOG_H
-#define ALADINPROPERTIESDIALOG_H
+#ifndef HIPSPROPERTIESDIALOG_H
+#define HIPSPROPERTIESDIALOG_H
 
 #include <QDialog>
 
 namespace Ui {
-class AladinPropertiesDialog;
+class HIPSPropertiesDialog;
 }
 
-class AladinPropertiesDialog : public QDialog
+class HIPSPropertiesDialog : public QDialog
 {
   Q_OBJECT
 
 public:
-  explicit AladinPropertiesDialog(QWidget *parent, const QString &file);
-  ~AladinPropertiesDialog();
+  explicit HIPSPropertiesDialog(QWidget *parent, const QString &file);
+  ~HIPSPropertiesDialog();
 
 private:
-  Ui::AladinPropertiesDialog *ui;
+  Ui::HIPSPropertiesDialog *ui;
 
 private slots:
   void clickedUrl(const QUrl &url);
   void on_pushButton_clicked();
 };
 
-#endif // ALADINPROPERTIESDIALOG_H
+#endif // HIPSPROPERTIESDIALOG_H

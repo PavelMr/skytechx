@@ -3850,7 +3850,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionTime_window"/>
    <addaction name="actionTelescope_window"/>
   </widget>
-  <widget class="QToolBar" name="tb_aladin">
+  <widget class="QToolBar" name="tb_HIPS">
    <property name="windowTitle">
     <string>HiPS (Hierarchical Progressive Surveys)</string>
    </property>
@@ -3860,11 +3860,11 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionAladin"/>
+   <addaction name="actionHIPS"/>
    <addaction name="separator"/>
    <addaction name="actionHEALPix_grid"/>
-   <addaction name="actionAladin_billinear"/>
-   <addaction name="actionAladin_properties"/>
+   <addaction name="actionHIPS_billinear"/>
+   <addaction name="actionHIPS_properties"/>
   </widget>
   <action name="action_Exit_2">
    <property name="text">
@@ -5741,13 +5741,13 @@ p, li { white-space: pre-wrap; }
     <string>Lunar features...</string>
    </property>
   </action>
-  <action name="actionAladin">
+  <action name="actionHIPS">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/res/aladin.png</normaloff>:/res/aladin.png</iconset>
+     <normaloff>:/res/HIPS.png</normaloff>:/res/HIPS.png</iconset>
    </property>
    <property name="text">
     <string>HiPS</string>
@@ -5771,7 +5771,7 @@ p, li { white-space: pre-wrap; }
     <string>HEALPix grid</string>
    </property>
   </action>
-  <action name="actionAladin_billinear">
+  <action name="actionHIPS_billinear">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -5789,7 +5789,7 @@ p, li { white-space: pre-wrap; }
     <string>HiPS billinear interpolation</string>
    </property>
   </action>
-  <action name="actionAladin_properties">
+  <action name="actionHIPS_properties">
    <property name="enabled">
     <bool>false</bool>
    </property>

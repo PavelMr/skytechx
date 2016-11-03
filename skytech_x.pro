@@ -263,7 +263,6 @@ SOURCES += main.cpp\
     skwatch.cpp \
     soundmanager.cpp \
     skserver.cpp \
-    qcustomplot.cpp \
     astcomdowntypedlg.cpp \
     skprogressdialog.cpp \
     vsop87/venus_vsop87.cpp \
@@ -496,7 +495,6 @@ HEADERS  += mainwindow.h \
     skwatch.h \
     soundmanager.h \
     skserver.h \
-    qcustomplot.h \
     astcomdowntypedlg.h \
     skprogressdialog.h \
     vsop87/vsop87.h \

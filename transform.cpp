@@ -482,37 +482,6 @@ bool trfProjectLine(SKPOINT *p1, SKPOINT *p2, QPointF *out)
   return(true);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-// NOTE: pouzit skutecne  frustum ??? (ne to zvetsene)
-bool trfProjectLineGetClip(SKPOINT *p1, SKPOINT *p2, bool &bClipped, int &sx, int &sy)
-//////////////////////////////////////////////////////////////////////////////////////
-{
-  SKVECTOR out;
-  SKPOINT *p[2] = {p1, p2};
-  SKVECTOR ptc;
-
-  //if (!SKPLANECheckFrustumToLine(m_frustum, &p1->w, &p2->w, bClipped, ptc))
-  return(false);
-
-  if (bClipped)
-  {
-    SKVECTransform(&out, &ptc, &m_matTransf);
-
-    sx = (int)(out.x * scrx2 + scrx2 + 0.5);
-    sy = (int)(out.y * scry2 + scry2 + 0.5);
-  }
-
-  for (int i = 0; i < 2; i++)
-  {
-    SKVECTransform(&out, &p[i]->w, &m_matTransf);
-
-    p[i]->sx = (int)(out.x * scrx2 + scrx2 + 0.5);
-    p[i]->sy = (int)(out.y * scry2 + scry2 + 0.5);
-  }
-
-  return(true);
-}
-
 
 /////////////////////////////////////////////////
 bool trfCheckRDPolygonVis(radec_t *rd, int count)

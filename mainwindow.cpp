@@ -429,7 +429,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->tb_planets->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_show->setToolButtonStyle(Qt::ToolButtonIconOnly);
   ui->tb_map->setToolButtonStyle(Qt::ToolButtonIconOnly);
-  ui->tb_aladin->setToolButtonStyle(Qt::ToolButtonIconOnly);
+  ui->tb_HIPS->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
   setToolbarIconSize(); 
 
@@ -848,21 +848,21 @@ MainWindow::MainWindow(QWidget *parent) :
   //m_horizonEditor = new CHorEditorWidget();
   //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
 
-  // aladin source //////////////////////////////////
+  // HIPS source //////////////////////////////////
 
-  m_aladinMenu = new QMenu();  
+  m_HIPSMenu = new QMenu();  
 
-  m_hipsToolButton = dynamic_cast<QToolButton *>(ui->tb_aladin->widgetForAction(ui->actionAladin));
-  m_hipsToolButton->setMenu(m_aladinMenu);
+  m_hipsToolButton = dynamic_cast<QToolButton *>(ui->tb_HIPS->widgetForAction(ui->actionHIPS));
+  m_hipsToolButton->setMenu(m_HIPSMenu);
   m_hipsToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 
-  fillAladinSources();
+  fillHIPSSources();
 
   connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHEALPix_grid, SLOT(setEnabled(bool)));
-  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionAladin_billinear, SLOT(setEnabled(bool)));
-  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionAladin_properties, SLOT(setEnabled(bool)));
+  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHIPS_billinear, SLOT(setEnabled(bool)));
+  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHIPS_properties, SLOT(setEnabled(bool)));
 
-  ui->actionAladin_billinear->setChecked(settings.value("hips_bi", false).toBool());
+  ui->actionHIPS_billinear->setChecked(settings.value("hips_bi", false).toBool());
 
   connect(g_hipsRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);
 
@@ -871,7 +871,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->cb_axis_y_invert->setChecked(settings.value("tel_axis_y_invert", false).toBool());  
 }
 
-void MainWindow::fillAladinSources()
+void MainWindow::fillHIPSSources()
 {
   CUrlFile url;
 
@@ -881,7 +881,7 @@ void MainWindow::fillAladinSources()
 
   QActionGroup *group = new QActionGroup(this);
 
-  QList <QAction *> actionList = m_aladinMenu->actions();
+  QList <QAction *> actionList = m_HIPSMenu->actions();
   QString lastUrl;
 
   // get selection
@@ -894,18 +894,18 @@ void MainWindow::fillAladinSources()
     }
   }
 
-  m_aladinMenu->clear();
+  m_HIPSMenu->clear();
   QAction *selAction = nullptr;
 
   QAction *action = new QAction(tr("None"), this);
   action->setCheckable(true);
   action->setData("");
-  m_aladinMenu->addAction(action);
+  m_HIPSMenu->addAction(action);
   group->addAction(action);
-  connect(action, SIGNAL(triggered()), SLOT(slotAladin()));
-  m_actionAladinNone = action;  
+  connect(action, SIGNAL(triggered()), SLOT(slotHIPS()));
+  m_actionHIPSNone = action;  
 
-  m_aladinMenu->addSeparator();
+  m_HIPSMenu->addSeparator();
 
   foreach (const urlItem_t &item, items)
   {
@@ -916,9 +916,9 @@ void MainWindow::fillAladinSources()
       selAction = action;
     }
     action->setData(item.url);
-    m_aladinMenu->addAction(action);
+    m_HIPSMenu->addAction(action);
     group->addAction(action);
-    connect(action, SIGNAL(triggered()), SLOT(slotAladin()));            
+    connect(action, SIGNAL(triggered()), SLOT(slotHIPS()));            
   }  
 
   // restore selection
@@ -931,7 +931,7 @@ void MainWindow::fillAladinSources()
   }
   else
   {    
-    m_actionAladinNone->trigger();
+    m_actionHIPSNone->trigger();
   }
 }
 
@@ -988,7 +988,7 @@ void MainWindow::setToolbarIconSize()
   ui->tb_show->setIconSize(QSize(size, size));
   ui->tb_map->setIconSize(QSize(size, size));
   ui->tb_window->setIconSize(QSize(size, size));    
-  ui->tb_aladin->setIconSize(QSize(size, size));
+  ui->tb_HIPS->setIconSize(QSize(size, size));
 }
 
 void MainWindow::checkNewVersion(bool forced)
@@ -1153,7 +1153,7 @@ void MainWindow::slotPluginError()
   }
 }
 
-void MainWindow::slotAladin()
+void MainWindow::slotHIPS()
 {
   QAction *action = dynamic_cast<QAction *>(sender());
   QString urlPath = action->data().toString();
@@ -1163,11 +1163,11 @@ void MainWindow::slotAladin()
     qDebug() << "none";
 
     hipsParams_t param;
-    param.billinear = ui->actionAladin_billinear->isChecked();
+    param.billinear = ui->actionHIPS_billinear->isChecked();
     param.showGrid = ui->actionHEALPix_grid->isChecked();
     param.render = false;
     param.url = "";
-    ui->actionAladin->setChecked(false);
+    ui->actionHIPS->setChecked(false);
     g_hipsRenderer->setParam(param);
     repaintMap();
     return;
@@ -1175,55 +1175,55 @@ void MainWindow::slotAladin()
 
   QUrl url(urlPath);
 
-  m_aladinUrl = urlPath;
+  m_HIPSUrl = urlPath;
   QString file = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/hips" + url.path() + "/properties";
-  m_aladinProperties = file;
+  m_HIPSProperties = file;
 
-  ui->actionAladin->setDisabled(true);
+  ui->actionHIPS->setDisabled(true);
 
   if (!QFile::exists(file))
   {
     CDownload *download = new CDownload();
 
-    m_aladinTmpUrl = urlPath + "/properties";
-    connect(download, SIGNAL(sigFileDone(bool)), this, SLOT(slotAladinPropertiesDone(bool)));
-    download->beginFile(m_aladinTmpUrl, file);
+    m_HIPSTmpUrl = urlPath + "/properties";
+    connect(download, SIGNAL(sigFileDone(bool)), this, SLOT(slotHIPSPropertiesDone(bool)));
+    download->beginFile(m_HIPSTmpUrl, file);
   }
   else
   {
-    slotAladinPropertiesDone(true);
+    slotHIPSPropertiesDone(true);
   }
 }
 
-void MainWindow::slotAladinPropertiesDone(bool ok)
+void MainWindow::slotHIPSPropertiesDone(bool ok)
 {
   //qDebug() << "done" << ok;
 
-  ui->actionAladin->setEnabled(true);
+  ui->actionHIPS->setEnabled(true);
 
   if (!ok)
   {
-    msgBoxError(this, tr("Error downloading file : ") + m_aladinTmpUrl);
-    m_actionAladinNone->trigger();    
+    msgBoxError(this, tr("Error downloading file : ") + m_HIPSTmpUrl);
+    m_actionHIPSNone->trigger();    
     return;
   }
 
   hipsParams_t param;
 
-  if (g_hipsRenderer->manager()->parseProperties(&param, m_aladinProperties, m_aladinUrl))
+  if (g_hipsRenderer->manager()->parseProperties(&param, m_HIPSProperties, m_HIPSUrl))
   {
     param.showGrid = ui->actionHEALPix_grid->isChecked();
-    param.billinear = ui->actionAladin_billinear->isChecked();
+    param.billinear = ui->actionHIPS_billinear->isChecked();
     param.render = true;
     g_hipsRenderer->manager()->cancelAll();
     g_hipsRenderer->setParam(param);
-    ui->actionAladin->setChecked(true);
+    ui->actionHIPS->setChecked(true);
   }
   else
   {
     msgBoxError(this, tr("Properties file is invalid"));
-    QFile::remove(m_aladinProperties);
-    m_actionAladinNone->trigger();
+    QFile::remove(m_HIPSProperties);
+    m_actionHIPSNone->trigger();
     return;
   }
 
@@ -1458,7 +1458,7 @@ void MainWindow::saveAndExit()
   settings.setValue("tel_axis_x_invert", ui->cb_axis_x_invert->isChecked());
   settings.setValue("tel_axis_y_invert", ui->cb_axis_y_invert->isChecked());
 
-  settings.setValue("hips_bi", ui->actionAladin_billinear->isChecked());
+  settings.setValue("hips_bi", ui->actionHIPS_billinear->isChecked());
 
   lfParam_t lfp;
   QByteArray data;
@@ -3506,7 +3506,7 @@ void MainWindow::on_actionSetting_triggered()
   ui->widget->m_zoom->setVisible(g_showZoomBar);
   setToolbarIconSize();
   setTitle();
-  fillAladinSources();
+  fillHIPSSources();
 }
 
 ///////////////////////////////////////////////////
@@ -6688,13 +6688,13 @@ void MainWindow::on_actionLunar_features_triggered()
   on_pushButton_35_clicked();
 }
 
-void MainWindow::on_actionAladin_toggled(bool arg1)
+void MainWindow::on_actionHIPS_toggled(bool arg1)
 {    
   hipsParams_t *param = g_hipsRenderer->getParam();
 
   if (param->url.isEmpty())
   {
-    ui->actionAladin->setChecked(false);
+    ui->actionHIPS->setChecked(false);
     return;
   }
 
@@ -6712,7 +6712,7 @@ void MainWindow::on_actionHEALPix_grid_toggled(bool arg1)
   repaintMap();
 }
 
-void MainWindow::on_actionAladin_billinear_toggled(bool arg1)
+void MainWindow::on_actionHIPS_billinear_toggled(bool arg1)
 {
   hipsParams_t *param = g_hipsRenderer->getParam();
 
@@ -6721,9 +6721,9 @@ void MainWindow::on_actionAladin_billinear_toggled(bool arg1)
   repaintMap();
 }
 
-void MainWindow::on_actionAladin_properties_triggered()
+void MainWindow::on_actionHIPS_properties_triggered()
 {
-  AladinPropertiesDialog dlg(this, m_aladinProperties);
+  HIPSPropertiesDialog dlg(this, m_HIPSProperties);
 
   dlg.exec();
 }

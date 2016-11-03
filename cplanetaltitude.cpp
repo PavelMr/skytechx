@@ -1,4 +1,3 @@
-
 #include "cplanetaltitude.h"
 #include "ui_cplanetaltitude.h"
 #include "castro.h"
@@ -6,7 +5,8 @@
 
 CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
   QDialog(parent),
-  ui(new Ui::CPlanetAltitude)
+  ui(new Ui::CPlanetAltitude) ,
+  m_chartView(0)
 {
   ui->setupUi(this);
   CAstro ast;
@@ -31,7 +31,7 @@ CPlanetAltitude::~CPlanetAltitude()
 
 void CPlanetAltitude::calculate(double jd)
 {
-  m_step = JD1SEC * 60 * 30; // 10 min
+  m_step = JD1SEC * 60 * 60; // 10 min
   CAstro ast;
 
   for (int p = 0; p < PT_PLANET_COUNT; p++)
@@ -43,7 +43,7 @@ void CPlanetAltitude::calculate(double jd)
 
   jd = (floor(cjd + 0.5));
 
-  for (double i = 0; i < 1 + m_step; i += m_step)
+  for (double i = 0; i < 1; i += m_step)
   {
     m_view.jd = (jd + i) - m_view.geo.tz;
     ast.setParam(&m_view);
@@ -65,54 +65,52 @@ void CPlanetAltitude::calculate(double jd)
 }
 
 void CPlanetAltitude::makeChart()
-{
-  int count = m_list[0].count();
-
-  QVector<double> x;
-  QVector<double> y;
-
-  int i = ui->comboBox->currentIndex();
+{    
+  if (m_chartView)
   {
-    for (int j = 0; j < count; j++)
-    {
-      double alt = R2D(m_list[i].at(j).alt);
-      double date = m_list[i].at(j).date;
-
-      QDateTime dt;
-
-      jdConvertJDTo_DateTime(date, &dt);
-
-      x.append(dt.toTime_t()); // FIXME: not working before 1.1.1970
-      y.append(alt);
-    }
+    delete m_chartView;
   }
 
-  ui->widget->clearGraphs();
-  ui->widget->addGraph();
+  QLineSeries *series = new QLineSeries();
 
-  ui->widget->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-  ui->widget->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, QPen(Qt::black), QBrush(Qt::white), 3));
+  int i = ui->comboBox->currentIndex();
+  for (int j = 0; j < m_list[0].count(); j++)
+  {
+    double alt = R2D(m_list[i].at(j).alt);
+    double date = m_list[i].at(j).date;
 
-  ui->widget->yAxis->setRange(-90, 90);
+    QDateTime dt;
 
-  ui->widget->xAxis->setLabel(tr("Time"));
-  ui->widget->yAxis->setLabel(tr("Alt."));
+    jdConvertJDTo_DateTime(date, &dt);
+    dt.setTimeSpec(Qt::LocalTime);
+    series->append(dt.toMSecsSinceEpoch(), alt);
+  }
 
-  ui->widget->xAxis->setAutoSubTicks(true);
-  ui->widget->xAxis->setAutoTickStep(false);
-  ui->widget->xAxis->setTickStep(3600);
+  QChart *chart = new QChart();
+  chart->addSeries(series);
+  chart->legend()->hide();
+  chart->setTitle(ui->comboBox->currentText());
 
-  ui->widget->yAxis->setAutoSubTicks(true);
-  ui->widget->yAxis->setAutoTickStep(false);
-  ui->widget->yAxis->setTickStep(10);
+  QDateTimeAxis *axisX = new QDateTimeAxis;
+  axisX->setTickCount(24);
+  axisX->setFormat("HH");
+  axisX->setTitleText(tr("Time"));
+  chart->addAxis(axisX, Qt::AlignBottom);
+  series->attachAxis(axisX);
 
-  ui->widget->xAxis->setDateTimeFormat("hh");
-  ui->widget->xAxis->setDateTimeSpec(Qt::UTC);
-  ui->widget->xAxis->setTickLabelType(QCPAxis::ltDateTime);
 
-  ui->widget->graph(0)->setData(x, y);
-  ui->widget->xAxis->rescale(true);
-  ui->widget->replot();
+  QValueAxis *axisY = new QValueAxis;
+  axisY->setLabelFormat("%0.1f");
+  axisY->setTitleBrush(series->pen().color());
+  axisY->setTitleText(tr("Altitude"));
+  axisY->setTickCount(5);
+  axisY->setRange(-90, 90);
+  chart->addAxis(axisY, Qt::AlignLeft);
+  series->attachAxis(axisY);
+
+  m_chartView = new QChartView(chart);
+  m_chartView->setRenderHint(QPainter::Antialiasing);
+  ui->verticalLayout->addWidget(m_chartView);
 }
 
 void CPlanetAltitude::on_comboBox_currentIndexChanged(int)
