@@ -157,9 +157,7 @@ double CAstro::deltaTTable(double jd)
   }
 
   double alpha = (y - ymin) / (ymax - ymin);
-  dT = (1.0 - alpha) * dmin + alpha * dmax;
-
-  //qDebug("%f %f   %f %f / %f", ymin, ymax, dmin, dmax, alpha);
+  dT = (1.0 - alpha) * dmin + alpha * dmax;  
 
   return(dT);
 }

@@ -162,8 +162,6 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
     }
   }
 
-
-
   return(pStars[spt][s].width() >> 1);
 }
 

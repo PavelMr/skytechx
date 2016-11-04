@@ -73,13 +73,10 @@ bool CBkImages::load(const QString name, int resizeTo)
     i.param.matrix[1][1] = 1;
     i.param.dlgSize = resizeTo;
 
-
     m_totalSize += i.byteSize;
 
     m_tImgList.append(i);
-    pcMainWnd->updateDSS();
-
-    //qDebug("load '%s'", qPrintable(name));
+    pcMainWnd->updateDSS();    
   }
 
   return(true);

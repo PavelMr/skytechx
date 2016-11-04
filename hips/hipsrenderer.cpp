@@ -53,11 +53,14 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
 
   int centerPix = m_HEALpix.getPix(level, ra, dec);
 
-  // calculate healpix grid edge in pixels
+  // calculate healpix grid edge size in pixels
   SKPOINT pts[4];
   m_HEALpix.getCornerPoints(level, centerPix, pts);
   for (int i = 0; i < 2; i++) trfProjectPointNoCheck(&pts[i]);
   int size = sqrt(POW2(pts[0].sx - pts[1].sx) + POW2(pts[0].sy - pts[1].sy));
+  if (size < 0) size = getParam()->tileWidth;
+
+  //qDebug() << size;
 
   bool old = scanRender.isBillinearInt();
   scanRender.enableBillinearInt(getParam()->billinear && (size >= getParam()->tileWidth || allSky));
