@@ -65,6 +65,8 @@ void CPolarisHourAngle::paintEvent(QPaintEvent *)
 
   poly << QPoint(0, r1);
   poly << QPoint(10, -10);
+  poly << QPoint(5, -14);
+  poly << QPoint(-5, -14);
   poly << QPoint(-10, -10);
   poly << QPoint(0, r1);
 
