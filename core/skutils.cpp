@@ -534,6 +534,26 @@ QString getStrTimeFromDayRads(double rads)
   return(str);
 }
 
+//////////////////////////
+QString getNumber(int val)
+//////////////////////////
+{
+  QString str = QString::number(val);
+  QString tmp;
+
+  int j = 1;
+  for (int i = str.size() - 1; i >=0; i--, j++)
+  {
+    tmp.prepend(str[i]);
+    if (((j % 3) == 0) && (i != 0))
+    {
+      tmp.prepend("' ");
+    }
+  }
+
+  return tmp;
+}
+
 /////////////////////////////
 QString getStrMag(double mag)
 /////////////////////////////
@@ -735,4 +755,28 @@ QString getTempName(const QString &path, const QString &ext)
   } while (f.exists());
 
   return file;
+}
+
+QString getStringSeparated(const QString &str, int chars)
+{
+  QString tmp;
+
+  int count = 0;
+  bool last = false;
+  for (int i = 0; i < str.size(); i++)
+  {
+    tmp += str[i];
+    if (++count == chars)
+    {
+      last = true;
+    }
+    if (last && (str[i] == ' ' || str[i] == ',' || str[i] == '/' || str[i] == ';' || str[i] == ':'))
+    {
+      count = 0;
+      tmp += '\n';
+      last = false;
+    }
+  }
+
+  return tmp;
 }

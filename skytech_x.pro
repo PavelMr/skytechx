@@ -289,7 +289,17 @@ SOURCES += main.cpp\
     hips/urlfiledownload.cpp \
     pixcache.cpp \
     hipspropertiesdialog.cpp \
-    hips/hipsrenderer.cpp
+    hips/hipsrenderer.cpp \
+    votheaderlist.cpp \
+    vocatalogparser.cpp \
+    vocatalogheaderparser.cpp \
+    votdataheaderlist.cpp \
+    votdataselectorwidget.cpp \
+    votdataeditor.cpp \
+    vocatalog.cpp \
+    vocatalogdataparser.cpp \
+    vocatalogrenderer.cpp \
+    vocatalogmanager.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -515,7 +525,17 @@ HEADERS  += mainwindow.h \
     hips/hips.h \
     pixcache.h \
     hipspropertiesdialog.h \
-    hips/hipsrenderer.h
+    hips/hipsrenderer.h \
+    votheaderlist.h \
+    vocatalogparser.h \
+    vocatalogheaderparser.h \
+    votdataheaderlist.h \
+    votdataselectorwidget.h \
+    votdataeditor.h \
+    vocatalog.h \
+    vocatalogdataparser.h \
+    vocatalogrenderer.h \
+    vocatalogmanager.h
 
 
 FORMS    += mainwindow.ui \
@@ -609,7 +629,11 @@ FORMS    += mainwindow.ui \
     cskeventdocdialog.ui \
     cchartdialog.ui \
     choreditorwidget.ui \
-    hipspropertiesdialog.ui
+    hipspropertiesdialog.ui \
+    votheaderlist.ui \
+    votdataheaderlist.ui \
+    votdataselectorwidget.ui \
+    votdataeditor.ui
 
 
 RESOURCES += \

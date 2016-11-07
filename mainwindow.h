@@ -681,6 +681,8 @@ private slots:
 
   void on_actionHIPS_properties_triggered();
 
+  void on_actionVO_Catalogue_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
@@ -741,7 +743,7 @@ signals:
 protected slots:
   void slotPluginError();  
   void slotHIPS();
-  void slotHIPSPropertiesDone(bool ok);
+  void slotHIPSPropertiesDone(QNetworkReply::NetworkError error, const QString &errorString);
 };
 
 extern MainWindow *pcMainWnd;

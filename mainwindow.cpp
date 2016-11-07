@@ -168,7 +168,6 @@ QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
   return QItemDelegate::sizeHint(option, index);
 }
 
-
 ////////////////////////////////////////////
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -1186,24 +1185,24 @@ void MainWindow::slotHIPS()
     CDownload *download = new CDownload();
 
     m_HIPSTmpUrl = urlPath + "/properties";
-    connect(download, SIGNAL(sigFileDone(bool)), this, SLOT(slotHIPSPropertiesDone(bool)));
+    connect(download, SIGNAL(sigFileDone(QNetworkReply::NetworkError,QString)), this, SLOT(slotHIPSPropertiesDone(QNetworkReply::NetworkError,QString)));
     download->beginFile(m_HIPSTmpUrl, file);
   }
   else
   {
-    slotHIPSPropertiesDone(true);
+    slotHIPSPropertiesDone(QNetworkReply::NoError, "");
   }
 }
 
-void MainWindow::slotHIPSPropertiesDone(bool ok)
+void MainWindow::slotHIPSPropertiesDone(QNetworkReply::NetworkError error, const QString &errorString)
 {
   //qDebug() << "done" << ok;
 
   ui->actionHIPS->setEnabled(true);
 
-  if (!ok)
+  if (error != QNetworkReply::NoError)
   {
-    msgBoxError(this, tr("Error downloading file : ") + m_HIPSTmpUrl);
+    msgBoxError(this, tr("Error downloading file : ") + m_HIPSTmpUrl + "\n" + errorString);
     m_actionHIPSNone->trigger();    
     return;
   }
@@ -6724,6 +6723,15 @@ void MainWindow::on_actionHIPS_billinear_toggled(bool arg1)
 void MainWindow::on_actionHIPS_properties_triggered()
 {
   HIPSPropertiesDialog dlg(this, m_HIPSProperties);
+
+  dlg.exec();
+}
+
+#include "votheaderlist.h"
+
+void MainWindow::on_actionVO_Catalogue_triggered()
+{
+  VOTHeaderList dlg(this);
 
   dlg.exec();
 }

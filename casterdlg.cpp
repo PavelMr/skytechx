@@ -261,8 +261,6 @@ void astRender(CSkPainter *p, mapView_t *view, float maxMag)
 
   int size = g_skSet.map.aster.radius;
 
-  // TODO: naplnit QList checked polozkama (pointer na comet_t ) aby se pres for chodilo jenom pres vybrane (to samy u asteroidu)
-
   // TODO: dat asi cAstro do kazdeho vlakna ??
   #pragma omp parallel for shared(tAsteroids, size)
   for (int i = 0; i < tAsteroids.count(); i++)

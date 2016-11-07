@@ -123,6 +123,8 @@ void copyAppData()
   copyPath("../appdata", QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 }
 
+#include "vocatalogmanager.h"
+
 ////////////////////////////////
 int main(int argc, char *argv[])
 ////////////////////////////////
@@ -150,6 +152,8 @@ int main(int argc, char *argv[])
 
   LOG_FILE = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log/log.txt";
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log");   
+
+  checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vo_tables");
 
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/telescope");
@@ -256,6 +260,8 @@ int main(int argc, char *argv[])
       }
     }
   }
+
+  g_voCatalogManager.loadAll();
 
   QLocale::setDefault(QLocale::c());
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));

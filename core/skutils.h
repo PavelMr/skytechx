@@ -44,6 +44,9 @@ void getHMSFromRad(double x, int *hh, int *mm, double *ss);
 
 void getDeg(double degress, int *deg, int *min, int *sec, int *sign);
 
+QString getStringSeparated(const QString &str, int chars = 50);
+QString getNumber(int val);
+
 QString getStrDegDF(double deg);
 QString getStrDeg(double deg, bool simple = false);
 QString getStrDegNoSign(double deg, bool msec = false);

@@ -31,6 +31,7 @@
 #include "cmeteorshower.h"
 #include "gcvs.h"
 #include "hipsrenderer.h"
+#include "vocatalogmanager.h"
 
 static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region);
 
@@ -1493,6 +1494,9 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   {
     smRenderStars(mapView, pPainter, pImg);
   }
+
+  g_voCatalogManager.renderAll(mapView, pPainter);
+
 
   if (g_skSet.map.constellation.showNames)
   {
