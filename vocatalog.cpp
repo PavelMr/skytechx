@@ -1,4 +1,5 @@
 #include "vocatalog.h"
+#include "dso_def.h"
 
 #include <QDebug>
 #include <QDataStream>
@@ -42,6 +43,52 @@ QString VOCatalog::lastErrorString()
   return m_lastError;
 }
 
+static double value(QString str, const QString &unit)
+{
+  double val = str.toDouble();
+  QString tmp;
+
+  if (unit == "deg")
+  {
+    return val;
+  }
+
+  if (unit == "mag")
+  {
+    return val;
+  }
+
+  if (unit == "arcmin" || unit == "arcm")
+  {
+    return val * 60.0;
+  }
+  else if (unit == "arcsec" || unit == "arcs")
+  {
+    return val;
+  }
+
+  if (unit.startsWith("[") && unit.endsWith("]"))
+  {
+    tmp = unit.mid(1);
+    tmp.chop(1);
+    tmp = tmp.remove(QRegExp("[a-zA-Z\\s]"));
+
+    double mul = tmp.toDouble();
+
+    if (unit.contains("arcmin") || unit.contains("arcm"))
+    {
+      return mul * pow(10, val) * 60;
+    }
+    else if (unit.contains("arcsec") || unit.contains("arcs"))
+    {
+      return mul * pow(10, val);
+    }
+  }
+
+  return 0;
+}
+
+
 bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys, QList<QStringList> &data, const VOParams_t &params, const QString &filePath)
 {
   m_lastError = "";  
@@ -56,7 +103,7 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
   m_desc = catalogs[0].m_desc;
   m_count = catalogs[0].m_count;
   m_id = catalogs[0].m_id;
-  m_type = VOT_STAR; // FIXME: dodelat
+  m_type = params.type;
 
   int count = data[0].count();
 
@@ -94,6 +141,8 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
   VOItem_t item;
 
   ds << data.count();
+  ds << true;
+  ds << m_type;
   ds << cat->m_desc;
   ds << cat->m_name;
   ds << cat->m_id;
@@ -171,16 +220,68 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
       j++;
     }
 
-    item.ra = row.at(params.raIndex).toDouble();
-    item.dec = row.at(params.decIndex).toDouble();
-    item.mag = row.at(params.magIndex).toFloat();
+    item.rd.Ra = row.at(params.raIndex).toDouble();
+    item.rd.Dec = row.at(params.decIndex).toDouble();
+
+    item.name = row.at(params.name).toString().toLocal8Bit();
+
+    if (params.magIndex1 != -1 && !data[i].at(params.magIndex1).isEmpty())
+    {
+      item.mag = row.at(params.magIndex1).toFloat();
+    }
+    else if (params.magIndex2 != -1 && !data[i].at(params.magIndex2).isEmpty())
+    {
+      item.mag = row.at(params.magIndex2).toFloat();
+    }
+    else
+    {
+      item.mag = VO_INVALID_MAG;
+    }
+
+    if (params.PA != -1 && !data[i].at(params.PA).isEmpty())
+    {
+      item.pa = value(data[i].at(params.PA), catalogs[0].m_field[params.PA].m_unit);
+    }
+    else
+    {
+      item.pa = NO_DSO_PA;
+    }
+
+    if (params.axis1 != -1 && !data[i].at(params.axis1).isEmpty())
+    {
+      item.axis[0] = value(data[i].at(params.axis1), catalogs[0].m_field[params.axis1].m_unit);
+    }
+    else
+    {
+      item.axis[0] = 0;
+    }
+
+    if (params.axis2 != -1 && !data[i].at(params.axis2).isEmpty())
+    {
+      item.axis[1] = value(data[i].at(params.axis2), catalogs[0].m_field[params.axis2].m_unit);
+    }
+    else
+    {
+      item.axis[1] = 0;
+    }
+
+    if (item.axis[1] == 0)
+    {
+      item.axis[1] = item.axis[0];
+    }
+
     item.infoFileOffset = fileTable.pos();
 
-    qDebug() << item.ra << item.dec << item.mag << item.infoFileOffset;
+    //qDebug() << item.ra << item.dec << item.mag << item.infoFileOffset;
+    //qDebug() << item.mag << item.axis[0] << item.axis[1] << item.rd.Ra << item.rd.Dec;
 
-    ds << item.ra;
-    ds << item.dec;
+    ds << item.name;
+    ds << item.rd.Ra;
+    ds << item.rd.Dec;
     ds << item.mag;
+    ds << item.axis[0];
+    ds << item.axis[1];
+    ds << item.pa;
     ds << item.infoFileOffset;
 
     dsTable << row;

@@ -99,6 +99,7 @@
 #include "cdownload.h"
 #include "hipspropertiesdialog.h"
 #include "cgeohash.h"
+#include "vocatalogmanagerdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -6727,11 +6728,10 @@ void MainWindow::on_actionHIPS_properties_triggered()
   dlg.exec();
 }
 
-#include "votheaderlist.h"
-
 void MainWindow::on_actionVO_Catalogue_triggered()
 {
-  VOTHeaderList dlg(this);
+  VOCatalogManagerDialog dlg(this);
 
   dlg.exec();
+  repaintMap();
 }

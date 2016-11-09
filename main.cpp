@@ -125,6 +125,7 @@ void copyAppData()
 
 #include "vocatalogmanager.h"
 
+
 ////////////////////////////////
 int main(int argc, char *argv[])
 ////////////////////////////////
@@ -134,7 +135,7 @@ int main(int argc, char *argv[])
      //_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
    #endif  
 
-  QCoreApplication::addLibraryPath("plugins");
+  QCoreApplication::addLibraryPath("plugins");  
 
   QCoreApplication::setOrganizationDomain("Frostware");
   QCoreApplication::setOrganizationName("PMR");

@@ -2,32 +2,34 @@
 #define VOCATALOG_H
 
 #include "vocatalogheaderparser.h"
+#include "const.h"
 
 #include <QObject>
 #include <QVector>
 
-enum eVOType
-{
-  VOT_STAR = 0,
-  VOR_DSO,
-};
-
-//typedef struct
-//{
-//} VOData_t;
+#define VO_INVALID_MAG     100000.0
 
 typedef struct
 {
-  double ra, dec;
-  float  mag;
-  qint64 infoFileOffset;
+  QByteArray name;
+  radec_t rd;
+  float   mag;
+  quint32 axis[2];
+  ushort  pa;
+  qint64  infoFileOffset;
 } VOItem_t;
 
 typedef struct
 {
+  int type;
   int raIndex;
   int decIndex;
-  int magIndex;
+  int magIndex1;
+  int magIndex2;
+  int axis1;
+  int axis2;
+  int name;
+  int PA;
 } VOParams_t;
 
 class VOCatalog : public QObject
@@ -38,7 +40,7 @@ public:
   QString lastErrorString();
   bool create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys, QList<QStringList> &data, const VOParams_t &params, const QString &filePath);
 
-  eVOType m_type;
+  int     m_type; // DSOT_xxx
   QString m_name;
   QString m_desc;
   QString m_id;

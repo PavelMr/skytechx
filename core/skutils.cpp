@@ -3,6 +3,8 @@
 #include "skcore.h"
 #include "../jd.h"
 
+static qint64 pathFileSize;
+
 SKPOINT max4Y(const SKPOINT &p1, const SKPOINT &p2, const SKPOINT &p3, const SKPOINT &p4)
 {
   SKPOINT newPt;
@@ -779,4 +781,33 @@ QString getStringSeparated(const QString &str, int chars)
   }
 
   return tmp;
+}
+
+static void scanDir(QDir dir)
+{
+  dir.setNameFilters(QStringList() << "*.*");
+  dir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+
+  QFileInfoList fileList = dir.entryInfoList();
+  for (int i = 0; i< fileList.count(); i++)
+  {
+    pathFileSize += fileList[i].size();
+  }
+
+  dir.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+  QStringList dirList = dir.entryList();
+  for (int i=0; i<dirList.size(); ++i)
+  {
+    QString newPath = QString("%1/%2").arg(dir.absolutePath()).arg(dirList.at(i));
+    scanDir(QDir(newPath));
+  }
+}
+
+qint64 folderFileSize(const QString &path)
+{
+  pathFileSize = 0;
+
+  scanDir(path);
+
+  return pathFileSize;
 }

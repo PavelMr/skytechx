@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
+
 #ifndef VOTDATAEDITOR_H
 #define VOTDATAEDITOR_H
 
@@ -25,6 +26,18 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDialog>
 #include <QProgressDialog>
 #include <QNetworkReply>
+
+enum VOType
+{
+  eVO_ID = 0,
+  eVO_RA,
+  eVO_DEC,
+  eVO_PA,
+  eVO_MAJ_AXIS,
+  eVO_MIN_AXIS,
+  eVO_PRIM_MAG,
+  eVO_SEC_MAG,
+};
 
 class QNetworkReply;
 
@@ -41,11 +54,20 @@ public:
   ~VOTDataEditor();
   bool setData(const QByteArray &data);
   bool prepareData(const QByteArray &data, const QString &path);
+  bool m_back;
 
 private slots:
   void on_pushButton_2_clicked();
   void slotDone(QNetworkReply::NetworkError error, const QString &errorString);
   void slotProgress(qint64 fileSize, int percent, QNetworkReply *reply);
+
+  void on_cb_type_currentIndexChanged(int index);
+
+  void on_cb_all_stateChanged(int arg1);
+
+  void on_pushButton_3_clicked();
+
+  void on_pushButton_clicked();
 
 private:
   Ui::VOTDataEditor *ui;  

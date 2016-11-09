@@ -1562,6 +1562,15 @@ void CMapView::getMapRaDec(double &ra, double &dec, double &fov)
   fov = m_mapView.fov;
 }
 
+///////////////////////////////////////////////////////////////////////////
+void CMapView::getMapCenterRaDecJ2000(double &ra, double &dec, double &fov)
+///////////////////////////////////////////////////////////////////////////
+{
+  // TODO: precesse
+  trfConvScrPtToXY(width() * 0.5, height() * 0.5, ra, dec);
+  fov = m_mapView.fov;
+}
+
 //////////////////////////////
 void CMapView::saveShape(void)
 //////////////////////////////

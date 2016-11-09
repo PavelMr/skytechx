@@ -44,6 +44,24 @@ bool VOCatalogParser::error(const QXmlParseException &exception)
   return true;
 }
 
+void VOCatalogParser::getInfo(const QXmlAttributes &attributes, const QString &what, QString &out)
+{
+  for (int i = 0; i < attributes.count(); i++)
+  {
+    if (attributes.qName(i) == "name" && attributes.value(i) == what)
+    {
+      for (int j = 0; j < attributes.count(); j++)
+      {
+        if (attributes.qName(j) == "value")
+        {
+          out = attributes.value(j);
+          return;
+        }
+      }
+    }
+  }
+}
+
 bool VOCatalogParser::characters(const QString &str)
 {
   if (m_inDescription)
@@ -127,8 +145,7 @@ bool VOCatalogParser::startElement(const QString &namespaceURI, const QString &l
       {
         m_inDescription = true;
       }
-
-      if (qName == "LINK")
+      else if (qName == "LINK")
       {
         for (int i = 0; i < attributes.count(); i++)
         {
@@ -137,6 +154,11 @@ bool VOCatalogParser::startElement(const QString &namespaceURI, const QString &l
             m_current.m_action = attributes.value(i);
           }
         }
+      }
+      else if (qName == "INFO")
+      {
+        getInfo(attributes, "-kw.Wavelength", m_current.m_WL);
+        getInfo(attributes, "ipopu", m_current.m_pop);
       }
     }
   }

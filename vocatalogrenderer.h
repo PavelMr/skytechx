@@ -31,12 +31,18 @@ public:
   VOCatalogRenderer();
   bool load(const QString &filePath);
   void render(mapView_t *mapView, CSkPainter *pPainter);
+  void setShow(bool show);
 
-private:
+  bool               m_show;
   QVector <VOItem_t> m_data;
+  int                m_type;
+  QString            m_path;
   QString            m_desc;
   QString            m_name;
   QString            m_id;
+  float              m_brightestMag;
+
+  SKPOINT            m_quad[4];
 };
 
 #endif // VOCATALOGRENDERER_H

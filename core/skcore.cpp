@@ -1,8 +1,7 @@
 #include "skcore.h"
 
-/////////////////////////////////
-QString readAllFile(QString name)
-/////////////////////////////////
+
+QString readAllFile(const QString &name)
 {
   QString str;
 
@@ -13,6 +12,15 @@ QString readAllFile(QString name)
   }
 
   return(str);
+}
+
+void writeToFile(const QString &name, const QString &str)
+{
+  SkFile f(name);
+  if (f.open(SkFile::WriteOnly))
+  {
+    f.write(str.toLocal8Bit());
+  }
 }
 
 void checkAndCreateFolder(const QString& folder)

@@ -71,8 +71,7 @@ public:
   VOCatalogHeader() : m_count(0) {}
 
   QString m_name;
-  QString m_id;
-  QString m_type;
+  QString m_id;  
   QString m_desc;
   qint64  m_count;
 
@@ -82,8 +81,7 @@ public:
   {
     m_desc.clear();
     m_name.clear();
-    m_id.clear();
-    m_type.clear();
+    m_id.clear();    
     m_count = 0;
     m_field.clear();
   }

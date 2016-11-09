@@ -38,12 +38,15 @@ public:
   explicit VOTDataHeaderList(QWidget *parent = 0);
   ~VOTDataHeaderList();
   bool setData(const QByteArray &data);
+  bool m_back;
 
 private slots:
   void on_pushButton_2_clicked();
   void on_pushButton_clicked();
 
   void slotDone(QNetworkReply::NetworkError error, const QString &errorString);
+
+  void on_pushButton_3_clicked();
 
 private:
   Ui::VOTDataHeaderList *ui;

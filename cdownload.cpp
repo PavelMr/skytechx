@@ -17,9 +17,7 @@ CDownload::CDownload(QObject *parent) :
 void CDownload::beginBkImage(QString &url, QString &fileName)
 ///////////////////////////////////////////////////////////
 {
-  QUrl qurl(url);
-
-  qDebug("url '%s'", qPrintable(url));
+  QUrl qurl(url);  
 
   QNetworkRequest request(qurl);
   QNetworkReply *reply = manager.get(request);
@@ -37,15 +35,13 @@ void CDownload::beginBkImage(QString &url, QString &fileName)
 
 void CDownload::beginFile(QString url, QString fileName)
 {
-  QUrl qurl(url);
+  QUrl qurl(url);  
 
-  qDebug("url '%s'", qPrintable(url));
-
-  QNetworkRequest request(qurl);
+  QNetworkRequest request(qurl);  
   QNetworkReply *reply = manager.get(request);  
 
   m_reply = reply;
-  m_fileName = fileName;    
+  m_fileName = fileName;
 
   connect(reply, SIGNAL(readyRead()), this, SLOT(slotFileReadyRead()));
   connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(slotProgress(qint64,qint64)));
@@ -109,7 +105,9 @@ void CDownload::slotDownloadFinished(QNetworkReply *reply)
 }
 
 void CDownload::slotDownloadFileFinished(QNetworkReply *reply)
-{
+{  
+  qDebug() << reply->errorString();
+
   if (reply->error() == QNetworkReply::NoError && m_file.isOpen())
   {        
     m_file.write(m_reply->readAll());

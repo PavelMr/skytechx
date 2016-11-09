@@ -35,9 +35,11 @@ VOTHeaderList::VOTHeaderList(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  QStandardItemModel *model = new QStandardItemModel(0, 2);
+  QStandardItemModel *model = new QStandardItemModel(0, 4);
   model->setHeaderData(0, Qt::Horizontal, tr("ID"));
-  model->setHeaderData(1, Qt::Horizontal, tr("Description"));
+  model->setHeaderData(1, Qt::Horizontal, tr("WL"));
+  model->setHeaderData(2, Qt::Horizontal, tr("Pop"));
+  model->setHeaderData(3, Qt::Horizontal, tr("Description"));
 
   ui->treeView->setModel(model);
   ui->treeView->setRootIsDecorated(false);
@@ -101,19 +103,34 @@ void VOTHeaderList::slotFileDone(QNetworkReply::NetworkError error, const QStrin
     {
       QStandardItem *item1 = new QStandardItem;
       QStandardItem *item2 = new QStandardItem;
+      QStandardItem *item3 = new QStandardItem;
+      QStandardItem *item4 = new QStandardItem;
       QList <QStandardItem *> row;
 
       item1->setText(item.m_name);
       item1->setEditable(false);
       item1->setData(item.m_action);      
 
-      item2->setText(item.m_description);
+      item2->setText(item.m_WL);
       item2->setEditable(false);
 
-      row << item1 << item2;
+      item3->setText(item.m_pop);
+      item3->setEditable(false);
+
+      item4->setText(item.m_description);
+      item4->setEditable(false);
+
+      row << item1 << item2 << item3 << item4;
 
       model->appendRow(row);
     }
+
+    ui->treeView->resizeColumnToContents(0);
+    ui->treeView->resizeColumnToContents(1);
+    ui->treeView->resizeColumnToContents(2);
+    ui->treeView->resizeColumnToContents(3);
+
+    ui->treeView->sortByColumn(2);
   }
   else
   {
@@ -124,6 +141,7 @@ void VOTHeaderList::slotFileDone(QNetworkReply::NetworkError error, const QStrin
 void VOTHeaderList::slotHeaderDone(QNetworkReply::NetworkError error, const QString &errorString)
 {
   ui->groupBox->setEnabled(true);
+  ui->treeView->setEnabled(true);
 
   if (error != QNetworkReply::NoError)
   {
@@ -138,6 +156,11 @@ void VOTHeaderList::slotHeaderDone(QNetworkReply::NetworkError error, const QStr
   if (dlg.setData(data))
   {    
     dlg.exec();
+    if (!dlg.m_back)
+    {
+      done(DL_CANCEL);
+      return;
+    }
   }
   else
   {
@@ -172,4 +195,5 @@ void VOTHeaderList::on_treeView_doubleClicked(const QModelIndex &)
 
   connect(download, SIGNAL(sigFileDone(QNetworkReply::NetworkError,QString)), this, SLOT(slotHeaderDone(QNetworkReply::NetworkError,QString)));
   ui->groupBox->setEnabled(false);
+  ui->treeView->setEnabled(false);
 }

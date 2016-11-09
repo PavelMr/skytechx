@@ -31,6 +31,7 @@ VOTDataHeaderList::VOTDataHeaderList(QWidget *parent) :
   ui(new Ui::VOTDataHeaderList)
 {
   ui->setupUi(this); 
+  m_back = false;
 }
 
 VOTDataHeaderList::~VOTDataHeaderList()
@@ -98,7 +99,19 @@ void VOTDataHeaderList::slotDone(QNetworkReply::NetworkError error, const QStrin
   {
     msgBoxError(this, tr("Cannot use this catalogue!\nNo eqt. position information!"));
     return;
-  }
+  }    
 
-  dlg.exec();
+  dlg.exec();    
+
+  if (!dlg.m_back)
+  {
+    qDebug() << "cancel";
+    done(DL_CANCEL);
+  }
+}
+
+void VOTDataHeaderList::on_pushButton_3_clicked()
+{
+  done(DL_CANCEL);
+  m_back = true;
 }

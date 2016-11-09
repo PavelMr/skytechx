@@ -23,19 +23,22 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "votdataheaderlist.h"
 #include "votheaderlist.h"
 #include "vocatalogdataparser.h"
+#include "mainwindow.h"
+#include "vocatalogmanager.h"
 
 #include <QStandardItemModel>
 #include <QUrlQuery>
 
 #include <QDebug>
 
-#define VO_TEST
+//#define VO_TEST
 
 VOTDataEditor::VOTDataEditor(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::VOTDataEditor)
 {
   ui->setupUi(this);
+  m_back = true;
 }
 
 VOTDataEditor::~VOTDataEditor()
@@ -51,7 +54,7 @@ bool VOTDataEditor::setData(const QByteArray &data)
   if (!parser.parse(data, m_cats, m_coords))
   {    
     return false;
-  }  
+  }      
 
   QStandardItemModel *model = new QStandardItemModel(0, 4);
   model->setHeaderData(0, Qt::Horizontal, tr("Name"));
@@ -63,14 +66,12 @@ bool VOTDataEditor::setData(const QByteArray &data)
   ui->treeView->setRootIsDecorated(false);
   ui->treeView->setSortingEnabled(false);
 
-  const VOCatalogHeader &header = m_cats[0];
+  const VOCatalogHeader &header = m_cats[0];  
+
+  ui->sb_maxRecords->setRange(1, header.m_count);
 
   ui->textEdit->setText(header.m_desc);
-  setWindowTitle(header.m_name);
-
-  m_param.raIndex = -1;
-  m_param.decIndex = -1;
-  m_param.magIndex = -1;
+  setWindowTitle(header.m_name);  
 
   int visMagIndex = -1;
   bool angSize = false;
@@ -105,57 +106,103 @@ bool VOTDataEditor::setData(const QByteArray &data)
     row << item1 << item2 << item3 << item4;
 
     if (item.m_ucd == "pos.eq.ra")
-    {
-      if (m_param.raIndex == -1)
-        m_param.raIndex = rowIndex;
+    {      
+      item1->setEnabled(false);
       radec++;
     }
     else if (item.m_ucd == "pos.eq.dec")
-    {
-      if (m_param.decIndex == -1)
-        m_param.decIndex = rowIndex;
+    {     
+      item1->setEnabled(false);
       radec++;
     }
 
-    if (item.m_ucd.startsWith("phot.mag;") && item.m_unit == "mag")
+    if (item.m_ucd.startsWith("phot.mag") && item.m_unit == "mag")
     {
-      ui->cb_mag->addItem(item.m_name, rowIndex);
+      item1->setEnabled(false);
+      ui->cb_mag1->addItem(item.m_name);
+      ui->cb_mag2->addItem(item.m_name);
       if (item.m_ucd == "phot.mag;em.opt.V")
       {
-        visMagIndex = ui->cb_mag->count() - 1;
+        visMagIndex = ui->cb_mag1->count() - 1;
       }
     }
 
-    if (item.m_ucd.startsWith("meta.id") && item.m_unit.isEmpty())
+    if (item.m_ucd.startsWith("meta.id"))
     {
-      ui->cb_id->addItem(item.m_name, rowIndex);
+      item1->setEnabled(false);
+      ui->cb_id->addItem(item.m_name);
     }
 
-    angSize = item.m_ucd.startsWith("phys.angSize");
+    if (item.m_ucd.startsWith("pos.posAng") && !item.m_unit.isEmpty())
+    {
+      item1->setEnabled(false);
+      ui->cb_pa->addItem(item.m_name);
+    }
+
+    if (item.m_ucd.startsWith("phys.angSize") && !item.m_unit.isEmpty())
+    {
+      item1->setEnabled(false);
+      ui->cb_axis1->addItem(item.m_name);
+      ui->cb_axis2->addItem(item.m_name);
+      angSize = item.m_ucd.startsWith("phys.angSize");
+    }
 
     model->appendRow(row);
     rowIndex++;
-  }
+  }  
 
-  if (!angSize)
-  {
-    ui->radioButton->setChecked(true);
-  }
-  else
-  {
-    ui->radioButton_2->setChecked(true);
-  }
+  ui->cb_type->addItem("Star", DSOT_STAR);
+  ui->cb_type->addItem("Galaxy", DSOT_GALAXY);
+  ui->cb_type->addItem("Open cluster", DSOT_OPEN_CLUSTER);
+  ui->cb_type->addItem("Globular cluster", DSOT_GLOB_CLUSTER);
 
   if (visMagIndex >= 0)
   {
-    ui->cb_mag->setCurrentIndex(visMagIndex);
+    ui->cb_mag1->setCurrentIndex(visMagIndex);
   }
+
   ui->cb_id->setCurrentIndex(0);
 
   ui->treeView->resizeColumnToContents(0);
   ui->treeView->resizeColumnToContents(1);
   ui->treeView->resizeColumnToContents(2);
   ui->treeView->resizeColumnToContents(3);    
+
+  if (ui->cb_pa->count() == 0)
+  {
+    ui->cb_pa->addItem("Not used");
+    foreach (const VOField &item, header.m_field)
+    {      
+      if (!item.m_unit.isEmpty())
+      {
+        ui->cb_pa->addItem(item.m_name);
+      }
+    }
+  }
+
+  if (ui->cb_mag1->count() == 0)
+  {
+    ui->cb_mag1->addItem("Not used");
+    foreach (const VOField &item, header.m_field)
+    {
+      if (!item.m_unit.isEmpty())
+      {
+        ui->cb_mag1->addItem(item.m_name);
+      }
+    }
+  }
+
+  if (ui->cb_mag2->count() == 0)
+  {
+    ui->cb_mag2->addItem("Not used");
+    foreach (const VOField &item, header.m_field)
+    {
+      if (!item.m_unit.isEmpty())
+      {
+        ui->cb_mag2->addItem(item.m_name);
+      }
+    }
+  }
 
   if (radec < 2)
   {
@@ -184,21 +231,17 @@ bool VOTDataEditor::prepareData(const QByteArray &data, const QString &path)
   m_cats.clear();
   m_coords.clear();
 
-  VOCatalog voCatalog;
-
-  m_param.magIndex = ui->cb_mag->currentData().toInt();
-  qDebug() << m_param.magIndex << "mag index";
+  VOCatalog voCatalog;  
 
   if (parser.parse(data, m_cats, m_coords, table))
-  {
+  {    
     if (!voCatalog.create(m_cats, m_coords, table, m_param, path))
     {
       qDebug() << voCatalog.m_lastError;
       return false;
     }
 
-    //qDebug() << voCatalog.m_data[0].data[0] << voCatalog.m_data[0].data[1];
-
+    g_voCatalogManager.load(path);    
     return true;
   }
 
@@ -211,10 +254,24 @@ void VOTDataEditor::on_pushButton_2_clicked()
   QUrl url("http://vizier.u-strasbg.fr/viz-bin/votable");
   QUrlQuery query;
 
+  double ra;
+  double dec;
+  double fov;
+
+  pcMainWnd->getView()->getMapCenterRaDecJ2000(ra, dec, fov);
+
+  fov = CLAMP(fov, D2R(0.5), D2R(5));
+
   query.addQueryItem("-source", m_cats[0].m_name);
   query.addQueryItem("-out.form", "VOTable");
-  query.addQueryItem("-out.max", "500");
-  query.addQueryItem("-c", "0.0-1,bd=1.0");
+  if (!ui->cb_all->isChecked())
+  {
+    qDebug() << "val" << QString(ui->sb_maxRecords->value()) << ui->sb_maxRecords->value();
+
+    query.addQueryItem("-out.max", QString::number(ui->sb_maxRecords->value()));
+    query.addQueryItem("-c", QString("%1%2%3").arg(R2D(ra)).arg(dec >= 0 ? "+" : "-").arg(R2D(qAbs(dec))));
+    query.addQueryItem("-c.bd", QString("%1").arg(R2D(fov)));
+  }
 
   QStandardItemModel *model = dynamic_cast<QStandardItemModel *>(ui->treeView->model());
 
@@ -228,7 +285,64 @@ void VOTDataEditor::on_pushButton_2_clicked()
     }
   }
   url.setQuery(query);
-  //qDebug() << url.toString();
+
+  qDebug() << "type" << ui->cb_type->currentData().toInt() << ui->cb_type->currentIndex();
+
+  m_param.type = ui->cb_type->currentData().toInt();
+  m_param.raIndex = -1;
+  m_param.decIndex = -1;
+  m_param.magIndex1 = -1;
+  m_param.magIndex2 = -1;
+  m_param.axis1 = -1;
+  m_param.axis2 = -1;
+  m_param.name = -1;
+
+  for (int i = 0; i < m_cats[0].m_field.count(); i++)
+  {
+    if (ui->cb_id->currentText() == m_cats[0].m_field[i].m_name)
+    {
+      m_param.name = i;
+    }
+    else if (ui->cb_pa->isEnabled() && ui->cb_pa->currentText() == m_cats[0].m_field[i].m_name)
+    {
+      m_param.PA = i;
+    }
+    else if (ui->cb_axis1->isEnabled() && ui->cb_axis1->currentText() == m_cats[0].m_field[i].m_name)
+    {
+      m_param.axis1 = i;
+    }
+    else if (ui->cb_axis2->isEnabled() && ui->cb_axis2->currentText() == m_cats[0].m_field[i].m_name)
+    {
+      m_param.axis2 = i;
+    }
+    else if (ui->cb_mag1->isEnabled() && ui->cb_mag1->currentText() == m_cats[0].m_field[i].m_name)
+    {
+      m_param.magIndex1 = i;
+    }
+    else if (ui->cb_mag2->isEnabled() && ui->cb_mag2->currentText() == m_cats[0].m_field[i].m_name)
+    {
+      m_param.magIndex2 = i;
+    }
+    else if (m_param.raIndex == -1 && m_cats[0].m_field[i].m_ucd == "pos.eq.ra")
+    {
+      m_param.raIndex = i;
+    }
+    else if (m_param.decIndex == -1 && m_cats[0].m_field[i].m_ucd == "pos.eq.dec")
+    {
+      m_param.decIndex = i;
+    }
+  }
+
+  if (m_param.raIndex == -1 || m_param.decIndex == -1)
+  {
+    msgBoxError(this, tr("Please select correct columns!!!"));
+    return;
+  }
+
+  qDebug() << "---------------------";
+  qDebug() << url.toString();
+
+  //return;
 
   CDownload *download = new CDownload;
 
@@ -276,6 +390,9 @@ void VOTDataEditor::slotDone(QNetworkReply::NetworkError error, const QString &e
     msgBoxError(this, "Cannot create data files!!!");
     return;
   }
+
+  m_back = false;
+  done(DL_CANCEL);
 }
 
 void VOTDataEditor::slotProgress(qint64 fileSize, int percent, QNetworkReply *reply)
@@ -295,3 +412,43 @@ void VOTDataEditor::slotProgress(qint64 fileSize, int percent, QNetworkReply *re
 }
 
 
+
+void VOTDataEditor::on_cb_type_currentIndexChanged(int index)
+{
+  switch (ui->cb_type->itemData(index).toInt())
+  {
+    case DSOT_GALAXY:
+      ui->cb_axis1->setEnabled(true);
+      ui->cb_axis2->setEnabled(true);
+      ui->cb_pa->setEnabled(true);
+      break;
+
+    case DSOT_STAR:
+      ui->cb_axis1->setEnabled(false);
+      ui->cb_axis2->setEnabled(false);
+      ui->cb_pa->setEnabled(false);
+      break;
+
+    default:
+      ui->cb_axis1->setEnabled(true);
+      ui->cb_axis2->setEnabled(false);
+      ui->cb_pa->setEnabled(false);
+  }
+}
+
+void VOTDataEditor::on_cb_all_stateChanged(int arg1)
+{
+  ui->sb_maxRecords->setEnabled(!arg1);
+}
+
+void VOTDataEditor::on_pushButton_3_clicked()
+{
+  m_back = true;
+  done(DL_CANCEL);  
+}
+
+void VOTDataEditor::on_pushButton_clicked()
+{
+  m_back = false;
+  done(DL_CANCEL);
+}

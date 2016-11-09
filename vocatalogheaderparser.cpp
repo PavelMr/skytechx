@@ -134,11 +134,13 @@ bool VOCatalogHeaderParser::startElement(const QString &namespaceURI, const QStr
       {
         m_current.m_id = attributes.value(i);
       }
+      /*
       else
       if (attributes.qName(i) == "type")
       {
         m_current.m_type = attributes.value(i);
       }
+      */
     }
   }
 

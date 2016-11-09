@@ -10,6 +10,8 @@ class VOCatalogList
 public:
   QString m_name;
   QString m_description;
+  QString m_WL;
+  QString m_pop;
   QString m_type;
   QString m_action;
 
@@ -50,6 +52,8 @@ private:
 
   VOCatalogList m_current;
   QList <VOCatalogList> m_list;
+
+  void getInfo(const QXmlAttributes &attributes, const QString &what, QString &out);
 };
 
 #endif // VOCATALOGPARSER_H

@@ -128,6 +128,7 @@ public:
 
   void enableConstEditor(bool enable);
 
+  void getMapCenterRaDecJ2000(double &ra, double &dec, double &fov);
 protected:
   void updateStatusBar();
   void tryShowToolTip(const QPoint &pos, bool isPressed);

@@ -34,7 +34,8 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "skfile.h"
 #include "../cconsole.h"
 
-QString readAllFile(QString name);
+QString readAllFile(const QString &name);
+void writeToFile(const QString &name, const QString &str);
 void checkAndCreateFolder(const QString &folder);
 void copyFile(const QString &source, const QString &dest);
 

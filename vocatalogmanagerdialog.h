@@ -16,34 +16,41 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-#ifndef VOCATALOGMANAGER_H
-#define VOCATALOGMANAGER_H
+#ifndef VOCATALOGMANAGERDIALOG_H
+#define VOCATALOGMANAGERDIALOG_H
 
-#include "vocatalogrenderer.h"
-#include "cskpainter.h"
-#include "cmapview.h"
+#include <QDialog>
 
-#include <QDir>
+namespace Ui {
+class VOCatalogManagerDialog;
+}
 
-class VOCatalogManager
+class VOCatalogManagerDialog : public QDialog
 {
+  Q_OBJECT
+
 public:
-  VOCatalogManager();
-  ~VOCatalogManager();
-  void loadAll();
-  void load(const QString &path);
+  explicit VOCatalogManagerDialog(QWidget *parent = 0);
+  ~VOCatalogManagerDialog();
 
-  void scanDir(QDir dir);
-  void renderAll(mapView_t *mapView, CSkPainter *pPainter);
-  void removeAll();
-  void remove(const QString &path);
-  void setShow(bool show, const QString &path);
-  VOCatalogRenderer *get(const QString &path);
+protected:
+  void closeEvent(QCloseEvent *event);
 
-  QList <VOCatalogRenderer*> m_list;
-  QStringList                m_paths;
+private slots:
+  void on_pushButton_3_clicked();
+
+  void on_pushButton_4_clicked();
+
+  void on_pushButton_2_clicked();
+
+  void on_pushButton_clicked();
+
+  void on_pushButton_5_clicked();
+
+private:
+  Ui::VOCatalogManagerDialog *ui;
+
+  void fillList();
 };
 
-extern VOCatalogManager g_voCatalogManager;
-
-#endif // VOCATALOGMANAGER_H
+#endif // VOCATALOGMANAGERDIALOG_H

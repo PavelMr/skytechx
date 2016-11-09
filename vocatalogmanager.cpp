@@ -26,7 +26,12 @@ VOCatalogManager g_voCatalogManager;
 
 VOCatalogManager::VOCatalogManager()
 {
+}
 
+VOCatalogManager::~VOCatalogManager()
+{
+  QDir dir; // TODO: nefunguje to
+  qDebug() << "remove" << dir.rmpath(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vo_tables/VII");
 }
 
 void VOCatalogManager::scanDir(QDir dir)
@@ -63,6 +68,60 @@ void VOCatalogManager::renderAll(mapView_t *mapView, CSkPainter *pPainter)
   }
 }
 
+void VOCatalogManager::removeAll()
+{
+  QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vo_tables/");
+
+  dir.removeRecursively();
+
+  foreach (VOCatalogRenderer *item, m_list)
+  {
+    delete item;
+  }
+}
+
+void VOCatalogManager::remove(const QString &path)
+{
+  QDir dir(path);
+
+  dir.removeRecursively();
+
+  foreach (VOCatalogRenderer *item, m_list)
+  {
+    if (item->m_path == path)
+    {
+      delete item;
+      return;
+    }
+  }
+}
+
+void VOCatalogManager::setShow(bool show, const QString &path)
+{
+  foreach (VOCatalogRenderer *item, m_list)
+  {
+    if (item->m_path == path)
+    {
+      item->setShow(show);
+      return;
+    }
+  }
+}
+
+VOCatalogRenderer *VOCatalogManager::get(const QString &path)
+{
+  foreach (VOCatalogRenderer *item, m_list)
+  {
+    if (item->m_path == path)
+    {
+      return item;
+    }
+  }
+
+  return nullptr;
+}
+
+
 void VOCatalogManager::loadAll()
 {
   scanDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vo_tables/");
@@ -82,4 +141,18 @@ void VOCatalogManager::loadAll()
 
     m_list.append(renderer);
   }
+}
+
+void VOCatalogManager::load(const QString &path)
+{
+  VOCatalogRenderer *renderer = new VOCatalogRenderer;
+
+  if (!renderer->load(path))
+  {
+    qDebug() << "error loading ";
+    delete renderer;
+    return;
+  }
+
+  m_list.append(renderer);
 }
