@@ -102,7 +102,11 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
       value->setFont(f);
 
       label->setText(item->label);
-      label->setToolTip(item->label);
+
+      if (item->toolTip1.isEmpty())
+        label->setToolTip(item->label);
+      else
+        label->setToolTip(item->toolTip1);
 
       if (item->bBold)
       {
@@ -114,7 +118,11 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
       if (!item->bIsTitle)
       {
         value->setText(item->value);
-        value->setToolTip(item->value);
+
+        if (item->toolTip2.isEmpty())
+          value->setToolTip(item->value);
+        else
+          value->setToolTip(item->toolTip2);
       }   
 
       if (label->text().isEmpty() && value->text().isEmpty())
@@ -128,7 +136,7 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
 
       m->appendRow(tRow);
 
-      if (item->bIsTitle)
+      if (item->bIsTitle || value->text().isEmpty())
       {
         setFirstColumnSpanned(index, QModelIndex(), true);     
       }

@@ -14,6 +14,7 @@
 #include "cdrawing.h"
 #include "cmeteorshower.h"
 #include "gcvs.h"
+#include "vocatalogrenderer.h"
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
@@ -589,6 +590,14 @@ void mapObjContextMenu(CMapView *map)
         break;
       }
 
+      case MO_VOCATALOG:
+      {
+        VOItem_t *obj = (VOItem_t*)o.par2;
+
+        str = QString("%1").arg(QString(obj->name)) + QString(QObject::tr(", %1 mag.")).arg((double)obj->mag, 0, 'f', 2);
+        break;
+      }
+
       case MO_PPMXLSTAR:
       {
         ppmxlCache_t *data;
@@ -860,6 +869,15 @@ QString checkObjOnMap(const QPoint &pos)
         magStr = getStrMag(cTYC.getVisMag(t));
       }
       break;
+
+      case MO_VOCATALOG:
+      {
+        VOItem_t *object = (VOItem_t*)obj.par2;
+
+        nameStr = object->name;
+        magStr = getStrMag(object->mag);
+        break;
+      }
 
       case MO_GSCSTAR:
       {

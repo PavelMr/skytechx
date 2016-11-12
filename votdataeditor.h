@@ -73,6 +73,10 @@ private:
   Ui::VOTDataEditor *ui;  
   QList <VOCatalogHeader> m_cats;
   QList <VOCooSys> m_coords;
+
+  QList <VOCatalogHeader> m_catsTmp;
+  QList <VOCooSys> m_coordsTmp;
+
   QProgressDialog *m_progressDlg;
   VOParams_t m_param;
 };

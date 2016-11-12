@@ -22,6 +22,8 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "vocatalogmanager.h"
 #include "votheaderlist.h"
 #include "skutils.h"
+#include "cdso.h"
+#include "votpreviewdialog.h"
 
 #include "QStandardItemModel"
 
@@ -31,12 +33,14 @@ VOCatalogManagerDialog::VOCatalogManagerDialog(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  QStandardItemModel *model = new QStandardItemModel(0, 5);
+  QStandardItemModel *model = new QStandardItemModel(0, 7);
   model->setHeaderData(0, Qt::Horizontal, tr("Catalog"));
-  model->setHeaderData(1, Qt::Horizontal, tr("Descripton"));
-  model->setHeaderData(2, Qt::Horizontal, tr("Records"));
-  model->setHeaderData(3, Qt::Horizontal, tr("Path"));
-  model->setHeaderData(4, Qt::Horizontal, tr("Size"));
+  model->setHeaderData(1, Qt::Horizontal, tr("Preview"));
+  model->setHeaderData(2, Qt::Horizontal, tr("Descripton"));
+  model->setHeaderData(3, Qt::Horizontal, tr("Records"));
+  model->setHeaderData(4, Qt::Horizontal, tr("Type"));
+  model->setHeaderData(5, Qt::Horizontal, tr("Size"));
+  model->setHeaderData(6, Qt::Horizontal, tr("Path"));
 
   ui->treeView->setModel(model);
   ui->treeView->setRootIsDecorated(false);
@@ -47,7 +51,33 @@ VOCatalogManagerDialog::VOCatalogManagerDialog(QWidget *parent) :
 
 VOCatalogManagerDialog::~VOCatalogManagerDialog()
 {  
+  removeEmptyDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vo_tables/");
+  QFile::remove(QDir::tempPath() + "/" + VO_DATA_TEMP_FILE);
+
   delete ui;
+}
+
+void VOCatalogManagerDialog::removeEmptyDir(QDir dir)
+{
+  dir.setNameFilters(QStringList() << "*.*");
+  dir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+
+  QFileInfoList fileList = dir.entryInfoList();
+
+  dir.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+  QStringList dirList = dir.entryList();
+  for (int i=0; i<dirList.size(); ++i)
+  {
+    QString newPath = QString("%1/%2").arg(dir.absolutePath()).arg(dirList.at(i));
+    removeEmptyDir(QDir(newPath));
+  }
+
+  if (fileList.count() == 0)
+  {
+    QDir d;
+
+    d.rmdir(dir.path());
+  }
 }
 
 void VOCatalogManagerDialog::closeEvent(QCloseEvent *event)
@@ -75,6 +105,8 @@ void VOCatalogManagerDialog::fillList()
     QStandardItem *item3 = new QStandardItem;
     QStandardItem *item4 = new QStandardItem;
     QStandardItem *item5 = new QStandardItem;
+    QStandardItem *item6 = new QStandardItem;
+    QStandardItem *item7 = new QStandardItem;
 
     QList <QStandardItem *> row;
 
@@ -99,15 +131,33 @@ void VOCatalogManagerDialog::fillList()
     item5->setEditable(false);
     item5->setToolTip(item->m_path);
 
-    row << item1 << item2 << item3 << item4 << item5;
+    item6->setText("");
+    item6->setEditable(false);
+
+    bool ok;
+    item7->setText(cDSO.getTypeName(item->m_type, ok));
+    item7->setEditable(false);
+
+    row << item1 << item6 << item2 << item3 << item7 << item4 << item5;
 
     model->appendRow(row);
+
+    QPushButton *button = new QPushButton("Preview");
+    button->setProperty("vo_path", item->m_path);
+    button->setProperty("vo_name", item->m_name);
+    connect(button, SIGNAL(clicked(bool)), this, SLOT(slotPreview()));
+
+    QModelIndex index = model->index(model->rowCount() - 1, 1);
+    ui->treeView->setIndexWidget(index, button);
   }
 
   ui->treeView->resizeColumnToContents(0);
   ui->treeView->resizeColumnToContents(1);
   ui->treeView->resizeColumnToContents(2);
   ui->treeView->resizeColumnToContents(3);
+  ui->treeView->resizeColumnToContents(4);
+  ui->treeView->resizeColumnToContents(5);
+  ui->treeView->resizeColumnToContents(6);
 
 }
 
@@ -181,10 +231,25 @@ void VOCatalogManagerDialog::on_pushButton_5_clicked()
       str += "<td>" + QString::number(R2D(renderer->m_data[i].rd.Ra)) + "</td>";
       str += "<td>" + QString::number(R2D(renderer->m_data[i].rd.Dec)) + "</td>";
       str += "<td>" + QString::number(renderer->m_data[i].mag) + "</td>";
+
+      str += "<td>" + QString::number(renderer->m_data[i].axis[0]) + "</td>";
+      str += "<td>" + QString::number(renderer->m_data[i].axis[1]) + "</td>";
+      str += "<td>" + QString::number(renderer->m_data[i].pa) + "</td>";
       str += "</tr>\n";
     }
     str += "</table>";
 
     writeToFile(QDir::tempPath() + "/vo_tmp.html", str);
   }
+}
+
+void VOCatalogManagerDialog::slotPreview()
+{
+  QWidget *widget = dynamic_cast<QWidget*>(sender());  
+
+  QImage img = QImage(widget->property("vo_path").toString() + "/preview.png");
+
+  VOTPreviewDialog dlg(this, QPixmap::fromImage(blurredImage(img, 1, false)), widget->property("vo_name").toString());
+
+  dlg.exec();
 }

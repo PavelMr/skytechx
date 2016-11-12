@@ -510,7 +510,7 @@ bool trfProjectPoint(SKPOINT *p)
   SKVECTransform(&out, &p->w, &m_matTransf);
 
   p->sx = (int)(out.x * scrx2 + scrx2 + 0.5);
-  p->sy = (int)(out.y * scry2 + scry2 + 0.5);
+  p->sy = (int)(out.y * scry2 + scry2 + 0.5);    
 
   return(true);
 }

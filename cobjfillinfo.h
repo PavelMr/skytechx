@@ -12,6 +12,8 @@ typedef struct
   bool    bBold;
   QString label;
   QString value;
+  QString toolTip1;
+  QString toolTip2;
   bool    extInfo;
 } ofiTextItem_t;
 
@@ -66,8 +68,10 @@ protected:
     void fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillShowerInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
+    void fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
 
-    void addTextItem(ofiItem_t *item, QString label, QString value, bool bBold = false);
+    void addTextItem(ofiItem_t *item, const QString &label, const QString &value, bool bBold = false);
+    void addTextItemToolTip(ofiItem_t *item, const QString  &label, const QString &value, const QString &toolTip1 = "", const QString &toolTip2 = "");
     void addLabelItem(ofiItem_t *item, QString label);
     void addSeparator(ofiItem_t *item);
     void beginExtInfo();

@@ -20,6 +20,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #define VOCATALOGMANAGERDIALOG_H
 
 #include <QDialog>
+#include <QDir>
 
 namespace Ui {
 class VOCatalogManagerDialog;
@@ -47,10 +48,13 @@ private slots:
 
   void on_pushButton_5_clicked();
 
+  void slotPreview();
+
 private:
   Ui::VOCatalogManagerDialog *ui;
 
   void fillList();
+  void removeEmptyDir(QDir dir);
 };
 
 #endif // VOCATALOGMANAGERDIALOG_H

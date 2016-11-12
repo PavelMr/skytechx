@@ -23,13 +23,53 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "cstarrenderer.h"
 #include "smartlabeling.h"
 #include "cdso.h"
+#include "mapobj.h"
 
 #include <QDataStream>
+
+void hammer(double mu, double phi, double &x, double &y)
+{
+  mu = qMin(+1., qMax(-1., mu));      // clamp mu to [-1,+1]
+  double sintheta = sqrt(1 - mu*mu);  // sin(theta) = cos(latitude)
+  double longitude = phi - M_PI;
+  double z = sqrt(1 + sintheta*cos(longitude/2));
+  x = -sintheta*sin(longitude/2)/z;
+  y = mu/z;
+}
+
+inline static int previewOffset(double ra, double dec)
+{
+  double x;
+  double y;
+
+  ra += 180;
+  while (ra >= 360) ra -= 360;
+  while (ra <= -360) ra += 360;
+
+  hammer(cos(D2R(dec + 90)), D2R(ra), x, y);
+
+  x = ((1. + x ) * 0.5) * (double)VO_PREVIEW_SIZE_X;
+  y = ((1. + y ) * 0.5) * (double)VO_PREVIEW_SIZE_Y;
+
+  x = CLAMP(x, 0, VO_PREVIEW_SIZE_X - 1);
+  y = CLAMP(y, 0, VO_PREVIEW_SIZE_Y - 1);
+
+  return (int)x + ((int)y * VO_PREVIEW_SIZE_X);
+}
+
+inline static void previewXY(double ra, double dec, int &x, int &y)
+{
+  int offset = previewOffset(ra, dec);
+
+  x = offset % VO_PREVIEW_SIZE_X;
+  y = offset / VO_PREVIEW_SIZE_X;
+}
 
 VOCatalogRenderer::VOCatalogRenderer()
 {  
   m_show = true;
 }
+
 
 bool VOCatalogRenderer::load(const QString &filePath)
 {
@@ -43,6 +83,11 @@ bool VOCatalogRenderer::load(const QString &filePath)
   m_path = filePath;
 
   QDataStream ds(&file);
+
+  int *preview = new int[VO_PREVIEW_SIZE_Y * VO_PREVIEW_SIZE_X];
+
+  memset(preview, 0, sizeof(int) * VO_PREVIEW_SIZE_Y * VO_PREVIEW_SIZE_X);
+  int previewMax = 0;
 
   int count;
 
@@ -58,7 +103,7 @@ bool VOCatalogRenderer::load(const QString &filePath)
   double raMin = 9999999;
   double raMax = -9999999;
   double decMin = 9999999;
-  double decMax = -9999999;
+  double decMax = -9999999;    
 
   for (int i = 0; i < count ; i++)
   {
@@ -73,8 +118,10 @@ bool VOCatalogRenderer::load(const QString &filePath)
     ds >> item.pa;
     ds >> item.infoFileOffset;
 
+    preview[previewOffset(item.rd.Ra, item.rd.Dec)]++;
+
     item.rd.Ra = D2R(item.rd.Ra);
-    item.rd.Dec = D2R(item.rd.Dec);
+    item.rd.Dec = D2R(item.rd.Dec);        
 
     if (item.rd.Ra < raMin) raMin = item.rd.Ra;
     if (item.rd.Ra > raMax) raMax = item.rd.Ra;
@@ -96,6 +143,36 @@ bool VOCatalogRenderer::load(const QString &filePath)
   trfRaDecToPointNoCorrect(&radec_t(raMin, decMax), &m_quad[1]);
   trfRaDecToPointNoCorrect(&radec_t(raMax, decMin), &m_quad[2]);
   trfRaDecToPointNoCorrect(&radec_t(raMax, decMax), &m_quad[3]);
+
+  QImage *image = new QImage(VO_PREVIEW_SIZE_X, VO_PREVIEW_SIZE_Y, QImage::Format_ARGB32);
+
+  m_preview = QImage(*image);
+  int *ptr = (int *)m_preview.bits();
+  QImage mask = QImage(":/res/hammer_mask.png");
+
+  for (int i = 0; i < VO_PREVIEW_SIZE_Y * VO_PREVIEW_SIZE_X; i++)
+  {
+    if (preview[i] > previewMax)
+    {
+      previewMax = preview[i];
+    }
+  }  
+
+  QEasingCurve crv(QEasingCurve::OutQuint);
+
+  for (int i = 0; i < VO_PREVIEW_SIZE_Y * VO_PREVIEW_SIZE_X; i++)
+  {
+    int val = crv.valueForProgress((preview[i] / (double)previewMax)) * 255.;
+    *ptr = QColor(val, val, val).rgba();
+    ptr++;
+  }
+
+  QPainter p(&m_preview);
+  p.drawImage(0, 0, mask);
+  p.end();
+
+  delete image;
+  m_preview.save(filePath + "/preview.png", "PNG");
 
   return true;
 }
@@ -119,6 +196,17 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
 
   cDSO.setPainter(pPainter, nullptr);
 
+  float maxMag;
+
+  if (m_type == DSOT_STAR)
+  {
+    maxMag = mapView->starMag;
+  }
+  else
+  {
+    maxMag = mapView->dsoMag;
+  }
+
   int i = -1;
   foreach (const VOItem_t &item, m_data)
   {
@@ -126,7 +214,7 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
 
     i++;
 
-    if (item.mag > mapView->starMag)
+    if (item.mag > maxMag)
     {
       continue;
     }
@@ -151,14 +239,16 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
         dso.pa = item.pa;
         dso.type = m_type;
         dso.shape = NO_DSO_SHAPE;
-        dso.nameOffs = 0;
+        dso.nameOffs = -1;
 
         cDSO.renderObj(&pt, &dso, mapView, false, 1);
+        addMapObj(item.rd, pt.sx, pt.sy, MO_VOCATALOG, MO_CIRCLE, 5, (qint64)this, (qint64)&item, item.mag);
       }
       else
       {
-        cStarRenderer.renderStar(&pt, 0, item.mag, pPainter);
-        g_labeling.addLabel(QPoint(pt.sx, pt.sy), 15, QString::number(item.mag), FONT_DRAWING, RT_BOTTOM_LEFT, SL_AL_ALL);
+        int r = cStarRenderer.renderStar(&pt, 0, item.mag, pPainter);
+        addMapObj(item.rd, pt.sx, pt.sy, MO_VOCATALOG, MO_CIRCLE, r + 2, (qint64)this, (qint64)&item, item.mag);
+        //g_labeling.addLabel(QPoint(pt.sx, pt.sy), 15, QString::number(item.mag), FONT_DRAWING, RT_BOTTOM_LEFT, SL_AL_ALL);
       }
 
       //g_labeling.addLabel(QPoint(pt.sx, pt.sy), 5, item.name, FONT_DRAWING, RT_BOTTOM_RIGHT, SL_AL_ALL);
@@ -182,4 +272,48 @@ void VOCatalogRenderer::setShow(bool show)
   file.write((char *)&show, sizeof(bool));
   file.close();
 }
+
+QList <VOTableItem_t> VOCatalogRenderer::getTableItem(VOItem_t &object)
+{
+  SkFile file(m_path + "/vo_table_data.bin");
+  if (!file.open(QFile::ReadOnly))
+  {
+    return QList <VOTableItem_t>();
+  }
+
+  QList <VOTableItem_t> list;
+
+  QDataStream ds(&file);
+
+  VOTableItem_t item;
+
+  int count;
+
+  ds >> count;
+
+  for (int i = 0; i < count; i++)
+  {
+    ds >> item.name;
+    ds >> item.ucd;
+    ds >> item.unit;
+    ds >> item.desc;
+
+    list.append(item);
+  }
+
+  file.seek(object.infoFileOffset);
+
+  QStringList row;
+
+  ds >> row;
+
+  for (int i = 0; i < count; i++)
+  {
+    QString str = row[i];
+    list[i].value = str;
+  }
+
+  return list;
+}
+
 

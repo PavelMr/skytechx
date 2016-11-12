@@ -48,16 +48,6 @@ static double value(QString str, const QString &unit)
   double val = str.toDouble();
   QString tmp;
 
-  if (unit == "deg")
-  {
-    return val;
-  }
-
-  if (unit == "mag")
-  {
-    return val;
-  }
-
   if (unit == "arcmin" || unit == "arcm")
   {
     return val * 60.0;
@@ -85,7 +75,7 @@ static double value(QString str, const QString &unit)
     }
   }
 
-  return 0;
+  return val;
 }
 
 
@@ -131,11 +121,13 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
 
   dsTable << cat->m_field.size();
 
+
   foreach (const VOField &field, cat->m_field)
   {
-    dsTable << field.m_name;
+    dsTable << field.m_name;    
     dsTable << field.m_ucd;
-    dsTable << field.m_unit;
+    dsTable << field.m_unit;                 
+    dsTable << field.m_desc;
   }
 
   VOItem_t item;
@@ -148,90 +140,19 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
   ds << cat->m_id;
 
   for (int i = 0; i < data.count(); i++)
-  {
-    QList <QVariant> row;
-    int j = 0;
+  {        
+    item.rd.Ra = data[i].at(params.raIndex).toDouble();
+    item.rd.Dec = data[i].at(params.decIndex).toDouble();
 
-    foreach (const QString &field, data[i])
-    {
-      const VOField *f = &cat->m_field[j];
-
-      switch (f->m_dataType)
-      {
-        case VO_BIT:
-          row.append(QVariant((QChar)field[0]));
-          break;
-
-        case VO_BOOLEAN:
-          row.append(QVariant((bool)field.toInt()));
-          break;
-
-        case VO_CHAR:
-          if (field.count() == 0)
-            row.append(QVariant((QChar)' '));
-          else
-            row.append(QVariant((QChar)field[0]));
-          break;
-
-        case VO_DOUBLE:
-          row.append(QVariant(field.toDouble()));
-          break;
-
-        case VO_UNSIGNED_BYTE:
-          row.append(QVariant(field.toInt()));
-          break;
-
-        case VO_DOUBLE_COMPLEX:
-          row.append(QVariant(field));
-          break;
-
-        case VO_FLOAT:
-          row.append(QVariant(field.toFloat()));
-          break;
-
-        case VO_FLOAT_COMPLEX:
-          row.append(QVariant(field));
-          break;
-
-        case VO_INT32:
-          row.append(QVariant(field.toInt()));
-          break;
-
-        case VO_LONG64:
-          row.append(QVariant(field.toLongLong()));
-          break;
-
-        case VO_SHORT:
-          row.append(QVariant(field.toShort()));
-          break;
-
-        case VO_UNI_CHAR:
-          row.append(QVariant(field));
-          break;
-
-        case VO_UNKNOWN:
-          row.append(QVariant(field));
-          break;
-
-        default:
-          m_lastError = tr("Invalid data type '") + f->m_dataType + "'";          
-          return false;
-      }
-      j++;
-    }
-
-    item.rd.Ra = row.at(params.raIndex).toDouble();
-    item.rd.Dec = row.at(params.decIndex).toDouble();
-
-    item.name = row.at(params.name).toString().toLocal8Bit();
+    item.name = data[i].at(params.name).toLocal8Bit();
 
     if (params.magIndex1 != -1 && !data[i].at(params.magIndex1).isEmpty())
     {
-      item.mag = row.at(params.magIndex1).toFloat();
+      item.mag = data[i].at(params.magIndex1).toFloat();
     }
     else if (params.magIndex2 != -1 && !data[i].at(params.magIndex2).isEmpty())
     {
-      item.mag = row.at(params.magIndex2).toFloat();
+      item.mag = data[i].at(params.magIndex2).toFloat();
     }
     else
     {
@@ -258,7 +179,22 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
 
     if (params.axis2 != -1 && !data[i].at(params.axis2).isEmpty())
     {
-      item.axis[1] = value(data[i].at(params.axis2), catalogs[0].m_field[params.axis2].m_unit);
+      double tmp = value(data[i].at(params.axis2), catalogs[0].m_field[params.axis2].m_unit);
+      if (params.ratio)
+      {
+        if (item.axis[1] != 0)
+        {
+          item.axis[1] = item.axis[0] * (1 - tmp);
+        }
+        else
+        {
+          item.axis[1] = 0;
+        }
+      }
+      else
+      {
+        item.axis[1] = tmp;
+      }
     }
     else
     {
@@ -284,7 +220,7 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
     ds << item.pa;
     ds << item.infoFileOffset;
 
-    dsTable << row;
+    dsTable << data[i];
   }
 
   return true;

@@ -78,6 +78,8 @@ void VOCatalogManager::removeAll()
   {
     delete item;
   }
+
+  m_list.clear();
 }
 
 void VOCatalogManager::remove(const QString &path)
@@ -89,7 +91,8 @@ void VOCatalogManager::remove(const QString &path)
   foreach (VOCatalogRenderer *item, m_list)
   {
     if (item->m_path == path)
-    {
+    {      
+      m_list.removeOne(item);
       delete item;
       return;
     }

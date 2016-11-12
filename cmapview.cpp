@@ -1565,9 +1565,11 @@ void CMapView::getMapRaDec(double &ra, double &dec, double &fov)
 ///////////////////////////////////////////////////////////////////////////
 void CMapView::getMapCenterRaDecJ2000(double &ra, double &dec, double &fov)
 ///////////////////////////////////////////////////////////////////////////
-{
-  // TODO: precesse
+{  
   trfConvScrPtToXY(width() * 0.5, height() * 0.5, ra, dec);
+
+  precess(&ra, &dec, m_mapView.jd, JD2000);
+
   fov = m_mapView.fov;
 }
 

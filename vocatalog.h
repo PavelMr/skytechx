@@ -28,8 +28,9 @@ typedef struct
   int magIndex2;
   int axis1;
   int axis2;
-  int name;
+  int name;  
   int PA;
+  bool ratio; // minAxis is ratio of maxAxis
 } VOParams_t;
 
 class VOCatalog : public QObject

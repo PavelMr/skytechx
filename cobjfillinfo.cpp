@@ -13,6 +13,7 @@
 #include "nomad.h"
 #include "cmeteorshower.h"
 #include "gcvs.h"
+#include "vocatalogrenderer.h"
 
 #define FILEREGEXP   QRegExp("\\W")
 
@@ -152,9 +153,12 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
     case MO_SHOWER:
       fillShowerInfo(view, obj, item);
       break;
+
+    case MO_VOCATALOG:
+      fillVOCInfo(view, obj, item);
+      break;
   }
 }
-
 
 ////////////////////////////////////////////////////////////////////
 void CObjFillInfo::fillAtlas(double ra, double dec, ofiItem_t *item)
@@ -976,6 +980,145 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
   }
   addTextItem(item, tr("Source"), m->source);
   addSeparator(item);
+}
+
+void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
+{
+  VOCatalogRenderer *ptr = (VOCatalogRenderer*)obj->par1;
+  VOItem_t *object = (VOItem_t*)obj->par2;
+
+  item->radec.Ra = obj->rd.Ra;
+  item->radec.Dec = obj->rd.Dec;
+  item->zoomFov = getOptObjFov(0, 0, D2R(2.5));
+  item->id = object->name;
+  item->simbad = item->id;
+
+  // TODO: udelat funkci na vypis casu
+  beginExtInfo();
+  addLabelItem(item, txDateTime);
+  addSeparator(item);
+  addTextItem(item, tr("JD"), QString::number(view->jd, 'f'));
+  addTextItem(item, tr("TDT"), QString::number(view->jd + cAstro.m_deltaT, 'f'));
+  addTextItem(item, tr("Date/Time"), QString("%1 / %2").arg(getStrDate(view->jd, view->geo.tz)).arg(getStrTime(view->jd, view->geo.tz)));
+  addSeparator(item);
+  endExtInfo();
+
+  bool ok;
+
+  addLabelItem(item, txObjType);
+  addSeparator(item);
+  addTextItem(item, txObjType, cDSO.getTypeName(ptr->m_type, ok) + " (" + ptr->m_name + ")");
+  addSeparator(item);
+
+  double raAtDate, decAtDate;
+  double ra, dec;
+  QString jd2000;
+
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
+
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
+  addLabelItem(item, txLocInfo);
+  addSeparator(item);
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+
+  double ha = cAstro.m_lst - raAtDate;
+  rangeDbl(&ha, R360);
+
+  beginExtInfo();
+  addTextItem(item, txHA, getStrRA(ha));
+  addSeparator(item);
+  endExtInfo();
+
+  int con = constWhatConstel(object->rd.Ra, object->rd.Dec, JD2000);
+
+  addTextItem(item, txVisMag, object->mag < 100 ? getStrMag(object->mag) : tr("N/A"));
+  addTextItem(item, txConstel, constGetName(con, 1));
+
+  double azm, alt;
+  double nazm, nalt;
+
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
+
+  addSeparator(item);
+  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addSeparator(item);
+
+  beginExtInfo();
+  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addSeparator(item);
+  double airmass = CAstro::getAirmass(alt);
+  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+  addSeparator(item);
+  endExtInfo();
+
+  CRts   cRts;
+  rts_t  rts;
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
+  fillRTS(&rts, view, item);
+
+  addLabelItem(item, tr("Other"));
+  addSeparator(item);
+  addTextItem(item, "Size", getStrSize(object->axis[0], object->axis[1]));
+
+  qDebug() << object->axis[0] << object->axis[1];
+
+  if (object->pa != NO_DSO_PA)
+  {
+    addTextItem(item, tr("P.A."), QString::number(object->pa) + "°");
+  }
+
+  beginExtInfo();
+  addSeparator(item);
+  addLabelItem(item, tr("Virtual Observatory Data"));
+  addSeparator(item);
+
+  QList <VOTableItem_t> voList = ptr->getTableItem(*object);
+
+  foreach (const VOTableItem_t &row, voList)
+  {
+    if (row.value.isEmpty())
+    {
+      addTextItemToolTip(item, row.name, "? " + row.unit, row.desc);
+    }
+    else
+    {
+      addTextItemToolTip(item, row.name, row.value + " " + row.unit, row.desc);
+    }
+  }
+
+  endExtInfo();
+
+  addSeparator(item);
+
+  addLabelItem(item, tr("Position at JD2000.0"));
+  addSeparator(item);
+  addTextItem(item, txRA, getStrRA(item->radec.Ra));
+  addTextItem(item, txDec, getStrDeg(item->radec.Dec));
+  addSeparator(item);
+
+  fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
+
+  addLabelItem(item, tr("Source"));
+  addSeparator(item);
+  addTextItem(item, ptr->m_desc, "");
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -2565,9 +2708,25 @@ void CObjFillInfo::fillESInfo(const mapView_t *view, const mapObj_t * /*obj*/, o
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void CObjFillInfo::addTextItemToolTip(ofiItem_t *item, const QString  &label, const QString &value, const QString &toolTip1, const QString &toolTip2)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+{
+  ofiTextItem_t i;
+
+  i.bIsTitle = false;
+  i.label = label;
+  i.value = value;
+  i.bBold = false;
+  i.toolTip1 = toolTip1;
+  i.toolTip2 = toolTip2;
+  i.extInfo = m_extInfo;
+
+  item->tTextItem.append(i);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
-void CObjFillInfo::addTextItem(ofiItem_t *item, QString label, QString value, bool bBold)
+void CObjFillInfo::addTextItem(ofiItem_t *item, const QString &label, const QString &value, bool bBold)
 /////////////////////////////////////////////////////////////////////////////////////////
 {
   ofiTextItem_t i;
@@ -2576,7 +2735,7 @@ void CObjFillInfo::addTextItem(ofiItem_t *item, QString label, QString value, bo
   i.label = label;
   i.value = value;
   i.bBold = bBold;
-  i.extInfo = m_extInfo;
+  i.extInfo = m_extInfo;  
 
   item->tTextItem.append(i);
 }

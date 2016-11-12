@@ -25,11 +25,12 @@
 #define MO_UCAC4        11
 #define MO_PPMXLSTAR    12
 #define MO_NOMAD        13
-#define MO_DSO          14
-#define MO_CONSTELL     15
-#define MO_EARTH_SHD    16
-#define MO_INSERT       17
-#define MO_SHOWER       18
+#define MO_VOCATALOG    14
+#define MO_DSO          15
+#define MO_CONSTELL     16
+#define MO_EARTH_SHD    17
+#define MO_INSERT       18
+#define MO_SHOWER       19
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

@@ -25,13 +25,26 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "cskpainter.h"
 #include "cmapview.h"
 
+#define VO_PREVIEW_SIZE_X      640
+#define VO_PREVIEW_SIZE_Y      320
+
+typedef struct
+{
+  QString name;
+  QString ucd;
+  QString unit;
+  QString desc;
+  QString value;
+} VOTableItem_t;
+
 class VOCatalogRenderer
 {
 public:
   VOCatalogRenderer();
   bool load(const QString &filePath);
   void render(mapView_t *mapView, CSkPainter *pPainter);
-  void setShow(bool show);
+  void setShow(bool show);  
+  QList <VOTableItem_t> getTableItem(VOItem_t &object);
 
   bool               m_show;
   QVector <VOItem_t> m_data;
@@ -43,6 +56,8 @@ public:
   float              m_brightestMag;
 
   SKPOINT            m_quad[4];
+
+  QImage             m_preview;
 };
 
 #endif // VOCATALOGRENDERER_H

@@ -16,36 +16,25 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-#ifndef VOCATALOGMANAGER_H
-#define VOCATALOGMANAGER_H
+#ifndef VOTPREVIEWDIALOG_H
+#define VOTPREVIEWDIALOG_H
 
-#include "vocatalogrenderer.h"
-#include "cskpainter.h"
-#include "cmapview.h"
+#include <QDialog>
 
-#include <QDir>
+namespace Ui {
+class VOTPreviewDialog;
+}
 
-class VOCatalogManager
+class VOTPreviewDialog : public QDialog
 {
+  Q_OBJECT
+
 public:
-  VOCatalogManager();
-  ~VOCatalogManager();
-  void loadAll();
-  void load(const QString &path);
-
-  void scanDir(QDir dir);
-  void renderAll(mapView_t *mapView, CSkPainter *pPainter);
-  void removeAll();
-  void remove(const QString &path);
-  void setShow(bool show, const QString &path);
-  VOCatalogRenderer *get(const QString &path);
-
-  QList <VOCatalogRenderer*> m_list;
-  QStringList                m_paths;
+  explicit VOTPreviewDialog(QWidget *parent, QPixmap &pixmap, const QString &name);
+  ~VOTPreviewDialog();
 
 private:
+  Ui::VOTPreviewDialog *ui;
 };
 
-extern VOCatalogManager g_voCatalogManager;
-
-#endif // VOCATALOGMANAGER_H
+#endif // VOTPREVIEWDIALOG_H

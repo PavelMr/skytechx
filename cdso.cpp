@@ -517,6 +517,7 @@ QStringList CDso::getNameList(dso_t *pDso)
 QString CDso::getName(dso_t *pDso)
 //////////////////////////////////
 {
+  if (pDso->nameOffs == -1) return QString();
   return namesMap[pDso->nameOffs].at(0);
 }
 
@@ -537,7 +538,7 @@ QString CDso::getName(dso_t *pDso, int idx)
 QStringList CDso::getNameInt(dso_t *pDso)
 /////////////////////////////////////////
 {
-  //return QStringList() << "ABCD3";
+  //return QStringList() << "ABCD3";  
 
   char *p = dsoNames + pDso->nameOffs;
   QString str = QString(p);

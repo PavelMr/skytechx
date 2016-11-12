@@ -42,8 +42,7 @@ VOTDataEditor::VOTDataEditor(QWidget *parent) :
 }
 
 VOTDataEditor::~VOTDataEditor()
-{
-  // TODO: remove all temp files
+{  
   delete ui;
 }
 
@@ -139,7 +138,7 @@ bool VOTDataEditor::setData(const QByteArray &data)
       ui->cb_pa->addItem(item.m_name);
     }
 
-    if (item.m_ucd.startsWith("phys.angSize") && !item.m_unit.isEmpty())
+    if (item.m_ucd.contains("arith.ratio") || (item.m_ucd.startsWith("phys.angSize") && !item.m_unit.isEmpty()))
     {
       item1->setEnabled(false);
       ui->cb_axis1->addItem(item.m_name);
@@ -235,9 +234,55 @@ bool VOTDataEditor::prepareData(const QByteArray &data, const QString &path)
 
   if (parser.parse(data, m_cats, m_coords, table))
   {    
+    m_param.type = ui->cb_type->currentData().toInt();
+    m_param.raIndex = -1;
+    m_param.decIndex = -1;
+    m_param.magIndex1 = -1;
+    m_param.magIndex2 = -1;
+    m_param.axis1 = -1;
+    m_param.axis2 = -1;
+    m_param.name = -1;
+    m_param.ratio = ui->cb_ratio->isChecked();
+
+    for (int i = 0; i < m_cats[0].m_field.count(); i++)
+    {
+      if (ui->cb_id->currentText() == m_cats[0].m_field[i].m_name)
+      {
+        m_param.name = i;
+      }
+      else if (ui->cb_pa->isEnabled() && ui->cb_pa->currentText() == m_cats[0].m_field[i].m_name)
+      {
+        m_param.PA = i;
+      }
+      else if (ui->cb_axis1->isEnabled() && ui->cb_axis1->currentText() == m_cats[0].m_field[i].m_name)
+      {
+        m_param.axis1 = i;
+      }
+      else if (ui->cb_axis2->isEnabled() && ui->cb_axis2->currentText() == m_cats[0].m_field[i].m_name)
+      {
+        m_param.axis2 = i;
+      }
+      else if (ui->cb_mag1->isEnabled() && ui->cb_mag1->currentText() == m_cats[0].m_field[i].m_name)
+      {
+        m_param.magIndex1 = i;
+      }
+      else if (ui->cb_mag2->isEnabled() && ui->cb_mag2->currentText() == m_cats[0].m_field[i].m_name)
+      {
+        m_param.magIndex2 = i;
+      }
+      else if (m_param.raIndex == -1 && m_cats[0].m_field[i].m_ucd == "pos.eq.ra")
+      {
+        m_param.raIndex = i;
+      }
+      else if (m_param.decIndex == -1 && m_cats[0].m_field[i].m_ucd == "pos.eq.dec")
+      {
+        m_param.decIndex = i;
+      }
+    }
+
     if (!voCatalog.create(m_cats, m_coords, table, m_param, path))
     {
-      qDebug() << voCatalog.m_lastError;
+      msgBoxError(this, voCatalog.m_lastError);
       return false;
     }
 
@@ -286,58 +331,7 @@ void VOTDataEditor::on_pushButton_2_clicked()
   }
   url.setQuery(query);
 
-  qDebug() << "type" << ui->cb_type->currentData().toInt() << ui->cb_type->currentIndex();
-
-  m_param.type = ui->cb_type->currentData().toInt();
-  m_param.raIndex = -1;
-  m_param.decIndex = -1;
-  m_param.magIndex1 = -1;
-  m_param.magIndex2 = -1;
-  m_param.axis1 = -1;
-  m_param.axis2 = -1;
-  m_param.name = -1;
-
-  for (int i = 0; i < m_cats[0].m_field.count(); i++)
-  {
-    if (ui->cb_id->currentText() == m_cats[0].m_field[i].m_name)
-    {
-      m_param.name = i;
-    }
-    else if (ui->cb_pa->isEnabled() && ui->cb_pa->currentText() == m_cats[0].m_field[i].m_name)
-    {
-      m_param.PA = i;
-    }
-    else if (ui->cb_axis1->isEnabled() && ui->cb_axis1->currentText() == m_cats[0].m_field[i].m_name)
-    {
-      m_param.axis1 = i;
-    }
-    else if (ui->cb_axis2->isEnabled() && ui->cb_axis2->currentText() == m_cats[0].m_field[i].m_name)
-    {
-      m_param.axis2 = i;
-    }
-    else if (ui->cb_mag1->isEnabled() && ui->cb_mag1->currentText() == m_cats[0].m_field[i].m_name)
-    {
-      m_param.magIndex1 = i;
-    }
-    else if (ui->cb_mag2->isEnabled() && ui->cb_mag2->currentText() == m_cats[0].m_field[i].m_name)
-    {
-      m_param.magIndex2 = i;
-    }
-    else if (m_param.raIndex == -1 && m_cats[0].m_field[i].m_ucd == "pos.eq.ra")
-    {
-      m_param.raIndex = i;
-    }
-    else if (m_param.decIndex == -1 && m_cats[0].m_field[i].m_ucd == "pos.eq.dec")
-    {
-      m_param.decIndex = i;
-    }
-  }
-
-  if (m_param.raIndex == -1 || m_param.decIndex == -1)
-  {
-    msgBoxError(this, tr("Please select correct columns!!!"));
-    return;
-  }
+  //qDebug() << "type" << ui->cb_type->currentData().toInt() << ui->cb_type->currentIndex();
 
   qDebug() << "---------------------";
   qDebug() << url.toString();
@@ -385,9 +379,16 @@ void VOTDataEditor::slotDone(QNetworkReply::NetworkError error, const QString &e
   QTemporaryDir temp(path);
   temp.setAutoRemove(false);
 
+  m_catsTmp = m_cats;
+  m_coordsTmp = m_coords;
+
   if (!prepareData(data, temp.path()))
   {
     msgBoxError(this, "Cannot create data files!!!");
+
+    m_cats = m_catsTmp;
+    m_coords = m_coordsTmp;
+
     return;
   }
 
