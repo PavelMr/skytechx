@@ -27,7 +27,9 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QDataStream>
 
-void hammer(double mu, double phi, double &x, double &y)
+extern bool g_showLabels;
+
+static void hammer(double mu, double phi, double &x, double &y)
 {
   mu = qMin(+1., qMax(-1., mu));      // clamp mu to [-1,+1]
   double sintheta = sqrt(1 - mu*mu);  // sin(theta) = cos(latitude)
@@ -91,19 +93,26 @@ bool VOCatalogRenderer::load(const QString &filePath)
 
   int count;
 
+  m_minRD.Ra = 9999;
+  m_minRD.Dec = 9999;
+
+  m_maxRD.Ra = -9999;
+  m_maxRD.Dec = -9999;
+
   ds >> count;
   ds >> m_show;
   ds >> m_type;
   ds >> m_desc;
   ds >> m_name;
   ds >> m_id;  
+  ds >> m_comment;
+  ds >> m_raCenter;
+  ds >> m_decCenter;
+  ds >> m_fov;
 
-  m_brightestMag = 99;
+  m_brightestMag = 99999999;
 
-  double raMin = 9999999;
-  double raMax = -9999999;
-  double decMin = 9999999;
-  double decMax = -9999999;    
+  m_bbox.reset();
 
   for (int i = 0; i < count ; i++)
   {
@@ -121,12 +130,17 @@ bool VOCatalogRenderer::load(const QString &filePath)
     preview[previewOffset(item.rd.Ra, item.rd.Dec)]++;
 
     item.rd.Ra = D2R(item.rd.Ra);
-    item.rd.Dec = D2R(item.rd.Dec);        
+    item.rd.Dec = D2R(item.rd.Dec);            
 
-    if (item.rd.Ra < raMin) raMin = item.rd.Ra;
-    if (item.rd.Ra > raMax) raMax = item.rd.Ra;
-    if (item.rd.Dec < decMin) decMin = item.rd.Dec;
-    if (item.rd.Dec > decMax) decMax = item.rd.Dec;
+    if (item.rd.Ra < m_minRD.Ra) m_minRD.Ra = item.rd.Ra;
+    if (item.rd.Dec < m_minRD.Dec) m_minRD.Dec = item.rd.Dec;
+    if (item.rd.Ra > m_maxRD.Ra) m_maxRD.Ra = item.rd.Ra;
+    if (item.rd.Dec > m_maxRD.Dec) m_maxRD.Dec = item.rd.Dec;
+
+    SKPOINT pt;
+
+    trfRaDecToPointNoCorrect(&item.rd, &pt);
+    m_bbox.addPt(pt.w.x, pt.w.y, pt.w.z);
 
     if (item.mag < m_brightestMag)
     {
@@ -136,13 +150,7 @@ bool VOCatalogRenderer::load(const QString &filePath)
     //qDebug() << item.mag << item.axis[0] << item.axis[1] << item.rd.Ra << item.rd.Dec;
 
     m_data.append(item);
-  }      
-
-  // create bounding box
-  trfRaDecToPointNoCorrect(&radec_t(raMin, decMin), &m_quad[0]);
-  trfRaDecToPointNoCorrect(&radec_t(raMin, decMax), &m_quad[1]);
-  trfRaDecToPointNoCorrect(&radec_t(raMax, decMin), &m_quad[2]);
-  trfRaDecToPointNoCorrect(&radec_t(raMax, decMax), &m_quad[3]);
+  }        
 
   QImage *image = new QImage(VO_PREVIEW_SIZE_X, VO_PREVIEW_SIZE_Y, QImage::Format_ARGB32);
 
@@ -182,46 +190,44 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
   if (!m_show)
   {
     return;
-  }  
-
-  if (m_brightestMag > mapView->starMag)
-  {
-    //return;
   }
-
-  if (!SKPLANECheckFrustumToPolygon(trfGetFrustum(), m_quad, 4))
-  {
-    //return;
-  }
-
-  cDSO.setPainter(pPainter, nullptr);
 
   float maxMag;
-
   if (m_type == DSOT_STAR)
   {
     maxMag = mapView->starMag;
   }
   else
-  {
+  {    
     maxMag = mapView->dsoMag;
   }
 
-  int i = -1;
+  //qDebug () << m_brightestMag << maxMag;
+
+  if (m_brightestMag > maxMag && m_brightestMag < VO_INVALID_MAG)
+  {
+    return;
+  }
+
+  if (!m_bbox.checkFrustum(trfGetFrustum()))
+  {
+    return;
+  }
+
+  cDSO.setPainter(pPainter, nullptr);  
+
   foreach (const VOItem_t &item, m_data)
   {
-    SKPOINT pt;
+    SKPOINT pt;    
 
-    i++;
-
-    if (item.mag > maxMag)
+    if (item.mag > maxMag && item.mag < VO_INVALID_MAG)
     {
       continue;
     }
 
-    //if (item.mag >= VO_INVALID_MAG && m_type )
+    if (item.mag >= VO_INVALID_MAG && mapView->fov > g_skSet.map.dsoNoMagOtherFOV)
     {
-      //continue;
+      continue;
     }
 
     trfRaDecToPointNoCorrect(&item.rd, &pt);
@@ -241,17 +247,20 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
         dso.shape = NO_DSO_SHAPE;
         dso.nameOffs = -1;
 
-        cDSO.renderObj(&pt, &dso, mapView, false, 1);
+        int r = cDSO.renderObj(&pt, &dso, mapView, false, 1);
+        if (r > 0 && g_showLabels)
+        {
+          g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, item.name, FONT_DSO, RT_BOTTOM, SL_AL_ALL);
+        }
         addMapObj(item.rd, pt.sx, pt.sy, MO_VOCATALOG, MO_CIRCLE, 5, (qint64)this, (qint64)&item, item.mag);
       }
       else
       {
         int r = cStarRenderer.renderStar(&pt, 0, item.mag, pPainter);
-        addMapObj(item.rd, pt.sx, pt.sy, MO_VOCATALOG, MO_CIRCLE, r + 2, (qint64)this, (qint64)&item, item.mag);
-        //g_labeling.addLabel(QPoint(pt.sx, pt.sy), 15, QString::number(item.mag), FONT_DRAWING, RT_BOTTOM_LEFT, SL_AL_ALL);
-      }
+        addMapObj(item.rd, pt.sx, pt.sy, MO_VOCATALOG, MO_CIRCLE, r + 2, (qint64)this, (qint64)&item, item.mag);        
+      }      
 
-      //g_labeling.addLabel(QPoint(pt.sx, pt.sy), 5, item.name, FONT_DRAWING, RT_BOTTOM_RIGHT, SL_AL_ALL);
+
       //g_labeling.addLabel(QPoint(pt.sx, pt.sy), 5, QString::number(item.pa), FONT_DRAWING, RT_BOTTOM_LEFT, SL_AL_ALL);
     }        
   }
@@ -301,16 +310,15 @@ QList <VOTableItem_t> VOCatalogRenderer::getTableItem(VOItem_t &object)
     list.append(item);
   }
 
-  file.seek(object.infoFileOffset);
-
-  QStringList row;
-
-  ds >> row;
+  file.seek(object.infoFileOffset);  
 
   for (int i = 0; i < count; i++)
-  {
-    QString str = row[i];
-    list[i].value = str;
+  {        
+    QByteArray array;
+
+    ds >> array;
+
+    list[i].value = QString(array);
   }
 
   return list;

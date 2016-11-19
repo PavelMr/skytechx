@@ -371,6 +371,22 @@ QString getStrSize(double sx, double sy)
   return(str);
 }
 
+////////////////////////////////////////
+// sx in arc sec
+QString getStrSize(double sx)
+////////////////////////////////////////
+{
+  QString str;
+
+  if (sx == 0)
+  {
+    return(QObject::tr("N/A"));
+  }
+
+  str.sprintf("%0.2f'", sx / 60.);
+  return(str);
+}
+
 
 ////////////////////////////////////////
 QString getStrRA(double ra, bool simple)
@@ -560,7 +576,12 @@ QString getNumber(int val)
 QString getStrMag(double mag)
 /////////////////////////////
 {
-  QString str = QString("%1%2 mag.").arg(mag < 0 ? "-" : "+").arg(fabs(mag), 0, 'f', 2);
+  if (mag > 50.)
+  {
+    return QObject::tr("N/A");
+  }
+
+  QString str = QString("%1%2 mag.").arg(mag < 0 ? "-" : "+").arg(fabs(mag), 0, 'f', 2);    
 
   return(str);
 }

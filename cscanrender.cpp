@@ -2,6 +2,8 @@
 #include "omp.h"
 #include "skcore.h"
 
+//#define PARALLEL_OMP
+
 CScanRender scanRender;
 
 //////////////////////////////
@@ -418,7 +420,7 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
   const quint32 *bitsSrc = (quint32 *)src->constBits();
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
-  bool bw = src->format() == QImage::Format_Indexed8 || src->format() == QImage::Format_Grayscale8;  
+  bool bw = src->format() == QImage::Format_Indexed8 || src->format() == QImage::Format_Grayscale8;    
 
   //#pragma omp parallel for
   for (int y = plMinY; y <= plMaxY; y++)
@@ -510,7 +512,9 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
   bkScan_t *scan = scLR;
   bool bw = src->format() == QImage::Format_Indexed8 || src->format() == QImage::Format_Grayscale8;
 
+#ifdef PARALLEL_OMP
   #pragma omp parallel for
+#endif
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])
@@ -565,6 +569,12 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
         float y_diff = uv[1] - static_cast<int>(uv[1]);
         float x_1diff = 1 - x_diff;
         float y_1diff = 1 - y_diff;
+
+        //x_diff -= 1;
+        //y_diff -= 1;
+
+        //x_1diff -= 0.5;
+        //y_1diff -= 0.5;
 
         int index = ((int)uv[0] + ((int)uv[1] * sw));
 
@@ -650,7 +660,9 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
   bool bw = src->format() == QImage::Format_Indexed8;
   float opacity = (m_opacity / 65536.) * 0.00390625f;
 
+#ifdef PARALLEL_OMP
   #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
+#endif
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])
@@ -795,9 +807,11 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
   const quint32 *bitsSrc = (quint32 *)src->constBits();
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
-  float opacity = 0.00390625f * m_opacity;
+  float opacity = 0.00390625f * m_opacity;  
 
+#ifdef PARALLEL_OMP
   #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
+#endif
   for (int y = plMinY; y <= plMaxY; y++)
   {
     if (scan[y].scan[0] > scan[y].scan[1])
@@ -862,6 +876,6 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
       uv[0] += duv[0];
       uv[1] += duv[1];
     }
-  }
+  }  
 }
 

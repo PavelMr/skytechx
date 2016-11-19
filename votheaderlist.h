@@ -47,8 +47,11 @@ private slots:
 
   void on_treeView_doubleClicked(const QModelIndex &index);
 
+  void on_pushButton_3_clicked();
+
 private:
   Ui::VOTHeaderList *ui;
+  QString getURL();
 };
 
 #endif // VOTHEADERLIST_H

@@ -1562,13 +1562,16 @@ void CMapView::getMapRaDec(double &ra, double &dec, double &fov)
   fov = m_mapView.fov;
 }
 
-///////////////////////////////////////////////////////////////////////////
-void CMapView::getMapCenterRaDecJ2000(double &ra, double &dec, double &fov)
-///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+void CMapView::getMapCenterRaDec(double &ra, double &dec, double &fov)
+//////////////////////////////////////////////////////////////////////
 {  
   trfConvScrPtToXY(width() * 0.5, height() * 0.5, ra, dec);
 
-  precess(&ra, &dec, m_mapView.jd, JD2000);
+  if (m_mapView.epochJ2000)
+  {
+    precess(&ra, &dec, m_mapView.jd, JD2000);
+  }
 
   fov = m_mapView.fov;
 }
@@ -1853,7 +1856,7 @@ void CMapView::repaintMap(bool bRepaint)
   updateStatusBar();
   pcMainWnd->updateControlInfo();
   QWidget::update();
-  g_forcedRecalculate = false;
+  g_forcedRecalculate = false;  
 }
 
 //////////////////////////////////////

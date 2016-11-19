@@ -55,7 +55,7 @@ class CDso : public QObject
     void load();
     void createSectors();
     void setPainter(CSkPainter *p, QImage *pImg);
-    void renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList = true, double opacity = 1);
+    int renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList = true, double opacity = 1);
     int  findDSO(char *pszName, dso_t **pDso, int &index);
     int  findDSOFirstName(char *pszName);
     QString getTypeName(int type, bool &ok);
@@ -75,14 +75,16 @@ class CDso : public QObject
     void applyNameFilter();
 
     void drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool addToList);
-    void renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
-    void renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
-    void renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
-    void renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
-    void renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t *mapView, bool addToList);
-    void renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
-    void renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
-    void renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+
+    int renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    int renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    int renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    int renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    int renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, mapView_t *mapView, bool addToList);
+    int renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    int renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    int renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+
     int  getMinSize() { return(m_minSize); }
     void setMinSize(int size) { m_minSize = size; }
 

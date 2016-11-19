@@ -594,7 +594,7 @@ void mapObjContextMenu(CMapView *map)
       {
         VOItem_t *obj = (VOItem_t*)o.par2;
 
-        str = QString("%1").arg(QString(obj->name)) + QString(QObject::tr(", %1 mag.")).arg((double)obj->mag, 0, 'f', 2);
+        str = QString("%1").arg(QString(obj->name)) + ", " + getStrMag(obj->mag);
         break;
       }
 

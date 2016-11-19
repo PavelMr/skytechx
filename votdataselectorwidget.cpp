@@ -29,7 +29,8 @@ VOTDataSelectorWidget::VOTDataSelectorWidget(QWidget *parent, const VOCatalogHea
   ui->setupUi(this);
 
   // FIXME: remove LaTeX formating
-  ui->label_2->setText(header.m_desc.mid(0, 80));
+  //ui->label_2->setText(header.m_desc.mid(0, 80));
+  ui->label_2->setText(header.m_desc);
   ui->label_2->setToolTip(getStringSeparated(header.m_desc, 60));
 
   ui->label->setText(tr("Count : ") + getNumber(header.m_count));

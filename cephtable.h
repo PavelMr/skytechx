@@ -37,7 +37,7 @@ class CEphTable : public QDialog
   Q_OBJECT
 
 public:
-  explicit CEphTable(QWidget *parent, QString name, QStringList header, QList <tableRow_t> row);
+  explicit CEphTable(QWidget *parent, QString name, QStringList header, QList <tableRow_t> row, QStringList &headerToolTips = QStringList());
   ~CEphTable();
 
 protected:

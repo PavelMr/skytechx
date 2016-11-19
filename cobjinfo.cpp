@@ -77,7 +77,7 @@ void CObjInfo::init(CMapView *map, const mapView_t *view, const mapObj_t *obj)
   ui->pushButton_3->setEnabled(obj->type == MO_ASTER || obj->type == MO_COMET);
 
 
-  info.fillInfo(view, obj, &m_infoItem);
+  info.fillInfo(view, obj, &m_infoItem);  
 
   /// read note
   QString str = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/notes/" + m_infoItem.id + ".txt";

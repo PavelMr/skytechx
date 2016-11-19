@@ -20,7 +20,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_votpreviewdialog.h"
 #include "skutils.h"
 
-VOTPreviewDialog::VOTPreviewDialog(QWidget *parent, QPixmap &pixmap, const QString &name) :
+VOTPreviewDialog::VOTPreviewDialog(QWidget *parent, const QString &textA ,const QString &textB, QPixmap &pixmap, const QString &name) :
   QDialog(parent),
   ui(new Ui::VOTPreviewDialog)
 {
@@ -29,6 +29,8 @@ VOTPreviewDialog::VOTPreviewDialog(QWidget *parent, QPixmap &pixmap, const QStri
   ui->label->setScaledContents(false);
   ui->label->setFixedSize(pixmap.size());
   setWindowTitle(name);
+  ui->label_A->setText(textA);
+  ui->label_B->setText(textB);
   adjustSize();
 }
 

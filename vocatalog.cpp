@@ -4,38 +4,8 @@
 #include <QDebug>
 #include <QDataStream>
 
-/*
-(('POS_ANG_DIST_GENERAL', 'pos.angDistance'),
-      ('POS_EQ_RA_MAIN', 'pos.eq.ra;meta.main'),
-      ('POS_EQ_DEC_MAIN', 'pos.eq.dec;meta.main'),
-      ('ID_MAIN', 'meta.id;meta.main'),
-      ('POS_EQ_RA', 'pos.eq.ra'),
-      ('POS_EQ_DEC', 'pos.eq.dec'),
-      ('POS_EQ_RA_OTHER', 'pos.eq.ra'),
-      ('POS_EQ_DEC_OTHER', 'pos.eq.dec'),
-      ('POS_EQ_PMRA', 'pos.pm;pos.eq.ra'),
-      ('POS_EQ_PMDEC', 'pos.pm;pos.eq.dec'),
-      ('PHOT_MAG_OPTICAL', 'phot.mag;em.opt'),
-      ('PHOT_JHN_J', 'phot.mag;em.IR.J'),
-      ('PHOT_JHN_K', 'phot.mag;em.IR.K'),
-      ('PHOT_MAG_B', 'phot.mag;em.opt.B'),
-      ('PHOT_MAG_V', 'phot.mag;em.opt.V'),
-      ('PHOT_MAG_R', 'phot.mag;em.opt.R'),
-      ('PHOT_MAG_I', 'phot.mag;em.opt.I'),
-      ('CODE_MULT_INDEX', 'meta.code.multip'),
-      ('CLASS_OBJECT', 'src.class'),
-      ('POS_PLATE_X', 'pos.cartesian.x;instr.plate'),
-      ('POS_PLATE_Y', 'pos.cartesian.y;instr.plate'),
-      ('PHOT_MAG_UNDEF', 'phot.mag'),
-      ('REFER_CODE', 'meta.bib'),
-      ('CODE_MISC', 'meta.code'),
-      ('NOTE', 'meta.note'));
-
-*/
-
 VOCatalog::VOCatalog()
 {
-
 }
 
 QString VOCatalog::lastErrorString()
@@ -55,6 +25,11 @@ static double value(QString str, const QString &unit)
   else if (unit == "arcsec" || unit == "arcs")
   {
     return val;
+  }
+
+  if (unit == "[---]")
+  {
+    return pow(10, val);
   }
 
   if (unit.startsWith("[") && unit.endsWith("]"))
@@ -103,14 +78,14 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
     return false;
   }
 
-  QFile fileTable(filePath + "/vo_table_data.bin");
+  SkFile fileTable(filePath + "/vo_table_data.bin");
   if (!fileTable.open(QFile::WriteOnly))
   {
     return false;
   }
   QDataStream dsTable(&fileTable);
 
-  QFile file(filePath + "/vo_data.dat");
+  SkFile file(filePath + "/vo_data.dat");
   if (!file.open(QFile::WriteOnly))
   {
     return false;
@@ -121,13 +96,57 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
 
   dsTable << cat->m_field.size();
 
+  int raIndex;
+  int decIndex;
+  int name = -1;
+  int magIndex1 = -1;
+  int magIndex2 = -1;
+  int PA = -1;
+  int axis1 = -1;
+  int axis2 = -1;
 
+  int index = 0;
   foreach (const VOField &field, cat->m_field)
   {
     dsTable << field.m_name;    
     dsTable << field.m_ucd;
     dsTable << field.m_unit;                 
     dsTable << field.m_desc;
+
+    if (params.raIndex == field.m_name)
+    {
+      raIndex = index;
+    }
+    else if (params.decIndex == field.m_name)
+    {
+      decIndex = index;
+    }
+    else if (params.name == field.m_name)
+    {
+      name = index;
+    }
+    else if (params.magIndex1 == field.m_name)
+    {
+      magIndex1 = index;
+    }
+    else if (params.magIndex2 == field.m_name)
+    {
+      magIndex2 = index;
+    }
+    else if (params.PA == field.m_name)
+    {
+      PA = index;
+    }
+    else if (params.axis1 == field.m_name)
+    {
+      axis1 = index;
+    }
+    else if (params.axis2 == field.m_name)
+    {
+      axis2 = index;
+    }
+
+    index++;
   }
 
   VOItem_t item;
@@ -138,53 +157,65 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
   ds << cat->m_desc;
   ds << cat->m_name;
   ds << cat->m_id;
+  ds << params.comment;
+  ds << params.raCenter;
+  ds << params.decCenter;
+  ds << params.fov;
 
   for (int i = 0; i < data.count(); i++)
   {        
-    item.rd.Ra = data[i].at(params.raIndex).toDouble();
-    item.rd.Dec = data[i].at(params.decIndex).toDouble();
-
-    item.name = data[i].at(params.name).toLocal8Bit();
-
-    if (params.magIndex1 != -1 && !data[i].at(params.magIndex1).isEmpty())
+    if ((i % 20000) == 0)
     {
-      item.mag = data[i].at(params.magIndex1).toFloat();
+      QApplication::processEvents();
     }
-    else if (params.magIndex2 != -1 && !data[i].at(params.magIndex2).isEmpty())
+
+    item.rd.Ra = data[i].at(raIndex).toDouble();
+    item.rd.Dec = data[i].at(decIndex).toDouble();
+
+    if (name != -1)
     {
-      item.mag = data[i].at(params.magIndex2).toFloat();
+      item.name = data[i].at(name).toLocal8Bit();
+    }
+
+    if (magIndex1 != -1 && !data[i].at(magIndex1).isEmpty())
+    {
+      item.mag = data[i].at(magIndex1).toFloat();
+    }
+    else if (magIndex2 != -1 && !data[i].at(magIndex2).isEmpty())
+    {
+      item.mag = data[i].at(magIndex2).toFloat();
     }
     else
     {
       item.mag = VO_INVALID_MAG;
     }
 
-    if (params.PA != -1 && !data[i].at(params.PA).isEmpty())
+    if (PA != -1 && !data[i].at(PA).isEmpty())
     {
-      item.pa = value(data[i].at(params.PA), catalogs[0].m_field[params.PA].m_unit);
+      item.pa = value(data[i].at(PA), catalogs[0].m_field[PA].m_unit);
     }
     else
     {
       item.pa = NO_DSO_PA;
     }
 
-    if (params.axis1 != -1 && !data[i].at(params.axis1).isEmpty())
+    if (axis1 != -1 && !data[i].at(axis1).isEmpty())
     {
-      item.axis[0] = value(data[i].at(params.axis1), catalogs[0].m_field[params.axis1].m_unit);
+      item.axis[0] = value(data[i].at(axis1), catalogs[0].m_field[axis1].m_unit);
     }
     else
     {
       item.axis[0] = 0;
     }
 
-    if (params.axis2 != -1 && !data[i].at(params.axis2).isEmpty())
+    if (axis2 != -1 && !data[i].at(axis2).isEmpty())
     {
-      double tmp = value(data[i].at(params.axis2), catalogs[0].m_field[params.axis2].m_unit);
+      double tmp = value(data[i].at(axis2), catalogs[0].m_field[axis2].m_unit);
       if (params.ratio)
       {
-        if (item.axis[1] != 0)
+        if (tmp != 0)
         {
-          item.axis[1] = item.axis[0] * (1 - tmp);
+          item.axis[1] = item.axis[0] / tmp;
         }
         else
         {
@@ -211,7 +242,15 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
     //qDebug() << item.ra << item.dec << item.mag << item.infoFileOffset;
     //qDebug() << item.mag << item.axis[0] << item.axis[1] << item.rd.Ra << item.rd.Dec;
 
-    ds << item.name;
+    if (!params.prefix.isEmpty())
+    {
+      ds << QByteArray(QString(params.prefix + " ").toLatin1() + item.name);
+    }
+    else
+    {
+      ds << item.name;
+    }
+
     ds << item.rd.Ra;
     ds << item.rd.Dec;
     ds << item.mag;
@@ -220,9 +259,15 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
     ds << item.pa;
     ds << item.infoFileOffset;
 
-    dsTable << data[i];
+    foreach (const QString &str, data[i])
+    {
+      dsTable << str.toLatin1();
+    }
   }
 
   return true;
 }
+
+
+
 

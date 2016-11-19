@@ -58,6 +58,7 @@ QString getStrLon(double deg);
 QString getStrLat(double deg);
 
 QString getStrSize(double sx, double sy);
+QString getStrSize(double sx);
 
 QString getStrTimeFromDayFrac(double day);
 QString getStrTimeFromDayRads(double rads);

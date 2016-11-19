@@ -187,6 +187,7 @@ CSetting::CSetting(QWidget *parent) :
   connect(ui->treeWidgetSun, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
   connect(ui->treeWidgetDSS, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
   connect(ui->treeWidgetSat, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
+  connect(ui->treeWidgetHiPS, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTreeWidgetCustomContextMenuRequested(QPoint)));
 
   // sun texture
   ui->cb_onlineSunPeriod->addItem(tr("At startup only"), 0);
@@ -1853,6 +1854,10 @@ void CSetting::onTreeWidgetCustomContextMenuRequested(const QPoint &pos)
 
     case 4:
       widget = ui->treeWidgetSat;
+      break;
+
+    case 5:
+      widget = ui->treeWidgetHiPS;
       break;
 
     default:

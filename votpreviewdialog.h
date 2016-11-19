@@ -30,7 +30,7 @@ class VOTPreviewDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit VOTPreviewDialog(QWidget *parent, QPixmap &pixmap, const QString &name);
+  explicit VOTPreviewDialog(QWidget *parent, const QString &textA ,const QString &textB, QPixmap &pixmap, const QString &name);
   ~VOTPreviewDialog();
 
 private:

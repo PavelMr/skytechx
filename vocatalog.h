@@ -22,15 +22,20 @@ typedef struct
 typedef struct
 {
   int type;
-  int raIndex;
-  int decIndex;
-  int magIndex1;
-  int magIndex2;
-  int axis1;
-  int axis2;
-  int name;  
-  int PA;
+  QString comment;
+  QString raIndex;
+  QString decIndex;
+  QString magIndex1;
+  QString magIndex2;
+  QString axis1;
+  QString axis2;
+  QString name;
+  QString PA;
   bool ratio; // minAxis is ratio of maxAxis
+  QString prefix;
+  double raCenter;
+  double decCenter;
+  double fov;
 } VOParams_t;
 
 class VOCatalog : public QObject

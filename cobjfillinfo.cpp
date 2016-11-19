@@ -834,7 +834,6 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
 
   addLabelItem(item, txDesig);
   addSeparator(item);
-
   addTextItem(item, s.name, "");
   addSeparator(item);
 
@@ -899,8 +898,8 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
 {
   CMeteorShowerItem *m = (CMeteorShowerItem *)obj->par1;
 
-  item->radec.Ra = obj->rd.Ra;
-  item->radec.Dec = obj->rd.Dec;
+  item->radec.Ra = m->rd.Ra;
+  item->radec.Dec = m->rd.Dec;
   item->zoomFov = getOptObjFov(0, 0, D2R(45));
   item->id = m->name;
   item->simbad = m->name;
@@ -987,11 +986,12 @@ void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   VOCatalogRenderer *ptr = (VOCatalogRenderer*)obj->par1;
   VOItem_t *object = (VOItem_t*)obj->par2;
 
-  item->radec.Ra = obj->rd.Ra;
-  item->radec.Dec = obj->rd.Dec;
+  item->radec.Ra = object->rd.Ra;
+  item->radec.Dec = object->rd.Dec;
   item->zoomFov = getOptObjFov(0, 0, D2R(2.5));
   item->id = object->name;
   item->simbad = item->id;
+  item->title = item->id;
 
   // TODO: udelat funkci na vypis casu
   beginExtInfo();
@@ -1008,6 +1008,11 @@ void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addLabelItem(item, txObjType);
   addSeparator(item);
   addTextItem(item, txObjType, cDSO.getTypeName(ptr->m_type, ok) + " (" + ptr->m_name + ")");
+  addSeparator(item);
+
+  addLabelItem(item, txDesig);
+  addSeparator(item);
+  addTextItem(item, object->name, "");
   addSeparator(item);
 
   double raAtDate, decAtDate;
@@ -1074,9 +1079,7 @@ void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   addLabelItem(item, tr("Other"));
   addSeparator(item);
-  addTextItem(item, "Size", getStrSize(object->axis[0], object->axis[1]));
-
-  qDebug() << object->axis[0] << object->axis[1];
+  addTextItem(item, "Size", getStrSize(object->axis[0], object->axis[1]));  
 
   if (object->pa != NO_DSO_PA)
   {

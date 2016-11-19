@@ -27,13 +27,13 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #define MAX_CATALOGUES      100
 
-//#define VO_TEST
+extern QString g_vizierUrl;
 
 VOTHeaderList::VOTHeaderList(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::VOTHeaderList)
 {
-  ui->setupUi(this);
+  ui->setupUi(this);  
 
   QStandardItemModel *model = new QStandardItemModel(0, 4);
   model->setHeaderData(0, Qt::Horizontal, tr("ID"));
@@ -70,8 +70,8 @@ void VOTHeaderList::on_pushButton_clicked()
 #ifdef VO_TEST
   download->beginFile("http://127.0.0.1:8887/test/vo_table/vo_table_tyc2.tmp", QDir::tempPath() + "/" + VO_TEMP_FILE);
 #else
-  download->beginFile("http://vizier.u-strasbg.fr/viz-bin/votable/" +
-                      QString("?-meta&-meta.max=%1&-words=%2").arg(MAX_CATALOGUES).arg(ui->lineEdit->text().simplified()),
+  download->beginFile(g_vizierUrl +
+                      QString("/?-meta&-meta.max=%1&-words=%2").arg(MAX_CATALOGUES).arg(ui->lineEdit->text().simplified()),
                       QDir::tempPath() + "/" + VO_TEMP_CAT_FILE);
 #endif
 
@@ -151,7 +151,7 @@ void VOTHeaderList::slotHeaderDone(QNetworkReply::NetworkError error, const QStr
 
   QByteArray data = readAllFile(QDir::tempPath() + "/" + VO_TEMP_FILE).toUtf8();
 
-  VOTDataHeaderList dlg(this);  
+  VOTDataHeaderList dlg(this);      
 
   if (dlg.setData(data))
   {    
@@ -188,8 +188,8 @@ void VOTHeaderList::on_treeView_doubleClicked(const QModelIndex &)
 #ifdef VO_TEST
   download->beginFile("http://127.0.0.1:8887/test/vo_table/vo_table_tyc_h.tmp", QDir::tempPath() + "/" + VO_TEMP_FILE);
 #else
-  download->beginFile("http://vizier.u-strasbg.fr/viz-bin/votable/" +
-                      QString("?-meta.all&-out=_RAJ2000&-out=_DEJ2000&-out=**&-source=%1/*").arg(data),
+  download->beginFile(g_vizierUrl +
+                      QString("/?-meta.all&-out=_RAJ2000&-out=_DEJ2000&-out=**&-source=%1/*").arg(data),
                       QDir::tempPath() + "/" + VO_TEMP_FILE);
 #endif
 
@@ -197,3 +197,9 @@ void VOTHeaderList::on_treeView_doubleClicked(const QModelIndex &)
   ui->groupBox->setEnabled(false);
   ui->treeView->setEnabled(false);
 }
+
+void VOTHeaderList::on_pushButton_3_clicked()
+{
+  on_treeView_doubleClicked(QModelIndex());
+}
+

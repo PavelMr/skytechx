@@ -50,6 +50,10 @@ private slots:
 
   void slotPreview();
 
+  void on_pushButton_6_clicked();
+
+  void on_comboBox_currentIndexChanged(int index);
+
 private:
   Ui::VOCatalogManagerDialog *ui;
 

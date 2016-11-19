@@ -35,7 +35,7 @@ void CDownload::beginBkImage(QString &url, QString &fileName)
 
 void CDownload::beginFile(QString url, QString fileName)
 {
-  QUrl qurl(url);  
+  QUrl qurl(url);    
 
   QNetworkRequest request(qurl);  
   QNetworkReply *reply = manager.get(request);  
@@ -56,13 +56,21 @@ void CDownload::slotProgress(qint64 recv ,qint64 total)
 ///////////////////////////////////////////////////////
 {
   //qDebug() << "recv : " << recv << " / " << total;
+
   if (recv == 0 || total == 0)
   {
     emit sigProgress((qint64)this, 0);
     return;
   }
 
-  int p = 100 - (recv * 100 / (float)total);
+  if (total == -1)
+  {
+    emit sigProgress((qint64)this, -1);
+    emit sigProgressTotal(recv, -1, m_reply);
+    return;
+  }
+
+  int p = 100 - (recv * 100 / (double)total);
 
   if (p == 0)
     p = 1;

@@ -5,7 +5,7 @@
 #include <QPrinter>
 #include <QPrintDialog>
 
-CEphTable::CEphTable(QWidget *parent, QString name, QStringList header, QList<tableRow_t> row) :
+CEphTable::CEphTable(QWidget *parent, QString name, QStringList header, QList<tableRow_t> row, QStringList &headerToolTips) :
   QDialog(parent),
   ui(new Ui::CEphTable)
 {
@@ -19,6 +19,10 @@ CEphTable::CEphTable(QWidget *parent, QString name, QStringList header, QList<ta
   for (int i = 0; i < header.count(); i++)
   {
     m->setHeaderData(i, Qt::Horizontal, header[i]);
+    if (!headerToolTips.isEmpty())
+    {
+      m->setHeaderData(i, Qt::Horizontal, headerToolTips[i], Qt::ToolTipRole);
+    }
   }
 
   for (int i = 0; i < row.count(); i++)

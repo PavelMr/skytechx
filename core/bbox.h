@@ -22,6 +22,8 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "plane.h"
 #include "vecmath.h"
 
+#include <QDebug>
+
 #define BMAX     999999
 #define BMIN    -999999
 
@@ -64,6 +66,12 @@ typedef struct BBox
       maxs[0] += off[0];
       maxs[1] += off[1];
       maxs[2] += off[2];
+    }
+
+    void debug()
+    {
+      qDebug() << mins[0] << mins[1] << mins[2];
+      qDebug() << maxs[0] << maxs[1] << maxs[2];
     }
 
     double size(int i)

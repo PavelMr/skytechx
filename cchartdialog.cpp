@@ -61,9 +61,11 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object,
   QValueAxis *axisY = new QValueAxis;
   axisY->setLabelFormat("%0.2f");
   axisY->setTitleBrush(series1->pen().color());
-  axisY->setTitleText(name1);
+  axisY->setTitleText(name1);    
+  //axisY->setReverse();
   chart->addAxis(axisY, Qt::AlignLeft);
   series1->attachAxis(axisY);
+
 
   QValueAxis *axisY1 = new QValueAxis;
   axisY1->setLabelFormat("%0.2f");

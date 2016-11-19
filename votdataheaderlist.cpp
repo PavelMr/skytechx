@@ -26,6 +26,8 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QDebug>
 
+extern QString g_vizierUrl;
+
 VOTDataHeaderList::VOTDataHeaderList(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::VOTDataHeaderList)
@@ -54,7 +56,7 @@ bool VOTDataHeaderList::setData(const QByteArray &data)
   foreach (const VOCatalogHeader &header, m_cats)
   {
     VOTDataSelectorWidget *widget = new VOTDataSelectorWidget(0, header);
-    m_tabs->addTab(widget, header.m_name);    
+    m_tabs->addTab(widget, header.m_name);
   }
 
   m_data = data;  
@@ -67,7 +69,7 @@ void VOTDataHeaderList::on_pushButton_2_clicked()
 {
   CDownload *download = new CDownload;
 
-  download->beginFile("http://vizier.u-strasbg.fr/viz-bin/votable" +
+  download->beginFile(g_vizierUrl +
                       QString("?-meta.all&-out=_RAJ2000&-out=_DEJ2000&-out=**&-source=%1").arg(m_cats[m_tabs->currentIndex()].m_name),
                       QDir::tempPath() + "/" + VO_TEMP_FILE);
 

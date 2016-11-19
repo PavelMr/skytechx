@@ -113,7 +113,7 @@ double CDecSpinBox::getDec()
 
   value = d + (m / 60.) + (s / 3600.);
 
-  return value / RAD * 15.;
+  return value / RAD;
 }
 
 void CDecSpinBox::slotValueDegChanged(int value)
@@ -166,6 +166,16 @@ void CRADecSpinBox::setLayout(Qt::Orientation direction)
   layout->setContentsMargins(4, 2, 4, 2);
   layout->addWidget(raSpinBox);
   layout->addWidget(decSpinBox);
+}
+
+CRASpinBox *CRADecSpinBox::getRaSpinBox() const
+{
+  return raSpinBox;
+}
+
+CDecSpinBox *CRADecSpinBox::getDecSpinBox() const
+{
+  return decSpinBox;
 }
 
 

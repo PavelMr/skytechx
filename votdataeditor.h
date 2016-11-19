@@ -40,6 +40,7 @@ enum VOType
 };
 
 class QNetworkReply;
+class VOCatalogRenderer;
 
 namespace Ui {
 class VOTDataEditor;
@@ -53,9 +54,11 @@ public:
   explicit VOTDataEditor(QWidget *parent = 0);
   ~VOTDataEditor();
   bool setData(const QByteArray &data);
+  void setEdit(const QString &path, VOCatalogRenderer *renderer);
   bool prepareData(const QByteArray &data, const QString &path);
   bool m_back;
 
+  static void openPreviewDialog(const QString &path, QWidget *parent, int count);
 private slots:
   void on_pushButton_2_clicked();
   void slotDone(QNetworkReply::NetworkError error, const QString &errorString);
@@ -69,6 +72,14 @@ private slots:
 
   void on_pushButton_clicked();
 
+  void on_pushButton_4_clicked();
+
+  void on_pushButton_5_clicked();
+
+  void on_pushButton_6_clicked();
+
+  void on_pushButton_7_clicked();
+
 private:
   Ui::VOTDataEditor *ui;  
   QList <VOCatalogHeader> m_cats;
@@ -79,6 +90,12 @@ private:
 
   QProgressDialog *m_progressDlg;
   VOParams_t m_param;
+  bool m_edit;
+  QString m_path;
+
+  bool m_preview;
+
+  void saveDialog(const QString &path);
 };
 
 #endif // VOTDATAEDITOR_H

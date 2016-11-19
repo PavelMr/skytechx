@@ -46,6 +46,9 @@ public:
   void setShow(bool show);  
   QList <VOTableItem_t> getTableItem(VOItem_t &object);
 
+  radec_t            m_minRD;
+  radec_t            m_maxRD;
+
   bool               m_show;
   QVector <VOItem_t> m_data;
   int                m_type;
@@ -53,11 +56,14 @@ public:
   QString            m_desc;
   QString            m_name;
   QString            m_id;
-  float              m_brightestMag;
-
-  SKPOINT            m_quad[4];
-
+  QString            m_comment;
+  float              m_brightestMag;  
   QImage             m_preview;
+  BBox               m_bbox;
+
+  double             m_raCenter;
+  double             m_decCenter;
+  double             m_fov;
 };
 
 #endif // VOCATALOGRENDERER_H

@@ -61,6 +61,9 @@ public:
     CRADecSpinBox(QWidget* parent = 0);
     void setLayout(Qt::Orientation direction);
 
+    CRASpinBox *getRaSpinBox() const;
+    CDecSpinBox *getDecSpinBox() const;
+
 private:
     CRASpinBox *raSpinBox;
     CDecSpinBox *decSpinBox;

@@ -568,7 +568,7 @@ CDSSDlg::CDSSDlg(QWidget *parent, double ra, double dec, double jd) :
   m_dec = dec;
   m_jd = jd;
 
-  CUrlFile u;
+  CUrlFile u;  
 
   u.readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/dss.url", &tUrl);
 
