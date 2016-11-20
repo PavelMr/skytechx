@@ -22,6 +22,7 @@
 #define SS_COMET        "'CO'"
 #define SS_LUNAR_FEAT   "'LF'"
 #define SS_SHOWER       "'MS'"
+#define SS_VOT          "'VO'"
 
 #define SS_CHECK_OR(a, str)     (!str.compare(a) || !str.compare(SS_ALL))
 

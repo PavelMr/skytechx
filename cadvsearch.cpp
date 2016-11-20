@@ -55,6 +55,9 @@ CAdvSearch::CAdvSearch(QWidget *parent, mapView_t *view) :
     case 10:
       ui->radioButton_10->setChecked(true);
       break;
+    case 11:
+      ui->radioButton_11->setChecked(true);
+      break;
   }
 
   connect(ui->radioButton_all , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
@@ -68,6 +71,7 @@ CAdvSearch::CAdvSearch(QWidget *parent, mapView_t *view) :
   connect(ui->radioButton_8, SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
   connect(ui->radioButton_9 , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
   connect(ui->radioButton_10 , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
+  connect(ui->radioButton_11 , SIGNAL(toggled(bool)), this, SLOT(slotRadioChange()));
 
   slotRadioChange();
 }
@@ -108,6 +112,8 @@ void CAdvSearch::on_pushButton_2_clicked()
     prefix = SS_LUNAR_FEAT;
   else if (ui->radioButton_10->isChecked())
     prefix = SS_SHOWER;
+  else if (ui->radioButton_11->isChecked())
+    prefix = SS_VOT;
 
   QString text;
 
@@ -227,6 +233,11 @@ void CAdvSearch::slotRadioChange()
   {
     lastRadio = 10;
     list << g_meteorShower.getNameList();
+  }
+
+  if (ui->radioButton_11->isChecked() || isAll)
+  {
+    lastRadio = 11;
   }
 
   if (ui->radioButton_all->isChecked())

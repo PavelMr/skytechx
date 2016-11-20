@@ -1007,7 +1007,7 @@ void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   addLabelItem(item, txObjType);
   addSeparator(item);
-  addTextItem(item, txObjType, cDSO.getTypeName(ptr->m_type, ok) + " (" + ptr->m_name + ")");
+  addTextItem(item, txObjType, cDSO.getTypeName(ptr->m_type, ok) + " (" + ptr->m_name + ")" + " VOT");
   addSeparator(item);
 
   addLabelItem(item, txDesig);

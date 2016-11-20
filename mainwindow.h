@@ -683,6 +683,8 @@ private slots:
 
   void on_actionVO_Catalogue_triggered();
 
+  void on_actionShow_Hide_VO_Catalogue_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

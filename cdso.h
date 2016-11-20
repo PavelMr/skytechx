@@ -61,7 +61,7 @@ class CDso : public QObject
     QString getTypeName(int type, bool &ok);
     QString getCatalogue(dso_t *pDso);
     QString getCatalogue(int index);
-    QString getClass(dso_t *pDso);
+    QString getClass(dso_t *pDso);    
 
     QStringList getCommonNameList();
     QString getCommonName(dso_t *pDso);
@@ -84,6 +84,7 @@ class CDso : public QObject
     int renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
     int renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
     int renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList);
+    int lastRenderedSize();
 
     int  getMinSize() { return(m_minSize); }
     void setMinSize(int size) { m_minSize = size; }
@@ -102,13 +103,14 @@ class CDso : public QObject
     QList <int>        tDsoSectors[NUM_DSO_SEG_Y][NUM_DSO_SEG_X];
     QList              <dsoCommonName_t> tDsoCommonNames;
 
-protected:
+private:
     CSkPainter      *pPainter;
     QImage          *pImg;
     int              m_fntHeight;
     int              m_minSize;
 
     QPen             m_pen;
+    int              m_lastSize;
 
     void loadNames();
     void loadShapes();

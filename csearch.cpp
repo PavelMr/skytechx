@@ -10,6 +10,7 @@
 #include "setting.h"
 #include "cmeteorshower.h"
 #include "gcvs.h"
+#include "vocatalogmanager.h"
 
 //////////////////
 CSearch::CSearch()
@@ -386,6 +387,29 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
       obj.type = MO_DSO;
       obj.par1 = (qint64)dso;
       obj.par2 = 0;
+
+      return(true);
+    }
+  }
+
+  QApplication::processEvents();
+
+  if (SS_CHECK_OR(SS_VOT, what))
+  {
+    // vo table
+    VOItem_t *item;
+    VOCatalogRenderer *renderer;
+
+    if (g_voCatalogManager.findObject(str, &item, &renderer))
+    {
+      ra = item->rd.Ra;
+      dec = item->rd.Dec;
+      precess(&ra, &dec, JD2000, mapView->jd);
+      fov = getOptObjFov(item->axis[0] / 3600., item->axis[1] / 3600.);
+
+      obj.type = MO_VOCATALOG;
+      obj.par1 = (qint64)renderer;
+      obj.par2 = (qint64)item;
 
       return(true);
     }

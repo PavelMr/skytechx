@@ -61,7 +61,7 @@ void VOCatalogManager::scanDir(QDir dir)
 }
 
 void VOCatalogManager::renderAll(mapView_t *mapView, CSkPainter *pPainter)
-{
+{    
   foreach (VOCatalogRenderer *item, m_list)
   {
     item->render(mapView, pPainter);
@@ -158,4 +158,28 @@ void VOCatalogManager::load(const QString &path)
   }
 
   m_list.append(renderer);
+}
+
+bool VOCatalogManager::findObject(const QString &name, VOItem_t **objectPtr, VOCatalogRenderer **renderer)
+{
+  QByteArray nameArray = name.toLatin1();
+
+  foreach (VOCatalogRenderer *item, m_list)
+  {
+    if (item->m_show)
+    {
+      foreach (const VOItem_t &object, item->m_data)
+      {
+        if (object.name.contains(nameArray))
+        {
+          VOItem_t &tmp =  const_cast<VOItem_t &>(object);
+          *objectPtr = &tmp;
+          *renderer = item;
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
 }

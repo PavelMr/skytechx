@@ -109,6 +109,7 @@
 // show/hide drawing
 bool g_showCenterScreen = false;
 bool g_showDSOShapes = false;
+bool g_showVO = false;
 bool g_showDSO = false;
 bool g_showStars = false;
 bool g_showConstLines = false;
@@ -751,6 +752,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->actionEpoch_J2000_0->setChecked(ui->widget->m_mapView.epochJ2000);
 
+  g_showVO = settings.value("show_vo", true).toBool();
   g_showDSOShapes = settings.value("show_dso_shapes", true).toBool();
   g_showDSO = settings.value("show_dso", true).toBool();
   g_showStars = settings.value("show_stars", true).toBool();
@@ -782,6 +784,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionConstellation_boundaries->setChecked(g_showConstBnd);
   ui->actionDSO->setChecked(g_showDSO);
   ui->actionDSO_Shapes->setChecked(g_showDSOShapes);
+  ui->actionShow_Hide_VO_Catalogue->setChecked(g_showVO);
   ui->checkBox->setChecked(!g_showDSOShapes);
   ui->checkBox->setEnabled(g_showDSOShapes);
   ui->actionDSO_Shapes->setEnabled(g_showDSO);
@@ -1415,6 +1418,7 @@ void MainWindow::saveAndExit()
 
   settings.setValue("clock_type", ui->comboBox_4->currentIndex());
   settings.setValue("show_dso_shapes", g_showDSOShapes);
+  settings.setValue("show_vo", g_showVO);
   settings.setValue("show_dso", g_showDSO);
   settings.setValue("show_stars", g_showStars);
   settings.setValue("show_const_lines", g_showConstLines);
@@ -4569,6 +4573,9 @@ void MainWindow::on_actionShow_all_triggered()
   ui->checkBox->setEnabled(true);
   ui->actionDSO_Shapes->setEnabled(true);
 
+  ui->actionShow_Hide_VO_Catalogue->setChecked(true);
+  g_showVO = true;
+
   ui->actionMilkyway->setChecked(true);
   g_showMW = true;
 
@@ -4994,6 +5001,9 @@ void MainWindow::on_actionHide_all_triggered()
 
   ui->actionMilkyway->setChecked(false);
   g_showMW = false;
+
+  ui->actionShow_Hide_VO_Catalogue->setChecked(false);
+  g_showVO = false;
 
   ui->actionShow_Hide_shading_planet->setChecked(false);
   g_showSP = false;
@@ -6733,5 +6743,11 @@ void MainWindow::on_actionVO_Catalogue_triggered()
   VOCatalogManagerDialog dlg(this);
 
   dlg.exec();
+  repaintMap();
+}
+
+void MainWindow::on_actionShow_Hide_VO_Catalogue_triggered(bool checked)
+{
+  g_showVO = checked;
   repaintMap();
 }

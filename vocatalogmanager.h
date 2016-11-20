@@ -33,6 +33,7 @@ public:
   void loadAll();
   void load(const QString &path);
 
+  bool findObject(const QString &name, VOItem_t **objectPtr, VOCatalogRenderer **renderer);
   void scanDir(QDir dir);
   void renderAll(mapView_t *mapView, CSkPainter *pPainter);
   void removeAll();

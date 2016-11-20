@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>441</width>
-    <height>343</height>
+    <height>366</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,6 +66,13 @@
            <widget class="QRadioButton" name="radioButton_5">
             <property name="text">
              <string>Deep sky object</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_11">
+            <property name="text">
+             <string>Virtual Observatory tables</string>
             </property>
            </widget>
           </item>

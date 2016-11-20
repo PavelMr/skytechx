@@ -28,6 +28,9 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDataStream>
 
 extern bool g_showLabels;
+extern bool g_showVO;
+extern bool g_showDSO;
+extern bool g_showStars;
 
 static void hammer(double mu, double phi, double &x, double &y)
 {
@@ -110,7 +113,7 @@ bool VOCatalogRenderer::load(const QString &filePath)
   ds >> m_decCenter;
   ds >> m_fov;
 
-  m_brightestMag = 99999999;
+  m_brightestMag = 9999999.;
 
   m_bbox.reset();
 
@@ -125,7 +128,7 @@ bool VOCatalogRenderer::load(const QString &filePath)
     ds >> item.axis[0];
     ds >> item.axis[1];
     ds >> item.pa;
-    ds >> item.infoFileOffset;
+    ds >> item.infoFileOffset;    
 
     preview[previewOffset(item.rd.Ra, item.rd.Dec)]++;
 
@@ -146,8 +149,6 @@ bool VOCatalogRenderer::load(const QString &filePath)
     {
       m_brightestMag = item.mag;
     }
-
-    //qDebug() << item.mag << item.axis[0] << item.axis[1] << item.rd.Ra << item.rd.Dec;
 
     m_data.append(item);
   }        
@@ -195,14 +196,20 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
   float maxMag;
   if (m_type == DSOT_STAR)
   {
+    if (!g_showVO || !g_showStars)
+    {
+      return;
+    }
     maxMag = mapView->starMag;
   }
   else
   {    
+    if (!g_showVO || !g_showDSO)
+    {
+      return;
+    }
     maxMag = mapView->dsoMag;
   }
-
-  //qDebug () << m_brightestMag << maxMag;
 
   if (m_brightestMag > maxMag && m_brightestMag < VO_INVALID_MAG)
   {
@@ -212,6 +219,16 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
   if (!m_bbox.checkFrustum(trfGetFrustum()))
   {
     return;
+  }
+
+  float op = 1;
+
+  if (g_skSet.map.dsoFadeTo)
+  {
+    op = FRAC(mapView->fov, g_skSet.map.dsoNoMagOtherFOV, g_skSet.map.dsoNoMagFadeFOV);
+    op = CLAMP(op, 0, 1);
+    QEasingCurve curve(QEasingCurve::InQuad);
+    op = curve.valueForProgress(op);
   }
 
   cDSO.setPainter(pPainter, nullptr);  
@@ -247,21 +264,23 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
         dso.shape = NO_DSO_SHAPE;
         dso.nameOffs = -1;
 
-        int r = cDSO.renderObj(&pt, &dso, mapView, false, 1);
+        if (item.mag >= VO_INVALID_MAG)
+          dso.opacity = op;
+        else
+          dso.opacity = 1.0;
+
+        int r = cDSO.renderObj(&pt, &dso, mapView, false, dso.opacity);
         if (r > 0 && g_showLabels)
         {
           g_labeling.addLabel(QPoint(pt.sx, pt.sy), r, item.name, FONT_DSO, RT_BOTTOM, SL_AL_ALL);
         }
-        addMapObj(item.rd, pt.sx, pt.sy, MO_VOCATALOG, MO_CIRCLE, 5, (qint64)this, (qint64)&item, item.mag);
+        addMapObj(item.rd, pt.sx, pt.sy, MO_VOCATALOG, MO_CIRCLE, cDSO.lastRenderedSize(), (qint64)this, (qint64)&item, item.mag);
       }
       else
       {
         int r = cStarRenderer.renderStar(&pt, 0, item.mag, pPainter);
         addMapObj(item.rd, pt.sx, pt.sy, MO_VOCATALOG, MO_CIRCLE, r + 2, (qint64)this, (qint64)&item, item.mag);        
-      }      
-
-
-      //g_labeling.addLabel(QPoint(pt.sx, pt.sy), 5, QString::number(item.pa), FONT_DRAWING, RT_BOTTOM_LEFT, SL_AL_ALL);
+      }            
     }        
   }
 }

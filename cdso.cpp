@@ -633,7 +633,7 @@ void CDso::applyNameFilter()
 int CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 /////////////////////////////////////////////////////////////////////////////
 {
-  bool b = false;
+  int b = 0;
 
   pPainter->setPen(m_pen);
 
@@ -644,10 +644,12 @@ int CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, boo
   s = qMax(s, m_minSize);
   pPainter->drawRect(QRect(pt->sx - s, pt->sy - s, s * 2, s * 2));
 
+  m_lastSize = s;
+
   if (s > m_minSize && g_showLabels)
   {
     g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
-    b = true;
+    b = s;
   }
   if (addToList)
   {
@@ -662,19 +664,21 @@ int CDso::renderNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, boo
 int CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 //////////////////////////////////////////////////////////////////////////////
 {
-  bool b = false;
+  int b = 0;
 
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
   int  s = qMax(sx, m_minSize);
 
+  m_lastSize = s;
+
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
 
   if (s > m_minSize && g_showLabels)
   {
     g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
-    b = true;
+    b = s;
   }
   if (addToList)
   {
@@ -689,12 +693,14 @@ int CDso::renderOpenClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bo
 int CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 //////////////////////////////////////////////////////////////////////////////
 {
-  bool b = false;
+  int b = 0;
 
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
   int  s = qMax(sx, m_minSize);
+
+  m_lastSize = s;
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
   pPainter->drawCross(pt->sx, pt->sy, s);
@@ -702,7 +708,7 @@ int CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bo
   if (s > m_minSize && g_showLabels)
   {
     g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
-    b = true;
+    b = s;
   }
   if (addToList)
   {
@@ -717,12 +723,14 @@ int CDso::renderGlobClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bo
 int CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool addToList)
 ////////////////////////////////////////////////////////////////////////////////
 {
-  bool b = false;
+  int b = 0;
 
   pPainter->setPen(m_pen);
 
   int sx = trfGetArcSecToPix(pDso->sx);
   int  s = qMax(sx, m_minSize);
+
+  m_lastSize = s;
 
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy),(int)(s * 0.8f), (int)(s * 0.8f));
@@ -730,7 +738,7 @@ int CDso::renderPlnNebulaSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, 
   if (s > m_minSize && g_showLabels)
   {
     g_labeling.addLabel(QPoint(pt->sx, pt->sy + s + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
-    b = true;
+    b = s;
   }
   if (addToList)
   {
@@ -759,6 +767,7 @@ int CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, map
     {
       addMapObj(pDso->rd, pt->sx, pt->sy, MO_DSO, MO_CIRCLE, sz, (qint64)pDso, 0, pDso->DSO_MAG);
     }
+    m_lastSize = s;
     return 0;
   }
 
@@ -783,6 +792,7 @@ int CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, map
   pPainter->restore();
 
   int b = s;
+  m_lastSize = s;
 
   if (g_showLabels)
   {
@@ -814,6 +824,8 @@ int CDso::renderGalaxyClsSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, 
   int sx = trfGetArcSecToPix(pDso->sx);
   int  s = qMax(sx, m_minSize);
 
+  m_lastSize = s;
+
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
 
   if (s > m_minSize && g_showLabels)
@@ -841,6 +853,8 @@ int CDso::renderDsoStarSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bo
   int sx = trfGetArcSecToPix(pDso->sx);
   int  s = qMax(sx, m_minSize);
 
+  m_lastSize = s;
+
   pPainter->drawEllipse(QPoint(pt->sx, pt->sy), s, s);
   pPainter->drawHalfCross(pt->sx, pt->sy, s, s / 2);
 
@@ -867,6 +881,8 @@ int CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool
   int sx = trfGetArcSecToPix(pDso->sx);
   int  s = qMax(sx, m_minSize);
 
+  m_lastSize = s;
+
   pPainter->drawCross(pt->sx, pt->sy, s);  
 
   if (s > m_minSize && g_showLabels)
@@ -881,7 +897,10 @@ int CDso::renderOtherSymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, bool
   return 0;
 }
 
-
+int CDso::lastRenderedSize()
+{
+  return m_lastSize;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 void CDso::drawShape(QPainter *p, QImage *img, dso_t *dso, mapView_t *view, bool addToList)
@@ -1042,7 +1061,7 @@ int CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList
     case DSOT_UNKNOWN:
       b = renderOtherSymbol(pt, pDso, pPainter, addToList);
       break;
-  }
+  }  
 
   pPainter->setOpacity(1);
 

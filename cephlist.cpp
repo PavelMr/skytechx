@@ -487,7 +487,7 @@ void CEphList::generateGraph()
   double jdFrom;
   double jdTo;
   double step = 1;
-  QList<QPair<double, double> >  chart[2];
+  QList<QPair<double, double> > chart[2];
   QString graph1Name;
   QString graph2Name;
 
@@ -715,8 +715,14 @@ void CEphList::generateGraph()
     }
   }
 
+  if ((chart[0].isEmpty() && chart[1].isEmpty()) || chart[0].isEmpty())
+  {
+    msgBoxError(this, tr("Select first chart!!!"));
+    return;
+  }
 
-  CChartDialog dlg(this, name, chart[0], chart[1], graph1Name, graph2Name);
+
+  CChartDialog dlg(this, name, chart[0], chart[1], graph1Name, graph2Name, ui->cb_axis1->isChecked(), ui->cb_axis2->isChecked());
   dlg.exec();
 }
 
