@@ -147,8 +147,7 @@ void CGSCReg::createOcTreeRec(regNode_t *node, int depth)
     {
       if (node->bbox.intersect(gscRegionBBox[i]))
       {        
-        node->tRegList.append(i);
-        test[i]++;
+        node->tRegList.append(i);        
       }
     }
     return;
@@ -189,9 +188,7 @@ void CGSCReg::createOcTreeRec(regNode_t *node, int depth)
 ////////////////////////////////
 void CGSCReg::createOcTree(void)
 ////////////////////////////////
-{
-  memset(test, 0, sizeof(test));
-
+{  
   SKVECTOR vec(-1.1, -1.1, -1.1);
   m_head = createNode(&vec, SKVECTOR(2.2, 2.2, 2.2));
   createOcTreeRec(m_head, 0);

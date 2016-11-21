@@ -1737,8 +1737,8 @@ void CMapView::printMapView(QPrinter *prn, const QString &profileName)
   }
 
   m_mapView.starMag = getStarMagnitudeLevel() + m_mapView.starMagAdd;
-  m_mapView.dsoMag = getDsoMagnitudeLevel() + m_mapView.dsoMagAdd;
-  m_mapView.mapEpoch = m_mapView.epochJ2000 ? JD2000 : m_mapView.jd;
+  m_mapView.dsoMag = getDsoMagnitudeLevel() + m_mapView.dsoMagAdd;  
+  m_mapView.mapEpoch = (m_mapView.epochJ2000 || !g_skSet.map.star.useProperMotion) ? JD2000 : m_mapView.jd;
   g_onPrinterBW = bw;
   smRenderSkyMap(&m_mapView, &p1, img);
   g_onPrinterBW = false;
@@ -1809,7 +1809,7 @@ void CMapView::repaintMap(bool bRepaint)
 
   m_mapView.jd = CLAMP(m_mapView.jd, MIN_JD, MAX_JD);
   m_mapView.roll = CLAMP(m_mapView.roll, D2R(-90), D2R(90));
-  m_mapView.mapEpoch = m_mapView.epochJ2000 ? JD2000 : m_mapView.jd;
+  m_mapView.mapEpoch = (m_mapView.epochJ2000 || !g_skSet.map.star.useProperMotion) ? JD2000 : m_mapView.jd;
 
   g_meteorShower.load((int)jdGetYearFromJD(m_mapView.jd));
 

@@ -837,3 +837,9 @@ void CEphList::on_pushButton_6_clicked()
   dt = dt.addYears(1);
   ui->dateTimeEdit_2->setDateTime(dt);
 }
+
+void CEphList::on_pushButton_7_clicked()
+{
+  ui->dateTimeEdit->setDate(QDateTime::currentDateTime().date());
+  ui->dateTimeEdit->setTime(QTime(0, 0, 0));
+}

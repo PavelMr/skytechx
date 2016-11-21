@@ -105,15 +105,15 @@ void CDecSpinBox::setDec(double dec)
 }
 
 double CDecSpinBox::getDec()
-{
+{    
   int d = degSpinBox->value();
   int m = minSpinBox->value();
   int s = secSpinBox->value();
-  double value;
+  double value;      
 
-  value = d + (m / 60.) + (s / 3600.);
+  value = qAbs(d) + (m / 60.) + (s / 3600.);
 
-  return value / RAD;
+  return D2R(value) * (d > 0. ? 1. : -1.);
 }
 
 void CDecSpinBox::slotValueDegChanged(int value)

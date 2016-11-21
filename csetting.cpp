@@ -317,6 +317,7 @@ void CSetting::setValues()
 
   ui->doubleSpinBox_30->setValue(set.map.star.starSizeFactor);
 
+  ui->cb_star_motion->setChecked(set.map.star.useProperMotion);
   ui->cb_properMotion->setChecked(set.map.star.showProperMotion);
   ui->sb_pmYears->setValue(set.map.star.properMotionYearVec);
 
@@ -844,6 +845,7 @@ void CSetting::apply()
   cStarRenderer.open(g_skSet.map.starBitmapName);  
 
   g_skSet.map.star.showProperMotion = ui->cb_properMotion->isChecked();
+  g_skSet.map.star.useProperMotion = ui->cb_star_motion->isChecked();
   g_skSet.map.star.properMotionYearVec = ui->sb_pmYears->value();
 
   g_skSet.map.star.glowAlpha = ui->spinBox_6->value() / 100.0;

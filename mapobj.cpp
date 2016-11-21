@@ -214,7 +214,7 @@ static bool sortObj(mapObj_t &o1, mapObj_t &o2)
 
   if (o1.type == o2.type)
   {
-    if (o1.type == MO_DSO || o1.type == MO_PLANET) // sort by size
+    if (o1.type == MO_VOCATALOG || o1.type == MO_DSO || o1.type == MO_PLANET) // sort by size
       return(o1.size < o2.size);
     else // else by magnitude
       return(o1.mag < o2.mag);
@@ -868,16 +868,7 @@ QString checkObjOnMap(const QPoint &pos)
         nameStr = QString("TYC %1-%2-%3").arg(t->tyc1).arg(t->tyc2).arg(t->tyc3);
         magStr = getStrMag(cTYC.getVisMag(t));
       }
-      break;
-
-      case MO_VOCATALOG:
-      {
-        VOItem_t *object = (VOItem_t*)obj.par2;
-
-        nameStr = object->name;
-        magStr = getStrMag(object->mag);
-        break;
-      }
+      break;      
 
       case MO_GSCSTAR:
       {
@@ -985,6 +976,15 @@ QString checkObjOnMap(const QPoint &pos)
         magStr = ((dso->mag != NO_DSO_MAG) ? (getStrMag(dso->DSO_MAG)) : QString(""));
       }
       break;
+
+      case MO_VOCATALOG:
+      {
+        VOItem_t *object = (VOItem_t*)obj.par2;
+
+        nameStr = object->name;
+        magStr = getStrMag(object->mag);
+        break;
+      }
     }
 
     return (nameStr + "\n" + magStr).trimmed();

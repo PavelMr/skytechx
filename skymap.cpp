@@ -74,12 +74,12 @@ int g_numRegions;
 static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
-  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;
+  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;    
 
   if (!g_skSet.map.urat1.show)
   {
     return;
-  }
+  }    
 
   if (mapView->fov < g_skSet.map.urat1.fromFOV && mapView->starMag >= g_skSet.map.urat1.fromMag)
   {
@@ -265,7 +265,7 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
   if (!g_skSet.map.ucac4.show)
   {
     return;
-  }
+  }    
 
   if (mapView->fov < g_skSet.map.ucac4.fromFOV && mapView->starMag >= g_skSet.map.ucac4.fromMag)
   {
@@ -468,7 +468,7 @@ static void smRenderGSCStars(mapView_t *mapView, CSkPainter *pPainter, int regio
 static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int region)
 ////////////////////////////////////////////////////////////////////////////////////
 {
-  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;
+  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;    
 
   tychoRegion2_t *tycReg = cTYC.getRegion(region);
 

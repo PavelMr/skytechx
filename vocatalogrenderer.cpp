@@ -247,6 +247,18 @@ void VOCatalogRenderer::render(mapView_t *mapView, CSkPainter *pPainter)
       continue;
     }
 
+    if (m_type != DSOT_STAR)
+    {
+      if (!g_skSet.map.dsoTypeShow[m_type])
+      {
+        continue;
+      }
+      if (item.mag >= VO_INVALID_MAG && !g_skSet.map.dsoTypeShowAll[m_type])
+      {
+        continue;
+      }
+    }
+
     trfRaDecToPointNoCorrect(&item.rd, &pt);
 
     if (trfProjectPoint(&pt))

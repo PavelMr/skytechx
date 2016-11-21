@@ -48,8 +48,7 @@ class CGSCReg
     regNode_t *createNode(const SKVECTOR *pos, const SKVECTOR &size);
     void getVisibleRec(regNode_t *node);
 
-    regNode_t  *m_head;
-    int         test[NUM_GSC_REGS];
+    regNode_t  *m_head;    
 
     SKPLANE     *m_frustum;
     QList <int> *m_visList;

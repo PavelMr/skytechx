@@ -957,7 +957,13 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
   fillRTS(&rts, view, item);
   addSeparator(item);
 
+  orbit_t moon;
+  cAstro.setParam(view);
+  cAstro.calcPlanet(PT_MOON, &moon);
+
   addLabelItem(item, tr("Other"));
+  addSeparator(item);
+  addTextItem(item, tr("Moon phase"), QString("%1%").arg(moon.phase * 100.0, 0, 'f', 2));
   addSeparator(item);
   addTextItem(item, tr("Begin"), getStrDate(m->jdBegin, view->geo.tz));
   addTextItem(item, tr("Maximum"), getStrDate(m->jdMax, view->geo.tz));

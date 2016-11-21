@@ -21,6 +21,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QStandardPaths>
 #include <QDebug>
+#include <QtGlobal>
 
 VOCatalogManager g_voCatalogManager;
 
@@ -152,8 +153,8 @@ void VOCatalogManager::load(const QString &path)
 
   if (!renderer->load(path))
   {
-    qDebug() << "error loading ";
-    delete renderer;
+    qDebug() << "error loading ";    
+    delete renderer;  
     return;
   }
 
@@ -170,7 +171,7 @@ bool VOCatalogManager::findObject(const QString &name, VOItem_t **objectPtr, VOC
     {
       foreach (const VOItem_t &object, item->m_data)
       {
-        if (object.name.contains(nameArray))
+        if (qstricmp(object.name, nameArray) == 0)
         {
           VOItem_t &tmp =  const_cast<VOItem_t &>(object);
           *objectPtr = &tmp;

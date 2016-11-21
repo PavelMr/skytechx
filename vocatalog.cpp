@@ -163,7 +163,13 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
   ds << params.fov;
 
   for (int i = 0; i < data.count(); i++)
-  {        
+  {
+    item.axis[0] = 0;
+    item.axis[1] = 0;
+    item.mag = VO_INVALID_MAG;
+    item.pa = NO_DSO_PA;
+    item.name = "";
+
     if ((i % 20000) == 0)
     {
       QApplication::processEvents();

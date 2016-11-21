@@ -32,6 +32,7 @@ VOTPreviewDialog::VOTPreviewDialog(QWidget *parent, const QString &textA ,const 
   ui->label_A->setText(textA);
   ui->label_B->setText(textB);
   adjustSize();
+  setFixedSize(size());
 }
 
 VOTPreviewDialog::~VOTPreviewDialog()

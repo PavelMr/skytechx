@@ -25,7 +25,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QDir>
 
-class VOCatalogManager
+class VOCatalogManager : public QObject
 {
 public:
   VOCatalogManager();

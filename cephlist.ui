@@ -83,14 +83,25 @@
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="dateTimeEdit">
-              <property name="calendarPopup">
-               <bool>true</bool>
-              </property>
-              <property name="timeSpec">
-               <enum>Qt::UTC</enum>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QDateTimeEdit" name="dateTimeEdit">
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+                <property name="timeSpec">
+                 <enum>Qt::UTC</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_7">
+                <property name="text">
+                 <string>From today</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <widget class="QLabel" name="label_2">
@@ -194,7 +205,7 @@
            <item>
             <widget class="QTabWidget" name="tabWidget_2">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_4">
               <attribute name="title">

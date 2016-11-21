@@ -60,6 +60,8 @@ private slots:
 
   void on_pushButton_6_clicked();
 
+  void on_pushButton_7_clicked();
+
 private:
   Ui::CEphList *ui;
   bool m_graph;

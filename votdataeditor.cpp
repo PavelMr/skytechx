@@ -35,7 +35,9 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 extern QString g_vizierUrl;
 
-#define VO_PREVIEW_COUNT 100
+#define VO_PREVIEW_COUNT  100
+#define MAX_RECORDS       500000
+
 //#define VO_TEST
 
 VOTDataEditor::VOTDataEditor(QWidget *parent) :
@@ -170,9 +172,11 @@ bool VOTDataEditor::setData(const QByteArray &data)
   ui->treeView->setRootIsDecorated(false);
   ui->treeView->setSortingEnabled(false);
 
-  const VOCatalogHeader &header = m_cats[0];  
+  const VOCatalogHeader &header = m_cats[0];
 
-  ui->sb_maxRecords->setRange(1, header.m_count);
+  m_records = header.m_count;
+
+  ui->sb_maxRecords->setRange(1, m_records > MAX_RECORDS  ? MAX_RECORDS : m_records);
   ui->label_count->setText(QString(tr("Records : %1")).arg(getNumber(header.m_count)));
 
   ui->textEdit->setText(header.m_desc);
@@ -241,7 +245,7 @@ bool VOTDataEditor::setData(const QByteArray &data)
       ui->cb_pa->addItem(item.m_name);
     }
 
-    if (item.m_ucd.contains("arith.ratio") || (item.m_ucd.startsWith("phys.angSize") && !item.m_unit.isEmpty()))
+    if (item.m_ucd.contains("arith.ratio") || ((item.m_ucd.contains("phys.angSize") || item.m_ucd.contains("phys.size")) && !item.m_unit.isEmpty()))
     {     
       ui->cb_axis1->addItem(item.m_name);
       ui->cb_axis2->addItem(item.m_name);
@@ -259,6 +263,11 @@ bool VOTDataEditor::setData(const QByteArray &data)
   ui->cb_type->addItem(cDSO.getTypeName(DSOT_OPEN_CLUSTER, ok), DSOT_OPEN_CLUSTER);
   ui->cb_type->addItem(cDSO.getTypeName(DSOT_GLOB_CLUSTER, ok), DSOT_GLOB_CLUSTER);
   ui->cb_type->addItem(cDSO.getTypeName(DSOT_PLN_NEBULA, ok), DSOT_PLN_NEBULA);
+  ui->cb_type->addItem(cDSO.getTypeName(DSOT_BRIGHT_NEB, ok), DSOT_BRIGHT_NEB);
+  ui->cb_type->addItem(cDSO.getTypeName(DSOT_DARK_NEB, ok), DSOT_DARK_NEB);
+  ui->cb_type->addItem(cDSO.getTypeName(DSOT_NEBULA, ok), DSOT_NEBULA);
+  ui->cb_type->addItem(cDSO.getTypeName(DSOT_GALAXY_CLD, ok), DSOT_GALAXY_CLD);
+  ui->cb_type->addItem(cDSO.getTypeName(DSOT_OPEN_CLS_NEB, ok), DSOT_OPEN_CLS_NEB);
   ui->cb_type->addItem(cDSO.getTypeName(DSOT_QUASAR, ok), DSOT_QUASAR);
   ui->cb_type->addItem(cDSO.getTypeName(DSOT_OTHER, ok), DSOT_OTHER);
 
@@ -322,20 +331,6 @@ bool VOTDataEditor::prepareData(const QByteArray &data, const QString &path)
 {  
   QFile::copy(QDir::tempPath() + "/" + VO_TEMP_FILE, path + "/vo_table.vot");
 
-  /*
-  QByteArray headerData = readAllFile(QDir::tempPath() + "/" + VO_TEMP_FILE).toUtf8();
-
-  SkFile file(path + "/vo_table.vot");
-  if (!file.open(QFile::WriteOnly))
-  {
-    return false;
-  }
-
-  file.write(headerData);
-  file.close();
-  */
-
-
   VOCatalogDataParser parser;
   QList <QStringList> table;
 
@@ -379,10 +374,9 @@ void VOTDataEditor::on_pushButton_2_clicked()
     dir.removeRecursively();                
   }
 
-
   fov = ui->db_fov->value();
   ra = ui->radec->getRaSpinBox()->getRA();
-  dec = ui->radec->getDecSpinBox()->getDec();
+  dec = ui->radec->getDecSpinBox()->getDec();  
 
   if (!pcMainWnd->getView()->m_mapView.epochJ2000)
   {
@@ -403,7 +397,7 @@ void VOTDataEditor::on_pushButton_2_clicked()
       query.addQueryItem("-out.max", QString::number(VO_PREVIEW_COUNT));
     }
     else
-    {
+    {      
       query.addQueryItem("-out.max", QString::number(ui->sb_maxRecords->value()));
     }
     query.addQueryItem("-c", QString("%1%2%3").arg(R2D(ra)).arg(dec >= 0 ? "+" : "-").arg(R2D(qAbs(dec))));
@@ -414,6 +408,14 @@ void VOTDataEditor::on_pushButton_2_clicked()
     if (m_preview)
     {
       query.addQueryItem("-out.max", QString::number(VO_PREVIEW_COUNT));
+    }
+    else
+    {
+      if (m_records > MAX_RECORDS)
+      {
+        msgBoxInfo(this, tr("Too many records to download!"));
+        return;
+      }
     }
   }
 
@@ -568,6 +570,7 @@ void VOTDataEditor::slotDone(QNetworkReply::NetworkError error, const QString &e
   m_progressDlg->setLabelText(tr("Preparing data..."));
   m_progressDlg->setRange(0, 0);
   m_progressDlg->setValue(0);   
+  m_progressDlg->show();
 
   if (!prepareData(data, path))
   {    

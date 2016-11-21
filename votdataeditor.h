@@ -92,6 +92,7 @@ private:
   VOParams_t m_param;
   bool m_edit;
   QString m_path;
+  qint64  m_records;
 
   bool m_preview;
 

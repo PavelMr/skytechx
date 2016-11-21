@@ -5822,7 +5822,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/res/vo_cat.png</normaloff>:/res/vo_cat.png</iconset>
    </property>
    <property name="text">
-    <string>VO Catalogue</string>
+    <string>VO Catalogues</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/hide VO Catalogues</string>
    </property>
   </action>
  </widget>

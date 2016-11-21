@@ -19,7 +19,7 @@ public:
   MyChartView(QChart *chart);
 
 protected:
-  void mouseMoveEvent(QMouseEvent *e);
+  void mouseMoveEvent(QMouseEvent *e);  
 
 signals:
   void sigChartValue(const QDateTime &dt, double Y1, double Y2, bool isY2);
@@ -50,6 +50,8 @@ private slots:
 private:
   Ui::CChartDialog *ui;
   QChartView *m_chartView;
+  bool m_invertY1;
+  bool m_invertY2;
 };
 
 #endif // CCHARTDIALOG_H

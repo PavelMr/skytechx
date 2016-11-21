@@ -25,11 +25,23 @@ void MyChartView::mouseMoveEvent(QMouseEvent *e)
   QList<QAbstractSeries *> list = chart()->series();
   QPointF val[2];
   bool isY2 = list.count() > 1;
+  QPointF pos1 = e->pos();
+  QPointF pos2 = e->pos();
 
-  val[0] = chart()->mapToValue(e->pos(), list[0]);
+  if (list[0]->attachedAxes()[1]->isReverse())
+  {
+    pos1.setY(height() - pos1.y());
+  }
+
+  val[0] = chart()->mapToValue(pos1, list[0]);
   if (isY2)
   {
-    val[1] = chart()->mapToValue(e->pos(), list[1]);
+    if (list[1]->attachedAxes()[1]->isReverse())
+    {
+      pos2.setY(height() - pos2.y());
+    }
+
+    val[1] = chart()->mapToValue(pos2, list[1]);
   }
 
   QDateTime dt = QDateTime::fromMSecsSinceEpoch(val[0].x());
@@ -81,8 +93,7 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object,
 
   QLocale locale(QLocale::system());
   QDateTimeAxis *axisX = new QDateTimeAxis;
-  axisX->setTickCount(10);
-  //axisX->setFormat("dd/MM/yyyy");
+  axisX->setTickCount(10);  
   axisX->setFormat(locale.dateFormat(QLocale::ShortFormat));
   axisX->setTitleText(tr("Date"));
   chart->addAxis(axisX, Qt::AlignBottom);
@@ -92,7 +103,7 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object,
   QValueAxis *axisY = new QValueAxis;
   axisY->setLabelFormat("%0.2f");
   axisY->setTitleBrush(series1->pen().color());
-  axisY->setTitleText(name1);      
+  axisY->setTitleText(name1);          
   if (invertY1) axisY->setReverse();
   chart->addAxis(axisY, Qt::AlignLeft);
   series1->attachAxis(axisY);
@@ -109,7 +120,7 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object,
     series2->attachAxis(axisY1);
   }
 
-  m_chartView = new MyChartView(chart);
+  m_chartView = new MyChartView(chart);    
   m_chartView->setRenderHint(QPainter::Antialiasing);
   ui->verticalLayout_2->addWidget(m_chartView);
 
@@ -123,6 +134,9 @@ CChartDialog::CChartDialog(QWidget *parent, const QString &object,
     ui->Y2_name->setText(name2);
     ui->Y2_name->setStyleSheet(QString("color:%1;").arg(axisY1->titleBrush().color().name()));
   }
+
+  m_invertY1 = invertY1;
+  m_invertY2 = invertY2;
 
   resize(l_size);  
 }
