@@ -260,7 +260,7 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->dockTime, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTimeVis(bool)));
   connect(ui->dockTele, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTeleVis(bool)));
   connect(ui->dockTimeDialog, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTimeDialogVis(bool)));
-  connect(m_dockHistogram, SIGNAL(visibilityChanged(bool)), this, SLOT(slotHistogramVis(bool)));
+  connect(m_dockHistogram, SIGNAL(visibilityChanged(bool)), this, SLOT(slotHistogramVis(bool)));    
 
   ui->dockWidget->setWindowTitle(tr("Sidebar"));
   ui->lv_quickInfo->init(ui->toolBox);

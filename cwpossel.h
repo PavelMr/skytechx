@@ -26,8 +26,9 @@ class CWPosSel : public QDialog
   Q_OBJECT
 
 public:
-  explicit CWPosSel(QWidget *parent, mapView_t *view);
+  explicit CWPosSel(QWidget *parent, mapView_t *view);  
   ~CWPosSel();
+  static QList <location_t> getHomeLocations();
 
 protected:
   void changeEvent(QEvent *e);
@@ -92,6 +93,14 @@ private slots:
   void on_pushButton_11_clicked();
 
   void on_pushButton_12_clicked();
+
+  void on_pushButton_16_clicked();
+
+  void on_pushButton_14_clicked();
+
+  void on_pushButton_13_clicked();
+
+  void on_pushButton_15_clicked();
 
 private:
   Ui::CWPosSel *ui;

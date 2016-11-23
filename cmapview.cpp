@@ -1932,7 +1932,7 @@ void CMapView::paintEvent(QPaintEvent *)
     g_nightRepaint = false;
   }
 
-  p.drawImage(0, 0, *pBmp);
+  p.drawImage(0, 0, *pBmp);  
 
   if (m_zoomLens)
   {

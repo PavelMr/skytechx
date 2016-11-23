@@ -21,6 +21,7 @@
 #include "suntexture.h"
 #include "cmeteorshower.h"
 #include "gcvs.h"
+#include "vocatalogmanager.h"
 
 extern CPlanetRenderer  cPlanetRenderer;
 extern QImage *g_pSunTexture;
@@ -106,6 +107,7 @@ void CLoadingDlg::slotLoad()
 
   qDebug() << "L2";
   cDSO.load();
+  g_voCatalogManager.loadAll();
   sigProgress(2);
 
   qDebug() << "L3";

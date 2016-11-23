@@ -123,8 +123,6 @@ void copyAppData()
   copyPath("../appdata", QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 }
 
-#include "vocatalogmanager.h"
-
 
 ////////////////////////////////
 int main(int argc, char *argv[])
@@ -143,7 +141,7 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   QApplication a(argc, argv);
-
+  
   QSharedMemory sharedMemory("The SkytechX (PMR)");
   if (!sharedMemory.create(1) && sharedMemory.error() == QSharedMemory::AlreadyExists)
   {
@@ -260,9 +258,7 @@ int main(int argc, char *argv[])
         a.installTranslator(&translator);
       }
     }
-  }
-
-  g_voCatalogManager.loadAll();
+  }  
 
   QLocale::setDefault(QLocale::c());
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));

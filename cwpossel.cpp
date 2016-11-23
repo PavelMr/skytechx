@@ -4,16 +4,15 @@
 #include "cwposmap.h"
 #include "cgeohash.h"
 
+Q_DECLARE_METATYPE(location_t)
+
 //////////////////////////////////////////////////////
 CWPosSel::CWPosSel(QWidget *parent, mapView_t *view) :
 //////////////////////////////////////////////////////
   QDialog(parent),
   ui(new Ui::CWPosSel)
 {
-  ui->setupUi(this);
-
-  // TODO: zkusit si pamatovat velikost dialogu
-  //resize(900, 300);
+  ui->setupUi(this);  
 
   m_earthTools.setCacheFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache");
   connect(&m_earthTools, SIGNAL(sigDone(bool,double,int)), this, SLOT(slotETDone(bool,double,int)));
@@ -51,9 +50,7 @@ CWPosSel::CWPosSel(QWidget *parent, mapView_t *view) :
       ui->listWidget->addItem(w);
     } while (1);
     f.close();
-  }
-
-  qDebug() << "cities count : " << m_tList.count();
+  }  
 
   ui->spinBox_8->setValue(view->geo.temp);
   ui->spinBox_9->setValue(view->geo.press);
@@ -80,13 +77,84 @@ CWPosSel::CWPosSel(QWidget *parent, mapView_t *view) :
 
   ui->widget->setModel((QSortFilterProxyModel *)ui->listWidget->model(), 0);
   connect(ui->widget, SIGNAL(sigSetSelection(QModelIndex&)), this, SLOT(slotSelChange(QModelIndex&)));
+
+  SkFile file(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations/home.dat");
+
+  if (file.open(QFile::ReadOnly))
+  {
+    QDataStream ds(&file);
+    int count;
+
+    ds >> count;
+    for (int i = 0; i < count; i++)
+    {
+      location_t loc;
+
+      ds >> loc.name;
+      ds >> loc.alt;
+      ds >> loc.lat;
+      ds >> loc.lon;
+      ds >> loc.tz;
+
+      QVariant var;
+      var.setValue(loc);
+      ui->cb_home->addItem(loc.name, var);
+    }
+  }
 }
 
 /////////////////////
 CWPosSel::~CWPosSel()
 /////////////////////
 {
+  SkFile file(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations/home.dat");
+
+  if (file.open(QFile::WriteOnly))
+  {
+    QDataStream ds(&file);
+    ds << ui->cb_home->count();
+    for (int i = 0; i < ui->cb_home->count(); i++)
+    {
+      location_t loc = ui->cb_home->itemData(i).value<location_t>();
+
+      ds << loc.name;
+      ds << loc.alt;
+      ds << loc.lat;
+      ds << loc.lon;
+      ds << loc.tz;
+    }
+  }
+
   delete ui;
+}
+
+QList<location_t> CWPosSel::getHomeLocations()
+{
+  QList <location_t> list;
+
+  SkFile file(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/locations/home.dat");
+
+  if (file.open(QFile::ReadOnly))
+  {
+    QDataStream ds(&file);
+    int count;
+
+    ds >> count;
+    for (int i = 0; i < count; i++)
+    {
+      location_t loc;
+
+      ds >> loc.name;
+      ds >> loc.alt;
+      ds >> loc.lat;
+      ds >> loc.lon;
+      ds >> loc.tz;
+
+      list.append(loc);
+    }
+  }
+
+  return list;
 }
 
 
@@ -694,4 +762,53 @@ void CWPosSel::on_pushButton_12_clicked()
   QDateTime dt = QDateTime::currentDateTime();
 
   ui->doubleSpinBox_4->setValue(qAbs(tz.daylightTimeOffset(dt) / 3600.));
+}
+
+void CWPosSel::on_pushButton_16_clicked()
+{
+  QModelIndex index = ui->listWidget->currentIndex();
+
+  if (index.isValid())
+  {
+    on_listWidget_doubleClicked(index);
+  }
+}
+
+void CWPosSel::on_pushButton_14_clicked()
+{
+  location_t loc;
+
+  loc.name = m_name;
+  getData(&loc);
+
+  if (ui->cb_home->findText(m_name) == -1)
+  {
+    QVariant var;
+    var.setValue(loc);
+    ui->cb_home->addItem(loc.name, var);
+    ui->cb_home->setCurrentIndex(ui->cb_home->count() - 1);
+  }
+  else
+  {
+    msgBoxInfo(this, tr("Already in home location!"));
+  }
+}
+
+void CWPosSel::on_pushButton_13_clicked()
+{
+  if (ui->cb_home->currentIndex() == -1)
+  {
+    return;
+  }
+
+  location_t loc = ui->cb_home->currentData().value<location_t>();
+  setData(&loc);
+}
+
+void CWPosSel::on_pushButton_15_clicked()
+{
+  if (msgBoxQuest(this, tr("Delete selected location?")) == QMessageBox::Yes)
+  {
+    ui->cb_home->removeItem(ui->cb_home->currentIndex());
+  }
 }
