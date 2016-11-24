@@ -3,12 +3,14 @@
 #include "ui_csetposition.h"
 #include "castro.h"
 
+#define FDIV 8.
+
 CSetPosition::CSetPosition(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::CSetPosition)
 {
   ui->setupUi(this);
-  ui->horizontalSlider->setRange(1, (int)R2D(MAX_MAP_FOV));
+  ui->horizontalSlider->setRange(1, (int)R2D(MAX_MAP_FOV) * FDIV);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -22,7 +24,7 @@ void CSetPosition::init(double x, double y, double fov, double rot)
 
   ui->doubleSpinBox->setValue(R2D(rot));
 
-  ui->horizontalSlider->setValue(ceil(R2D(fov)));
+  ui->horizontalSlider->setValue(ceil(R2D(fov * FDIV)));
 
   int v1, v2, v3;
 
@@ -89,7 +91,7 @@ void CSetPosition::changeEvent(QEvent *e)
 void CSetPosition::on_horizontalSlider_valueChanged(int value)
 //////////////////////////////////////////////////////////////
 {
-  double val = D2R((double)value);
+  double val = D2R((double)value) / FDIV;
 
   ui->label->setText(tr("FOV : ") + getStrDeg(val));
 }
@@ -164,7 +166,7 @@ void CSetPosition::on_pushButton_clicked()
   if (ui->checkBox->isChecked())
     m_fov = CM_UNDEF;
   else
-    m_fov = D2R(ui->horizontalSlider->value());
+    m_fov = D2R(ui->horizontalSlider->value() / FDIV);
 
   m_roll = D2R(ui->doubleSpinBox->value());
 

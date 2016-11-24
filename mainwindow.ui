@@ -4093,6 +4093,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Set UTC time...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
   </action>
   <action name="actionSet_current_time">
    <property name="icon">
@@ -4365,6 +4368,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Go to Position</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+P</string>
+   </property>
   </action>
   <action name="actionAutomatic_grid">
    <property name="checkable">
@@ -4433,6 +4439,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Connect device...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
    </property>
   </action>
   <action name="actionStandard_cross">
@@ -5033,6 +5042,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Ephemeris tables and graph</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+E</string>
    </property>
   </action>
   <action name="actionBilinear_interpolation">

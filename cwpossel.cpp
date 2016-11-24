@@ -516,6 +516,17 @@ void CWPosSel::slotLocationDone(QNetworkReply *reply)
   {
     msgBoxError(this, tr("Cannot get location!!!"));
   }
+
+  if (obj.contains("city"))
+  {
+    m_name = obj["city"].toString();
+  }
+  else
+  {
+    m_name = "From IP";
+  }
+
+  ui->groupBox->setTitle(tr("Location of ") + m_name);
 }
 
 // Cancel ////////////////////////////

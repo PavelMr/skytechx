@@ -872,6 +872,8 @@ MainWindow::MainWindow(QWidget *parent) :
   // handpad
   ui->cb_axis_x_invert->setChecked(settings.value("tel_axis_x_invert", false).toBool());
   ui->cb_axis_y_invert->setChecked(settings.value("tel_axis_y_invert", false).toBool());  
+
+  updateHomeLocation();
 }
 
 void MainWindow::fillHIPSSources()
@@ -3686,6 +3688,28 @@ void MainWindow::saveDSSList()
   }
 }
 
+void MainWindow::updateHomeLocation()
+{
+
+  return;
+
+  qDeleteAll(m_homeLocActions);
+
+  //xxxxx
+  //QMenu *menu = ui->actionSelect_world_location->p;
+
+  QList <location_t> list = CWPosSel::getHomeLocations();
+
+  if (list.isEmpty())
+  {
+    return;
+  }
+
+  //qDebug() << menu;
+
+  //menu->insertAction(ui->actionSet_current_time, new QAction("123"));
+}
+
 //////////////////////////////////////////
 void MainWindow::on_pushButton_2_clicked()
 //////////////////////////////////////////
@@ -3822,6 +3846,7 @@ void MainWindow::on_actionSelect_world_location_triggered()
   g_forcedRecalculate = true;
   setTitle();
   ui->widget->repaintMap();
+  updateHomeLocation();
 }
 
 

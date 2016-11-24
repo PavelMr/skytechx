@@ -700,8 +700,10 @@ private:
   void setTitle();
   void restoreDSSList();
   void saveDSSList();
-
+  void updateHomeLocation();
   int getTelescopeSpeed();
+
+  QList <QAction *> m_homeLocActions;
 
 public slots:
   void repaintMap();
