@@ -100,6 +100,7 @@
 #include "hipspropertiesdialog.h"
 #include "cgeohash.h"
 #include "vocatalogmanagerdialog.h"
+#include "sunspotsdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -6775,4 +6776,11 @@ void MainWindow::on_actionShow_Hide_VO_Catalogue_triggered(bool checked)
 {
   g_showVO = checked;
   repaintMap();
+}
+
+void MainWindow::on_actionSunspots_triggered()
+{
+  SunspotsDialog dlg(this);
+
+  dlg.exec();
 }

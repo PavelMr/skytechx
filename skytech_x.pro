@@ -301,7 +301,8 @@ SOURCES += main.cpp\
     vocatalogrenderer.cpp \
     vocatalogmanager.cpp \
     vocatalogmanagerdialog.cpp \
-    votpreviewdialog.cpp
+    votpreviewdialog.cpp \
+    sunspotsdialog.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -539,7 +540,8 @@ HEADERS  += mainwindow.h \
     vocatalogrenderer.h \
     vocatalogmanager.h \
     vocatalogmanagerdialog.h \
-    votpreviewdialog.h
+    votpreviewdialog.h \
+    sunspotsdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -639,7 +641,8 @@ FORMS    += mainwindow.ui \
     votdataselectorwidget.ui \
     votdataeditor.ui \
     vocatalogmanagerdialog.ui \
-    votpreviewdialog.ui
+    votpreviewdialog.ui \
+    sunspotsdialog.ui
 
 
 RESOURCES += \

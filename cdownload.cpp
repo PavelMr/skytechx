@@ -124,7 +124,13 @@ void CDownload::slotDownloadFileFinished(QNetworkReply *reply)
   if (m_file.isOpen())
   {
     m_file.close();
-    emit sigFileDone(reply->error(), reply->errorString());
+
+    if (reply->error() != QNetworkReply::NoError)
+    {
+      qDebug() << m_file.remove() << "remove";
+    }
+
+    emit sigFileDone(reply->error(), reply->errorString());    
   }
   else
   {
