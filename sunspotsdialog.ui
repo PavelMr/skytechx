@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Sunspots</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,0,0">
    <item>

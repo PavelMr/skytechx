@@ -237,7 +237,7 @@ void SunspotsDialog::parseData(SkFile *f, int type)
   QValueAxis *axisY = new QValueAxis;
   axisY->setLabelFormat("%0.0f");
   axisY->setTitleBrush(series->pen().color());
-  axisY->setTitleText("Sunspots count");
+  axisY->setTitleText(tr("Sunspots count"));
   axisY->setTickCount(7);
   axisY->setRange(0, 400);
   chart->addAxis(axisY, Qt::AlignLeft);
@@ -259,25 +259,6 @@ SunSpotChartView::SunSpotChartView(QChart *chart) : QChartView(chart),
 }
 
 
-/*
-bool SunSpotChartView::viewportEvent(QEvent *event)
-{
-    if (event->type() == QEvent::TouchBegin) {
-        // By default touch events are converted to mouse events. So
-        // after this event we will get a mouse event also but we want
-        // to handle touch events as gestures only. So we need this safeguard
-        // to block mouse events that are actually generated from touch.
-        m_isTouching = true;
-
-        // Turn off animations when handling gestures they
-        // will only slow us down.
-        chart()->setAnimationOptions(QChart::NoAnimation);
-    }
-    return QChartView::viewportEvent(event);
-}
-*/
-
-
 void SunSpotChartView::mousePressEvent(QMouseEvent *event)
 {
     m_isTouching = true;
@@ -296,6 +277,7 @@ void SunSpotChartView::mouseMoveEvent(QMouseEvent *event)
     int dx = event->pos().x() - m_lastPoint.x();
 
     chart()->scroll(-dx, 0);
+
 
     m_lastPoint = event->pos();
 
@@ -327,35 +309,6 @@ void SunSpotChartView::wheelEvent(QWheelEvent *event)
   val = CLAMP(val, 25, 1000);
   chart()->axisY()->setRange(0, val);
 }
-
-/*
-void SunSpotChartView::keyPressEvent(QKeyEvent *event)
-{
-    switch (event->key()) {
-    case Qt::Key_Plus:
-        chart()->zoomIn();
-        break;
-    case Qt::Key_Minus:
-        chart()->zoomOut();
-        break;
-    case Qt::Key_Left:
-        chart()->scroll(-10, 0);
-        break;
-    case Qt::Key_Right:
-        chart()->scroll(10, 0);
-        break;
-    case Qt::Key_Up:
-        chart()->scroll(0, 10);
-        break;
-    case Qt::Key_Down:
-        chart()->scroll(0, -10);
-        break;
-    default:
-        QGraphicsView::keyPressEvent(event);
-        break;
-    }
-}
-*/
 
 void SunspotsDialog::on_pushButton_2_clicked()
 {
