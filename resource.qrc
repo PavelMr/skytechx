@@ -291,5 +291,6 @@
         <file>res/qt/viewlist-128.png</file>
         <file>res/hammer_mask.png</file>
         <file>res/vo_cat.png</file>
+        <file>res/night_mode.png</file>
     </qresource>
 </RCC>

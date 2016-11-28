@@ -145,7 +145,7 @@ QImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
       int ox = origPix % offset;
       int oy = origPix / offset;
 
-      QImage *newImage = new QImage(image->copy(ox * size, oy * size, size, size));
+      QImage *newImage = new QImage(image->copy((ox * size) + 1, (oy * size) + 1, size, size));
       freeImage = true;
       return newImage;
     }

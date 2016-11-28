@@ -297,8 +297,9 @@ MainWindow::MainWindow(QWidget *parent) :
   m_timeMul->setToolTip(tr("Time multiplicator"));
   m_timeMul->setMaximumWidth(60);
 
-  ui->tb_time->insertWidget(ui->actionCurLocTime, m_timeMul);
-  ui->tb_time->insertSeparator(ui->actionCurLocTime);
+  ui->tb_time->insertWidget(ui->actionTime_lapse, m_timeMul);
+  ui->tb_time->insertSeparator(ui->actionTime_lapse);
+
 
   QLabel *spacer = new QLabel(" ");
   ui->tb_time->addWidget(spacer);
@@ -962,7 +963,7 @@ void MainWindow::setToolbarIconSize()
   ui->action_zoom_20->setIcon(SkIconUtils::createFromText(size, size, tr("20°")));
   ui->action_zoom_45->setIcon(SkIconUtils::createFromText(size, size, tr("45°")));
   ui->action_zoom_90->setIcon(SkIconUtils::createFromText(size, size, tr("90°")));
-  ui->action_zoom_100->setIcon(SkIconUtils::createFromText(size, size, tr("180°")));
+  ui->action_zoom_100->setIcon(SkIconUtils::createFromText(size, size, tr("180°")));  
 
   ui->actionYPlus->setIcon(SkIconUtils::createFromText(size, size, tr("Y+")));
   ui->actionYMinus->setIcon(SkIconUtils::createFromText(size, size, tr("Y-")));

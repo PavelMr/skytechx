@@ -20,7 +20,7 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="resource.qrc">
     <normaloff>:/res/ico_skytech.png</normaloff>:/res/ico_skytech.png</iconset>
   </property>
   <property name="toolButtonStyle">
@@ -992,7 +992,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="resource.qrc">
                  <normaloff>:/res/rise_icon.png</normaloff>:/res/rise_icon.png</iconset>
                </property>
               </widget>
@@ -1009,7 +1009,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="resource.qrc">
                  <normaloff>:/res/transit_icon.png</normaloff>:/res/transit_icon.png</iconset>
                </property>
               </widget>
@@ -1026,7 +1026,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="resource.qrc">
                  <normaloff>:/res/set_icon.png</normaloff>:/res/set_icon.png</iconset>
                </property>
               </widget>
@@ -1097,7 +1097,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/dialog.png</normaloff>:/res/dialog.png</iconset>
              </property>
              <property name="iconSize">
@@ -1120,7 +1120,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_slew_center.png</normaloff>:/res/ico_slew_center.png</iconset>
              </property>
              <property name="iconSize">
@@ -1143,7 +1143,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/holdobj.png</normaloff>:/res/holdobj.png</iconset>
              </property>
              <property name="iconSize">
@@ -1166,7 +1166,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/tracking_dialog.png</normaloff>:/res/tracking_dialog.png</iconset>
              </property>
              <property name="iconSize">
@@ -1189,7 +1189,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/add_to_list.png</normaloff>:/res/add_to_list.png</iconset>
              </property>
              <property name="iconSize">
@@ -1225,7 +1225,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/empty_list.png</normaloff>:/res/empty_list.png</iconset>
              </property>
              <property name="iconSize">
@@ -1264,7 +1264,7 @@
               <string>Open...</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/diropen-16.png</normaloff>:/res/qt/diropen-16.png</iconset>
              </property>
              <property name="iconSize">
@@ -1294,7 +1294,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_manager.png</normaloff>:/res/ico_manager.png</iconset>
              </property>
             </widget>
@@ -1528,7 +1528,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_process_all.png</normaloff>:/res/ico_process_all.png</iconset>
              </property>
             </widget>
@@ -1552,7 +1552,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_reset.png</normaloff>:/res/ico_reset.png</iconset>
              </property>
             </widget>
@@ -1569,7 +1569,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_reset_all.png</normaloff>:/res/ico_reset_all.png</iconset>
              </property>
             </widget>
@@ -1864,7 +1864,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_reset_all.png</normaloff>:/res/ico_reset_all.png</iconset>
              </property>
             </widget>
@@ -2121,7 +2121,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/left-32.png</normaloff>:/res/qt/left-32.png</iconset>
              </property>
              <property name="iconSize">
@@ -2156,7 +2156,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/up-32.png</normaloff>:/res/qt/up-32.png</iconset>
              </property>
              <property name="iconSize">
@@ -2207,7 +2207,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/minus.png</normaloff>:/res/minus.png</iconset>
              </property>
              <property name="iconSize">
@@ -2242,7 +2242,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/right-32.png</normaloff>:/res/qt/right-32.png</iconset>
              </property>
              <property name="iconSize">
@@ -2277,7 +2277,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/reset_icon.png</normaloff>:/res/reset_icon.png</iconset>
              </property>
              <property name="iconSize">
@@ -2309,7 +2309,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/rotate_right.png</normaloff>:/res/rotate_right.png</iconset>
              </property>
              <property name="iconSize">
@@ -2344,7 +2344,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/plus.png</normaloff>:/res/plus.png</iconset>
              </property>
              <property name="iconSize">
@@ -2379,7 +2379,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/down-32.png</normaloff>:/res/qt/down-32.png</iconset>
              </property>
              <property name="iconSize">
@@ -2414,7 +2414,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/rotate_left.png</normaloff>:/res/rotate_left.png</iconset>
              </property>
              <property name="iconSize">
@@ -2624,7 +2624,7 @@ background-color: rgb(0, 0, 0);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/down-32.png</normaloff>:/res/qt/down-32.png</iconset>
              </property>
              <property name="iconSize">
@@ -2656,7 +2656,7 @@ background-color: rgb(0, 0, 0);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/left-32.png</normaloff>:/res/qt/left-32.png</iconset>
              </property>
             </widget>
@@ -2676,7 +2676,7 @@ background-color: rgb(0, 0, 0);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_stop_tele.png</normaloff>:/res/ico_stop_tele.png</iconset>
              </property>
              <property name="iconSize">
@@ -2711,7 +2711,7 @@ background-color: rgb(0, 0, 0);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/ico_find_tele.png</normaloff>:/res/ico_find_tele.png</iconset>
              </property>
              <property name="iconSize">
@@ -2765,7 +2765,7 @@ background-color: rgb(0, 0, 0);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/up-32.png</normaloff>:/res/qt/up-32.png</iconset>
              </property>
              <property name="iconSize">
@@ -2797,7 +2797,7 @@ background-color: rgb(0, 0, 0);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="resource.qrc">
                <normaloff>:/res/qt/right-32.png</normaloff>:/res/qt/right-32.png</iconset>
              </property>
             </widget>
@@ -3624,6 +3624,9 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionCurLocTime"/>
+   <addaction name="actionRealtime"/>
+   <addaction name="separator"/>
    <addaction name="actionTime_dialog"/>
    <addaction name="separator"/>
    <addaction name="actionYPlus"/>
@@ -3642,11 +3645,6 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionMinMinus"/>
    <addaction name="actionSPlus"/>
    <addaction name="actionSMinus"/>
-   <addaction name="separator"/>
-   <addaction name="actionCurLocTime"/>
-   <addaction name="separator"/>
-   <addaction name="actionRealtime"/>
-   <addaction name="separator"/>
    <addaction name="actionTime_lapse"/>
    <addaction name="actionTime_Lapse_prefs"/>
    <addaction name="separator"/>
@@ -3716,6 +3714,7 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
+   <addaction name="actionNight_mode"/>
    <addaction name="actionAntialiasing"/>
    <addaction name="actionBilinear_interpolation"/>
    <addaction name="actionSymbol_Real_planet_rendering"/>
@@ -3878,7 +3877,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_About">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/app_icon48.ico</normaloff>:/res/app_icon48.ico</iconset>
    </property>
    <property name="text">
@@ -3887,7 +3886,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="inc_star_mag">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_star_plus.png</normaloff>:/res/ico_star_plus.png</iconset>
    </property>
    <property name="text">
@@ -3899,7 +3898,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="dec_star_mag">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_star_minus.png</normaloff>:/res/ico_star_minus.png</iconset>
    </property>
    <property name="text">
@@ -3914,7 +3913,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_lock_mag.png</normaloff>:/res/ico_lock_mag.png</iconset>
    </property>
    <property name="text">
@@ -3929,7 +3928,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_flipx.png</normaloff>:/res/ico_flipx.png</iconset>
    </property>
    <property name="text">
@@ -3944,7 +3943,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_flipy.png</normaloff>:/res/ico_flipy.png</iconset>
    </property>
    <property name="text">
@@ -3956,7 +3955,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionInc_dso_mag">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_dso_plus.png</normaloff>:/res/ico_dso_plus.png</iconset>
    </property>
    <property name="text">
@@ -3968,7 +3967,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionDec_dso_mag">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_dso_minus.png</normaloff>:/res/ico_dso_minus.png</iconset>
    </property>
    <property name="text">
@@ -4049,7 +4048,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_eq.png</normaloff>:/res/ico_eq.png</iconset>
    </property>
    <property name="text">
@@ -4064,7 +4063,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_aa.png</normaloff>:/res/ico_aa.png</iconset>
    </property>
    <property name="text">
@@ -4100,7 +4099,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSet_current_time">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_clock_now.png</normaloff>:/res/ico_clock_now.png</iconset>
    </property>
    <property name="text">
@@ -4126,7 +4125,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_sidebar.png</normaloff>:/res/ico_sidebar.png</iconset>
    </property>
    <property name="text">
@@ -4197,7 +4196,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionCurLocTime">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_clock_now.png</normaloff>:/res/ico_clock_now.png</iconset>
    </property>
    <property name="text">
@@ -4289,7 +4288,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_search.png</normaloff>:/res/ico_search.png</iconset>
    </property>
    <property name="text">
@@ -4344,7 +4343,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_ec.png</normaloff>:/res/ico_ec.png</iconset>
    </property>
    <property name="text">
@@ -4378,7 +4377,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_auto_grid.png</normaloff>:/res/ico_auto_grid.png</iconset>
    </property>
    <property name="text">
@@ -4393,7 +4392,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_realtime.png</normaloff>:/res/ico_realtime.png</iconset>
    </property>
    <property name="text">
@@ -4435,7 +4434,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionConnect_device">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_sel_tele.png</normaloff>:/res/ico_sel_tele.png</iconset>
    </property>
    <property name="text">
@@ -4474,7 +4473,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_dis_tele.png</normaloff>:/res/ico_dis_tele.png</iconset>
    </property>
    <property name="text">
@@ -4486,7 +4485,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_find_tele.png</normaloff>:/res/ico_find_tele.png</iconset>
    </property>
    <property name="text">
@@ -4584,7 +4583,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_star.png</normaloff>:/res/sh_star.png</iconset>
    </property>
    <property name="text">
@@ -4602,7 +4601,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_dso_shape.png</normaloff>:/res/sh_dso_shape.png</iconset>
    </property>
    <property name="text">
@@ -4620,7 +4619,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_con_lines.png</normaloff>:/res/sh_con_lines.png</iconset>
    </property>
    <property name="text">
@@ -4638,7 +4637,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_con_bnd.png</normaloff>:/res/sh_con_bnd.png</iconset>
    </property>
    <property name="text">
@@ -4656,7 +4655,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_dso.png</normaloff>:/res/sh_dso.png</iconset>
    </property>
    <property name="text">
@@ -4674,7 +4673,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_mw.png</normaloff>:/res/sh_mw.png</iconset>
    </property>
    <property name="text">
@@ -4692,7 +4691,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_planets.png</normaloff>:/res/sh_planets.png</iconset>
    </property>
    <property name="text">
@@ -4715,7 +4714,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_full_grid.png</normaloff>:/res/ico_full_grid.png</iconset>
    </property>
    <property name="text">
@@ -4754,7 +4753,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_aster.png</normaloff>:/res/sh_aster.png</iconset>
    </property>
    <property name="text">
@@ -4772,7 +4771,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_antialias.png</normaloff>:/res/ico_antialias.png</iconset>
    </property>
    <property name="text">
@@ -4790,7 +4789,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_pln_type.png</normaloff>:/res/ico_pln_type.png</iconset>
    </property>
    <property name="text">
@@ -4817,7 +4816,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionTelescope_FOV">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_find_tele.png</normaloff>:/res/ico_find_tele.png</iconset>
    </property>
    <property name="text">
@@ -4835,7 +4834,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_legends.png</normaloff>:/res/sh_legends.png</iconset>
    </property>
    <property name="text">
@@ -4853,7 +4852,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_comet.png</normaloff>:/res/sh_comet.png</iconset>
    </property>
    <property name="text">
@@ -4884,7 +4883,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_labels.png</normaloff>:/res/sh_labels.png</iconset>
    </property>
    <property name="text">
@@ -4896,7 +4895,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionTelrad">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_telrad.png</normaloff>:/res/ico_telrad.png</iconset>
    </property>
    <property name="text">
@@ -4926,7 +4925,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFrame_field">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_frame_field.png</normaloff>:/res/ico_frame_field.png</iconset>
    </property>
    <property name="text">
@@ -4957,7 +4956,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_time_window.png</normaloff>:/res/ico_time_window.png</iconset>
    </property>
    <property name="text">
@@ -4969,7 +4968,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_full_scr.png</normaloff>:/res/ico_full_scr.png</iconset>
    </property>
    <property name="text">
@@ -4984,7 +4983,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_stop_tele.png</normaloff>:/res/ico_stop_tele.png</iconset>
    </property>
    <property name="text">
@@ -5018,7 +5017,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_tele_window.png</normaloff>:/res/ico_tele_window.png</iconset>
    </property>
    <property name="text">
@@ -5027,7 +5026,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionCircle">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_circle.png</normaloff>:/res/ico_circle.png</iconset>
    </property>
    <property name="text">
@@ -5056,7 +5055,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_bi.png</normaloff>:/res/ico_bi.png</iconset>
    </property>
    <property name="text">
@@ -5084,7 +5083,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_timelapse.png</normaloff>:/res/ico_timelapse.png</iconset>
    </property>
    <property name="text">
@@ -5119,7 +5118,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionReset_magnitude">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_mag_reset.png</normaloff>:/res/ico_mag_reset.png</iconset>
    </property>
    <property name="text">
@@ -5131,7 +5130,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionTime_Lapse_prefs">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_tool.png</normaloff>:/res/ico_tool.png</iconset>
    </property>
    <property name="text">
@@ -5143,7 +5142,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionShow_help">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/blue-home-icon.png</normaloff>:/res/blue-home-icon.png</iconset>
    </property>
    <property name="text">
@@ -5156,6 +5155,10 @@ p, li { white-space: pre-wrap; }
   <action name="actionNight_mode">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/night_mode.png</normaloff>:/res/night_mode.png</iconset>
    </property>
    <property name="text">
     <string>Night mode</string>
@@ -5179,7 +5182,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_clock.png</normaloff>:/res/ico_clock.png</iconset>
    </property>
    <property name="text">
@@ -5202,7 +5205,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_lock_mag.png</normaloff>:/res/ico_lock_mag.png</iconset>
    </property>
    <property name="text">
@@ -5227,7 +5230,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_grid_label.png</normaloff>:/res/ico_grid_label.png</iconset>
    </property>
    <property name="text">
@@ -5242,7 +5245,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_telrad.png</normaloff>:/res/ico_telrad.png</iconset>
    </property>
    <property name="text">
@@ -5304,7 +5307,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Sun">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sun_sym.png</normaloff>:/res/sun_sym.png</iconset>
    </property>
    <property name="text">
@@ -5316,7 +5319,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Mercury">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/mercury_sym.png</normaloff>:/res/mercury_sym.png</iconset>
    </property>
    <property name="text">
@@ -5328,7 +5331,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Venus">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/venus_sym.png</normaloff>:/res/venus_sym.png</iconset>
    </property>
    <property name="text">
@@ -5340,7 +5343,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Mars">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/mars_sym.png</normaloff>:/res/mars_sym.png</iconset>
    </property>
    <property name="text">
@@ -5352,7 +5355,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Jupiter">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/jupiter_sym.png</normaloff>:/res/jupiter_sym.png</iconset>
    </property>
    <property name="text">
@@ -5364,7 +5367,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Saturn">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/saturn_sym.png</normaloff>:/res/saturn_sym.png</iconset>
    </property>
    <property name="text">
@@ -5376,7 +5379,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Uranus">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/uranus_sym.png</normaloff>:/res/uranus_sym.png</iconset>
    </property>
    <property name="text">
@@ -5388,7 +5391,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Neptune">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/neptune_sym.png</normaloff>:/res/neptune_sym.png</iconset>
    </property>
    <property name="text">
@@ -5400,7 +5403,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_a_Moon">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/moon_sym.png</normaloff>:/res/moon_sym.png</iconset>
    </property>
    <property name="text">
@@ -5425,7 +5428,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_satellite.png</normaloff>:/res/sh_satellite.png</iconset>
    </property>
    <property name="text">
@@ -5448,7 +5451,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ep_j2000.png</normaloff>:/res/ep_j2000.png</iconset>
    </property>
    <property name="text">
@@ -5471,7 +5474,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_horizon.png</normaloff>:/res/sh_horizon.png</iconset>
    </property>
    <property name="text">
@@ -5496,7 +5499,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_phase.png</normaloff>:/res/ico_phase.png</iconset>
    </property>
    <property name="text">
@@ -5508,7 +5511,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionDonation">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/paypal.png</normaloff>:/res/paypal.png</iconset>
    </property>
    <property name="text">
@@ -5517,7 +5520,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionText_2">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_text.png</normaloff>:/res/ico_text.png</iconset>
    </property>
    <property name="text">
@@ -5537,7 +5540,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_obj_tracking.png</normaloff>:/res/ico_obj_tracking.png</iconset>
    </property>
    <property name="text">
@@ -5549,7 +5552,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionLook_backward">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_b180.png</normaloff>:/res/ico_b180.png</iconset>
    </property>
    <property name="text">
@@ -5569,7 +5572,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_release_obj.png</normaloff>:/res/ico_release_obj.png</iconset>
    </property>
    <property name="text">
@@ -5578,7 +5581,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionBinocular">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_bino.png</normaloff>:/res/ico_bino.png</iconset>
    </property>
    <property name="text">
@@ -5593,7 +5596,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/center_ico.png</normaloff>:/res/center_ico.png</iconset>
    </property>
    <property name="text">
@@ -5602,7 +5605,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFinder_FOV">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_finder.png</normaloff>:/res/ico_finder.png</iconset>
    </property>
    <property name="text">
@@ -5622,7 +5625,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_pfeatures.png</normaloff>:/res/ico_pfeatures.png</iconset>
    </property>
    <property name="text">
@@ -5634,7 +5637,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSearch_help">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_help.png</normaloff>:/res/ico_help.png</iconset>
    </property>
    <property name="text">
@@ -5654,7 +5657,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_eq_axis.png</normaloff>:/res/ico_eq_axis.png</iconset>
    </property>
    <property name="text">
@@ -5666,7 +5669,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionAdvanced_search">
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_adv_search.png</normaloff>:/res/ico_adv_search.png</iconset>
    </property>
    <property name="text">
@@ -5681,7 +5684,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_slew_center.png</normaloff>:/res/ico_slew_center.png</iconset>
    </property>
    <property name="text">
@@ -5696,7 +5699,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_topo.png</normaloff>
      <activeon>:/res/ico_geo.png</activeon>:/res/ico_topo.png</iconset>
    </property>
@@ -5712,7 +5715,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_lmeridian.png</normaloff>:/res/ico_lmeridian.png</iconset>
    </property>
    <property name="text">
@@ -5743,7 +5746,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/sh_shower.png</normaloff>:/res/sh_shower.png</iconset>
    </property>
    <property name="text">
@@ -5763,7 +5766,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/HIPS.png</normaloff>:/res/HIPS.png</iconset>
    </property>
    <property name="text">
@@ -5781,7 +5784,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/healpix_grid.png</normaloff>:/res/healpix_grid.png</iconset>
    </property>
    <property name="text">
@@ -5796,7 +5799,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_bi.png</normaloff>:/res/ico_bi.png</iconset>
    </property>
    <property name="text">
@@ -5811,7 +5814,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/ico_manager.png</normaloff>:/res/ico_manager.png</iconset>
    </property>
    <property name="text">
@@ -5831,7 +5834,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resource.qrc">
      <normaloff>:/res/vo_cat.png</normaloff>:/res/vo_cat.png</iconset>
    </property>
    <property name="text">
@@ -5878,6 +5881,8 @@ p, li { white-space: pre-wrap; }
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
