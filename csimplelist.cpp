@@ -76,6 +76,21 @@ void CSimpleList::addRow(const QString &text, const QVariant &data, bool boldFon
   m_model->appendRow(item);
 }
 
+void CSimpleList::preapendRow(const QString &text, const QVariant &data, bool boldFont)
+{
+  SimpleItem *item = new SimpleItem;
+
+  item->setText(text);
+  item->setData(data);
+
+  QFont fnt = item->font();
+  fnt.setBold(boldFont);
+
+  item->setFont(fnt);
+
+  m_model->insertRow(0, item);
+}
+
 int CSimpleList::findText(int from, const QString &text, bool partialy)
 {
   for (int i = from; i < m_model->rowCount(); i++)

@@ -1,8 +1,11 @@
 #include "skwatch.h"
+#include "skstopwatchctrl.h"
 
 #include <QPainter>
 #include <QResizeEvent>
 #include <QLCDNumber>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <QDebug>
 
@@ -11,8 +14,9 @@ SkWatch::SkWatch(QWidget *parent) : QWidget(parent)
   m_background = NULL;
   m_style = SKW_DIGITAL;
   m_time = QTime(12, 0, 0);
+  m_stopWatch = QTime(0, 0, 0);
 
-  QSizePolicy qsp(QSizePolicy::Preferred, QSizePolicy::Preferred);
+  QSizePolicy qsp(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
   qsp.setHeightForWidth(true);
   setSizePolicy(qsp);
@@ -24,6 +28,25 @@ void SkWatch::setStyle(int style)
   updateGeometry();
   render();
   update();
+
+  if (style == SKW_STOPWATCH)
+  {
+    m_ctrl->show();
+  }
+  else
+  {
+    m_ctrl->hide();
+  }
+}
+
+void SkWatch::updateStopWatch(const QTime &time)
+{
+  m_stopWatch = time;
+
+  if (m_style == SKW_STOPWATCH)
+  {
+    update();
+  }
 }
 
 void SkWatch::render()
@@ -38,7 +61,7 @@ void SkWatch::render()
   }
 
   m_background = new QPixmap(rc.size());
-  m_background->fill(Qt::transparent);
+  m_background->fill(Qt::transparent);  
 
   QPainter p(m_background);
   p.setRenderHint(QPainter::Antialiasing);
@@ -137,7 +160,7 @@ void SkWatch::render()
     }
   }
   else
-  if (m_style == SKW_DIGITAL)
+  if (m_style == SKW_DIGITAL || m_style == SKW_STOPWATCH)
   {
     QLinearGradient gBk(0, 0, 0, rect().bottom());
 
@@ -159,11 +182,16 @@ void SkWatch::setTime(const QTime time)
   update();
 }
 
+void SkWatch::setCtrl(SkStopWatchCtrl *ctrl)
+{
+  m_ctrl = ctrl;
+}
+
 void SkWatch::paintEvent(QPaintEvent *)
 {
   QPainter p(this);
 
-  p.setRenderHint(QPainter::Antialiasing);
+  p.setRenderHint(QPainter::Antialiasing);  
   p.drawPixmap(0, 0, *m_background);
 
   QRect rc = rect();
@@ -287,6 +315,30 @@ void SkWatch::paintEvent(QPaintEvent *)
     QPixmap pix = lcd.grab();
 
     p.drawPixmap(0, height() / 2 - pix.height() / 2, pix);
+  }  
+  else
+  if (m_style == SKW_STOPWATCH)
+  {
+    QLCDNumber lcd(11);
+
+    QPalette pal;
+    pal.setColor(QPalette::WindowText, Qt::lightGray);
+
+    lcd.resize(width(), 48);
+    lcd.setSegmentStyle(QLCDNumber::Flat);
+
+    lcd.setPalette(pal);
+    lcd.setFrameStyle(QFrame::NoFrame);
+    lcd.setAttribute(Qt::WA_NoSystemBackground);
+    lcd.setAttribute(Qt::WA_TranslucentBackground);
+    lcd.display(QString("%1:%2:%3.%4").arg(m_stopWatch.hour(), 2, 10, QChar('0')).
+                                       arg(m_stopWatch.minute(), 2, 10, QChar('0')).
+                                       arg(m_stopWatch.second(), 2, 10, QChar('0')).
+                                       arg(m_stopWatch.msec() / 10, 2, 10, QChar('0')));
+
+    QPixmap pix = lcd.grab();
+
+    p.drawPixmap(0, height() / 2 - pix.height() / 2, pix);
   }
 }
 
@@ -295,16 +347,19 @@ void SkWatch::resizeEvent(QResizeEvent *)
   render();
 }
 
+
 int SkWatch::heightForWidth(int w) const
 {
-  if (m_style == SKW_DIGITAL)
-    return w / 2;
+  if (m_style == SKW_DIGITAL || m_style == SKW_STOPWATCH)
+    return w / 3;
 
   return w;
 }
+
 
 QSize SkWatch::sizeHint() const
 {
   return QSize(256, 256);
 }
+
 

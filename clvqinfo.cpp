@@ -94,12 +94,12 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
     {
       QList <QStandardItem *> tRow;
       QStandardItem *label = new QStandardItem;
-      QStandardItem *value = new QStandardItem;                  
+      QStandardItem *value = new QStandardItem;                        
 
       QFont f = label->font();
       f.setPointSizeF(f.pointSizeF() - 0.25);
       label->setFont(f);
-      value->setFont(f);
+      value->setFont(f);      
 
       label->setText(item->label);
 

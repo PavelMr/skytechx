@@ -101,6 +101,7 @@
 #include "cgeohash.h"
 #include "vocatalogmanagerdialog.h"
 #include "sunspotsdialog.h"
+#include "skstopwatchctrl.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -824,13 +825,24 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(timer, SIGNAL(timeout()), this, SLOT(slotTimeSliderUpdate()));
   timer->start(15);
 
+  SkStopWatchCtrl *ctrl = new SkStopWatchCtrl();
+  connect(ctrl, SIGNAL(sigTime(QTime)), ui->widget_2, SLOT(updateStopWatch(QTime)));
+
+  ui->widget_2->setCtrl(ctrl);
+
   ui->comboBox_4->addItem(tr("Black clock"));
   ui->comboBox_4->addItem(tr("White clock"));
   ui->comboBox_4->addItem(tr("Digital clock"));
+  ui->comboBox_4->addItem(tr("Stopwatch"));
   connect(ui->comboBox_4, SIGNAL(currentIndexChanged(int)), ui->widget_2, SLOT(setStyle(int)));
   int index = settings.value("clock_type", 0).toInt();
   ui->comboBox_4->setCurrentIndex(index);
   ui->widget_2->setStyle(index);  
+
+  ui->verticalLayout_17->addWidget(ctrl);
+  //ui->verticalLayout_9->insertWidget(3, ctrl);
+  //ui->verticalLayout_9->addStretch();
+  //ui->verticalLayout_9->update();
 
   cDSO.applyNameFilter();
   restoreDSSList();

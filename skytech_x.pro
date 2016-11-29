@@ -302,7 +302,8 @@ SOURCES += main.cpp\
     vocatalogmanager.cpp \
     vocatalogmanagerdialog.cpp \
     votpreviewdialog.cpp \
-    sunspotsdialog.cpp
+    sunspotsdialog.cpp \
+    skstopwatchctrl.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -541,7 +542,8 @@ HEADERS  += mainwindow.h \
     vocatalogmanager.h \
     vocatalogmanagerdialog.h \
     votpreviewdialog.h \
-    sunspotsdialog.h
+    sunspotsdialog.h \
+    skstopwatchctrl.h
 
 
 FORMS    += mainwindow.ui \
@@ -642,7 +644,8 @@ FORMS    += mainwindow.ui \
     votdataeditor.ui \
     vocatalogmanagerdialog.ui \
     votpreviewdialog.ui \
-    sunspotsdialog.ui
+    sunspotsdialog.ui \
+    skstopwatchctrl.ui
 
 
 RESOURCES += \
