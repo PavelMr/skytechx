@@ -310,9 +310,7 @@ void CObjFillInfo::fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, of
   str = str.remove(FILEREGEXP);
   item->id = "pln_sat_" + str;
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Planetary satellite"));
+  addTextItem(item, txObjType, tr("Planetary satellite"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -408,9 +406,7 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Asteroid"));
+  addTextItem(item, txObjType, tr("Asteroid"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -486,6 +482,7 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
     precess(&ra, &dec, view->jd, JD2000);
   }
 
+  beginExtInfo();
   addLabelItem(item, tr("Geocentric information"));
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
@@ -537,12 +534,10 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Y"), QString::number(hy, 'f', 8) + " " + tr("AU"));
   addTextItem(item, tr("Z"), QString::number(hz, 'f', 8) + " " + tr("AU"));
 
-  beginExtInfo();
   addSeparator(item);
   addTextItem(item, tr("VX"), getStrNumber("", vhx, 8, " " + tr("AU/day"), true));
   addTextItem(item, tr("VY"), getStrNumber("", vhy, 8, " " + tr("AU/day"), true));
-  addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));
-  endExtInfo();
+  addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));  
 
   addSeparator(item);
   addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
@@ -550,20 +545,25 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   addTextItem(item, tr("r"), QString::number(a->orbit.r) + tr("AU"));
   addSeparator(item);
+  endExtInfo();
+
 
   ra  = a->orbit.lRD.Ra;
   dec = a->orbit.lRD.Dec;
 
   precess(&ra, &dec, view->jd, JD2000);
 
-  addLabelItem(item, tr("Position at JD2000.0"));
-  addSeparator(item);
-  addTextItem(item, txRA, getStrRA(ra));
-  addTextItem(item, txDec, getStrDeg(dec));
-  addSeparator(item);
+  if (!view->epochJ2000)
+  {
+    addLabelItem(item, tr("Position at JD2000.0"));
+    addSeparator(item);
+    addTextItem(item, txRA, getStrRA(ra));
+    addTextItem(item, txDec, getStrDeg(dec));
+    addSeparator(item);
+  }
 
   fillAtlas(ra, dec, item);
-  fillZoneInfo(ra, dec, item);
+  fillZoneInfo(ra, dec, item);  
 }
 
 
@@ -599,9 +599,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Comet"));
+  addTextItem(item, txObjType, tr("Comet"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -827,9 +825,7 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Satellite"));
+  addTextItem(item, txObjType, tr("Satellite"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -887,11 +883,13 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   double diff = view->jd - tle->epoch;
   addTextItem(item, tr("Time difference"), QString("%1").arg(diff, 0, 'f', 1) + tr(" day(s)"));
 
+  beginExtInfo();
   addSeparator(item);
 
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "SGP4 C++ Satellite Library", "");
+  endExtInfo();
 }
 
 void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
@@ -914,9 +912,7 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Meteor shower"));
+  addTextItem(item, txObjType, tr("Meteor shower"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -983,8 +979,11 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
   {
     addTextItem(item, tr("Speed"), QString("%1 km/h").arg(m->speed, 0, 'f', 2));
   }
+
+  beginExtInfo();
   addTextItem(item, tr("Source"), m->source);
   addSeparator(item);
+  endExtInfo();
 }
 
 void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
@@ -1011,9 +1010,7 @@ void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   bool ok;
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, cDSO.getTypeName(ptr->m_type, ok) + " (" + ptr->m_name + ")" + " VOT");
+  addTextItem(item, txObjType, cDSO.getTypeName(ptr->m_type, ok) + " (" + ptr->m_name + ")" + " VOT", true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -1124,9 +1121,11 @@ void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, ptr->m_desc, "");
+  endExtInfo();
 
 }
 
@@ -1164,9 +1163,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Star (TYC2 cat.)"));
+  addTextItem(item, txObjType, tr("Star (TYC2 cat.)"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -1360,9 +1357,11 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   fillAtlas(t->rd.Ra, t->rd.Dec, item);
   fillZoneInfo(t->rd.Ra, t->rd.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The Tycho-2 Catalogue (Hog+ 2000)", "");
+  endExtInfo();
 }
 
 
@@ -1392,9 +1391,7 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Star (UCAC4 cat.)"));
+  addTextItem(item, txObjType, tr("Star (UCAC4 cat.)"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -1483,9 +1480,11 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The UCAC4 Catalogue (Zacharias+ 2012)", "");
+  endExtInfo();
 }
 
 
@@ -1514,9 +1513,7 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Star (GSC1.2 cat.)"));
+  addTextItem(item, txObjType, tr("Star (GSC1.2 cat.)"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -1606,9 +1603,11 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   fillAtlas(t.Ra, t.Dec, item);
   fillZoneInfo(t.Ra, t.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The HST Guide Star Catalog, Version 1.2 (Lasker+ 1996)", "");
+  endExtInfo();
 }
 
 
@@ -1638,9 +1637,7 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Star (PPMXL cat.)"));
+  addTextItem(item, txObjType, tr("Star (PPMXL cat.)"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -1721,9 +1718,11 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The PPMXL Catalog (Roeser+ 2010)", "");
+  endExtInfo();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -1752,9 +1751,7 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Star (USNO2 cat.)"));
+  addTextItem(item, txObjType, tr("Star (USNO2 cat.)"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -1835,9 +1832,11 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The USNO-A2.0 Catalogue (Monet+ 1998)", "");
+  endExtInfo();
 }
 
 void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
@@ -1861,9 +1860,8 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Star (USNO B1 cat.)"));
+
+  addTextItem(item, txObjType, tr("Star (USNO B1 cat.)"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -1951,9 +1949,11 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The USNO-B1.0 Catalogue (Monet+ 2003)", "");
+  endExtInfo();
 }
 
 void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
@@ -1979,9 +1979,7 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Star (NOMAD cat.)"));
+  addTextItem(item, txObjType, tr("Star (NOMAD cat.)"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -2086,9 +2084,11 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "NOMAD Catalog (Zacharias+ 2005)", "");
+  endExtInfo();
 }
 
 
@@ -2117,9 +2117,7 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, tr("Star (URAT1 cat.)"));
+  addTextItem(item, txObjType, tr("Star (URAT1 cat.)"), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -2215,9 +2213,11 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
   fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The URAT1 Catalogue (Zacharias+ 2015)", "");
+  endExtInfo();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -2248,9 +2248,7 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
 
   bool ok;
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, cDSO.getTypeName(dso->type, ok));
+  addTextItem(item, txObjType, cDSO.getTypeName(dso->type, ok), true);
   addSeparator(item);
 
   addLabelItem(item, txDesig);
@@ -2351,11 +2349,9 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   addSeparator(item);
 
   fillAtlas(item->radec.Ra, item->radec.Dec, item);
-  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);  
 
-  addLabelItem(item, tr("Source"));
-  addSeparator(item);
-  addTextItem(item, cDSO.getCatalogue(dso), "");
+  beginExtInfo();
 
   QList <CDSOPluginInterface::dsoPlgOut_t> lst = dsoGetPluginDesc(cDSO.getName(dso, 0), cDSO.getName(dso, 1));
 
@@ -2375,6 +2371,14 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     }
     addSeparator(item);
   }
+
+  endExtInfo();
+
+  beginExtInfo();
+  addLabelItem(item, tr("Source"));
+  addSeparator(item);
+  addTextItem(item, cDSO.getCatalogue(dso), "");
+  endExtInfo();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -2407,9 +2411,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, item->title);
+  addTextItem(item, txObjType, item->title, true);
   addSeparator(item);
 
   double raAtDate, decAtDate;
@@ -2490,6 +2492,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     precess(&ra, &dec, view->jd, JD2000);
   }
 
+  beginExtInfo();
   addLabelItem(item, tr("Geocentric information"));
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
@@ -2506,6 +2509,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   }    
 
   addSeparator(item);
+  endExtInfo();
 
   beginExtInfo();
   if (item->par1 != PT_MOON)
@@ -2643,6 +2647,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   fillAtlas(ra, dec, item);
   fillZoneInfo(ra, dec, item);
 
+  beginExtInfo();
   addLabelItem(item, tr("Source"));
   addSeparator(item);
 
@@ -2664,6 +2669,7 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
       addTextItem(item, "JPL", CAstro::getEphType(o.ephemType));
       break;
   }
+  endExtInfo();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -2698,9 +2704,7 @@ void CObjFillInfo::fillESInfo(const mapView_t *view, const mapObj_t * /*obj*/, o
   addSeparator(item);
   endExtInfo();
 
-  addLabelItem(item, txObjType);
-  addSeparator(item);
-  addTextItem(item, txObjType, item->title);
+  addTextItem(item, txObjType, item->title, true);
   addSeparator(item);
 
   QString str  = QString("%1\"").arg(o.sy * 0.5, 0, 'f', 2);

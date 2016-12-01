@@ -3381,7 +3381,7 @@ void MainWindow::slotGrid3(void)
 ///////////////////////////////
 void MainWindow::slotRealTime()
 ///////////////////////////////
-{
+{  
   ui->widget->m_mapView.jd = jdGetCurrentJD();
   recenterHoldObject(ui->widget, false);
   ui->widget->repaintMap();
@@ -3419,7 +3419,7 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
 
   if (checked)
   {
-    m_realTimer.start(500);
+    m_realTimer.start(250);
     slotRealTime();
   }
   else
