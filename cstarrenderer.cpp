@@ -120,11 +120,10 @@ int CStarRenderer::getStarSize(float mag)
   vm = vm * (mag - brMag);
   r = vm;
 
-  if (r < 0)
-    r = 0;
-  else
   if (r >= numStars)
-    r = numStars - 1;
+  {
+    r = numStars - 1;    
+  }
 
   return(r);
 }
@@ -144,8 +143,8 @@ int CStarRenderer::renderStar(SKPOINT *pt, int spt, float mag, QPainter *p)
   int w = pStars[spt][s].width();
   int h = pStars[spt][s].height();
 
-  p->drawPixmap(pt->sx - (w >> 1),
-                pt->sy - (h >> 1), pStars[spt][s]);
+  p->drawPixmap(QPointF(pt->sx - (w >> 1),
+                        pt->sy - (h >> 1)), pStars[spt][s]);
 
   if (m_showHalo)
   {

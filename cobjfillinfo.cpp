@@ -1325,7 +1325,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     if (!gcvs->type.isEmpty()) addTextItem(item, tr("Type"), gcvs->type);
     if (!gcvs->typeDesc.isEmpty()) addTextItem(item, tr("Desc"), gcvs->typeDesc);
 
-    addTextItem(item, tr("Max. mag."), getStrMag(gcvs->magMax));
+    addTextItem(item, tr("Max. mag."), getStrMag(gcvs->magMax));    
 
     if (gcvs->magMinSymbol == 0)
       addTextItem(item, tr("Min. mag."), getStrMag(gcvs->magMin));
@@ -1340,15 +1340,10 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
       addSeparator(item);
 
       double jd = g_GCVS.solveNextMaximum(gcvs->epoch, gcvs->period, view->jd);
-      addTextItem(item, tr("Next maximum"), getStrDate(jd, view->geo.tz) + " / " + getStrTime(jd, view->geo.tz, true));
-
-      qDebug() << "------------";
-      qDebug() << jd;
+      addTextItem(item, tr("Next maximum"), getStrDate(jd, view->geo.tz) + " / " + getStrTime(jd, view->geo.tz, true));      
 
       jd = g_GCVS.solveNextMinimum(gcvs->epoch, gcvs->period, view->jd);
-      addTextItem(item, tr("Next minimum"), getStrDate(jd, view->geo.tz) + " / " + getStrTime(jd, view->geo.tz, true));
-
-      qDebug() << jd;
+      addTextItem(item, tr("Next minimum"), getStrDate(jd, view->geo.tz) + " / " + getStrTime(jd, view->geo.tz, true));      
     }
 
     addSeparator(item);

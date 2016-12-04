@@ -481,12 +481,13 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
       }      
     }
     else
-    {
+    {      
       for (int x = px1; x < px2; x++)
       {
         int offset = ((int)(uv[0]) + (int)(uv[1]) * sw);
         const quint32 *pSrc = bitsSrc + offset;
-        *pDst = (*pSrc) | (0xFF << 24);
+        *pDst = (*pSrc) | (0xFF << 24);        
+
         pDst++;
 
         uv[0] += duv[0];
@@ -807,7 +808,7 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
   const quint32 *bitsSrc = (quint32 *)src->constBits();
   quint32 *bitsDst = (quint32 *)dst->bits();
   bkScan_t *scan = scLR;
-  float opacity = 0.00390625f * m_opacity;  
+  float opacity = 0.00390625f * m_opacity;    
 
 #ifdef PARALLEL_OMP
   #pragma omp parallel for shared(bitsDst, bitsSrc, scan, tsx, tsy, w, sw)
@@ -869,7 +870,7 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
         *pDst = qRgb(LERP(a, qRed(rgbd), qRed(rgbs)),
                      LERP(a, qGreen(rgbd), qGreen(rgbs)),
                      LERP(a, qBlue(rgbd), qBlue(rgbs))
-                     );
+                     );        
       }
       pDst++;
 

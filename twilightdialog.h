@@ -1,6 +1,8 @@
 /***********************************************************************
 This file is part of SkytechX.
 
+Pavel Mraz, Copyright (C) 2016
+
 SkytechX is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -14,18 +16,42 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
+#ifndef TWILIGHTDIALOG_H
+#define TWILIGHTDIALOG_H
 
-#ifndef __BUILD_DEF_H
-#define __BUILD_DEF_H
+#include "crts.h"
 
-#include "build_inc.h"
+#include <QDialog>
 
-#define _BUILD_NO_       DEF_BUILD_NO
-#define _BUILD_YEAR_     2016
-#define SK_VERSION       "v1.05 Beta 2"
-#define SKYTECH_WEB      "http://www.skytechx.eu"
+class TwilightWidget : public QWidget
+{
+public:
+  TwilightWidget(QWidget *parent);
+  void setView(mapView_t *view);
 
-// pri nove verzi odstranit SK_DEBUG_IN_RELEASE v debug.h a definovat QT_NO_DEBUG_OUTPUT
-// upravit QCoreApplication::setApplicationName
+protected:
+  void paintEvent(QPaintEvent *e);
 
-#endif
+private:
+  daylight_t m_dayLight;
+  rts_t      m_rts;
+};
+
+namespace Ui {
+class TwilightDialog;
+}
+
+class TwilightDialog : public QDialog
+{
+  Q_OBJECT
+
+public:
+  explicit TwilightDialog(QWidget *parent, mapView_t *view);
+  ~TwilightDialog();
+
+private:
+  Ui::TwilightDialog *ui;
+  TwilightWidget *m_widget;
+};
+
+#endif // TWILIGHTDIALOG_H

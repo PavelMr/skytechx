@@ -12,6 +12,27 @@ GCVS::GCVS()
 {
 }
 
+QString GCVS::getTypes(int index)
+{
+  switch (index)
+  {
+    case 0:
+      return tr("Eruptive");
+    case 1:
+      return tr("Pulsating");
+    case 2:
+      return tr("Rotating");
+    case 3:
+      return tr("Cataclysmic");
+    case 4:
+      return tr("Eclipsing binary systems");
+    case 5:
+      return "Other / Unknown";
+  }
+
+  return "";
+}
+
 QString GCVS::getTypeDesc(const QString &type)
 {
   QString type2 = type;
@@ -19,30 +40,33 @@ QString GCVS::getTypeDesc(const QString &type)
   // remove flag
   type2.remove(QRegExp("[:+*]"));
 
-  if (QString("FU GCAS I,IA IB IN INA INB INT IT IN(YY) IS ISA ISB RCB RS SDOR UV UVN WR").contains(type2, Qt::CaseInsensitive))
+  if (!type2.simplified().isEmpty())
   {
-    return tr("Eruptive");
-  }
+    if (QString("FU GCAS I,IA IB IN INA INB INT IT IN(YY) IS ISA ISB RCB RS SDOR UV UVN WR").contains(type2, Qt::CaseInsensitive))
+    {
+      return tr("Eruptive");
+    }
 
-  if (QString("ACYG BCEP BCEPS CEP CEP(B) CW CWA CWB DCEP DCEPS DSCT DSCTC GDOR L LB LC M PVTEL RPHS RR RR(B) RRAB RRC RV RVA RVB SR SRA SRB SRC SRD SXPHE ZZ ZZA ZZB")
-      .contains(type2, Qt::CaseInsensitive))
-  {
-    return tr("Pulsating");
-  }
+    if (QString("ACYG BCEP BCEPS CEP CEP(B) CW CWA CWB DCEP DCEPS DSCT DSCTC GDOR L LB LC M PVTEL RPHS RR RR(B) RRAB RRC RV RVA RVB SR SRA SRB SRC SRD SXPHE ZZ ZZA ZZB")
+        .contains(type2, Qt::CaseInsensitive))
+    {
+      return tr("Pulsating");
+    }
 
-  if (QString("ACV ACVO BY ELL FKCOM PSR SXARI").contains(type2, Qt::CaseInsensitive))
-  {
-    return tr("Rotating");
-  }
+    if (QString("ACV ACVO BY ELL FKCOM PSR SXARI").contains(type2, Qt::CaseInsensitive))
+    {
+      return tr("Rotating");
+    }
 
-  if (QString("N NA NB NC NL NR SN SNI SNII UG UGSS UGSU UGZ ZAND").contains(type2, Qt::CaseInsensitive))
-  {
-    return tr("Cataclysmic");
-  }
+    if (QString("N NA NB NC NL NR SN SNI SNII UG UGSS UGSU UGZ ZAND").contains(type2, Qt::CaseInsensitive))
+    {
+      return tr("Cataclysmic");
+    }
 
-  if (QString("E EA EB EW GS PN RS WD WR AR D DM DS DW K KE KW SD").contains(type2, Qt::CaseInsensitive))
-  {
-    return tr("Eclipsing binary systems");
+    if (QString("E EA EB EW GS PN RS WD WR AR D DM DS DW K KE KW SD").contains(type2, Qt::CaseInsensitive))
+    {
+      return tr("Eclipsing binary systems");
+    }
   }
 
   return tr("Other / Unknown");
@@ -61,6 +85,8 @@ void GCVS::load()
   int i = 0;
 
   QStringList test;
+
+  int cc = 0;
 
   do
   {
@@ -84,6 +110,9 @@ void GCVS::load()
     ds >> item.tyc2;
     ds >> item.tyc3;
 
+    if (item.epoch > 0)
+      cc++;
+
     item.typeDesc = getTypeDesc(item.type);
 
     test.append(item.type);
@@ -94,6 +123,8 @@ void GCVS::load()
     m_list.append(item);
     i++;
   } while (true);
+
+  qDebug() << "epoch cc " << cc;
 
   /*
   test.removeDuplicates();
@@ -149,5 +180,10 @@ double GCVS::solveNextMinimum(double epoch, double period, double jd)
 {
   epoch -= period * 0.5;
   return epoch + period * floor(1 + (jd - epoch) / period);
+}
+
+QList<gcvs_t> GCVS::getList() const
+{
+    return m_list;
 }
 

@@ -102,6 +102,7 @@
 #include "vocatalogmanagerdialog.h"
 #include "sunspotsdialog.h"
 #include "skstopwatchctrl.h"
+#include "variablestarsdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -6797,3 +6798,28 @@ void MainWindow::on_actionSunspots_triggered()
 
   dlg.exec();
 }
+
+void MainWindow::on_actionVariable_stars_triggered()
+{
+  VariableStarsDialog dlg(this, &ui->widget->m_mapView);
+
+  if (dlg.exec() == DL_OK)
+  {
+    if (dlg.m_setTime)
+    {
+      ui->widget->m_mapView.jd = dlg.m_jd;
+    }
+    ui->widget->centerMap(dlg.m_ra, dlg.m_dec, dlg.m_fov);
+
+    if (dlg.m_obj.type != MO_EMPTY)
+    {
+      CObjFillInfo info;
+      ofiItem_t    item;
+
+      info.fillInfo(&ui->widget->m_mapView, &dlg.m_obj, &item);
+      fillQuickInfo(&item);
+    }
+  }
+}
+
+

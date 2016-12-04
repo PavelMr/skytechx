@@ -39,6 +39,9 @@ public:
   double solveNextMaximum(double epoch, double period, double jd);
   double solveNextMinimum(double epoch, double period, double jd);
 
+  QList<gcvs_t> getList() const;
+
+  QString getTypes(int index);
 private:
   QList <gcvs_t> m_list;
   QMap  <qint64, int> m_map;

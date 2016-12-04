@@ -600,6 +600,7 @@
     <addaction name="separator"/>
     <addaction name="actionStar_in_Tycho_catalogue"/>
     <addaction name="actionStar_by_proper_name"/>
+    <addaction name="actionVariable_stars"/>
     <addaction name="actionDoube_star"/>
     <addaction name="separator"/>
     <addaction name="actionDOS_by_common_name"/>
@@ -811,7 +812,6 @@
    <addaction name="separator"/>
    <addaction name="actionRelease_object"/>
    <addaction name="separator"/>
-   <addaction name="actionLook_backward"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget">
    <property name="minimumSize">
@@ -3709,6 +3709,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionWest"/>
    <addaction name="actionZenith"/>
    <addaction name="actionMeridian"/>
+   <addaction name="actionLook_backward"/>
   </widget>
   <widget class="QToolBar" name="tb_grid">
    <property name="windowTitle">
@@ -5871,6 +5872,19 @@ p, li { white-space: pre-wrap; }
   <action name="actionSunspots">
    <property name="text">
     <string>Sunspots...</string>
+   </property>
+  </action>
+  <action name="actionVariable_stars">
+   <property name="text">
+    <string>Variable stars...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionTwilight">
+   <property name="text">
+    <string>Twilight...</string>
    </property>
   </action>
  </widget>

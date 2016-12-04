@@ -687,6 +687,8 @@ private slots:
 
   void on_actionSunspots_triggered();
 
+  void on_actionVariable_stars_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
