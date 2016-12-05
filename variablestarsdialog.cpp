@@ -56,7 +56,7 @@ VariableStarsDialog::VariableStarsDialog(QWidget *parent, mapView_t *mapView) :
   m_model->setHeaderData(3, Qt::Horizontal, QObject::tr("Max.Mag."));
   m_model->setHeaderData(4, Qt::Horizontal, QObject::tr("Min.Mag."));
   m_model->setHeaderData(5, Qt::Horizontal, QObject::tr("Period"));
-  m_model->setHeaderData(6, Qt::Horizontal, QObject::tr("Epocha"));
+  m_model->setHeaderData(6, Qt::Horizontal, QObject::tr("Epoch"));
   m_model->setHeaderData(7, Qt::Horizontal, QObject::tr("Next Min."));
   m_model->setHeaderData(8, Qt::Horizontal, QObject::tr("Next Max."));
 

@@ -66,9 +66,11 @@ void CPlanetAltitude::calculate(double jd)
 
 void CPlanetAltitude::makeChart()
 {    
-  if (m_chartView)
-  {
-    delete m_chartView;
+  if (!m_chartView)
+  {   
+    m_chartView = new QChartView(this);
+    m_chartView->setRenderHint(QPainter::Antialiasing);
+    ui->verticalLayout->addWidget(m_chartView);
   }
 
   QLineSeries *series = new QLineSeries();
@@ -108,9 +110,12 @@ void CPlanetAltitude::makeChart()
   chart->addAxis(axisY, Qt::AlignLeft);
   series->attachAxis(axisY);
 
-  m_chartView = new QChartView(chart);
-  m_chartView->setRenderHint(QPainter::Antialiasing);
-  ui->verticalLayout->addWidget(m_chartView);
+  if (m_chartView->chart())
+  {
+    delete m_chartView->chart();
+
+  }
+  m_chartView->setChart(chart);
 }
 
 void CPlanetAltitude::on_comboBox_currentIndexChanged(int)
