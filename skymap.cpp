@@ -1392,7 +1392,7 @@ void rrr(void)
   pPainter.setCompositionMode(QPainter::CompositionMode_Plus);
 
   for (int region = 0; region < NUM_GSC_REGS; region++)
-  //for (int region = 0; region < 1000; region++)
+  for (int region = 0; region < 500; region++)
   if (true)
   {
     ucac4Region_t *ucacRegion;
@@ -1435,6 +1435,7 @@ void rrr(void)
 }
 */
 
+
 ///////////////////////////////////////////////////////////////////////////
 bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
 ///////////////////////////////////////////////////////////////////////////
@@ -1449,7 +1450,7 @@ bool smRenderSkyMap(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
   pPainter->setRenderHint(QPainter::Antialiasing, g_antialiasing);
   pPainter->setRenderHint(QPainter::SmoothPixmapTransform, g_antialiasing);  
 
-  mapObjReset();
+  mapObjReset();  
 
   cAstro.setParam(mapView);
 
