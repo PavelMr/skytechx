@@ -11,12 +11,16 @@ CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
   ui->setupUi(this);
   CAstro ast;
 
+  m_chartView = new QChartView(this);
+  m_chartView->setRenderHint(QPainter::Antialiasing);
+  ui->verticalLayout->addWidget(m_chartView);
+
   for (int p = 0; p < PT_PLANET_COUNT; p++)
   {
     ui->comboBox->addItem(ast.getName(p));
   }
 
-  ui->comboBox->setCurrentIndex(0);
+  ui->comboBox->setCurrentIndex(0);  
 
   m_view = *view;
   m_jd = view->jd;
@@ -67,10 +71,7 @@ void CPlanetAltitude::calculate(double jd)
 void CPlanetAltitude::makeChart()
 {    
   if (!m_chartView)
-  {   
-    m_chartView = new QChartView(this);
-    m_chartView->setRenderHint(QPainter::Antialiasing);
-    ui->verticalLayout->addWidget(m_chartView);
+  {       
   }
 
   QLineSeries *series = new QLineSeries();
@@ -108,14 +109,11 @@ void CPlanetAltitude::makeChart()
   axisY->setTickCount(5);
   axisY->setRange(-90, 90);
   chart->addAxis(axisY, Qt::AlignLeft);
-  series->attachAxis(axisY);
+  series->attachAxis(axisY);  
 
-  if (m_chartView->chart())
-  {
-    delete m_chartView->chart();
-
-  }
+  QChart *ch = m_chartView->chart();
   m_chartView->setChart(chart);
+  delete ch;
 }
 
 void CPlanetAltitude::on_comboBox_currentIndexChanged(int)

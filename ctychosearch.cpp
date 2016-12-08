@@ -35,6 +35,7 @@ CTychoSearch::CTychoSearch(QWidget *parent, double epoch) :
   {
     ui->comboBox->addItem(CTycho::getGreekChar(i));
     ui->comboBox->setItemData(i, QFont("symbol"), Qt::FontRole);
+    ui->comboBox->setItemData(i, CTycho::getGreekString(i), Qt::ToolTipRole);
   }
 
   ui->comboBox->setCurrentIndex(cb1);

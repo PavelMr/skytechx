@@ -4756,7 +4756,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionStar_in_Tycho_catalogue">
    <property name="text">
-    <string>Star in &amp;Tycho catalogue...</string>
+    <string>Star in catalogue...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>

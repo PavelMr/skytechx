@@ -104,12 +104,13 @@ class CTycho : public QObject
     QList   <tychoStar_t *>  tNames;         // list ptrs. to stars with proper name
 
     static QString getGreekChar(int i);
+    static QString getGreekString(int i);
 //protected:
     tychoHead_t       m_head;
     tychoRegion2_t   *m_region;
-    QByteArray        m_names;
+    QByteArray        m_names;    
 
-  signals:
+signals:
 };
 
 extern CTycho cTYC;

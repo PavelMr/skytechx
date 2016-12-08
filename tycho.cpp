@@ -65,6 +65,13 @@ QString CTycho::getGreekChar(int i)
   return(QString(greekChar[i]));
 }
 
+/////////////////////////////////////
+QString CTycho::getGreekString(int i)
+/////////////////////////////////////
+{
+  return(QString(greekStr[i]));
+}
+
 ///////////////////
 bool CTycho::load()
 ///////////////////
