@@ -3,6 +3,11 @@
 #include "castro.h"
 #include "skcore.h"
 
+static QList <QCheckBox *> list;
+static QColor colors[PT_PLANET_COUNT] = {QColor(250, 180, 20), Qt::gray, Qt::darkYellow,
+                                         Qt::red, Qt::blue, Qt::magenta,
+                                         Qt::green, Qt::darkGreen, Qt::lightGray};
+
 CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
   QDialog(parent),
   ui(new Ui::CPlanetAltitude) ,
@@ -15,12 +20,20 @@ CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
   m_chartView->setRenderHint(QPainter::Antialiasing);
   ui->verticalLayout->addWidget(m_chartView);
 
-  for (int p = 0; p < PT_PLANET_COUNT; p++)
-  {
-    ui->comboBox->addItem(ast.getName(p));
-  }
+  list.append(ui->checkBox);
+  list.append(ui->checkBox_3);
+  list.append(ui->checkBox_4);
+  list.append(ui->checkBox_5);
+  list.append(ui->checkBox_6);
+  list.append(ui->checkBox_7);
+  list.append(ui->checkBox_8);
+  list.append(ui->checkBox_9);
+  list.append(ui->checkBox_2);
 
-  ui->comboBox->setCurrentIndex(0);  
+  for (const QCheckBox *cb : list)
+  {
+    connect(cb, SIGNAL(clicked(bool)), this, SLOT(cbChanged()));
+  }
 
   m_view = *view;
   m_jd = view->jd;
@@ -61,11 +74,16 @@ void CPlanetAltitude::calculate(double jd)
 
       data.alt = o.lAlt;
       data.date = jd + i;
-      m_list[p].append(data);
+      m_list[p].append(data);      
     }
   }
 
   setWindowTitle(tr("Planet altitude") + " " + getStrDate(jd, m_view.geo.tz));
+}
+
+void CPlanetAltitude::cbChanged()
+{
+  makeChart();
 }
 
 void CPlanetAltitude::makeChart()
@@ -74,52 +92,62 @@ void CPlanetAltitude::makeChart()
   {       
   }
 
-  QLineSeries *series = new QLineSeries();
+  QLineSeries *series[PT_PLANET_COUNT];// = new QLineSeries();
 
-  int i = ui->comboBox->currentIndex();
-  for (int j = 0; j < m_list[0].count(); j++)
+  for (int i = 0; i < PT_PLANET_COUNT; i++)
   {
-    double alt = R2D(m_list[i].at(j).alt);
-    double date = m_list[i].at(j).date;
+    series[i] = nullptr;
+    if (list[i]->isChecked())
+    {
+      series[i] = new QLineSeries();
+      //int i = ui->comboBox->currentIndex();
+      for (int j = 0; j < m_list[0].count(); j++)
+      {
+        double alt = R2D(m_list[i].at(j).alt);
+        double date = m_list[i].at(j).date;
 
-    QDateTime dt;
+        QDateTime dt;
 
-    jdConvertJDTo_DateTime(date, &dt);
-    dt.setTimeSpec(Qt::LocalTime);
-    series->append(dt.toMSecsSinceEpoch(), alt);
+        jdConvertJDTo_DateTime(date, &dt);
+        dt.setTimeSpec(Qt::LocalTime);
+        series[i]->append(dt.toMSecsSinceEpoch(), alt);
+      }
+      series[i]->setName(CAstro::getName(i));
+      series[i]->setPen(QPen(colors[i], 2));
+    }
   }
 
   QChart *chart = new QChart();
-  chart->addSeries(series);
-  chart->legend()->hide();
-  chart->setTitle(ui->comboBox->currentText());
+  for (int i = 0; i < PT_PLANET_COUNT; i++)
+    if (series[i]) chart->addSeries(series[i]);
+  //chart->legend()->hide();
+  //chart->setTitle(ui->comboBox->currentText());
+  chart->setTitle(tr("Planet altitude"));
 
   QDateTimeAxis *axisX = new QDateTimeAxis;
   axisX->setTickCount(24);
   axisX->setFormat("HH");
   axisX->setTitleText(tr("Time"));
   chart->addAxis(axisX, Qt::AlignBottom);
-  series->attachAxis(axisX);
+  for (int i = 0; i < PT_PLANET_COUNT; i++)
+    if (series[i]) series[i]->attachAxis(axisX);
 
 
   QValueAxis *axisY = new QValueAxis;
   axisY->setLabelFormat("%0.1f");
-  axisY->setTitleBrush(series->pen().color());
+  //axisY->setTitleBrush(series->pen().color());
   axisY->setTitleText(tr("Altitude"));
   axisY->setTickCount(5);
   axisY->setRange(-90, 90);
   chart->addAxis(axisY, Qt::AlignLeft);
-  series->attachAxis(axisY);  
+  for (int i = 0; i < PT_PLANET_COUNT; i++)
+    if (series[i]) series[i]->attachAxis(axisY);
 
   QChart *ch = m_chartView->chart();
   m_chartView->setChart(chart);
   delete ch;
 }
 
-void CPlanetAltitude::on_comboBox_currentIndexChanged(int)
-{
-  makeChart();
-}
 
 void CPlanetAltitude::on_pushButton_clicked()
 {
@@ -144,5 +172,14 @@ void CPlanetAltitude::on_pushButton_4_clicked()
 {
   m_jd = jdGetCurrentJD();
   calculate(m_jd);
+  makeChart();
+}
+
+void CPlanetAltitude::on_pushButton_5_clicked()
+{
+  for (QCheckBox *cb : list)
+  {
+    cb->setChecked(false);
+  }
   makeChart();
 }
