@@ -161,7 +161,6 @@ extern bool bParkTelescope;
 extern bool g_developMode;
 extern QApplication *g_pApp;
 
-
 QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
   QStandardItemModel * model = (QStandardItemModel *)index.model();
@@ -181,6 +180,8 @@ MainWindow::MainWindow(QWidget *parent) :
   QSettings settings;  
 
   ui->setupUi(this);
+
+  //QApplication::instance()->setAttribute(Qt::AA_DontShowIconsInMenus, true);
 
   ui->toolButton_37->setDefaultAction(ui->actionConnect_device);  
   ui->toolButton_38->setDefaultAction(ui->actionDisconnect);
@@ -729,30 +730,38 @@ MainWindow::MainWindow(QWidget *parent) :
 
   m_webView->setSource(QUrl::fromLocalFile(QDir::currentPath() + "/../help/main.htm"));
 
+  int mode;
+
   if (g_autoSave.mapPosition)
   {
-    int mode = settings.value("map/mode", 0).toInt();
-    ui->widget->m_mapView.coordType = mode;
-
-    m_noRecalculateView = true;
-
-    switch (mode)
-    {
-      case SMCT_RA_DEC:
-        ui->actionAtlas_mode_Pole_Up->trigger();
-        break;
-
-      case SMCT_ALT_AZM:
-        ui->actionHorizon_mode_Zenith_up->trigger();
-        break;
-
-      case SMCT_ECL:
-        ui->actionEcliptic->trigger();
-        break;
-    }
-
-    m_noRecalculateView = false;
+    mode = settings.value("map/mode", 0).toInt();
   }
+  else
+  {
+    mode = settings.value("sel_map/mode", 0).toInt();
+  }
+
+  ui->widget->m_mapView.coordType = mode;
+
+  m_noRecalculateView = true;
+
+  switch (mode)
+  {
+    case SMCT_RA_DEC:
+      ui->actionAtlas_mode_Pole_Up->trigger();
+      break;
+
+    case SMCT_ALT_AZM:
+      ui->actionHorizon_mode_Zenith_up->trigger();
+      break;
+
+    case SMCT_ECL:
+      ui->actionEcliptic->trigger();
+      break;
+  }
+
+  m_noRecalculateView = false;
+
 
   ui->actionEpoch_J2000_0->setChecked(ui->widget->m_mapView.epochJ2000);
 
@@ -778,7 +787,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showObjectAxis = settings.value("show_object_axis", false).toBool();
   g_showShower = settings.value("show_showers", false).toBool();
 
-  ui->cb_extInfo->setChecked(settings.value("show_extra_info", true).toBool());
+  ui->cb_extInfo->setChecked(settings.value("show_extra_info", false).toBool());
   ui->checkBox_5->setChecked(settings.value("info_auto_update", true).toBool());
 
   ui->actionCenter_of_screen->setChecked(g_showCenterScreen);

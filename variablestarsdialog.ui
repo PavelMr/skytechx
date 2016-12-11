@@ -63,6 +63,19 @@
       </layout>
      </item>
      <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
         <widget class="QLabel" name="label_3">
@@ -73,6 +86,15 @@
        </item>
        <item>
         <widget class="QDateEdit" name="dateEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="showGroupSeparator" stdset="0">
+          <bool>false</bool>
+         </property>
          <property name="maximumDateTime">
           <datetime>
            <hour>23</hour>
@@ -83,8 +105,14 @@
            <day>1</day>
           </datetime>
          </property>
+         <property name="displayFormat">
+          <string>dd.MM.yyyy</string>
+         </property>
          <property name="calendarPopup">
           <bool>true</bool>
+         </property>
+         <property name="timeSpec">
+          <enum>Qt::LocalTime</enum>
          </property>
         </widget>
        </item>

@@ -221,10 +221,15 @@ private slots:
 
    void on_pushButton_76_clicked();
 
+   void on_pushButton_77_clicked();
+
 private:
    Ui::CSetting *ui;
    void fillAstComList(QTreeWidget *list, const QList<urlItem_t> &strList, bool sun = false);
    void getAstComList(QTreeWidget *list, QList<urlItem_t> &strList);
+   void fillSelPos();
+
+   mapView_t m_selMapView;
 
 };
 

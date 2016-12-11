@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>3</number>
+            <number>10</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -4507,33 +4507,84 @@
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox_12">
-                <property name="text">
-                 <string>Map position</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QCheckBox" name="checkBox_19">
                 <property name="text">
                  <string>DSS background images</string>
                 </property>
                </widget>
               </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_36">
               <item>
-               <spacer name="verticalSpacer_2">
+               <widget class="QGroupBox" name="groupBox_40">
+                <property name="title">
+                 <string>Map position</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_118">
+                 <item>
+                  <layout class="QFormLayout" name="formLayout_23">
+                   <item row="2" column="0">
+                    <widget class="QRadioButton" name="rb_pos_last">
+                     <property name="text">
+                      <string>Save last position and time</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QRadioButton" name="rb_pos_sel">
+                     <property name="text">
+                      <string>Use selected coordinates</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QPushButton" name="pushButton_77">
+                     <property name="text">
+                      <string>Set to current position</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0" colspan="2">
+                    <widget class="QLabel" name="label_pos_map">
+                     <property name="text">
+                      <string>TextLabel</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>20</width>
-                  <height>40</height>
+                  <width>40</width>
+                  <height>20</height>
                  </size>
                 </property>
                </spacer>
               </item>
              </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>
@@ -5006,7 +5057,7 @@
              </widget>
             </item>
             <item>
-             <widget class="CSimpleList" name="jplList" native="true"/>
+             <widget class="CSimpleList" name="jplList"/>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_33">
@@ -5435,7 +5486,7 @@ then PLAN404 or VSOP87 is used</string>
             <item row="0" column="0">
              <widget class="QCheckBox" name="checkBox_14">
               <property name="text">
-               <string>Parking telescope before disconnection</string>
+               <string>Park the telescope before disconnection</string>
               </property>
              </widget>
             </item>
@@ -6040,6 +6091,12 @@ then PLAN404 or VSOP87 is used</string>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>CSimpleList</class>
+   <extends>QListView</extends>
+   <header>csimplelist.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>CFontColorButton</class>
    <extends>QPushButton</extends>
    <header location="global">cfontcolorbutton.h</header>
@@ -6059,12 +6116,6 @@ then PLAN404 or VSOP87 is used</string>
    <class>CStarExample</class>
    <extends>QFrame</extends>
    <header>cstarexample.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CSimpleList</class>
-   <extends>QWidget</extends>
-   <header>csimplelist.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

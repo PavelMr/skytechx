@@ -9,24 +9,7 @@ HIPSPropertiesDialog::HIPSPropertiesDialog(QWidget *parent, const QString &file)
   ui->setupUi(this);
 
   QString content = readAllFile(file);
-  QString html;
-
-  /*
-  QString content = readAllFile(file);
-  QRegularExpression regExp("(?:https?|ftp)://\\S+");
-
-  QRegularExpressionMatchIterator i = regExp.globalMatch(content);
-  while (i.hasNext())
-  {
-    QRegularExpressionMatch match = i.next();
-    if (match.hasMatch())
-    {
-      qDebug() << match.captured(0);
-      content.replace(match.capturedStart(0), match.capturedLength(), "XXX");//QString("<a href=\"%1\">%1</a>").arg(match.captured(0)));
-    }
-  }
-  content = content.replace("\n", "<br>");
-  */
+  QString html;  
 
   QStringList rows = content.split("\n");
 

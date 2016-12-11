@@ -161,10 +161,15 @@ CMapView::CMapView(QWidget *parent) :
   if (!g_autoSave.mapPosition)
   {
     m_mapView.jd = jdGetCurrentJD();
-    m_mapView.x = 0;
-    m_mapView.y = 0;
-    m_mapView.roll = 0;
-    m_mapView.fov = D2R(90);
+    m_mapView.x = settings.value("sel_map/x", 0).toDouble();
+    m_mapView.y = settings.value("sel_map/y", 0).toDouble();
+    m_mapView.roll = settings.value("sel_map/roll", 0).toDouble();
+    m_mapView.fov = settings.value("sel_map/fov", D2R(90)).toDouble();
+
+    //m_mapView.x = 0;
+    //m_mapView.y = 0;
+    //m_mapView.roll = 0;
+    //m_mapView.fov = D2R(90);
   }
   else
   {

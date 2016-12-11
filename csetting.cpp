@@ -32,6 +32,7 @@
 
 static int currentRow = 0;
 
+extern MainWindow *pcMainWnd;
 extern bool g_showZoomBar;
 extern bool bAlternativeMouse;
 extern bool bParkTelescope;
@@ -51,6 +52,8 @@ CSetting::CSetting(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::CSetting)
 {
+  QSettings setting;
+
   ui->setupUi(this);
 
   g_sunOnlineDaemon.stop();
@@ -61,16 +64,23 @@ CSetting::CSetting(QWidget *parent) :
   // autosave
   ui->checkBox_7->setChecked(g_autoSave.tracking);
   ui->checkBox_8->setChecked(g_autoSave.events);
-  ui->checkBox_9->setChecked(g_autoSave.drawing);
-  ui->checkBox_12->setChecked(g_autoSave.mapPosition);
+  ui->checkBox_9->setChecked(g_autoSave.drawing);  
   ui->checkBox_19->setChecked(g_autoSave.dssImages);
   ui->checkBox_10->setChecked(g_showZoomBar);
 
+  g_autoSave.mapPosition ? ui->rb_pos_last->setChecked(true) : ui->rb_pos_sel->setChecked(true);
+
+  m_selMapView.x = setting.value("sel_map/x", 0).toDouble();
+  m_selMapView.y = setting.value("sel_map/y", 0).toDouble();
+  m_selMapView.roll = setting.value("sel_map/roll", 0).toDouble();
+  m_selMapView.fov = setting.value("sel_map/fov", D2R(90)).toDouble();
+  m_selMapView.coordType = setting.value("sel_map/mode", SMCT_RA_DEC).toInt();
+
+  fillSelPos();
+
   ui->cb_iconSize->addItem(tr("24x24 (Default size)"));
   ui->cb_iconSize->addItem(tr("18x18 (Small size)"));
-  ui->cb_iconSize->addItem(tr("32x32 (Large size)"));    
-
-  QSettings setting;
+  ui->cb_iconSize->addItem(tr("32x32 (Large size)"));      
 
   // HIPS
   ui->spinBox_8->setValue(g_hipsRenderer->manager()->setting("hips_mem_cache").toInt() / ONE_MB);
@@ -1221,7 +1231,7 @@ void CSetting::on_pushButton_clicked()
   g_autoSave.tracking = ui->checkBox_7->isChecked();
   g_autoSave.events = ui->checkBox_8->isChecked();
   g_autoSave.drawing = ui->checkBox_9->isChecked();
-  g_autoSave.mapPosition = ui->checkBox_12->isChecked();
+  g_autoSave.mapPosition = ui->rb_pos_last->isChecked();
   g_autoSave.dssImages = ui->checkBox_19->isChecked();
 
   g_showZoomBar = ui->checkBox_10->isChecked();
@@ -1230,6 +1240,12 @@ void CSetting::on_pushButton_clicked()
   bParkTelescope = ui->checkBox_14->isChecked();
 
   QSettings setting;
+
+  setting.setValue("sel_map/x", m_selMapView.x);
+  setting.setValue("sel_map/y", m_selMapView.y);
+  setting.setValue("sel_map/roll", m_selMapView.roll);
+  setting.setValue("sel_map/fov", m_selMapView.fov);
+  setting.setValue("sel_map/mode", m_selMapView.coordType);
 
   setting.setValue("sound_enable", ui->checkBox_21->isChecked());
   setting.setValue("sound_volume", ui->horizontalSlider_17->value());
@@ -2574,4 +2590,28 @@ void CSetting::on_pushButton_76_clicked()
     CUrlFile::readFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/urls/hips.url", &strList);
     fillAstComList(ui->treeWidgetHiPS, strList);
   }
+}
+
+void CSetting::on_pushButton_77_clicked()
+{
+  m_selMapView = pcMainWnd->getView()->m_mapView;
+
+  //qDebug() << view.coordType << view.x << view.y << view.roll << view.fov;
+  fillSelPos();
+}
+
+void CSetting::fillSelPos()
+{
+  QString str;
+
+  if (m_selMapView.coordType == SMCT_RA_DEC)
+    str = tr("Eqt. ") + getStrRA(m_selMapView.x) + " / " + getStrDeg(m_selMapView.y);
+  else if (m_selMapView.coordType == SMCT_ALT_AZM)
+    str = tr("Hor. ") + getStrDeg(R360 - m_selMapView.x) + " / " + getStrDeg(m_selMapView.y);
+  else
+    str = tr("Ecl. ") + getStrDeg(m_selMapView.x) + " / " + getStrDeg(m_selMapView.y);
+
+  str += " " + tr("FOV : ") + getStrDeg(m_selMapView.fov, true) + " / " + tr(" Roll : ") + getStrDeg(m_selMapView.roll, true);
+
+  ui->label_pos_map->setText(str);
 }

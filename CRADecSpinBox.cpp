@@ -141,8 +141,7 @@ CRADecSpinBox::CRADecSpinBox(QWidget *parent) :
   raSpinBox = new CRASpinBox;
   decSpinBox = new CDecSpinBox;
 
-  setLayout(Qt::Horizontal);
-  //setLayout(Qt::Vertical);
+  setLayout(Qt::Horizontal);  
 }
 
 void CRADecSpinBox::setLayout(Qt::Orientation direction)
