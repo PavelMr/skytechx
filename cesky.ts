@@ -10576,7 +10576,7 @@ které mají definovanou jasnost.</translation>
     <message>
         <location filename="mainwindow.ui" line="2531"/>
         <source>Telescope handpad</source>
-        <translation></translation>
+        <translation>Ovládání dalekohledu</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="2858"/>

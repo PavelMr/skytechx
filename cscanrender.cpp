@@ -412,6 +412,7 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
 {
   int w = dst->width();
   int sw = src->width();
+  int sh = src->height();
   float tsx = src->width() - 1;
   float tsy = src->height() - 1;
   const quint32 *bitsSrc = (quint32 *)src->constBits();
@@ -471,8 +472,11 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
     fuv[0] = uv[0] * 65536;
     fuv[1] = uv[1] * 65536;
 
-    fduv[0] = duv[0] * 65536;
+    fduv[0] = duv[0] * 65536;    
     fduv[1] = duv[1] * 65536;
+
+    fuv[0] = CLAMP(fuv[0], 0, (sw - 1) * 65536.);
+    fuv[1] = CLAMP(fuv[1], 0, (sh - 1) * 65536.);
 
     if (bw)
     {

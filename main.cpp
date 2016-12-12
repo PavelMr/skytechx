@@ -187,6 +187,8 @@ int main(int argc, char *argv[])
 
   g_pApp = &a;
 
+  qDebug() << "xxxxxxxx" << -2.86733266e-005 << (int)-2.86733266e-005 << -2.86733266e-005 * 65536.;
+
   // parse cmd line
   for (int i = 1; i < argc; i++)
   {
