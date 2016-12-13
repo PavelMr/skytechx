@@ -3,6 +3,7 @@
 #include "castro.h"
 #include "skcore.h"
 
+static bool checked[PT_PLANET_COUNT] = {1, 0, 0, 0, 0, 0, 0, 0, 0};
 static QList <QCheckBox *> list;
 static QColor colors[PT_PLANET_COUNT] = {QColor(250, 180, 20), Qt::gray, Qt::darkYellow,
                                          Qt::red, Qt::blue, Qt::magenta,
@@ -20,6 +21,7 @@ CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
   m_chartView->setRenderHint(QPainter::Antialiasing);
   ui->verticalLayout->addWidget(m_chartView);
 
+  list.clear();
   list.append(ui->checkBox);
   list.append(ui->checkBox_3);
   list.append(ui->checkBox_4);
@@ -30,9 +32,12 @@ CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
   list.append(ui->checkBox_9);
   list.append(ui->checkBox_2);
 
-  for (const QCheckBox *cb : list)
+  int i = 0;
+  for (QCheckBox *cb : list)
   {
     connect(cb, SIGNAL(clicked(bool)), this, SLOT(cbChanged()));
+    cb->setChecked(checked[i]);
+    i++;
   }
 
   m_view = *view;
@@ -43,6 +48,13 @@ CPlanetAltitude::CPlanetAltitude(QWidget *parent, mapView_t *view) :
 
 CPlanetAltitude::~CPlanetAltitude()
 {
+  int i = 0;
+  for (QCheckBox *cb : list)
+  {
+    checked[i] = cb->isChecked();
+    i++;
+  }
+
   delete ui;
 }
 
