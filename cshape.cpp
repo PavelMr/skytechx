@@ -1,5 +1,6 @@
 #include "cshape.h"
 #include "cscanrender.h"
+#include "setting.h"
 
 ////////////////
 CShape::CShape()
@@ -167,8 +168,8 @@ int CShape::render(QPainter * /*p*/, QImage *img, mapView_t *, QColor *colList, 
       p->drawPolygon(poly);
       */
 
-
-      scanRender.renderPolygon(col, img);
+      col.setAlpha(g_skSet.map.dsoShapeAlpha);
+      scanRender.renderPolygonAlpha(col, img);
     }
   }
 

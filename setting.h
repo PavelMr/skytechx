@@ -247,6 +247,7 @@ typedef struct
   int        dsoStyle[DSO_COL_COUNT];
   int        dsoWidth[DSO_COL_COUNT];
   QRgb       dsoShapeColor[3];
+  int        dsoShapeAlpha;
   QString    starBitmapName;
   magRange_t starRange[MAG_RNG_COUNT];
   magRange_t dsoRange[MAG_RNG_COUNT];

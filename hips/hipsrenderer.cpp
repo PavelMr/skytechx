@@ -27,6 +27,8 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
 
   while( level < m_manager.getParam()->max_level  && view->fov < minfov) { minfov /= 2; level++; }
 
+  //level = 3;
+
   m_renderedMap.clear();
   m_rendered = 0;
   m_blocks = 0;

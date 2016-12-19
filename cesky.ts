@@ -12239,7 +12239,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="5509"/>
         <source>Show/Hide horizon</source>
-        <translation>Sobrazí/Skryje horizont</translation>
+        <translation>Zobrazí/Skryje horizont</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="267"/>

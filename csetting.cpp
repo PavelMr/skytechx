@@ -477,6 +477,7 @@ void CSetting::setValues()
   ui->pushButton_43->setColor(set.map.dsoShapeColor[0]);
   ui->pushButton_44->setColor(set.map.dsoShapeColor[1]);
   ui->pushButton_45->setColor(set.map.dsoShapeColor[2]);
+  ui->sb_shp_alpha->setValue(set.map.dsoShapeAlpha / 2.55);
 
   // DSO mag.
   ui->horizontalSlider_21->setValue(set.map.dsoRange[0].mag * 10);
@@ -888,6 +889,8 @@ void CSetting::apply()
   g_skSet.map.dsoFilter = ui->le_dso_filter->text().simplified();
   g_skSet.map.dsoFilterType = ui->radioButton_5->isChecked();
   cDSO.applyNameFilter();
+
+  g_skSet.map.dsoShapeAlpha = ui->sb_shp_alpha->value() * 2.55; // 100% -> 255
 
   QStandardItemModel *model = (QStandardItemModel *)ui->treeView->model();
 

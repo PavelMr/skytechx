@@ -194,6 +194,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.dsoShapeColor0", set->map.dsoShapeColor[0], ds);
   writeVal("map.dsoShapeColor1", set->map.dsoShapeColor[1], ds);
   writeVal("map.dsoShapeColor2", set->map.dsoShapeColor[2], ds);
+  writeVal("map.dsoShapeAlpha", set->map.dsoShapeAlpha, ds);
 
   writeVal("map.dsoNoMagShapeFOV", set->map.dsoNoMagShapeFOV, ds);
   writeVal("map.dsoNoMagOtherFOV", set->map.dsoNoMagOtherFOV, ds);
@@ -504,6 +505,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.dsoShapeColor[0] = readVal("map.dsoShapeColor0", MRGB(86, 86, 86), tMap).toUInt();
   set->map.dsoShapeColor[1] = readVal("map.dsoShapeColor1", MRGB(64, 64, 64), tMap).toUInt();
   set->map.dsoShapeColor[2] = readVal("map.dsoShapeColor2", MRGB(32, 32, 32), tMap).toUInt();
+  set->map.dsoShapeAlpha = readVal("map.dsoShapeAlpha", 128, tMap).toUInt();
 
   set->map.dsoNoMagShapeFOV = readVal("map.dsoNoMagShapeFOV", D2R(75), tMap).toDouble();
   set->map.dsoNoMagOtherFOV = readVal("map.dsoNoMagOtherFOV", D2R(25), tMap).toDouble();
