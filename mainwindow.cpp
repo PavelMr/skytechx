@@ -103,6 +103,7 @@
 #include "sunspotsdialog.h"
 #include "skstopwatchctrl.h"
 #include "variablestarsdialog.h"
+#include "twilightdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -3906,7 +3907,7 @@ void MainWindow::on_actionStandard_cross_triggered()
 {
   ui->actionSelect->setChecked(false);
   ui->actionStandard_cross->setChecked(true);
-  ui->widget->m_bCustomTele = false;
+  ui->widget->m_bCustomTeleType = 0;
   ui->widget->repaintMap();
 }
 
@@ -3920,12 +3921,12 @@ void MainWindow::on_actionSelect_triggered()
   {
     ui->actionSelect->setChecked(true);
     ui->actionStandard_cross->setChecked(false);
-    ui->widget->m_bCustomTele = true;
+    ui->widget->m_bCustomTeleType = 1;
     ui->widget->m_customTeleRad = dlg.m_outFOV;
   }
   else
   {
-    if (ui->widget->m_bCustomTele)
+    if (ui->widget->m_bCustomTeleType > 0)
     {
       ui->actionSelect->setChecked(true);
       ui->actionStandard_cross->setChecked(false);
@@ -6832,3 +6833,41 @@ void MainWindow::on_actionVariable_stars_triggered()
 }
 
 
+
+void MainWindow::on_actionTelescope_frame_triggered()
+{
+  CInsertFrmField dlg(this);
+
+  if (dlg.exec() == DL_OK)
+  {
+    ui->actionSelect->setChecked(false);
+    ui->actionStandard_cross->setChecked(false);
+    ui->actionTelescope_FOV->setChecked(true);
+    ui->widget->m_bCustomTeleType = 2;
+    ui->widget->m_customTeleX = dlg.m_x;
+    ui->widget->m_customTeleY = dlg.m_y;
+  }
+  else
+  {
+    if (ui->widget->m_bCustomTeleType > 0)
+    {
+      ui->actionSelect->setChecked(false);
+      ui->actionStandard_cross->setChecked(false);
+      ui->actionTelescope_FOV->setChecked(true);
+    }
+    else
+    {
+      ui->actionSelect->setChecked(false);
+      ui->actionStandard_cross->setChecked(true);
+      ui->actionTelescope_FOV->setChecked(false);
+    }
+  }
+  ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionTwilight_2_triggered()
+{
+  TwilightDialog dlg(this, &ui->widget->m_mapView);
+
+  dlg.exec();
+}

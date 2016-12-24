@@ -41,6 +41,7 @@
 
 typedef struct
 {
+  bool    telescopeLink;
   int     type;
   bool    show;
   bool    onScr;
@@ -75,6 +76,7 @@ typedef struct
 class CDrawing : public QObject
 {
   Q_OBJECT
+  void setTelescopePos(drawing_t *drawing);
 public:
   explicit CDrawing(QObject *parent = 0);
   void setView(mapView_t *view);
@@ -83,9 +85,11 @@ public:
 
   void selectAndEdit(int id);
   void remove();
+  void setTelescopeLink(drawing_t *drawing, bool enable);
+  void toggleTelescopeLink(drawing_t *drawing);
 
-  int drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, QString text = "", bool bEdited = false, int id = -1);
-  int drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited = false, int id = -1);
+  int drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, drawing_t *drw, QString text = "", bool bEdited = false, int id = -1);
+  int drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, drawing_t *drw, bool bEdited = false, int id = -1);
   int drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited = false, int id = -1);
   int drawFrmField(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdited = false, int id = -1);
 

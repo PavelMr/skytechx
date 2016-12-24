@@ -37,7 +37,7 @@ public:
    ~CShape();
     bool load(QString name);
     void createTriangle(radec_t *rd1, radec_t *rd2, radec_t *rd3);
-    int render(QPainter *p, QImage *img, mapView_t *view, QColor *colList, QRect &rc);
+    int render(QPainter *p, QImage *img, mapView_t *view, QColor *colList, QRect &rc, bool isMilkyWay = false);
 
 protected:
     bool          bReady;

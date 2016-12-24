@@ -26,8 +26,8 @@
 #include "skcore.h"
 #include "cmapview.h"
 
-#define SHD_X     256
-#define SHD_Y     128
+#define SHD_X     512
+#define SHD_Y     256
 
 namespace Ui {
 class CDayNight;
@@ -81,6 +81,8 @@ private slots:
   void on_pushButton_2_clicked();
 
   void on_pushButton_13_clicked();
+
+  void on_checkBox_toggled(bool checked);
 
 private:
   Ui::CDayNight *ui;

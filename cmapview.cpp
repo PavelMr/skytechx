@@ -214,7 +214,7 @@ CMapView::CMapView(QWidget *parent) :
   m_bZoomByMouse = false;
   m_drawing = false;
 
-  m_bCustomTele = false;
+  m_bCustomTeleType = 0;
 
   m_zoomLens = false;
   m_bInit = false;

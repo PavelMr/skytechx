@@ -23,20 +23,6 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QDialog>
 
-class TwilightWidget : public QWidget
-{
-public:
-  TwilightWidget(QWidget *parent);
-  void setView(mapView_t *view);
-
-protected:
-  void paintEvent(QPaintEvent *e);
-
-private:
-  daylight_t m_dayLight;
-  rts_t      m_rts;
-};
-
 namespace Ui {
 class TwilightDialog;
 }
@@ -49,9 +35,23 @@ public:
   explicit TwilightDialog(QWidget *parent, mapView_t *view);
   ~TwilightDialog();
 
+private slots:
+  void on_pushButton_2_clicked();
+
+  void on_pushButton_4_clicked();
+
+  void on_pushButton_3_clicked();
+
+  void on_pushButton_clicked();
+
 private:
-  Ui::TwilightDialog *ui;
-  TwilightWidget *m_widget;
+  void setView(mapView_t *view);
+
+  Ui::TwilightDialog *ui;  
+
+  daylight_t m_dayLight;
+  rts_t      m_rts;
+  mapView_t  m_view;
 };
 
 #endif // TWILIGHTDIALOG_H

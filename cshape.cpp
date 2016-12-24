@@ -84,7 +84,7 @@ bool CShape::load(QString name)
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-int CShape::render(QPainter * /*p*/, QImage *img, mapView_t *, QColor *colList, QRect &rc)
+int CShape::render(QPainter *p, QImage *img, mapView_t *, QColor *colList, QRect &rc, bool isMilkyWay)
 /////////////////////////////////////////////////////////////////////////////////////
 {
   QColor col;
@@ -168,7 +168,10 @@ int CShape::render(QPainter * /*p*/, QImage *img, mapView_t *, QColor *colList, 
       p->drawPolygon(poly);
       */
 
-      col.setAlpha(g_skSet.map.dsoShapeAlpha);
+      if (!isMilkyWay)
+      {
+        col.setAlpha(g_skSet.map.dsoShapeAlpha);
+      }
       scanRender.renderPolygonAlpha(col, img);
     }
   }

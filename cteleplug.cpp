@@ -167,4 +167,5 @@ void tpUnloadDriver(void)
   delete tpLoader;
   tpLoader = NULL;
   g_pTelePlugin = NULL;
+  pcMapView->m_lastTeleRaDec.Ra = CM_UNDEF;
 }

@@ -1296,20 +1296,32 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
 /////////////////////////////////////////////////////////////////////
 static void renderTelescope(mapView_t *mapView, CSkPainter *pPainter)
 /////////////////////////////////////////////////////////////////////
-{
+{    
   if (g_pTelePlugin && pcMapView->m_lastTeleRaDec.Ra != CM_UNDEF)
   { // draw telescope pos.
     radec_t rd;
     QPoint  pt;
+    drawing_t dr;
     int r;
+    bool isLinked = false;
+    drawing_t *draw;
 
-    precess(&pcMapView->m_lastTeleRaDec, &rd, mapView->jd, JD2000);
+    for (int i = 0; ; i++)
+    {
+      draw = getDrawing(i);
+      if (draw == NULL)
+      {
+        break;
+      }
+      if (draw->telescopeLink)
+      {
+        isLinked = true;
+        break;
+      }
+    }
 
-    if (!pcMapView->m_bCustomTele)
-      r = g_cDrawing.drawCircle(pt, pPainter, &rd, -10, g_pTelePlugin->getTelescope());
-    else
-      r = g_cDrawing.drawCircle(pt, pPainter, &rd, pcMapView->m_customTeleRad, g_pTelePlugin->getTelescope());
-
+    precess(&pcMapView->m_lastTeleRaDec, &rd, mapView->jd, JD2000);        
+    r = g_cDrawing.drawCircle(pt, pPainter, &rd, -10, nullptr, isLinked ? "" : g_pTelePlugin->getTelescope());
     if (r > 0)
       addMapObj(rd, pt.x(), pt.y(), MO_TELESCOPE, MO_CIRCLE, r, 0, 0);
   }

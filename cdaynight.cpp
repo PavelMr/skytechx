@@ -193,7 +193,7 @@ void CDayNight::updateMap()
       int    i;
 
       if (d > DEG2RAD(90 + 18))
-        i = 255;
+        i = 255;      
       else
       if (d > DEG2RAD(90 + 12))
         i = 180;
@@ -202,7 +202,7 @@ void CDayNight::updateMap()
         i = 120;
       else
       if (d > DEG2RAD(90))
-        i = 64;
+        i = 64;      
       else
         i = 0;
 
@@ -211,7 +211,15 @@ void CDayNight::updateMap()
     }
   }
 
-  QImage b = blurredImage(*m_shade, 4, true);
+  QImage b;
+  if (ui->checkBox->isChecked())
+  {
+    b = blurredImage(*m_shade, 6, true);
+  }
+  else
+  {
+    b = *m_shade;
+  }
 
   float qx = 0;
   float qy = 0;
@@ -391,4 +399,9 @@ void CDayNight::on_pushButton_2_clicked()
 void CDayNight::on_pushButton_13_clicked()
 {
   done(DL_OK);
+}
+
+void CDayNight::on_checkBox_toggled(bool checked)
+{
+  updateMap();
 }

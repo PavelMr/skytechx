@@ -3,8 +3,10 @@
 #include "setting.h"
 #include "skcore.h"
 #include "mapobj.h"
+#include "cteleplug.h"
+#include "cmapview.h"
 
-#define DRAWING_VERSION   "VER2.0"
+#define DRAWING_VERSION   "VER2.5"
 #define ROT_MARGIN        10
 
 
@@ -72,8 +74,9 @@ void drawingSave(void)
       s << t.text_t.text;
       s << t.text_t.align;
       s << t.text_t.bRect;
-
       s << t.text_t.font;
+
+      s << t.telescopeLink;
     }
   }
 }
@@ -106,7 +109,7 @@ void drawingLoad(void)
 
     for (int i = 0; i < count; i++)
     {
-      drawing_t t;
+      drawing_t t;      
 
       s >> t.type;
       s >> t.show;
@@ -127,6 +130,8 @@ void drawingLoad(void)
       s >> t.text_t.align;
       s >> t.text_t.bRect;
       s >> t.text_t.font;
+
+      s >> t.telescopeLink;
 
       m_tList.append(t);
     }
@@ -177,6 +182,7 @@ void CDrawing::selectAndEdit(int id)
 void CDrawing::insertTelescope(radec_t *rd, float rad, QString text)
 ////////////////////////////////////////////////////////////////////
 {
+  m_drawing.telescopeLink = false;
   m_drawing.type = DT_TELESCOPE;
   m_drawing.rd = *rd;
   m_drawing.telescope_t.name = text;
@@ -193,6 +199,7 @@ void CDrawing::insertTelescope(radec_t *rd, float rad, QString text)
 void CDrawing::insertTelrad(radec_t *rd)
 ////////////////////////////////////////
 {
+  m_drawing.telescopeLink = false;
   m_drawing.type = DT_TELRAD;
   m_drawing.rd = *rd;
 
@@ -207,6 +214,7 @@ void CDrawing::insertTelrad(radec_t *rd)
 void CDrawing::insertFrmField(radec_t *rd, double x, double y, QString name)
 ////////////////////////////////////////////////////////////////////////////
 {
+  m_drawing.telescopeLink = false;
   m_drawing.type = DT_FRM_FIELD;
   m_drawing.rd = *rd;
   m_drawing.frmField_t.text = name;
@@ -225,6 +233,7 @@ void CDrawing::insertFrmField(radec_t *rd, double x, double y, QString name)
 void CDrawing::insertText(radec_t *rd, QString name, QFont *font, int align, bool bRect)
 ////////////////////////////////////////////////////////////////////////////////////////
 {
+  m_drawing.telescopeLink = false;
   m_drawing.type = DT_TEXT;
   m_drawing.rd = *rd;
   m_drawing.text_t.text = name;
@@ -252,12 +261,12 @@ void CDrawing::drawEditedObject(CSkPainter *p)
 
     case DT_TELESCOPE:
       drawCircle(out, p, &m_drawing.rd,
-                          m_drawing.telescope_t.rad,
+                          m_drawing.telescope_t.rad, &m_drawing,
                           m_drawing.telescope_t.name, true);
       break;
 
     case DT_TELRAD:
-      drawTelrad(out, p, &m_drawing.rd, true);
+      drawTelrad(out, p, &m_drawing.rd, &m_drawing, true);
       break;
 
     case DT_TEXT:
@@ -282,7 +291,7 @@ void CDrawing::drawObjects(CSkPainter *p)
     if (!m_tList[i].show)
     {
       continue;
-    }
+    }    
 
     switch (m_tList[i].type)
     {
@@ -291,12 +300,12 @@ void CDrawing::drawObjects(CSkPainter *p)
 
       case DT_TELESCOPE:
         drawCircle(out, p, &m_tList[i].rd,
-                            m_tList[i].telescope_t.rad,
+                            m_tList[i].telescope_t.rad, &m_tList[i],
                             m_tList[i].telescope_t.name, false, i);
         break;
 
       case DT_TELRAD:
-        drawTelrad(out, p, &m_tList[i].rd, false, i);
+        drawTelrad(out, p, &m_tList[i].rd, &m_tList[i], false, i);
         break;
 
       case DT_TEXT:
@@ -397,6 +406,16 @@ void CDrawing::remove()
   emit sigChange(false, m_tList.count() == 0);
 }
 
+void CDrawing::setTelescopeLink(drawing_t *drawing, bool enable)
+{
+  drawing->telescopeLink = enable;
+}
+
+void CDrawing::toggleTelescopeLink(drawing_t *drawing)
+{
+  drawing->telescopeLink = !drawing->telescopeLink;
+}
+
 ///////////////////////
 void CDrawing::cancel()
 ///////////////////////
@@ -448,7 +467,7 @@ void CDrawing::setHelp(int type)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, QString text, bool bEdited, int id)
+int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad,  drawing_t *drw, QString text, bool bEdited, int id)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt;
@@ -459,6 +478,8 @@ int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, Q
   {
     m_drawing.onScr = false;
   }
+
+  setTelescopePos(drw);
 
   if (rad > 0)
     r2 = rad;
@@ -514,7 +535,7 @@ int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad, Q
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited, int id)
+int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, drawing_t *drw, bool bEdited, int id)
 /////////////////////////////////////////////////////////////////////////////////
 {
   SKPOINT pt;
@@ -530,6 +551,8 @@ int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, bool bEdited
   {
     m_drawing.onScr = false;
   }
+
+  setTelescopePos(drw);
 
   trfRaDecToPointNoCorrect(rd, &pt);
   if (SKPLANECheckFrustumToSphere(m_frustum, &pt.w, radius1))
@@ -594,6 +617,8 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
   {
     m_drawing.onScr = false;
   }
+
+  setTelescopePos(drw);
 
   trfRaDecToPointNoCorrect(&drw->rd, &pt);
   if (SKPLANECheckFrustumToSphere(m_frustum, &pt.w, 0))
@@ -697,6 +722,17 @@ void calcAngularDistance(double ra, double dec, double angle, double distance, d
   raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
 }
 
+
+void CDrawing::setTelescopePos(drawing_t *drawing)
+{
+  if (drawing && drawing->telescopeLink && g_pTelePlugin && pcMapView->m_lastTeleRaDec.Ra != CM_UNDEF)
+  { // draw telescope pos.
+    radec_t rd;
+    precess(&pcMapView->m_lastTeleRaDec, &rd, pcMapView->m_mapView.jd, JD2000);
+    drawing->rd = rd;
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////////////////
 int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, bool bEdited, int id)
 //////////////////////////////////////////////////////////////////////////////////////
@@ -711,6 +747,8 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
     m_drawing.onScr = false;
   }
 
+  setTelescopePos(drw);
+
   double aspect = drw->frmField_t.x / drw->frmField_t.y;
   double angle = D2R(drw->angle);
 
@@ -720,7 +758,7 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
   double ang4 = MPI + atan(aspect) + angle;
   radec_t textRD;
 
-  double dist = sqrt(POW2(drw->frmField_t.x) + POW2(drw->frmField_t.y)) * 0.5;
+  double dist = sqrt(POW2(drw->frmField_t.x) + POW2(drw->frmField_t.y)) * 0.5;  
 
   calcAngularDistance(drw->rd.Ra, drw->rd.Dec, ang1, dist, drw->frmField_t.corner[0].Ra, drw->frmField_t.corner[0].Dec);
   calcAngularDistance(drw->rd.Ra, drw->rd.Dec, ang2, dist, drw->frmField_t.corner[1].Ra, drw->frmField_t.corner[1].Dec);

@@ -111,7 +111,9 @@ public:
   bool      m_bInit;
 
   radec_t   m_lastTeleRaDec;
-  bool      m_bCustomTele;
+  int       m_bCustomTeleType;  // 0- standard 1-circle 2-frame
+  double    m_customTeleX;
+  double    m_customTeleY;
   double    m_customTeleRad;
   //CZoomBar *m_zoom;
   SkMapControl *m_zoom;

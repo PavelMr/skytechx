@@ -293,6 +293,19 @@
      <normaloff>:/res/set_map_time.png</normaloff>:/res/set_map_time.png</iconset>
    </property>
   </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>540</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Blur twilight</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>pushButton</tabstop>

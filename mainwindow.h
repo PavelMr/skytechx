@@ -689,6 +689,10 @@ private slots:
 
   void on_actionVariable_stars_triggered();
 
+  void on_actionTelescope_frame_triggered();
+
+  void on_actionTwilight_2_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

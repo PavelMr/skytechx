@@ -23,16 +23,16 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "cskpainter.h"
 #include "smartlabeling.h"
 
-// TODO : dodelat to cele
-
 TwilightDialog::TwilightDialog(QWidget *parent, mapView_t *view) :
   QDialog(parent),
   ui(new Ui::TwilightDialog)
 {
-  ui->setupUi(this);
-  m_widget = new TwilightWidget(this);
-  ui->verticalLayout->addWidget(m_widget);
-  m_widget->setView(view);
+  ui->setupUi(this);  
+  m_view = *view;
+  setView(&m_view);
+
+  ui->pushButton_2->setAutoRepeat(true);
+  ui->pushButton_4->setAutoRepeat(true);
 }
 
 TwilightDialog::~TwilightDialog()
@@ -40,132 +40,47 @@ TwilightDialog::~TwilightDialog()
   delete ui;
 }
 
-///////////////////////////////////
-
-TwilightWidget::TwilightWidget(QWidget *parent) : QWidget(parent)
+void TwilightDialog::setView(mapView_t *view)
 {
-}
-
-void TwilightWidget::setView(mapView_t *view)
-{
+  double tz = view->geo.tz;
   CRts rts;
   rts.calcTwilight(&m_dayLight, view);
 
-  rts.calcOrbitRTS(&m_rts, PT_SUN, MO_PLANET, view);
+  rts.calcOrbitRTS(&m_rts, PT_SUN, MO_PLANET, view);  
 
-  qDebug() << m_rts.flag;
-  qDebug() << m_dayLight.beginAstroTw;
-  update();
+  setWindowTitle(tr("Twilight") + " "  + getStrDate(view->jd, tz));
+
+  ui->label_t0->setText(m_dayLight.beginAstroTw > 0 ? getStrTime(m_dayLight.beginAstroTw, tz) : "---");
+  ui->label_t1->setText(m_dayLight.beginNauticalTw > 0 ? getStrTime(m_dayLight.beginNauticalTw, tz) : "---");
+  ui->label_t2->setText(m_dayLight.beginCivilTw > 0 ? getStrTime(m_dayLight.beginCivilTw, tz) : "---");
+  ui->label_t3->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_RISE ? getStrTime(m_rts.rise, tz) : "---");
+  ui->label_t4->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_TRANSIT ? getStrTime(m_rts.transit, tz) : "---");
+  ui->label_t5->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_SET ? getStrTime(m_rts.set, tz) : "---");
+  ui->label_t6->setText(m_dayLight.endCivilTw > 0 ? getStrTime(m_dayLight.endCivilTw, tz) : "---");
+  ui->label_t7->setText(m_dayLight.endNauticalTw > 0 ? getStrTime(m_dayLight.endNauticalTw, tz) : "---");
+  ui->label_t8->setText(m_dayLight.endAstroTw > 0 ? getStrTime(m_dayLight.endAstroTw, tz) : "---");
 }
 
-void TwilightWidget::paintEvent(QPaintEvent *)
+
+void TwilightDialog::on_pushButton_2_clicked()
 {
-  const QColor colorDay = QColor(219, 233, 255);
-  const QColor colorNight = QColor(31, 37, 45);
+  m_view.jd--;
+  setView(&m_view);
+}
 
-  SmartLabeling label;
-  CSkPainter p(this);
-  p.setRenderHint(QPainter::Antialiasing);
+void TwilightDialog::on_pushButton_4_clicked()
+{
+  m_view.jd++;
+  setView(&m_view);
+}
 
-  int radius = qMin(width(), height()) * 0.4;
+void TwilightDialog::on_pushButton_3_clicked()
+{
+  m_view.jd = jdGetCurrentJD();
+  setView(&m_view);
+}
 
-  p.fillRect(rect(), Qt::black);
-
-  p.save();
-
-  p.translate(rect().center());
-
-
-  if (m_rts.flag == RTS_CIRC)
-  {
-    p.setPen(Qt::NoPen);
-    p.setBrush(colorDay);
-    p.drawPie(-radius, -radius, radius * 2, radius * 2, 0, 360 * 16);
-
-    label.addLabel(QPoint(0, 0), 0, tr("Polar day"), -1, SL_AL_CENTER, SL_AL_FIXED);
-
-    p.setPen(Qt::black);
-    label.render(&p);
-  }
-  else
-  if (m_rts.flag == RTS_NONV && m_dayLight.beginAstroTw == 0 &&
-      m_dayLight.beginCivilTw == 0 && m_dayLight.beginNauticalTw == 0 &&
-      m_dayLight.endAstroTw == 0 && m_dayLight.endCivilTw == 0 && m_dayLight.endNauticalTw == 0)
-  {
-    p.setPen(Qt::NoPen);
-    p.setBrush(colorNight);
-    p.drawPie(-radius, -radius, radius * 2, radius * 2, 0, 360 * 16);
-
-    label.addLabel(QPoint(0, 0), 0, tr("Polar night"), -1, SL_AL_CENTER, SL_AL_FIXED);
-
-    p.setPen(Qt::white);
-    label.render(&p);
-  }
-  else
-  {
-    p.setPen(Qt::NoPen);
-
-    double a1 = 0;
-    double a2;
-    double last = 0;
-    QColor color;
-
-    if (m_rts.flag == RTS_DONE)
-    {
-      color = colorDay;
-      a2 = 90;
-      p.setBrush(color);
-      p.drawPie(-radius, -radius, radius * 2, radius * 2,(90 + a1) * 16, a2 * 16);
-      last = 90 + a2;
-    }
-
-    if (m_dayLight.beginCivilTw > 0)
-    {
-      color = Qt::red;
-      a2 = last;
-      p.setBrush(color);
-      p.drawPie(-radius, -radius, radius * 2, radius * 2,a2 * 16, 6 * 16);
-    }
-
-    /*
-    p.setPen(Qt::NoPen);
-    p.setBrush(colorDay);
-    p.drawPie(-radius, -radius, radius * 2, radius * 2, 90 * 16, -90 * 16);
-
-    if (m_dayLight.endCivilTw)
-    {
-      p.setPen(Qt::NoPen);
-      p.setBrush(Qt::red);
-      p.drawPie(-radius, -radius, radius * 2, radius * 2, 0 * 16, -6 * 16);
-    }
-
-    if (m_dayLight.endNauticalTw)
-    {
-      p.setPen(Qt::NoPen);
-      p.setBrush(Qt::green);
-      p.drawPie(-radius, -radius, radius * 2, radius * 2, -6 * 16, -6 * 16);
-    }
-
-    if (m_dayLight.endAstroTw)
-    {
-      p.setPen(Qt::NoPen);
-      p.setBrush(Qt::yellow);
-      p.drawPie(-radius, -radius, radius * 2, radius * 2, -12 * 16, -6 * 16);
-    }
-    */
-
-    /*
-    p.setBrush(colorNight);
-    p.drawPie(-radius, -radius, radius * 2, radius * 2, 0, -6 * 16);
-
-    p.setBrush(Qt::red);
-    p.drawPie(-radius, -radius, radius * 2, radius * 2, -6 * 16, -6 * 16);
-    */
-  }
-
-  p.setPen(Qt::white);
-  p.setBrush(Qt::NoBrush);
-  p.drawCircle(QPoint(0, 0), radius);
-
-  p.restore();
+void TwilightDialog::on_pushButton_clicked()
+{
+  done(DL_OK);
 }

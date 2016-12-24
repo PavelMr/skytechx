@@ -51,7 +51,7 @@ void CMilkyWay::render(mapView_t *view, CSkPainter *pPainter, QImage *pImg)
                    CLAMP(col.green() + g_skSet.map.milkyWay.darkest , 0, 255),
                    CLAMP(col.blue() + g_skSet.map.milkyWay.darkest, 0, 255));
 
-  shape.render(pPainter, pImg, view, cols, rc);
+  shape.render(pPainter, pImg, view, cols, rc, true);
 }
 
 
