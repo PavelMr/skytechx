@@ -18,8 +18,9 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BUILD_INC_H
 #define BUILD_INC_H
 
-#define DEF_BUILD_NO 222 // beta
+#define DEF_BUILD_NO 230 // 1.05
 
+// 230 // beta 1.05
 // 222 // beta 1.05 beta (2)
 // 221 // beta 1.05 beta (1)
 // 212 // 1.041

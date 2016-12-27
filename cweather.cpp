@@ -48,6 +48,7 @@ void CWeather::updateInfo()
   double windSpeed = 0;
   double windDeg = 0;
   double cloudiness = 0;
+  QString description = "N/A";
   QString icon;
   QString cityName;
   QString country = "N/A";
@@ -59,7 +60,7 @@ void CWeather::updateInfo()
     tempObject = val.toObject();
     temp = tempObject.value(QStringLiteral("temp")).toDouble();
     humidity = tempObject.value(QStringLiteral("humidity")).toDouble();
-    pressure = tempObject.value(QStringLiteral("pressure")).toDouble();
+    pressure = tempObject.value(QStringLiteral("pressure")).toDouble();    
   }
 
 
@@ -72,6 +73,7 @@ void CWeather::updateInfo()
     val = weatherArray.at(0);
     tempObject = val.toObject();
     icon = tempObject.value("icon").toString() + ".png";
+    description = tempObject.value(QStringLiteral("description")).toString();
   }
 
   if (obj.contains(QStringLiteral("sys")))
@@ -102,9 +104,9 @@ void CWeather::updateInfo()
   }
 
   if (obj.contains(QStringLiteral("clouds")))
-  {
+  {    
     val = obj.value(QStringLiteral("clouds"));
-    tempObject = val.toObject();
+    tempObject = val.toObject();    
     cloudiness = tempObject.value(QStringLiteral("all")).toDouble();
   }
 
@@ -120,6 +122,11 @@ void CWeather::updateInfo()
     ui->label_6->setText(tr("Clouds : ") + QString("%1%").arg(cloudiness, 0, 'f', 0));
     ui->label_7->setText(tr("Name : ") + cityName + ", " + country);
     ui->label_8->setText(tr("Date/Time : ") + locale.toString(dateTime, QLocale::ShortFormat));
+    if (!description.isEmpty())
+    {
+      description[0] = description[0].toUpper();
+      ui->label_9->setText(description);
+    }
   }
   else
   {

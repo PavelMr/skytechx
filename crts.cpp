@@ -81,14 +81,14 @@ void CRts::calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view)
   double  tmpJD = view->jd;
   double  jd;
   double  add = RTS_IADD;
-  double  curDay = (floor(view->jd + 0.5) - 0.5) - view->geo.tz;
+  double  curDay = getStartOfDay(view->jd, view->geo.tz);
   double  startDay = curDay;
   double  lAzm;
   double  lAlt;
   double  azm;
   double  alt;
   double  r;
-  radec_t rd;
+  radec_t rd;  
 
   jd = curDay;
   v = *view;
@@ -234,7 +234,7 @@ void CRts::calcFixed(rts_t *rts, double ra, double dec, const mapView_t *view)
   mapView_t v;
   double jd;
   double add = RTS_IADD;
-  double curDay = (floor(view->jd + 0.5) - 0.5) - view->geo.tz;
+  double curDay = getStartOfDay(view->jd, view->geo.tz);
   double startDay = curDay;
   double lAzm;
   double lAlt;
@@ -367,7 +367,49 @@ void CRts::calcFixed(rts_t *rts, double ra, double dec, const mapView_t *view)
     rts->rts |= RTS_T_SET;
 }
 
+/////////////////////////////////////////////////////////
+void CRts::calcTwilight(daylight_t *rts, mapView_t *view, double sunTransit)
+/////////////////////////////////////////////////////////
+{
+  mapView_t v;
+  double    jd;
 
+  v = *view;
+
+  memset(rts, 0, sizeof(daylight_t));
+
+  if (calcSunPosAtAlt(sunTransit, DEG2RAD(-18), &jd, &v, true, false))
+  {
+    rts->beginAstroTw = jd;
+  }
+
+  if (calcSunPosAtAlt(sunTransit, DEG2RAD(-12), &jd, &v, true, false))
+  {
+    rts->beginNauticalTw = jd;
+  }
+
+  if (calcSunPosAtAlt(sunTransit, DEG2RAD(-6), &jd, &v, true, false))
+  {
+    rts->beginCivilTw = jd;
+  }
+
+  if (calcSunPosAtAlt(sunTransit, DEG2RAD(-18), &jd, &v, true, true))
+  {
+    rts->endAstroTw = jd;
+  }
+
+  if (calcSunPosAtAlt(sunTransit, DEG2RAD(-12), &jd, &v, true, true))
+  {
+    rts->endNauticalTw = jd;
+  }
+
+  if (calcSunPosAtAlt(sunTransit, DEG2RAD(-6), &jd, &v, true, true))
+  {
+    rts->endCivilTw = jd;
+  }
+}
+
+#if 0
 /////////////////////////////////////////////////////////
 void CRts::calcTwilight(daylight_t *rts, mapView_t *view)
 /////////////////////////////////////////////////////////
@@ -378,52 +420,59 @@ void CRts::calcTwilight(daylight_t *rts, mapView_t *view)
 
   v = *view;
 
-  memset(rts, 0, sizeof(daylight_t));
+  memset(rts, 0, sizeof(daylight_t));    
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-18), &jd, &v, true))
-  {
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-18), &jd, &v, true, false))
+  {    
     rts->beginAstroTw = jd;
   }
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-12), &jd, &v, true))
-  {
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-12), &jd, &v, true, false))
+  {   
     rts->beginNauticalTw = jd;
   }
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-6), &jd, &v, true))
-  {
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-6), &jd, &v, true, false))
+  {   
     rts->beginCivilTw = jd;
   }
 
   startDay += 0.5;
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-18), &jd, &v, true))
-  {
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-18), &jd, &v, true, true))
+  {   
     rts->endAstroTw = jd;
   }
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-12), &jd, &v, true))
-  {
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-12), &jd, &v, true, true))
+  {   
     rts->endNauticalTw = jd;
   }
 
-  if (calcSunPosAtAlt(startDay, DEG2RAD(-6), &jd, &v, true))
-  {
+  if (calcSunPosAtAlt(startDay, DEG2RAD(-6), &jd, &v, true, true))
+  {   
     rts->endCivilTw = jd;
   }
 }
+#endif
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool center)
+bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool center, bool ascent)
 //////////////////////////////////////////////////////////////////////////////////////////////////
 {
+  double mul = ascent ? 1 : -1;
+
+  double tz = view->geo.tz;
+
   double  jd = start;
-  double  add = RTS_IADD;
+  double  add = RTS_IADD * mul;
   int     cnt;
   double  lAzm, lAlt;
   double  alt, azm;
-  radec_t rd;
+  radec_t rd;  
+
+  //qDebug() << mul << ascent;
 
   view->jd = jd;
   ast->setParam(view);
@@ -439,12 +488,12 @@ bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *
     ast->setParam(view);
     r = getRTSRaDecFromPtr(&rd, PT_SUN, MO_PLANET, jd);
     if (center) r = 0;
-    ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);
+    ast->convRD2AARef(rd.Ra, rd.Dec, &azm, &alt, r);    
     if ((alt > atAlt && lAlt < atAlt) || (alt < atAlt && lAlt > atAlt))
     {
       jd -= add;
       add /= 2.0;
-      if (add < m_limit) break;
+      if (qAbs(add) < m_limit) break;
     }
     else
     {
@@ -457,10 +506,10 @@ bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *
     lAlt = alt;
   }
 
-  if (jd > start + 1)
+  if ((jd > start + 0.5) || (jd < start - 0.5))
     return(false);
 
-  *jdTo = jd;
+  *jdTo = jd;  
 
   return(true);
 }

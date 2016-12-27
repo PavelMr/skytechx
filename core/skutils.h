@@ -27,6 +27,8 @@ SKPOINT max4Y(const SKPOINT &p1, const SKPOINT &p2, const SKPOINT &p3, const SKP
 int max4(int v1, int v2, int v3, int v4);
 int min4(int v1, int v2, int v3, int v4);
 
+double getStartOfDay(double jd, double tz);
+
 double anSep(double R1, double D1, double R2, double D2);
 void getRDCenter(radec_t *out, radec_t *rd1, radec_t *rd2);
 void getRDCenter(radec_t *out, const QList<radec_t> &in);
@@ -60,7 +62,7 @@ QString getStrLat(double deg);
 QString getStrSize(double sx, double sy);
 QString getStrSize(double sx);
 
-QString getStrTimeFromDayFrac(double day);
+QString getStrTimeFromDayFrac(double day, bool showSec = true);
 QString getStrTimeFromDayRads(double rads);
 
 QString getStrMag(double mag);

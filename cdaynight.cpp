@@ -99,8 +99,8 @@ void CDayNight::paintEvent(QPaintEvent *)
   CAstro       ast;
   orbit_t      sun;
 
-  view = m_view;
-  double jd = (floor(m_jd + 0.5) - 0.5) - view.geo.tz;
+  view = m_view;  
+  double jd = getStartOfDay(m_jd, view.geo.tz);
 
   QImage img(24, 1, QImage::Format_ARGB32);
   img.fill(Qt::blue);

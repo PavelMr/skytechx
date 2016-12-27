@@ -42,9 +42,7 @@ void CDailyEv::setTitle()
 }
 
 void CDailyEv::fillList()
-{
-  //double curDay = (floor(m_view.jd + 0.5) - 0.5) - HR2DF(m_view.geo.timeZone + m_view.geo.sdlt);
-
+{  
   QStandardItemModel *m = (QStandardItemModel *)ui->treeView->model();
 
   if (m != NULL)
@@ -113,8 +111,10 @@ void CDailyEv::fillList()
 
   CRts       cRts;
   daylight_t dl;
+  rts_t      rts;
 
-  cRts.calcTwilight(&dl, &m_view);
+  cRts.calcOrbitRTS(&rts, PT_SUN, MO_PLANET, &m_view);
+  cRts.calcTwilight(&dl, &m_view, rts.transit);
 
   if (dl.beginAstroTw > 0)
   {

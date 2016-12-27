@@ -16,7 +16,7 @@ CSatEvents::CSatEvents(QWidget *parent, mapView_t *view) :
   m_view = *view;
   m_jd = m_view.jd;
 
-  m_jd = (floor(m_jd + 0.5) - 0.5) - m_view.geo.tz;
+  m_jd = getStartOfDay(m_jd, view->geo.tz);
 
   ui->comboBox->addItem(cAstro.getName(PT_MARS));
   ui->comboBox->addItem(cAstro.getName(PT_JUPITER));

@@ -523,7 +523,7 @@ QString getStrDegDF(double deg)
 
 /////////////////////////////////////////
 // day = 0..1
-QString getStrTimeFromDayFrac(double day)
+QString getStrTimeFromDayFrac(double day, bool showSec)
 /////////////////////////////////////////
 {
   QString str;
@@ -531,7 +531,10 @@ QString getStrTimeFromDayFrac(double day)
 
   getDMSFromRad(day * 360 / RAD / 15.0, &d, &m, &s);
 
-  str = str.sprintf("%02dh %02dm %02ds", d, m, s);
+  if (showSec)
+    str = str.sprintf("%02dh %02dm %02ds", d, m, s);
+  else
+    str = str.sprintf("%02dh %02dm", d, m);
 
   return(str);
 }
@@ -647,7 +650,14 @@ QString getStrTime(double jd, double tz, bool noSec, bool noTZ)
   jdConvertJDTo_DateTime(jd, &t);
 
   if (noSec)
-    str = t.time().toString("hh:mm") + tzName;
+  {
+    if (t.time().second() > 30)
+    {
+      t = t.addSecs(30);
+    }
+    str = QString("%1:%2").arg(t.time().hour(), 2, 10, QChar('0')).arg(t.time().minute(), 2, 10, QChar('0'));
+    //str = t.time().toString("hh:mm") + tzName;
+  }
   else
     str = t.time().toString("hh:mm:ss") + tzName ;
 
@@ -831,4 +841,9 @@ qint64 folderFileSize(const QString &path)
   scanDir(path);
 
   return pathFileSize;
+}
+
+double getStartOfDay(double jd, double tz)
+{
+  return (floor(jd + tz - 0.5) + 0.5) - tz;
 }

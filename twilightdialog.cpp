@@ -33,6 +33,26 @@ TwilightDialog::TwilightDialog(QWidget *parent, mapView_t *view) :
 
   ui->pushButton_2->setAutoRepeat(true);
   ui->pushButton_4->setAutoRepeat(true);
+
+  /*
+  QFile ff("tw.csv");
+
+  ff.open(QFile::WriteOnly | QFile::Text);
+
+  QTextStream ts(&ff);
+
+  for (int i = 0; i < 365; i++)
+  {
+    CRts rts;
+    rts.calcTwilight(&m_dayLight, &m_view);
+
+    ts << i << ";" << getStrDate(m_dayLight.beginAstroTw, 0) << ";" << getStrTime(m_dayLight.beginAstroTw, 0, true, true) << ";" <<
+                      getStrDate(m_dayLight.endAstroTw, 0) << ";" << getStrTime(m_dayLight.endAstroTw, 0, true, true);
+    ts << "\n";
+
+    m_view.jd++;
+  }
+  */
 }
 
 TwilightDialog::~TwilightDialog()
@@ -43,33 +63,58 @@ TwilightDialog::~TwilightDialog()
 void TwilightDialog::setView(mapView_t *view)
 {
   double tz = view->geo.tz;
+  mapView_t _view = *view;
   CRts rts;
-  rts.calcTwilight(&m_dayLight, view);
 
-  rts.calcOrbitRTS(&m_rts, PT_SUN, MO_PLANET, view);  
+  rts.calcOrbitRTS(&m_rts, PT_SUN, MO_PLANET, &_view);
+  rts.calcTwilight(&m_dayLight, &_view, m_rts.transit);
 
-  setWindowTitle(tr("Twilight") + " "  + getStrDate(view->jd, tz));
+  setWindowTitle(tr("Twilight") + " "  + getStrDate(_view.jd, tz));
 
-  ui->label_t0->setText(m_dayLight.beginAstroTw > 0 ? getStrTime(m_dayLight.beginAstroTw, tz) : "---");
-  ui->label_t1->setText(m_dayLight.beginNauticalTw > 0 ? getStrTime(m_dayLight.beginNauticalTw, tz) : "---");
-  ui->label_t2->setText(m_dayLight.beginCivilTw > 0 ? getStrTime(m_dayLight.beginCivilTw, tz) : "---");
-  ui->label_t3->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_RISE ? getStrTime(m_rts.rise, tz) : "---");
-  ui->label_t4->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_TRANSIT ? getStrTime(m_rts.transit, tz) : "---");
-  ui->label_t5->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_SET ? getStrTime(m_rts.set, tz) : "---");
-  ui->label_t6->setText(m_dayLight.endCivilTw > 0 ? getStrTime(m_dayLight.endCivilTw, tz) : "---");
-  ui->label_t7->setText(m_dayLight.endNauticalTw > 0 ? getStrTime(m_dayLight.endNauticalTw, tz) : "---");
-  ui->label_t8->setText(m_dayLight.endAstroTw > 0 ? getStrTime(m_dayLight.endAstroTw, tz) : "---");
+  ui->label_t0->setText(m_dayLight.beginAstroTw > 0 ? getStrTime(m_dayLight.beginAstroTw, tz, true) : "---");
+  ui->label_t1->setText(m_dayLight.beginNauticalTw > 0 ? getStrTime(m_dayLight.beginNauticalTw, tz, true) : "---");
+  ui->label_t2->setText(m_dayLight.beginCivilTw > 0 ? getStrTime(m_dayLight.beginCivilTw, tz, true) : "---");
+  ui->label_t3->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_RISE ? getStrTime(m_rts.rise, tz, true) : "---");
+  ui->label_t4->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_TRANSIT ? getStrTime(m_rts.transit, tz, true) : "---");
+  ui->label_t5->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_SET ? getStrTime(m_rts.set, tz, true) : "---");
+  ui->label_t6->setText(m_dayLight.endCivilTw > 0 ? getStrTime(m_dayLight.endCivilTw, tz, true) : "---");
+  ui->label_t7->setText(m_dayLight.endNauticalTw > 0 ? getStrTime(m_dayLight.endNauticalTw, tz, true) : "---");
+  ui->label_t8->setText(m_dayLight.endAstroTw > 0 ? getStrTime(m_dayLight.endAstroTw, tz, true) : "---");
+
+  //qDebug() << getStrDate(m_dayLight.beginAstroTw, tz) << getStrDate(m_dayLight.endAstroTw, tz);
+
+  daylight_t nextDay;
+  _view.jd++;
+  rts.calcOrbitRTS(&m_rts, PT_SUN, MO_PLANET, &_view);
+  rts.calcTwilight(&nextDay, &_view, m_rts.transit);
+  if (nextDay.beginAstroTw > 0 && m_dayLight.endAstroTw > 0)
+  {
+    ui->label_a1->setText(getStrTimeFromDayFrac(qAbs(nextDay.beginAstroTw - m_dayLight.endAstroTw), false));
+  }
+  else
+    ui->label_a1->setText("---");
+
+  if ((m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_RISE) &&
+      (m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_SET))
+  {
+    ui->label_a2->setText(getStrTimeFromDayFrac(qAbs(m_rts.set - m_rts.rise), false));
+  }
+  else
+  {
+    ui->label_a2->setText("---");
+  }
+
 }
 
 
 void TwilightDialog::on_pushButton_2_clicked()
-{
+{  
   m_view.jd--;
   setView(&m_view);
 }
 
 void TwilightDialog::on_pushButton_4_clicked()
-{
+{ 
   m_view.jd++;
   setView(&m_view);
 }

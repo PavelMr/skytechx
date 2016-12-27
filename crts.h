@@ -47,10 +47,10 @@ public:
     void setLowPrec(void);
     void calcFixed(rts_t *rts, double ra, double dec, const mapView_t *view);
     void calcOrbitRTS(rts_t *rts, qint64 ptr, int type, const mapView_t *view);
-    void calcTwilight(daylight_t *rts, mapView_t *view);
+    void calcTwilight(daylight_t *rts, mapView_t *view, double sunTransit);
 
 protected:
-    bool calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool center);
+    bool calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool center, bool ascent);
     bool isNotRTS(double dec, rts_t *rts, const mapView_t *view);
   double getRTSRaDecFromPtr(radec_t *rd, qint64 ptr, int type, double jd);
 

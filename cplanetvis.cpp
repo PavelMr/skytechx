@@ -96,7 +96,7 @@ void CPlanetVis::paintEvent(QPaintEvent *)
     orbit_t   sun;
     CAstro    astro;
     mapView_t view = m_view;
-    double    jd = (floor(m_view.jd + 0.5) - 0.5) - m_view.geo.tz;
+    double    jd = getStartOfDay(m_view.jd, m_view.geo.tz);
 
     fRect = frm[i]->geometry();
 
