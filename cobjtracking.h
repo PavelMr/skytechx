@@ -17,6 +17,7 @@ typedef struct
   bool       show;
   QString    objName;
   int        labelStep;
+  int        markStep;
   bool       bShowDateTime;
   bool       bShowMag;
   float      labelAngle;

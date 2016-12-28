@@ -5,6 +5,8 @@
 #include "setting.h"
 #include "csgp4.h"
 
+#define TRACKING_VERSION        "TRK10"
+
 QList <tracking_t> tTracking;
 extern CMapView    *pcMapView;
 
@@ -18,6 +20,12 @@ void loadTracking(void)
   if (f.open(SkFile::ReadOnly))
   {
     int count;
+    QString version;
+
+    s >> version;
+
+    if (version != TRACKING_VERSION)
+      return;
 
     s >> count;
 
@@ -65,6 +73,7 @@ void saveTracking(void)
 
   if (f.open(SkFile::WriteOnly))
   {
+    s << QString(TRACKING_VERSION);
     s << tTracking.count();
 
     for (int i = 0; i < tTracking.count(); i++)
@@ -150,8 +159,10 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
   SKPOINT p1;
   SKPOINT p2;
 
-  int size = 4;
-  int markPeriod = 5;
+  int markSize = 2;
+  int size = 4;  
+
+  pPainter->setBrush(QColor(g_skSet.map.tracking.color));
 
   for (int i = 0; i < tTracking.count(); i++)
   {
@@ -166,6 +177,7 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
     bool  bDT = tTracking[i].bShowDateTime;
     bool  bMag = tTracking[i].bShowMag;
     float la = tTracking[i].labelAngle;
+    int   markStep = tTracking[i].markStep;
 
     for (int j = 0; j < tTracking[i].tPos.count() - 1; j++)
     {
@@ -198,8 +210,10 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
         }
         else
         {
-          if ((j % markPeriod) == 0)
-            drawLineTicks(&p1, &p2, pPainter, size, &p1);
+          if ((j % markStep) == 0)
+          {
+            pPainter->drawCircle(QPoint(p1.sx, p1.sy), markSize);
+          }
         }
 
         if (j + 2 == tTracking[i].tPos.count())
@@ -222,8 +236,8 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
           }
           else
           {
-            if ((j % markPeriod) == 0)
-              drawLineTicks(&p1, &p2, pPainter, size, &p2);
+            if ((j % markStep) == 0)
+              pPainter->drawCircle(QPoint(p2.sx, p2.sy), markSize);
           }
         }
       }
@@ -344,6 +358,7 @@ void CObjTracking::on_pushButton_2_clicked()
   track.jdFrom = jdFrom;
   track.jdTo = jdTo;
   track.type = m_item->type;
+  track.markStep = ui->spinBox_4->value();
 
   switch (m_item->type)
   {
