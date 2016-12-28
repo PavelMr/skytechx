@@ -438,9 +438,9 @@ void mapObjContextMenu(CMapView *map)
         if (g_pTelePlugin && pcMapView->m_lastTeleRaDec.Ra != CM_UNDEF)
         {
           if (getDrawing(o.par1)->telescopeLink)
-            a = myMenu.addAction(QObject::tr("Unlink object '") + name + "' from telescope");
+            a = myMenu.addAction(QObject::tr("Unlink object '%1' from telescope").arg(name));
           else
-            a = myMenu.addAction(QObject::tr("Link object '") + name + "' with telescope");
+            a = myMenu.addAction(QObject::tr("Link object '%1' to telescope").arg(name));
           drawingMap[a] = o.par1;
           a->setData(-11);
         }

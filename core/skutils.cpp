@@ -655,7 +655,7 @@ QString getStrTime(double jd, double tz, bool noSec, bool noTZ)
     {
       t = t.addSecs(30);
     }
-    str = QString("%1:%2").arg(t.time().hour(), 2, 10, QChar('0')).arg(t.time().minute(), 2, 10, QChar('0'));
+    str = QString("%1:%2").arg(t.time().hour(), 2, 10, QChar('0')).arg(t.time().minute(), 2, 10, QChar('0')) + tzName;
     //str = t.time().toString("hh:mm") + tzName;
   }
   else

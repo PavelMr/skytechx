@@ -81,8 +81,6 @@ void TwilightDialog::setView(mapView_t *view)
   ui->label_t7->setText(m_dayLight.endNauticalTw > 0 ? getStrTime(m_dayLight.endNauticalTw, tz, true) : "---");
   ui->label_t8->setText(m_dayLight.endAstroTw > 0 ? getStrTime(m_dayLight.endAstroTw, tz, true) : "---");
 
-  //qDebug() << getStrDate(m_dayLight.beginAstroTw, tz) << getStrDate(m_dayLight.endAstroTw, tz);
-
   daylight_t nextDay;
   _view.jd++;
   rts.calcOrbitRTS(&m_rts, PT_SUN, MO_PLANET, &_view);
@@ -94,10 +92,11 @@ void TwilightDialog::setView(mapView_t *view)
   else
     ui->label_a1->setText("---");
 
+  // TODO: pocita to spatne kdyz je vychod pozdeji nez zapad (pri posunu TZ)
   if ((m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_RISE) &&
       (m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_SET))
   {
-    ui->label_a2->setText(getStrTimeFromDayFrac(qAbs(m_rts.set - m_rts.rise), false));
+    ui->label_a2->setText(getStrTimeFromDayFrac(m_rts.set - m_rts.rise, false));
   }
   else
   {

@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
 
   QSettings settings;
 
-  g_pApp = &a;
+  g_pApp = &a; 
 
   // parse cmd line
   for (int i = 1; i < argc; i++)

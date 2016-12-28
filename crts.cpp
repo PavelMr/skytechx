@@ -470,9 +470,7 @@ bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *
   int     cnt;
   double  lAzm, lAlt;
   double  alt, azm;
-  radec_t rd;  
-
-  //qDebug() << mul << ascent;
+  radec_t rd;   
 
   view->jd = jd;
   ast->setParam(view);
