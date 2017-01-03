@@ -104,6 +104,7 @@
 #include "skstopwatchctrl.h"
 #include "variablestarsdialog.h"
 #include "twilightdialog.h"
+#include "planetreport.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -6866,8 +6867,8 @@ void MainWindow::on_actionTelescope_frame_triggered()
 }
 
 void MainWindow::on_actionTwilight_2_triggered()
-{
+{  
   TwilightDialog dlg(this, &ui->widget->m_mapView);
 
-  dlg.exec();
+  dlg.exec(); 
 }
