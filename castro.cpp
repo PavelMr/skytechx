@@ -1570,6 +1570,120 @@ void CAstro::solveMoon(orbit_t *o)
 }
 
 
+///////////////////////////////////////////
+double CAstro::getMoonAgeInDays(orbit_t *o)
+///////////////////////////////////////////
+{
+  double age = -R2D(o->elongation);
+
+  rangeDbl(&age, 360);
+  return (age / 360.) * 29.53058868;
+}
+
+/////////////////////////////////////
+double CAstro::getMoonAge(orbit_t *o)
+/////////////////////////////////////
+{
+  double age = -R2D(o->elongation);
+
+  rangeDbl(&age, 360);
+  return (age / 360.);
+}
+
+////////////////////////////////////////
+QString CAstro::getMoonPhase(orbit_t *o)
+////////////////////////////////////////
+{
+  double age = getMoonAgeInDays(o);
+
+  int index = (int)((age + 2) * 16 / 59) % 8;
+
+  static QString description[] = {
+        tr("New"),                  /* totally dark                         */
+        tr("Waxing crescent"),      /* increasing to full & quarter light   */
+        tr("First quarter"),        /* increasing to full & half light      */
+        tr("Waxing gibbous"),       /* increasing to full & > than half     */
+        tr("Full"),                 /* fully lighted                        */
+        tr("Waning gibbous"),       /* decreasing from full & > than half   */
+        tr("Last quarter"),         /* decreasing from full & half light    */
+        tr("Waning crescent")       /* decreasing from full & quarter light */
+        };
+
+  return description[index];
+}
+
+////////////////////////////////////////////////////////////////
+int CAstro::solveMoonPhase(const mapView_t *view, double *jdOut)
+////////////////////////////////////////////////////////////////
+{
+  #define MAX_RTS_ITIN  1000
+
+  CAstro ast;
+  double curDay = getStartOfDay(view->jd, view->geo.tz);
+  orbit_t o;
+  mapView_t v = *view;
+  double request[4] = {R180, 0, R90, -R90};
+
+  for (int i = 0; i < 4; i++)
+  {
+    double add = JD1SEC * 60 * 60 * 3;
+    double lElon;
+    double req = request[i];
+    const double limit = JD1SEC * 30;
+    double jd = curDay;
+
+    v.jd = jd;
+    ast.setParam(&v);
+    ast.calcPlanet(PT_MOON, &o);
+    lElon = o.elongation;
+
+    qDebug() << i << req;
+
+    int cnt = 0;
+    while (1)
+    {
+      v.jd = jd;
+      ast.setParam(&v);
+      ast.calcPlanet(PT_MOON, &o);
+
+      //qDebug() << R2D(o.elongation) << R2D(lElon);
+
+      double e1 = o.elongation + R180;
+      double e2 = lElon + R180;
+
+      //qDebug() << R2D(e1) << R2D(e2) << R2D(o.elongation);
+
+      if (((o.elongation >= req && lElon <= req) || (o.elongation <= req && lElon >= req)) || (e1 <= R360 && e2 >= 0 && qAbs(e1 - e2) > R90))
+      {
+        jd -= add;
+        add *= 0.5;
+        if (add < limit)
+        {
+          *jdOut = jd;
+          qDebug() << jd << getStrDateTime(jd, view->geo.tz) << i;
+          return i;
+        }
+      }
+      else
+      {
+        jd += add;
+      }
+
+      if (++cnt > MAX_RTS_ITIN || jd > curDay + 1)
+      {
+        //qDebug() << "none";
+        break;
+      }
+      lElon = o.elongation;
+    }
+  }
+
+  qDebug() << "none";//jd << (add < limit) << getStrDateTime(jd, view->geo.tz);
+  //qDebug() << jd << (add < limit) << getStrDateTime(jd, view->geo.tz);
+
+  return -1;
+}
+
 /////////////////////////////////
 void CAstro::solveSun(orbit_t *o)
 /////////////////////////////////

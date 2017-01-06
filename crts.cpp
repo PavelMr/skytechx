@@ -8,7 +8,7 @@
 // TODO: kontrola jizni polokoule
 // TODO: u fixed objektu pouzit alg. meeus str. 97
 
-#define RTS_IADD        JD1SEC * 60 * 60 * 3   // 1h
+#define RTS_IADD        JD1SEC * 60 * 60 * 3
 #define MAX_RTS_ITIN    3000
 
 CRts::CRts()

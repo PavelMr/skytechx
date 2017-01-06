@@ -2596,6 +2596,22 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   {
     addTextItem(item, tr("Phase"), QString("%1%").arg(o.phase * 100.0, 0, 'f', 2));
     addTextItem(item, tr("Phase angle"), QString("%1°").arg(R2D(o.FV), 0, 'f', 2));    
+
+    if (item->par1 == PT_MOON)
+    {
+      double age = CAstro::getMoonAgeInDays(&o);
+      addTextItem(item, tr("Age"), QString(tr("%1 day(s)")).arg(age, 0, 'f', 2));
+      addTextItem(item, tr("Phase"), CAstro::getMoonPhase(&o));
+
+      /*
+      double jdo;
+      if (CAstro::solveMoonPhase(view, &jdo) != -1)
+      {
+        addTextItem(item, tr("Time"), getStrTime(jdo, view->geo.tz));
+      }
+      */
+
+    }
   }
   addTextItem(item, tr("P.A."), QString("%1°").arg(R2D(o.PA), 0, 'f', 1));
 

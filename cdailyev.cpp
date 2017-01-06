@@ -59,6 +59,28 @@ void CDailyEv::fillList()
   CDailyEvItem *item;
 
   int row = 0;
+  double jdo;
+  int type = CAstro::solveMoonPhase(&m_view, &jdo);
+
+  if (type != -1)
+  {
+    const QString desc[4] = {tr("The Moon is full"),
+                             tr("The Moon is new"),
+                             tr("The Moon is in the last quarter"),
+                             tr("The Moon is in the first quarter")};
+
+    item = new CDailyEvItem;
+    item->setText(getStrTime(jdo, m_view.geo.tz));
+    item->setData(jdo);
+    m->setItem(row, 0, item);
+
+    item = new CDailyEvItem;
+    item->setText(desc[type]);
+    m->setItem(row, 1, item);
+
+    row++;
+  }
+
   for (int i = 0; i < PT_PLANET_COUNT; i++)
   {
     CRts  cRts;

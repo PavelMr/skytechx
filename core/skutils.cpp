@@ -847,3 +847,8 @@ double getStartOfDay(double jd, double tz)
 {
   return (floor(jd + tz - 0.5) + 0.5) - tz;
 }
+
+QString getStrDateTime(double jd, double tz)
+{
+  return getStrDate(jd, tz) + " / " + getStrTime(jd, tz);
+}

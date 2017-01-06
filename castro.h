@@ -26,6 +26,11 @@
 #include "cmapview.h"
 #include "jpl_int.h"
 
+#define MP_FULL_MOON      0
+#define MP_NEW_MOON       1
+#define MP_LAST_QUARTER   2
+#define MP_FIRST_QUARTER  3
+
 typedef struct
 {
   void     *ephem;
@@ -116,7 +121,7 @@ typedef struct
 } orbit_t;
 
 
-class CAstro
+class CAstro : public QObject
 {
   public:
     CAstro();
@@ -157,6 +162,7 @@ class CAstro
 
     static double getAirmass(double alt);
     static double getJupiterGRSLon(double jd);
+    static int solveMoonPhase(const mapView_t *view, double *jdOut);
 
     double m_geoLon;
     double m_geoLat;
@@ -188,6 +194,9 @@ class CAstro
     static QList<jplData_t> getJPLEphems();
     static void setJPLEphems(QList<jplData_t> &ephem);
 
+    static double getMoonAge(orbit_t *o);
+    static double getMoonAgeInDays(orbit_t *o);
+    static QString getMoonPhase(orbit_t *o);
 protected:
     orbit_t m_sunOrbit;
 
