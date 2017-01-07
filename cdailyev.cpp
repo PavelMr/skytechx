@@ -56,7 +56,7 @@ void CDailyEv::fillList()
   ui->treeView->sortByColumn(0);
   ui->treeView->setSortingEnabled(true);
 
-  CDailyEvItem *item;
+  CDailyEvItem *item;    
 
   int row = 0;
   double jdo;

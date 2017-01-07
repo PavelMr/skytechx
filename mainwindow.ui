@@ -644,6 +644,7 @@
     <addaction name="actionMoonless_nights"/>
     <addaction name="actionSunspots"/>
     <addaction name="actionTwilight_2"/>
+    <addaction name="actionLunar_phase"/>
    </widget>
    <widget class="QMenu" name="menu_Telescope">
     <property name="title">
@@ -5904,6 +5905,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionTwilight_2">
    <property name="text">
     <string>Twilight...</string>
+   </property>
+  </action>
+  <action name="actionLunar_phase">
+   <property name="text">
+    <string>Lunar phases...</string>
    </property>
   </action>
  </widget>

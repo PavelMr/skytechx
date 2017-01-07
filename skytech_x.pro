@@ -307,7 +307,8 @@ SOURCES += main.cpp\
     variablestarsdialog.cpp \
     twilightdialog.cpp \
     checkcombobox.cpp \
-    planetreport.cpp
+    planetreport.cpp \
+    lunarphase.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -551,7 +552,8 @@ HEADERS  += mainwindow.h \
     variablestarsdialog.h \
     twilightdialog.h \
     checkcombobox.h \
-    planetreport.h
+    planetreport.h \
+    lunarphase.h
 
 
 FORMS    += mainwindow.ui \
@@ -655,7 +657,8 @@ FORMS    += mainwindow.ui \
     sunspotsdialog.ui \
     skstopwatchctrl.ui \
     variablestarsdialog.ui \
-    twilightdialog.ui
+    twilightdialog.ui \
+    lunarphase.ui
 
 
 RESOURCES += \

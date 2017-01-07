@@ -1624,6 +1624,8 @@ int CAstro::solveMoonPhase(const mapView_t *view, double *jdOut)
   mapView_t v = *view;
   double request[4] = {R180, 0, R90, -R90};
 
+  //qDebug() << "start day" << getStrDateTime(curDay, view->geo.tz);
+
   for (int i = 0; i < 4; i++)
   {
     double add = JD1SEC * 60 * 60 * 3;
@@ -1637,7 +1639,7 @@ int CAstro::solveMoonPhase(const mapView_t *view, double *jdOut)
     ast.calcPlanet(PT_MOON, &o);
     lElon = o.elongation;
 
-    qDebug() << i << req;
+    //qDebug() << i << req;
 
     int cnt = 0;
     while (1)
@@ -1660,7 +1662,7 @@ int CAstro::solveMoonPhase(const mapView_t *view, double *jdOut)
         if (add < limit)
         {
           *jdOut = jd;
-          qDebug() << jd << getStrDateTime(jd, view->geo.tz) << i;
+          //qDebug() << jd << getStrDateTime(jd, view->geo.tz) << i;
           return i;
         }
       }
@@ -1678,7 +1680,7 @@ int CAstro::solveMoonPhase(const mapView_t *view, double *jdOut)
     }
   }
 
-  qDebug() << "none";//jd << (add < limit) << getStrDateTime(jd, view->geo.tz);
+  //qDebug() << "none";//jd << (add < limit) << getStrDateTime(jd, view->geo.tz);
   //qDebug() << jd << (add < limit) << getStrDateTime(jd, view->geo.tz);
 
   return -1;

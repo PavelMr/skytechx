@@ -693,6 +693,8 @@ private slots:
 
   void on_actionTwilight_2_triggered();
 
+  void on_actionLunar_phase_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
