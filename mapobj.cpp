@@ -69,8 +69,8 @@ void recenterHoldObject(CMapView *p, bool bRepaint)
     orbit_t o;
 
     cAstro.setParam(&p->m_mapView);
-    cAstro.calcPlanet(g_HoldObject.objIdx, &o);
-    p->centerMap(o.lRD.Ra, o.lRD.Dec, CM_UNDEF);
+    cAstro.calcPlanet(g_HoldObject.objIdx, &o);    
+    p->centerMap(o.lRD.Ra, o.lRD.Dec, CM_UNDEF);    
   }
   else
   if (g_HoldObject.objType == MO_EARTH_SHD)

@@ -123,6 +123,7 @@ typedef struct
 
 class CAstro : public QObject
 {
+  Q_OBJECT
   public:
     CAstro();
 

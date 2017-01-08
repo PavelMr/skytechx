@@ -1598,7 +1598,7 @@ QString CAstro::getMoonPhase(orbit_t *o)
 
   int index = (int)((age + 2) * 16 / 59) % 8;
 
-  static QString description[] = {
+  QString description[] = {
         tr("New"),                  /* totally dark                         */
         tr("Waxing crescent"),      /* increasing to full & quarter light   */
         tr("First quarter"),        /* increasing to full & half light      */
