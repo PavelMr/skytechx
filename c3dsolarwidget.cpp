@@ -166,6 +166,12 @@ QPixmap *C3DSolarWidget::getPixmap()
   return m_pixmap;
 }
 
+void C3DSolarWidget::setBkColor(const QColor &color)
+{
+  m_bkColor = color;
+  update();
+}
+
 void C3DSolarWidget::generateOrbits()
 {
   double steps[8] = {8, 1, 4, 10, 20, 25, 30, 40};
@@ -303,7 +309,7 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
   }
 
   p.setRenderHint(QPainter::Antialiasing, true);
-  p.fillRect(rect(), Qt::black);
+  p.fillRect(rect(), m_bkColor);
 
   double minSize = 3;
   SKPOINT p1, p2;

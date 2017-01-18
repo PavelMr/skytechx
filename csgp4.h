@@ -16,6 +16,7 @@ typedef struct
   bool     used;
   SGP4    *sgp4;
   QString  name;
+  QString  id;
   double   period;
   double   inclination;
   double   perigee;
@@ -45,7 +46,8 @@ public:
   bool solve(int index, const mapView_t *view, satellite_t *out);
   void setObserver(mapView_t *view);
   tleItem_t *tleItem(int index);
-  QString &getName(int index);
+  QString getName(int index);
+  QString getID(int index);
   int count();
   void removeAll();
 

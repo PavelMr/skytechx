@@ -64,6 +64,7 @@ public:
   void updateDSS(bool refill = true);
   void checkDSS(void);
   void setShapeInfo(QString info);
+  void updateTrackingMenu();
 
   bool            m_bRealTime;
   bool            m_bRealTimeLapse;
@@ -695,6 +696,10 @@ private slots:
 
   void on_actionLunar_phase_triggered();
 
+  void on_toolButton_2_clicked();
+
+  void on_actionClear_all_tracking_paths_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
@@ -706,12 +711,13 @@ private:
   QString m_HIPSProperties;
   QString m_HIPSUrl;
   QToolButton *m_hipsToolButton;
+  int m_settingTab;
 
   void setTitle();
   void restoreDSSList();
   void saveDSSList();
   void updateHomeLocation();
-  int getTelescopeSpeed();
+  int getTelescopeSpeed();    
 
   QList <QAction *> m_homeLocActions;
 

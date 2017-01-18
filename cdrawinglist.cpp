@@ -15,7 +15,9 @@ CDrawingList::CDrawingList(QWidget *parent) :
   m_model = new QStandardItemModel(0, 2);
 
   m_model->setHeaderData(0, Qt::Horizontal, tr("Type"));
-  m_model->setHeaderData(1, Qt::Horizontal, tr("Description"));
+  m_model->setHeaderData(1, Qt::Horizontal, tr("LWT"));
+  m_model->setHeaderData(1, Qt::Horizontal, tr("Linked with telescope"), Qt::ToolTipRole);
+  m_model->setHeaderData(2, Qt::Horizontal, tr("Description"));
 
   drawing_t *draw;
 
@@ -28,12 +30,20 @@ CDrawingList::CDrawingList(QWidget *parent) :
     }
 
     QStandardItem *item = new QStandardItem;
+    QStandardItem *item2 = new QStandardItem;
     QStandardItem *item1 = new QStandardItem;
 
     item->setCheckable(true);
     if (draw->show)
     {
       item->setCheckState(Qt::Checked);
+    }
+
+    item2->setToolTip(tr("Linked with telescope"));
+    item2->setCheckable(true);
+    if (draw->telescopeLink)
+    {
+      item2->setCheckState(Qt::Checked);
     }
 
     switch (draw->type)
@@ -65,13 +75,15 @@ CDrawingList::CDrawingList(QWidget *parent) :
     }
     item->setData((qint64)draw);
     m_model->setItem(i, 0, item);
-    m_model->setItem(i, 1, item1);
+    m_model->setItem(i, 1, item2);
+    m_model->setItem(i, 2, item1);
   }
 
   ui->treeView->setModel(m_model);
   ui->treeView->setRootIsDecorated(false);
   ui->treeView->header()->resizeSection(0, 150);
-  ui->treeView->header()->resizeSection(1, 200);
+  ui->treeView->header()->resizeSection(1, 60);
+  ui->treeView->header()->resizeSection(2, 200);
 
 
   QShortcut *sh1 = new QShortcut(QKeySequence(Qt::Key_Delete), ui->treeView, 0, 0,  Qt::WidgetShortcut);
@@ -136,10 +148,12 @@ void CDrawingList::on_pushButton_clicked()
   for (int i = 0; i < model->rowCount(); i++)
   {
     QStandardItem *item = model->item(i);
+    QStandardItem *item2 = model->item(i, 1);
 
     drawing_t *draw = (drawing_t *)item->data(Qt::UserRole + 1).toLongLong();
 
     draw->show = item->checkState() ==  Qt::Checked ? true : false;
+    draw->telescopeLink = item2->checkState() ==  Qt::Checked ? true : false;
   }
 
   done(DL_CANCEL);

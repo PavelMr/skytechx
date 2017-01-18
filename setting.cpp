@@ -585,7 +585,7 @@ bool setLoad(QString name, setting_t *set)
 
   // background
   set->map.background.bStatic = readVal("map.background.bStatic", false, tMap).toBool();
-  set->map.background.staticColor = readVal("map.background.staticColor", MRGB(10, 10, 20), tMap).toUInt();
+  set->map.background.staticColor = readVal("map.background.staticColor", MRGB(0, 0, 0), tMap).toUInt();
 
   set->map.background.dynamicColor[0] = readVal("map.background.dynamicColor0", MRGB(22, 22, 22), tMap).toUInt();
   set->map.background.dynamicColor[1] = readVal("map.background.dynamicColor1", MRGB(62, 64, 80), tMap).toUInt();

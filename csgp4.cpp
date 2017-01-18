@@ -72,7 +72,7 @@ bool CSGP4::loadTLEData(const QString &fileName)
         continue;
       }
 
-      OrbitalElements elem = OrbitalElements(*tle);
+      OrbitalElements elem = OrbitalElements(*tle);      
 
       item.data[0] = data[0];
       item.data[1] = data[1];
@@ -80,6 +80,7 @@ bool CSGP4::loadTLEData(const QString &fileName)
       item.used = used;
       item.sgp4 = new SGP4(*tle);
       item.name = data[0].simplified();
+      item.id = data[1].mid(2, 5);
       item.perigee = elem.Perigee();
       item.inclination = elem.Inclination();
       item.period = elem.Period();
@@ -168,9 +169,14 @@ tleItem_t *CSGP4::tleItem(int index)
   return &m_data[index];
 }
 
-QString &CSGP4::getName(int index)
+QString CSGP4::getName(int index)
 {
   return m_data[index].name;
+}
+
+QString CSGP4::getID(int index)
+{
+  return m_data[index].id;
 }
 
 int CSGP4::count()

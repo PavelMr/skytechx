@@ -81,6 +81,7 @@ bool VOCatalog::create(QList<VOCatalogHeader> &catalogs, QList<VOCooSys> &cooSys
   SkFile fileTable(filePath + "/vo_table_data.bin");
   if (!fileTable.open(QFile::WriteOnly))
   {
+    qDebug() << "write error" << filePath;
     return false;
   }
   QDataStream dsTable(&fileTable);

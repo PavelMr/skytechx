@@ -180,7 +180,7 @@ MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
-  QSettings settings;  
+  QSettings settings;    
 
   ui->setupUi(this);
 
@@ -204,6 +204,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   setWindowIcon(QIcon(":/res/ico_app.ico"));
 
+  m_settingTab = 1;
   m_slewButton = false;
   m_DSOCatalogueDlg = NULL;
   ui->dockTime->hide();
@@ -644,7 +645,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ///////////////////////////////////
   ui->toolBox->setCurrentIndex(0);
 
-  connect(&g_cDrawing, SIGNAL(sigChange(bool,bool)), this, SLOT(slotDrawingChange(bool,bool)));
+  connect(&g_cDrawing, SIGNAL(sigChange(bool,bool)), this, SLOT(slotDrawingChange(bool,bool)));  
 
   m_timeDialog = new CTimeDialog();
   ui->dockTimeDialog->setWidget(m_timeDialog);
@@ -672,6 +673,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionClear_map->setEnabled(true);
   else
     ui->actionClear_map->setEnabled(false);
+
+  updateTrackingMenu();
 
   setShapeInfo("");
 
@@ -3529,9 +3532,9 @@ void MainWindow::on_actionSetting_triggered()
     msgBoxInfo(this, tr("Night mode is enabled!\nThe color setting will be may be incorrect."));
   }
 
-  CSetting dlg(this);
+  CSetting dlg(this, m_settingTab);
 
-  dlg.exec();
+  dlg.exec(); 
 
   g_quickInfoForced = true;
   g_forcedRecalculate = true;
@@ -3540,6 +3543,7 @@ void MainWindow::on_actionSetting_triggered()
   setToolbarIconSize();
   setTitle();
   fillHIPSSources();
+  m_settingTab = 1;
 }
 
 ///////////////////////////////////////////////////
@@ -4865,7 +4869,8 @@ void MainWindow::on_actionObject_tracking_triggered()
   CTrackList dlg(this, ui->widget->m_mapView.geo.tz);
 
   dlg.exec();
-  ui->widget->repaintMap();
+  ui->widget->repaintMap();  
+  updateTrackingMenu();
 }
 
 ////////////////////////////////////////////////////
@@ -6029,6 +6034,7 @@ void MainWindow::on_pushButton_17_clicked()
   dlg.exec();
 
   ui->widget->repaintMap();
+  updateTrackingMenu();
 }
 
 void MainWindow::on_actionHorizon_triggered(bool checked)
@@ -6879,4 +6885,28 @@ void MainWindow::on_actionLunar_phase_triggered()
   LunarPhase dlg(this, &ui->widget->m_mapView);
 
   dlg.exec();
+}
+
+void MainWindow::on_toolButton_2_clicked()
+{
+  m_settingTab = 6;
+  on_actionSetting_triggered();
+}
+
+void MainWindow::on_actionClear_all_tracking_paths_triggered()
+{
+  if (msgBoxQuest(this, tr("Clear all object tracking?")) == QMessageBox::Yes)
+  {
+    tTracking.clear();
+    ui->widget->repaintMap();
+    updateTrackingMenu();
+  }
+}
+
+void MainWindow::updateTrackingMenu()
+{
+  if (tTracking.count() > 0)
+    ui->actionClear_all_tracking_paths->setEnabled(true);
+  else
+    ui->actionClear_all_tracking_paths->setEnabled(false);
 }

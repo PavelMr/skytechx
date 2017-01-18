@@ -9,6 +9,7 @@
 
 bool g_comAstChanged = false;
 
+static int g_bkColorIndex = 0;
 static int g_quiet = true;
 static int g_cb = 0;
 static int g_cb2 = 0;
@@ -28,6 +29,11 @@ C3DSolar::C3DSolar(mapView_t *view, QWidget *parent, bool isComet, int index) :
   ui->frame->setView(view, true);
   m_view = *view;
   m_jd = m_view.jd;
+
+  ui->comboBox_4->addItem(tr("Black"));
+  ui->comboBox_4->addItem(tr("Dark red"));
+  ui->comboBox_4->addItem(tr("Blue"));
+  ui->comboBox_4->setCurrentIndex(g_bkColorIndex);
 
   setWindowFlags(Qt::Window);
 
@@ -131,6 +137,7 @@ void C3DSolar::saveAll()
   g_cbx3 = ui->checkBox_2->isChecked();
   g_sb = ui->spinBox->value();
   g_sb2 = ui->spinBox_2->value();
+  g_bkColorIndex = ui->comboBox_4->currentIndex();
 }
 
 C3DSolar::~C3DSolar()
@@ -257,7 +264,7 @@ void C3DSolar::updateData()
   ui->dateEdit->blockSignals(true);
   ui->dateEdit->setDateTime(dt);
   ui->dateEdit->blockSignals(false);
-  ui->label_4->setText(getStrDate(m_jd, m_view.geo.tz));
+  ui->label_4->setText(getStrDateTime(m_jd, m_view.geo.tz));
 }
 
 void C3DSolar::on_pushButton_9_clicked()
@@ -482,4 +489,20 @@ void C3DSolar::printWidget(QPrinter *printer)
   p.setBrush(Qt::NoBrush);
   p.drawRect(QRect(QPoint(px, py), image.size()));
   p.end();
+}
+
+void C3DSolar::on_comboBox_4_currentIndexChanged(int index)
+{
+  switch (index)
+  {
+    case 0:
+      ui->frame->setBkColor(Qt::black);
+      break;
+    case 1:
+      ui->frame->setBkColor(QColor(32, 0, 0));
+      break;
+    case 2:
+      ui->frame->setBkColor(QColor(0, 55, 94));
+      break;
+  }
 }

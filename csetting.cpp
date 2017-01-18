@@ -48,7 +48,7 @@ static QString g_horizonNameOld;
 
 extern QString g_tpSpeed[3];
 
-CSetting::CSetting(QWidget *parent) :
+CSetting::CSetting(QWidget *parent, int tab) :
   QDialog(parent),
   ui(new Ui::CSetting)
 {
@@ -60,6 +60,8 @@ CSetting::CSetting(QWidget *parent) :
 
   set = g_skSet;
   g_horizonNameOld = g_horizonName;
+
+  ui->tabWidget->setCurrentIndex(tab);
 
   // autosave
   ui->checkBox_7->setChecked(g_autoSave.tracking);

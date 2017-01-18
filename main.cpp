@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 
   QCoreApplication::setOrganizationDomain("Frostware");
   QCoreApplication::setOrganizationName("PMR");
-  QCoreApplication::setApplicationName("SkytechX_beta");
+  QCoreApplication::setApplicationName("SkytechX");
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   QApplication a(argc, argv);
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
   {
     msgBoxError(NULL, QObject::tr("SkytechX already running!"));
     return 1;
-  }
+  }  
 
   LOG_FILE = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log/log.txt";
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log");   

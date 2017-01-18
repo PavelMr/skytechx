@@ -15,7 +15,7 @@ class CSetting : public QDialog
   Q_OBJECT
 
 public:
-  explicit CSetting(QWidget *parent = 0);
+  explicit CSetting(QWidget *parent = 0, int tab = 1);
   ~CSetting();
 
 protected:

@@ -42,6 +42,7 @@ void loadTracking(void)
       s >> t.labelStep;
       s >> t.objName;
       s >> t.type;
+      s >> t.markStep;
 
       int c;
 
@@ -87,6 +88,7 @@ void saveTracking(void)
       s << tTracking.at(i).labelStep;
       s << tTracking.at(i).objName;
       s << tTracking.at(i).type;
+      s << tTracking.at(i).markStep;
 
       s << tTracking.at(i).tPos.count();
 
@@ -95,7 +97,7 @@ void saveTracking(void)
         s << tTracking.at(i).tPos[j].jd;
         s << tTracking.at(i).tPos[j].mag;
         s << tTracking.at(i).tPos[j].rd.Ra;
-        s << tTracking.at(i).tPos[j].rd.Dec;
+        s << tTracking.at(i).tPos[j].rd.Dec;        
       }
     }
 

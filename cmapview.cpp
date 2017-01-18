@@ -342,8 +342,9 @@ void CMapView::mousePressEvent(QMouseEvent *e)
 
   if ((e->buttons() & Qt::RightButton) == Qt::RightButton)
   {
-    mapObjContextMenu(this);
+    mapObjContextMenu(this);    
     repaintMap();
+    pcMainWnd->updateTrackingMenu();
   }
 
   if (bAlternativeMouse)

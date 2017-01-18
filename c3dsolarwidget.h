@@ -41,6 +41,7 @@ public:
   void setViewParam(double yaw = CM_UNDEF, double pitch = CM_UNDEF, double x = CM_UNDEF, double y = CM_UNDEF, double z = CM_UNDEF, bool updateView = true);
   void removeOrbit();
   QPixmap *getPixmap();
+  void setBkColor(const QColor &color);
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -55,6 +56,7 @@ protected:
 
   void generateOrbits();
 
+  QColor    m_bkColor;
   bool      m_isComet;
   int       m_lockAt;
   bool      m_showEclipticPlane;

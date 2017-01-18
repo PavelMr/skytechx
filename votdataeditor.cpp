@@ -343,6 +343,7 @@ bool VOTDataEditor::prepareData(const QByteArray &data, const QString &path)
   {       
     if (!voCatalog.create(m_cats, m_coords, table, m_param, path))
     {
+      qDebug() << "parse error" << voCatalog.m_lastError << path;
       msgBoxError(this, voCatalog.m_lastError);
       return false;
     }    
@@ -561,7 +562,7 @@ void VOTDataEditor::slotDone(QNetworkReply::NetworkError error, const QString &e
   }
   else
   {
-    QDir::tempPath() + "/";
+    path = QDir::tempPath() + "/";
   }
 
   m_catsTmp = m_cats;
@@ -571,6 +572,8 @@ void VOTDataEditor::slotDone(QNetworkReply::NetworkError error, const QString &e
   m_progressDlg->setRange(0, 0);
   m_progressDlg->setValue(0);   
   m_progressDlg->show();
+
+  qDebug() << "prepare" << path;
 
   if (!prepareData(data, path))
   {    

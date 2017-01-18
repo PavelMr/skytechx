@@ -735,6 +735,7 @@
     <addaction name="actionObject_tracking"/>
     <addaction name="separator"/>
     <addaction name="actionClear_map"/>
+    <addaction name="actionClear_all_tracking_paths"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Chart"/>
@@ -2518,7 +2519,7 @@
           <x>0</x>
           <y>0</y>
           <width>262</width>
-          <height>519</height>
+          <height>526</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2853,14 +2854,32 @@ background-color: rgb(0, 0, 0);</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_13">
               <item>
-               <widget class="QRadioButton" name="rb_tp_1">
-                <property name="text">
-                 <string>Slow</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
+               <layout class="QHBoxLayout" name="horizontalLayout_17">
+                <item>
+                 <widget class="QRadioButton" name="rb_tp_1">
+                  <property name="text">
+                   <string>Slow</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="toolButton_2">
+                  <property name="toolTip">
+                   <string>Settings</string>
+                  </property>
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="resource.qrc">
+                    <normaloff>:/res/ico_process_all.png</normaloff>:/res/ico_process_all.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
                <widget class="QRadioButton" name="rb_tp_2">
@@ -4950,7 +4969,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Clear map...</string>
+    <string>Clear all drawing...</string>
    </property>
   </action>
   <action name="actionHide_all">
@@ -5910,6 +5929,14 @@ p, li { white-space: pre-wrap; }
   <action name="actionLunar_phase">
    <property name="text">
     <string>Lunar phases...</string>
+   </property>
+  </action>
+  <action name="actionClear_all_tracking_paths">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Clear all tracking paths...</string>
    </property>
   </action>
  </widget>

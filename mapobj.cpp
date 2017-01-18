@@ -367,6 +367,7 @@ void mapObjContextMenu(CMapView *map)
   bool isHoldObjFirst = false;
   int cometIndex = -1;
   int astIndex = -1;
+  QString noradName;
 
   foreach(o, tObjTmp)
   {
@@ -576,6 +577,13 @@ void mapObjContextMenu(CMapView *map)
           g_HoldObject.objIdx = o.par1;
           g_HoldObject.objType = MO_SATELLITE;
           isHoldObjFirst =  true;
+        }
+
+        if (noradName.isEmpty())
+        {
+          strSuf.append(QObject::tr("  Find %1 in NORAD database").arg(str));
+          strIdx.append(-12);
+          noradName = sgp4.getID(o.par1);
         }
       }
       break;
@@ -852,6 +860,16 @@ void mapObjContextMenu(CMapView *map)
       case -11:
       {
         g_cDrawing.toggleTelescopeLink(getDrawing(drawingMap[selectedItem]));
+        return;
+      }
+
+      case -12:
+      {
+        QString url;
+
+        url = QString("https://www.n2yo.com/satellite/?s=%1").arg(noradName);
+
+        QDesktopServices::openUrl(url);
         return;
       }
 

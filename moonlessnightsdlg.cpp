@@ -7,8 +7,8 @@ MoonlessNightsDlg::MoonlessNightsDlg(QWidget *parent, mapView_t *view) :
   ui(new Ui::MoonlessNightsDlg)
 {
   ui->setupUi(this);
-  m_view = *view;
-  m_startJD = m_jd = getStartOfDay(m_jd, view->geo.tz);
+  m_view = *view;  
+  m_startJD = m_jd = getStartOfDay(view->jd, view->geo.tz);
   fillList();
 
   connect(ui->widget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(on_pushButton_2_clicked()));

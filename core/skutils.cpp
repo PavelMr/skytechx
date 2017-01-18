@@ -423,7 +423,7 @@ QString getStrRA(double ra, bool simple)
 //////////////////////////////////////////
 QString getStrDeg(double deg, bool simple)
 //////////////////////////////////////////
-{
+{  
   QString str;
   QString out;
   int     d, m;

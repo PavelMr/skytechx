@@ -517,7 +517,7 @@ void CWPosSel::slotLocationDone(QNetworkReply *reply)
     msgBoxError(this, tr("Cannot get location!!!"));
   }
 
-  if (obj.contains("city"))
+  if (obj.contains("city") && !obj["city"].toString().isEmpty())
   {
     m_name = obj["city"].toString();
   }

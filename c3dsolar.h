@@ -91,6 +91,8 @@ private slots:
 
   void slotPrintPreview(QPrinter *printer);
 
+  void on_comboBox_4_currentIndexChanged(int index);
+
 private:
   Ui::C3DSolar *ui;
   double m_jd;
