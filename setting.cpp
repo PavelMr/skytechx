@@ -637,8 +637,8 @@ bool setLoad(QString name, setting_t *set)
   set->map.shower.color = readVal("map.shower.color", MRGB(220, 220, 220), tMap).toUInt();
   set->map.shower.nonActiveColor = readVal("map.shower.nonActiveColor", MRGB(120, 120, 120), tMap).toUInt();
 
-  // aster & comets
-  set->map.comet.color = readVal("map.comet.true", true, tMap).toBool();
+  // aster & comets  
+  set->map.comet.real = readVal("map.comet.real", true, tMap).toBool();
   set->map.comet.color = readVal("map.comet.color", MRGB(255, 255, 255), tMap).toUInt();
   set->map.comet.radius = readVal("map.comet.radius", 5, tMap).toInt();
   set->map.comet.plusMag = readVal("map.comet.plusMag", 5, tMap).toFloat();

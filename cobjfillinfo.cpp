@@ -676,6 +676,8 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
     precess(&ra, &dec, view->jd, JD2000);
   }
 
+  beginExtInfo();
+
   addLabelItem(item, tr("Geocentric information"));
   addSeparator(item);
   addTextItem(item, txRA + jd2000, getStrRA(ra));
@@ -685,7 +687,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
 
   double lon, lat;
-  double hx, hy, hz;
+  double hx, hy, hz;  
 
   if (view->epochJ2000)
   {
@@ -727,12 +729,10 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Y"), QString::number(hy, 'f', 8) + " " + tr("AU"));
   addTextItem(item, tr("Z"), QString::number(hz, 'f', 8) + " " + tr("AU"));
 
-  beginExtInfo();
   addSeparator(item);
   addTextItem(item, tr("VX"), getStrNumber("", vhx, 8, " " + tr("AU/day"), true));
   addTextItem(item, tr("VY"), getStrNumber("", vhy, 8, " " + tr("AU/day"), true));
-  addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));
-  endExtInfo();
+  addTextItem(item, tr("VZ"), getStrNumber("", vhz, 8, " " + tr("AU/day"), true));  
 
   addSeparator(item);
   addTextItem(item, tr("Longitude"), QString::number(R2D(lon), 'f', 8));
@@ -740,6 +740,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   addTextItem(item, tr("r"), QString::number(a->orbit.r) + tr("AU"));
   addSeparator(item);
+  endExtInfo();
 
   addLabelItem(item, tr("Other"));
   addSeparator(item);

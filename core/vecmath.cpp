@@ -66,11 +66,13 @@ SKVECTOR *SKVecAdd(SKVECTOR *out, SKVECTOR *a1, SKVECTOR *a2)
   return(out);
 }
 
+#include <xmmintrin.h>
+#include <emmintrin.h>
 
 /////////////////////////////////////////////////////////////
 SKVECTOR *SKVecSub(SKVECTOR *out, SKVECTOR *a1, SKVECTOR *a2)
 /////////////////////////////////////////////////////////////
-{
+{  
   out->x = a1->x - a2->x;
   out->y = a1->y - a2->y;
   out->z = a1->z - a2->z;

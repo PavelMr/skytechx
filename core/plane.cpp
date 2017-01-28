@@ -110,7 +110,7 @@ bool SKPLANECheckFrustumToPolygon(SKPLANE *frustum, SKPOINT *pts, int count, dou
 // with line clipping
 bool SKPLANECheckFrustumToLine(SKPLANE *frustum, SKVECTOR *p1, SKVECTOR *p2, bool clip)
 ///////////////////////////////////////////////////////////////////////////////////////
-{
+{  
   for (int i = 0; i < FRUSTUM_COUNT; i++)
   {
     double dist1 = p1->x * frustum[i].x +

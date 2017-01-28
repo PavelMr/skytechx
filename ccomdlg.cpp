@@ -171,6 +171,7 @@ static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
   double ye = 0;
   double ze = 0;
   double rh[3] = {0,0,0};
+  double ea2000 = cAstro.getEclObl(JD2000);
 
   // NOTE: komety a asteroidy maji uz deltaT v sobe
   double t = (jdt - a->perihelionDate);
@@ -215,11 +216,10 @@ static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
     double yg = rh[1] + ys;
     double zg = rh[2] + zs;
 
-    // geocentric eq. J2000.0
-    double ea = cAstro.getEclObl(JD2000);
+    // geocentric eq. J2000.0    
     xe = xg;
-    ye = yg * cos(ea) - zg * sin(ea);
-    ze = yg * sin(ea) + zg * cos(ea);
+    ye = yg * cos(ea2000) - zg * sin(ea2000);
+    ze = yg * sin(ea2000) + zg * cos(ea2000);
 
     a->orbit.r = r;
     a->orbit.R = sqrt(xg * xg + yg * yg + zg *zg);
@@ -249,10 +249,9 @@ static bool comSolve2(comet_t *a, double jdt, bool lightCorrected = true)
   ty += ys;
   tz += zs;
 
-  double ea = cAstro.getEclObl(JD2000);
   double txe = tx;
-  double tye = ty * cos(ea) - tz * sin(ea);
-  double tze = ty * sin(ea) + tz * cos(ea);
+  double tye = ty * cos(ea2000) - tz * sin(ea2000);
+  double tze = ty * sin(ea2000) + tz * cos(ea2000);
 
   // tail end ra/dec
   a->orbit.params[0] = atan2(tye, txe);

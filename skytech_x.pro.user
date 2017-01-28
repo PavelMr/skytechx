@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.0.2, 2017-01-15T14:30:33. -->
+<!-- Written by QtCreator 4.0.2, 2017-01-24T21:36:48. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -8,7 +8,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">0</value>
+  <value type="int">1</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -59,6 +59,7 @@
     <value type="QString" key="CustomPchFile"></value>
     <value type="int" key="PchUsage">1</value>
    </valuemap>
+   <valuelist type="QVariantList" key="ClangStaticAnalyzer.SuppressedDiagnostics"/>
   </valuemap>
  </data>
  <data>

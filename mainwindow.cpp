@@ -6673,7 +6673,7 @@ void MainWindow::on_pb_tc_right_pressed()
 
 void MainWindow::on_pb_tc_right_released()
 {
-  g_pTelePlugin->moveAxis(0, 0);
+  g_pTelePlugin->moveAxis(0, 0);  
 }
 
 void MainWindow::on_pb_tc_left_pressed()

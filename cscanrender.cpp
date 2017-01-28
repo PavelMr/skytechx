@@ -285,6 +285,9 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
   int       dw = dst->width();
   bkScan_t *scan = scLR;
   float     a = qAlpha(c) / 256.0f;
+  int       rc = qRed(c);
+  int       gc = qGreen(c);
+  int       bc = qBlue(c);
 
   for (int y = plMinY; y <= plMaxY; y++)
   {
@@ -311,9 +314,9 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
     {
       QRgb rgbd = *pDst;
 
-      *pDst = qRgb(LERP(a, qRed(rgbd), qRed(c)),
-                   LERP(a, qGreen(rgbd), qGreen(c)),
-                   LERP(a, qBlue(rgbd), qBlue(c))
+      *pDst = qRgb(LERP(a, qRed(rgbd), rc),
+                   LERP(a, qGreen(rgbd), gc),
+                   LERP(a, qBlue(rgbd), bc)
                   );
       pDst++;
     }

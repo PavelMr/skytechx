@@ -1330,12 +1330,18 @@ void CMapView::slotCheckedFlipY(bool checked)
 ////////////////////////////////////////////////////////
 void CMapView::slotTelePlugChange(double ra, double dec)
 ////////////////////////////////////////////////////////
-{
+{  
+  static QTime tm;
+
   m_lastTeleRaDec.Ra = D2R(ra * 15);
   m_lastTeleRaDec.Dec = D2R(dec);
 
+  //qDebug() << "u" << tm.elapsed();
+
   recenterHoldObject(this, false);
   repaintMap();
+
+  tm.start();
 }
 
 void CMapView::slotMapControl(QVector2D map, double rotate, double zoom)
@@ -1815,7 +1821,7 @@ void CMapView::repaintMap(bool bRepaint)
 
   m_mapView.jd = CLAMP(m_mapView.jd, MIN_JD, MAX_JD);
   m_mapView.roll = CLAMP(m_mapView.roll, D2R(-90), D2R(90));
-  m_mapView.mapEpoch = (m_mapView.epochJ2000 || !g_skSet.map.star.useProperMotion) ? JD2000 : m_mapView.jd;
+  m_mapView.mapEpoch = (m_mapView.epochJ2000 || !g_skSet.map.star.useProperMotion) ? JD2000 : m_mapView.jd;  
 
   g_meteorShower.load((int)jdGetYearFromJD(m_mapView.jd));
 
@@ -1925,19 +1931,17 @@ void CMapView::paintEvent(QPaintEvent *)
   if (g_nightConfig && g_nightRepaint)
   {
     for (int ii = 0; ii < pBmp->height(); ii++)
-    {
-      uchar *scan = pBmp->scanLine(ii);
-      int depth = 4;
+    {           
+      QRgb* rgbpixel = reinterpret_cast<QRgb*>(pBmp->scanLine(ii));
       for (int jj = 0; jj < pBmp->width(); jj++)
-      {
-        QRgb* rgbpixel = reinterpret_cast<QRgb*>(scan + jj * depth);
+      {        
         int gray = qGray(*rgbpixel);
         *rgbpixel = (255 << 24) | (gray << 16);
+        rgbpixel++;
       }
     }
     g_nightRepaint = false;
-  }
-
+  }  
   p.drawImage(0, 0, *pBmp);  
 
   if (m_zoomLens)
