@@ -66,9 +66,6 @@ SKVECTOR *SKVecAdd(SKVECTOR *out, SKVECTOR *a1, SKVECTOR *a2)
   return(out);
 }
 
-#include <xmmintrin.h>
-#include <emmintrin.h>
-
 /////////////////////////////////////////////////////////////
 SKVECTOR *SKVecSub(SKVECTOR *out, SKVECTOR *a1, SKVECTOR *a2)
 /////////////////////////////////////////////////////////////

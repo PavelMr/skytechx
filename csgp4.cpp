@@ -1,4 +1,5 @@
 #include "csgp4.h"
+#include "castro.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -129,10 +130,10 @@ bool CSGP4::solve(int index, const mapView_t *view, satellite_t *out)
 
     out->altitude = geo.altitude;
     out->longitude = geo.longitude;
-    out->latitude = geo.latitude;
+    out->latitude = geo.latitude;        
 
     out->azimuth = topo.azimuth;
-    out->elevation = topo.elevation;
+    out->elevation = topo.elevation + cAstro.getAtmRef(topo.elevation);
     out->range = topo.range;
   }
 

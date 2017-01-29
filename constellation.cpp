@@ -184,8 +184,7 @@ static void constLoadNames(void)
   {
     int         i = 0;
     QString     str;
-    QStringList list;
-    // TODO: upravit lepe pozice ra/dec nazvu
+    QStringList list;    
     do
     {
       str = f.readLine();

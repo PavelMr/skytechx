@@ -88,9 +88,7 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
 {
   QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/", "*.fits");
   dir.setFilter(QDir::Files);
-  QFileInfoList list = dir.entryInfoList();
-
-  // TODO: pridat dialog pro rescale obrazku
+  QFileInfoList list = dir.entryInfoList();  
 
   QProgressDialog dlg(tr("Please wait..."), tr("Cancel"), 0, list.count() - 1, parent);
   dlg.setWindowModality(Qt::WindowModal);

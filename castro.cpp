@@ -531,6 +531,39 @@ void CAstro::convAA2RDRef(double azm, double alt, double *ra, double *dec)
 
 
 ////////////////////////////////////////////////////////////////////////////
+void CAstro::convAA2RDNoRef(double azm, double alt, double *ra, double *dec)
+////////////////////////////////////////////////////////////////////////////
+{
+  double ALT, AZM, HA, DEC;
+
+  ALT = alt;
+  AZM = azm;
+
+  /* Calculate the declination. */
+  DEC = asin( ( sin(ALT) * sin(m_geoLat) ) + ( cos(ALT) * cos(m_geoLat) * cos(AZM) ) );
+  *dec = DEC;
+
+  /* Calculate the hour angle. */
+  double cc = cos(m_geoLat) * cos(DEC);
+  double aa = sin(ALT) - sin(m_geoLat) * sin(DEC);
+  double res = aa / cc;
+  if (res < -1) res = -1;
+    else
+  if (res > 1) res = 1;
+  HA = acos(res);
+  if (sin(AZM) > 0.0) HA = R360 - HA;
+
+  /* Correct the HA for our sidereal time. */
+  //HA = getHA(curJD, 0) - HA;
+  HA = m_lst - HA;
+
+  /* Convert the HA into degrees for the return. */
+  rangeDbl(&HA, MPI2);
+  *ra = HA;
+}
+
+
+////////////////////////////////////////////////////////////////////////////
 // convert RA/DEC to ALT/AZM without atm. correction
 void CAstro::convRD2AANoRef(double ra, double dec, double *azm, double *alt)
 ////////////////////////////////////////////////////////////////////////////

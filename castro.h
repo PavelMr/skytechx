@@ -132,6 +132,7 @@ class CAstro : public QObject
     void convRD2AANoRef(double ra, double dec, double *azm, double *alt);
     void convRD2AARef(double ra, double dec, double *azm, double *alt, double r = 0);
     void convAA2RDRef(double azm, double alt, double *ra, double *dec);
+    void convAA2RDNoRef(double azm, double alt, double *ra, double *dec);
 
     void convRD2Ecl(double ra, double dec, double *lon, double *lat);
     void convEcl2RD(double lon, double lat, double *ra, double *dec);

@@ -345,11 +345,10 @@ void CObjInfo::on_clb_gallery_clicked()
 void CObjInfo::on_clb_tracking_clicked()
 ////////////////////////////////////////
 {
-  CObjTracking dlg(this, &m_infoItem, &m_map->m_mapView);
+  CObjTracking dlg(this, &m_infoItem, &m_map->m_mapView);  
 
-  // TODO: udelat to ne takhle prasacky
   setWindowOpacity(0);
-  dlg.exec();  
+  dlg.exec();    
   setWindowOpacity(1);
 }
 

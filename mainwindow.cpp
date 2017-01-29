@@ -977,7 +977,6 @@ void MainWindow::setToolbarIconSize()
 
   int size = set.value("toolbar_icon_size", 24).toInt();
 
-  // TODO: zkontrolovat pri zmene DPI
   ui->actionNorth->setIcon(SkIconUtils::createFromText(size, size, tr("N"), 0.6));
   ui->actionSouth->setIcon(SkIconUtils::createFromText(size, size, tr("S"), 0.6));
   ui->actionEast->setIcon(SkIconUtils::createFromText(size, size, tr("E"), 0.6));

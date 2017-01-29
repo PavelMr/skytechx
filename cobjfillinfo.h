@@ -42,9 +42,9 @@ typedef struct
 
 class CObjFillInfo : public QObject
 {
-  Q_OBJECT
+  Q_OBJECT  
 
-  public:
+public:
     CObjFillInfo();
     void fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
 
@@ -77,6 +77,7 @@ protected:
     void beginExtInfo();
     void endExtInfo();
 
+    void addDateTime(ofiItem_t *item, const mapView_t *view);
     void fillAtlas(double ra, double dec, ofiItem_t *item);
     void fillRTS(rts_t *rts, const mapView_t *view, ofiItem_t *item);
     void fillZoneInfo(double ra2000, double dec2000, ofiItem_t *item);

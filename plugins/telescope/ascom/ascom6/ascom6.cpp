@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QCoreApplication>
 #include <QSettings>
+#include <QTime>
 
 #include <QDebug>
 
@@ -27,7 +28,7 @@ static int msgBoxQuest(QWidget *w, QString str)
 void CAscom6::init()
 ////////////////////
 {
-  qDebug("ASCOM6 init()");
+  qDebug() << "ASCOM6 init()";
 
   m_refreshMs = 100;
   m_device = NULL;
@@ -35,9 +36,13 @@ void CAscom6::init()
   m_ra = __DBL_MAX__;
   m_dec = __DBL_MAX__;
 
-  m_timer = new QTimer(this);
-  m_timer->start(m_refreshMs);
-  QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(slotUpdate()));
+  //m_timer = new QTimer(this);
+  //m_timer->start(m_refreshMs);
+
+  m_thread = new UpdateThread();
+  m_thread->setObject(m_device);
+  m_thread->start();
+  QObject::connect(m_thread, SIGNAL(timeout(double, double)), this, SLOT(slotUpdate(double, double)));
 }
 
 ////////////////////
@@ -62,8 +67,8 @@ void CAscom6::stop()
 void CAscom6::setRefresh(int ms)
 ////////////////////////////////
 {
-  m_refreshMs = ms;
-  m_timer->setInterval(m_refreshMs);
+  m_refreshMs = ms;  
+  m_thread->setUpdateTime(m_refreshMs);
 }
 
 //////////////////////////
@@ -161,6 +166,7 @@ bool CAscom6::connectDev(QWidget *parent)
     m_device->dynamicCall("Unpark()");
     m_device->setProperty("Tracking", "1");
     emit sigConnected(true);
+    m_thread->setObject(m_device);
   }
 
   return(true);
@@ -233,30 +239,14 @@ bool CAscom6::isSlewing()
 
 
 //////////////////////////
-void CAscom6::slotUpdate()
+void CAscom6::slotUpdate(double ra, double dec)
 //////////////////////////
-{
-  //qDebug("ascom update2 %d", m_device);
-
-  if (m_device == NULL)
-    return;
-
-  if (m_device->isNull())
-    return;
-
-  double ra, dec;
-  QVariant v;
-
-  v = m_device->property("RightAscension");
-  ra = v.toDouble();
-  v = m_device->property("Declination");
-  dec = v.toDouble();
-
+{  
   if (m_ra == ra && m_dec == dec)
     return; // no change
 
   m_ra = ra;
-  m_dec = dec;
+  m_dec = dec;  
 
   emit sigUpdate(ra, dec);
 }
@@ -270,18 +260,21 @@ bool CAscom6::disconnectDev(bool park)
   if (m_device == NULL)
     return(true);
 
+  m_thread->setEnd(true);
+  while (m_thread->isRunning());
+  delete m_thread;
+
   if (park)
   {
     m_device->setProperty("Tracking", "0");
     m_device->dynamicCall("Park()");
-  }
-  m_device->setProperty("Connected", "0");
+  }  
+
+  m_device->setProperty("Connected", "0");  
   m_device->clear();
-
-  delete m_device;
-  m_device = NULL;
-
-  emit sigConnected(false);
+  delete m_device;  
+  m_device = NULL;  
+  emit sigConnected(false);  
 
   return(true);
 }
@@ -390,4 +383,45 @@ bool CAscom6::getAxisRates(QVector <double> &raRate, QVector <double> &decRate)
   }
 
   return true;
+}
+
+void UpdateThread::setObject(QAxObject *device)
+{
+  m_device = device;
+}
+
+void UpdateThread::run()
+{  
+  m_end = false;
+
+  while (!m_end)
+  {
+    msleep(m_updateTime);
+
+    if (m_device == NULL)
+      continue;
+
+    if (m_device->isNull())
+      continue;
+
+    double ra, dec;
+    QVariant v;    
+
+    v = m_device->property("RightAscension");
+    ra = v.toDouble();
+    v = m_device->property("Declination");
+    dec = v.toDouble();
+
+    emit timeout(ra, dec);
+  }
+}
+
+void UpdateThread::setEnd(bool end)
+{
+  m_end = end;
+}
+
+void UpdateThread::setUpdateTime(int updateTime)
+{
+  m_updateTime = updateTime;
 }
