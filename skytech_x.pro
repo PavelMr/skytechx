@@ -308,7 +308,8 @@ SOURCES += main.cpp\
     twilightdialog.cpp \
     checkcombobox.cpp \
     planetreport.cpp \
-    lunarphase.cpp
+    lunarphase.cpp \
+    cdssopendialog.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -553,7 +554,8 @@ HEADERS  += mainwindow.h \
     twilightdialog.h \
     checkcombobox.h \
     planetreport.h \
-    lunarphase.h
+    lunarphase.h \
+    cdssopendialog.h
 
 
 FORMS    += mainwindow.ui \

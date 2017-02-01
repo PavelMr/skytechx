@@ -49,6 +49,7 @@ void getDeg(double degress, int *deg, int *min, int *sec, int *sign);
 QString getStringSeparated(const QString &str, int chars = 50);
 QString getNumber(int val);
 
+QString getStrDeg2(double deg);
 QString getStrDegDF(double deg);
 QString getStrDeg(double deg, bool simple = false);
 QString getStrDegNoSign(double deg, bool msec = false);

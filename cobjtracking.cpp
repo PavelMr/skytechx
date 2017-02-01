@@ -162,7 +162,6 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
   SKPOINT p2;
 
   int markSize = 2;
-  int size = 4;  
 
   pPainter->setBrush(QColor(g_skSet.map.tracking.color));
 

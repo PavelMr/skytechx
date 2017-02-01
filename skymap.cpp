@@ -1356,6 +1356,7 @@ static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
           QRect rc2 = QRect(-5, -8, 10, -20);
           QRect rc3 = QRect(-5, 8, 10, 20);
 
+
           pPainter->save();
           pPainter->translate(pt.sx, pt.sy);
           pPainter->scale(0.5 * g_skSet.map.satellite.size, 0.5 * g_skSet.map.satellite.size);
@@ -1368,6 +1369,7 @@ static void renderSatellites(mapView_t *mapView, CSkPainter *pPainter)
           pPainter->drawLine(10, 0, 25, 0);
 
           pPainter->restore();
+
 
           //pPainter->setBrush(QColor(255, 0, 0));
           //pPainter->drawEllipse(QPoint(pt.sx, pt.sy), 5, 5);

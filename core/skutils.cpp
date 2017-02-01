@@ -852,3 +852,13 @@ QString getStrDateTime(double jd, double tz)
 {
   return getStrDate(jd, tz) + " / " + getStrTime(jd, tz);
 }
+
+QString getStrDeg2(double deg)
+{
+  if (true) // TODO: registry
+  {
+    return getStrDeg(deg);
+  }
+
+  return getStrNumber("", R2D(deg), 5, "°", true);
+}

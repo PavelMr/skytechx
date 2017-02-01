@@ -587,15 +587,15 @@ void CAstro::convRD2AANoRef(double ra, double dec, double *azm, double *alt)
 void CAstro::convRD2AARef(double ra, double dec, double *azm, double *alt, double r)
 ////////////////////////////////////////////////////////////////////////////////////
 {
-
   double HA = m_lst - ra;
   double cDec = cos(dec);
   double sDec = sin(dec);
   double cLat = cos(m_geoLat);
   double sLat = sin(m_geoLat);
+  double cosHA = cos(HA);
 
-  *azm = atan2(sDec * cLat - cDec * cos(HA) * sLat, -cDec * sin(HA));
-  *alt = asin(sLat * sDec + cLat * cDec * cos(HA));
+  *azm = atan2(sDec * cLat - cDec * cosHA * sLat, -cDec * sin(HA));
+  *alt = asin(sLat * sDec + cLat * cDec * cosHA);
   *alt += r;
   *alt += getAtmRef(*alt);
 

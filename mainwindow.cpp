@@ -106,6 +106,7 @@
 #include "twilightdialog.h"
 #include "planetreport.h"
 #include "lunarphase.h"
+#include "cdssopendialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -2139,13 +2140,14 @@ void MainWindow::fillQuickInfo(ofiItem_t *item, bool update)
 
   ui->pushButton->setEnabled(true);
   ui->pushButton_4->setEnabled(true);
-  ui->pushButton_16->setEnabled(true);
+  ui->pushButton_16->setEnabled(true);  
   ui->pushButton_17->setEnabled(true);
   ui->pushButton_34->setEnabled(true);
   ui->pushButton_unselect->setEnabled(true);
   ui->checkBox_5->setEnabled(true);
   ui->cb_extInfo->setEnabled(true);
   ui->action_Last_search_object->setEnabled(true);
+  checkSlewButton();
 }
 
 ////////////////////////////////////////
@@ -2973,6 +2975,7 @@ void MainWindow::removeQuickInfo(int type)
     ui->pushButton->setEnabled(false);
     ui->pushButton_4->setEnabled(false);
     ui->pushButton_16->setEnabled(false);
+    ui->pushButton_37->setEnabled(false);
     ui->pushButton_17->setEnabled(false);
     ui->pushButton_19->setEnabled(false);
     ui->pushButton_20->setEnabled(false);
@@ -3552,59 +3555,6 @@ void MainWindow::on_actionOpen_DSS_file_triggered()
 
 }
 
-// TODO: dat do samostatneho souboru
-CDSSOpenDialog::CDSSOpenDialog(QWidget *parent,
-               const QString &caption,
-               const QString &directory,
-               const QString &filter) :
-  QFileDialog(parent, caption, directory, filter),
-  m_sizeComboBox(0)
-{
-  setOption(QFileDialog::DontUseNativeDialog, true);
-  QGridLayout *layout = dynamic_cast<QGridLayout*>(this->layout());
-
-  if (layout == 0)
-  {
-    return;
-  }
-
-  QHBoxLayout *hbl = new QHBoxLayout;
-
-  QLabel *label = new QLabel(tr("Rescale to"));
-  m_sizeComboBox = new QComboBox();
-
-  label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-  hbl->addWidget(label);
-  hbl->addWidget(m_sizeComboBox);
-
-  m_sizeComboBox->addItem(tr("Original size"));
-  m_sizeComboBox->addItem(tr("128 x 128"));
-  m_sizeComboBox->addItem(tr("256 x 256"));
-  m_sizeComboBox->addItem(tr("512 x 512"));
-  m_sizeComboBox->addItem(tr("1024 x 1024"));
-
-  layout->addLayout(hbl, layout->rowCount(), 0, 1, -1);
-}
-
-int CDSSOpenDialog::getSize()
-{
-  if (!m_sizeComboBox)
-  {
-    return 0;
-  }
-  switch (m_sizeComboBox->currentIndex())
-  {
-    case 0: return 0;
-    case 1: return 128;
-    case 2: return 256;
-    case 3: return 512;
-    case 4: return 1024;
-    default: Q_ASSERT(false);
-  }
-
-  return (0);
-}
-
 void MainWindow::restoreDSSList()
 {
   if (!g_autoSave.dssImages)
@@ -3790,6 +3740,7 @@ void MainWindow::on_actionConnect_device_triggered()
         return;
       }
 
+      connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), this, SLOT(checkSlewButton()));
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionDisconnect, SLOT(setEnabled(bool)));
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionTPStop, SLOT(setEnabled(bool)));
       connect(g_pTelePlugin, SIGNAL(sigConnected(bool)), ui->actionFind_telescope, SLOT(setEnabled(bool)));
@@ -6909,3 +6860,44 @@ void MainWindow::updateTrackingMenu()
   else
     ui->actionClear_all_tracking_paths->setEnabled(false);
 }
+
+void MainWindow::on_pushButton_37_clicked()
+{
+  if (g_pTelePlugin)
+  {
+    if (g_pTelePlugin->getAttributes() & TPI_CAN_SLEW)
+    {
+      double ra, dec;
+
+      ra = getQuickInfo()->radec.Ra;
+      dec = getQuickInfo()->radec.Dec;
+
+      precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
+
+      double r = R2D(ra) / 15.0;
+      double d = R2D(dec);
+      g_pTelePlugin->slewTo(r, d);
+    }
+  }
+}
+
+void MainWindow::checkSlewButton()
+{
+  if (g_pTelePlugin && getQuickInfo())
+  {
+    if (g_pTelePlugin->getAttributes() & TPI_CAN_SLEW)
+    {
+      ui->pushButton_37->setEnabled(true);
+      return;
+    }
+  }
+
+  ui->pushButton_37->setEnabled(false);
+}
+
+
+
+
+
+
+

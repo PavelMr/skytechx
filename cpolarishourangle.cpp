@@ -17,6 +17,7 @@ CPolarisHourAngle::CPolarisHourAngle(QWidget *parent, const mapView_t *view) :
 
   m_reticle = new QPixmap(":/res/reticle.png");
   m_view = *view;
+  m_mapTime = m_view.jd;
 
   updateTime();
 }
@@ -113,5 +114,11 @@ void CPolarisHourAngle::on_dateTimeEdit_dateTimeChanged(const QDateTime &dateTim
   QDateTime dt = QDateTime(dateTime);
 
   m_view.jd = jdGetJDFrom_DateTime(&dt) - m_view.geo.tz;
+  updateTime();
+}
+
+void CPolarisHourAngle::on_pushButton_3_clicked()
+{
+  m_view.jd = m_mapTime;
   updateTime();
 }

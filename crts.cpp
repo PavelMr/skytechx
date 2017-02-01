@@ -522,7 +522,7 @@ bool CRts::isNotRTS(double dec, rts_t *rts, const  mapView_t *view)
   if (view->geo.lat >= 0)
     i = (R90 - view->geo.lat) + dec;
   else
-    i = view->geo.lat - dec + R90;
+    i = view->geo.lat - dec + R90;    
 
   double eqt = 0;//ast->getInvAtmRef(0);
 

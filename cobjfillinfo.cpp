@@ -437,13 +437,13 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, txElongation, QString("%1").arg(R2D(a->orbit.elongation), 0, 'f', 2));
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -624,13 +624,13 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -832,8 +832,8 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addTextItem(item, txConstel, constGetName(con, 1));
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(s.azimuth));
-  addTextItem(item, tr("Altitude"), getStrDeg(s.elevation));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(s.azimuth));
+  addTextItem(item, tr("Altitude"), getStrDeg2(s.elevation));
 
   //addTextItem(item, tr("Azimuth"), getStrNumber("", R2D(s.azimuth)));
   //addTextItem(item, tr("Altitude"), getStrNumber("", R2D(s.elevation)));
@@ -1022,13 +1022,13 @@ void CObjFillInfo::fillVOCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -1218,13 +1218,13 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -1386,13 +1386,13 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -1502,13 +1502,13 @@ void CObjFillInfo::fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -1618,13 +1618,13 @@ void CObjFillInfo::fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofi
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -1725,13 +1725,13 @@ void CObjFillInfo::fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiI
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -1826,13 +1826,13 @@ void CObjFillInfo::fillUSNOB1Info(const mapView_t *view, const mapObj_t *obj, of
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -1937,13 +1937,13 @@ void CObjFillInfo::fillNomadInfo(const mapView_t *view, const mapObj_t *obj, ofi
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -2068,13 +2068,13 @@ void CObjFillInfo::fillURAT1Info(const mapView_t *view, const mapObj_t *obj, ofi
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -2205,13 +2205,13 @@ void CObjFillInfo::fillDSOInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
@@ -2349,13 +2349,13 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
 
   addSeparator(item);
-  addTextItem(item, tr("Azimuth"), getStrDeg(azm));
-  addTextItem(item, tr("Altitude"), getStrDeg(alt));
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
   addSeparator(item);
 
   beginExtInfo();
-  addTextItem(item, tr("Altitude without ref."), getStrDeg(nalt));
-  addTextItem(item, tr("Atm. refraction"), getStrDeg(cAstro.getAtmRef(nalt)));
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
   addSeparator(item);
   double airmass = CAstro::getAirmass(alt);
   addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));

@@ -89,8 +89,7 @@ class CDso : public QObject
     int  getMinSize() { return(m_minSize); }
     void setMinSize(int size) { m_minSize = size; }
 
-    //TODO: dat nazvy do QStringList *dsoNames;
-    dsoHeader_t        dsoHead;
+    dsoHeader_t      dsoHead;
     dso_t           *dso;
     char            *dsoNames;
     char            *dsoClass;

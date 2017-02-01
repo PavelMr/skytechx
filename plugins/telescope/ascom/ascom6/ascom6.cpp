@@ -35,14 +35,12 @@ void CAscom6::init()
   m_deviceName = "";
   m_ra = __DBL_MAX__;
   m_dec = __DBL_MAX__;
-
-  //m_timer = new QTimer(this);
-  //m_timer->start(m_refreshMs);
+  m_slewing = false;
 
   m_thread = new UpdateThread();
   m_thread->setObject(m_device);
-  m_thread->start();
-  QObject::connect(m_thread, SIGNAL(timeout(double, double)), this, SLOT(slotUpdate(double, double)));
+  m_thread->setUpdateTime(250);
+  QObject::connect(m_thread, SIGNAL(timeout(double, double, bool)), this, SLOT(slotUpdate(double, double, bool)));
 }
 
 ////////////////////
@@ -105,19 +103,20 @@ bool CAscom6::setup(QWidget *parent, bool parkAtExit)
     }
   }
 
-  QAxObject *o = new QAxObject("ASCOM.Utilities.Chooser");
+  QAxObject *o = new QAxObject("ASCOM.Utilities.Chooser");      
 
   if (o->isNull())
   {
     msgBoxError(NULL, "ASCOM.Utilities.Chooser interface not found!");
     delete o;
     return(false);
-  }
+  }  
 
-  m_deviceName = set.value("ascomDevice").toString();
+  m_deviceName = set.value("ascomDevice").toString();    
+  QVariant selected;
 
   o->setProperty("DeviceType", "Telescope");
-  QVariant selected = o->dynamicCall("Choose(String *)", m_deviceName);
+  selected = o->dynamicCall("Choose(String *)", m_deviceName);
 
   m_deviceName = selected.toString();
   delete o;
@@ -138,6 +137,9 @@ bool CAscom6::connectDev(QWidget *parent)
   qDebug("ASCOM6 connect()");
 
   m_device = new QAxObject(m_deviceName);
+
+  connect(m_device, SIGNAL(exception(int, QString, QString, QString )),
+          this, SLOT(exception(int,QString,QString,QString)));
 
   if (m_device->isNull())
   {
@@ -168,6 +170,8 @@ bool CAscom6::connectDev(QWidget *parent)
     emit sigConnected(true);
     m_thread->setObject(m_device);
   }
+
+  m_thread->start();
 
   return(true);
 }
@@ -209,6 +213,12 @@ int CAscom6::getAttributes()
 {
   int attr = 0;
 
+  if (m_device == NULL)
+    return(0);
+
+  if (m_device->isNull())
+    return(0);
+
   QVariant v;
 
   v = m_device->property("CanSync");
@@ -228,20 +238,16 @@ int CAscom6::getAttributes()
 
 bool CAscom6::isSlewing()
 {
-  if (m_device == NULL)
-    return false;
-
-  if (m_device->isNull())
-    return false;
-
-  return m_device->property("Slewing").toBool();
+  return m_slewing;
 }
 
 
-//////////////////////////
-void CAscom6::slotUpdate(double ra, double dec)
-//////////////////////////
+/////////////////////////////////////////////////////////////
+void CAscom6::slotUpdate(double ra, double dec, bool slewing)
+/////////////////////////////////////////////////////////////
 {  
+  m_slewing = slewing;
+
   if (m_ra == ra && m_dec == dec)
     return; // no change
 
@@ -249,6 +255,11 @@ void CAscom6::slotUpdate(double ra, double dec)
   m_dec = dec;  
 
   emit sigUpdate(ra, dec);
+}
+
+void CAscom6::exception(int code, const QString &source, const QString &desc, const QString &help)
+{
+  qDebug() << "code" << code << source << desc << help;
 }
 
 //////////////////////////////////////
@@ -260,21 +271,26 @@ bool CAscom6::disconnectDev(bool park)
   if (m_device == NULL)
     return(true);
 
-  m_thread->setEnd(true);
-  while (m_thread->isRunning());
-  delete m_thread;
+  m_thread->setEnd(true);  
+  m_thread->wait();
+  delete m_thread;  
 
   if (park)
   {
+    qDebug() << "parking";
     m_device->setProperty("Tracking", "0");
     m_device->dynamicCall("Park()");
-  }  
+    qDebug() << "park done";
+  }
 
-  m_device->setProperty("Connected", "0");  
-  m_device->clear();
-  delete m_device;  
-  m_device = NULL;  
-  emit sigConnected(false);  
+  qDebug() << "disconnect";
+  m_device->setProperty("Connected", "0");    
+  m_device->clear();  
+  delete m_device;    
+  m_device = NULL;    
+  emit sigConnected(false);
+
+  qDebug() << "disconnected";
 
   return(true);
 }
@@ -395,25 +411,23 @@ void UpdateThread::run()
   m_end = false;
 
   while (!m_end)
-  {
+  {    
     msleep(m_updateTime);
 
     if (m_device == NULL)
       continue;
 
     if (m_device->isNull())
-      continue;
+      continue;    
 
-    double ra, dec;
-    QVariant v;    
+    double ra = m_device->property("RightAscension").toDouble();
+    double dec = m_device->property("Declination").toDouble();
+    bool slewing = m_device->property("Slewing").toBool();
 
-    v = m_device->property("RightAscension");
-    ra = v.toDouble();
-    v = m_device->property("Declination");
-    dec = v.toDouble();
-
-    emit timeout(ra, dec);
+    emit timeout(ra, dec, slewing);
   }
+
+  qDebug() << "ascom thread done";
 }
 
 void UpdateThread::setEnd(bool end)

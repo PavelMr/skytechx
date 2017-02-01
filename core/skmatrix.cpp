@@ -49,14 +49,11 @@ SKMATRIX *SKMATRIXMultiply(SKMATRIX *out, SKMATRIX *m1, SKMATRIX *m2)
   {
     for (int j = 0; j < 4; j++)
     {
-      double summ = 0;
+      out->m[i][j] = m1->m[i][0] * m2->m[0][j] +
+                     m1->m[i][1] * m2->m[1][j] +
+                     m1->m[i][2] * m2->m[2][j] +
+                     m1->m[i][3] * m2->m[3][j];
 
-      for (int k = 0; k < 4; k++)
-      {
-        summ += m1->m[i][k] * m2->m[k][j];
-      }
-
-      out->m[i][j] = summ;
     }
   }
   return(out);
@@ -264,9 +261,7 @@ SKMATRIX *SKMATRIXOrtho(SKMATRIX *out, double w, double h, double nearPlane, dou
   SKMATRIXIdentity(out);
 
   out->m_11 =  2 / w;
-  out->m_22 =  2 / h;
-  //out->m_33 =  1  / (farPlane / nearPlane);
-  //out->m_43 =  -nearPlane / (farPlane / nearPlane);
+  out->m_22 =  2 / h; 
   out->m_33 =  1  / (nearPlane / farPlane);
   out->m_43 =  nearPlane / (nearPlane / farPlane);
   out->m_44 =  1;

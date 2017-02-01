@@ -878,7 +878,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -1186,6 +1186,29 @@
              <property name="icon">
               <iconset resource="resource.qrc">
                <normaloff>:/res/add_to_list.png</normaloff>:/res/add_to_list.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_37">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Slew to object</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resource.qrc">
+               <normaloff>:/res/ico_find_tele.png</normaloff>:/res/ico_find_tele.png</iconset>
              </property>
              <property name="iconSize">
               <size>

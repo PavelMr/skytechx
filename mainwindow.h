@@ -33,20 +33,6 @@ class MainWindow;
 }
 
 
-class CDSSOpenDialog : public QFileDialog
-{
-  Q_OBJECT
-
-public:
-  CDSSOpenDialog(QWidget *parent = 0,
-                 const QString &caption = QString(),
-                 const QString &directory = QString(),
-                 const QString &filter = QString());
-  int getSize();
-protected:
-  QComboBox *m_sizeComboBox;
-};
-
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
@@ -699,6 +685,10 @@ private slots:
   void on_toolButton_2_clicked();
 
   void on_actionClear_all_tracking_paths_triggered();
+
+  void on_pushButton_37_clicked();
+
+  void checkSlewButton();
 
 private:
   Ui::MainWindow *ui;

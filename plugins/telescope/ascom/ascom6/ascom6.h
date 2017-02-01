@@ -31,11 +31,11 @@ public:
   void setUpdateTime(int updateTime);
 
 signals:
-  void timeout(double ra, double dec);
+  void timeout(double ra, double dec, bool slewing);
 
 private:
   volatile bool m_end;
-  volatile int  m_updateTime;
+  volatile int  m_updateTime;  
 };
 
 class CAscom6 : public CTelePluginInterface
@@ -72,9 +72,11 @@ protected:
   QTimer    *m_timer;
   int        m_refreshMs;
   UpdateThread *m_thread;
+  bool       m_slewing;
 
 public slots:
-  virtual void slotUpdate(double ra, double dec);
+  virtual void slotUpdate(double ra, double dec, bool slewing);
+  void exception(int code, const QString &source, const QString &desc, const QString &help);
 };
 
 

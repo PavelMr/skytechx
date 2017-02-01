@@ -47,7 +47,7 @@ QRect SmartLabeling::renderLabel(CSkPainter *painter, const QPoint &point, float
   int y = point.y();
 
   trc.moveLeft(x);
-  trc.moveBottom(y);
+  trc.moveBottom(y); 
 
   switch (align)
   {
@@ -213,7 +213,7 @@ void SmartLabeling::render(CSkPainter *painter)
         else
           align = getAlign(a);
 
-        for (double d = 0; d < label.m_distance; d++)
+        for (int d = 0; d < label.m_distance; d += 2)
         {
           QRect rc = renderLabel(painter, label.m_point, label.m_distance + d, label.m_text, label.m_fontId, align, false, label.m_opacity);
 

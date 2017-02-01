@@ -208,7 +208,7 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
     return(true);
   }
 
-  m_pix = new QImage(sx, sy, QImage::Format_Indexed8);
+  m_pix = new QImage(sx, sy, QImage::Format_Grayscale8);
   if (m_pix == NULL || m_pix->isNull())
   {
     if (m_pix)
@@ -231,7 +231,7 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
   //float delta = 65536 / (float)(m_datamax - m_datamin);
 
   for (int y = sy - 1; y >= 0; y--)
-  {
+  {    
     uchar *dst = (uchar *)m_pix->bits() + (y * m_pix->width());
     for (int x = 0; x < sx; x++)
     {
@@ -254,7 +254,23 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
 
   if (resizeTo != 0)
   {
-    QImage tmp = m_pix->scaledToWidth(resizeTo, Qt::SmoothTransformation);
+    int resizeToY =  m_pix->height() / (double)(m_pix->width() / (double)resizeTo);
+    QImage tmp = QImage(resizeTo, resizeToY, QImage::Format_Grayscale8);
+
+    float dx = m_pix->width() / (float)tmp.width();
+    float dy = m_pix->height() / (float)tmp.height();
+
+    for (int y = 0; y < resizeToY; y++)
+    {
+      uchar *dst = (uchar *)tmp.bits() + (y * tmp.width());
+      for (int x = 0; x < resizeTo; x++)
+      {
+        uchar *src = (uchar *)m_pix->bits() + ((int)(y * dy) * m_pix->width() + (int)(x * dx));
+        *dst = *src;
+        dst++;
+      }
+    }
+
     delete m_pix;
     m_pix = new QImage(tmp);
   }

@@ -101,10 +101,7 @@ void CDso::load()
   }
   pf.close();
 
-  //qDebug("dsoHead.numDso = %ld\n", dsoHead.numDso);
-
-  // TODO: do dalsi verze
-  //addAddon("data/catalogue/dso/test.dso");
+  //qDebug("dsoHead.numDso = %ld\n", dsoHead.numDso); 
 
   // sort dso by size
   qsort(dso, dsoHead.numDso, sizeof(dso_t), dsoSort);

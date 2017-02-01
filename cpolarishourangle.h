@@ -28,12 +28,15 @@ private slots:
 
   void on_dateTimeEdit_dateTimeChanged(const QDateTime &dateTime);
 
+  void on_pushButton_3_clicked();
+
 private:
   void updateTime();
   Ui::CPolarisHourAngle *ui;
   QPixmap* m_reticle;
   double m_polarisHourAngle;
   mapView_t m_view;
+  double m_mapTime;
 };
 
 #endif // CPOLARISHOURANGLE_H

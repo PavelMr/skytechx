@@ -18,7 +18,7 @@
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
-static QList <mapObj_t> tObj;
+static QList      <mapObj_t> tObj;
 
 typedef struct
 {
@@ -296,7 +296,7 @@ bool mapObjSearch(int x, int y, mapObj_t *obj)
 void mapObjContextMenu(CMapView *map)
 /////////////////////////////////////
 {
-  QList <mapObj_t> tObjTmp;
+  QList       <mapObj_t> tObjTmp;
   QAction     *a;
   QMenu        myMenu;
   QPoint       pos = QCursor::pos();

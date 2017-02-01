@@ -40,7 +40,7 @@ CImageManip::CImageManip()
 void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
 //////////////////////////////////////////////////////////////////////
 {
-  bool bw = src->format() == QImage::Format_Indexed8;
+  bool bw = src->format() == (QImage::Format_Indexed8) || (src->format() == QImage::Format_Grayscale8);
 
   if (par->autoAdjust)
   {
@@ -157,7 +157,7 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
 void CImageManip::getHistogram(const QImage *src, int *histogram)
 /////////////////////////////////////////////////////////////////
 {  
-  bool bw = src->format() == QImage::Format_Indexed8;
+  bool bw = src->format() == (QImage::Format_Indexed8) || (src->format() == QImage::Format_Grayscale8);
 
   memset(histogram, 0, sizeof(int) * 256);  
 
@@ -189,7 +189,7 @@ void CImageManip::getHistogram(const QImage *src, int *histogram)
 void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv)
 ////////////////////////////////////////////////////////////////////
 {
-  bool bw = src->format() == QImage::Format_Indexed8;
+  bool bw = src->format() == (QImage::Format_Indexed8) || (src->format() == QImage::Format_Grayscale8);
   minv = 255;
   maxv = 0;
 
@@ -243,7 +243,7 @@ void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv)
 void CImageManip::autoAdjust(const QImage *src, QImage *dst, imageParam_t *par)
 /////////////////////////////////////////////////////////////////////////
 {
-  bool bw = src->format() == QImage::Format_Indexed8;
+  bool bw = src->format() == (QImage::Format_Indexed8) || (src->format() == QImage::Format_Grayscale8);
   int maxv;
   int minv;
 
