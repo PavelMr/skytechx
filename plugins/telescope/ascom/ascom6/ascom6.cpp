@@ -5,6 +5,8 @@
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTime>
+#include <QProgressDialog>
+#include <QApplication>
 
 #include <QDebug>
 
@@ -95,7 +97,7 @@ bool CAscom6::setup(QWidget *parent, bool parkAtExit)
   {
     if (msgBoxQuest(parent, "Disconnect current device?") == QMessageBox::Yes)
     {
-      disconnectDev(parkAtExit);
+      disconnectDev(parent, parkAtExit);
     }
     else
     {
@@ -165,7 +167,19 @@ bool CAscom6::connectDev(QWidget *parent)
     m_ra = __DBL_MAX__;
     m_dec = __DBL_MAX__;
 
+    QProgressDialog dlg(tr("Please wait...\nUnparking telescope!"), NULL, -1, -1, parent);
+
+    dlg.setWindowFlags(((dlg.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
+    dlg.setWindowModality(Qt::WindowModal);
+    dlg.show();
+
+    QApplication::processEvents();
+
     m_device->dynamicCall("Unpark()");
+
+    QApplication::processEvents();
+    dlg.hide();
+
     m_device->setProperty("Tracking", "1");
     emit sigConnected(true);
     m_thread->setObject(m_device);
@@ -262,9 +276,10 @@ void CAscom6::exception(int code, const QString &source, const QString &desc, co
   qDebug() << "code" << code << source << desc << help;
 }
 
-//////////////////////////////////////
-bool CAscom6::disconnectDev(bool park)
-/////////////////////////////////////
+
+///////////////////////////////////////////////////////
+bool CAscom6::disconnectDev(QWidget *parent, bool park)
+///////////////////////////////////////////////////////
 {
   qDebug("ASCOM6 disconnect()");
 
@@ -276,11 +291,22 @@ bool CAscom6::disconnectDev(bool park)
   delete m_thread;  
 
   if (park)
-  {
+  {    
+    QProgressDialog dlg(tr("Please wait...\nParking telescope!"), NULL, 0, 0, parent);
+
+    dlg.setWindowFlags(((dlg.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
+    dlg.setWindowModality(Qt::WindowModal);
+    dlg.show();
+
+    QApplication::processEvents();
+
     qDebug() << "parking";
     m_device->setProperty("Tracking", "0");
     m_device->dynamicCall("Park()");
     qDebug() << "park done";
+
+    QApplication::processEvents();
+    dlg.hide();
   }
 
   qDebug() << "disconnect";

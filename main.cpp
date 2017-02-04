@@ -94,6 +94,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext & /*context*/, cons
   outFile.open(QIODevice::WriteOnly | QIODevice::Append);
   QTextStream ts(&outFile);
   ts << txt << endl;
+  ts.flush();
 }
 
 static void copyPath(const QString &src, const QString &dst)

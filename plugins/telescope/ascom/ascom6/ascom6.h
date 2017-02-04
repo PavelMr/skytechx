@@ -51,7 +51,7 @@ public:
   QString getName(void);
   bool setup(QWidget *parent, bool parkAtExit = true);
   bool connectDev(QWidget *parent);
-  bool disconnectDev(bool park = true);
+  bool disconnectDev(QWidget *parent, bool park = true);
   bool slewTo(double ra, double dec);
   bool syncTo(double ra, double dec);
   int  getAttributes();

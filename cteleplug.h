@@ -6,8 +6,8 @@
 #include "cteleplugininterface.h"
 
 QString tpGetDriverName(QString libName);
-bool tpLoadDriver(QString libName);
-void tpUnloadDriver(void);
+bool tpLoadDriver(QWidget *parent, QString libName);
+void tpUnloadDriver(QWidget *parent);
 
 double tpGetTelePluginSpeed(const QString &value, QVector <double> list);
 double tpGetTelePluginRatePercent(double percent, QVector <double> list);

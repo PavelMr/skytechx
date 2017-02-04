@@ -1426,7 +1426,7 @@ void MainWindow::saveAndExit()
 
   if (g_pTelePlugin != NULL)
   {
-    g_pTelePlugin->disconnectDev(bParkTelescope);
+    g_pTelePlugin->disconnectDev(this, bParkTelescope);
   }
 
   if (ui->actionNight_mode->isChecked())
@@ -3730,12 +3730,12 @@ void MainWindow::on_actionConnect_device_triggered()
   {
     qDebug("sel = %s", qPrintable(dlg.m_libName));
 
-    if (tpLoadDriver(dlg.m_libName))
+    if (tpLoadDriver(this, dlg.m_libName))
     {
       g_pTelePlugin->init();
       if (!g_pTelePlugin->setup(this))
       {
-        tpUnloadDriver();
+        tpUnloadDriver(this);
         ui->widget->repaintMap();
         return;
       }
@@ -3761,7 +3761,7 @@ void MainWindow::on_actionConnect_device_triggered()
 
       if (!g_pTelePlugin->connectDev(this))
       {
-        tpUnloadDriver();
+        tpUnloadDriver(this);
         ui->widget->repaintMap();
         return;
       }
@@ -3838,7 +3838,7 @@ void MainWindow::on_actionDisconnect_triggered()
   if (msgBoxQuest(this,tr("Disconnect current telescope?")) == QMessageBox::No)
     return;
 
-  tpUnloadDriver();
+  tpUnloadDriver(this);
   ui->widget->repaintMap();
 }
 

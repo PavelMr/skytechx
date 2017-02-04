@@ -19,7 +19,7 @@ public:
   virtual QString getName(void) = 0;
   virtual bool setup(QWidget *parent, bool parkAtExit = true) = 0;
   virtual bool connectDev(QWidget *parent) = 0;
-  virtual bool disconnectDev(bool park = true) = 0;
+  virtual bool disconnectDev(QWidget *parent, bool park = true) = 0;
   virtual bool slewTo(double ra, double dec) = 0;
   virtual bool syncTo(double ra, double dec) = 0;
   virtual int  getAttributes() = 0;

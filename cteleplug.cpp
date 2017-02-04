@@ -114,10 +114,10 @@ QString tpGetDriverName(QString libName)
 
 
 //////////////////////////////////
-bool tpLoadDriver(QString libName)
+bool tpLoadDriver(QWidget *parent, QString libName)
 //////////////////////////////////
 {
-  tpUnloadDriver();
+  tpUnloadDriver(parent);
 
   Q_ASSERT(tpLoader == 0);
 
@@ -148,7 +148,7 @@ bool tpLoadDriver(QString libName)
 
 
 /////////////////////////
-void tpUnloadDriver(void)
+void tpUnloadDriver(QWidget *parent)
 /////////////////////////
 {
   if (!tpLoader)
@@ -156,7 +156,7 @@ void tpUnloadDriver(void)
 
   if (g_pTelePlugin)
   {
-    g_pTelePlugin->disconnectDev(bParkTelescope);
+    g_pTelePlugin->disconnectDev(parent, bParkTelescope);
     g_soundManager.play(MC_DISCONNECT);
   }
 
