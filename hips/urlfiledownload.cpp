@@ -43,7 +43,8 @@ void UrlFileDownload::downloadFinished(QNetworkReply *reply)
   }
   else
   {    
-    emit sigDownloadDone(reply->error(), QByteArray(), key);
+    QByteArray empty;
+    emit sigDownloadDone(reply->error(), empty, key);
   }
 
   reply->deleteLater();  

@@ -42,6 +42,7 @@ public:
   int renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, double ang = CM_UNDEF, bool isPreview = false);
   void drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate);
   int renderMoon(int id, QImage *pImg, QPainter *p, SKPOINT *pt, SKPOINT *ptp, orbit_t *o, planetSatellite_t *sat, bool bIsShadow, mapView_t *view);
+  void reloadMoonTexture();
 protected:
   bool m_init;
   void renderRing(int side, SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, bool isPreview = false);

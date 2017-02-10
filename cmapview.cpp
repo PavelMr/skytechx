@@ -1330,18 +1330,12 @@ void CMapView::slotCheckedFlipY(bool checked)
 ////////////////////////////////////////////////////////
 void CMapView::slotTelePlugChange(double ra, double dec)
 ////////////////////////////////////////////////////////
-{  
-  static QTime tm;
-
+{    
   m_lastTeleRaDec.Ra = D2R(ra * 15);
   m_lastTeleRaDec.Dec = D2R(dec);
 
-  //qDebug() << "u" << tm.elapsed();
-
   recenterHoldObject(this, false);
-  repaintMap();
-
-  tm.start();
+  repaintMap();  
 }
 
 void CMapView::slotMapControl(QVector2D map, double rotate, double zoom)
@@ -2267,12 +2261,12 @@ void CMapView::slotGamepadChange(const gamepad_t &state, double speedMul)
   double upDown = state.up > 0 ? -state.up : state.down;
   double zoom = state.zoomIn > 0 ? -state.zoomIn : state.zoomOut;
   double starMag = state.starMagPlus > 0 ? state.starMagPlus : -state.starMagMinus;
-  double dsoMag = state.DSOMagPlus > 0 ? state.DSOMagPlus : -state.DSOMagMinus;
+  double dsoMag = state.DSOMagPlus > 0 ? state.DSOMagPlus : -state.DSOMagMinus;  
 
   double x, y;
   double angle = atan2(leftRight, -upDown);
   double speed = speedMul * sqrt(POW2(leftRight) + POW2(upDown));
-  double mulY = speedMul * 0.05;
+  double mulY = speedMul * 0.5;
 
   if (qAbs(m_mapView.y) > D2R(89.9))
   {
@@ -2283,7 +2277,7 @@ void CMapView::slotGamepadChange(const gamepad_t &state, double speedMul)
     calcAngularDistance(m_mapView.x, m_mapView.y, angle, m_mapView.fov * speed * 0.05, x, y);
   }
 
-  addY(-upDown * mulY * m_mapView.fov);
+  addY(-upDown * mulY);
 
   m_mapView.x = x;
 

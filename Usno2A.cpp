@@ -39,7 +39,7 @@ CUsno2A::~CUsno2A()
 }
 
 ///////////////////////////////////
-__inline static long swap (long val)
+__inline static qint32 swap (qint32 val)
 ///////////////////////////////////
 {
   unsigned char b[4];
@@ -91,10 +91,10 @@ bool CUsno2A::searchStar(int zone, int number, usnoStar_t *star)
   iDec = swap(iDec);
   iMag = swap(iMag);
 
-  long data[4];
-  long *pPtr = &data[0];
+  qint32 data[4];
+  qint32 *pPtr = &data[0];
 
-  *pPtr = (long)(number); pPtr++;
+  *pPtr = (qint32)(number); pPtr++;
   *pPtr = iRa; pPtr++;
   *pPtr = iDec; pPtr++;
   *pPtr = iMag; pPtr++;
@@ -137,7 +137,7 @@ usnoZone_t *CUsno2A::loadGSCRegion(int region)
   int   z = -1;
   int   emptyZ = -1;
   int   lastZ = -1;
-  ULONG t = 0xFFFFFFFF;
+  quint32 t = 0xFFFFFFFF;
 
   if (usnoDir.isEmpty())
     return NULL;
@@ -202,13 +202,13 @@ usnoZone_t *CUsno2A::loadGSCRegion(int region)
 
 
 //////////////////////////////////////////////////////
-void CUsno2A::getUSNOStar(usnoStar_t *star, long *ptr)
+void CUsno2A::getUSNOStar(usnoStar_t *star, qint32 *ptr)
 //////////////////////////////////////////////////////
 {
   star->id = *ptr; ptr++;
-  ulong iRa  = *ptr; ptr++;
-  ulong iDec = *ptr; ptr++;
-  ulong iMag = *ptr; ptr++;
+  quint32 iRa  = *ptr; ptr++;
+  quint32 iDec = *ptr; ptr++;
+  quint32 iMag = *ptr; ptr++;
 
   star->rd.Ra = iRa / (3600. * 100.);
   star->rd.Dec = (iDec / 3600. / 100.) - 90.;
@@ -220,7 +220,7 @@ void CUsno2A::getUSNOStar(usnoStar_t *star, long *ptr)
   //0 0 352 188 180
   //    651 007 744
 
-  long rbMag = iMag % 1000000;
+  qint32 rbMag = iMag % 1000000;
   float magR = (float)(rbMag % 1000);
   float magB = (rbMag - magR) / 10000.;
   magR /= 10.;
@@ -237,7 +237,7 @@ usnoZone_t *CUsno2A::getStar(usnoStar_t *s, int reg, int index)
 {
   usnoZone_t *z = loadGSCRegion(reg);
 
-  long *p = z->pData;
+  qint32 *p = z->pData;
 
   p += index *4;
 
@@ -262,8 +262,7 @@ bool CUsno2A::readZoneFile(usnoZone_t * pZone,
 
   float  fRa;
   int    i1, i2;
-  ulong  last = -1;
-  //ulong  from = 0;
+  quint32  last = -1;
   int    count = 0;
   bool   bFound = false;
 
@@ -319,21 +318,21 @@ bool CUsno2A::readZoneFile(usnoZone_t * pZone,
 
   pf.seek(last * USNO_STAR_REC_SIZE);
 
-  pZone->pData = (long *)malloc(count * (4 + USNO_STAR_REC_SIZE));
+  pZone->pData = (qint32 *)malloc(count * (4 + USNO_STAR_REC_SIZE));
   if (pZone->pData == NULL)
     return(false);
 
-  unsigned long    iRa, iDec;
-  long             iMag;
-  long            *pPtr = pZone->pData;
-  double           ra, dec;
+  quint32    iRa, iDec;
+  qint32    iMag;
+  qint32    *pPtr = pZone->pData;
+  double     ra, dec;
 
   raMin = raMin * 15 * 3600 * 100;
   raMax = raMax * 15 * 3600 * 100;
   decMin = (decMin + 90) * 3600 * 100;
   decMax = (decMax + 90) * 3600 * 100;
 
-  for (ulong i = 0; i < (ulong)count; i++)
+  for (quint32 i = 0; i < (quint32)count; i++)
   {
     pf.read((char *)&iRa, sizeof(int));
     pf.read((char *)&iDec, sizeof(int));
@@ -353,7 +352,7 @@ bool CUsno2A::readZoneFile(usnoZone_t * pZone,
         pZone->starCount++;
         iMag = swap(iMag);
 
-        *pPtr = (ulong)(last + i + 1); pPtr++;
+        *pPtr = (quint32)(last + i + 1); pPtr++;
         *pPtr = iRa; pPtr++;
         *pPtr = iDec; pPtr++;
         *pPtr = iMag; pPtr++;
@@ -381,7 +380,7 @@ bool CUsno2A::readZoneFile(usnoZone_t * pZone,
     return(true);
   }
 
-  long *p = (long *)realloc(pZone->pData, pZone->starCount * (4 + USNO_STAR_REC_SIZE));
+  qint32 *p = (qint32 *)realloc(pZone->pData, pZone->starCount * (4 + USNO_STAR_REC_SIZE));
   if (p == NULL)
   {
     qDebug("Realloc failed!");

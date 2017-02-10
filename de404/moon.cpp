@@ -78,9 +78,9 @@ struct plantbl {
   char max_harmonic[NARGS];
   char max_power_of_t;
   CHAR *arg_tbl;
-  long *lon_tbl;
-  long *lat_tbl;
-  long *rad_tbl;
+  qint32 *lon_tbl;
+  qint32 *lat_tbl;
+  qint32 *rad_tbl;
   double distance;
   double timescale;
   double trunclvl;
@@ -129,7 +129,7 @@ public:
 #define AUKM 1.4959787e8
 
 
-static long lrtabl[] = {
+static qint32 lrtabl[] = {
     175667,     66453,      5249,       -42,
      20057,       403,     -2360,      6148,
      -7644,     24646,     -1273,      9127,
@@ -786,8 +786,8 @@ static long lrtabl[] = {
          0,        57,
          0,      -133,
 };
-static long lrtabb[] = {-1};
-static long lrtabr[] = {
+static qint32 lrtabb[] = {-1};
+static qint32 lrtabr[] = {
      -5422,     -2120,      1077,       772,
         39,        75,         3,        10,
       -468,      -326,      -113,       -78,
@@ -2080,9 +2080,9 @@ static CHAR lrargs[] = {
  -1
 };
 
-static long btabr[] = {-1};
-static long btabb[] = {-1};
-static long btabl[] = {
+static qint32 btabr[] = {-1};
+static qint32 btabb[] = {-1};
+static qint32 btabl[] = {
         -3,        -4,
          4,     -1856,         0,      8043,
         -9,     -1082,
@@ -3040,7 +3040,7 @@ int CMoon::g2plan (double J, struct plantbl *plan, double pobj[], int flag)
   /* On some systems such as Silicon Graphics, char is unsigned
      by default.  */
   CHAR *p;
-  long *pl, *pr;
+  qint32 *pl, *pr;
   double su, cu, sv, cv;
   double t, sl, sr;
 
@@ -3163,7 +3163,7 @@ double CMoon::g1plan (double J, struct plantbl *plan)
   /* On some systems such as Silicon Graphics, char is unsigned
      by default.  */
   CHAR *p;
-  long *pl;
+  qint32 *pl;
   double su, cu, sv, cv;
   double t, sl;
 
@@ -3305,17 +3305,17 @@ void CMoon::moon_fast (double mj, double *lam, double *bet, double *hp, double *
   t2 = t*t;
 
   m1 = mj/27.32158213;
-  m1 = 360.0*(m1-(long)m1);
+  m1 = 360.0*(m1-(qint32)m1);
   m2 = mj/365.2596407;
-  m2 = 360.0*(m2-(long)m2);
+  m2 = 360.0*(m2-(qint32)m2);
   m3 = mj/27.55455094;
-  m3 = 360.0*(m3-(long)m3);
+  m3 = 360.0*(m3-(qint32)m3);
   m4 = mj/29.53058868;
-  m4 = 360.0*(m4-(long)m4);
+  m4 = 360.0*(m4-(qint32)m4);
   m5 = mj/27.21222039;
-  m5 = 360.0*(m5-(long)m5);
+  m5 = 360.0*(m5-(qint32)m5);
   m6 = mj/6798.363307;
-  m6 = 360.0*(m6-(long)m6);
+  m6 = 360.0*(m6-(qint32)m6);
 
   ld = 270.434164+m1-(.001133-.0000019*t)*t2;
   ms = 358.475833+m2-(.00015+.0000033*t)*t2;

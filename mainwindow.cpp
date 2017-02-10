@@ -113,6 +113,8 @@
 #include <QCompleter>
 #include <QTextBrowser>
 
+Q_DECLARE_METATYPE(lfParam_t)
+
 // show/hide drawing
 bool g_showCenterScreen = false;
 bool g_showDSOShapes = false;
@@ -182,6 +184,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   QSettings settings;    
+
+  qRegisterMetaTypeStreamOperators<lfParam_t>("lfParam_T");
 
   ui->setupUi(this);
 
@@ -631,17 +635,14 @@ MainWindow::MainWindow(QWidget *parent) :
   lfmodel->setItem(8, 0, item);
 
   ui->hr_lf_detail_2->setSliderPosition(5);
-  on_hr_lf_detail_2_valueChanged(ui->hr_lf_detail_2->value());  
+  on_hr_lf_detail_2_valueChanged(ui->hr_lf_detail_2->value());    
 
-  QByteArray data;
+  lfParam_t lfDefVal;
+  QVariant defVal = QVariant::fromValue(lfDefVal);
+  QVariant val = settings.value("lunar_features_opt", defVal);
+  lfParam_t lfp = val.value<lfParam_t>();
+  lfSetParam(&lfp);
 
-  data = settings.value("lunar_features_opt").toByteArray();
-
-  if (data.count() == sizeof(lfParam_t))
-  {
-    const lfParam_t *lfp = (const lfParam_t *)data.constData();
-    lfSetParam(lfp);
-  }
 
   ///////////////////////////////////
   ui->toolBox->setCurrentIndex(0);
@@ -1497,12 +1498,14 @@ void MainWindow::saveAndExit()
   settings.setValue("hips_bi", ui->actionHIPS_billinear->isChecked());
 
   lfParam_t lfp;
-  QByteArray data;
+  //QByteArray data;
 
   lfGetParam(&lfp);
 
-  data.setRawData((const char *)&lfp, sizeof (lfParam_t));
-  settings.setValue("lunar_features_opt", data);
+  //data.setRawData((const char *)&lfp, sizeof (lfParam_t));
+  QVariant vv = QVariant::fromValue(lfp);
+  qDebug() << vv;
+  settings.setValue("lunar_features_opt", vv);
 
   if (g_autoSave.mapPosition)
   {
@@ -4179,13 +4182,7 @@ void MainWindow::on_pushButton_dss_all_clicked()
     dlg.setValue(index);
     QApplication::processEvents();
 
-    CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
-
-    MEMORYSTATUSEX ex;
-
-    ex.dwLength = sizeof(MEMORYSTATUSEX);
-    GlobalMemoryStatusEx(&ex);
-
+    CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;    
     CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[index].param);    
   }
 
@@ -4235,7 +4232,7 @@ void MainWindow::slotTimeUpdate()
   {
     double azm, alt;
 
-    if (g_pTelePlugin && tpLoader->isLoaded())
+    if (g_pTelePlugin && tpLoader->isLoaded() && g_pTelePlugin->isRADecValid())
     {
       ui->dockTele->setWindowTitle(tr("Telescope - ") + g_pTelePlugin->getTelescope());
       ui->dockTele->setEnabled(true);
@@ -4261,7 +4258,7 @@ void MainWindow::slotTimeUpdate()
     }
   }
 
-  if (g_pTelePlugin && tpLoader->isLoaded()) // TODO: g_pTelePlugin.isConnected()
+  if (g_pTelePlugin && tpLoader->isLoaded() && g_pTelePlugin->isRADecValid())
   {
     ui->label_tp_ra->setText(tr("R.A. : ") + getStrRA(ui->widget->m_lastTeleRaDec.Ra));
     ui->label_tp_dec->setText(tr("Dec. : ") + getStrDeg(ui->widget->m_lastTeleRaDec.Dec));

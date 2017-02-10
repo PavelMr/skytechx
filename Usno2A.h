@@ -10,11 +10,11 @@
 #include "skcore.h"
 
 #define MAX_USNO_A2_ZONES      24
-#define USNO_STAR_REC_SIZE     (3 * sizeof(long))
+#define USNO_STAR_REC_SIZE     (3 * sizeof(qint32))
 
 typedef struct
 {
-  ulong   id;
+  quint32 id;
   radec_t rd;
   float   rMag;
   float   bMag;
@@ -22,12 +22,12 @@ typedef struct
 
 typedef struct
 {
-  bool  bUsed;
-  int   region;
-  int   zone;
-  int   starCount;
-  long *pData;
-  ULONG timer;
+  bool    bUsed;
+  int     region;
+  int     zone;
+  int     starCount;
+  qint32 *pData;
+  quint32 timer;
 } usnoZone_t;
 
 class CUsno2A
@@ -45,7 +45,7 @@ public:
   usnoZone_t *loadGSCRegion(int region);
   usnoZone_t *getStar(usnoStar_t *s, int reg, int index);
   bool readZoneFile(usnoZone_t * pZone, double raMin, double raMax, double decMin, double decMax, const QString &szCat, const QString &acc, int reg);
-  void getUSNOStar(usnoStar_t *star, long *ptr);
+  void getUSNOStar(usnoStar_t *star, qint32 *ptr);
   void setUsnoDir(QString dir);
 };
 

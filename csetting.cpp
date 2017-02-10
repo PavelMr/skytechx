@@ -27,6 +27,7 @@
 #include "skserver.h"
 #include "csimplelist.h"
 #include "hipsrenderer.h"
+#include "cplanetrenderer.h"
 
 #include <QSettings>
 
@@ -1105,28 +1106,7 @@ void CSetting::apply()
   {
     settings.setValue("sun_online_period", period);
     settings.setValue("sun_online_startup_only", false);
-  }
-
-  /*
-  m_used = set.value("sun_online_used", false).toBool();
-  m_radius = set.value("sun_radius", 0).toInt();
-  m_url = set.value("sun_online_url", "http://sdo.gsfc.nasa.gov/assets/img/latest/latest_2048_4500.jpg").toString();
-  m_period = set.value("sun_online_period", 0).toInt();
-  m_lastJD = set.value("sun_online_last_update", 0.0).toDouble();
-  m_startupOnly = set.value("sun_online_startup_only", true).toBool();
-  */
-
-  /*
-  int index = ui->cb_onlineSunUrl->currentData(Qt::UserRole)// settings.value("sun_online_url", "").toString());
-  if (index == -1)
-  {
-    index = 0;
-  }
-  ui->cb_onlineSunUrl->setCurrentIndex(index);
-  int period = settings.value("sun_online_period", 60 * 60).toInt();
-  index = ui->cb_onlineSunPeriod->findData(period);
-  ui->cb_onlineSunPeriod->setCurrentIndex(index);
-  */
+  } 
 
   // other
   g_skSet.map.smartLabels = ui->checkBox_18->isChecked();
@@ -1148,6 +1128,8 @@ void CSetting::apply()
     ds << ui->tv_statusBar->item(i)->data(Qt::UserRole + 1).toInt();
   }
   set.setValue("status_bar", data);
+
+  cPlanetRenderer.reloadMoonTexture();
 
   pcMainWnd->statusBar->createSkyMapBar();
   pcMainWnd->statusBar->saveStatusBar();

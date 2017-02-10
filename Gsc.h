@@ -44,7 +44,7 @@ typedef struct
 {
   gscHeader_t h;
         gsc_t *gsc;
-        ULONG  timer;
+      quint32  timer;
         short  loaded;
         short  region;
 } gscRegion2_t;
@@ -60,7 +60,7 @@ public:
   void loadRegion(int r);
   bool searchStar(int region, int number, gsc_t **star, int &index);
 
-  long         m_maxGSCNumRegions;
+  qint32       m_maxGSCNumRegions;
   bool         bIsGsc;
   gscRegion2_t gscRegion[NUM_GSC_REGS];
 
@@ -68,12 +68,12 @@ protected :
   void deleteRegion(int rn);
   void decode(BYTE *c, gscHeader_t *h, gsc_t *r);
   bool readRegion(int r, gscRegion2_t *rgn);
-  long m_curGSCNumRegions;
-  long gscTable[NUM_GSC_REGS];
+  qint32 m_curGSCNumRegions;
+  qint32 gscTable[NUM_GSC_REGS];
   bool tableLoaded;
 
    int numLoaded;
-  long memoryUsage;
+  qint32 memoryUsage;
 };
 
 extern CGsc  cGSC;

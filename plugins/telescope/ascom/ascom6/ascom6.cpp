@@ -5,8 +5,6 @@
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTime>
-#include <QProgressDialog>
-#include <QApplication>
 
 #include <QDebug>
 
@@ -38,6 +36,7 @@ void CAscom6::init()
   m_ra = __DBL_MAX__;
   m_dec = __DBL_MAX__;
   m_slewing = false;
+  m_raDecValid = false;
 
   m_thread = new UpdateThread();
   m_thread->setObject(m_device);
@@ -165,20 +164,9 @@ bool CAscom6::connectDev(QWidget *parent)
   else
   {
     m_ra = __DBL_MAX__;
-    m_dec = __DBL_MAX__;
+    m_dec = __DBL_MAX__;    
 
-    QProgressDialog dlg(tr("Please wait...\nUnparking telescope!"), NULL, -1, -1, parent);
-
-    dlg.setWindowFlags(((dlg.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
-    dlg.setWindowModality(Qt::WindowModal);
-    dlg.show();
-
-    QApplication::processEvents();
-
-    m_device->dynamicCall("Unpark()");
-
-    QApplication::processEvents();
-    dlg.hide();
+    m_device->dynamicCall("Unpark()");    
 
     m_device->setProperty("Tracking", "1");
     emit sigConnected(true);
@@ -219,6 +207,13 @@ if (m_device == NULL)
   m_device->dynamicCall("SyncToCoordinates(double, double)", QVariant(ra), QVariant(dec));
 
   return(true);
+}
+
+////////////////////////////
+bool CAscom6::isRADecValid()
+////////////////////////////
+{
+  return m_raDecValid;
 }
 
 ////////////////////////////
@@ -267,6 +262,7 @@ void CAscom6::slotUpdate(double ra, double dec, bool slewing)
 
   m_ra = ra;
   m_dec = dec;  
+  m_raDecValid = true;
 
   emit sigUpdate(ra, dec);
 }
@@ -291,22 +287,11 @@ bool CAscom6::disconnectDev(QWidget *parent, bool park)
   delete m_thread;  
 
   if (park)
-  {    
-    QProgressDialog dlg(tr("Please wait...\nParking telescope!"), NULL, 0, 0, parent);
-
-    dlg.setWindowFlags(((dlg.windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
-    dlg.setWindowModality(Qt::WindowModal);
-    dlg.show();
-
-    QApplication::processEvents();
-
+  {        
     qDebug() << "parking";
     m_device->setProperty("Tracking", "0");
     m_device->dynamicCall("Park()");
-    qDebug() << "park done";
-
-    QApplication::processEvents();
-    dlg.hide();
+    qDebug() << "park done";    
   }
 
   qDebug() << "disconnect";

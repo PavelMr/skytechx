@@ -4,13 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network xml sql widgets printsupport script multimedia charts
+QT += core gui network xml sql widgets printsupport script multimedia charts
+#QT += gamepad
 
-CONFIG   += openssl-linked
-CONFIG   += qxt
-CONFIG   += axcontainer
-CONFIG   += plugin
-CONFIG   += c++11
+#CONFIG   += openssl-linked
+#CONFIG   += qxt
+#CONFIG   += axcontainer
+#CONFIG   += plugin
+#CONFIG   += c++11
 
 DEFINES += NOMINMAX
 

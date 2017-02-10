@@ -54,6 +54,7 @@ public:
   bool disconnectDev(QWidget *parent, bool park = true);
   bool slewTo(double ra, double dec);
   bool syncTo(double ra, double dec);
+  bool isRADecValid();
   int  getAttributes();
   bool isSlewing();
   QString getTelescope();
@@ -69,6 +70,7 @@ protected:
   QString    m_deviceName;
   double     m_ra;
   double     m_dec;
+  bool       m_raDecValid;
   QTimer    *m_timer;
   int        m_refreshMs;
   UpdateThread *m_thread;

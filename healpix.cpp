@@ -111,7 +111,7 @@ void HEALPix::getCornerPoints(int level, int pix, SKPOINT *points)
   }        
 }
 
-void HEALPix::boundaries(long nside, long pix, int step, SKVECTOR *out)
+void HEALPix::boundaries(qint32 nside, qint32 pix, int step, SKVECTOR *out)
 {
   int ix, iy, fn;
 
@@ -206,7 +206,7 @@ static int xyf2nest (int nside, int ix, int iy, int face_num)
 }
 
 
-int static leadingZeros(long value)
+int static leadingZeros(qint32 value)
 {
   int leadingZeros = 0;
   while(value != 0)
@@ -218,12 +218,12 @@ int static leadingZeros(long value)
   return (32 - leadingZeros);
 }
 
-static int ilog2(long arg)
+static int ilog2(qint32 arg)
 {
-  return 32 - leadingZeros(qMax(arg, 1L));
+  return 32 - leadingZeros(qMax(arg, 1));
 }
 
-static int nside2order(long nside)
+static int nside2order(qint32 nside)
 {
   { int i=0;
     while((nside>>(++i))>0);
@@ -241,7 +241,7 @@ static int nside2order(long nside)
        of ipix. If a neighbor does not exist (this can only happen
        for the W, N, E and S neighbors), its entry is set to -1. */
 
-void HEALPix::neighbours(int nside, long ipix, int *result)
+void HEALPix::neighbours(int nside, qint32 ipix, int *result)
  {
    int ix, iy, face_num;
 
@@ -249,10 +249,10 @@ void HEALPix::neighbours(int nside, long ipix, int *result)
 
    nest2xyf(nside, ipix, &ix, &iy, &face_num);
 
-   long nsm1 = nside-1;
+   qint32 nsm1 = nside-1;
    if ((ix>0)&&(ix<nsm1)&&(iy>0)&&(iy<nsm1))
      {
-       long fpix = (long)(face_num)<<(2*order),
+       qint32 fpix = (qint32)(face_num)<<(2*order),
             px0=spread_bits64(ix  ), py0=spread_bits64(iy  )<<1,
             pxp=spread_bits64(ix+1), pyp=spread_bits64(iy+1)<<1,
             pxm=spread_bits64(ix-1), pym=spread_bits64(iy-1)<<1;
@@ -294,7 +294,7 @@ void HEALPix::neighbours(int nside, long ipix, int *result)
      }   
 }
 
-int HEALPix::ang2pix_nest_z_phi (long nside_, double z, double phi)
+int HEALPix::ang2pix_nest_z_phi (qint32 nside_, double z, double phi)
 {
   double za = fabs(z);
   double tt = fmodulo(phi,twopi) * inv_halfpi; /* in [0,4) */

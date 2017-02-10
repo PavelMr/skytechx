@@ -203,7 +203,7 @@ void SKPLANEClipPolygonToPlane(SKPLANE *plane, SKPOINT *in, int countIn, SKPOINT
 
   for (int index = 0; index < countIn; index++)
   {
-    long loc = location[index];
+    int loc = location[index];
 
     if (loc == polygonExterior)
     {

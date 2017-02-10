@@ -250,7 +250,7 @@ static int get_hhh_data( const char *szDataDir, const char *header_file_name,
    size_t n_read;
    FILE *ifile;
    unsigned i, n_lines = 0;
-   long offset;
+   qint32 offset;
    char lower_name[20], filename[20];
 
    strcpy( filename, "hhh.dat");

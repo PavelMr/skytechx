@@ -22,6 +22,7 @@ public:
   virtual bool disconnectDev(QWidget *parent, bool park = true) = 0;
   virtual bool slewTo(double ra, double dec) = 0;
   virtual bool syncTo(double ra, double dec) = 0;
+  virtual bool isRADecValid() = 0;
   virtual int  getAttributes() = 0;
   virtual bool isSlewing() = 0;
 

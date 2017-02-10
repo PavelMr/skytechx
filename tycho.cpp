@@ -109,6 +109,8 @@ bool CTycho::load()
   f.seek(pos);
   int maxhd = 0;
 
+  qDebug() << "TSS" << sizeof(tychoStar_t) << sizeof(long);
+
   for (int i = 0; i < m_head.regCount; i++)
   {
     tychoRegion_t  reg;

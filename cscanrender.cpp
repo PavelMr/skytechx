@@ -45,22 +45,6 @@ void CScanRender::resetScanPoly(int sx, int sy)
   m_sy = sy;
 }
 
-
-/////////////////////////////////////
-static inline int float2int(double d)
-/////////////////////////////////////
-{
-   union Cast
-   {
-      double d;
-      long l;
-    };
-   volatile Cast c;
-   c.d = d + 6755399441055744.0;
-   return c.l;
-}
-
-
 //////////////////////////////////////////////////////////
 void CScanRender::scanLine(int x1, int y1, int x2, int y2)
 //////////////////////////////////////////////////////////
@@ -217,7 +201,7 @@ void CScanRender::scanLine(int x1, int y1, int x2, int y2, float u1, float v1, f
 
   for (y = y1; y <= y2; y++)
   {
-    scLR[y].scan[side] = float2int(x);
+    scLR[y].scan[side] = (int)x;
     scLR[y].uv[side][0] = uv[0];
     scLR[y].uv[side][1] = uv[1];
 

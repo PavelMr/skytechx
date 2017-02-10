@@ -76,6 +76,8 @@ bool CPlanetRenderer::load()
   m_bmp[PT_URANUS] = new QImage("../data/planets/uranus.jpg");
   m_bmp[PT_NEPTUNE] = new QImage("../data/planets/neptune.jpg");
 
+  reloadMoonTexture();
+  /*
   if (g_skSet.map.planet.useCustomMoonTexture)
   {
     m_bmp[PT_MOON] = new QImage(g_skSet.map.planet.moonImage);
@@ -91,6 +93,7 @@ bool CPlanetRenderer::load()
   {
     m_bmp[PT_MOON] = new QImage("../data/planets/moon2k.png");
   }
+  */
 
   QImage *satRing_a = new QImage("../data/planets/saturn_ring_alpha.jpg");
   QImage *satRing = new QImage("../data/planets/saturn_ring.jpg");
@@ -113,6 +116,26 @@ bool CPlanetRenderer::load()
   return true;
 }
 
+void CPlanetRenderer::reloadMoonTexture()
+{
+  delete m_bmp[PT_MOON];
+
+  if (g_skSet.map.planet.useCustomMoonTexture)
+  {
+    m_bmp[PT_MOON] = new QImage(g_skSet.map.planet.moonImage);
+
+    if (m_bmp[PT_MOON]->isNull())
+    {
+      delete m_bmp[PT_MOON];
+      m_bmp[PT_MOON] = new QImage(32, 32, QImage::Format_ARGB32_Premultiplied);
+      m_bmp[PT_MOON]->fill(0xff0000ff);
+    }
+  }
+  else
+  {
+    m_bmp[PT_MOON] = new QImage("../data/planets/moon2k.png");
+  }
+}
 
 /////////////////////////////////////////////////
 mesh_t *CPlanetRenderer::createSphere(int detail)

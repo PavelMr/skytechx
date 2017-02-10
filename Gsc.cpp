@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <math.h>
+#include <limits.h>
 
 #include "Gsc.h"
 #include "QtCore"
@@ -262,11 +263,10 @@ void CGsc::decode(BYTE *c, gscHeader_t *h, gsc_t *r)
 void CGsc::deleteRegion(int rn)
 ///////////////////////////////
 {
-  ULONG timer = ULONG_MAX;
-  int rgn;
+  quint32 timer = std::numeric_limits<quint32>::max();
   int del = -1;
 
-  for (rgn=0;rgn<NUM_GSC_REGS;rgn++)
+  for (int rgn=0;rgn<NUM_GSC_REGS;rgn++)
   {
     if (gscRegion[rgn].loaded && rn != rgn)
     {

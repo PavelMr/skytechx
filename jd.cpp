@@ -20,16 +20,16 @@ double jdGetJDFrom_DateTime(QDateTime *t)
   int min = t->time().minute();
   int s = t->time().second();
 
-  static const long IGREG2 = 15+31L*(10+12L*1582);
+  static const qint32 IGREG2 = 15+31L*(10+12L*1582);
   double deltaTime = (h / 24.0) + (min / (24.0*60.0)) + (s / (24.0 * 60.0 * 60.0)) - 0.5;
 
   /*
    * Algorithm taken from "Stellarium"
    */
 
-  long ljul;
-  long jy, jm;
-  long laa, lbb, lcc, lee;
+  qint32 ljul;
+  qint32 jy, jm;
+  qint32 laa, lbb, lcc, lee;
 
   jy = y;
   if (m > 2)

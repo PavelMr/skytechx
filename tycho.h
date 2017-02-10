@@ -49,7 +49,7 @@ typedef struct
   short     tyc3;
   short     pmRa;
   short     pmDec;
-  long      supIndex;        // bayer flam. etc.  .. -1 no supp.
+  qint32    supIndex;        // bayer flam. etc.  .. -1 no supp.
   short     BTmag, VTmag;
   radec_t   rd;
 } tychoStar_t;

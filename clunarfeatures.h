@@ -28,8 +28,17 @@ typedef struct
   int       type; // LFT_xxx
 } lunarItem_t;
 
-typedef struct
+typedef struct lfParam_t
 {
+  lfParam_t ()
+  {
+    bShowLF = true;
+    bShowDiam = false;
+    minDetail = 10;
+    maxKmDiam = 10;
+    filter = 2;
+  }
+
   bool    bShowLF;
   bool    bShowDiam;
   qint32  minDetail;
@@ -53,5 +62,8 @@ public:
 };
 
 extern CLunarFeatures cLunarFeatures;
+
+QDataStream& operator<<(QDataStream& out, const lfParam_t& v);
+QDataStream& operator>>(QDataStream& in, lfParam_t& v);
 
 #endif // CLUNARFEATURES_H

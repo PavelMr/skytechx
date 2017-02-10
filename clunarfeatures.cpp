@@ -11,6 +11,23 @@ static const double    mkm = 1738 * 2;
 
 CLunarFeatures cLunarFeatures;
 
+QDataStream& operator<<(QDataStream& out, const lfParam_t& v)
+{
+  out << v.bShowDiam << v.bShowLF << v.filter << v.maxKmDiam << v.minDetail;
+  return out;
+}
+
+QDataStream& operator>>(QDataStream& in, lfParam_t& v)
+{
+  in >> v.bShowDiam;
+  in >> v.bShowLF;
+  in >> v.filter;
+  in >> v.maxKmDiam;
+  in >> v.minDetail;
+
+  return in;
+}
+
 ////////////////////////////////
 CLunarFeatures::CLunarFeatures()
 ////////////////////////////////

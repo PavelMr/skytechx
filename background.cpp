@@ -349,7 +349,7 @@ int CBackground::splitY(int countIn, radec_t *in, double y, double side, radec_t
 
   for (int index = 0; index < countIn; index++)
   {
-    long loc = location[index];
+    int loc = location[index];
 
     if (loc == polygonExterior)
     {

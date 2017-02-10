@@ -65,10 +65,15 @@ void CGSCReg::createRegion(int region)
   m_raMax += 0.001;
   m_raMin -= 0.001;
 
-  trfRaDecToPointNoCorrect(&radec_t(m_raMin, m_decMin), &p1);
-  trfRaDecToPointNoCorrect(&radec_t(m_raMin, m_decMax), &p0);
-  trfRaDecToPointNoCorrect(&radec_t(m_raMax, m_decMin), &p2);
-  trfRaDecToPointNoCorrect(&radec_t(m_raMax, m_decMax), &p3);
+  radec_t a1 = radec_t(m_raMin, m_decMin);
+  radec_t a2 = radec_t(m_raMin, m_decMax);
+  radec_t a3 = radec_t(m_raMax, m_decMin);
+  radec_t a4 = radec_t(m_raMax, m_decMax);
+
+  trfRaDecToPointNoCorrect(&a1, &p1);
+  trfRaDecToPointNoCorrect(&a2, &p0);
+  trfRaDecToPointNoCorrect(&a3, &p2);
+  trfRaDecToPointNoCorrect(&a4, &p3);
 
   gscRegionSector[region].DecMax = m_decMax;
   gscRegionSector[region].DecMin = m_decMin;

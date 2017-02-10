@@ -14,9 +14,7 @@ CTipOfDay::CTipOfDay(QWidget *parent) :
   srand(QDateTime::currentMSecsSinceEpoch());
   m_index = rand() % TIPS_COUNT;
 
-  ui->setupUi(this);
-  setFixedSize(size());
-  ui->label->setContentsMargins(0, 40, 0, 0);
+  ui->setupUi(this);    
   setTip(m_index);
 
   QSettings set;

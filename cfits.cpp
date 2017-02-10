@@ -220,10 +220,9 @@ bool CFits::load(QString file, bool &memOk, bool bAll, int resizeTo)
   }
 
   // posun se na nasledujici nasobek 2880
-  long prv = f.pos();
-  long al = 2880 - (prv % 2880);
-  if (al != 2880)
-    f.seek(al + prv);
+  int prv = f.pos();
+  int al = 2880 - (prv % 2880);
+  if (al != 2880) f.seek(al + prv);
 
   m_datamin = getValue("DATAMIN=", "0").toInt();
   m_datamax = getValue("DATAMAX=", "65535").toInt();
