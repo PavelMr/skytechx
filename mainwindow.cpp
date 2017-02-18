@@ -207,6 +207,8 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->actionSearch_a_Uranus, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
   connect(ui->actionSearch_a_Neptune, SIGNAL(triggered()), this, SLOT(slotSearchPlanetTriggered()));
 
+  m_noRecalculateView = true;
+
   setWindowIcon(QIcon(":/res/ico_app.ico"));
 
   m_settingTab = 1;
@@ -639,7 +641,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   lfParam_t lfDefVal;
   QVariant defVal = QVariant::fromValue(lfDefVal);
-  QVariant val = settings.value("lunar_features_opt", defVal);
+  QVariant val = settings.value("lunar_features_opts", defVal);
   lfParam_t lfp = val.value<lfParam_t>();
   lfSetParam(&lfp);
 
@@ -1505,7 +1507,7 @@ void MainWindow::saveAndExit()
   //data.setRawData((const char *)&lfp, sizeof (lfParam_t));
   QVariant vv = QVariant::fromValue(lfp);
   qDebug() << vv;
-  settings.setValue("lunar_features_opt", vv);
+  settings.setValue("lunar_features_opts", vv);
 
   if (g_autoSave.mapPosition)
   {
