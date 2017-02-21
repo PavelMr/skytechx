@@ -17,6 +17,11 @@ QT += axcontainer
 TEMPLATE = lib
 CONFIG   += axcontainer plugin
 
+#for WIN XP
+win32 {
+Release:win32-msvc2013 :  QMAKE_LFLAGS += /SUBSYSTEM:WINDOWS,"5.01"
+}
+
 SOURCES += ascom6.cpp
 
 HEADERS += ascom6.h \

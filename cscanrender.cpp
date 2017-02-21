@@ -575,7 +575,6 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
         int val = (a&0xff)*(x_1diff)*(y_1diff) + (b&0xff)*(x_diff)*(y_1diff) +
                   (c&0xff)*(y_diff)*(x_1diff)   + (d&0xff)*(x_diff*y_diff);
 
-        // ????: pretypovani to zrychly
         *pDst = 0xff000000 |
                 ((((int)val)<<16)&0xff0000) |
                 ((((int)val)<<8)&0xff00) |

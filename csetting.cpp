@@ -78,6 +78,7 @@ CSetting::CSetting(QWidget *parent, int tab) :
   m_selMapView.roll = setting.value("sel_map/roll", 0).toDouble();
   m_selMapView.fov = setting.value("sel_map/fov", D2R(90)).toDouble();
   m_selMapView.coordType = setting.value("sel_map/mode", SMCT_RA_DEC).toInt();
+  m_selMapView.epochJ2000 = setting.value("sel_map/epochJ2000", false).toBool();
 
   fillSelPos();
 
@@ -1233,6 +1234,7 @@ void CSetting::on_pushButton_clicked()
   setting.setValue("sel_map/roll", m_selMapView.roll);
   setting.setValue("sel_map/fov", m_selMapView.fov);
   setting.setValue("sel_map/mode", m_selMapView.coordType);
+  setting.setValue("sel_map/epochJ2000", m_selMapView.epochJ2000);
 
   setting.setValue("sound_enable", ui->checkBox_21->isChecked());
   setting.setValue("sound_volume", ui->horizontalSlider_17->value());
@@ -2596,9 +2598,18 @@ void CSetting::fillSelPos()
   else if (m_selMapView.coordType == SMCT_ALT_AZM)
     str = tr("Hor. ") + getStrDeg(R360 - m_selMapView.x) + " / " + getStrDeg(m_selMapView.y);
   else
-    str = tr("Ecl. ") + getStrDeg(m_selMapView.x) + " / " + getStrDeg(m_selMapView.y);
+    str = tr("Ecl. ") + getStrDeg(m_selMapView.x) + " / " + getStrDeg(m_selMapView.y);  
 
   str += " " + tr("FOV : ") + getStrDeg(m_selMapView.fov, true) + " / " + tr(" Roll : ") + getStrDeg(m_selMapView.roll, true);
+
+  if (m_selMapView.epochJ2000)
+  {
+    str += tr(" J2000");
+  }
+  else
+  {
+    str += tr(" At date");
+  }
 
   ui->label_pos_map->setText(str);
 }

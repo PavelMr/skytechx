@@ -1264,11 +1264,13 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
       addTextItem(item, tr("Spectral type"), spa[supp->spt] + QString(supp->spn));
     }
   }
+  beginExtInfo();
   double mag = 0.850 * (TYC_SHORT_TO_MAG(t->BTmag) - TYC_SHORT_TO_MAG(t->VTmag));
   addTextItem(item, tr("B-V mag."), getStrMag(mag));
 
   addTextItem(item, tr("Johnson BT"), getStrMag(TYC_SHORT_TO_MAG(t->BTmag)));
   addTextItem(item, tr("Johnson VT"), getStrMag(TYC_SHORT_TO_MAG(t->VTmag)));
+  endExtInfo();
   addSeparator(item);
 
   if (isVariable)
