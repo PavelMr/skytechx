@@ -1719,7 +1719,23 @@ void CSetting::on_pushButton_36_clicked()
 /////////////////////////////////////////
 void CSetting::on_pushButton_37_clicked()
 /////////////////////////////////////////
-{
+{  
+  QPen pen = QPen(QColor(set.map.drawing.color),
+                  set.map.drawing.width,
+                  (Qt::PenStyle)set.map.drawing.style);
+
+  CLineColorDlg dlg(this, &pen);
+
+  if (dlg.exec() == DL_OK)
+  {
+    set.map.drawing.color = dlg.m_pen.color().toRgb().rgba();
+    set.map.drawing.width = dlg.m_pen.width();
+    set.map.drawing.style = (int)dlg.m_pen.style();
+
+    ui->pushButton_37->setColor(set.map.drawing.color);
+  }
+
+  /*
   QColorDialog dlg(set.map.drawing.color, this);
 
   if (dlg.exec() == DL_OK)
@@ -1727,6 +1743,7 @@ void CSetting::on_pushButton_37_clicked()
     set.map.drawing.color = dlg.currentColor().rgb();
     ui->pushButton_37->setColor(dlg.currentColor());
   }
+  */
 }
 
 /////////////////////////////////////////

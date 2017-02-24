@@ -12,7 +12,7 @@ CDrawingList::CDrawingList(QWidget *parent) :
   setWindowFlags(((windowFlags() | Qt::CustomizeWindowHint)
                  & ~Qt::WindowCloseButtonHint));
 
-  m_model = new QStandardItemModel(0, 2);
+  m_model = new QStandardItemModel(0, 3);
 
   m_model->setHeaderData(0, Qt::Horizontal, tr("Type"));
   m_model->setHeaderData(1, Qt::Horizontal, tr("LWT"));

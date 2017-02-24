@@ -320,6 +320,8 @@ bool setSave(QString name, setting_t *set)
 
   // drawing
   writeVal("map.drawing.color", set->map.drawing.color, ds);
+  writeVal("map.drawing.width", set->map.drawing.width, ds);
+  writeVal("map.drawing.style", set->map.drawing.style, ds);
 
   // object selection
   writeVal("map.objSelectionColor", set->map.objSelectionColor, ds);
@@ -613,7 +615,7 @@ bool setLoad(QString name, setting_t *set)
   // measure point
   set->map.measurePoint.color = readVal("map.measurePoint.color", MRGB(255, 255, 255), tMap).toUInt();
   set->map.measurePoint.style = readVal("map.measurePoint.style", (int)Qt::SolidLine, tMap).toInt();
-  set->map.measurePoint.width = readVal("map.measurePoint.width", 3, tMap).toInt();
+  set->map.measurePoint.width = readVal("map.measurePoint.width", 1, tMap).toInt();
 
   // planets
   set->map.planet.penColor = readVal("map.planet.penColor", MRGB(255, 255, 255), tMap).toUInt();
@@ -659,6 +661,8 @@ bool setLoad(QString name, setting_t *set)
 
   // drawing
   set->map.drawing.color = readVal("map.drawing.color", MRGB(255, 255, 255), tMap).toUInt();
+  set->map.drawing.style = readVal("map.drawing.style", (int)Qt::SolidLine, tMap).toInt();
+  set->map.drawing.width = readVal("map.drawing.width", 3, tMap).toInt();
 
   // object selection
   set->map.objSelectionColor = readVal("map.objSelectionColor", MRGB(255, 55, 55), tMap).toUInt();

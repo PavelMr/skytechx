@@ -170,11 +170,6 @@ typedef struct
 typedef struct
 {
   QRgb  color;
-} setDraw_t;
-
-typedef struct
-{
-  QRgb  color;
 } setTrack_t;
 
 typedef struct
@@ -280,7 +275,7 @@ typedef struct
   astCom_t   comet;
   astCom_t   aster;
   setSatellite_t satellite;
-  setDraw_t  drawing;
+  penStyle_t  drawing;
   setTrack_t tracking;
   setPpmxl_t ppmxl;
   setUsno2_t  usno2;

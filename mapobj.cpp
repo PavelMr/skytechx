@@ -432,9 +432,13 @@ void mapObjContextMenu(CMapView *map)
             name = "???";
         }
 
-        a = myMenu.addAction(QObject::tr("Edit object '") + name + "'");
-        drawingMap[a] = o.par1;
-        a->setData(-10);
+        //if (!getDrawing(o.par1)->telescopeLink && !g_pTelePlugin)
+        if (!g_pTelePlugin || ((!getDrawing(o.par1)->telescopeLink && g_pTelePlugin) || getDrawing(o.par1)->type == DT_FRM_FIELD))
+        {
+          a = myMenu.addAction(QObject::tr("Edit object '") + name + "'");
+          drawingMap[a] = o.par1;
+          a->setData(-10);
+        }
 
         if (g_pTelePlugin && pcMapView->m_lastTeleRaDec.Ra != CM_UNDEF)
         {

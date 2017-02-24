@@ -497,7 +497,7 @@ int CDrawing::drawCircle(QPoint &ptOut, CSkPainter *p, radec_t *rd, float rad,  
     if (r < 5)
       r = 5;
 
-    p->setPen(g_skSet.map.drawing.color);
+    p->setPen(QPen(QBrush(g_skSet.map.drawing.color), g_skSet.map.drawing.width, (Qt::PenStyle)g_skSet.map.drawing.style));
     p->setBrush(Qt::NoBrush);
 
     trfProjectPointNoCheck(&pt);
@@ -561,7 +561,7 @@ int CDrawing::drawTelrad(QPoint &ptOut, CSkPainter *p, radec_t *rd, drawing_t *d
     r2 = (int)(p->device()->width() / RAD2DEG(m_view.fov) * RAD2DEG(radius2) / 2.0);
     r3 = (int)(p->device()->width() / RAD2DEG(m_view.fov) * RAD2DEG(radius3) / 2.0);
 
-    p->setPen(QPen(QColor(g_skSet.map.drawing.color), 2));
+    p->setPen(QPen(QBrush(g_skSet.map.drawing.color), g_skSet.map.drawing.width, (Qt::PenStyle)g_skSet.map.drawing.style));
     p->setBrush(Qt::NoBrush);
 
     trfProjectPointNoCheck(&pt);
@@ -622,7 +622,7 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
   trfRaDecToPointNoCorrect(&drw->rd, &pt);
   if (SKPLANECheckFrustumToSphere(m_frustum, &pt.w, 0))
   {
-    p->setPen(QPen(QColor(g_skSet.map.drawing.color), 2));
+    p->setPen(QPen(QBrush(g_skSet.map.drawing.color), g_skSet.map.drawing.width, (Qt::PenStyle)g_skSet.map.drawing.style));
     p->setBrush(Qt::NoBrush);
 
     trfProjectPointNoCheck(&pt);
@@ -646,7 +646,7 @@ int CDrawing::drawText(QPoint &ptOut, CSkPainter *p, drawing_t *drw, bool bEdite
     {
       if (drw->text_t.bRect)
       {
-        p->setPen(QPen(QColor(g_skSet.map.drawing.color), 1));
+        p->setPen(QPen(QBrush(g_skSet.map.drawing.color), g_skSet.map.drawing.width, (Qt::PenStyle)g_skSet.map.drawing.style));
         p->drawRect(rc.adjusted(-5, -5, 5, 5));
       }
 
@@ -769,7 +769,7 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
   trfRaDecToPointNoCorrect(&drw->frmField_t.corner[2], &pp[2]);
   trfRaDecToPointNoCorrect(&drw->frmField_t.corner[3], &pp[3]);
 
-  p->setPen(QPen(QColor(g_skSet.map.drawing.color), 2));
+  p->setPen(QPen(QBrush(g_skSet.map.drawing.color), g_skSet.map.drawing.width, (Qt::PenStyle)g_skSet.map.drawing.style));
   p->setBrush(Qt::NoBrush);
 
   double textAngle = CM_UNDEF;

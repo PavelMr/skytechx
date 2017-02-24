@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>3</number>
+            <number>12</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -3416,7 +3416,7 @@
                <item row="0" column="0" colspan="2">
                 <widget class="QGroupBox" name="groupBox_15">
                  <property name="title">
-                  <string>Drawing</string>
+                  <string>Drawing (Field of view, Telrad, etc.)</string>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_49">
                   <item>

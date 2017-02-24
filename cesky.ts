@@ -13583,7 +13583,7 @@ ESC : Storno
         <location filename="mapobj.cpp" line="444"/>
         <source>Link object &apos;%1&apos; to telescope</source>
         <oldsource>Link object &apos;</oldsource>
-        <translation>Spojit objekt &apos;%1&apos; k dalekohledu </translation>
+        <translation>Spojit objekt &apos;%1&apos; s dalekohledem </translation>
     </message>
     <message>
         <location filename="mapobj.cpp" line="584"/>
