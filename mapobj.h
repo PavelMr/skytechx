@@ -11,7 +11,6 @@
 #include "cppmxl.h"
 
 #define MO_EMPTY        -1
-#define MO_TELESCOPE     0
 #define MO_ASTER         1
 #define MO_SATELLITE     2
 #define MO_COMET         3
@@ -31,6 +30,7 @@
 #define MO_EARTH_SHD    17
 #define MO_INSERT       18
 #define MO_SHOWER       19
+#define MO_TELESCOPE    20
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

@@ -1613,7 +1613,8 @@ The new comets : %2</source>
     </message>
     <message>
         <location filename="cdsogalerylist.ui" line="56"/>
-        <source>Go to galery</source>
+        <source>Go to gallery</source>
+        <oldsource>Go to galery</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2289,6 +2290,12 @@ ESC : Cancel
     <message>
         <location filename="cdrawinglist.cpp" line="18"/>
         <source>LWT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdrawinglist.cpp" line="19"/>
+        <location filename="cdrawinglist.cpp" line="42"/>
+        <source>Linked with telescope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5612,6 +5619,11 @@ The results are shown in the sidebar tab &apos;Event information&apos;</source>
     <message>
         <location filename="cpolarishourangle.ui" line="93"/>
         <source>Polaris HourAngle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cpolarishourangle.ui" line="123"/>
+        <source>Map time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

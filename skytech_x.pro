@@ -32,9 +32,7 @@ Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GS- /GA /FAcs
 Debug:win32-msvc2013 :    QMAKE_CXXFLAGS += /openmp
 
 #for WIN XP
-win32 {
-Release:win32-msvc2013 :  QMAKE_LFLAGS += /SUBSYSTEM:WINDOWS,"5.01"
-}
+win32:contains(QMAKE_HOST.arch, x86_64) QMAKE_LFLAGS += /SUBSYSTEM:WINDOWS,"5.01"
 
 #Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG /MAP
 

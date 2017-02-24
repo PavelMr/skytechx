@@ -53,7 +53,7 @@
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Go to galery</string>
+        <string>Go to gallery</string>
        </property>
        <property name="default">
         <bool>true</bool>

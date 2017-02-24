@@ -1696,7 +1696,8 @@ Nové komety : %2</translation>
     </message>
     <message>
         <location filename="cdsogalerylist.ui" line="56"/>
-        <source>Go to galery</source>
+        <source>Go to gallery</source>
+        <oldsource>Go to galery</oldsource>
         <translation>Jdi do galerie</translation>
     </message>
     <message>
@@ -2399,6 +2400,12 @@ ESC : Storno
         <location filename="cdrawinglist.cpp" line="18"/>
         <source>LWT</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="cdrawinglist.cpp" line="19"/>
+        <location filename="cdrawinglist.cpp" line="42"/>
+        <source>Linked with telescope</source>
+        <translation>Spojen s dalekohledem</translation>
     </message>
     <message>
         <location filename="cdrawinglist.cpp" line="20"/>
@@ -5776,6 +5783,11 @@ Výsledek je zobrazen v postraním panelu &apos;Informace o událostech&apos;</t
         <translation>Hodinový úhel Polárky</translation>
     </message>
     <message>
+        <location filename="cpolarishourangle.ui" line="123"/>
+        <source>Map time</source>
+        <translation>Čas mapy</translation>
+    </message>
+    <message>
         <location filename="cpolarishourangle.ui" line="130"/>
         <source>Current time</source>
         <translation>Aktuální čas</translation>
@@ -6375,7 +6387,7 @@ Přeješ si zobrazovat tento dialog příště?</translation>
     <message>
         <location filename="cseltelefield.ui" line="218"/>
         <source>Telescope parameters</source>
-        <translation>Parametry dalekohledy</translation>
+        <translation>Parametry dalekohledu</translation>
     </message>
     <message>
         <location filename="cseltelefield.ui" line="224"/>
