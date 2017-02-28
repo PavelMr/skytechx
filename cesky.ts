@@ -7665,9 +7665,8 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <translation>Jasnost (Nejtmavší část)</translation>
     </message>
     <message>
-        <location filename="csetting.ui" line="3419"/>
         <source>Drawing</source>
-        <translation>Kreslení</translation>
+        <translation type="vanished">Kreslení</translation>
     </message>
     <message>
         <location filename="csetting.ui" line="3473"/>
@@ -7968,6 +7967,11 @@ Přeješ si zobrazovat tento dialog příště?</translation>
         <location filename="csetting.ui" line="4548"/>
         <source>Save last position and time</source>
         <translation>Uložit poslední polohu a čas</translation>
+    </message>
+    <message>
+        <location filename="csetting.ui" line="3419"/>
+        <source>Drawing (Field of view, Telrad, etc.)</source>
+        <translation>Kreslení (Zorné pole, Telrad atd.)</translation>
     </message>
     <message>
         <location filename="csetting.ui" line="4555"/>
@@ -8281,7 +8285,7 @@ meze tak se použijí PLAN404 nebo VSOP87</translation>
     <message>
         <location filename="csetting.cpp" line="92"/>
         <location filename="csetting.cpp" line="93"/>
-        <location filename="csetting.cpp" line="2563"/>
+        <location filename="csetting.cpp" line="2580"/>
         <source>Used : %1 MB</source>
         <translation>Použito : %1 MB</translation>
     </message>
@@ -8529,217 +8533,217 @@ které mají definovanou jasnost.</translation>
         <translation>Nelze uložit profil!!!</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1823"/>
+        <location filename="csetting.cpp" line="1840"/>
         <source>Do you want remove this profile?</source>
         <translation>Chceš opravdu odstranit tento profil?</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1876"/>
+        <location filename="csetting.cpp" line="1893"/>
         <source>Add New</source>
         <translation>Přidej nový</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1884"/>
+        <location filename="csetting.cpp" line="1901"/>
         <source>Delete </source>
         <translation>Smazat </translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1922"/>
+        <location filename="csetting.cpp" line="1939"/>
         <source>Reset to default?</source>
         <translation>Načíst defaultní hodnoty?</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1980"/>
+        <location filename="csetting.cpp" line="1997"/>
         <source>None</source>
         <translation>Nic</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1981"/>
+        <location filename="csetting.cpp" line="1998"/>
         <source>X Axis -</source>
         <translation>Osa X -</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1982"/>
+        <location filename="csetting.cpp" line="1999"/>
         <source>X Axis +</source>
         <translation>Osa X +</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1983"/>
+        <location filename="csetting.cpp" line="2000"/>
         <source>Y Axis -</source>
         <translation>Osa Y -</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1984"/>
+        <location filename="csetting.cpp" line="2001"/>
         <source>Y Axis +</source>
         <translation>Osa Y +</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1985"/>
+        <location filename="csetting.cpp" line="2002"/>
         <source>Z Axis -</source>
         <translation>Osa Z -</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1986"/>
+        <location filename="csetting.cpp" line="2003"/>
         <source>Z Axis +</source>
         <translation>Osa Z +</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1987"/>
+        <location filename="csetting.cpp" line="2004"/>
         <source>R Axis -</source>
         <translation>Osa R -</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1988"/>
+        <location filename="csetting.cpp" line="2005"/>
         <source>R Axis +</source>
         <translation>Osa R +</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1989"/>
+        <location filename="csetting.cpp" line="2006"/>
         <source>POV Left</source>
         <translation>Poziční klobouček vlevo</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1990"/>
+        <location filename="csetting.cpp" line="2007"/>
         <source>POV Right</source>
         <translation>Poziční klobouček vpravo</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1991"/>
+        <location filename="csetting.cpp" line="2008"/>
         <source>POV Up</source>
         <translation>Poziční klobouček nahoru</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1992"/>
+        <location filename="csetting.cpp" line="2009"/>
         <source>POV Down</source>
         <translation>Poziční klobouček dolu</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1993"/>
+        <location filename="csetting.cpp" line="2010"/>
         <source>Button 1</source>
         <translation>Tlačítko 1</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1994"/>
+        <location filename="csetting.cpp" line="2011"/>
         <source>Button 2</source>
         <translation>Tlačítko 2</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1995"/>
+        <location filename="csetting.cpp" line="2012"/>
         <source>Button 3</source>
         <translation>Tlačítko 3</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1996"/>
+        <location filename="csetting.cpp" line="2013"/>
         <source>Button 4</source>
         <translation>Tlačítko 4</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1997"/>
+        <location filename="csetting.cpp" line="2014"/>
         <source>Button 5</source>
         <translation>Tlačítko 5</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1998"/>
+        <location filename="csetting.cpp" line="2015"/>
         <source>Button 6</source>
         <translation>Tlačítko 6</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="1999"/>
+        <location filename="csetting.cpp" line="2016"/>
         <source>Button 7</source>
         <translation>Tlačítko 7</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2000"/>
+        <location filename="csetting.cpp" line="2017"/>
         <source>Button 8</source>
         <translation>Tlačítko 8</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2001"/>
+        <location filename="csetting.cpp" line="2018"/>
         <source>Button 9</source>
         <translation>Tlačítko 9</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2002"/>
+        <location filename="csetting.cpp" line="2019"/>
         <source>Button 10</source>
         <translation>Tlačítko 10</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2003"/>
+        <location filename="csetting.cpp" line="2020"/>
         <source>Button 11</source>
         <translation>Tlačítko 11</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2004"/>
+        <location filename="csetting.cpp" line="2021"/>
         <source>Button 12</source>
         <translation>Tlačítko 12</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2005"/>
+        <location filename="csetting.cpp" line="2022"/>
         <source>Button 13</source>
         <translation>Tlačítko 13</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2006"/>
+        <location filename="csetting.cpp" line="2023"/>
         <source>Button 14</source>
         <translation>Tlačítko 14</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2007"/>
+        <location filename="csetting.cpp" line="2024"/>
         <source>Button 15</source>
         <translation>Tlačítko 15</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2008"/>
+        <location filename="csetting.cpp" line="2025"/>
         <source>Button 16</source>
         <translation>Tlačítko 16</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2094"/>
+        <location filename="csetting.cpp" line="2111"/>
         <source>Latin abbr.</source>
         <translation>Latinské zkratky</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2095"/>
+        <location filename="csetting.cpp" line="2112"/>
         <source>Latin long</source>
         <translation>Latinsky</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2560"/>
+        <location filename="csetting.cpp" line="2577"/>
         <source>Empty disc cache?</source>
         <translation>Vymazat diskovou mezipaměť?</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2597"/>
+        <location filename="csetting.cpp" line="2614"/>
         <source>Eqt. </source>
         <translation>Rov.</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2599"/>
+        <location filename="csetting.cpp" line="2616"/>
         <source>Hor. </source>
         <translation>Hor.</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2601"/>
+        <location filename="csetting.cpp" line="2618"/>
         <source>Ecl. </source>
         <translation>Ekl.</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2603"/>
+        <location filename="csetting.cpp" line="2620"/>
         <source>FOV : </source>
         <translation>FOV : </translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2603"/>
+        <location filename="csetting.cpp" line="2620"/>
         <source> Roll : </source>
         <translation> Rot: .</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2607"/>
+        <location filename="csetting.cpp" line="2624"/>
         <source> J2000</source>
         <translation> J2000</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2611"/>
+        <location filename="csetting.cpp" line="2628"/>
         <source> At date</source>
         <translation> K datu</translation>
     </message>
@@ -8748,27 +8752,27 @@ které mají definovanou jasnost.</translation>
         <translation type="vanished">Latinsky</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2175"/>
-        <location filename="csetting.cpp" line="2182"/>
-        <location filename="csetting.cpp" line="2239"/>
-        <location filename="csetting.cpp" line="2409"/>
-        <location filename="csetting.cpp" line="2416"/>
-        <location filename="csetting.cpp" line="2477"/>
+        <location filename="csetting.cpp" line="2192"/>
+        <location filename="csetting.cpp" line="2199"/>
+        <location filename="csetting.cpp" line="2256"/>
+        <location filename="csetting.cpp" line="2426"/>
+        <location filename="csetting.cpp" line="2433"/>
+        <location filename="csetting.cpp" line="2494"/>
         <source>Select a folder</source>
         <translation>Vyber složku</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2262"/>
+        <location filename="csetting.cpp" line="2279"/>
         <source>Select name of new profile</source>
         <translation>Zvolte jméno nového profilu</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2277"/>
+        <location filename="csetting.cpp" line="2294"/>
         <source>Profile already exist!!!</source>
         <translation>Tento profil již existuje!!!</translation>
     </message>
     <message>
-        <location filename="csetting.cpp" line="2330"/>
+        <location filename="csetting.cpp" line="2347"/>
         <source>Select file</source>
         <translation>Zvolte soubor</translation>
     </message>
@@ -13300,7 +13304,7 @@ Nastavení barev může být zobrazeno špatně.</translation>
     </message>
     <message>
         <location filename="castro.cpp" line="1388"/>
-        <location filename="mapobj.cpp" line="453"/>
+        <location filename="mapobj.cpp" line="457"/>
         <source>Earth shadow</source>
         <translation>Zemský stín</translation>
     </message>
@@ -13538,18 +13542,18 @@ ESC : Storno
         <translation type="vanished">Nastav texturu slunce...</translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="532"/>
+        <location filename="mapobj.cpp" line="536"/>
         <source>  Show asteroid </source>
         <translation>  Zobraz asteroid </translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="559"/>
+        <location filename="mapobj.cpp" line="563"/>
         <source>  Show comet </source>
         <translation>  Zobraz kometu </translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="532"/>
-        <location filename="mapobj.cpp" line="559"/>
+        <location filename="mapobj.cpp" line="536"/>
+        <location filename="mapobj.cpp" line="563"/>
         <source> in 3D</source>
         <translation> ve 3D</translation>
     </message>
@@ -13569,41 +13573,41 @@ ESC : Storno
         <translation>Telrad</translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="435"/>
+        <location filename="mapobj.cpp" line="438"/>
         <source>Edit object &apos;</source>
         <translation>Edituj objekt &apos;</translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="442"/>
+        <location filename="mapobj.cpp" line="446"/>
         <source>Unlink object &apos;%1&apos; from telescope</source>
         <oldsource>Unlink object &apos;</oldsource>
         <translation>Odpojit objekt &apos;%1&apos; od dalekohledu </translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="444"/>
+        <location filename="mapobj.cpp" line="448"/>
         <source>Link object &apos;%1&apos; to telescope</source>
         <oldsource>Link object &apos;</oldsource>
         <translation>Spojit objekt &apos;%1&apos; s dalekohledem </translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="584"/>
+        <location filename="mapobj.cpp" line="588"/>
         <source>  Find %1 in NORAD database</source>
         <translation>Najdi %1 v databázi NORAD</translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="607"/>
-        <location filename="mapobj.cpp" line="626"/>
-        <location filename="mapobj.cpp" line="636"/>
-        <location filename="mapobj.cpp" line="647"/>
-        <location filename="mapobj.cpp" line="653"/>
-        <location filename="mapobj.cpp" line="659"/>
-        <location filename="mapobj.cpp" line="665"/>
-        <location filename="mapobj.cpp" line="674"/>
+        <location filename="mapobj.cpp" line="611"/>
+        <location filename="mapobj.cpp" line="630"/>
+        <location filename="mapobj.cpp" line="640"/>
+        <location filename="mapobj.cpp" line="651"/>
+        <location filename="mapobj.cpp" line="657"/>
+        <location filename="mapobj.cpp" line="663"/>
+        <location filename="mapobj.cpp" line="669"/>
+        <location filename="mapobj.cpp" line="678"/>
         <source>, %1 mag.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mapobj.cpp" line="804"/>
+        <location filename="mapobj.cpp" line="808"/>
         <source>Do you really want to synchronize the telescope?</source>
         <translation>Opravdu chceš synchronizovat dalekohled?</translation>
     </message>
