@@ -187,7 +187,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   qRegisterMetaTypeStreamOperators<lfParam_t>("lfParam_T");
 
-  ui->setupUi(this);
+  ui->setupUi(this);  
 
   //QApplication::instance()->setAttribute(Qt::AA_DontShowIconsInMenus, true);
 
@@ -2130,7 +2130,9 @@ QList<QStandardItem *> MainWindow::createEIRow(event_t *e, QString c1, QString c
 void MainWindow::fillQuickInfo(ofiItem_t *item, bool update)
 ////////////////////////////////////////////////////////////
 {
-  ui->lv_quickInfo->fillInfo(item, update);
+  ui->lv_quickInfo->fillInfo(item, update);  
+
+  //xxx
 
   ui->pushButton_19->setEnabled(!IS_NEAR(item->riseJD, CM_UNDEF, 0.01));
   ui->pushButton_20->setEnabled(!IS_NEAR(item->transitJD, CM_UNDEF, 0.01));

@@ -225,6 +225,8 @@ int main(int argc, char *argv[])
     }
   }  
 
+
+
   if (g_log)
   {
     QFile::remove(LOG_FILE);
