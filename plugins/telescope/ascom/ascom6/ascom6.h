@@ -4,7 +4,6 @@
 #include <QtPlugin>
 #include <QObject>
 #include <QAxObject>
-#include <QThread>
 
 #include "../../../../cteleplugininterface.h"
 
@@ -17,26 +16,6 @@ class QTimer;
 #ifndef __DBL_MIN__
 #define __DBL_MIN__  2.2250738585072014e-308
 #endif
-
-class UpdateThread : public QThread
-{
-  Q_OBJECT
-public:
-  void setObject(QAxObject *device);
-  void run();
-  QAxObject *m_device;
-
-  void setEnd(bool end);
-
-  void setUpdateTime(int updateTime);
-
-signals:
-  void timeout(double ra, double dec, bool slewing);
-
-private:
-  volatile bool m_end;
-  volatile int  m_updateTime;  
-};
 
 class CAscom6 : public CTelePluginInterface
 {
@@ -54,8 +33,8 @@ public:
   bool disconnectDev(QWidget *parent, bool park = true);
   bool slewTo(double ra, double dec);
   bool syncTo(double ra, double dec);
-  bool isRADecValid();
   int  getAttributes();
+  bool isRADecValid();
   bool isSlewing();
   QString getTelescope();
   bool setDriverProperty(const QString &name, QVariant value);
@@ -70,16 +49,13 @@ protected:
   QString    m_deviceName;
   double     m_ra;
   double     m_dec;
-  bool       m_raDecValid;
   QTimer    *m_timer;
   int        m_refreshMs;
-  UpdateThread *m_thread;
-  bool       m_slewing;
 
 public slots:
-  virtual void slotUpdate(double ra, double dec, bool slewing);
-  void exception(int code, const QString &source, const QString &desc, const QString &help);
+  virtual void slotUpdate();
 };
+
 
 
 #endif // ASCOM6_H

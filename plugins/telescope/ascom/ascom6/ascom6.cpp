@@ -4,7 +4,6 @@
 #include <QTimer>
 #include <QCoreApplication>
 #include <QSettings>
-#include <QTime>
 
 #include <QDebug>
 
@@ -28,20 +27,17 @@ static int msgBoxQuest(QWidget *w, QString str)
 void CAscom6::init()
 ////////////////////
 {
-  qDebug() << "ASCOM6 init()";
+  qDebug("ASCOM6 init()");
 
   m_refreshMs = 100;
   m_device = NULL;
   m_deviceName = "";
   m_ra = __DBL_MAX__;
   m_dec = __DBL_MAX__;
-  m_slewing = false;
-  m_raDecValid = false;
 
-  m_thread = new UpdateThread();
-  m_thread->setObject(m_device);
-  m_thread->setUpdateTime(250);
-  QObject::connect(m_thread, SIGNAL(timeout(double, double, bool)), this, SLOT(slotUpdate(double, double, bool)));
+  m_timer = new QTimer(this);
+  m_timer->start(m_refreshMs);
+  QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(slotUpdate()));
 }
 
 ////////////////////
@@ -66,15 +62,15 @@ void CAscom6::stop()
 void CAscom6::setRefresh(int ms)
 ////////////////////////////////
 {
-  m_refreshMs = ms;  
-  m_thread->setUpdateTime(m_refreshMs);
+  m_refreshMs = ms;
+  m_timer->setInterval(m_refreshMs);
 }
 
 //////////////////////////
 QString CAscom6::getName()
 //////////////////////////
 {
-  return(QString("ASCOM6 Driver"));
+  return(QString("ASCOM6 Driver (SyncClient)"));
 }
 
 ///////////////////////////////
@@ -104,20 +100,19 @@ bool CAscom6::setup(QWidget *parent, bool parkAtExit)
     }
   }
 
-  QAxObject *o = new QAxObject("ASCOM.Utilities.Chooser");      
+  QAxObject *o = new QAxObject("ASCOM.Utilities.Chooser");
 
   if (o->isNull())
   {
     msgBoxError(NULL, "ASCOM.Utilities.Chooser interface not found!");
     delete o;
     return(false);
-  }  
+  }
 
-  m_deviceName = set.value("ascomDevice").toString();    
-  QVariant selected;
+  m_deviceName = set.value("ascomDevice").toString();
 
   o->setProperty("DeviceType", "Telescope");
-  selected = o->dynamicCall("Choose(String *)", m_deviceName);
+  QVariant selected = o->dynamicCall("Choose(String *)", m_deviceName);
 
   m_deviceName = selected.toString();
   delete o;
@@ -138,9 +133,6 @@ bool CAscom6::connectDev(QWidget *parent)
   qDebug("ASCOM6 connect()");
 
   m_device = new QAxObject(m_deviceName);
-
-  connect(m_device, SIGNAL(exception(int, QString, QString, QString )),
-          this, SLOT(exception(int,QString,QString,QString)));
 
   if (m_device->isNull())
   {
@@ -164,16 +156,12 @@ bool CAscom6::connectDev(QWidget *parent)
   else
   {
     m_ra = __DBL_MAX__;
-    m_dec = __DBL_MAX__;    
+    m_dec = __DBL_MAX__;
 
-    m_device->dynamicCall("Unpark()");    
-
+    m_device->dynamicCall("Unpark()");
     m_device->setProperty("Tracking", "1");
     emit sigConnected(true);
-    m_thread->setObject(m_device);
   }
-
-  m_thread->start();
 
   return(true);
 }
@@ -210,23 +198,10 @@ if (m_device == NULL)
 }
 
 ////////////////////////////
-bool CAscom6::isRADecValid()
-////////////////////////////
-{
-  return m_raDecValid;
-}
-
-////////////////////////////
 int CAscom6::getAttributes()
 ////////////////////////////
 {
   int attr = 0;
-
-  if (m_device == NULL)
-    return(0);
-
-  if (m_device->isNull())
-    return(0);
 
   QVariant v;
 
@@ -245,63 +220,73 @@ int CAscom6::getAttributes()
   return attr;
 }
 
+bool CAscom6::isRADecValid()
+{
+  return true;
+}
+
 bool CAscom6::isSlewing()
 {
-  return m_slewing;
+  if (m_device == NULL)
+    return false;
+
+  if (m_device->isNull())
+    return false;
+
+  return m_device->property("Slewing").toBool();
 }
 
 
-/////////////////////////////////////////////////////////////
-void CAscom6::slotUpdate(double ra, double dec, bool slewing)
-/////////////////////////////////////////////////////////////
-{  
-  m_slewing = slewing;
+//////////////////////////
+void CAscom6::slotUpdate()
+//////////////////////////
+{
+  //qDebug("ascom update2 %d", m_device);
+
+  if (m_device == NULL)
+    return;
+
+  if (m_device->isNull())
+    return;
+
+  double ra, dec;
+  QVariant v;
+
+  v = m_device->property("RightAscension");
+  ra = v.toDouble();
+  v = m_device->property("Declination");
+  dec = v.toDouble();
 
   if (m_ra == ra && m_dec == dec)
     return; // no change
 
   m_ra = ra;
-  m_dec = dec;  
-  m_raDecValid = true;
+  m_dec = dec;
 
   emit sigUpdate(ra, dec);
 }
 
-void CAscom6::exception(int code, const QString &source, const QString &desc, const QString &help)
-{
-  qDebug() << "code" << code << source << desc << help;
-}
-
-
-///////////////////////////////////////////////////////
+//////////////////////////////////////
 bool CAscom6::disconnectDev(QWidget *parent, bool park)
-///////////////////////////////////////////////////////
+/////////////////////////////////////
 {
   qDebug("ASCOM6 disconnect()");
 
   if (m_device == NULL)
     return(true);
 
-  m_thread->setEnd(true);  
-  m_thread->wait();
-  delete m_thread;  
-
   if (park)
-  {        
-    qDebug() << "parking";
+  {
     m_device->setProperty("Tracking", "0");
     m_device->dynamicCall("Park()");
-    qDebug() << "park done";    
   }
+  m_device->setProperty("Connected", "0");
+  m_device->clear();
 
-  qDebug() << "disconnect";
-  m_device->setProperty("Connected", "0");    
-  m_device->clear();  
-  delete m_device;    
-  m_device = NULL;    
+  delete m_device;
+  m_device = NULL;
+
   emit sigConnected(false);
-
-  qDebug() << "disconnected";
 
   return(true);
 }
@@ -410,43 +395,4 @@ bool CAscom6::getAxisRates(QVector <double> &raRate, QVector <double> &decRate)
   }
 
   return true;
-}
-
-void UpdateThread::setObject(QAxObject *device)
-{
-  m_device = device;
-}
-
-void UpdateThread::run()
-{  
-  m_end = false;
-
-  while (!m_end)
-  {    
-    msleep(m_updateTime);
-
-    if (m_device == NULL)
-      continue;
-
-    if (m_device->isNull())
-      continue;    
-
-    double ra = m_device->property("RightAscension").toDouble();
-    double dec = m_device->property("Declination").toDouble();
-    bool slewing = m_device->property("Slewing").toBool();
-
-    emit timeout(ra, dec, slewing);
-  }
-
-  qDebug() << "ascom thread done";
-}
-
-void UpdateThread::setEnd(bool end)
-{
-  m_end = end;
-}
-
-void UpdateThread::setUpdateTime(int updateTime)
-{
-  m_updateTime = updateTime;
 }
