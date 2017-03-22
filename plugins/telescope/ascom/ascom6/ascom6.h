@@ -40,6 +40,7 @@ public:
   bool isRADecValid();
   int  getAttributes();
   bool isSlewing();
+  int equatorialCoordinateType();
   QString getTelescope();
   bool setDriverProperty(const QString &name, QVariant value);
   bool getDriverProperty(const QString &name, QVariant &value);
@@ -57,7 +58,7 @@ public:
   double     m_dec;
   bool       m_raDecValid;  
   UpdateThread *m_thread;
-  bool       m_slewing;  
+  bool       m_slewing;    
 
 public slots:
   virtual void slotUpdate();
@@ -90,6 +91,7 @@ public:
   volatile double m_locLon;
   volatile double m_locLat;
   volatile double m_locElev;
+  volatile int    m_eqtsys;
 
   volatile int m_attr;
 

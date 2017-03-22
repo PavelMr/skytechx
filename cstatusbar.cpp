@@ -39,6 +39,9 @@ QWidget *CStatusBar::createItem(int id, const QString & tooltip, int width, Qt::
   }
   pStatusBar->addWidget(i.pLabel, 0);
   i.pLabel->setToolTip(tooltip);
+  QFont fnt = i.pLabel->font();
+  fnt.setBold(true);
+  i.pLabel->setFont(fnt);
 
   if (id == SB_SM_LOADING)
   {

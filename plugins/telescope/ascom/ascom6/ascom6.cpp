@@ -10,15 +10,16 @@
 
 #include <QDebug>
 
-#define STATE_READ     0
-#define STATE_SLEW     1
-#define STATE_MOVE     2
-#define STATE_RATES    3
-#define STATE_STOP     4
-#define STATE_SET_LOC  5
-#define STATE_GET_LOC  6
-#define STATE_SYNC     7
-#define STATE_GET_ATTR 8
+#define STATE_READ         0
+#define STATE_SLEW         1
+#define STATE_MOVE         2
+#define STATE_RATES        3
+#define STATE_STOP         4
+#define STATE_SET_LOC      5
+#define STATE_GET_LOC      6
+#define STATE_SYNC         7
+#define STATE_GET_ATTR     8
+#define STATE_GET_EQT_SYS  9
 
 static QReadWriteLock g_lock;
 static QSemaphore     g_semaphore;
@@ -251,6 +252,21 @@ bool CAscom6::isSlewing()
   return val;
 }
 
+int CAscom6::equatorialCoordinateType()
+{
+  g_lock.lockForWrite();
+  m_thread->m_state = STATE_GET_EQT_SYS;
+  g_lock.unlock();
+
+  g_semaphore.acquire();
+
+  g_lock.lockForRead();
+  int val = m_thread->m_eqtsys;
+  g_lock.unlock();
+
+  return val;
+}
+
 QString CAscom6::getTelescope()
 {
   return(m_deviceName);
@@ -386,6 +402,8 @@ UpdateThread::UpdateThread()
 {
   m_isConnected = false;
   m_isRaDecValid = false;
+
+  qRegisterMetaType<int>("AscomInterfacesLib::EquatorialCoordinateType");
 }
 
 void UpdateThread::run()
@@ -541,6 +559,14 @@ void UpdateThread::run()
         m_state = STATE_READ;
         g_semaphore.release();
       }
+      else
+      if (m_state == STATE_GET_EQT_SYS)
+      {
+        //qDebug() << m_device->property("EquatorialSystem");
+        m_eqtsys = m_device->property("EquatorialSystem").toInt();
+        m_state = STATE_READ;
+        g_semaphore.release();
+      }
       g_lock.unlock();
     }
   }
@@ -580,6 +606,8 @@ void UpdateThread::setUpdateTime(int updateTime)
 
 void UpdateThread::slewTo(double ra, double dec)
 {
+  qDebug() << "slew to" << ra  << dec;
+
   g_lock.lockForWrite();
   m_state = STATE_SLEW;
   m_slewRa = ra;

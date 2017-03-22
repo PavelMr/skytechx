@@ -25,6 +25,7 @@ public:
   virtual bool isRADecValid() = 0;
   virtual int  getAttributes() = 0;
   virtual bool isSlewing() = 0;
+  virtual int equatorialCoordinateType() = 0;
 
   virtual QString getTelescope() = 0;
 

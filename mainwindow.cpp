@@ -3784,6 +3784,8 @@ void MainWindow::on_actionConnect_device_triggered()
 
       g_pTelePlugin->getAxisRates(m_raRates, m_decRates);      
 
+      qDebug() << "EQT" << g_pTelePlugin->equatorialCoordinateType();
+
       switch (g_telePlugObsLocMode)
       {
         case TP_OBS_LOC_MODE_TO:
@@ -6569,8 +6571,14 @@ void MainWindow::on_actionSlew_telescope_to_screen_center_triggered()
 
       trfConvScrPtToXY(ui->widget->width() / 2.0, ui->widget->height() / 2.0, ra, dec);
 
+      if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
+      {
+        precess(&ra, &dec, ui->widget->m_mapView.jd, JD2000);
+      }
+
       double r = R2D(ra) / 15.0;
-      double d = R2D(dec);
+      double d = R2D(dec);            
+
       g_pTelePlugin->slewTo(r, d);
     }
   }
@@ -6873,10 +6881,16 @@ void MainWindow::on_pushButton_37_clicked()
       ra = getQuickInfo()->radec.Ra;
       dec = getQuickInfo()->radec.Dec;
 
-      precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);
+      precess(&ra, &dec, JD2000, ui->widget->m_mapView.jd);      
+
+      if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
+      {
+        precess(&ra, &dec, ui->widget->m_mapView.jd, JD2000);
+      }
 
       double r = R2D(ra) / 15.0;
-      double d = R2D(dec);
+      double d = R2D(dec);            
+
       g_pTelePlugin->slewTo(r, d);
     }
   }

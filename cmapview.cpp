@@ -568,8 +568,7 @@ void CMapView::tryShowToolTip(const QPoint &pos, bool isPressed)
 ///////////////////////////////////////////////
 void CMapView::mouseReleaseEvent(QMouseEvent *e)
 ///////////////////////////////////////////////
-{
-  //qDebug("release");
+{  
   setCursor(QCursor(Qt::CrossCursor));
 
   m_bMouseMoveMap = false;
@@ -638,16 +637,18 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
 
   if (m_bClick && !(e->modifiers() & Qt::ControlModifier))
   { // search object
-    mapObj_t obj;
+    mapObj_t obj;        
 
-    if (mapObjSearch(e->pos().x(), e->pos().y(), &obj))
+    bool found = mapObjSearch(e->pos().x(), e->pos().y(), &obj);
+
+    if (found && (obj.type != MO_INSERT && obj.type != MO_TELESCOPE))
     {
       CObjFillInfo info;
       ofiItem_t    item;
 
       info.fillInfo(&m_mapView, &obj, &item);
-      pcMainWnd->fillQuickInfo(&item);
-    }
+      pcMainWnd->fillQuickInfo(&item);            
+    }    
     m_bClick = false;
   }
 
@@ -702,8 +703,6 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
 void CMapView::mouseDoubleClickEvent(QMouseEvent *e)
 ////////////////////////////////////////////////////
 {
-  //qDebug("dbl");
-
   m_bClick = false;
   m_bMouseMoveMap = false;
   m_bZoomByMouse = false;
@@ -1330,9 +1329,14 @@ void CMapView::slotCheckedFlipY(bool checked)
 ////////////////////////////////////////////////////////
 void CMapView::slotTelePlugChange(double ra, double dec)
 ////////////////////////////////////////////////////////
-{    
+{      
   m_lastTeleRaDec.Ra = D2R(ra * 15);
   m_lastTeleRaDec.Dec = D2R(dec);
+
+  if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
+  {
+    precess(&m_lastTeleRaDec.Ra, &m_lastTeleRaDec.Dec, JD2000, m_mapView.jd);
+  }
 
   recenterHoldObject(this, false);
   repaintMap();  
@@ -2222,8 +2226,7 @@ void CMapView::paintEvent(QPaintEvent *)
 }
 
 void CMapView::slotAnimChanged(curvePoint_t &p)
-{
-  //qDebug() << p.x << p.y;
+{  
   centerMap(p.x, p.y, p.fov);
 }
 

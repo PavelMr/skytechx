@@ -322,6 +322,11 @@ void CObjInfo::on_clb_slew_clicked()
 
   precess(&m_infoItem.radec, &rd, JD2000, m_map->m_mapView.jd);
 
+  if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
+  {
+    precess(&rd.Ra, &rd.Dec, m_map->m_mapView.jd, JD2000);
+  }
+
   double r = R2D(rd.Ra) / 15.0;
   double d = R2D(rd.Dec);
 
@@ -360,6 +365,11 @@ void CObjInfo::on_clb_sync_clicked()
   radec_t rd;
 
   precess(&m_infoItem.radec, &rd, JD2000, m_map->m_mapView.jd);
+
+  if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
+  {
+    precess(&rd.Ra, &rd.Dec, m_map->m_mapView.jd, JD2000);
+  }
 
   double r = R2D(rd.Ra) / 15.0;
   double d = R2D(rd.Dec);
