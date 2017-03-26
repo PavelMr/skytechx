@@ -254,6 +254,13 @@ bool CAscom6::isSlewing()
 
 int CAscom6::equatorialCoordinateType()
 {
+  static int lastValue = -1;
+
+  if (lastValue != -1)
+  {
+    return lastValue;
+  }
+
   g_lock.lockForWrite();
   m_thread->m_state = STATE_GET_EQT_SYS;
   g_lock.unlock();
@@ -263,6 +270,8 @@ int CAscom6::equatorialCoordinateType()
   g_lock.lockForRead();
   int val = m_thread->m_eqtsys;
   g_lock.unlock();
+
+  lastValue = val;
 
   return val;
 }
@@ -478,7 +487,8 @@ void UpdateThread::run()
     }
     else
     {
-      g_lock.lockForRead();
+      g_lock.lockForRead();      
+
       if (m_state == STATE_SLEW)
       {
         qDebug() << "slewing" << m_slewRa << m_slewDec << thread();

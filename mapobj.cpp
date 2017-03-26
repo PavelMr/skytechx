@@ -286,7 +286,7 @@ bool mapObjSearch(int x, int y, mapObj_t *obj)
       *obj = o;
       return(true);
     }
-  }  
+  }
 
   return(false);
 }
@@ -783,11 +783,6 @@ void mapObjContextMenu(CMapView *map)
 
       case -3:
       {
-        if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
-        {
-          precess(&ra, &dec, map->m_mapView.jd, JD2000);
-        }
-
         double r = R2D(ra) / 15.0;
         double d = R2D(dec);
         g_pTelePlugin->slewTo(r, d);
@@ -816,11 +811,6 @@ void mapObjContextMenu(CMapView *map)
           double r, d;
           if (info == NULL)
           {
-            if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
-            {
-              precess(&ra, &dec, map->m_mapView.jd, JD2000);
-            }
-
             r = R2D(ra) / 15.0;
             d = R2D(dec);
           }
@@ -829,11 +819,6 @@ void mapObjContextMenu(CMapView *map)
             double ra = info->radec.Ra, dec = info->radec.Dec;
 
             precess(&ra, &dec, JD2000, map->m_mapView.jd);
-
-            if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
-            {
-              precess(&ra, &dec, map->m_mapView.jd, JD2000);
-            }
 
             r = R2D(ra) / 15.0;
             d = R2D(dec);

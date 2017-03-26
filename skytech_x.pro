@@ -313,7 +313,8 @@ SOURCES += main.cpp\
     checkcombobox.cpp \
     planetreport.cpp \
     lunarphase.cpp \
-    cdssopendialog.cpp
+    cdssopendialog.cpp \
+    colongitude.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -559,7 +560,8 @@ HEADERS  += mainwindow.h \
     checkcombobox.h \
     planetreport.h \
     lunarphase.h \
-    cdssopendialog.h
+    cdssopendialog.h \
+    colongitude.h
 
 
 FORMS    += mainwindow.ui \

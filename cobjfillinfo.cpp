@@ -14,6 +14,7 @@
 #include "cmeteorshower.h"
 #include "gcvs.h"
 #include "vocatalogrenderer.h"
+#include "colongitude.h"
 
 #define FILEREGEXP   QRegExp("\\W")
 
@@ -2493,6 +2494,10 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
       double age = CAstro::getMoonAgeInDays(&o);
       addTextItem(item, tr("Age"), QString(tr("%1 day(s)")).arg(age, 0, 'f', 2));
       addTextItem(item, tr("Phase"), CAstro::getMoonPhase(&o));
+      double col;
+
+      moon_colong(view->jd, &col);
+      addTextItem(item, tr("Colongitude"), QString("%1°").arg(R2D(col), 0, 'f', 1));
     }
   }
   addTextItem(item, tr("P.A."), QString("%1°").arg(R2D(o.PA), 0, 'f', 1));

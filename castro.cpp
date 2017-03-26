@@ -1424,6 +1424,7 @@ double CAstro::getNPA(double ra, double raD, double dec, double decD, double oRa
   return(PA);
 }
 
+
 //////////////////////////////////
 void CAstro::solveMoon(orbit_t *o)
 //////////////////////////////////
@@ -1560,7 +1561,7 @@ void CAstro::solveMoon(orbit_t *o)
   o->cLat = 0;
   o->cMer = 0;
 
-  mLibration(m_jd, &o->cLat, &o->cMer); // optical libration
+  mLibration(m_jd, &o->cLat, &o->cMer); // optical libration  
 
   // topocentric libration
   if (!g_geocentric)

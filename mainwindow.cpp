@@ -4270,8 +4270,16 @@ void MainWindow::slotTimeUpdate()
 
   if (g_pTelePlugin && tpLoader->isLoaded() && g_pTelePlugin->isRADecValid())
   {
-    ui->label_tp_ra->setText(tr("R.A. : ") + getStrRA(ui->widget->m_lastTeleRaDec.Ra));
-    ui->label_tp_dec->setText(tr("Dec. : ") + getStrDeg(ui->widget->m_lastTeleRaDec.Dec));
+    double ra = ui->widget->m_lastTeleRaDec.Ra;
+    double dec = ui->widget->m_lastTeleRaDec.Dec;
+
+    if (g_pTelePlugin->equatorialCoordinateType() == 2) // JD2000
+    {
+      precess(&ra, &dec, ui->widget->m_mapView.jd, JD2000);
+    }
+
+    ui->label_tp_ra->setText(tr("R.A. : ") + getStrRA(ra));
+    ui->label_tp_dec->setText(tr("Dec. : ") + getStrDeg(dec));
   }
   else
   {
