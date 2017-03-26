@@ -1,5 +1,6 @@
 #include "cstatusbar.h"
 
+extern bool g_boldStatusBar;
 
 ////////////////////////////////////////
 CStatusBar::CStatusBar(QStatusBar *pBar)
@@ -38,10 +39,7 @@ QWidget *CStatusBar::createItem(int id, const QString & tooltip, int width, Qt::
     i.pLabel->setFixedWidth(width);
   }
   pStatusBar->addWidget(i.pLabel, 0);
-  i.pLabel->setToolTip(tooltip);
-  QFont fnt = i.pLabel->font();
-  fnt.setBold(true);
-  i.pLabel->setFont(fnt);
+  i.pLabel->setToolTip(tooltip);  
 
   if (id == SB_SM_LOADING)
   {
@@ -106,11 +104,18 @@ void CStatusBar::setDownloadStatus(bool start, bool reset)
 void CStatusBar::setItem(int id, QString str)
 /////////////////////////////////////////////
 {
+  QString newStr = str;
+
+  if (!g_boldStatusBar)
+  {
+    newStr = str.remove("<b>").remove("</b>");
+  }
+
   for (int i = 0; i < tItems.count(); i++)
   {
     if (tItems[i].id == id)
     {
-      tItems[i].pLabel->setText("  " + str + "  ");
+      tItems[i].pLabel->setText("  " + newStr + "  ");
       break;
     }
   }

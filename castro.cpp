@@ -129,8 +129,7 @@ double CAstro::deltaTTable(double jd)
   double dT;
 
   if (y < 0 || y > 2013)
-  {
-    //qDebug("cDeltaT: error1 %f %f", jd, y);
+  {    
     return(CM_UNDEF);
   }
 
@@ -485,13 +484,7 @@ void CAstro::setParam(const mapView_t *view)
   m_gst = DEG2RAD(m_gst);
   m_lst = DEG2RAD(m_lst);
 
-  //qDebug("GMST0 = %s", qPrintable(getStrTimeFromDayRads(m_gmst0)));
-  //qDebug("GST   = %s", qPrintable(getStrTimeFromDayRads(m_gst)));
-  //qDebug("LST   = %s", qPrintable(getStrTimeFromDayRads(m_lst)));
-
-  calcPlanet(PT_EARTH, &m_sunOrbit, false, true, false);
-
-  //qDebug() << getStrDeg(getEclObl(JD2000));
+  calcPlanet(PT_EARTH, &m_sunOrbit, false, true, false);  
 }
 
 
@@ -1253,20 +1246,7 @@ void CAstro::calcPlanet(int planet, orbit_t *orbit, bool bSunCopy, bool all, boo
 
     double xg = xh + xs;
     double yg = yh + ys;
-    double zg = zh + zs;
-
-    if (planet == PT_VENUS && i == 0)
-    {
-      //qDebug() << qSetRealNumberPrecision(12) << getStrDeg(data[0]) << getStrDeg(data[1]) << data[2] << getStrDeg(m_sunOrbit.hLon) << getStrDeg(m_sunOrbit.hLat) << m_sunOrbit.r;
-      //qDebug() << qSetRealNumberPrecision(12) << xg << yg << zg;
-    }
-
-    if (planet == PT_VENUS)
-    {
-      //xg = -.5071402;
-      //yg = 0.3015280;
-      //zg = 0.0047570;
-    }
+    double zg = zh + zs;    
 
     double obl = m_eclObl;
 

@@ -99,16 +99,12 @@ void CDso::load()
       dso[i].sy = dso[i].sx;
     }
   }
-  pf.close();
-
-  //qDebug("dsoHead.numDso = %ld\n", dsoHead.numDso); 
+  pf.close();  
 
   // sort dso by size
   qsort(dso, dsoHead.numDso, sizeof(dso_t), dsoSort);
 
-  createSectors();
-
-  qDebug() << "dso = " << sizeof(dso_t);
+  createSectors();  
 
   // assign to sectors
   for (qint32 i = 0; i < dsoHead.numDso; i++)
@@ -429,8 +425,7 @@ void CDso::loadShapes()
     QFileInfo fi = list.at(i);
     int index;
     if (findDSO(fi.baseName().toLatin1().data(), &pDso, index) >= 0)
-    {
-      //qDebug("'%s'", fi.filePath().toAscii().data());
+    {      
       CShape *shp = new CShape;
       if (shp->load(fi.filePath()))
       {
@@ -543,50 +538,6 @@ QStringList CDso::getNameInt(dso_t *pDso)
   str = str.remove(" ");
 
   return str.split("\t");
-}
-
-///////////////////////////////////////
-bool CDso::addAddon(const QString /*name*/)
-///////////////////////////////////////
-{
-  /*
-  SkFile f(name);
-
-  if (!f.open(SkFile::ReadOnly | SkFile::Text))
-    return(false);
-
-   while (!f.atEnd())
-  {
-    QString     str = f.readLine();
-    QStringList list;
-
-    if (str.startsWith("#"))
-      continue;
-
-    if (str.startsWith("$SOURCE="))
-    {
-      continue;
-    }
-
-    list = str.split("|");
-
-    if (list.count() != 9)
-      continue;
-
-    dso_t dso;
-
-    dso.type = list.at(0).toInt();
-
-    dso.rd.Ra = D2R(list.at(1).toDouble() * 24.0);
-    dso.rd.Dec = D2R(list.at(2).toDouble());
-    dso.sx = (int)(list.at(3).toFloat() * 60.0);
-    dso.sy = (int)(list.at(4).toFloat() * 60.0);
-
-    //qDebug("%d %f %f %dx%d", dso.type, R2D(dso.rd.Ra), R2D(dso.rd.Dec), dso.sx, dso.sy);
-  }
-  */
-
-  return(true);
 }
 
 void CDso::applyNameFilter()

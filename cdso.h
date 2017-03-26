@@ -68,9 +68,7 @@ class CDso : public QObject
     QStringList getNameList(dso_t *pDso);
     QString getName(dso_t *pDso);
     QString getName(dso_t *pDso, int idx);
-    QStringList getNameInt(dso_t *pDso);
-
-    bool addAddon(const QString name);
+    QStringList getNameInt(dso_t *pDso);    
 
     void applyNameFilter();
 

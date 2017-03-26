@@ -54,9 +54,7 @@ void CDownload::beginFile(QString url, QString fileName)
 ///////////////////////////////////////////////////////
 void CDownload::slotProgress(qint64 recv ,qint64 total)
 ///////////////////////////////////////////////////////
-{
-  //qDebug() << "recv : " << recv << " / " << total;
-
+{  
   if (recv == 0 || total == 0)
   {
     emit sigProgress((qint64)this, 0);
@@ -84,8 +82,7 @@ void CDownload::slotProgress(qint64 recv ,qint64 total)
 //////////////////////////////////////////////////////////
 void CDownload::slotDownloadFinished(QNetworkReply *reply)
 //////////////////////////////////////////////////////////
-{
-  //qDebug("done %s", qPrintable(reply->errorString()));
+{  
   if (reply->error() == QNetworkReply::NoError)
   {    
     SkFile f(m_fileName);
@@ -113,9 +110,7 @@ void CDownload::slotDownloadFinished(QNetworkReply *reply)
 }
 
 void CDownload::slotDownloadFileFinished(QNetworkReply *reply)
-{  
-  qDebug() << reply->errorString();
-
+{   
   if (reply->error() == QNetworkReply::NoError && m_file.isOpen())
   {        
     m_file.write(m_reply->readAll());

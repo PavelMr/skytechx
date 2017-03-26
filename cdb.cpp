@@ -32,9 +32,7 @@ bool CDB::addToGallery(const QString name, const QString id, const QString path)
   id2 = id2.replace("'", "''");
 
   QString cmd = QString("insert into gallery (name, path, common_name) values('%1', '%2', '%3')").arg(id2).arg(path).arg(name2);
-  QSqlQuery q = exec(cmd);
-
-  qDebug() << q.lastError().text() << cmd;
+  QSqlQuery q = exec(cmd);  
 
   if (q.lastError().type() != QSqlError::NoError)
   {

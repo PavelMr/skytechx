@@ -99,9 +99,7 @@ bool CUsno2A::searchStar(int zone, int number, usnoStar_t *star)
   *pPtr = iDec; pPtr++;
   *pPtr = iMag; pPtr++;
 
-  getUSNOStar(star, data);
-
-  //qDebug() << star->id << zone << R2D(star->rd.Dec);
+  getUSNOStar(star, data);  
 
   return true;
 }
@@ -165,11 +163,8 @@ usnoZone_t *CUsno2A::loadGSCRegion(int region)
   { // free the region
     z = lastZ;
     if (zone[z].starCount > 0 && zone[z].pData != NULL)
-      free(zone[z].pData);
-    //qDebug("free usno zone %d", zone[z].zone);
-  }
-
-  //qDebug("Reading USNO A2 GSC region %d\n", region);
+      free(zone[z].pData);   
+  }  
 
   usnoZone_t *pZone = &zone[z];
 

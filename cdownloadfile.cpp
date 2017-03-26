@@ -59,8 +59,7 @@ void CDownloadFile::slotReadyRead()
 }
 
 void CDownloadFile::slotDownloadFinished(QNetworkReply *reply)
-{
-  qDebug() << reply << reply->error();
+{  
   if (reply->error() == QNetworkReply::NoError)
   {
     QFileDialog dlg(this);

@@ -1480,11 +1480,11 @@ void CMapView::updateStatusBar(void)
 
   if (pcMainWnd->statusBar)
   {
-    pcMainWnd->statusBar->setItem(SB_SM_CONST,QString("%1").arg(constGetName(constWhatConstel(ra, dec, epoch), 1)));
-    pcMainWnd->statusBar->setItem(SB_SM_RA,   QString(tr("R.A. : %1")).arg(getStrRA(ra)));
-    pcMainWnd->statusBar->setItem(SB_SM_DEC,  QString(tr("Dec. : %1")).arg(getStrDeg(dec)));
-    pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : %1")).arg(getStrDegNoSign(m_mapView.fov)));
-    pcMainWnd->statusBar->setItem(SB_SM_MAGS, QString(tr("Star : %1 mag. / DSO %2 mag.")).arg(m_mapView.starMag, 0, 'f', 1).arg(m_mapView.dsoMag, 0, 'f', 1));
+    pcMainWnd->statusBar->setItem(SB_SM_CONST,QString("<b>%1</b>").arg(constGetName(constWhatConstel(ra, dec, epoch), 1)));
+    pcMainWnd->statusBar->setItem(SB_SM_RA,   QString(tr("R.A. : <b>%1</b>")).arg(getStrRA(ra)));
+    pcMainWnd->statusBar->setItem(SB_SM_DEC,  QString(tr("Dec. : <b>%1</b>")).arg(getStrDeg(dec)));
+    pcMainWnd->statusBar->setItem(SB_SM_FOV,  QString(tr("FOV : <b>%1</b>")).arg(getStrDegNoSign(m_mapView.fov)));
+    pcMainWnd->statusBar->setItem(SB_SM_MAGS, QString(tr("Star : <b>%1 mag.</b>r / DSO <b>%2 mag.</b>")).arg(m_mapView.starMag, 0, 'f', 1).arg(m_mapView.dsoMag, 0, 'f', 1));
 
     QString j2000 = m_mapView.epochJ2000 ? tr(" J2000") : tr(" At date");
     QString geo = g_geocentric ? tr(" Geo.") : " Topo.";
@@ -1504,22 +1504,22 @@ void CMapView::updateStatusBar(void)
         mode = tr("Ecl") + tr(" At date") + geo;
         break;
     }
-    pcMainWnd->statusBar->setItem(SB_SM_MODE,  QString(tr("%1")).arg(mode));
+    pcMainWnd->statusBar->setItem(SB_SM_MODE,  QString(tr("<b>%1</b>")).arg(mode));
 
     if (alt > 0)
     {
       double airmass = CAstro::getAirmass(alt);
-      pcMainWnd->statusBar->setItem(SB_SM_AIRMASS,   QString(tr("Airmass : %1")).arg(airmass, 0, 'f', 2));
+      pcMainWnd->statusBar->setItem(SB_SM_AIRMASS,   QString(tr("Airmass : <b>%1</b>")).arg(airmass, 0, 'f', 2));
     }
     else
     {
-      pcMainWnd->statusBar->setItem(SB_SM_AIRMASS,   QString(tr("Airmass : N/A")));
+      pcMainWnd->statusBar->setItem(SB_SM_AIRMASS,   QString(tr("Airmass : <b>N/A</b>")));
     }
-    pcMainWnd->statusBar->setItem(SB_SM_ALT,   QString(tr("Alt. : %1")).arg(getStrDeg(alt)));
-    pcMainWnd->statusBar->setItem(SB_SM_AZM,  QString(tr("Azm. : %1")).arg(getStrDeg(azm)));
+    pcMainWnd->statusBar->setItem(SB_SM_ALT,   QString(tr("Alt. : <b>%1</b>")).arg(getStrDeg(alt)));
+    pcMainWnd->statusBar->setItem(SB_SM_AZM,  QString(tr("Azm. : <b>%1</b>")).arg(getStrDeg(azm)));
 
-    pcMainWnd->statusBar->setItem(SB_SM_DATE,  QString(tr("Date : %1")).arg(getStrDate(m_mapView.jd, m_mapView.geo.tz)));
-    pcMainWnd->statusBar->setItem(SB_SM_TIME,  QString(tr("Time : %1")).arg(getStrTime(m_mapView.jd, m_mapView.geo.tz)));
+    pcMainWnd->statusBar->setItem(SB_SM_DATE,  QString(tr("Date : <b>%1</b>")).arg(getStrDate(m_mapView.jd, m_mapView.geo.tz)));
+    pcMainWnd->statusBar->setItem(SB_SM_TIME,  QString(tr("Time : <b>%1</b>")).arg(getStrTime(m_mapView.jd, m_mapView.geo.tz)));
 
     if (m_mapView.epochJ2000 && m_mapView.coordType == SMCT_RA_DEC)
     {
@@ -1528,7 +1528,7 @@ void CMapView::updateStatusBar(void)
 
     double sep = anSep(m_measurePoint.Ra, m_measurePoint.Dec, ra, dec);
     double ang = RAD2DEG(trfGetPosAngle(ra, dec, m_measurePoint.Ra, m_measurePoint.Dec));
-    pcMainWnd->statusBar->setItem(SB_SM_MEASURE, QString(tr("Sep : %1 / PA : %2°")).arg(getStrDegNoSign(sep, true)).arg(ang, 0, 'f', 2));
+    pcMainWnd->statusBar->setItem(SB_SM_MEASURE, QString(tr("Sep : <b>%1</b> / PA : <b>%2°</b>")).arg(getStrDegNoSign(sep, true)).arg(ang, 0, 'f', 2));
   }
 
   if (bDevelopMode)

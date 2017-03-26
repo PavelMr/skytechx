@@ -551,9 +551,7 @@ void CAsterDlg::fillList()
   model->removeRows(0, model->rowCount());
 
   setCursor(Qt::WaitCursor);
-  QApplication::processEvents();
-
-  //qDebug() << tAsteroids.count();
+  QApplication::processEvents();  
 
   for (int i = 0; i < tAsteroids.count(); i++)
   {

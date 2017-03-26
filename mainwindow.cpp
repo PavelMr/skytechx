@@ -155,6 +155,8 @@ bool g_useJPLEphem;
 int g_ephType;
 int g_ephMoonType;
 
+bool g_boldStatusBar = false;
+
 QString g_tpSpeed[3] = {"0.5", "25%", "100%"};
 
 CStatusBar *g_statusBar;
@@ -774,6 +776,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
   ui->actionEpoch_J2000_0->setChecked(ui->widget->m_mapView.epochJ2000);
+
+  g_boldStatusBar = settings.value("bold_status_bar", true).toBool();
 
   g_showVO = settings.value("show_vo", true).toBool();
   g_showDSOShapes = settings.value("show_dso_shapes", true).toBool();

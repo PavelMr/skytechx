@@ -177,8 +177,7 @@ bool CGsc::readRegion(int r, gscRegion2_t *rgn)
   f.close();
 
   if (a != rgn->h.nobj)
-  {
-    //fatalErrorMsg("GSC %d %d",a,rgn->h.nobj);
+  {    
     qDebug("gsc fatal error!!!");
     return(false);
   }

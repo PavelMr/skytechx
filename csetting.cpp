@@ -49,6 +49,8 @@ static QString g_horizonNameOld;
 
 extern QString g_tpSpeed[3];
 
+extern bool g_boldStatusBar;
+
 CSetting::CSetting(QWidget *parent, int tab) :
   QDialog(parent),
   ui(new Ui::CSetting)
@@ -58,6 +60,8 @@ CSetting::CSetting(QWidget *parent, int tab) :
   ui->setupUi(this);
 
   g_sunOnlineDaemon.stop();
+
+  ui->label_119->setText(ui->label_119->text() + "<b>" + QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/jplde/" + "</b>)");
 
   set = g_skSet;
   g_horizonNameOld = g_horizonName;
@@ -259,6 +263,8 @@ CSetting::CSetting(QWidget *parent, int tab) :
       ui->tv_statusBarUnused->addItem(item);
     }
   } while (ok);
+
+  ui->checkBox_12->setChecked(g_boldStatusBar);
 
   ui->listWidget_2->addItem(tr("Stars"));
   ui->listWidget_2->addItem(tr("Stars magnitude"));
@@ -1130,14 +1136,16 @@ void CSetting::apply()
   }
   set.setValue("status_bar", data);
 
+  g_boldStatusBar = ui->checkBox_12->isChecked();
+  set.setValue("bold_status_bar", g_boldStatusBar);
+
   cPlanetRenderer.reloadMoonTexture();
 
   pcMainWnd->statusBar->createSkyMapBar();
   pcMainWnd->statusBar->saveStatusBar();
 
   setCreateFonts();
-  pcMapView->repaintMap(true);
-
+  pcMapView->repaintMap(true);  
 }
 
 //////////////////////////////////////////////////////////

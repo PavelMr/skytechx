@@ -139,8 +139,7 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
         if (f->load(fi.filePath(), memOk))
         {
           i.bShow = true;
-          i.filePath = fi.filePath();
-          //qDebug("%s", qPrintable(i.filePath));
+          i.filePath = fi.filePath();         
           i.byteSize = (int)fi.size();
           i.ptr = (void *)f;
           i.fileName = fi.fileName();
