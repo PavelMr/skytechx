@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 
 extern bool g_extObjInfo;
+extern bool g_boldStatusBar;
 
 CLvQInfo::CLvQInfo(QWidget *parent) :
   QTreeView(parent)
@@ -110,7 +111,7 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
 
       if (item->bBold)
       {
-        QFont f = label->font();
+        f = label->font();
         f.setBold(true);
         label->setFont(f);
       }
@@ -130,6 +131,15 @@ void CLvQInfo::fillInfo(ofiItem_t *data, bool update)
         label->setSelectable(false);
         value->setSelectable(false);
       }
+
+      /*
+      if (g_boldStatusBar)
+      {
+        f = label->font();
+        f.setBold(true);
+        value->setFont(f);
+      }
+      */
 
       tRow.append(label);
       tRow.append(value);            

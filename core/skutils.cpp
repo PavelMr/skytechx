@@ -420,6 +420,44 @@ QString getStrRA(double ra, bool simple)
 }
 
 
+////////////////////////////////////////
+QString getStrRASign(double ra, bool simple)
+////////////////////////////////////////
+{
+  QString str;
+  QString out;
+  int     d, m;
+  double  s;
+  QString sign;
+
+  if (ra < 0)
+    sign = "-";
+  else
+    sign = "+";
+
+  getHMSFromRad(fabs(ra) / 15., &d, &m, &s);
+
+  if (!simple)
+  {
+    out = str.sprintf("%02dh %02dm %05.2fs", d, m, s);
+  }
+  else
+  {
+    out = str.sprintf("%02dh", d);
+    if (m != 0)
+    {
+      out += str.sprintf(" %02dm", m);
+    }
+    if (s > 0.001)
+    {
+      out += str.sprintf(" %04.2fs", s);
+    }
+  }
+
+  return(sign + out);
+}
+
+
 //////////////////////////////////////////
 QString getStrDeg(double deg, bool simple)
 //////////////////////////////////////////

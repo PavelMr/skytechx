@@ -6,7 +6,9 @@
 #include "systemsettings.h"
 #include "elp2000.h"
 #include "jpl_eph.h"
-
+#include "mapobj.h"
+#include "ccomdlg.h"
+#include "casterdlg.h"
 
 static QList <jplData_t> jplEphemList;
 
@@ -397,6 +399,60 @@ double CAstro::getPolarisHourAngle()
   double val = ((m_lst - polarisRA) / M_PI / 2 + 0.5);
 
   return val;
+}
+
+void CAstro::getMotionRate(int what, qint64 data, const mapView_t *view, double length, motionRates_t *out)
+{
+  mapView_t tmp = *view;
+  orbit_t o1, o2;
+  comet_t *comet;
+  asteroid_t *aster;
+  int id;
+
+  switch (what)
+  {
+    case MO_COMET:
+      comet = (comet_t *)data;
+      cAstro.setParam(&tmp);
+      comSolve(comet, tmp.jd);
+      o1 = comet->orbit;
+
+      tmp.jd += length;
+      cAstro.setParam(&tmp);
+      comSolve(comet, tmp.jd);
+      o2 = comet->orbit;
+      break;
+
+    case MO_ASTER:
+      aster = (asteroid_t *)data;
+      cAstro.setParam(&tmp);
+      astSolve(aster, tmp.jd);
+      o1 = aster->orbit;
+
+      tmp.jd += length;
+      cAstro.setParam(&tmp);
+      astSolve(aster, tmp.jd);
+      o2 = aster->orbit;
+      break;
+
+    case MO_PLANET:
+      id = (int)data;
+      cAstro.setParam(&tmp);
+      cAstro.calcPlanet(id, &o1);
+
+      tmp.jd += length;
+      cAstro.setParam(&tmp);
+      cAstro.calcPlanet(id, &o2);
+      break;
+  }
+
+  // FIXME: eg 359 - 3
+  out->dRA  = o2.lRD.Ra - o1.lRD.Ra;
+  out->dDec = o2.lRD.Dec - o1.lRD.Dec;
+  out->size = anSep(o2.lRD.Ra, o2.lRD.Dec,
+                    o1.lRD.Ra, o1.lRD.Dec);
+  out->PA = trfGetPosAngle(o2.lRD.Ra, o2.lRD.Dec,
+                           o1.lRD.Ra, o1.lRD.Dec);
 }
 
 // Pickering (2002)

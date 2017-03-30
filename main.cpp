@@ -132,13 +132,13 @@ int main(int argc, char *argv[])
   // Enable run-time memory check for debug builds.
    #if defined(DEBUG) | defined(_DEBUG)
      //_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-   #endif  
+   #endif
 
   QCoreApplication::addLibraryPath("plugins");  
 
   QCoreApplication::setOrganizationDomain("Frostware");
   QCoreApplication::setOrganizationName("PMR");
-  QCoreApplication::setApplicationName("SkytechX");
+  QCoreApplication::setApplicationName("SkytechX_beta"); // NOTE: beta reg.
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   QApplication a(argc, argv);

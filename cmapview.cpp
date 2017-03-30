@@ -651,6 +651,18 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
     }    
     m_bClick = false;
   }
+  else if (m_bClick && (e->modifiers() & Qt::ControlModifier))
+  { // search object
+    mapObj_t obj;
+
+    bool found = mapObjSearch(e->pos().x(), e->pos().y(), &obj);
+
+    if (found && (obj.type != MO_INSERT && obj.type != MO_TELESCOPE))
+    { // move cursor to nearest object
+      cursor().setPos(mapToGlobal(QPoint(obj.x, obj.y)));
+    }
+    m_bClick = false;
+  }
 
   if (m_bZoomByMouse)
   { // zoom map

@@ -41,7 +41,6 @@ double jd,	/* jd */
 double *cp	/* selenographic colongitude (-lng of rising sun), rads */
 )
 {
-
   double rad = .0174533;
 
   double L, M, R, LAM0;

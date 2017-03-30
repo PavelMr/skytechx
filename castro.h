@@ -41,6 +41,14 @@ typedef struct
   double    endJD;
 } jplData_t;
 
+typedef struct
+{
+  double dRA;
+  double dDec;
+  double PA;
+  double size;
+} motionRates_t;
+
 // delta-T alg.
 #define DELTA_T_TABLE                  0
 #define DELTA_T_M_AND_S_1982           1
@@ -159,6 +167,7 @@ class CAstro : public QObject
     void   calcPlanet(int planet, orbit_t *orbit, bool bSunCopy = true, bool all = true, bool lightCorrection = true);
     static double getEclObl(double jd);
     double getPolarisHourAngle(); // v 0..1
+    static void getMotionRate(int what, qint64 data, const mapView_t *view, double length, motionRates_t *out);
 
     static void sphToXYZ(double l, double b, double r, double &x, double &y, double &z);
 

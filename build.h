@@ -22,7 +22,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #define _BUILD_NO_       DEF_BUILD_NO
 #define _BUILD_YEAR_     2017
-#define SK_VERSION       "v1.05"
+#define SK_VERSION       "BETA v1.051 (1)"
 #define SKYTECH_WEB      "http://www.skytechx.eu"
 
 // pri nove verzi odstranit SK_DEBUG_IN_RELEASE v debug.h a definovat QT_NO_DEBUG_OUTPUT

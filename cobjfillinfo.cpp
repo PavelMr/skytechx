@@ -528,6 +528,19 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addSeparator(item);
   addTextItem(item, tr("r"), QString::number(a->orbit.r) + tr("AU"));
   addSeparator(item);
+
+  addLabelItem(item, tr("Hourly motion"));
+  addSeparator(item);
+
+  motionRates_t rates;
+  cAstro.getMotionRate(MO_ASTER, (qint64)&o1, view, 1. / 24., &rates);
+
+  addTextItem(item, tr("dRA"), getStrRASign(rates.dRA));
+  addTextItem(item, tr("dDec"), getStrDeg(rates.dDec));
+  addTextItem(item, tr("Size"), getStrDeg(rates.size));
+  addTextItem(item, tr("P.A."), getStrNumber("", R2D(rates.PA), 3, "°"));
+  addSeparator(item);
+
   endExtInfo();
 
 
@@ -553,7 +566,7 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
 /////////////////////////////////////////////////////////////////////////////////////////////
 void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
 /////////////////////////////////////////////////////////////////////////////////////////////
-{
+{  
   comet_t *a = (comet_t *)obj->par2;
 
   double ra  = a->orbit.lRD.Ra;
@@ -683,7 +696,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   double vhx2, vhy2, vhz2;
   comet_t o1 = *a;
   comet_t o2 = *a;
-  mapView_t tmp = *view;
+  mapView_t tmp = *view;  
 
   cAstro.setParam(&tmp);
   comSolve(&o1, tmp.jd, false);
@@ -698,7 +711,7 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   vhy = vhy2 - vhy1;
   vhz = vhz2 - vhz1;
 
-  CAstro::sphToXYZ(lon, lat, a->orbit.r, hx, hy, hz);
+  CAstro::sphToXYZ(lon, lat, a->orbit.r, hx, hy, hz);      
 
   addSeparator(item);
   addTextItem(item, tr("X"), QString::number(hx, 'f', 8) + " " + tr("AU"));
@@ -715,11 +728,24 @@ void CObjFillInfo::fillCometInfo(const mapView_t *view, const mapObj_t *obj, ofi
   addTextItem(item, tr("Latitude"), QString::number(R2D(lat), 'f', 8));
   addSeparator(item);
   addTextItem(item, tr("r"), QString::number(a->orbit.r) + tr("AU"));
+  addSeparator(item);  
+
+  addLabelItem(item, tr("Hourly motion"));
   addSeparator(item);
+
+  motionRates_t rates;
+  cAstro.getMotionRate(MO_COMET, (qint64)&o1, view, 1. / 24., &rates);
+
+  addTextItem(item, tr("dRA"), getStrRASign(rates.dRA));
+  addTextItem(item, tr("dDec"), getStrDeg(rates.dDec));
+  addTextItem(item, tr("Size"), getStrDeg(rates.size));
+  addTextItem(item, tr("P.A."), getStrNumber("", R2D(rates.PA), 3, "°"));
+  addSeparator(item);
+
   endExtInfo();
 
   addLabelItem(item, tr("Other"));
-  addSeparator(item);
+  addSeparator(item);    
 
   QString label = tr("Orbital period");
 
@@ -2456,6 +2482,19 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     addTextItem(item, tr("r"), QString::number(o.r) + tr("AU"));
     addSeparator(item);
   }
+
+  addLabelItem(item, tr("Hourly motion"));
+  addSeparator(item);
+
+  motionRates_t rates;
+  cAstro.getMotionRate(MO_PLANET, (qint64)obj->par1, view, 1. / 24., &rates);
+
+  addTextItem(item, tr("dRA"), getStrRASign(rates.dRA));
+  addTextItem(item, tr("dDec"), getStrDeg(rates.dDec));
+  addTextItem(item, tr("Size"), getStrDeg(rates.size));
+  addTextItem(item, tr("P.A."), getStrNumber("", R2D(rates.PA), 3, "°"));
+  addSeparator(item);
+
   endExtInfo();
 
   addLabelItem(item, tr("Apparent view"));
