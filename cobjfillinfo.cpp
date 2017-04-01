@@ -1314,7 +1314,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
     else
       addTextItem(item, tr("Amplitude"), getStrMag(gcvs->magMin));
 
-    if (gcvs->epoch > 0) addTextItem(item, tr("Epoch"), getStrDate(gcvs->epoch, 0));
+    if (gcvs->epoch > 0) addTextItem(item, tr("Epoch"), getStrNumber("", gcvs->epoch, 8));
     if (gcvs->period > 0) addTextItem(item, tr("Period"), QString::number(gcvs->period) + " " + tr("day(s)"));
 
     if (gcvs->epoch > 0 && gcvs->period > 0)

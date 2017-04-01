@@ -32,12 +32,13 @@ static bool check0 = false;
 static bool check1 = false;
 static QDateTime lastDateTime = QDateTime::currentDateTime();
 
+
 VariableStarsDialog::VariableStarsDialog(QWidget *parent, mapView_t *mapView) :
   QDialog(parent),
   ui(new Ui::VariableStarsDialog),
   m_setTime(false)
 {
-  ui->setupUi(this);
+  ui->setupUi(this);  
 
   ui->dateEdit->setLocale(QLocale::system());
 
@@ -82,7 +83,7 @@ VariableStarsDialog::VariableStarsDialog(QWidget *parent, mapView_t *mapView) :
   ui->cb_ab_hor->setChecked(check0);
   ui->cb_all_valid->setChecked(check1);
   ui->dateEdit->setDate(lastDateTime.date());
-  ui->timeEdit->setTime(lastDateTime.time());
+  ui->timeEdit->setTime(lastDateTime.time());  
 
   fillList();
   ui->treeView->sortByColumn(0, Qt::AscendingOrder);
@@ -95,7 +96,7 @@ VariableStarsDialog::~VariableStarsDialog()
   check0 = ui->cb_ab_hor->isChecked();
   check1 = ui->cb_all_valid->isChecked();
   lastDateTime.setDate(ui->dateEdit->date());
-  lastDateTime.setTime(ui->timeEdit->time());
+  lastDateTime.setTime(ui->timeEdit->time());  
 
   delete ui;
 }
@@ -177,7 +178,14 @@ void VariableStarsDialog::fillList()
     QStandardItem *item4 = new QStandardItem();
     if (item.epoch > 0)
     {
-      item4->setText(getStrDate(item.epoch, tz) + " " + getStrTime(item.epoch, tz));
+      if (!ui->cb_jd->isChecked())
+      {
+        item4->setText(getStrDate(item.epoch, tz) + " " + getStrTime(item.epoch, tz));
+      }
+      else
+      {
+        item4->setText(getStrNumber("", item.epoch));
+      }
       item4->setData(item.epoch);
     }
     else
@@ -191,7 +199,15 @@ void VariableStarsDialog::fillList()
     if (item.epoch > 0 && item.period > 0)
     {
        double jd = g_GCVS.solveNextMinimum(item.epoch, item.period, m_jd);
-       item5->setText(getStrDate(jd, tz) + " " + getStrTime(jd, tz));
+
+       if (!ui->cb_jd->isChecked())
+       {
+        item5->setText(getStrDate(jd, tz) + " " + getStrTime(jd, tz));
+       }
+       else
+       {
+         item5->setText(getStrNumber("", jd));
+       }
        item5->setData(jd);
     }
     else
@@ -205,7 +221,15 @@ void VariableStarsDialog::fillList()
     if (item.epoch > 0 && item.period > 0)
     {
        double jd = g_GCVS.solveNextMaximum(item.epoch, item.period, m_jd);
-       item6->setText(getStrDate(jd, tz) + " " + getStrTime(jd, tz));
+
+       if (!ui->cb_jd->isChecked())
+       {
+        item6->setText(getStrDate(jd, tz) + " " + getStrTime(jd, tz));
+       }
+       else
+       {
+         item6->setText(getStrNumber("", jd));
+       }
        item6->setData(jd);
     }
     else
