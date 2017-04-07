@@ -158,7 +158,8 @@ void CLoadingDlg::slotLoad()
   background.loadBackground(g_horizonName);
 
   sigProgress(10);
-  cLunarFeatures.load("../data/moon/moon.dat");
+  //cLunarFeatures.load("../data/moon/moon.dat");
+  cLunarFeatures.load("../data/moon/features.csv");
 
   sigProgress(11);
   loadTracking();

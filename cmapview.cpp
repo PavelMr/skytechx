@@ -1257,6 +1257,32 @@ void CMapView::changeMapView(int type)
 }
 
 
+void CMapView::updateLunarFeatures()
+{
+  mapObj_t obj;
+
+  if (!pcMainWnd->isLunarInfoTab())
+  {
+    return;
+  }
+
+  if (mapObjSearch(m_lastMousePos.x(), m_lastMousePos.y(), &obj))
+  {
+    if (obj.type == MO_PLANET && obj.par1 == PT_MOON)
+    {
+      double lon, lat;
+      QString desc;
+      if (cLunarFeatures.getCoordinates(&m_mapView, QPointF(obj.x, obj.y), m_lastMousePos, lon, lat, desc))
+      {
+        pcMainWnd->updateLunarInfo(desc, lon, lat, true);
+        return;
+      }
+    }
+  }
+  pcMainWnd->updateLunarInfo("", 0, 0, false);
+}
+
+
 ////////////////////////////////////////////
 double CMapView::getStarMagnitudeLevel(void)
 ////////////////////////////////////////////
@@ -1875,6 +1901,7 @@ void CMapView::repaintMap(bool bRepaint)
     }
   }
 
+  updateLunarFeatures();
   updateStatusBar();
   pcMainWnd->updateControlInfo();
   QWidget::update();

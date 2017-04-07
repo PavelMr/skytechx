@@ -138,6 +138,7 @@
  </widget>
  <tabstops>
   <tabstop>spinBox</tabstop>
+  <tabstop>lineEdit</tabstop>
   <tabstop>lineEdit_2</tabstop>
   <tabstop>comboBox</tabstop>
   <tabstop>pushButton_2</tabstop>

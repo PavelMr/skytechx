@@ -736,7 +736,6 @@ int CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, map
   pPainter->translate(pt->sx, pt->sy);
   pPainter->rotate(R2D(ang));
   pPainter->drawEllipse(QPoint(0, 0), sy, sx);
-
   pPainter->restore();
 
   int b = s;

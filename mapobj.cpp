@@ -177,15 +177,15 @@ void addMapObj(const radec_t &rd, int x, int y, int type, int selType, int size,
 static bool checkMapObjPos(QPoint pos, mapObj_t *obj)
 /////////////////////////////////////////////////////
 {
-  int border = 5;
+  qint64 border = 5;
 
   switch (obj->selType)
   {
     case MO_CIRCLE:
       {
-        int deltaX = abs(pos.x() - obj->x);
-        int deltaY = abs(pos.y() - obj->y);
-        int dist = POW2(deltaX) + POW2(deltaY);
+        qint64 deltaX = abs(pos.x() - obj->x);
+        qint64 deltaY = abs(pos.y() - obj->y);
+        qint64 dist = POW2(deltaX) + POW2(deltaY);
 
         if (dist <= POW2(obj->size + border))
           return(true);
@@ -194,7 +194,7 @@ static bool checkMapObjPos(QPoint pos, mapObj_t *obj)
 
     case MO_RECT:
       {
-        QRect rc(obj->x - (obj->size + border), obj->y - (obj->size + border), (obj->size + border) * 2, (obj->size + border) * 2);
+        QRectF rc(obj->x - (obj->size + border), obj->y - (obj->size + border), (obj->size + border) * 2, (obj->size + border) * 2);
 
         if (rc.contains(pos))
           return(true);

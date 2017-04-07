@@ -281,7 +281,8 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.planet.brColor", set->map.planet.brColor, ds);
   writeVal("map.planet.satColor", set->map.planet.satColor, ds);
   writeVal("map.planet.satColorShd", set->map.planet.satColorShd, ds);
-  writeVal("map.planet.lunarFeatures", set->map.planet.lunarFeatures, ds);
+  writeVal("map.planet.lunarFeatures", set->map.planet.lunarFeatures, ds);  
+
   writeVal("map.planet.phaseAlpha", set->map.planet.phaseAlpha, ds);
   writeVal("map.planet.plnRad", set->map.planet.plnRad, ds);
   writeVal("map.planet.satRad", set->map.planet.satRad, ds);
@@ -622,7 +623,8 @@ bool setLoad(QString name, setting_t *set)
   set->map.planet.brColor = readVal("map.planet.brColor", MRGB(200, 200, 255), tMap).toUInt();
   set->map.planet.satColor = readVal("map.planet.satColor", MRGB(220, 220, 255), tMap).toUInt();
   set->map.planet.satColorShd = readVal("map.planet.satColorShd", MRGB(100, 100, 100), tMap).toUInt();
-  set->map.planet.lunarFeatures = readVal("map.planet.lunarFeatures", MRGB(255, 255, 255), tMap).toUInt();
+  set->map.planet.lunarFeatures = readVal("map.planet.lunarFeatures", MRGB(255, 255, 255), tMap).toUInt(); 
+
   set->map.planet.phaseAlpha = readVal("map.planet.phaseAlpha", 200, tMap).toInt();
   set->map.planet.plnRad = readVal("map.planet.plnRad", 5, tMap).toInt();
   set->map.planet.satRad = readVal("map.planet.satRad", 3, tMap).toInt();

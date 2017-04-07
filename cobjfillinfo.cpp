@@ -2405,6 +2405,84 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
     precess(&ra, &dec, view->jd, JD2000);
   }
 
+  addLabelItem(item, tr("Apparent view"));
+  addSeparator(item);
+
+  if (o.type != PT_SUN && o.type != PT_MOON)
+  {
+    if (o.sx == o.sy)
+      diam = QString("%1\"").arg(o.sx, 0, 'f', 2);
+    else
+      diam = QString("%1\" x %2\"").arg(o.sx, 0, 'f', 2).arg(o.sy, 0, 'f', 2);
+
+    addTextItem(item, tr("Apparent diameter"), diam);
+
+    if (o.sx == o.sy)
+    {
+      QString str  = QString("%1\"").arg(o.sx * 0.5, 0, 'f', 2);
+      addTextItem(item, tr("Apparent radius"), str);
+    }
+  }
+  else
+  {
+    QString str  = QString("%1\'").arg(o.sx / 60., 0, 'f', 2);
+    addTextItem(item, tr("Apparent diameter"), str);
+    str  = QString("%1\'").arg(o.sx / 120., 0, 'f', 2);
+    addTextItem(item, tr("Apparent radius"), str);
+  }
+
+  if (o.type != PT_SUN)
+  {
+    addTextItem(item, tr("Phase"), QString("%1%").arg(o.phase * 100.0, 0, 'f', 2));
+    addTextItem(item, tr("Phase angle"), QString("%1°").arg(R2D(o.FV), 0, 'f', 2));
+
+    if (item->par1 == PT_MOON)
+    {
+      double age = CAstro::getMoonAgeInDays(&o);
+      addTextItem(item, tr("Age"), QString(tr("%1 day(s)")).arg(age, 0, 'f', 2));
+      addTextItem(item, tr("Phase"), CAstro::getMoonPhase(&o));
+      double col, sslon, sslat;
+
+      moon_colong(view->jd, &col, &sslon, &sslat);
+      addTextItem(item, tr("Colongitude"), QString("%1°").arg(R2D(col), 0, 'f', 1));
+      addTextItem(item, tr("Sub-Solar Lon."), QString("%1°").arg(R2D(sslon), 0, 'f', 2));
+      addTextItem(item, tr("Sub-Solar Lat."), QString("%1°").arg(R2D(sslat), 0, 'f', 2));
+    }
+  }
+  addTextItem(item, tr("P.A."), QString("%1°").arg(R2D(o.PA), 0, 'f', 1));
+
+  if (o.cMer != CM_UNDEF)
+  {
+    if (o.type == PT_JUPITER ||
+        o.type == PT_SATURN)
+    {
+      addTextItem(item, tr("Central Meridian I"), QString("%1°").arg(R2D(o.cMer), 0, 'f', 2));
+      addTextItem(item, tr("Central Meridian II"), QString("%1°").arg(R2D(o.sysII), 0, 'f', 2));
+      addTextItem(item, tr("Central Meridian III"), QString("%1°").arg(R2D(o.sysIII), 0, 'f', 2));
+    }
+    else
+    {
+      if (o.type == PT_MOON)
+        addTextItem(item, tr("Central Meridian"), QString("%1°").arg(R2D(-o.cMer), 0, 'f', 2));
+      else
+        addTextItem(item, tr("Central Meridian"), QString("%1°").arg(R2D(o.cMer), 0, 'f', 2));
+    }
+  }
+
+  if (o.cLat != CM_UNDEF)
+  {
+    addTextItem(item, tr("Sub-Earth Phi"), QString("%1°").arg(R2D(o.cLat), 0, 'f', 2));
+  }
+
+  if (o.type == PT_JUPITER)
+  {
+    addSeparator(item);
+
+    addTextItem(item, tr("GRS longitude"), QString("%1°").arg(CAstro::getJupiterGRSLon(view->jd), 0, 'f', 1));
+  }
+
+  addSeparator(item);
+
   beginExtInfo();
   addLabelItem(item, tr("Geocentric information"));
   addSeparator(item);
@@ -2496,79 +2574,6 @@ void CObjFillInfo::fillPlanetInfo(const mapView_t *view, const mapObj_t *obj, of
   addSeparator(item);
 
   endExtInfo();
-
-  addLabelItem(item, tr("Apparent view"));
-  addSeparator(item);
-
-  if (o.type != PT_SUN && o.type != PT_MOON)
-  {
-    if (o.sx == o.sy)
-      diam = QString("%1\"").arg(o.sx, 0, 'f', 2);
-    else
-      diam = QString("%1\" x %2\"").arg(o.sx, 0, 'f', 2).arg(o.sy, 0, 'f', 2);
-
-    addTextItem(item, tr("Apparent diameter"), diam);
-
-    if (o.sx == o.sy)
-    {
-      QString str  = QString("%1\"").arg(o.sx * 0.5, 0, 'f', 2);
-      addTextItem(item, tr("Apparent radius"), str);
-    }
-  }
-  else
-  {
-    QString str  = QString("%1\'").arg(o.sx / 60., 0, 'f', 2);
-    addTextItem(item, tr("Apparent diameter"), str);
-    str  = QString("%1\'").arg(o.sx / 120., 0, 'f', 2);
-    addTextItem(item, tr("Apparent radius"), str);
-  }
-
-  if (o.type != PT_SUN)
-  {
-    addTextItem(item, tr("Phase"), QString("%1%").arg(o.phase * 100.0, 0, 'f', 2));
-    addTextItem(item, tr("Phase angle"), QString("%1°").arg(R2D(o.FV), 0, 'f', 2));    
-
-    if (item->par1 == PT_MOON)
-    {
-      double age = CAstro::getMoonAgeInDays(&o);
-      addTextItem(item, tr("Age"), QString(tr("%1 day(s)")).arg(age, 0, 'f', 2));
-      addTextItem(item, tr("Phase"), CAstro::getMoonPhase(&o));
-      double col;
-
-      moon_colong(view->jd, &col);
-      addTextItem(item, tr("Colongitude"), QString("%1°").arg(R2D(col), 0, 'f', 1));
-    }
-  }
-  addTextItem(item, tr("P.A."), QString("%1°").arg(R2D(o.PA), 0, 'f', 1));
-
-  if (o.cMer != CM_UNDEF)
-  {
-    if (o.type == PT_JUPITER ||
-        o.type == PT_SATURN)
-    {
-      addTextItem(item, tr("Central Meridian I"), QString("%1°").arg(R2D(o.cMer), 0, 'f', 1));
-      addTextItem(item, tr("Central Meridian II"), QString("%1°").arg(R2D(o.sysII), 0, 'f', 1));
-      addTextItem(item, tr("Central Meridian III"), QString("%1°").arg(R2D(o.sysIII), 0, 'f', 1));
-    }
-    else
-    {
-      addTextItem(item, tr("Central Meridian"), QString("%1°").arg(R2D(o.cMer), 0, 'f', 1));
-    }
-  }
-
-  if (o.cLat != CM_UNDEF)
-  {
-    addTextItem(item, tr("Sub-Earth Phi"), QString("%1°").arg(R2D(o.cLat), 0, 'f', 1));
-  }
-
-  if (o.type == PT_JUPITER)
-  {
-    addSeparator(item);
-
-    addTextItem(item, tr("GRS longitude"), QString("%1°").arg(CAstro::getJupiterGRSLon(view->jd), 0, 'f', 1));
-  }
-
-  addSeparator(item);
 
   ra  = o.lRD.Ra;
   dec = o.lRD.Dec;

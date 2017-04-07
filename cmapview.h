@@ -97,6 +97,7 @@ public:
   bool isRaDecOnScreen(double ra, double dec);
 
   void changeMapView(int type);
+  void updateLunarFeatures();
 
   void printMap(void);
   void printMapView(QPrinter *prn, const QString &profileName);

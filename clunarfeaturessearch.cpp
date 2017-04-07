@@ -12,7 +12,7 @@ CLunarFeaturesSearch::CLunarFeaturesSearch(QWidget *parent, mapView_t *view) :
   ui->setupUi(this);
 
   m_view = view;
-  m_model = new QStandardItemModel(0, 5);
+  m_model = new QStandardItemModel(0, 6);
 
   m_proxy = new MyProxyLFModel();
   m_proxy->setSourceModel(m_model);
@@ -22,6 +22,7 @@ CLunarFeaturesSearch::CLunarFeaturesSearch(QWidget *parent, mapView_t *view) :
   m_model->setHeaderData(2, Qt::Horizontal, tr("Diameter"));
   m_model->setHeaderData(3, Qt::Horizontal, tr("Longitude"));
   m_model->setHeaderData(4, Qt::Horizontal, tr("Latitude"));
+  m_model->setHeaderData(5, Qt::Horizontal, tr("Desc."));
 
   int i = 0;
   foreach (const lunarItem_t &lf, cLunarFeatures.tLunarItems)
@@ -55,6 +56,10 @@ CLunarFeaturesSearch::CLunarFeaturesSearch(QWidget *parent, mapView_t *view) :
     item4->setText(getStrLat(lf.lat));
     item4->setData(lf.lat);
     m_model->setItem(i, 4, item4);
+
+    QStandardItem *item5 = new QStandardItem;
+    item5->setText(lf.desc);
+    m_model->setItem(i, 5, item5);
 
     i++;
   }

@@ -597,13 +597,13 @@ MainWindow::MainWindow(QWidget *parent) :
   lfmodel->setItem(1, 0, item);
 
   item = new QStandardItem;
-  item->setText(tr("Montes"));
+  item->setText(tr("Lettered crater"));
   item->setCheckable(true);
   item->setCheckState(Qt::Unchecked);
   lfmodel->setItem(2, 0, item);
 
   item = new QStandardItem;
-  item->setText(tr("Mons"));
+  item->setText(tr("Mons/Montes"));
   item->setCheckable(true);
   item->setCheckState(Qt::Unchecked);
   lfmodel->setItem(3, 0, item);
@@ -643,7 +643,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   lfParam_t lfDefVal;
   QVariant defVal = QVariant::fromValue(lfDefVal);
-  QVariant val = settings.value("lunar_features_opts", defVal);
+  QVariant val = settings.value("lunar_features_opts2", defVal);
   lfParam_t lfp = val.value<lfParam_t>();
   lfSetParam(&lfp);
 
@@ -1503,15 +1503,11 @@ void MainWindow::saveAndExit()
 
   settings.setValue("hips_bi", ui->actionHIPS_billinear->isChecked());
 
-  lfParam_t lfp;
-  //QByteArray data;
-
+  lfParam_t lfp;  
   lfGetParam(&lfp);
 
-  //data.setRawData((const char *)&lfp, sizeof (lfParam_t));
-  QVariant vv = QVariant::fromValue(lfp);
-  qDebug() << vv;
-  settings.setValue("lunar_features_opts", vv);
+  QVariant vv = QVariant::fromValue(lfp);  
+  settings.setValue("lunar_features_opts2", vv);
 
   if (g_autoSave.mapPosition)
   {
@@ -2071,6 +2067,7 @@ void MainWindow::lfSetParam(const lfParam_t *lfp)
   ui->checkBox_4->setChecked(lfp->bShowLF);
   ui->hr_lf_detail_2->setValue(lfp->maxKmDiam);
   ui->checkBox_lfDiam->setChecked(lfp->bShowDiam);
+  ui->cb_lf_labels->setChecked(lfp->bShowLabels);
 
   CLFModel *m = (CLFModel *)ui->treeView_4->model();
   for (int i = 0; i < m->rowCount(); i++)
@@ -2092,6 +2089,7 @@ void MainWindow::lfGetParam(lfParam_t *lfp)
   lfp->bShowLF = ui->checkBox_4->isChecked();
   lfp->maxKmDiam = ui->hr_lf_detail_2->value();
   lfp->bShowDiam= ui->checkBox_lfDiam->isChecked();
+  lfp->bShowLabels = ui->cb_lf_labels->isChecked();
   lfp->filter = 0;
 
   CLFModel *m = (CLFModel *)ui->treeView_4->model();
@@ -4842,6 +4840,7 @@ void MainWindow::on_actionObject_tracking_triggered()
 void MainWindow::on_checkBox_4_toggled(bool checked)
 ////////////////////////////////////////////////////
 {
+  ui->cb_lf_labels->setEnabled(checked);
   ui->treeView_4->setEnabled(checked);
   ui->checkBox_lfDiam->setEnabled(checked);
   ui->hr_lf_detail->setEnabled(checked);
@@ -4866,7 +4865,7 @@ void MainWindow::on_pushButton_5_clicked()
   orbit_t o;
   cAstro.calcPlanet(PT_MOON, &o);
 
-  ui->widget->centerMap(o.lRD.Ra, o.lRD.Dec, getOptObjFov(o.sx / 3600.0, o.sy / 3600.0));
+  ui->widget->centerMap(o.lRD.Ra, o.lRD.Dec, D2R(1));
 }
 
 //////////////////////////////////////////////////////////
@@ -6882,6 +6881,28 @@ void MainWindow::updateTrackingMenu()
     ui->actionClear_all_tracking_paths->setEnabled(false);
 }
 
+void MainWindow::updateLunarInfo(const QString &desc, double lon, double lat, bool isValid)
+{
+  if (isValid)
+  {
+    ui->te_lunar_text->setHtml(desc);
+    ui->le_lunar_pos_lon->setText(getStrLon(lon));
+    ui->le_lunar_pos_lat->setText(getStrLat(lat));
+  }
+  else
+  {
+    ui->te_lunar_text->setPlainText("");
+    ui->le_lunar_pos_lon->setText("");
+    ui->le_lunar_pos_lat->setText("");
+  }
+}
+
+bool MainWindow::isLunarInfoTab()
+{
+  // NOTE: toolbox index to enum
+  return ui->toolBox->currentIndex() == 6;
+}
+
 void MainWindow::on_pushButton_37_clicked()
 {
   if (g_pTelePlugin)
@@ -6922,9 +6943,7 @@ void MainWindow::checkSlewButton()
   ui->pushButton_37->setEnabled(false);
 }
 
-
-
-
-
-
-
+void MainWindow::on_cb_lf_labels_toggled(bool)
+{
+  ui->widget->repaintMap();
+}

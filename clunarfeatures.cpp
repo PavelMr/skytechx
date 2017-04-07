@@ -4,6 +4,7 @@
 #include "cconsole.h"
 #include "setting.h"
 #include "mapobj.h"
+#include "colongitude.h"
 
 // http://www.fourmilab.ch/earthview/lunarform/lunarform.html
 
@@ -13,12 +14,13 @@ CLunarFeatures cLunarFeatures;
 
 QDataStream& operator<<(QDataStream& out, const lfParam_t& v)
 {
-  out << v.bShowDiam << v.bShowLF << v.filter << v.maxKmDiam << v.minDetail;
+  out << v.bShowLabels << v.bShowDiam << v.bShowLF << v.filter << v.maxKmDiam << v.minDetail;
   return out;
 }
 
 QDataStream& operator>>(QDataStream& in, lfParam_t& v)
 {
+  in >> v.bShowLabels;
   in >> v.bShowDiam;
   in >> v.bShowLF;
   in >> v.filter;
@@ -28,10 +30,46 @@ QDataStream& operator>>(QDataStream& in, lfParam_t& v)
   return in;
 }
 
+// TODO: dat to nekam jinam
+static void xyzToSph(double x, double y, double z, double &l, double &b, double &r)
+{
+  double rho = x * x + y * y;
+
+  if (rho > 0)
+  {
+    l = atan2(y, x);
+    rangeDbl(&l, 2 * M_PI);
+    b = atan2(z, sqrt(rho));
+    r = sqrt(rho + z * z);
+  }
+  else
+  {
+    l = 0.0;
+    if (z == 0.0)
+    {
+      b = 0.0;
+    }
+    else
+    {
+      b = (z > 0.0) ? M_PI / 2. : -M_PI / 2.;
+    }
+    r = fabs(z);
+  }
+}
+
+
 ////////////////////////////////
 CLunarFeatures::CLunarFeatures()
 ////////////////////////////////
 {
+}
+
+////////////////////////////////////////////////////////////
+static bool sort(const lunarItem_t &a, const lunarItem_t &b)
+////////////////////////////////////////////////////////////
+{
+  // sort by size
+  return a.rad < b.rad;
 }
 
 ///////////////////////////////////////
@@ -44,6 +82,8 @@ void CLunarFeatures::load(QString name)
     return;
 
   QTextStream s(&f);
+
+  s.readLine(); // first row
 
   while (1)
   {
@@ -61,65 +101,37 @@ void CLunarFeatures::load(QString name)
 
     lunarItem_t item;
 
-    list = str.simplified().split("|");
+    list = str.split("\t");
 
-    if (list.count() != 5)
-      continue;
+    item.name = list[0].simplified();
+    item.lat = D2R(list[3].toDouble());
+    item.lon = D2R(list[4].toDouble());
+    item.rad = list[2].toDouble();
+    item.desc = list[8].simplified();
 
-    QString lat = list.at(2).simplified();
-    lat.chop(1);
-
-    QString lon = list.at(3).simplified();
-    lon.chop(1);
-
-    item.name = list.at(1).trimmed();
-    item.rad = list.at(4).toDouble();
-    item.lon = D2R(lon.toDouble());
-    item.lat = D2R(lat.toDouble());
-
-    if (item.lon > 110)
-      continue; // never seen
-
-    if (list.at(2).endsWith('S'))
-      item.lat = -item.lat;
-
-    if (list.at(3).endsWith('W'))
-      item.lon = -item.lon;
-
-    if (list[0].startsWith("CR"))
-      item.type = LFT_CRATER;
-    else
-    if (list[0].startsWith("LL"))
-      item.type = LFT_LANDING_SITE;
-    else
-    if (list[0].startsWith("MO"))
-      item.type = LFT_MONS;
-    else
-    if (list[0].startsWith("MS"))
-      item.type = LFT_MONTES;
-    else
-    if (list[0].startsWith("RI"))
-      item.type = LFT_RIMA;
-    else
-    if (list[0].startsWith("MR"))
-      item.type = LFT_MARE;
-    else
-    if (list[0].startsWith("VA"))
-      item.type = LFT_VALLIS;
-    else
-    if (list[0].startsWith("LA"))
-      item.type = LFT_LACUS;
-    else
-    if (list[0].startsWith("SI"))
-      item.type = LFT_SINUS;
-    else
-      item.type = LFT_UNKNOWN;
+    if (list[6] == "LS") item.type = LFT_LANDING_SITE;
+      else
+    if (list[6] == "SF") item.type = LFT_SURF_FEATURE;
+      else
+    if (list[6] == "RI") item.type = LFT_RIMA;
+      else
+    if (list[6] == "LC") item.type = LFT_LACUS;
+      else
+    if (list[6] == "VA") item.type = LFT_VALLIS;
+      else
+    if (list[6] == "SI") item.type = LFT_SINUS;
+      else
+    if (list[6] == "AA") item.type = LFT_CRATER;
+      else
+    if (list[6] == "MO") item.type = LFT_MONS;
+      else
+    if (list[6] == "OC" || list[6] == "ME") item.type = LFT_MARE;
+      else continue;
 
     tLunarItems.append(item);
-
-    //qDebug("%d '%s' %f %f %f", item.type, qPrintable(item.name), R2D(item.lat), R2D(item.lon), item.rad);
-    //if (tLunarItems.count() == 15) break;
   }
+
+  qSort(tLunarItems.begin(), tLunarItems.end(), sort);
 }
 
 
@@ -138,7 +150,7 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     return;
 
   lunarItem_t item;
-  lunarItem_t *lf;
+  lunarItem_t *lf;  
 
   double angle;
 
@@ -156,19 +168,17 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     angle = angle + R180;
   }
 
-  SKMATRIXRotateY(&mY, R90 + R180 + moon->cMer);
-  SKMATRIXRotateX(&mX, R180 + moon->cLat);
-  SKMATRIXRotateZ(&mZ, -angle);
-  SKMATRIXScale(&mS, view->flipX ? -1 : 1, view->flipY ? -1 : 1, 1);
+  SKMATRIXRotateZ(&mY, moon->cMer);
+  SKMATRIXRotateY(&mX, moon->cLat);
+  SKMATRIXRotateX(&mZ, angle);
+  SKMATRIXScale(&mS, 1, view->flipX ? -1 : 1, view->flipY ? -1 : 1);
 
   mat = mY * mX * mZ * mS;
 
   p->setFont(setFonts[FONT_LUNAR_FEATURES]);
-  p->setBrush(Qt::NoBrush);
-  //p->setBrush(QColor(200, 100, 100, 64));
+  p->setBrush(Qt::NoBrush);  
 
-  QFontMetrics  fm(p->font());
-
+  QFontMetrics fm(p->font());
   QPainterPath pth;
 
   pth.addEllipse(QPoint(pt->sx, pt->sy), rad, rad);
@@ -191,26 +201,28 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
         continue;
     }
 
-    SKVECTOR out;
-    SKVECTOR in;
+    SKVECTOR in, out;
 
-    double clat = cos(lf->lat);
-    in.x = clat * cos(-lf->lon) * scale;
-    in.y =        sin(lf->lat)  * scale;
-    in.z = clat * sin(-lf->lon) * scale;
-
+    cAstro.sphToXYZ(lf->lon, lf->lat, 1, in.x, in.y, in.z);
     SKVECTransform3(&out, &in, &mat);
 
-    if (out.z > 0)
+    if (out.x < 0)
       continue;
 
-    int sx = pt->sx + out.x;
-    int sy = pt->sy + out.y;
+    double llon, llat;
+    double rr;
+    xyzToSph(out.x, out.y, out.z, llon, llat, rr);
+
+    int sx = scale *  cos(llat) * sin(llon);
+    int sy = scale * -sin(llat);
+
+    sx += pt->sx;
+    sy += pt->sy;
 
     if (!trfPointOnScr(sx, sy, radius))
       continue;
 
-    double d = sqrt(POW2(out.x) + POW2(out.y)) / scale;
+    double d = sqrt(POW2(out.z) + POW2(out.y));
 
     double r1 = radius;
     double r2 = radius * sqrt(1 - d * d);
@@ -218,7 +230,7 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     {
       r2 = r1;
     }
-    double ang = atan2(out.x, -out.y);
+    double ang = R90 + atan2(-out.z, out.y);
 
     p->setPen(g_skSet.map.planet.lunarFeatures);
 
@@ -229,25 +241,25 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
     }
     else
     {
-      if (lf->rad > 300)
+      if (lf->rad > 200)
         p->setClipPath(pth);
 
       p->save();
       p->translate(sx, sy);
-      p->rotate(RAD2DEG(ang));
-      p->drawEllipse(QPoint(0, 0), (int)r1, (int)r2);
+      p->rotate(RAD2DEG(ang));                  
+      p->drawEllipse(QPoint(0, 0), (int)r1, (int)r2);      
       p->restore();
 
       p->setClipping(false);
-    }
+    }    
 
-    if (1)
+    if (par.bShowLabels)
     {
       QString str = lf->name;
 
       if (par.bShowDiam && lf->type != LFT_LANDING_SITE)
       {
-        str += " " + QString::number(lf->rad) + (" km");
+        str += "\n" + QString::number(lf->rad) + (" km");
       }
 
       int tw = fm.width(str);
@@ -362,6 +374,120 @@ bool CLunarFeatures::search(QString str, mapView_t *view, double &ra, double &de
   return(false);
 }
 
+static double distance( double nLat1, double nLon1, double nLat2, double nLon2 )
+{
+    int nRadius = 1737.1; // Earth's radius in Kilometers
+    // Get the difference between our two points
+    // then convert the difference into radians
+    double nDLat = (nLat2 - nLat1);
+    double nDLon = (nLon2 - nLon1);
+    double nA = pow ( sin(nDLat/2), 2 ) + cos(nLat1) * cos(nLat2) * pow ( sin(nDLon/2), 2 );
+
+    double nC = 2 * atan2( sqrt(nA), sqrt( 1 - nA ));
+    double nD = nRadius * nC;
+
+    return nD; // Return our calculated distance
+}
+
+
+static double distance2(double lat1, double lon1, double lat2, double lon2)
+{
+  const double moonRadius = 1737.1;
+  double u, v;
+
+  u = sin((lat2 - lat1)/2);
+  v = sin((lon2 - lon1)/2);
+
+  return 2.0 * moonRadius * asin(sqrt(u * u + cos(lat1) * cos(lat2) * v * v));
+}
+
+
+bool CLunarFeatures::getCoordinates(const mapView_t *view, const QPointF &center, const QPointF &pos, double &lon, double &lat, QString &desc)
+{
+  orbit_t o;
+
+  cAstro.setParam(view);
+  cAstro.calcPlanet(PT_MOON, &o);
+
+  double radius = trfGetArcSecToPix(o.sx);
+
+  double x = (pos.x() - center.x()) / radius;
+  double y = (pos.y() - center.y()) / radius;
+  double z = 0;
+
+  if (x < -1 || x > 1) return false;
+  if (y < -1 || y > 1) return false;
+
+  double p = sqrt(POW2(x) + POW2(y));
+  if (p >= 1.) return false;
+  double c = asin(p);
+
+  if (p != 0)
+  {
+    lat = -asin((y  * sin(c)) / p);
+    lon =  atan((x * sin(c)) / (p * cos(c)));
+  }
+  else
+  {
+    lon = 0;
+    lat = 0;
+  }
+
+  cAstro.sphToXYZ(lon, lat, 1, x, y, z);
+
+  SKMATRIX     mat;
+  SKMATRIX     mX, mY, mZ, mS;
+
+  double angle;
+
+  if (view->flipX + view->flipY == 1)
+  {
+    angle = o.PA + trfGetAngleToNPole(o.lRD.Ra, o.lRD.Dec, view->jd) + R180;
+  }
+  else
+  {
+    angle = o.PA - trfGetAngleToNPole(o.lRD.Ra, o.lRD.Dec, view->jd) + R180;
+  }
+
+  if (view->flipY)
+  {
+    angle = angle + R180;
+  }
+
+  SKMATRIXRotateZ(&mY, -o.cMer);
+  SKMATRIXRotateY(&mX, -o.cLat);
+  SKMATRIXRotateX(&mZ, -angle);
+  SKMATRIXScale(&mS, 1, view->flipX ? -1 : 1, view->flipY ? -1 : 1);
+
+  mat = mS * mZ * mX * mY;
+
+  SKVECTOR out;
+  SKVECTOR in = SKVECTOR(x, y, z);
+
+  SKVECTransform3(&out, &in, &mat);
+
+  double r;
+  xyzToSph(out.x, out.y, out.z, lon, lat, r);
+  if (lon >= R180) lon = lon - R360;
+
+  desc.clear();
+
+  lunarItem_t item;
+  foreach (item, tLunarItems)
+  {
+    double d = distance(item.lat, item.lon, lat, lon);
+    double rad = item.rad * 0.5;
+    if (rad == 0) rad = 10;
+    if (d <= rad)
+    {
+      desc = "<b>" + item.name + "</b><br>" + item.desc;
+      return true;
+    }
+  }
+
+  return true;
+}
+
 bool CLunarFeatures::isVisible(int index, mapView_t *view)
 {
   lunarItem_t *lf = &tLunarItems[index];
@@ -403,10 +529,10 @@ QString CLunarFeatures::getTypeName(int id)
       return tr("Landing site");
     case LFT_CRATER:
       return tr("Crater");
-    case LFT_MONTES:
-      return tr("Montes");
+    case LFT_SURF_FEATURE:
+      return tr("Lettered crater");
     case LFT_MONS:
-      return tr("Mons");
+      return tr("Mons/Montes");
     case LFT_RIMA:
       return tr("Rima");
     case LFT_MARE:

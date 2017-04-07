@@ -413,6 +413,8 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
     }
   }
 
+  QColor color[8] = {Qt::blue, Qt::lightGray, Qt::yellow, Qt::red, Qt::darkYellow, Qt::yellow, Qt::green, Qt::blue};
+
   for (int i = PT_SUN; i <= PT_NEPTUNE; i++)
   {
     for (int j = 0; j < ptsList[i].count(); j++)
@@ -429,13 +431,12 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
       p2.w.z = pt2.z();
 
       if (trfProjectLine(&p1, &p2))
-      {
+      {               
         p.setPen(QPen(Qt::white, 0.5));
-        p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+        QLine l(p1.sx, p1.sy, p2.sx, p2.sy);
+        p.drawLines(&l, 1);
       }
-    }
-
-    QColor color[8] = {Qt::blue, Qt::lightGray, Qt::yellow, Qt::red, Qt::darkYellow, Qt::yellow, Qt::green, Qt::blue};
+    }    
 
     orbit_t o;
     QVector3D pos;

@@ -22,7 +22,9 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 void
 moon_colong (
 double jd,	/* jd */
-double *cp	/* selenographic colongitude (-lng of rising sun), rads */
+double *cp,	/* selenographic colongitude (-lng of rising sun), rads */
+double *ssLon,
+double *ssLat
 );
 
 #endif // COLONGITUDE_H

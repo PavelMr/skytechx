@@ -23,7 +23,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>13</number>
+            <number>10</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2519,7 +2519,7 @@
                      <item>
                       <widget class="QGroupBox" name="groupBox_13">
                        <property name="title">
-                        <string>Moon texture (Restart required)</string>
+                        <string>Moon texture</string>
                        </property>
                        <layout class="QVBoxLayout" name="verticalLayout_82">
                         <item>

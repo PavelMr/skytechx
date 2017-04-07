@@ -59,9 +59,9 @@ CPlanetRenderer::~CPlanetRenderer()
 
 bool CPlanetRenderer::load()
 {
-  m_sphere[0] = createSphere(10);
-  m_sphere[1] = createSphere(20);
-  m_sphere[2] = createSphere(40);
+  m_sphere[0] = createSphere(17);
+  m_sphere[1] = createSphere(39);
+  m_sphere[2] = createSphere(59);
 
   m_ring[0] = createRing(20);
   m_ring[1] = createRing(40);
@@ -77,23 +77,6 @@ bool CPlanetRenderer::load()
   m_bmp[PT_NEPTUNE] = new QImage("../data/planets/neptune.jpg");
 
   reloadMoonTexture();
-  /*
-  if (g_skSet.map.planet.useCustomMoonTexture)
-  {
-    m_bmp[PT_MOON] = new QImage(g_skSet.map.planet.moonImage);
-
-    if (m_bmp[PT_MOON]->isNull())
-    {
-      delete m_bmp[PT_MOON];
-      m_bmp[PT_MOON] = new QImage(32, 32, QImage::Format_ARGB32_Premultiplied);
-      m_bmp[PT_MOON]->fill(0xff0000ff);
-    }
-  }
-  else
-  {
-    m_bmp[PT_MOON] = new QImage("../data/planets/moon2k.png");
-  }
-  */
 
   QImage *satRing_a = new QImage("../data/planets/saturn_ring_alpha.jpg");
   QImage *satRing = new QImage("../data/planets/saturn_ring.jpg");
@@ -283,7 +266,9 @@ void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, fl
     // prime meridian
     pPainter->save();
     pPainter->setBrush(Qt::NoBrush);
+
     pPainter->setPen(QPen(QColor(g_skSet.map.planet.penColor), 2, Qt::DotLine));
+
 
     SKMATRIX matX;
     SKMATRIX matY;
@@ -314,7 +299,7 @@ void CPlanetRenderer::drawAxises(float angle, CSkPainter *pPainter, float sx, fl
       angp = 0;
     }
 
-    double scale = 0.99;
+    double scale = 1;
     SKMATRIXRotateX(&matX, o->cLat);
     SKMATRIXRotateZ(&matZ, angp);
     SKMATRIXScale(&matScale, view->flipX ? -scale : scale, view->flipY ? -scale : scale, scale);
@@ -706,9 +691,10 @@ int CPlanetRenderer::renderSymbol(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   return(sx);
 }
 
-void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate)
+
+void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, CSkPainter *p, SKPOINT *pt, mapView_t *view, int rx, int ry, bool rotate)
 {
-  double scale = 1.002f;
+  double scale = 1.003f;
 
   if (o->type == PT_MARS)
   { // FIXME: kvuli flateningu
@@ -721,15 +707,13 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
   if (sun->type != PT_SUN)
   {
     qDebug("CPlanetRenderer::drawPhase: sun != sun");
-  }
+  }  
 
   float ph = ((o->phase) - 0.5) * 2;
   ph *= rx;
 
   // angle to sun
   double sa = -trfGetPosAngle(o->lRD.Ra, o->lRD.Dec, sun->lRD.Ra, sun->lRD.Dec);
-
-  rangeDbl(&sa, R360);
 
   // angle to NP
   double na = trfGetAngleToNPole(o->lRD.Ra, o->lRD.Dec, view->jd) - R180;
@@ -759,14 +743,13 @@ void CPlanetRenderer::drawPhase(orbit_t *o, orbit_t *sun, QPainter *p, SKPOINT *
   path.arcTo(QRect(-rx, -ph, rx * 2, ph * 2), 180, -180);
 
   p->save();
-  p->translate(pt->sx, pt->sy);
-
+  p->translate(pt->sx, pt->sy);  
   p->rotate(R2D(sunAng) + 90);
   p->setPen(QColor(0, 0, 0));
-  p->setBrush(QColor(0, 0, 0));
+  p->setBrush(QColor(0, 0, 0));  
   p->setOpacity(g_skSet.map.planet.phaseAlpha / 255.f);
   p->drawPath(path);
-  p->restore();
+  p->restore();  
 }
 
 int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView_t *mapView, CSkPainter *pPainter, QImage *pImg, double /*ang*/, bool isPreview)
@@ -824,9 +807,9 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
     SKMATRIX matScale;
     int lod = 2;
 
-    if (sx > 50) lod = 2;
+    if (sx > 250) lod = 2;
     else
-    if (sx > 25) lod = 1;
+    if (sx > 50) lod = 1;
     else lod = 0;
 
     mesh_t *mesh = m_sphere[lod];
@@ -955,7 +938,6 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
                           mesh->vertices[f0].uv[1]);
 
       scanRender.renderPolygon(pImg, m_bmp[o->type]);
-
 
       /*
       pPainter->drawLine(mesh->vertices[f0].sp[0], mesh->vertices[f0].sp[1],

@@ -1617,7 +1617,7 @@ void CAstro::solveMoon(orbit_t *o)
   o->cLat = 0;
   o->cMer = 0;
 
-  mLibration(m_jd, &o->cLat, &o->cMer); // optical libration  
+  mLibration(m_jd, &o->cLat, &o->cMer); // optical libration
 
   // topocentric libration
   if (!g_geocentric)
@@ -1629,14 +1629,17 @@ void CAstro::solveMoon(orbit_t *o)
     double Z = acos(sin(o->gRD.Dec) * sin(m_geoLat) + cos(o->gRD.Dec) * cos(m_geoLat) * cos(H));
     double pi2 = pi * (sin(Z) + 0.0084 * sin(2 * Z));
 
-    double ll = -pi2 * sin(Q - o->PA) / cos(o->cLat);
+    double ll = (-pi2 * sin(Q - o->PA)) / cos(o->cLat);
     double lb = pi2 * cos(Q - o->PA);
-    double lP = ll * sin(o->cLat) - pi2 * sin(Q) * tan(o->gRD.Dec);
+    double lP = ll * sin(o->cLat) - pi2 * sin(Q) * tan(o->gRD.Dec);        
 
     o->cLat += lb;
     o->cMer += ll;
     o->PA += lP;
-  }
+  }  
+
+  // NOTE: swap E-W
+  o->cMer = -o->cMer;
 }
 
 

@@ -51,6 +51,8 @@ public:
   void checkDSS(void);
   void setShapeInfo(QString info);
   void updateTrackingMenu();
+  void updateLunarInfo(const QString &desc, double lon, double lat, bool isValid);
+  bool isLunarInfoTab();
 
   bool            m_bRealTime;
   bool            m_bRealTimeLapse;
@@ -689,6 +691,8 @@ private slots:
   void on_pushButton_37_clicked();
 
   void checkSlewButton();
+
+  void on_cb_lf_labels_toggled(bool checked);
 
 private:
   Ui::MainWindow *ui;

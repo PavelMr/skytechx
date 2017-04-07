@@ -6,6 +6,7 @@
 #include "dso_def.h"
 #include "cmapview.h"
 #include "cskpainter.h"
+#include "clunarfeatures.h"
 
 #define MRGB(r, g, b)          QColor(r, g, b).rgb()
 
@@ -89,7 +90,7 @@ typedef struct
   QRgb  brColor;
   QRgb  satColor;
   QRgb  satColorShd;
-  QRgb  lunarFeatures;
+  QRgb  lunarFeatures;  
   float phaseAlpha;
   int   plnRad;
   int   satRad;

@@ -150,6 +150,9 @@
          <property name="text">
           <string>Now</string>
          </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -176,6 +179,9 @@
         <widget class="QPushButton" name="pushButton_3">
          <property name="text">
           <string>Generate list</string>
+         </property>
+         <property name="default">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

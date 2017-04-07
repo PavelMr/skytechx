@@ -139,7 +139,7 @@ void CMoonCal::updateTime()
 
   m_img->fill(Qt::black);
 
-  QPainter p(m_img);
+  CSkPainter p(m_img);
 
   p.setRenderHint(QPainter::Antialiasing);
 

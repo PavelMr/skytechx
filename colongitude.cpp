@@ -38,7 +38,9 @@ static void Sun (double rad, double T, double T2, double *L, double *M,
 void
 moon_colong (
 double jd,	/* jd */
-double *cp	/* selenographic colongitude (-lng of rising sun), rads */
+double *cp,	/* selenographic colongitude (-lng of rising sun), rads */
+double *ssLon,
+double *ssLat
 )
 {
   double rad = .0174533;
@@ -68,6 +70,17 @@ double *cp	/* selenographic colongitude (-lng of rising sun), rads */
   if (cp) {
       *cp = D2R(C0);
       rangeDbl(cp, 2*MPI);	/* prefer 0..360 +W */
+  }  
+
+  if (ssLon)
+  {
+    *ssLon = -(*cp - R90);
+    rangeDbl(ssLon, R360);
+  }
+
+  if (ssLat)
+  {
+    *ssLat = B0;
   }
 }
 
@@ -134,7 +147,7 @@ double *LAMH, double *BH)
   DIST = *DR / R;
   *LAMH = (LAM0 + 180 + DIST * cos(*B) * sin(LAM0 * rad - *LAM) / rad)
                   * rad;
-  *BH = DIST * *B * rad;
+  *BH = DIST * *B * rad; 
 }
 
 static void
