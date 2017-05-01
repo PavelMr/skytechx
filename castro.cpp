@@ -925,32 +925,6 @@ void CAstro::sunEphemerid_Fast(orbit_t *o)
   convRD2AANoRef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 }
 
-static void xyzToSph(double x, double y, double z, double &l, double &b, double &r)
-{
-  double rho = x * x + y * y;
-
-  if (rho > 0)
-  {
-    l = atan2(y, x);
-    rangeDbl(&l, 2 * M_PI);
-    b = atan2(z, sqrt(rho));
-    r = sqrt(rho + z * z);
-  }
-  else
-  {
-    l = 0.0;
-    if (z == 0.0)
-    {
-      b = 0.0;
-    }
-    else
-    {
-      b = (z > 0.0) ? M_PI / 2. : -M_PI / 2.;
-    }
-    r = fabs(z);
-  }
-}
-
 QList <jplData_t> CAstro::getJPLEphems()
 {
   return jplEphemList;
@@ -1199,7 +1173,6 @@ bool CAstro::jplde(int planet, double tjd, double *data, int &deVersion)
       }
 
       precessLonLat(data[0], data[1], data[0], data[1], JD2000, tjd);
-
     }
     else
     {
@@ -1579,8 +1552,7 @@ void CAstro::solveMoon(orbit_t *o)
 
   convRD2AARef(o->lRD.Ra, o->lRD.Dec, &o->lAzm, &o->lAlt);
 
-  rangeDbl(&lonecl, MPI2);
-  rangeDbl(&latecl, MPI2);
+  rangeDbl(&lonecl, MPI2);  
 
   o->hLon = lonecl;
   o->hLat = latecl;
@@ -1617,7 +1589,7 @@ void CAstro::solveMoon(orbit_t *o)
   o->cLat = 0;
   o->cMer = 0;
 
-  mLibration(m_jd, &o->cLat, &o->cMer); // optical libration
+  mLibration(m_jd, &o->cLat, &o->cMer); // optical libration 
 
   // topocentric libration
   if (!g_geocentric)
@@ -2171,6 +2143,31 @@ void CAstro::calcParallax(radec_t *rd, double R)
   rangeDbl(&rd->Ra, MPI2);
 }
 
+void CAstro::xyzToSph(double x, double y, double z, double &l, double &b, double &r)
+{
+  double rho = x * x + y * y;
+
+  if (rho > 0)
+  {
+    l = atan2(y, x);
+    rangeDbl(&l, 2 * M_PI);
+    b = atan2(z, sqrt(rho));
+    r = sqrt(rho + z * z);
+  }
+  else
+  {
+    l = 0.0;
+    if (z == 0.0)
+    {
+      b = 0.0;
+    }
+    else
+    {
+      b = (z > 0.0) ? M_PI / 2. : -M_PI / 2.;
+    }
+    r = fabs(z);
+  }
+}
 
 void CAstro::sphToXYZ(double l, double b, double r, double &x, double &y, double &z)
 {

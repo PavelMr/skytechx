@@ -170,9 +170,7 @@ bool CBackground::loadBackground(QString name)
     painter.setBrushOrigin(bkTexture->width() / 360.0 * north, 0);
     painter.drawRect(0, 0, bkTexture->width(), bkTexture->height());
 
-    painter.end();
-
-    //newImage->save("bk.png", "PNG");
+    painter.end();    
 
     delete bkTexture;
     bkTexture = newImage;

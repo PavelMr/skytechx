@@ -27,8 +27,9 @@ win32-msvc2013    : LIBS += winmm.lib
 # /O2          Creates fast code.
 # /GS-         Disable Buffers security check.
 # /GA          Optimizes code for Windows application.
+# /FAcs        Creates a listing file containing assembly code.
 
-Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GS- /GA /FAcs
+Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GS- /GA
 Debug:win32-msvc2013 :    QMAKE_CXXFLAGS += /openmp
 
 #for WIN XP

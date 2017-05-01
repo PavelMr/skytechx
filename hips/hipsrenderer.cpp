@@ -25,9 +25,7 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
 
   double minfov = D2R(58.5);
 
-  while( level < m_manager.getParam()->max_level  && view->fov < minfov) { minfov /= 2; level++; }
-
-  //level = 3;
+  while( level < m_manager.getParam()->max_level && view->fov < minfov) { minfov /= 2; level++; }
 
   m_renderedMap.clear();
   m_rendered = 0;

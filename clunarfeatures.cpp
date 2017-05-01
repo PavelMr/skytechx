@@ -30,33 +30,6 @@ QDataStream& operator>>(QDataStream& in, lfParam_t& v)
   return in;
 }
 
-// TODO: dat to nekam jinam
-static void xyzToSph(double x, double y, double z, double &l, double &b, double &r)
-{
-  double rho = x * x + y * y;
-
-  if (rho > 0)
-  {
-    l = atan2(y, x);
-    rangeDbl(&l, 2 * M_PI);
-    b = atan2(z, sqrt(rho));
-    r = sqrt(rho + z * z);
-  }
-  else
-  {
-    l = 0.0;
-    if (z == 0.0)
-    {
-      b = 0.0;
-    }
-    else
-    {
-      b = (z > 0.0) ? M_PI / 2. : -M_PI / 2.;
-    }
-    r = fabs(z);
-  }
-}
-
 
 ////////////////////////////////
 CLunarFeatures::CLunarFeatures()
@@ -211,7 +184,7 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
 
     double llon, llat;
     double rr;
-    xyzToSph(out.x, out.y, out.z, llon, llat, rr);
+    cAstro.xyzToSph(out.x, out.y, out.z, llon, llat, rr);
 
     int sx = scale *  cos(llat) * sin(llon);
     int sy = scale * -sin(llat);
@@ -234,6 +207,8 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
 
     p->setPen(g_skSet.map.planet.lunarFeatures);
 
+    double opacity = CLAMP((qMax(r1, r2) / 20), 0, 1);
+
     if (r1 == 0 && r2 == 0)
     {
       p->drawRect(sx - 5, sy - 5, 10, 10);
@@ -245,6 +220,7 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
         p->setClipPath(pth);
 
       p->save();
+      p->setOpacity(opacity);
       p->translate(sx, sy);
       p->rotate(RAD2DEG(ang));                  
       p->drawEllipse(QPoint(0, 0), (int)r1, (int)r2);      
@@ -267,7 +243,7 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
       setSetFontColor(FONT_LUNAR_FEATURES, p);
 
       if (tw + 10 < qMin(r1, r2) * 2)
-      {
+      {   
         p->drawCText(sx, sy, str);
       }
       else
@@ -277,11 +253,11 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
         if (lf->type == LFT_LANDING_SITE)
         {
           h = 0;
-        }
+        }        
         p->drawCText(sx, sy + h + fm.height(), str);
       }
     }
-  }
+  }  
 }
 
 static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
@@ -467,7 +443,7 @@ bool CLunarFeatures::getCoordinates(const mapView_t *view, const QPointF &center
   SKVECTransform3(&out, &in, &mat);
 
   double r;
-  xyzToSph(out.x, out.y, out.z, lon, lat, r);
+  cAstro.xyzToSph(out.x, out.y, out.z, lon, lat, r);
   if (lon >= R180) lon = lon - R360;
 
   desc.clear();

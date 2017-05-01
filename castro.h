@@ -170,6 +170,7 @@ class CAstro : public QObject
     static void getMotionRate(int what, qint64 data, const mapView_t *view, double length, motionRates_t *out);
 
     static void sphToXYZ(double l, double b, double r, double &x, double &y, double &z);
+    static void CAstro::xyzToSph(double x, double y, double z, double &l, double &b, double &r);
 
     static double getAirmass(double alt);
     static double getJupiterGRSLon(double jd);

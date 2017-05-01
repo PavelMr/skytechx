@@ -270,7 +270,7 @@ void CDayNight::updateMap()
   p.setBrush(QColor(255, 255, 0));
   p.drawCross(sx, sy, 10);
   p.drawCrossX(sx, sy, 10);
-  p.drawEllipse(QPoint(sx, sy), 5, 5);
+  p.drawEllipse(QPoint(sx, sy), 5, 5);    
 
   // draw cur obs. pos.
   sx = RAD2DEG(m_view.geo.lon + R180) / 360.0 * m_img->width();

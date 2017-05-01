@@ -1991,7 +1991,6 @@ void CMapView::paintEvent(QPaintEvent *)
     QPainterPath path;
 
     path.addEllipse(rect);
-
     p.setClipPath(path);
 
     p.drawImage(rect,

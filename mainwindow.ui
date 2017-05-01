@@ -4408,6 +4408,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Look at north</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+N</string>
+   </property>
   </action>
   <action name="actionSouth">
    <property name="text">
@@ -4415,6 +4418,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Look at south</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+S</string>
    </property>
   </action>
   <action name="actionEast">
@@ -4424,6 +4430,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Look at east</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+E</string>
+   </property>
   </action>
   <action name="actionWest">
    <property name="text">
@@ -4432,6 +4441,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Look at west</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+W</string>
+   </property>
   </action>
   <action name="actionZenith">
    <property name="text">
@@ -4439,6 +4451,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Look at zenith</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Z</string>
    </property>
   </action>
   <action name="actionEcliptic">
@@ -4503,6 +4518,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Realtime On/Off</string>
+   </property>
+   <property name="shortcut">
+    <string>R</string>
    </property>
   </action>
   <action name="actionDay_Night">
@@ -5566,6 +5584,9 @@ p, li { white-space: pre-wrap; }
    <property name="statusTip">
     <string>Mean epoch J2000.0 otherwise true to date.</string>
    </property>
+   <property name="shortcut">
+    <string>2</string>
+   </property>
   </action>
   <action name="actionCheck_new_version">
    <property name="text">
@@ -5680,6 +5701,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Release object</string>
+   </property>
+   <property name="shortcut">
+    <string>H</string>
    </property>
   </action>
   <action name="actionBinocular">
@@ -5835,6 +5859,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Look at local meridian</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+M</string>
+   </property>
   </action>
   <action name="action_zoom_100">
    <property name="text">
@@ -5973,6 +6000,9 @@ p, li { white-space: pre-wrap; }
   <action name="actionTwilight_2">
    <property name="text">
     <string>Twilight...</string>
+   </property>
+   <property name="shortcut">
+    <string>W</string>
    </property>
   </action>
   <action name="actionLunar_phase">

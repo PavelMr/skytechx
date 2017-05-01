@@ -225,8 +225,6 @@ int main(int argc, char *argv[])
     }
   }  
 
-
-
   if (g_log)
   {
     QFile::remove(LOG_FILE);
@@ -266,15 +264,15 @@ int main(int argc, char *argv[])
   QLocale::setDefault(QLocale::c());
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-  qDebug("octreedepth=%d", g_ocTreeDepth);
-  qDebug("numthreads=%d", omp_get_max_threads());
-  qDebug("develop=%d", g_developMode);
-  qDebug("SSL support %d", QSslSocket::supportsSsl());
-  qDebug() << "SSL ver" << QSslSocket::sslLibraryVersionString();
-  qDebug() << "SSL ver" << QSslSocket::sslLibraryBuildVersionString();
-  qDebug("Sound support %d", !QAudioDeviceInfo::availableDevices(QAudio::AudioOutput).isEmpty());
+  qDebug() << "octreedepth =" << g_ocTreeDepth;
+  qDebug() << "numthreads =" << omp_get_max_threads();
+  qDebug() << "develop =" << g_developMode;
+  qDebug() << "SSL support =" << QSslSocket::supportsSsl();
+  qDebug() << "SSL ver =" << QSslSocket::sslLibraryVersionString();
+  qDebug() << "SSL ver =" << QSslSocket::sslLibraryBuildVersionString();
+  qDebug() << "Sound support =" << !QAudioDeviceInfo::availableDevices(QAudio::AudioOutput).isEmpty();
 
-  g_hipsRenderer = new HiPSRenderer();
+  g_hipsRenderer = new HiPSRenderer();  
 
   CLoadingDlg *dlg = new CLoadingDlg;
   dlg->exec();
@@ -283,7 +281,7 @@ int main(int argc, char *argv[])
   loadQSSStyle();
 
   MainWindow w;
-  w.show();
+  w.show();  
 
   int ret = 1;      
 

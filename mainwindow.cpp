@@ -1388,6 +1388,30 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     return;
   }
 
+  if (e->key() == Qt::Key_F)
+  {
+    m_search->setFocus();
+    return;
+  }
+
+  if (e->key() == Qt::Key_I)
+  {
+    ui->toolBox->setCurrentIndex(0);
+    return;
+  }
+
+  if (e->key() == Qt::Key_T)
+  {
+    ui->toolBox->setCurrentIndex(4);
+    return;
+  }
+
+  if (e->key() == Qt::Key_L)
+  {
+    ui->toolBox->setCurrentIndex(6);
+    return;
+  }
+
   if (!ui->widget->hasFocus())
     return;
 
@@ -3846,8 +3870,26 @@ void MainWindow::on_actionSelect_world_location_triggered()
 void MainWindow::on_actionDisconnect_triggered()
 ////////////////////////////////////////////////
 {
-  if (msgBoxQuest(this,tr("Disconnect current telescope?")) == QMessageBox::No)
-    return;
+  QSettings set;
+
+  if (set.value("show_disconnect_msg", true).toBool())
+  {
+    QCheckBox *cb = new QCheckBox(tr("Don't show this message again"));
+    QMessageBox msg(QObject::tr("Question"),
+                   tr("Disconnect current telescope?") + "\n", QMessageBox::Question, QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton, this);
+    msg.setButtonText(QMessageBox::Yes, QObject::tr("Yes"));
+    msg.setButtonText(QMessageBox::No, QObject::tr("No"));
+    msg.setCheckBox(cb);
+
+    int rtv = msg.exec();
+
+    set.setValue("show_disconnect_msg", !msg.checkBox()->isChecked());
+
+    if (rtv == QMessageBox::No)
+    {
+      return;
+    }
+  }
 
   tpUnloadDriver(this);
   ui->widget->repaintMap();

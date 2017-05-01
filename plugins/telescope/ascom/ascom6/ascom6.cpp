@@ -79,7 +79,7 @@ void CAscom6::setRefresh(int ms)
 
 QString CAscom6::getName()
 {
-  return(QString("ASCOM6 Client Driver 1.2"));
+  return(QString("ASCOM6 Client Driver 1.3"));
 }
 
 bool CAscom6::setup(QWidget *parent, bool parkAtExit)
