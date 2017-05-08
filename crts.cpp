@@ -280,7 +280,7 @@ void CRts::calcFixed(rts_t *rts, double ra, double dec, const mapView_t *view)
   }
 
   rts->tAlt = alt;
-  rts->transit = jd;
+  rts->transit = jd; 
 
   if (isNotRTS(dec, rts, view))
   { // no rise / set

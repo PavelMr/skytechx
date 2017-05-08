@@ -865,7 +865,7 @@
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>6</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -1771,7 +1771,7 @@
           <x>0</x>
           <y>0</y>
           <width>413</width>
-          <height>527</height>
+          <height>495</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1785,6 +1785,12 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
            </property>
            <property name="styleSheet">
             <string notr="true">color : rgb(170, 0, 0)</string>
@@ -1917,18 +1923,40 @@
           </layout>
          </item>
          <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Time</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_22" stretch="1,6">
+           <item>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Time</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="1,6">
+           <item>
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Visibility</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_2">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLabel" name="label_7">
@@ -1939,20 +1967,6 @@
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_3">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>Visibility</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_2">
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -1995,42 +2009,46 @@
           </widget>
          </item>
          <item>
-          <widget class="QTreeView" name="treeView_3">
-           <property name="toolTip">
-            <string>Click change time to event</string>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="dragDropMode">
-            <enum>QAbstractItemView::DropOnly</enum>
-           </property>
-           <property name="defaultDropAction">
-            <enum>Qt::IgnoreAction</enum>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTextEdit" name="textEdit">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_9" stretch="2,1">
+           <item>
+            <widget class="QTreeView" name="treeView_3">
+             <property name="toolTip">
+              <string>Click change time to event</string>
+             </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="dragDropMode">
+              <enum>QAbstractItemView::DropOnly</enum>
+             </property>
+             <property name="defaultDropAction">
+              <enum>Qt::IgnoreAction</enum>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="textEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>48</height>
+              </size>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_9">

@@ -386,66 +386,45 @@ void CPlanetRenderer::renderRing(int sx, orbit_t *o, CSkPainter *pPainter, float
   double ri1 = 0.5 * sx * 3.05;
 
   double ro2 = 0.5 * sx * 4.5;
-  double ri2 = 0.5 * sx * 4.1;
+  double ri2 = 0.5 * sx * 4.1;        
+
+  QPainterPath path;
+  float angle2 = angle;
+
+  if (mapView->flipX + mapView->flipY == 1)
+  {
+    angle2 = R180 + angle2;
+  }
+
+  path.addEllipse(QPoint(0, 0), ro1, (int)(ro1 * sin(o->cLat)));
+  path.addEllipse(QPoint(0, 0), ri1, (int)(ri1 * sin(o->cLat)));
+
+  path.addEllipse(QPoint(0, 0), ro2, (int)(ro2 * sin(o->cLat)));
+  path.addEllipse(QPoint(0, 0), ri2, (int)(ri2 * sin(o->cLat)));
+
+  pPainter->save();
+  pPainter->translate(QPoint(pt->sx, pt->sy));
 
   if (!isFront)
   { // draw saturn ring back side
-    QPainterPath path;
-    float angle2 = angle;
-
-    if (mapView->flipX + mapView->flipY == 1)
-    {
-      angle2 = R180 + angle2;
-    }
-
-    path.addEllipse(QPoint(0, 0), ro1, (int)(ro1 * sin(o->cLat)));
-    path.addEllipse(QPoint(0, 0), ri1, (int)(ri1 * sin(o->cLat)));
-
-    path.addEllipse(QPoint(0, 0), ro2, (int)(ro2 * sin(o->cLat)));
-    path.addEllipse(QPoint(0, 0), ri2, (int)(ri2 * sin(o->cLat)));
-
-    pPainter->save();
-    pPainter->translate(QPoint(pt->sx, pt->sy));
-    pPainter->rotate(R2D(angle2));
     if (o->cLat > 0)
-      pPainter->setClipRect(QRect(-10000, -2, 20000, 10000));
-    else
       pPainter->setClipRect(QRect(-10000, 2, 20000, -10000));
-    pPainter->setBrush(QColor(g_skSet.map.planet.brColor));
-    pPainter->setPen(QColor(g_skSet.map.planet.penColor));
-    pPainter->drawPath(path);
-    pPainter->setClipping(false);
-    pPainter->restore();
+    else
+      pPainter->setClipRect(QRect(-10000, -2, 20000, 10000));
   }
   else
   {
-    QPainterPath path;
-    float angle2 = angle;
-
-    if (mapView->flipX + mapView->flipY == 1)
-    {
-      angle2 = R180 + angle2;
-    }
-
-    path.addEllipse(QPoint(0, 0), ro1, (int)(ro1 * sin(o->cLat)));
-    path.addEllipse(QPoint(0, 0), ri1, (int)(ri1 * sin(o->cLat)));
-
-    path.addEllipse(QPoint(0, 0), ro2, (int)(ro2 * sin(o->cLat)));
-    path.addEllipse(QPoint(0, 0), ri2, (int)(ri2 * sin(o->cLat)));
-
-    pPainter->save();
-    pPainter->translate(QPoint(pt->sx, pt->sy));
-    pPainter->rotate(R2D(angle2));
     if (o->cLat > 0)
-      pPainter->setClipRect(QRect(-10000, 2, 20000, -10000));
-    else
       pPainter->setClipRect(QRect(-10000, -2, 20000, 10000));
-    pPainter->setBrush(QColor(g_skSet.map.planet.brColor));
-    pPainter->setPen(QColor(g_skSet.map.planet.penColor));
-    pPainter->drawPath(path);
-    pPainter->setClipping(false);
-    pPainter->restore();
+    else
+      pPainter->setClipRect(QRect(-10000, 2, 20000, -10000));
   }
+
+  pPainter->setBrush(QColor(g_skSet.map.planet.brColor));
+  pPainter->setPen(QColor(g_skSet.map.planet.penColor));
+  pPainter->drawPath(path);
+  pPainter->setClipping(false);
+  pPainter->restore();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

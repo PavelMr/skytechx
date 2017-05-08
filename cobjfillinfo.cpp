@@ -1259,7 +1259,7 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
   CRts   cRts;
   rts_t  rts;
   cRts.calcFixed(&rts, raAtDate, decAtDate, view);
-  fillRTS(&rts, view, item);
+  fillRTS(&rts, view, item);  
 
   addLabelItem(item, tr("Position at JD2000.0"));
   addSeparator(item);

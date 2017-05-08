@@ -68,5 +68,5 @@ void CSetJD::on_pushButton_4_clicked()
 void CSetJD::on_pushButton_5_clicked()
 //////////////////////////////////////
 {
-  ui->doubleSpinBox->setValue(B2000);
+  ui->doubleSpinBox->setValue(B1950);
 }

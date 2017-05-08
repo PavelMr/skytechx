@@ -40,7 +40,7 @@
 
 #include <QDebug>
 
-   double Jupiter_L0 (double t) // 760 terms of order 0
+double Jupiter_L0 (double t) // 760 terms of order 0
 {
    double L0 = 0;
    L0 += 0.59954691495;

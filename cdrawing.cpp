@@ -848,7 +848,7 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
 
       p->setPen(QPen(QColor(g_skSet.map.drawing.color), 1, Qt::DotLine));
       p->drawRect(m_drawing.rect);
-      rc = m_drawing.rect.adjusted(ROT_MARGIN, ROT_MARGIN, -ROT_MARGIN, -ROT_MARGIN);
+      rc = m_drawing.rect.adjusted(ROT_MARGIN, ROT_MARGIN, -ROT_MARGIN, -ROT_MARGIN);     
       p->drawRect(rc);
     }
     else

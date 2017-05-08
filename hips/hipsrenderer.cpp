@@ -58,9 +58,7 @@ void HiPSRenderer::render(mapView_t *view, CSkPainter *painter, QImage *pDest)
   m_HEALpix.getCornerPoints(level, centerPix, pts);
   for (int i = 0; i < 2; i++) trfProjectPointNoCheck(&pts[i]);
   int size = sqrt(POW2(pts[0].sx - pts[1].sx) + POW2(pts[0].sy - pts[1].sy));
-  if (size < 0) size = getParam()->tileWidth;
-
-  //qDebug() << size;
+  if (size < 0) size = getParam()->tileWidth;  
 
   bool old = scanRender.isBillinearInt();
   scanRender.enableBillinearInt(getParam()->billinear && (size >= getParam()->tileWidth || allSky));

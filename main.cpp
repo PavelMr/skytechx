@@ -280,7 +280,7 @@ int main(int argc, char *argv[])
 
   loadQSSStyle();
 
-  MainWindow w;
+  MainWindow w;  
   w.show();  
 
   int ret = 1;      
@@ -299,7 +299,7 @@ int main(int argc, char *argv[])
   catch (...)
   {
     qDebug() << "ERROR2";
-  }  
+  }    
 
   return ret;
 }

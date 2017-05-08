@@ -530,11 +530,11 @@ void CAstro::setParam(const mapView_t *view)
 
   m_gmst0 = theta0;
   m_gst = theta1;
-  m_lst = m_gst + R2D(m_geoLon);
+  m_lst = m_gst + R2D(m_geoLon);  
 
   rangeDbl(&m_gmst0, 360);
   rangeDbl(&m_gst, 360);
-  rangeDbl(&m_lst, 360);
+  rangeDbl(&m_lst, 360);  
 
   m_gmst0 = DEG2RAD(m_gmst0);
   m_gst = DEG2RAD(m_gst);

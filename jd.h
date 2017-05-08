@@ -3,7 +3,7 @@
 
 #include <QtCore>
 
-#define B2000     2433282.4235
+#define B1950     2433282.4235
 
 #define JD2000    2451545.0    // 1.1.2000 12:00 UT
 #define JD1900    2415020.0

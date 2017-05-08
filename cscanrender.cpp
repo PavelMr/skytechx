@@ -216,7 +216,7 @@ void CScanRender::scanLine(int x1, int y1, int x2, int y2, float u1, float v1, f
 ////////////////////////////////////////////////////////
 void CScanRender::renderPolygon(QColor col, QImage *dst)
 ////////////////////////////////////////////////////////
-{
+{ 
   quint32   c = col.rgb();
   quint32  *bits = (quint32 *)dst->bits();
   int       dw = dst->width();
@@ -296,12 +296,12 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
     quint32 *pDst = bits + (y * dw) + px1;
     for (int x = px1; x < px2; x++)
     {
-      QRgb rgbd = *pDst;
+      QRgb rgbd = *pDst;     
 
       *pDst = qRgb(LERP(a, qRed(rgbd), rc),
                    LERP(a, qGreen(rgbd), gc),
                    LERP(a, qBlue(rgbd), bc)
-                  );
+                  );     
       pDst++;
     }
   }
@@ -464,7 +464,7 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
 
     if (bw)
     {
-      for (int x = px1; x < px2; x++)
+      for (int x = px1; x <= px2; x++)
       {
         const uchar *pSrc = (uchar *)bitsSrc + (fuv[0] >> 16) + ((fuv[1] >> 16) * sw);
         *pDst = qRgb(*pSrc, *pSrc, *pSrc);
@@ -476,7 +476,7 @@ void CScanRender::renderPolygonNI(QImage *dst, QImage *src)
     }
     else
     {                  
-      for (int x = px1; x < px2; x++)
+      for (int x = px1; x <= px2; x++)
       {        
         int offset = (fuv[0] >> 16) + ((fuv[1] >> 16) * sw);
         const quint32 *pSrc = bitsSrc + offset;
@@ -558,7 +558,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
     quint32 *pDst = bitsDst + (y * w) + px1;
     if (bw)
     {
-      for (int x = px1; x < px2; x++)
+      for (int x = px1; x <= px2; x++)
       {
         float x_diff = uv[0] - static_cast<int>(uv[0]);
         float y_diff = uv[1] - static_cast<int>(uv[1]);
@@ -587,7 +587,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
     }
     else
     {
-      for (int x = px1; x < px2; x++)
+      for (int x = px1; x <= px2; x++)
       {
         float x_diff = uv[0] - static_cast<int>(uv[0]);
         float y_diff = uv[1] - static_cast<int>(uv[1]);
@@ -731,7 +731,7 @@ void CScanRender::renderPolygonAlphaBI(QImage *dst, QImage *src)
     }
     else
     {      
-      for (int x = px1; x < px2; x++)
+      for (int x = px1; x <= px2; x++)
       {
         float x_diff = uv[0] - static_cast<int>(uv[0]);
         float y_diff = uv[1] - static_cast<int>(uv[1]);
@@ -845,7 +845,7 @@ void CScanRender::renderPolygonAlphaNI(QImage *dst, QImage *src)
     duv[0] *= tsx;
     duv[1] *= tsy;
 
-    for (int x = px1; x < px2; x++)
+    for (int x = px1; x <= px2; x++)
     {
       const quint32 *pSrc = bitsSrc + ((int)(uv[0])) + ((int)(uv[1]) * sw);
       QRgb rgbs = *pSrc;
