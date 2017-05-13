@@ -316,6 +316,7 @@ void CObjTracking::on_pushButton_2_clicked()
   double     jdStep;
   int        c = 0;
   orbit_t    o;
+  orbit_t    o1;
   tracking_t track;
   trackPos_t pos;
   asteroid_t *ast;
@@ -367,6 +368,10 @@ void CObjTracking::on_pushButton_2_clicked()
       track.objName = cAstro.getName(m_item->par1);
       break;
 
+    case MO_EARTH_SHD:
+      track.objName = cAstro.getName(m_item->par1);
+      break;
+
     case MO_COMET:
       com = (comet_t *)m_item->par2;
       track.objName = com->name;
@@ -394,6 +399,15 @@ void CObjTracking::on_pushButton_2_clicked()
         pos.rd.Ra = o.lRD.Ra;
         pos.rd.Dec = o.lRD.Dec;
         pos.mag = o.mag;
+        pos.jd = j;
+        break;
+
+      case MO_EARTH_SHD:
+        cAstro.calcPlanet(PT_MOON, &o1);
+        cAstro.calcEarthShadow(&o, &o1);
+        pos.rd.Ra = o.lRD.Ra;
+        pos.rd.Dec = o.lRD.Dec;
+        pos.mag = CM_UNDEF;
         pos.jd = j;
         break;
 

@@ -827,6 +827,7 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addLabelItem(item, txDesig);
   addSeparator(item);
   addTextItem(item, s.name, "");
+  addTextItem(item, tr("NORAD ID"), sgp4.getID(obj->par1));
   addSeparator(item);
 
   int con = constWhatConstel(rd.Ra, rd.Dec, view->jd);

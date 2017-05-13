@@ -6027,7 +6027,8 @@ void MainWindow::on_pushButton_17_clicked()
   if (info->type != MO_PLANET &&
       info->type != MO_SATELLITE &&
       info->type != MO_COMET &&
-      info->type != MO_ASTER)
+      info->type != MO_ASTER &&
+      info->type != MO_EARTH_SHD)
   {
     msgBoxError(this, tr("You cannot track static object!!!"));
     return;

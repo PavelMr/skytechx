@@ -1,4 +1,5 @@
 #include "hipsmanager.h"
+#include "skutils.h"
 
 #include <QTime>
 #include <QHash>
@@ -272,8 +273,6 @@ void HiPSManager::clearDiscCache()
 {
   g_discCache->clear();
 }
-
-#include "skutils.h"
 
 void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
 {    

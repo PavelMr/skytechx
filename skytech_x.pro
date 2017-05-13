@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui network xml sql widgets printsupport script multimedia charts
+QT += core gui network xml sql widgets printsupport multimedia charts script
 #QT += gamepad
 
 #CONFIG   += openssl-linked
@@ -35,7 +35,13 @@ Debug:win32-msvc2013 :    QMAKE_CXXFLAGS += /openmp
 #for WIN XP
 contains(QT_ARCH, i386) {
   QMAKE_LFLAGS += /SUBSYSTEM:WINDOWS,"5.01"
+  message("build win32")
 }
+else
+{
+  message("build win64")
+}
+
 
 #Release:win32-msvc2013 :  QMAKE_LFLAGS += /LTCG /MAP
 

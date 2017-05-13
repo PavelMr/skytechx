@@ -12,6 +12,7 @@ void SystemSettings::readAll()
   QSettings set(m_fileName, QSettings::IniFormat);
 
   m_weatherAppId = set.value("weather_api/appid").toString();
+
   m_sun_radius = set.value("sol_sys/sun_radius").toDouble();
   m_moon_radius = set.value("sol_sys/moon_radius").toDouble();
   m_mercury_radius = set.value("sol_sys/mercury_radius").toDouble();

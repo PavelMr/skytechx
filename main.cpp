@@ -271,6 +271,7 @@ int main(int argc, char *argv[])
   qDebug() << "SSL ver =" << QSslSocket::sslLibraryVersionString();
   qDebug() << "SSL ver =" << QSslSocket::sslLibraryBuildVersionString();
   qDebug() << "Sound support =" << !QAudioDeviceInfo::availableDevices(QAudio::AudioOutput).isEmpty();
+  qDebug() << "User data folder" << QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 
   g_hipsRenderer = new HiPSRenderer();  
 
@@ -283,7 +284,7 @@ int main(int argc, char *argv[])
   MainWindow w;  
   w.show();  
 
-  int ret = 1;      
+  int ret = 1;
 
   try
   {

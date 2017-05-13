@@ -471,7 +471,7 @@ void mapObjContextMenu(CMapView *map)
 
       case MO_PLANET:
       {
-        str = cAstro.getName(o.par1) + " " + getStrMag(o.mag);
+        str = cAstro.getName(o.par1) + " " + getStrMag(o.mag);                                
 
         if (!g_bHoldObject && !isHoldObjFirst)
         {
