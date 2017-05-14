@@ -5,6 +5,14 @@
 
 static qint64 pathFileSize;
 
+void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
+{
+  // http://www.movable-type.co.uk/scripts/latlong.html
+
+  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
+  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
+}
+
 SKPOINT max4Y(const SKPOINT &p1, const SKPOINT &p2, const SKPOINT &p3, const SKPOINT &p4)
 {
   SKPOINT newPt;

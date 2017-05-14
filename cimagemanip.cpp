@@ -59,7 +59,7 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
   createGammasTable(gamma, gammaTable);
 
   if (bw)
-  {
+  {   
     const uchar *s = (uchar *)src->bits();
     uchar *d = (uchar *)dst->bits();
 
@@ -84,28 +84,34 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
     }
   }
   else
-  {
+  {   
     const QRgb *s = (QRgb *)src->bits();
     QRgb *d = (QRgb *)dst->bits();
+    int valRGB[3];
 
-    #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, val, rgb)
+    #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, valRGB, rgb)
     for (y = 0; y < src->height(); y++)
     {
       int index = src->width() * y;
       for (x = 0; x < src->width(); x++)
       {
         rgb = s[x + index];
-        val = rgb & 0xff;
+        valRGB[0] = qRed(rgb);
+        valRGB[1] = qGreen(rgb);
+        valRGB[2] = qBlue(rgb);
 
-        val += par->brightness;
-        val = CLAMP(val, 0, 255);
+        for (int i = 0; i < 3; i++)
+        {
+          valRGB[i] += par->brightness;
+          valRGB[i] = CLAMP(valRGB[i], 0, 255);
 
-        val = contrastTable[val];
-        val = gammaTable[val];
+          valRGB[i] = contrastTable[valRGB[i]];
+          valRGB[i] = gammaTable[valRGB[i]];
 
-        val = par->invert ? 255 - val : val;
+          valRGB[i] = par->invert ? 255 - valRGB[i] : valRGB[i];
+        }
 
-        d[x + index] = (255 << 24) | (val << 16) | (val << 8) | val;
+        d[x + index] = qRgb(valRGB[0], valRGB[1], valRGB[2]);
       }
     }
   }

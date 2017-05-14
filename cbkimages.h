@@ -21,10 +21,13 @@
 #define CBKIMAGES_H
 
 #include <QtCore>
+
 #include "cfits.h"
 #include "cskpainter.h"
+#include "cdrawing.h"
 
 #define BKT_DSSFITS          0
+#define BKT_CUSTOM           1
 
 typedef struct
 {
@@ -59,16 +62,21 @@ class CBkImages : public QObject
   public:
     CBkImages();
    ~CBkImages();
-    bool load(const QString name, int resizeTo = 0);
+    bool load(const QString name, int resizeTo = 0, const radec_t &rdCenter = radec_t(0, 0), double fov = 1);
     void loadOnScreen(QWidget *parent, double ra, double dec, double fov);
     void renderDSSFits(QImage *pDst, CSkPainter *p, CFits *fit);
+    void renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit);
+    int  editObject(QPoint pos, QPoint delta, int op = DTO_NONE);
     void renderAll(QImage *pDst, CSkPainter *pPainter);
     void deleteItem(int index);
+    void setEdit(CFits *fit);
 
     QList <bkImgItem_t> m_tImgList;
     qint64              m_totalSize;
 
+
   protected:
+    CFits *m_editFit;
 };
 
 extern CBkImages bkImg;

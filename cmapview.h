@@ -158,12 +158,14 @@ private:
   bool      m_zoomLens;
   bool      m_bClick;
   bool      m_drawing;
+  bool      m_drawing2;
   bool      m_bZoomByMouse;
   bool      m_bZoomByMouseCenter;
   QPoint    m_zoomPoint;
 
   bool      m_bMouseMoveMap;
 
+  int       m_dto2;
   int       m_dto;
   QPoint    m_lastMousePos;
   radec_t   m_measurePoint;

@@ -37,10 +37,13 @@ public:
     QImage *getImage(void);
     QImage *getOriginalImage();
     QMap <QString, QString> getHeader() {  return tFitsMap; }
+    void setEdit(bool enable);
+    bool getEdited() const;
+
     double  m_ra;
     double  m_dec;
     radec_t m_cor[4];
-    radec_t cen_rd;
+    radec_t cen_rd;   // plate center
     QString m_name;
     int     m_xSize;
     int     m_ySize;
@@ -52,8 +55,13 @@ public:
     int     m_datamin;
     int     m_datamax;
 
+    // custom image
+    double m_width;
+    double m_height;
+    double m_angle;
+    radec_t m_controlPoint;
 
-protected:
+//protected:
    QImage *m_pix;
    QImage *m_ori;
 
@@ -65,6 +73,8 @@ protected:
    double ppo_coef[6];
    double amd_x_coeff[20];
    double amd_y_coeff[20];
+
+   bool   m_edited;
 
 private:
    void readHeader(QFile &f);

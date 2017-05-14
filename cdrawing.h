@@ -28,6 +28,8 @@
 #include "cmapview.h"
 #include "transform.h"
 
+#define ROT_MARGIN        10
+
 #define DT_NONE           0
 #define DT_TELESCOPE      1
 #define DT_TELRAD         2
@@ -38,6 +40,8 @@
 #define DTO_NONE          0
 #define DTO_MOVE          1
 #define DTO_ROTATE        2
+#define DTO_SCALE         3
+#define DTO_MOVE_CTRL     4
 
 typedef struct
 {

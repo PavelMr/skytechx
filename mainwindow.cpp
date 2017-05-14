@@ -1092,6 +1092,7 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
 
   QModelIndex index = ui->treeView->indexAt(pos);
   QStandardItemModel *m = (QStandardItemModel *)ui->treeView->model();
+  QAction *edit;
   QAction *ren;
   QAction *info;
   QAction *download;
@@ -1099,6 +1100,10 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
 
   if (index.isValid())
   {
+    edit = new QAction(tr("Edit ") + index.model()->index(index.row(), 0).data().toString(), this);
+    edit->setData(index);
+    actions.append(edit);
+
     ren = new QAction(tr("Rename ") + index.model()->index(index.row(), 0).data().toString(), this);
     ren->setData(index);
     actions.append(ren);
@@ -1179,9 +1184,18 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
     {
       int index = getCurDSS();
       CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
-      QImage img =QImage(*f->getImage());
+      QImage img = QImage(*f->getImage());
       img = img.convertToFormat(QImage::Format_ARGB32);
       QApplication::clipboard()->setImage(img);
+    }
+    else
+    if (selected == edit)
+    {
+      int index = getCurDSS();
+      CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
+
+      f->setEdit(true);
+      bkImg.setEdit(f);
     }
   }
   ui->widget->repaintMap();
@@ -3646,13 +3660,6 @@ void MainWindow::restoreDSSList()
          bkImg.m_tImgList[i].param.useMatrix = list[16].toInt();
          bkImg.m_tImgList[i].param.dlgSize = list[17].toInt();
 
-         /*
-         CFits *f = (CFits *)bkImg.m_tImgList[i].ptr;
-         CImageManip::process(f->getOriginalImage(), f->getImage(), &bkImg.m_tImgList[i].param);
-         int histogram[256];
-         CImageManip::getHistogram(f->getImage(), histogram);
-         m_histogram->setData(histogram);
-         */
          i++;
       }      
     } while (1);
@@ -3727,7 +3734,7 @@ void MainWindow::updateHomeLocation()
 void MainWindow::on_pushButton_2_clicked()
 //////////////////////////////////////////
 {
-  CDSSOpenDialog dlg(this, tr("Open a File"), QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/", "DSS Fits file (*.fits)");
+  CDSSOpenDialog dlg(this, tr("Open a File"), QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/", "DSS Fits file (*.fits) | JPG (*.jpg)");
   dlg.setAcceptMode(QFileDialog::AcceptOpen);
   dlg.setFileMode(QFileDialog::ExistingFiles);
 
@@ -3744,7 +3751,13 @@ void MainWindow::on_pushButton_2_clicked()
 
     for (int i = 0; i < names.count(); i++)
     {
-      bkImg.load(names[i], dlg.getSize());
+      radec_t rd;
+
+      trfConvScrPtToXY(ui->widget->width() * 0.5,
+                       ui->widget->height() * 0.5, rd.Ra, rd.Dec);
+      precess(&rd.Ra, &rd.Dec, ui->widget->m_mapView.jd, JD2000);
+
+      bkImg.load(names[i], dlg.getSize(), rd, ui->widget->m_mapView.fov);
       progress.setValue(i);
       QApplication::processEvents();
     }

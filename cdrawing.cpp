@@ -7,8 +7,6 @@
 #include "cmapview.h"
 
 #define DRAWING_VERSION   "VER2.5"
-#define ROT_MARGIN        10
-
 
 CDrawing g_cDrawing; // TODO: nepouzivat globalne promene s QObject kvuli tr();
 
@@ -713,15 +711,6 @@ void CDrawing::calcFrmField(CSkPainter * /*p*/, drawing_t *drw)
   }
 }
 
-void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
-{
-  // http://www.movable-type.co.uk/scripts/latlong.html
-
-  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
-  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
-}
-
-
 void CDrawing::setTelescopePos(drawing_t *drawing)
 {
   if (drawing && drawing->telescopeLink && g_pTelePlugin && pcMapView->m_lastTeleRaDec.Ra != CM_UNDEF)
@@ -778,7 +767,7 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
   r2 = qMax(drw->frmField_t.x, drw->frmField_t.y);
 
   trfRaDecToPointNoCorrect(&drw->rd, &pt);
-  if (SKPLANECheckFrustumToSphere(m_frustum, &pt.w, r2))
+  if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, r2))
   {
     SKPOINT newPts[4];
     QList <QPoint> bndBox;

@@ -338,6 +338,17 @@ void CMapView::mousePressEvent(QMouseEvent *e)
         setCursor(Qt::SizeAllCursor); // udelat podle operace
       return;
     }
+
+    m_dto2 = bkImg.editObject(e->pos(), QPoint(0, 0));
+    if (m_dto2 != DTO_NONE)
+    {
+      m_drawing2 = true;
+      if (m_dto2 == DTO_ROTATE)
+        setCursor(cur_rotate);
+      else
+        setCursor(Qt::SizeAllCursor); // udelat podle operace
+      return;
+    }
   }
 
   if ((e->buttons() & Qt::RightButton) == Qt::RightButton)
@@ -515,6 +526,40 @@ void CMapView::mouseMoveEvent(QMouseEvent *e)
     }
   }
 
+  if (((e->buttons() & Qt::LeftButton) == Qt::LeftButton) && m_drawing2)
+  {
+    if (bkImg.editObject(e->pos(), QPoint(m_lastMousePos - e->pos()), m_dto2))
+    {
+      m_bZoomByMouse = false;
+      m_drawing2 = true;
+      if (m_dto2 == DTO_ROTATE)
+        setCursor(cur_rotate);
+      else
+        setCursor(Qt::SizeAllCursor); // udelat podle operace
+
+      repaintMap();
+    }
+  }
+  else
+  if (e->buttons() == 0)
+  {
+    m_dto2 = bkImg.editObject(e->pos(), QPoint(0, 0));
+    if (m_dto2 != DTO_NONE)
+    {
+      if (m_dto2 == DTO_ROTATE)
+        setCursor(cur_rotate);
+      else
+        setCursor(Qt::SizeAllCursor); // udelat podle operace
+
+      repaintMap();
+      return;
+    }
+    else
+    {
+      setCursor(Qt::CrossCursor);
+    }
+  }
+
   tryShowToolTip(e->pos(), QApplication::keyboardModifiers() == Qt::ControlModifier);
 
   m_lastMousePos = e->pos();
@@ -573,6 +618,7 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
 
   m_bMouseMoveMap = false;
   m_drawing = false;
+  m_drawing2 = false;
 
   if (bConstEdit && dev_move_index != -1)
   {

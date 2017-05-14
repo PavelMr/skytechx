@@ -21,7 +21,8 @@ CFits::CFits()
   m_gamma = 1;
   m_bAuto = false;
   m_datamin = 0;
-  m_datamax = 0;
+  m_datamax = 0;  
+  m_edited = false;
 }
 
 
@@ -62,6 +63,11 @@ QImage *CFits::getOriginalImage(void)
 /////////////////////////////////////
 {
   return(m_ori);
+}
+
+void CFits::setEdit(bool enable)
+{
+  m_edited = enable;
 }
 
 
@@ -360,4 +366,9 @@ void CFits::amdpos(double x, double y, double *ra, double *dec)
    *  to pass by address
    */
    transtdeq(cen_rd.Ra, cen_rd.Dec, object_xi, object_eta, ra,dec);
+}
+
+bool CFits::getEdited() const
+{
+  return m_edited;
 }
