@@ -70,6 +70,9 @@ class CBkImages : public QObject
     void renderAll(QImage *pDst, CSkPainter *pPainter);
     void deleteItem(int index);
     void setEdit(CFits *fit);
+    void editDone();
+    void saveSBI(CFits *fit);
+    bool loadSBI(CFits *fit, const QString &name);
 
     QList <bkImgItem_t> m_tImgList;
     qint64              m_totalSize;

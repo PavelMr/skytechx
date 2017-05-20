@@ -1136,8 +1136,10 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
 
   if (key == Qt::Key_Enter || key == Qt::Key_Return)
   {
+    bkImg.editDone();
     g_cDrawing.done();
     repaintMap(true);
+    pcMainWnd->updateDSS();
   }
 
   if (key == Qt::Key_Backspace && m_lastFOV > CM_UNDEF)
@@ -1152,8 +1154,10 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
 
   if (key == Qt::Key_Escape)
   {
+    bkImg.editDone();
     g_cDrawing.cancel();
     repaintMap(true);
+    pcMainWnd->updateDSS();
   }
 
   if (key == Qt::Key_Delete)

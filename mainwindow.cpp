@@ -167,6 +167,8 @@ extern bool g_forcedRecalculate;
 extern bool g_bHoldObject;
 extern bool bParkTelescope;
 extern bool g_developMode;
+extern QString helpText;
+
 extern QApplication *g_pApp;
 
 QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -1100,17 +1102,25 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
 
   if (index.isValid())
   {
-    edit = new QAction(tr("Edit ") + index.model()->index(index.row(), 0).data().toString(), this);
-    edit->setData(index);
-    actions.append(edit);
+    int listIndex = getCurDSS();
 
-    ren = new QAction(tr("Rename ") + index.model()->index(index.row(), 0).data().toString(), this);
-    ren->setData(index);
-    actions.append(ren);
+    if (bkImg.m_tImgList[listIndex].type == BKT_CUSTOM)
+    {
+      edit = new QAction(tr("Edit ") + index.model()->index(index.row(), 0).data().toString(), this);
+      edit->setData(index);
+      actions.append(edit);
+    }
 
-    info = new QAction(tr("Show FITS header"), this);
-    info->setData(index);
-    actions.append(info);
+    if (bkImg.m_tImgList[listIndex].type != BKT_CUSTOM)
+    {
+      ren = new QAction(tr("Rename ") + index.model()->index(index.row(), 0).data().toString(), this);
+      ren->setData(index);
+      actions.append(ren);
+
+      info = new QAction(tr("Show FITS header"), this);
+      info->setData(index);
+      actions.append(info);
+    }
 
     download = new QAction(tr("Download new DSS from same location"), this);
     download->setData(index);
@@ -1194,8 +1204,8 @@ void MainWindow::onTreeViewDSSContextMenuRequested(QPoint pos)
       int index = getCurDSS();
       CFits *f = (CFits *)bkImg.m_tImgList[index].ptr;
 
-      f->setEdit(true);
       bkImg.setEdit(f);
+      helpText = tr("Move, Rotate, Scale\nENTER/ESC - Done");
     }
   }
   ui->widget->repaintMap();
@@ -2244,6 +2254,8 @@ void MainWindow::updateDSS(bool refill)
 
     for (int i = 0; i < bkImg.m_tImgList.count(); i++)
     {
+      CFits *fit = (CFits *)bkImg.m_tImgList[i].ptr;
+
       QStandardItem *item = new QStandardItem;
       item->setText(bkImg.m_tImgList[i].fileName);
       item->setCheckable(true);
@@ -2253,7 +2265,15 @@ void MainWindow::updateDSS(bool refill)
       m->setItem(i, 0, item);
 
       item = new QStandardItem;
-      item->setText(QString("%1'").arg(R2D(bkImg.m_tImgList[i].size / sqrt(2.0)) * 60.0, 0, 'f', 1));
+      if (bkImg.m_tImgList[i].type == BKT_CUSTOM)
+      {
+        double d = anSep(fit->m_cor[0].Ra, fit->m_cor[0].Dec, fit->m_cor[2].Ra, fit->m_cor[2].Dec);
+        item->setText(QString("%1'").arg(R2D(d) * 60.0, 0, 'f', 1));
+      }
+      else
+      {
+        item->setText(QString("%1'").arg(R2D(bkImg.m_tImgList[i].size / sqrt(2.0)) * 60.0, 0, 'f', 1));
+      }
       item->setEditable(false);
       m->setItem(i, 1, item);
 
@@ -3734,7 +3754,8 @@ void MainWindow::updateHomeLocation()
 void MainWindow::on_pushButton_2_clicked()
 //////////////////////////////////////////
 {
-  CDSSOpenDialog dlg(this, tr("Open a File"), QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/", "DSS Fits file (*.fits) | JPG (*.jpg)");
+  CDSSOpenDialog dlg(this, tr("Open a File"), QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/",
+                     "DSS Fits file (*.fits);;JPG (*.jpg);;SBI (*.sbi)");
   dlg.setAcceptMode(QFileDialog::AcceptOpen);
   dlg.setFileMode(QFileDialog::ExistingFiles);
 
@@ -4053,7 +4074,17 @@ void MainWindow::on_pushButton_dssCZ_clicked()
   QStandardItem *item = model->itemFromIndex(il.at(0));
   int index = item->row();
 
-  double fov = bkImg.m_tImgList[index].size * 2;
+  double fov;
+
+  if (bkImg.m_tImgList[index].type == BKT_CUSTOM)
+  {
+    CFits *fit = (CFits *)bkImg.m_tImgList[index].ptr;
+    fov = 2 * anSep(fit->m_cor[0].Ra, fit->m_cor[0].Dec, fit->m_cor[2].Ra, fit->m_cor[2].Dec);
+  }
+  else
+  {
+     fov = bkImg.m_tImgList[index].size * 2;
+  }
 
   radec_t rd;
 

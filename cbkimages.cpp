@@ -4,16 +4,55 @@
 #include "mainwindow.h"
 #include "cmapview.h"
 #include "setting.h"
+#include "castro.h"
 
 extern MainWindow *pcMainWnd;
 extern CMapView   *pcMapView;
 extern bool g_showDSSFrameName;
+extern QString        helpText;
 
 CBkImages    bkImg;
 
-const double editControlSize = 10;
+const double editControlSize = 15;
 const double axisLen = 60;
 const double centerRadius = 4;
+const QString sbiVersion = "100";
+
+QRect skRectFromCenter(int cx, int cy, int w, int h)
+{
+  return QRect(cx - w / 2, cy - h / 2, w, h);
+}
+
+radec_t getCenterOfPolygon(QList <radec_t>&polygon)
+{
+  double X=0;
+  double Y=0;
+  double Z=0;
+
+  foreach (radec_t vertex, polygon)
+  {
+    double lat1 = vertex.Dec;
+    double lon1 = vertex.Ra;
+
+    X += cos(lat1) * cos(lon1);
+    Y += cos(lat1) * sin(lon1);
+    Z += sin(lat1);
+  }
+
+  double Lon = atan2(Y, X);
+  double Hyp = sqrt(X * X + Y * Y);
+  double Lat = atan2(Z, Hyp);
+
+  return radec_t(Lon, Lat);
+}
+
+radec_t getCenterOfPolygon(radec_t &a, radec_t &b)
+{
+  QList <radec_t> p;
+
+  p << a << b;
+  return getCenterOfPolygon(p);
+}
 
 //////////////////////
 CBkImages::CBkImages()
@@ -84,6 +123,41 @@ bool CBkImages::load(const QString name, int resizeTo, const radec_t &rdCenter, 
     pcMainWnd->updateDSS();    
   }
   else
+  if (!fi.suffix().compare("sbi", Qt::CaseInsensitive))
+  {
+    CFits *f = new CFits;
+
+    if (!loadSBI(f, name))
+    {
+      delete f;
+      return(false);
+    }
+
+    i.bShow = true;
+    i.filePath = name;
+    i.byteSize = f->m_ori->byteCount();
+    i.ptr = (void *)f;
+    i.fileName = fi.fileName();
+    i.type = BKT_CUSTOM;
+    i.rd.Ra = f->m_ra;
+    i.rd.Dec = f->m_dec;
+    i.size = 0;
+    i.param.brightness = 0;
+    i.param.contrast = 100;
+    i.param.gamma = 150;
+    i.param.invert = false;
+    i.param.autoAdjust = false;
+    i.param.useMatrix = false;
+    memset(i.param.matrix, 0, sizeof(i.param.matrix));
+    i.param.matrix[1][1] = 1;
+    i.param.dlgSize = resizeTo;
+
+    m_totalSize += i.byteSize;
+
+    m_tImgList.append(i);
+    pcMainWnd->updateDSS();
+  }
+  else
   {
     CFits *f = new CFits;
 
@@ -99,17 +173,18 @@ bool CBkImages::load(const QString name, int resizeTo, const radec_t &rdCenter, 
 
     f->m_controlPoint = rdCenter;
     f->cen_rd = rdCenter;
-    f->m_name = name;
+    f->m_name = name; // TODO: without path
+    f->m_fileName = name;
 
     i.bShow = true;
-    i.filePath = name;
+    i.filePath = name + ".sbi";
     i.byteSize = (int)fi.size(); // TODO: tohle je velikost originalu. V pameti to bude jinak (neco vymyslet)
     i.ptr = (void *)f;
     i.fileName = fi.fileName();
     i.type = BKT_CUSTOM;
     i.rd.Ra = f->m_ra;
     i.rd.Dec = f->m_dec;
-    i.size = anSep(f->m_cor[0].Ra, f->m_cor[0].Dec, f->m_cor[2].Ra, f->m_cor[2].Dec);
+    i.size = 0;
     i.param.brightness = 0;
     i.param.contrast = 100;
     i.param.gamma = 150;
@@ -124,6 +199,7 @@ bool CBkImages::load(const QString name, int resizeTo, const radec_t &rdCenter, 
 
     m_tImgList.append(i);
     pcMainWnd->updateDSS();
+    saveSBI(f);
   }
 
   return(true);
@@ -296,15 +372,15 @@ void CBkImages::renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit)
   SKPOINT pp[4];
   radec_t corner[4];
   radec_t center = radec_t(fit->m_ra, fit->m_dec);
+  radec_t textRD;
 
   double aspect = fit->m_width / fit->m_height;
-  double angle = D2R(fit->m_angle);
+  double angle = fit->m_angle;
 
   double ang1 = -atan(aspect) + angle;
   double ang2 = atan(aspect) + angle;
   double ang3 = MPI - atan(aspect) + angle;
   double ang4 = MPI + atan(aspect) + angle;
-  radec_t textRD;
 
   double dist = sqrt(POW2(fit->m_width) + POW2(fit->m_height)) * 0.5;
 
@@ -313,15 +389,15 @@ void CBkImages::renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit)
   calcAngularDistance(fit->m_ra, fit->m_dec, ang3, dist, corner[2].Ra, corner[2].Dec);
   calcAngularDistance(fit->m_ra, fit->m_dec, ang4, dist, corner[3].Ra, corner[3].Dec);
 
-  //calcAngularDistance(fit->m_controlPoint.Ra, fit->m_controlPoint.Dec, ang1, dist, corner[0].Ra, corner[0].Dec);
-  //calcAngularDistance(fit->m_controlPoint.Ra, fit->m_controlPoint.Dec, ang2, dist, corner[1].Ra, corner[1].Dec);
-  //calcAngularDistance(fit->m_controlPoint.Ra, fit->m_controlPoint.Dec, ang3, dist, corner[2].Ra, corner[2].Dec);
-  //calcAngularDistance(fit->m_controlPoint.Ra, fit->m_controlPoint.Dec, ang4, dist, corner[3].Ra, corner[3].Dec);
-
   trfRaDecToPointNoCorrect(&corner[0], &pp[0]);
   trfRaDecToPointNoCorrect(&corner[1], &pp[1]);
   trfRaDecToPointNoCorrect(&corner[2], &pp[2]);
   trfRaDecToPointNoCorrect(&corner[3], &pp[3]);
+
+  for (int i = 0; i < 4; i++)
+  {
+    fit->m_cor[i] = corner[i];
+  }
 
   p->setPen(QPen(QBrush(g_skSet.map.drawing.color), g_skSet.map.drawing.width, (Qt::PenStyle)g_skSet.map.drawing.style));
   p->setBrush(Qt::NoBrush);
@@ -375,12 +451,25 @@ void CBkImages::renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit)
       trfProjectPointNoCheck(&pp[i]);
     }
 
+    if (fit->getEdited())
+    {
+      scanRender.setOpacity(0.75);
+    }
+
     scanRender.resetScanPoly(pDst->width(), pDst->height());
     scanRender.scanLine(pp[0].sx, pp[0].sy, pp[1].sx, pp[1].sy, 0, 0, 1, 0);
     scanRender.scanLine(pp[1].sx, pp[1].sy, pp[2].sx, pp[2].sy, 1, 0, 1, 1);
     scanRender.scanLine(pp[2].sx, pp[2].sy, pp[3].sx, pp[3].sy, 1, 1, 0, 1);
     scanRender.scanLine(pp[3].sx, pp[3].sy, pp[0].sx, pp[0].sy, 0, 1, 0, 0);
-    scanRender.renderPolygon(pDst, fit->getImage());
+    if (fit->getEdited())
+    {
+      scanRender.renderPolygonAlpha(pDst, fit->getImage());
+      scanRender.setOpacity(1);
+    }
+    else
+    {
+      scanRender.renderPolygon(pDst, fit->getImage());
+    }
 
     QRect rc;
 
@@ -410,6 +499,7 @@ void CBkImages::renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit)
       p->restore();
     }
 
+
     if (fit->getEdited())
     {
       SKPOINT cxy;
@@ -420,12 +510,17 @@ void CBkImages::renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit)
       double cx = cxy.sx;
       double cy = cxy.sy;
 
+      p->setOpacity(0.5);
       p->drawLine(cx, cy - centerRadius, cx, cy - axisLen + editControlSize);
       p->drawCircle(QPoint(cx, cy - axisLen), editControlSize);
 
       p->drawLine(cx + centerRadius, cy, cx + axisLen - editControlSize, cy);
       p->drawCircle(QPoint(cx + axisLen, cy), editControlSize);
       p->drawCircle(QPoint(cx, cy), centerRadius);
+      p->setOpacity(1);
+
+      p->drawText(skRectFromCenter(cx, cy - axisLen, 32, 32), Qt::AlignCenter, tr("R"));
+      p->drawText(skRectFromCenter(cx + axisLen, cy, 32, 32), Qt::AlignCenter, tr("S"));
     }
 
     if (qMax(rc.width(), rc.height()) > 50 && g_showDSSFrameName)
@@ -441,6 +536,7 @@ void CBkImages::renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit)
       trfRaDecToPointNoCorrect(&textRD, &textPoint);
       if (trfProjectPoint(&textPoint))
       {
+
         p->save();
         p->translate(textPoint.sx, textPoint.sy);
         p->rotate(textAngle);
@@ -450,6 +546,9 @@ void CBkImages::renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit)
     }
   }
 }
+
+
+
 
 int CBkImages::editObject(QPoint pos, QPoint delta, int op)
 {
@@ -471,6 +570,7 @@ int CBkImages::editObject(QPoint pos, QPoint delta, int op)
       if (QApplication::keyboardModifiers() & Qt::CTRL)
         return(DTO_MOVE_CTRL);
       else
+
         return(DTO_MOVE);
     }
 
@@ -504,51 +604,56 @@ int CBkImages::editObject(QPoint pos, QPoint delta, int op)
     {
       m_editFit->m_ra -= ra2 - ra;
       m_editFit->m_dec -= dec2 - dec;
+      m_editFit->m_controlPoint.Ra -= ra2 - ra;
+      m_editFit->m_controlPoint.Dec -= dec2 - dec;
     }
-
-    m_editFit->m_controlPoint.Ra -= ra2 - ra;
-    m_editFit->m_controlPoint.Dec -= dec2 - dec;
-
     return(DTO_MOVE);
   }
   else
   if (op == DTO_ROTATE)
   {
-    double dist =  anSep(m_editFit->m_ra, m_editFit->m_controlPoint.Ra,
-                         m_editFit->m_dec, m_editFit->m_controlPoint.Dec);
+    double mul;
 
-    double ang = trfGetPosAngle(m_editFit->m_ra, m_editFit->m_controlPoint.Ra,
-                                m_editFit->m_dec, m_editFit->m_controlPoint.Dec) + R270;
+    if (QApplication::keyboardModifiers() & Qt::ShiftModifier)
+      mul = 0.001;
+    else
+      mul = 0.005;
 
-    qDebug() << m_editFit->m_ra - m_editFit->m_controlPoint.Ra;
-    qDebug() << m_editFit->m_dec - m_editFit->m_controlPoint.Dec;
-
-    //calcAngularDistance(m_editFit->m_controlPoint.Ra, m_editFit->m_controlPoint.Dec, ang + delta.x() * 0.25, dist, m_editFit->m_ra, m_editFit->m_dec);
-    calcAngularDistance(m_editFit->m_controlPoint.Ra, m_editFit->m_controlPoint.Dec, ang + delta.x() * 0.25, dist, m_editFit->m_ra, m_editFit->m_dec);
-
-    m_editFit->m_angle -= delta.x() * 0.25;
-
-    //qDebug() << dist << ang;
+    m_editFit->m_angle -= delta.x() * mul;
     return(DTO_ROTATE);
   }
   else
   if (op == DTO_SCALE)
   {
     double scale;
+    double mul;
+    double sc;
+
+    if (QApplication::keyboardModifiers() & Qt::ShiftModifier)
+    {
+      mul = 0.00001;
+      sc =  1.002;
+    }
+    else
+    {
+      mul = 0.005;
+      sc =  1.004;
+    }
 
     if (delta.x() < 0)
     {
-      scale = 1.005 + qAbs(delta.x() * 0.001);
+      scale = sc + qAbs(delta.x() * mul);
       if (qMax(m_editFit->m_width, m_editFit->m_height) > R90 * 0.5)
       {
         return DTO_SCALE;
       }
     }
     else
-      scale = 0.995 - qAbs(delta.x() * 0.001);
+      scale = (1 / sc) - qAbs(delta.x() * mul);
 
     m_editFit->m_width *= scale;
     m_editFit->m_height *= scale;
+
     return(DTO_SCALE);
   }
 
@@ -588,7 +693,81 @@ void CBkImages::deleteItem(int index)
 
 void CBkImages::setEdit(CFits *fit)
 {
+  if (m_editFit)
+  {
+    m_editFit->setEdit(false);
+  }
+
   m_editFit = fit;
+  m_editFit->setEdit(true);
+}
+
+void CBkImages::editDone()
+{
+  if (m_editFit == nullptr)
+  {
+    return;
+  }
+
+  saveSBI(m_editFit);
+  m_editFit->setEdit(false);
+  m_editFit = nullptr;
+  helpText = "";
+}
+
+void CBkImages::saveSBI(CFits *fit)
+{
+  QString name = fit->m_fileName + ".sbi";
+
+  QFile f(name);
+  QDataStream ds(&f);
+
+  qDebug() << "save" << f.fileName() << name;
+
+  if (f.open(QFile::WriteOnly))
+  {
+    ds << sbiVersion;
+    ds << fit->m_fileName;
+    ds << fit->m_ra;
+    ds << fit->m_dec;
+    ds << fit->m_angle;
+    ds << fit->m_width;
+    ds << fit->m_height;
+  }
+
+  f.close();
+}
+
+bool CBkImages::loadSBI(CFits *fit, const QString &name)
+{
+  QFile f(name);
+  QDataStream ds(&f);
+
+  QString version;
+  QString imageName;
+
+  if (f.open(QFile::ReadOnly))
+  {
+    ds >> version;
+    ds >> imageName;
+    ds >> fit->m_ra;
+    ds >> fit->m_dec;
+    ds >> fit->m_angle;
+    ds >> fit->m_width;
+    ds >> fit->m_height;
+
+    fit->m_fileName = imageName;
+  }
+  else
+  {
+    return false;
+  }
+
+  fit->m_pix = new QImage(imageName);
+  fit->m_ori = new QImage(imageName);
+  fit->m_controlPoint = radec_t(fit->m_ra, fit->m_dec);
+
+  return true;
 }
 
 

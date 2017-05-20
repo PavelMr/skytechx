@@ -5,6 +5,9 @@
 static int contrastTable[256];
 static int gammaTable[256];
 static int autoTable[256];
+static int autoTableR[256];
+static int autoTableG[256];
+static int autoTableB[256];
 
 static inline void createContrastsTable(float contrast, int *table)
 {
@@ -192,7 +195,7 @@ void CImageManip::getHistogram(const QImage *src, int *histogram)
 }
 
 ////////////////////////////////////////////////////////////////////
-void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv)
+void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv, int comp)
 ////////////////////////////////////////////////////////////////////
 {
   bool bw = src->format() == (QImage::Format_Indexed8) || (src->format() == QImage::Format_Grayscale8);
@@ -223,7 +226,22 @@ void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv)
     for (int i = 0; i < src->width() * src->height(); i++, p++)
     {
       QRgb rgb = *p;
-      int val = rgb & 0xff;
+      int val;
+
+      switch (comp)
+      {
+        case 0:
+          val = rgb & 0xff;
+          break;
+
+        case 1:
+          val = (rgb & 0xff00) >> 8;
+          break;
+
+        case 2:
+          val = (rgb & 0xff0000) >> 16;
+          break;
+      }
 
       histogram[val]++;
 
@@ -252,26 +270,36 @@ void CImageManip::autoAdjust(const QImage *src, QImage *dst, imageParam_t *par)
   bool bw = src->format() == (QImage::Format_Indexed8) || (src->format() == QImage::Format_Grayscale8);
   int maxv;
   int minv;
+  int maxa[3];
+  int mina[3];
 
-  getMinMax(src, minv, maxv);
+  if (bw)
+  {
+    getMinMax(src, minv, maxv);
+  }
+  else
+  {
+    getMinMax(src, mina[0], maxa[0], 0);
+    getMinMax(src, mina[1], maxa[1], 1);
+    getMinMax(src, mina[2], maxa[2], 2);
+  }
 
   int val;
   QRgb rgb;
   int x, y;
 
-  SK_DEBUG_TIMER_START(0);
-
-  float delta = 256 / (float)(maxv - minv);
-
-  createAutosTable(minv, delta, autoTable);
+  SK_DEBUG_TIMER_START(0);  
 
   if (bw)
   {
+    float delta = 256 / (float)(maxv - minv);
+    createAutosTable(minv, delta, autoTable);
+
     const uchar *s = (uchar *)src->bits();
 
     uchar *d = (uchar *)dst->bits();
 
-    #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val)
+    #pragma omp parallel for shared(s, d, src, par) private (x, y, val)
     for (y = 0; y < src->height(); y++)
     {
       int index = src->width() * y;
@@ -290,24 +318,40 @@ void CImageManip::autoAdjust(const QImage *src, QImage *dst, imageParam_t *par)
   }
   else
   {
+    float deltaR = 256 / (float)(maxa[0] - mina[0]);
+    float deltaG = 256 / (float)(maxa[1] - mina[1]);
+    float deltaB = 256 / (float)(maxa[2] - mina[2]);
+
+    createAutosTable(mina[0], deltaR, autoTableR);
+    createAutosTable(mina[1], deltaG, autoTableG);
+    createAutosTable(mina[2], deltaB, autoTableB);
+
     const QRgb *s = (QRgb *)src->bits();
     QRgb *d = (QRgb *)dst->bits();
 
-    #pragma omp parallel for shared(s, d, src, par, delta) private (x, y, val, rgb)
+    #pragma omp parallel for shared(s, d, src, par) private (x, y, rgb)
     for (y = 0; y < src->height(); y++)
     {
       int index = src->width() * y;
       for (x = 0; x < src->width(); x++)
       {
         rgb = s[x + index];
-        val = rgb & 0xff;
+        int valR = qRed(rgb);
+        int valG = qGreen(rgb);
+        int valB = qBlue(rgb);
 
-        val = autoTable[val];
+        valR = autoTableR[valR];
+        valG = autoTableR[valG];
+        valB = autoTableR[valB];
 
         if (par->invert)
-          val = 255 - val;
+        {
+          valR = 255 - valR;
+          valG = 255 - valG;
+          valB = 255 - valB;
+        }
 
-        d[x + index] = (255 << 24) | (val << 16) | (val << 8) | val;
+        d[x + index] = qRgb(valR, valG, valB);
       }
     }
   }

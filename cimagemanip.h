@@ -8,7 +8,7 @@ class CImageManip
   public:
     CImageManip();
     static void process(const QImage *src, QImage *dst, imageParam_t *par);
-    static void getMinMax(const QImage *src, int &minv, int &maxv);
+    static void getMinMax(const QImage *src, int &minv, int &maxv, int comp = -1);
     static void autoAdjust(const QImage *src, QImage *dst, imageParam_t *par);
     static void getHistogram(const QImage *src, int *histogram);
 };

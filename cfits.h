@@ -43,6 +43,7 @@ public:
     double  m_ra;
     double  m_dec;
     radec_t m_cor[4];
+    radec_t m_cor2[4];
     radec_t cen_rd;   // plate center
     QString m_name;
     int     m_xSize;
@@ -60,6 +61,7 @@ public:
     double m_height;
     double m_angle;
     radec_t m_controlPoint;
+    QString m_fileName;
 
 //protected:
    QImage *m_pix;
