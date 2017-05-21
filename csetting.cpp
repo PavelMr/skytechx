@@ -501,16 +501,16 @@ void CSetting::setValues()
   ui->horizontalSlider_29->setValue(set.map.dsoRange[8].mag * 10);
   ui->horizontalSlider_30->setValue(set.map.dsoRange[9].mag * 10);
 
-  ui->doubleSpinBox_45->setValue(R2D(set.map.starRange[0].fromFov));
-  ui->doubleSpinBox_47->setValue(R2D(set.map.starRange[1].fromFov));
-  ui->doubleSpinBox_49->setValue(R2D(set.map.starRange[2].fromFov));
-  ui->doubleSpinBox_51->setValue(R2D(set.map.starRange[3].fromFov));
-  ui->doubleSpinBox_53->setValue(R2D(set.map.starRange[4].fromFov));
-  ui->doubleSpinBox_55->setValue(R2D(set.map.starRange[5].fromFov));
-  ui->doubleSpinBox_57->setValue(R2D(set.map.starRange[6].fromFov));
-  ui->doubleSpinBox_59->setValue(R2D(set.map.starRange[7].fromFov));
-  ui->doubleSpinBox_61->setValue(R2D(set.map.starRange[8].fromFov));
-  ui->doubleSpinBox_63->setValue(R2D(set.map.starRange[9].fromFov));
+  ui->doubleSpinBox_45->setValue(R2D(set.map.dsoRange[0].fromFov));
+  ui->doubleSpinBox_47->setValue(R2D(set.map.dsoRange[1].fromFov));
+  ui->doubleSpinBox_49->setValue(R2D(set.map.dsoRange[2].fromFov));
+  ui->doubleSpinBox_51->setValue(R2D(set.map.dsoRange[3].fromFov));
+  ui->doubleSpinBox_53->setValue(R2D(set.map.dsoRange[4].fromFov));
+  ui->doubleSpinBox_55->setValue(R2D(set.map.dsoRange[5].fromFov));
+  ui->doubleSpinBox_57->setValue(R2D(set.map.dsoRange[6].fromFov));
+  ui->doubleSpinBox_59->setValue(R2D(set.map.dsoRange[7].fromFov));
+  ui->doubleSpinBox_61->setValue(R2D(set.map.dsoRange[8].fromFov));
+  ui->doubleSpinBox_63->setValue(R2D(set.map.dsoRange[9].fromFov));
 
   // GRIDS
   ui->pushButton_8->setColor(set.map.grid[SMCT_RA_DEC].color);

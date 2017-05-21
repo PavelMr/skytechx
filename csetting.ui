@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -649,7 +649,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -691,7 +691,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -733,7 +733,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -775,7 +775,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -817,7 +817,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -859,7 +859,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -901,7 +901,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -943,7 +943,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -985,7 +985,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1027,7 +1027,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1439,7 +1439,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1481,7 +1481,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1523,7 +1523,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1565,7 +1565,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1607,7 +1607,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1649,7 +1649,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1691,7 +1691,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1733,7 +1733,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1775,7 +1775,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>
@@ -1817,7 +1817,7 @@
                     <double>0.100000000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>90.000000000000000</double>
+                    <double>180.000000000000000</double>
                    </property>
                    <property name="value">
                     <double>90.000000000000000</double>

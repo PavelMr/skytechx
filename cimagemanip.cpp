@@ -158,6 +158,43 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
           d[x + index] = val = CLAMP(total / summ, 0, 255);
         }
       }
+    } else // COLOR
+    {
+      QImage tmp(*dst);
+
+      const QRgb *s = (QRgb *)tmp.bits();
+      QRgb *d = (QRgb *)dst->bits();
+
+      #pragma omp parallel for shared(s, d, par) private (x, y)
+      for (y = 1; y < src->height() - 1; y++)
+      {
+        int index = src->width() * y;
+        for (x = 1; x < src->width() - 1; x++)
+        {
+          int valR, valG, valB;
+          int totalR = 0;
+          int totalG = 0;
+          int totalB = 0;
+          for (int fy = -1; fy <= 1; fy++)
+          {
+            for (int fx = -1; fx <= 1; fx++)
+            {
+              valR = qRed(s[OFFSET(x + fx, y + fy)]);
+              valG = qGreen(s[OFFSET(x + fx, y + fy)]);
+              valB = qBlue(s[OFFSET(x + fx, y + fy)]);
+
+              totalR += valR * par->matrix[fy + 1][fx + 1];
+              totalG += valG * par->matrix[fy + 1][fx + 1];
+              totalB += valB * par->matrix[fy + 1][fx + 1];
+            }
+          }
+          valR = CLAMP(totalR / summ, 0, 255);
+          valG = CLAMP(totalG / summ, 0, 255);
+          valB = CLAMP(totalB / summ, 0, 255);
+
+          d[x + index] = qRgb(valR, valG, valB);
+        }
+      }
     }
   }  
 }
