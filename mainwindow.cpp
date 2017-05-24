@@ -1262,9 +1262,7 @@ void MainWindow::slotHIPS()
 }
 
 void MainWindow::slotHIPSPropertiesDone(QNetworkReply::NetworkError error, const QString &errorString)
-{
-  //qDebug() << "done" << ok;
-
+{  
   ui->actionHIPS->setEnabled(true);
 
   if (error != QNetworkReply::NoError)

@@ -85,10 +85,15 @@ void HiPSManager::setParam(const hipsParams_t &param)
   m_uid = qHash(param.url);  
 }
 
-QImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
-{  
+HipsImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
+{    
   int origPix = pix;  
   freeImage = false;
+
+  if (m_param.imageExtension == "tsv" && level < 3)
+  {
+    return nullptr;
+  }
 
   if (allsky)
   {
@@ -104,7 +109,12 @@ QImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
 
   pixCacheItem_t *item = getCacheItem(key);
 
-  if (m_downloadMap.contains(key))
+  if (m_downloadMap.contains(key) && m_param.imageExtension == "tsv")
+  {
+    return nullptr;
+  }
+
+  if (m_downloadMap.contains(key) && m_param.imageExtension != "tsv")
   { // downloading
 
     // try render (level - 1) while downloading
@@ -114,17 +124,17 @@ QImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
 
     if (item)
     {
-      QImage *cacheImage = item->image;
+      HipsImage *cacheImage = item->image;
       int size = m_param.tileWidth >> 1;
       int offset = cacheImage->width() / size;
-      QImage *image = cacheImage;
+      HipsImage *image = cacheImage;
 
       int index[4] = {0, 2, 1, 3};
 
       int ox = index[pix % 4] % offset;
       int oy = index[pix % 4] / offset;
 
-      QImage *newImage = new QImage(image->copy(ox * size, oy * size, size, size));
+      HipsImage *newImage = new HipsImage(image->copy(ox * size, oy * size, size, size));
       freeImage = true;
       return newImage;
     }        
@@ -133,20 +143,20 @@ QImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
 
   if (item)
   {        
-    QImage *cacheImage = item->image;
+    HipsImage *cacheImage = item->image;
 
-    Q_ASSERT(!item->image->isNull());
+    //Q_ASSERT(!item->image->isNull());
 
     if (allsky && cacheImage != nullptr)
     { // all sky
       int size = 64;
       int offset = cacheImage->width() / size;
-      QImage *image = cacheImage;
+      HipsImage *image = cacheImage;
 
       int ox = origPix % offset;
       int oy = origPix / offset;
 
-      QImage *newImage = new QImage(image->copy(ox * size, oy * size, size, size));
+      HipsImage *newImage = new HipsImage(image->copy(ox * size, oy * size, size, size));
       freeImage = true;
       return newImage;
     }
@@ -166,6 +176,7 @@ QImage *HiPSManager::getPix(bool allsky, int level, int pix, bool &freeImage)
     path = "/Norder3/Allsky." + m_param.imageExtension;
   } 
 
+  qDebug() << m_param.url + path;
   g_download->begin(m_param.url + path, key);
   m_downloadMap.insert(key);    
 
@@ -240,6 +251,11 @@ bool HiPSManager::parseProperties(hipsParams_t *param, const QString &filename, 
       param->imageExtension = "png";
       count++;
     }
+    else if (list.contains("tsv"))
+    {
+      param->imageExtension = "tsv";
+      count++;
+    }
   }
 
   if (map.contains("hips_frame") || map.contains("ohips_frame"))
@@ -261,6 +277,8 @@ bool HiPSManager::parseProperties(hipsParams_t *param, const QString &filename, 
     }
   }
 
+  return true;
+
   return count == 5; // all items have been loaded
 }
 
@@ -277,21 +295,21 @@ void HiPSManager::clearDiscCache()
 void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
 {    
   if (error == QNetworkReply::NoError)
-  {
+  {    
     m_downloadMap.remove(key);
 
     pixCacheItem_t *item = new pixCacheItem_t;
 
-    item->image = new QImage();
+    item->image = new HipsImage();
     if (item->image->loadFromData(data))
     {      
-      addToMemoryCache(key, item);
+      addToMemoryCache(key, item);      
 
       emit sigRepaint();
     }
     else
     {
-      qDebug() << "no image" << data;
+      qDebug() << "no image/data";// << data;
     }
   }
   else
@@ -332,11 +350,24 @@ void HiPSManager::addToMemoryCache(pixCacheKey_t &key, pixCacheItem_t *item)
   Q_ASSERT(item->image);
 
   int cost = item->image->byteCount();
+  //qDebug() << cost;
   m_cache.add(key, item, cost);
 }
 
 pixCacheItem_t *HiPSManager::getCacheItem(pixCacheKey_t &key)
 {  
+  pixCacheItem_t *i = m_cache.get(key);
+
+  /*
+  if (i != nullptr)
+  {
+    qDebug() << "data get" << i->image->byteCount() << key.pix;
+  } else
+  {
+    qDebug() << "data get 0" << key.pix;
+  }
+  */
+
   return m_cache.get(key);
 }
 

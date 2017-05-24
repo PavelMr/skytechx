@@ -36,6 +36,7 @@ void PixCache::add(pixCacheKey_t &key, pixCacheItem_t *item, int cost)
   Q_ASSERT(cost < m_cache.maxCost());
 
   m_cache.insert(key, item, cost);
+  //printCache();
 }
 
 pixCacheItem_t *PixCache::get(pixCacheKey_t &key)
@@ -51,7 +52,7 @@ void PixCache::setMaxCost(int maxCost)
 void PixCache::printCache()
 {
   qDebug() << " -- cache ---------------";
-  qDebug() << m_cache.size() << m_cache.totalCost() << m_cache.maxCost();
+  qDebug() << m_cache.size() << m_cache.totalCost() << m_cache.maxCost();    
 }
 
 int PixCache::used()

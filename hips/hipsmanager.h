@@ -41,7 +41,7 @@ public:
   QVariant setting(const QString &name);
   void writeSetting(const QString &name, const QVariant &value);
   void setParam(const hipsParams_t &param);
-  QImage *getPix(bool allsky, int level, int pix, bool &freeImage);
+  HipsImage *getPix(bool allsky, int level, int pix, bool &freeImage);
   qint64 getDiscCacheSize();
   bool parseProperties(hipsParams_t *param, const QString &filename, const QString &url = "");
   void cancelAll();

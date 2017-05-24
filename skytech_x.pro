@@ -323,7 +323,8 @@ SOURCES += main.cpp\
     planetreport.cpp \
     lunarphase.cpp \
     cdssopendialog.cpp \
-    colongitude.cpp
+    colongitude.cpp \
+    hips.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
