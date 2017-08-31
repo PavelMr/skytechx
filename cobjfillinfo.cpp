@@ -882,7 +882,7 @@ void CObjFillInfo::fillSatelliteInfo(const mapView_t *view, const mapObj_t *obj,
   addTextItem(item, tr("Epoch"), QString("%1 / %2").arg(getStrDate(tle->epoch, view->geo.tz)).arg(getStrTime(tle->epoch, view->geo.tz)));
 
   double diff = view->jd - tle->epoch;
-  addTextItem(item, tr("Time difference"), QString("%1").arg(diff, 0, 'f', 1) + tr(" day(s)"));
+  addTextItem(item, tr("Ephemeris age"), QString("%1").arg(diff, 0, 'f', 1) + tr(" day(s)"));
 
   beginExtInfo();
   addSeparator(item);
@@ -903,6 +903,11 @@ void CObjFillInfo::fillShowerInfo(const mapView_t *view, const mapObj_t *obj, of
   item->id = m->name;
   item->simbad = m->name;
   item->title = m->name;
+
+  item->riseJD = CM_UNDEF;
+  item->setJD = CM_UNDEF;
+  item->transitJD = CM_UNDEF;
+  item->rtsType = RTS_ERR;
 
   addDateTime(item, view);
 

@@ -694,6 +694,8 @@ private slots:
 
   void on_cb_lf_labels_toggled(bool checked);
 
+  void on_actionRendering_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

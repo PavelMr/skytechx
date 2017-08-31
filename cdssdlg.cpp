@@ -715,14 +715,6 @@ void CDSSDlg::slotChangeVal(QString)
   ((MainWindow *)parentWidget())->repaintMap();
 }
 
-static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
-{
-  // http://www.movable-type.co.uk/scripts/latlong.html
-
-  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
-  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
-}
-
 ///////////////////////////////////////
 // on Cancel
 void CDSSDlg::on_pushButton_2_clicked()

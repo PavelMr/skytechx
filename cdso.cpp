@@ -526,16 +526,46 @@ QString CDso::getName(dso_t *pDso, int idx)
   return list->at(idx);
 }
 
+/////////////////////////////////////////////////
+static QString removeSpacesLN(const QString text)
+/////////////////////////////////////////////////
+{
+  QString result = text.simplified();
+
+  qDebug() << text;
+  Q_ASSERT(result.size() >= 2);
+
+  QString tmp = (QString)result[0];
+
+  for (int i = 1; i < result.size() - 1; i++)
+  {
+    if (result[i] == ' ' && !result[i - 1].isDigit() && result[i + 1].isDigit())
+    {
+      continue;
+    }
+    tmp += result[i];
+  }
+
+  tmp += result[result.size() - 1];
+
+  return tmp;
+}
+
 /////////////////////////////////////////
 QStringList CDso::getNameInt(dso_t *pDso)
 /////////////////////////////////////////
-{
-  //return QStringList() << "ABCD3";  
-
+{ 
   char *p = dsoNames + pDso->nameOffs;
   QString str = QString(p);
 
+  // TODO: pouze mezi pismenem a cislem
   str = str.remove(" ");
+  //str = removeSpacesLN(str);
+
+  if (str.isEmpty())
+  {
+    qDebug() << "empty??" << getStrRA(pDso->rd.Ra) << getStrDeg(pDso->rd.Dec) << pDso->mag << pDso->type << pDso->sx;
+  }  
 
   return str.split("\t");
 }
@@ -702,7 +732,7 @@ int CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, map
 /////////////////////////////////////////////////////////////////////////////////////////////////
 {  
   int sz = m_minSize - 1;
-  pPainter->setPen(m_pen);
+  pPainter->setPen(m_pen);  
 
   int sx = trfGetArcSecToPix(pDso->sx);
   int sy = trfGetArcSecToPix(pDso->sy);
@@ -732,7 +762,7 @@ int CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, map
       ang = -(D2R(pDso->pa) - ang);
   }
 
-  pPainter->save();
+  pPainter->save();  
   pPainter->translate(pt->sx, pt->sy);
   pPainter->rotate(R2D(ang));
   pPainter->drawEllipse(QPoint(0, 0), sy, sx);
@@ -747,7 +777,7 @@ int CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, map
     float vy = sx * sin( - ang + MPI/2);
     int y = sqrt(uy*uy + vy*vy);
 
-    g_labeling.addLabel(QPoint(pt->sx, pt->sy + y + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());    
+    g_labeling.addLabel(QPoint(pt->sx, pt->sy + y + m_fntHeight), 0, getName(pDso), FONT_DSO, SL_AL_CENTER, SL_AL_FIXED, pPainter->opacity());
 
     b = y;
   }
@@ -986,6 +1016,7 @@ int CDso::renderObj(SKPOINT *pt, dso_t *pDso, mapView_t *mapView, bool addToList
       break;
 
     case DSOT_PLN_NEBULA:
+    case DSOT_NGC_DUPP:
       b = renderPlnNebulaSymbol(pt, pDso, pPainter, addToList);
       break;
 

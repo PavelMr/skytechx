@@ -293,5 +293,6 @@
         <file>res/vo_cat.png</file>
         <file>res/night_mode.png</file>
         <file>res/red/nova.png</file>
+        <file>res/pen_icon.png</file>
     </qresource>
 </RCC>

@@ -250,7 +250,8 @@ void VOCatalogManagerDialog::slotPreview()
   QString textA = getStrRA(item->m_minRD.Ra) + " .. " + getStrRA(item->m_maxRD.Ra);
   QString textB = getStrDeg(item->m_minRD.Dec) + " .. " + getStrDeg(item->m_maxRD.Dec);
 
-  VOTPreviewDialog dlg(this, textA, textB, QPixmap::fromImage(blurredImage(img, 1, false)), widget->property("vo_name").toString());
+  QPixmap pixmap = QPixmap::fromImage(blurredImage(img, 1, false));
+  VOTPreviewDialog dlg(this, textA, textB, pixmap, widget->property("vo_name").toString());
 
   dlg.exec();
 }

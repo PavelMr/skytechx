@@ -1,6 +1,8 @@
 #include "cgamepad.h"
 #include "skcore.h"
 
+#ifdef Q_OS_WIN32
+
 CGamepad::CGamepad(int period, double deadZone, double speedMul, QObject *parent) :
   QObject(parent) ,
   m_deadZone(deadZone),
@@ -279,3 +281,4 @@ void CGamepad::slotTimeout()
 }
 
 
+#endif // Q_OS_WIN32

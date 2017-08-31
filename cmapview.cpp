@@ -687,6 +687,8 @@ void CMapView::mouseReleaseEvent(QMouseEvent *e)
 
     bool found = mapObjSearch(e->pos().x(), e->pos().y(), &obj);
 
+    qDebug() << found << obj.type << obj.x << obj.y;
+
     if (found && (obj.type != MO_INSERT && obj.type != MO_TELESCOPE))
     {
       CObjFillInfo info;
@@ -2338,13 +2340,6 @@ void CMapView::slotSlewingTimer()
   }
 }
 
-static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
-{
-  // http://www.movable-type.co.uk/scripts/latlong.html
-
-  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
-  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
-}
 
 void CMapView::slotGamepadChange(const gamepad_t &state, double speedMul)
 {

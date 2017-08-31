@@ -533,6 +533,7 @@
     <addaction name="separator"/>
     <addaction name="separator"/>
     <addaction name="actionEpoch_J2000_0"/>
+    <addaction name="actionGeocentric"/>
    </widget>
    <widget class="QMenu" name="menu_Time_Location">
     <property name="title">
@@ -3836,9 +3837,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </attribute>
    <addaction name="actionNight_mode"/>
-   <addaction name="actionAntialiasing"/>
-   <addaction name="actionBilinear_interpolation"/>
-   <addaction name="actionSymbol_Real_planet_rendering"/>
+   <addaction name="actionRendering"/>
   </widget>
   <widget class="QToolBar" name="tb_tele">
    <property name="windowTitle">
@@ -3957,8 +3956,6 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionHorizon_mode_Zenith_up"/>
    <addaction name="actionEcliptic"/>
    <addaction name="separator"/>
-   <addaction name="actionEpoch_J2000_0"/>
-   <addaction name="actionGeocentric"/>
   </widget>
   <widget class="QToolBar" name="tb_window">
    <property name="windowTitle">
@@ -3985,10 +3982,9 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionHIPS"/>
    <addaction name="separator"/>
+   <addaction name="actionHIPS"/>
    <addaction name="actionHEALPix_grid"/>
-   <addaction name="actionHIPS_billinear"/>
    <addaction name="actionHIPS_properties"/>
   </widget>
   <action name="action_Exit_2">
@@ -5849,10 +5845,13 @@ p, li { white-space: pre-wrap; }
      <activeon>:/res/ico_geo.png</activeon>:/res/ico_topo.png</iconset>
    </property>
    <property name="text">
-    <string>Geocentric</string>
+    <string>Geocentric position</string>
    </property>
    <property name="toolTip">
     <string>If checked then solar system is geocentric</string>
+   </property>
+   <property name="shortcut">
+    <string>G</string>
    </property>
   </action>
   <action name="actionShow_local_meridian">
@@ -5944,7 +5943,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
@@ -6034,6 +6033,18 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Clear all tracking paths...</string>
+   </property>
+  </action>
+  <action name="actionRendering">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/pen_icon.png</normaloff>:/res/pen_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rendering</string>
+   </property>
+   <property name="toolTip">
+    <string>Show rendering options</string>
    </property>
   </action>
  </widget>

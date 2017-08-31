@@ -23,11 +23,13 @@ CAbout::CAbout(QWidget *parent) :
 
   QString winVer;
 
-#ifdef _WIN64
-  winVer = " (64 bits) MSVC 2013";
+#ifdef Q_OS_WIN
+  winVer = " MSVC 2013";
 #else
-  winVer = " (32 bits) MSVC 2013";
+  winVer = " G++";
 #endif
+
+  winVer += " " + QSysInfo::buildAbi();
 
   ui->textBrowser_about->setOpenExternalLinks(true);
   ui->textBrowser_about->setHtml(QString("<html><body><b>SkytechX</b><br>"

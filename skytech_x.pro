@@ -13,6 +13,7 @@ QT += core gui network xml sql widgets printsupport multimedia charts script
 #CONFIG   += plugin
 #CONFIG   += c++11
 
+DEFINES += _USE_OMP
 DEFINES += NOMINMAX
 
 #Release:DEFINES  += QT_NO_DEBUG_OUTPUT QT_FATAL_WARNINGS
@@ -31,6 +32,8 @@ win32-msvc2013    : LIBS += winmm.lib
 
 Release:win32-msvc2013 :  QMAKE_CXXFLAGS += /openmp /O2 /GS- /GA
 Debug:win32-msvc2013 :    QMAKE_CXXFLAGS += /openmp
+
+gcc:
 
 #for WIN XP
 contains(QT_ARCH, i386) {

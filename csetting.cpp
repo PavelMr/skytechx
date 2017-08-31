@@ -1965,6 +1965,7 @@ void CSetting::fillGamepad()
 
   ui->cb_device->clear();
 
+#ifdef Q_OS_WIN
   for (int i = 0; i < 16; i++)
   {
     gamePadInfo_t info;
@@ -1978,6 +1979,10 @@ void CSetting::fillGamepad()
       }
     }
   }
+#else
+    // TODO: no gamepad
+    ui->tabWidget->setTabEnabled(5, false);
+#endif
 
   QComboBox *cb[20] = {
                         ui->cb_left,

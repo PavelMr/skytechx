@@ -889,7 +889,18 @@ MainWindow::MainWindow(QWidget *parent) :
   setToolBoxPage(0);
 
   //m_horizonEditor = new CHorEditorWidget();
-  //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));
+  //ui->toolBox->addItem(m_horizonEditor, tr("Horizon Editor"));    
+
+  QMenu *menu = new QMenu(this);
+  QToolButton *button = dynamic_cast<QToolButton *>(ui->tb_render->widgetForAction(ui->actionRendering));
+
+  menu->addAction(ui->actionSymbol_Real_planet_rendering);
+  menu->addAction(ui->actionAntialiasing);
+  menu->addAction(ui->actionBilinear_interpolation);
+  menu->addAction(ui->actionHIPS_billinear);
+
+  button->setMenu(menu);
+  button->setPopupMode(QToolButton::InstantPopup);
 
   // HIPS source //////////////////////////////////
 
@@ -901,8 +912,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   fillHIPSSources();
 
-  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHEALPix_grid, SLOT(setEnabled(bool)));
-  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHIPS_billinear, SLOT(setEnabled(bool)));
+  connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHEALPix_grid, SLOT(setEnabled(bool)));  
   connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHIPS_properties, SLOT(setEnabled(bool)));
 
   ui->actionHIPS_billinear->setChecked(settings.value("hips_bi", false).toBool());
@@ -3755,7 +3765,7 @@ void MainWindow::on_pushButton_2_clicked()
 //////////////////////////////////////////
 {
   CDSSOpenDialog dlg(this, tr("Open a File"), QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dssfits/",
-                     "DSS Fits file (*.fits);;JPG (*.jpg);;SBI (*.sbi)");
+                     "DSS Fits file (*.fits)");
   dlg.setAcceptMode(QFileDialog::AcceptOpen);
   dlg.setFileMode(QFileDialog::ExistingFiles);
 
@@ -7032,3 +7042,19 @@ void MainWindow::on_cb_lf_labels_toggled(bool)
 {
   ui->widget->repaintMap();
 }
+
+void MainWindow::on_actionRendering_triggered()
+{
+  /*
+  QMenu *menu = new QMenu(this);
+  QToolButton *button = dynamic_cast<QToolButton *>(ui->tb_render->widgetForAction(ui->actionRendering));
+
+  menu->addAction(ui->actionHIPS_billinear);
+  menu->addAction("a33b");
+
+  QPoint pos = button->mapToGlobal(QPoint(0, 0));
+
+  menu->exec(pos);
+  */
+}
+

@@ -2,6 +2,7 @@
 
 #include <QtCore>
 #include <QAudioDeviceInfo>
+
 #include <omp.h>
 
 #include "skcore.h"
@@ -26,23 +27,6 @@ bool g_log = false;
 
 QApplication *g_pApp = NULL;
 
-////////////////////////////
-QString loadNightStyle(void)
-////////////////////////////
-{
-  QString str = readAllFile("../data/styles/night.qss");
-
-  return(str);
-}
-
-/////////////////////////////
-QString loadNormalStyle(void)
-/////////////////////////////
-{
-  QString str = readAllFile("../data/styles/normal.qss");
-
-  return(str);
-}
 
 static bool getCommandParamValue(const QString command, const QString& param, const QString& separator, QString& value)
 {
@@ -64,7 +48,7 @@ static bool getCommandParamValue(const QString command, const QString& param, co
   return true;
 }
 
-void messageHandler(QtMsgType type, const QMessageLogContext & /*context*/, const QString &msg)
+static void messageHandler(QtMsgType type, const QMessageLogContext & /*context*/, const QString &msg)
 {
   QString txt;
   switch (type)
@@ -118,12 +102,11 @@ static void copyPath(const QString &src, const QString &dst)
   }
 }
 
-void copyAppData()
+static void copyAppData()
 {
   // copy app data to current user folder (if not exists)
   copyPath("../appdata", QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 }
-
 
 ////////////////////////////////
 int main(int argc, char *argv[])
@@ -142,13 +125,16 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
   QApplication a(argc, argv);
-  
+
   QSharedMemory sharedMemory("The SkytechX (PMR)");
   if (!sharedMemory.create(1) && sharedMemory.error() == QSharedMemory::AlreadyExists)
   {
     msgBoxError(NULL, QObject::tr("SkytechX already running!"));
     return 1;
-  }  
+  }    
+
+  qDebug() << "writable dir" << QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+  qDebug() << "current dir" << QDir::currentPath();
 
   LOG_FILE = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log/log.txt";
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/log");   
@@ -177,7 +163,7 @@ int main(int argc, char *argv[])
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/gamepad");
   checkAndCreateFolder(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data/dso");  
 
-  copyAppData();
+  copyAppData();  
 
   g_soundManager.init();
 
@@ -201,7 +187,9 @@ int main(int argc, char *argv[])
     else
     if (getCommandParamValue(param, "-numthreads=", "=", value))
     {
+#ifdef _USE_OMP
       omp_set_num_threads(value.toInt());
+#endif
     }
     else
     if (getCommandParamValue(param, "-develop_mode=", "=", value))

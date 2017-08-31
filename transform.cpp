@@ -636,14 +636,6 @@ double trfGetAngleDegFlipped(double ang)
   return ang;
 }
 
-static void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut)
-{
-  // http://www.movable-type.co.uk/scripts/latlong.html
-
-  decOut = asin(sin(dec) * cos(distance) + cos(dec) * sin(distance) * cos(-angle));
-  raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
-}
-
 
 double trfGetAngleToEast(double ra, double dec, double epoch)
 {

@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QTimer>
 
-#include <windows.h>
+#ifdef Q_OS_WIN32
+  #include <windows.h>
+#endif
 
 // button 0-31
 #define GP_X_PLUS_AXIS     100
@@ -73,6 +75,9 @@ typedef struct
 class CGamepad : public QObject
 {
   Q_OBJECT
+
+#ifdef Q_OS_WIN32
+
 public:
   explicit CGamepad(int period = 50, double deadZone = 0.1, double speedMul = 1.0, QObject *parent = 0);
   ~CGamepad();
@@ -107,6 +112,7 @@ signals:
 public slots:
   void slotTimeout();
 
+#endif
 };
 
 #endif // CGAMEPAD_H
