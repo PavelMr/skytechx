@@ -124,6 +124,8 @@ void CDso::load()
 
   loadShapes();
   loadNames();
+
+  //qDebug() << getCatalogue(&dso[dsoHead.numDso - 10]);
 }
 
 
@@ -190,23 +192,9 @@ void CDso::loadNames(void)
 QString CDso::getCatalogue(dso_t *pDso)
 ///////////////////////////////////////
 {
-  char *p = dsoCats + pDso->cataloque;
-  QString str;
-  static char tmp[256];
-  char *ptmp = tmp;
-
-  while (*p != '\0')
-  {
-    *ptmp = *p;
-    ptmp++;
-    p++;
-  }
-
-  *ptmp = '\0';
-  str = tmp;
-
-  return(str);
+  return getCatalogue(pDso->cataloque);
 }
+
 
 /////////////////////////////////////
 QString CDso::getCatalogue(int index)
@@ -530,9 +518,9 @@ QString CDso::getName(dso_t *pDso, int idx)
 static QString removeSpacesLN(const QString text)
 /////////////////////////////////////////////////
 {
-  QString result = text.simplified();
+  QString result = text;//.simplified();
 
-  qDebug() << text;
+  //qDebug() << text;
   Q_ASSERT(result.size() >= 2);
 
   QString tmp = (QString)result[0];
@@ -559,8 +547,11 @@ QStringList CDso::getNameInt(dso_t *pDso)
   QString str = QString(p);
 
   // TODO: pouze mezi pismenem a cislem
-  str = str.remove(" ");
-  //str = removeSpacesLN(str);
+  //str = str.remove(" ");
+  //qDebug() << str;
+  str = removeSpacesLN(str);
+  //qDebug() << str;
+
 
   if (str.isEmpty())
   {
