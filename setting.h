@@ -98,7 +98,7 @@ typedef struct
   double jupGRSYearDrift;
   double jupGRSDate;
   QString moonImage;
-  bool    useCustomMoonTexture;
+  bool    useCustomMoonTexture;  
 } planet_t;
 
 typedef struct
@@ -227,6 +227,7 @@ typedef struct
   bool  show;
   QRgb  color;
   float alpha;
+  double  earthShadowDistance;
 } setES_t;
 
 typedef struct

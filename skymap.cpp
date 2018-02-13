@@ -55,6 +55,7 @@ extern bool g_showLegends;
 extern bool g_showLabels;
 extern bool g_showDrawings;
 extern bool g_showObjTracking;
+extern bool g_showAsterism;
 
 extern bool g_showAsteroids;
 extern bool g_showComets;
@@ -750,7 +751,10 @@ static void smRenderDSO(mapView_t *mapView, CSkPainter *pPainter, QImage *pImg)
         if (!g_skSet.map.dsoTypeShow[d->type])
           continue;
 
-        double opacity = 1;
+        if (!g_showAsterism && d->type == DSOT_ASTERISM)
+          continue;
+
+        double opacity = 1;        
 
         if (d->mag == NO_DSO_MAG)
         {
@@ -1209,86 +1213,95 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
   // draw earth shadow
   if (g_skSet.map.es.show)
   {
+    double dist;
+
     orbit_t es;
+    orbit_t moon;
     SKPOINT pt;
 
     cAstro.calcEarthShadow(&es, &o[PT_MOON]);
+    cAstro.calcPlanet(PT_MOON, &moon);
 
     double ra = es.lRD.Ra;
     double dec = es.lRD.Dec;
 
-    precess(&ra, &dec, mapView->jd, JD2000);
+    dist = anSep(ra, dec, moon.lRD.Ra, moon.lRD.Dec);
 
-    trfRaDecToPointCorrectFromTo(&es.lRD, &pt, mapView->jd, JD2000);
-    if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, 0.5 * D2R(es.sx / 3600.0)))
+    if (dist <= D2R(g_skSet.map.es.earthShadowDistance))
     {
-      trfProjectPointNoCheck(&pt);
-      double rot = 180 + R2D(trfGetAngleToNPole(ra, dec));
+      precess(&ra, &dec, mapView->jd, JD2000);
 
-      int r1 = trfGetArcSecToPix(es.sx);
-      int r2 = trfGetArcSecToPix(es.sy);
-
-      pPainter->save();
-      pPainter->translate(pt.sx, pt.sy);
-      pPainter->rotate(rot);
-
-      pPainter->setPen(g_skSet.map.es.color);
-      pPainter->setBrush(QColor(0,0,0, g_skSet.map.es.alpha));
-
-      pPainter->drawEllipse(QPoint(0, 0), r1, r1);
-      pPainter->drawEllipse(QPoint(0, 0), r2, r2);
-
-      pPainter->setPen(QPen(QColor(g_skSet.map.es.color), 1, Qt::DotLine));
-      pPainter->drawCross(0, 0, r1);
-      pPainter->drawCrossX(0, 0, r1 * 0.7071067811865475);
-
-      pPainter->restore();
-
-      QTransform tr;
-
-      tr.translate(pt.sx, pt.sy);
-      tr.rotate(rot);
-
-      pPainter->setPen(g_skSet.map.es.color);
-      pPainter->setBrush(QColor(0, 0, 0, g_skSet.map.es.alpha));
-
-      int fs = 10;
-      QPoint p;
-
-      setSetFont(FONT_EARTH_SHD, pPainter);
-      setSetFontColor(FONT_EARTH_SHD, pPainter);
-
-      QString labels[4] = {QObject::tr("S"),
-                           QObject::tr("N"),
-                           QObject::tr("E"),
-                           QObject::tr("W")};
-      int idx[4];
-
-      if (mapView->flipX + mapView->flipY == 1)
+      trfRaDecToPointCorrectFromTo(&es.lRD, &pt, mapView->jd, JD2000);
+      if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, 0.5 * D2R(es.sx / 3600.0)))
       {
-        idx[0] = 0;
-        idx[1] = 1;
-        idx[2] = 3;
-        idx[3] = 2;
-      }
-      else
-      {
-        idx[0] = 0;
-        idx[1] = 1;
-        idx[2] = 2;
-        idx[3] = 3;
-      }
+        trfProjectPointNoCheck(&pt);
+        double rot = 180 + R2D(trfGetAngleToNPole(ra, dec));
 
-      p = tr.map(QPoint(0, r1 + fs));
-      pPainter->drawCText(p.x(), p.y(), labels[idx[0]]);
-      p = tr.map(QPoint(0, -r1 - fs));
-      pPainter->drawCText(p.x(), p.y(), labels[idx[1]]);
-      p = tr.map(QPoint(-r1 - fs, 0));
-      pPainter->drawCText(p.x(), p.y(), labels[idx[2]]);
-      p = tr.map(QPoint(r1 + fs, 0));
-      pPainter->drawCText(p.x(), p.y(), labels[idx[3]]);
+        int r1 = trfGetArcSecToPix(es.sx);
+        int r2 = trfGetArcSecToPix(es.sy);
 
-      addMapObj(es.lRD, pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
+        pPainter->save();
+        pPainter->translate(pt.sx, pt.sy);
+        pPainter->rotate(rot);
+
+        pPainter->setPen(g_skSet.map.es.color);
+        pPainter->setBrush(QColor(0,0,0, g_skSet.map.es.alpha));
+
+        pPainter->drawEllipse(QPoint(0, 0), r1, r1);
+        pPainter->drawEllipse(QPoint(0, 0), r2, r2);
+
+        pPainter->setPen(QPen(QColor(g_skSet.map.es.color), 1, Qt::DotLine));
+        pPainter->drawCross(0, 0, r1);
+        pPainter->drawCrossX(0, 0, r1 * 0.7071067811865475);
+
+        pPainter->restore();
+
+        QTransform tr;
+
+        tr.translate(pt.sx, pt.sy);
+        tr.rotate(rot);
+
+        pPainter->setPen(g_skSet.map.es.color);
+        pPainter->setBrush(QColor(0, 0, 0, g_skSet.map.es.alpha));
+
+        int fs = 10;
+        QPoint p;
+
+        setSetFont(FONT_EARTH_SHD, pPainter);
+        setSetFontColor(FONT_EARTH_SHD, pPainter);
+
+        QString labels[4] = {QObject::tr("S"),
+                             QObject::tr("N"),
+                             QObject::tr("E"),
+                             QObject::tr("W")};
+        int idx[4];
+
+        if (mapView->flipX + mapView->flipY == 1)
+        {
+          idx[0] = 0;
+          idx[1] = 1;
+          idx[2] = 3;
+          idx[3] = 2;
+        }
+        else
+        {
+          idx[0] = 0;
+          idx[1] = 1;
+          idx[2] = 2;
+          idx[3] = 3;
+        }
+
+        p = tr.map(QPoint(0, r1 + fs));
+        pPainter->drawCText(p.x(), p.y(), labels[idx[0]]);
+        p = tr.map(QPoint(0, -r1 - fs));
+        pPainter->drawCText(p.x(), p.y(), labels[idx[1]]);
+        p = tr.map(QPoint(-r1 - fs, 0));
+        pPainter->drawCText(p.x(), p.y(), labels[idx[2]]);
+        p = tr.map(QPoint(r1 + fs, 0));
+        pPainter->drawCText(p.x(), p.y(), labels[idx[3]]);
+
+        addMapObj(es.lRD, pt.sx, pt.sy, MO_EARTH_SHD, MO_CIRCLE, r1, 0, 0, -100);
+      }
     }
   }
 }

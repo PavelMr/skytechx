@@ -294,5 +294,6 @@
         <file>res/night_mode.png</file>
         <file>res/red/nova.png</file>
         <file>res/pen_icon.png</file>
+        <file>res/ico_asterism.png</file>
     </qresource>
 </RCC>

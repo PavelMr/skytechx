@@ -696,6 +696,8 @@ private slots:
 
   void on_actionRendering_triggered();
 
+  void on_actionAsterism_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;

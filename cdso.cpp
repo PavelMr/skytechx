@@ -99,7 +99,7 @@ void CDso::load()
       dso[i].sy = dso[i].sx;
     }
   }
-  pf.close();  
+  pf.close();
 
   // sort dso by size
   qsort(dso, dsoHead.numDso, sizeof(dso_t), dsoSort);
@@ -116,7 +116,7 @@ void CDso::load()
 
   // create name map list
   for (qint32 i = 0; i < dsoHead.numDso; i++)
-  {
+  {    
     namesMap[dso[i].nameOffs].append(cDSO.getNameInt(&dso[i]));
     Q_ASSERT(namesMap[dso[i].nameOffs].size() > 0);
   }
@@ -518,10 +518,11 @@ QString CDso::getName(dso_t *pDso, int idx)
 static QString removeSpacesLN(const QString text)
 /////////////////////////////////////////////////
 {
-  QString result = text;//.simplified();
+  QString result = text;
 
   //qDebug() << text;
-  Q_ASSERT(result.size() >= 2);
+  //Q_ASSERT(result.size() >= 2);
+  if (result.isEmpty()) return "";
 
   QString tmp = (QString)result[0];
 
@@ -546,15 +547,13 @@ QStringList CDso::getNameInt(dso_t *pDso)
   char *p = dsoNames + pDso->nameOffs;
   QString str = QString(p);
 
-  // TODO: pouze mezi pismenem a cislem
-  //str = str.remove(" ");
+  //qDebug() << p;
+  str = removeSpacesLN(str);  
   //qDebug() << str;
-  str = removeSpacesLN(str);
-  //qDebug() << str;
-
 
   if (str.isEmpty())
   {
+    qDebug() << p << pDso->nameOffs << pDso->type;
     qDebug() << "empty??" << getStrRA(pDso->rd.Ra) << getStrDeg(pDso->rd.Dec) << pDso->mag << pDso->type << pDso->sx;
   }  
 

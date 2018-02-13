@@ -680,6 +680,7 @@
     <addaction name="actionDSO"/>
     <addaction name="actionDSO_Shapes"/>
     <addaction name="actionShow_Hide_VO_Catalogue"/>
+    <addaction name="actionAsterism"/>
     <addaction name="separator"/>
     <addaction name="actionConstellation_lines"/>
     <addaction name="actionConstellation_boundaries"/>
@@ -3916,6 +3917,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionDSO"/>
    <addaction name="actionDSO_Shapes"/>
    <addaction name="actionShow_Hide_VO_Catalogue"/>
+   <addaction name="actionAsterism"/>
    <addaction name="separator"/>
    <addaction name="actionConstellation_lines"/>
    <addaction name="actionConstellation_boundaries"/>
@@ -6045,6 +6047,21 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Show rendering options</string>
+   </property>
+  </action>
+  <action name="actionAsterism">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_asterism.png</normaloff>:/res/ico_asterism.png</iconset>
+   </property>
+   <property name="text">
+    <string>Asterisms</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Asterisms</string>
    </property>
   </action>
  </widget>

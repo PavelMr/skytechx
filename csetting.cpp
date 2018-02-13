@@ -601,6 +601,7 @@ void CSetting::setValues()
   ui->pushButton_41->setColor(set.map.es.color);
   ui->pushButton_42->setFontColor(setFonts[FONT_EARTH_SHD], set.fonst[FONT_EARTH_SHD].color);
   ui->horizontalSlider_15->setValue(set.map.es.alpha);
+  ui->spinBox_10->setValue(set.map.es.earthShadowDistance);
 
   if (!set.map.planet.useCustomMoonTexture)
   {
@@ -983,6 +984,7 @@ void CSetting::apply()
   // earth shadow
   g_skSet.map.es.show = ui->checkBox_17->isChecked();
   g_skSet.map.es.alpha = ui->horizontalSlider_15->value();
+  g_skSet.map.es.earthShadowDistance = ui->spinBox_10->value();
 
   g_skSet.map.planet.jupGRSLon = ui->doubleSpinBox_32->value();
   g_skSet.map.planet.jupGRSYearDrift = ui->doubleSpinBox_41->value();

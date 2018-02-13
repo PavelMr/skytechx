@@ -119,6 +119,7 @@ Q_DECLARE_METATYPE(lfParam_t)
 bool g_showCenterScreen = false;
 bool g_showDSOShapes = false;
 bool g_showVO = false;
+bool g_showAsterism = false;
 bool g_showDSO = false;
 bool g_showStars = false;
 bool g_showConstLines = false;
@@ -784,6 +785,7 @@ MainWindow::MainWindow(QWidget *parent) :
   g_showVO = settings.value("show_vo", true).toBool();
   g_showDSOShapes = settings.value("show_dso_shapes", true).toBool();
   g_showDSO = settings.value("show_dso", true).toBool();
+  g_showAsterism = settings.value("show_asterisms", true).toBool();
   g_showStars = settings.value("show_stars", true).toBool();
   g_showConstLines = settings.value("show_const_lines", true).toBool();
   g_showConstBnd = settings.value("show_const_bnd", true).toBool();
@@ -812,6 +814,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->actionConstellation_lines->setChecked(g_showConstLines);
   ui->actionConstellation_boundaries->setChecked(g_showConstBnd);
   ui->actionDSO->setChecked(g_showDSO);
+  ui->actionAsterism->setChecked(g_showAsterism);
   ui->actionDSO_Shapes->setChecked(g_showDSOShapes);
   ui->actionShow_Hide_VO_Catalogue->setChecked(g_showVO);
   ui->checkBox->setChecked(!g_showDSOShapes);
@@ -1517,6 +1520,7 @@ void MainWindow::saveAndExit()
   settings.setValue("show_dso_shapes", g_showDSOShapes);
   settings.setValue("show_vo", g_showVO);
   settings.setValue("show_dso", g_showDSO);
+  settings.setValue("show_asterisms", g_showAsterism);
   settings.setValue("show_stars", g_showStars);
   settings.setValue("show_const_lines", g_showConstLines);
   settings.setValue("show_const_bnd", g_showConstBnd);
@@ -4681,6 +4685,9 @@ void MainWindow::on_actionShow_all_triggered()
   ui->actionConstellation_boundaries->setChecked(true);
   g_showConstBnd = true;
 
+  ui->actionAsterism->setChecked(true);
+  g_showAsterism = true;
+
   ui->actionDSO->setChecked(true);
   g_showDSO = true;
   ui->checkBox->setEnabled(true);
@@ -5116,6 +5123,9 @@ void MainWindow::on_actionHide_all_triggered()
 
   ui->actionMilkyway->setChecked(false);
   g_showMW = false;
+
+  ui->actionAsterism->setChecked(false);
+  g_showAsterism = false;
 
   ui->actionShow_Hide_VO_Catalogue->setChecked(false);
   g_showVO = false;
@@ -7058,3 +7068,9 @@ void MainWindow::on_actionRendering_triggered()
   */
 }
 
+
+void MainWindow::on_actionAsterism_triggered(bool checked)
+{
+  g_showAsterism = checked;
+  ui->widget->repaintMap();
+}

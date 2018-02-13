@@ -649,17 +649,25 @@ bool UpdateThread::readRates()
 {
   QVector <double> *list[2] = {&raRate, &decRate};
 
+  qDebug() << "reading rates 0";
+
   QVariant res = m_device->dynamicCall("CanMoveAxis(int)", QVariant(0));
   if (!res.isValid() || !res.toBool())
     return false;
+
+  qDebug() << "reading rates 1";
 
   res = m_device->dynamicCall("CanMoveAxis(int)", QVariant(1));
   if (!res.isValid() || !res.toBool())
     return false;
 
+  qDebug() << "reading rates 2";
+
   for (int i = 0; i < 2; i++)
   {
+    qDebug() << "AxisRates" << i;
     QAxObject *o = m_device->querySubObject("AxisRates(int)", QVariant(i));
+    qDebug() << "AxisRates" << i << "ok";
 
     if (!o)
     {

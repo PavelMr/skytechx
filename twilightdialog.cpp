@@ -75,8 +75,10 @@ void TwilightDialog::setView(mapView_t *view)
   ui->label_t1->setText(m_dayLight.beginNauticalTw > 0 ? getStrTime(m_dayLight.beginNauticalTw, tz, true) : "---");
   ui->label_t2->setText(m_dayLight.beginCivilTw > 0 ? getStrTime(m_dayLight.beginCivilTw, tz, true) : "---");
   ui->label_t3->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_RISE ? getStrTime(m_rts.rise, tz, true) : "---");
+  ui->label_rise_azm->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_RISE ? getStrNumber("", R2D(m_rts.rAzm), 2, "°") : "---");
   ui->label_t4->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_TRANSIT ? getStrTime(m_rts.transit, tz, true) : "---");
   ui->label_t5->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_SET ? getStrTime(m_rts.set, tz, true) : "---");
+  ui->label_set_azm->setText(m_rts.flag == RTS_DONE && m_rts.rts & RTS_T_SET ? getStrNumber("", R2D(m_rts.sAzm), 2, "°") : "---");
   ui->label_t6->setText(m_dayLight.endCivilTw > 0 ? getStrTime(m_dayLight.endCivilTw, tz, true) : "---");
   ui->label_t7->setText(m_dayLight.endNauticalTw > 0 ? getStrTime(m_dayLight.endNauticalTw, tz, true) : "---");
   ui->label_t8->setText(m_dayLight.endAstroTw > 0 ? getStrTime(m_dayLight.endAstroTw, tz, true) : "---");

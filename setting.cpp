@@ -115,6 +115,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.es.show", set->map.es.show, ds);
   writeVal("map.es.color", set->map.es.color, ds);
   writeVal("map.es.alpha", set->map.es.alpha, ds);
+  writeVal("map.es.earthShadowDistance", set->map.es.earthShadowDistance, ds);
 
   // stars
   writeVal("map.star.propNamesFromFov", set->map.star.propNamesFromFov, ds);
@@ -285,9 +286,9 @@ bool setSave(QString name, setting_t *set)
 
   writeVal("map.planet.phaseAlpha", set->map.planet.phaseAlpha, ds);
   writeVal("map.planet.plnRad", set->map.planet.plnRad, ds);
-  writeVal("map.planet.satRad", set->map.planet.satRad, ds);
+  writeVal("map.planet.satRad", set->map.planet.satRad, ds);  
   writeVal("map.planet.jupGRSLon", set->map.planet.jupGRSLon, ds);
-  writeVal("map.planet.jupGRSYearDrift", set->map.planet.jupGRSYearDrift, ds);
+  writeVal("map.planet.jupGRSYearDrift", set->map.planet.jupGRSYearDrift, ds);  
   writeVal("map.planet.jupGRSDate", set->map.planet.jupGRSDate, ds);
   writeVal("map.planet.moonImage", set->map.planet.moonImage, ds);
   writeVal("map.planet.useCustomMoonTexture", set->map.planet.useCustomMoonTexture, ds);
@@ -437,6 +438,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.es.show = readVal("map.es.show", true, tMap).toBool();
   set->map.es.color = readVal("map.es.color", MRGB(0, 200, 0), tMap).toUInt();
   set->map.es.alpha = readVal("map.es.alpha", 128, tMap).toFloat();
+  set->map.es.earthShadowDistance = readVal("map.es.earthShadowDistance", 10, tMap).toFloat();
 
   // stars
   set->map.star.propNamesFromFov = readVal("map.star.propNamesFromFov", D2R(90), tMap).toDouble();
