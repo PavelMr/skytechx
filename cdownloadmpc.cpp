@@ -131,10 +131,14 @@ void CDownloadMPC::readMPCLine(QString str)
     }
   }
 
+  bool ok;
+
   a.selected = true;
   a.lastJD = CM_UNDEF;
-  a.H = str.mid(8, 5).toFloat();
-  a.G = str.mid(14, 5).toFloat();
+  a.H = str.mid(8, 5).toFloat(&ok);
+  if (!ok) a.H = CM_NO_MAG;
+  a.G = str.mid(14, 5).toFloat(&ok);
+  if (!ok) a.G = CM_NO_MAG;
   a.epoch = unpackMPCDate(str.mid(20, 5));
   a.M = DEG2RAD(str.mid(26, 9).toDouble());
   a.peri = DEG2RAD(str.mid(37, 9).toDouble());

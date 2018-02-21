@@ -625,7 +625,7 @@ QString getNumber(int val)
 QString getStrMag(double mag)
 /////////////////////////////
 {
-  if (mag > 50.)
+  if (mag >= 50.)
   {
     return QObject::tr("N/A");
   }

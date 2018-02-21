@@ -85,6 +85,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 #define CM_UNDEF           -12345678
 #define IS_UNDEF(v)        (qAbs(v - CM_UNDEF) < 0.001)
+#define CM_NO_MAG          50
 
 #define DL_OK              QDialog::Accepted
 #define DL_CANCEL          QDialog::Rejected

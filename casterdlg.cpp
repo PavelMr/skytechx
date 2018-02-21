@@ -112,6 +112,11 @@ static QString packMPCDate(double jd)
 static double caclHGMag(double h, double g, double rp, double rho, double rsn)
 //////////////////////////////////////////////////////////////////////////////
 {
+  if (h == CM_NO_MAG && g == CM_NO_MAG)
+  {
+    return CM_NO_MAG;
+  }
+
   double psi_t, Psi_1, Psi_2, beta;
   double tb2;
 
@@ -276,9 +281,21 @@ void astRender(CSkPainter *p, mapView_t *view, float maxMag)
       a->lastJD = view->jd;
     }
 
-    if ((a->orbit.mag > maxMag + g_skSet.map.aster.plusMag) || (a->orbit.mag > g_skSet.map.aster.maxMag))
+    if (a->orbit.mag != CM_NO_MAG)
     {
-      continue;
+      if ((a->orbit.mag > maxMag + g_skSet.map.aster.plusMag) || (a->orbit.mag > g_skSet.map.aster.maxMag))
+      {
+        continue;
+      }
+    }
+    else
+    {
+      const double undefMag = 15.;
+
+      if ((undefMag > maxMag + g_skSet.map.aster.plusMag) || (undefMag > g_skSet.map.aster.maxMag))
+      {
+        continue;
+      }
     }
 
     SKPOINT pt;
