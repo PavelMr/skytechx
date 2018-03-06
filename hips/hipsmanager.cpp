@@ -63,10 +63,7 @@ QVariant HiPSManager::setting(const QString &name)
 
 void HiPSManager::writeSetting(const QString &name, const QVariant &value)
 {
-  QSettings set;
-
-  qDebug() << name << value;
-
+  QSettings set;  
 
   if (name == "hips_mem_cache")
   {
@@ -200,8 +197,7 @@ bool HiPSManager::parseProperties(hipsParams_t *param, const QString &filename, 
     }
   }
 
-  param->url = url;
-  qDebug() << url;
+  param->url = url;  
 
   int count = 0;
   QString tmp;

@@ -449,7 +449,13 @@ bool CLunarFeatures::getCoordinates(const mapView_t *view, const QPointF &center
     if (rad == 0) rad = 10;
     if (d <= rad)
     {
-      desc = "<b>" + item.name + "</b><br>" + item.desc;
+      desc += "<b>" + item.name + "</b><br/>";
+      desc += getTypeName(item.type) + "<br/>";
+      desc += item.desc;
+      if (item.rad > 0)
+      {
+        desc += "<br/>" + QString(tr("Diameter : %1 km")).arg(item.rad);
+      }
       return true;
     }
   }
