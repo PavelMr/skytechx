@@ -509,6 +509,17 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
     if (m_showRadius)
     {
+      QVector3D tmp;
+      float size;
+
+      if (i == 0) // earth
+      {
+        tmp = pos;
+        pos = QVector3D(o.eRect[0], o.eRect[1], o.eRect[2]);
+        size = 1.25;
+      }
+      else size = 0.75;
+
       p1.w.x = pos.x();
       p1.w.y = pos.y();
       p1.w.z = pos.z();            
@@ -519,8 +530,13 @@ void C3DSolarWidget::paintEvent(QPaintEvent *)
 
       if (trfProjectLine(&p1, &p2))
       {
-        p.setPen(QPen(Qt::gray, 0.75, Qt::DotLine));
+        p.setPen(QPen(Qt::gray, size, Qt::DotLine));
         p.drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+      }
+
+      if (i == 0) // earth
+      {
+        pos = tmp;
       }
     }
   }

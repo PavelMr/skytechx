@@ -889,6 +889,28 @@ qint64 folderFileSize(const QString &path)
   return pathFileSize;
 }
 
+bool isFolderWritable(const QString &path)
+{
+  QFile file(path + "/" + "sktmp_file.tmp");
+
+  if (!file.open(QFile::WriteOnly))
+  {
+    return false;
+  }
+
+  char data = 0x10;
+
+  if (file.write(&data, 1) != 1)
+  {
+    return false;
+  }
+
+  file.close();
+  file.remove();
+
+  return true;
+}
+
 double getStartOfDay(double jd, double tz)
 {
   return (floor(jd + tz - 0.5) + 0.5) - tz;

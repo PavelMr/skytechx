@@ -1058,6 +1058,10 @@ void CSetting::apply()
   // UCAC4
   cUcac4.setUCAC4Dir(ui->lineEdit_4->text());
   rset.setValue("ucac4_path", ui->lineEdit_4->text());
+  if (!isFolderWritable(ui->lineEdit_4->text()))
+  {
+    msgBoxInfo(this, tr("UCAC4 must be in writable folder!!!"));
+  }
 
   g_skSet.map.ucac4.show = ui->showUCAC4CheckBox->isChecked();
   g_skSet.map.ucac4.fromFOV = D2R(ui->doubleSpinBox_37->value());

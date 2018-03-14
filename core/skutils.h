@@ -85,6 +85,7 @@ QImage blurredImage(const QImage& image, int radius, bool alphaOnly);
 QString getTempName(const QString &path, const QString &ext);
 
 qint64 folderFileSize(const QString &path);
+bool isFolderWritable(const QString &path);
 
 
 #endif // SKUTILS_H

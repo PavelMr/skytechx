@@ -84,7 +84,15 @@ void CInsertFrmField::updateData()
   double cx =  (x * 3438) / f;
   double cy =  (y * 3438) / f;
 
-  m_name = ui->comboBox->currentText();
+  if (ui->lineEdit->text().isEmpty())
+  {
+    m_name = ui->comboBox->currentText();
+  }
+  else
+  {
+    m_name = ui->lineEdit->text();
+  }
+
   m_x = D2R(cx / 60);
   m_y = D2R(cy / 60);
 
@@ -260,4 +268,9 @@ void CInsertFrmField::on_barlow_valueChanged(double /*arg1*/)
 
   ui->pushButton_3->setEnabled(false);
   ui->pushButton_5->setEnabled(false);
+}
+
+void CInsertFrmField::on_lineEdit_textChanged(const QString &)
+{
+  updateData();
 }

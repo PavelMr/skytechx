@@ -861,10 +861,23 @@ int CDrawing::drawFrmField(QPoint &/*ptOut*/, CSkPainter *p, drawing_t *drw, boo
       trfRaDecToPointNoCorrect(&textRD, &textPoint);
       if (trfProjectPoint(&textPoint))
       {
+        QString str = QString("%1' x %2' - %3").
+                      arg(R2D(drw->frmField_t.x * 60), 0, 'f', 2).
+                      arg(R2D(drw->frmField_t.y * 60), 0, 'f', 2).
+                      arg(drw->frmField_t.text);
         p->save();
         p->translate(textPoint.sx, textPoint.sy);
         p->rotate(textAngle);
-        p->renderText(0, 0, 5, QString("%1' x %2'").arg(R2D(drw->frmField_t.x * 60), 0, 'f', 2).arg(R2D(drw->frmField_t.y * 60), 0, 'f', 2), RT_TOP_RIGHT);
+        QRect rct = p->renderText(0, 0, 5, str, RT_TOP_RIGHT, false);
+        if (rct.width() > rc.width())
+        {
+          str = QString("%1' x %2'").
+                arg(R2D(drw->frmField_t.x * 60), 0, 'f', 2).
+                arg(R2D(drw->frmField_t.y * 60), 0, 'f', 2);
+        }
+        p->renderText(0, 0, 5, str, RT_TOP_RIGHT);
+
+
         p->restore();
       }
     }

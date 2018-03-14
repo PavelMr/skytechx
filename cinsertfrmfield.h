@@ -49,6 +49,8 @@ private slots:
 
   void on_barlow_valueChanged(double arg1);
 
+  void on_lineEdit_textChanged(const QString &arg1);
+
 private:
   Ui::CInsertFrmField *ui;
 };

@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>310</height>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Draw telescope field</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1,1,0,0">
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
@@ -230,6 +230,22 @@
          <double>1.000000000000000</double>
         </property>
        </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="title">
+      <string>Label</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLineEdit" name="lineEdit"/>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
