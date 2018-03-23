@@ -326,7 +326,8 @@ SOURCES += main.cpp\
     planetreport.cpp \
     lunarphase.cpp \
     cdssopendialog.cpp \
-    colongitude.cpp
+    colongitude.cpp \
+    cucac5.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -573,7 +574,8 @@ HEADERS  += mainwindow.h \
     planetreport.h \
     lunarphase.h \
     cdssopendialog.h \
-    colongitude.h
+    colongitude.h \
+    cucac5.h
 
 
 FORMS    += mainwindow.ui \

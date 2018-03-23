@@ -9,6 +9,7 @@
 #include "csatxyz.h"
 #include "Usno2A.h"
 #include "cucac4.h"
+#include "cucac5.h"
 #include "csgp4.h"
 #include "c3dsolar.h"
 #include "cdrawing.h"
@@ -641,6 +642,18 @@ void mapObjContextMenu(CMapView *map)
         break;
       }
 
+      case MO_UCAC5:
+      {
+        ucac5Star_t s;
+
+        cUcac5.getStar(s, o.par1, o.par2);
+
+        qDebug() << s.id;
+
+        str = QString("UCAC5 %1").arg(s.id) + QString(QObject::tr(", %1 mag.")).arg(o.mag, 0, 'f', 2);
+        break;
+      }
+
       case MO_USNO2:
       {
         usnoStar_t s;
@@ -959,6 +972,17 @@ QString checkObjOnMap(const QPoint &pos)
 
         nameStr = QString("UCAC4 %1-%2").arg(s.zone).arg(s.number, 6, 10, QChar('0'));
         magStr = getStrMag(s.mag);
+        break;
+      }
+
+      case MO_UCAC5:
+      {
+        ucac5Star_t s;
+
+        cUcac5.getStar(s, obj.par1, obj.par2);
+
+        nameStr = QString("UCAC5 %1").arg(s.id);
+        magStr = getStrMag(obj.mag);
         break;
       }
 

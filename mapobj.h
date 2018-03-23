@@ -21,16 +21,17 @@
 #define MO_USNOB1        8
 #define MO_URAT1         9
 #define MO_UCAC4        10
-#define MO_PPMXLSTAR    11
-#define MO_NOMAD        12
-#define MO_COMET        13
-#define MO_VOCATALOG    14
-#define MO_DSO          15
-#define MO_CONSTELL     16
-#define MO_EARTH_SHD    17
-#define MO_SHOWER       18
-#define MO_INSERT       19
-#define MO_TELESCOPE    20
+#define MO_UCAC5        11
+#define MO_PPMXLSTAR    12
+#define MO_NOMAD        13
+#define MO_COMET        14
+#define MO_VOCATALOG    15
+#define MO_DSO          16
+#define MO_CONSTELL     17
+#define MO_EARTH_SHD    18
+#define MO_SHOWER       19
+#define MO_INSERT       20
+#define MO_TELESCOPE    21
 
 #define MO_CIRCLE        0
 #define MO_RECT          1

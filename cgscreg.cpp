@@ -45,6 +45,14 @@ void CGSCReg::resetRegion()
   m_decMax = -9999999;
 }
 
+void CGSCReg::setRegion(int region)
+{
+  m_raMin = gscRegionSector[region].RaMin;
+  m_raMax = gscRegionSector[region].RaMax;
+  m_decMin = gscRegionSector[region].DecMin;
+  m_decMax = gscRegionSector[region].DecMax;
+}
+
 void CGSCReg::addPoint(const radec_t &rd)
 {
   if (rd.Ra < m_raMin) m_raMin = rd.Ra;
@@ -60,10 +68,10 @@ void CGSCReg::createRegion(int region)
   SKPOINT p2;
   SKPOINT p3;
 
-  m_decMax += 0.001;
-  m_decMin -= 0.001;
-  m_raMax += 0.001;
-  m_raMin -= 0.001;
+  //m_decMax += 0.001;
+  //m_decMin -= 0.001;
+  //m_raMax += 0.001;
+  //m_raMin -= 0.001;
 
   radec_t a1 = radec_t(m_raMin, m_decMin);
   radec_t a2 = radec_t(m_raMin, m_decMax);

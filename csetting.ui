@@ -174,7 +174,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>10</number>
+            <number>19</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -4195,6 +4195,124 @@
                     </item>
                     <item>
                      <widget class="QDoubleSpinBox" name="doubleSpinBox_36">
+                      <property name="suffix">
+                       <string> mag.</string>
+                      </property>
+                      <property name="decimals">
+                       <number>1</number>
+                      </property>
+                      <property name="minimum">
+                       <double>0.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>99.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_13">
+            <layout class="QVBoxLayout" name="verticalLayout_123">
+             <item>
+              <layout class="QFormLayout" name="formLayout_24">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <item row="0" column="0">
+                <widget class="QGroupBox" name="groupBox_41">
+                 <property name="title">
+                  <string>Show</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_119">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_120">
+                    <item>
+                     <widget class="QCheckBox" name="showUCAC5CheckBox">
+                      <property name="text">
+                       <string>Show UCAC5 Catalogue</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QGroupBox" name="groupBox_42">
+                 <property name="title">
+                  <string>Settings</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_121">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_122">
+                    <item>
+                     <widget class="QLabel" name="label_137">
+                      <property name="text">
+                       <string>Path to UCAC5 folder</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_38">
+                      <item>
+                       <widget class="QLineEdit" name="lineEdit_9">
+                        <property name="minimumSize">
+                         <size>
+                          <width>300</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="pushButton_78">
+                        <property name="text">
+                         <string>Browse...</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_138">
+                      <property name="text">
+                       <string>Show UCAC5 stars from FOV</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_65">
+                      <property name="suffix">
+                       <string>°</string>
+                      </property>
+                      <property name="decimals">
+                       <number>0</number>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>45.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_139">
+                      <property name="text">
+                       <string>Show UCAC5 stars from magnitude</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_66">
                       <property name="suffix">
                        <string> mag.</string>
                       </property>

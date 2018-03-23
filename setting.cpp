@@ -351,6 +351,11 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.ucac4.fromFOV", set->map.ucac4.fromFOV, ds);
   writeVal("map.ucac4.fromMag", set->map.ucac4.fromMag, ds);
 
+  // UCAC5
+  writeVal("map.ucac5.show", set->map.ucac5.show, ds);
+  writeVal("map.ucac5.fromFOV", set->map.ucac5.fromFOV, ds);
+  writeVal("map.ucac5.fromMag", set->map.ucac5.fromMag, ds);
+
   // PPMXL
   writeVal("map.ppmxl.show", set->map.ppmxl.show, ds);
   writeVal("map.ppmxl.fromFOV", set->map.ppmxl.fromFOV, ds);
@@ -693,6 +698,11 @@ bool setLoad(QString name, setting_t *set)
   set->map.ucac4.show = readVal("map.ucac4.show", false, tMap).toBool();
   set->map.ucac4.fromFOV = readVal("map.ucac4.fromFOV", D2R(15), tMap).toDouble();
   set->map.ucac4.fromMag = readVal("map.ucac4.fromMag", 12, tMap).toDouble();;
+
+  // UCAC5
+  set->map.ucac5.show = readVal("map.ucac5.show", false, tMap).toBool();
+  set->map.ucac5.fromFOV = readVal("map.ucac5.fromFOV", D2R(15), tMap).toDouble();
+  set->map.ucac5.fromMag = readVal("map.ucac5.fromMag", 12, tMap).toDouble();;
 
   // PPMXL
   set->map.ppmxl.show = readVal("map.ppmxl.show", false, tMap).toBool();

@@ -213,6 +213,13 @@ typedef struct
   bool   show;
   double fromFOV;
   double fromMag;
+} setUCAC5_t;
+
+typedef struct
+{
+  bool   show;
+  double fromFOV;
+  double fromMag;
 } setNomad_t;
 
 typedef struct
@@ -285,6 +292,7 @@ typedef struct
   setNomad_t nomad;
   setURAT1_t  urat1;
   setUCAC4_t ucac4;
+  setUCAC5_t ucac5;
   setGsc_t   gsc;
   setES_t    es;
 } setMap_t;

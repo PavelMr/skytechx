@@ -23,6 +23,7 @@
 #include "cobjtracking.h"
 #include "Usno2A.h"
 #include "cucac4.h"
+#include "cucac5.h"
 #include "urat1.h"
 #include "csgp4.h"
 #include "smartlabeling.h"
@@ -253,6 +254,75 @@ static void smRenderUSNOB1Stars(mapView_t *mapView, CSkPainter *pPainter, int re
           }
         }
       }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+static void smRenderUCAC5Stars(mapView_t *mapView, CSkPainter *pPainter, int region)
+////////////////////////////////////////////////////////////////////////////////////
+{
+  double yr = jdGetYearFromJD(mapView->mapEpoch) - 2000;
+
+  if (!g_skSet.map.ucac5.show)
+  {
+    return;
+  }
+
+  if (mapView->fov < g_skSet.map.ucac5.fromFOV && mapView->starMag >= g_skSet.map.ucac5.fromMag)
+  {
+    ucac5Region_t *ucacRegion;
+    SKPOINT        pt;
+
+    ucacRegion = cUcac5.getRegion(region);
+
+    if (ucacRegion == NULL)
+    {
+      return;
+    }
+
+    int i = 0;
+    foreach (const ucac5Star_t &star, ucacRegion->stars)
+    {
+      float mag = U5MAG(star.mag);
+      if (mag <= mapView->starMag)
+      {
+        if ((mag >= g_skSet.map.ucac5.fromMag))
+        {
+          SKPOINT pt;
+          radec_t rdpm;      
+
+          cUcac5.getStarPos(rdpm, star, yr);
+          trfRaDecToPointNoCorrect(&rdpm, &pt);          
+
+          if (trfProjectPoint(&pt))
+          {           
+            int r = cStarRenderer.renderStar(&pt, 0, mag, pPainter);
+            addMapObj(star.rd, pt.sx, pt.sy, MO_UCAC5, MO_CIRCLE, r + 4, star.zone, star.num, mag);
+            g_numStars++;
+
+            if (g_skSet.map.star.showProperMotion)
+            {
+              radec_t rd;
+              SKPOINT p1;
+              SKPOINT p2;
+
+              double yr = g_skSet.map.star.properMotionYearVec;
+              rd.Ra = rdpm.Ra + (D2R(star.pm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
+              rd.Dec = rdpm.Dec + D2R(star.pm[1] / 10000.0 / 3600.0) * yr;
+
+              trfRaDecToPointNoCorrect(&rdpm, &p1);
+              trfRaDecToPointNoCorrect(&rd, &p2);
+              if (trfProjectLine(&p1, &p2))
+              {
+                pPainter->setPen(g_skSet.map.drawing.color);
+                pPainter->drawLine(p1.sx, p1.sy, p2.sx, p2.sy);
+              }
+            }
+          }
+        }
+      } else return;
+      i++;
     }
   }
 }
@@ -582,7 +652,7 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
   }
 }
 
-#if 0
+#if 1
 /////////////////////////////////////////////////////////////////////////////
 static void smRenderGSCRegions(mapView_t *, CSkPainter *pPainter, int region)
 /////////////////////////////////////////////////////////////////////////////
@@ -691,7 +761,7 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
     //smRenderGSCRegions(mapView, pPainter, region);
 
     /*
-    if (region != 8467)
+    if (region != 4662)
     {
       continue;
     }
@@ -703,8 +773,9 @@ static void smRenderStars(mapView_t *mapView, CSkPainter *pPainter, QImage *)
     smRenderPPMXLStars(mapView, pPainter, region);
     smRenderURAT1Stars(mapView, pPainter, region);  // Prop. mot
     smRenderUCAC4Stars(mapView, pPainter, region);  // Prop. mot.
+    smRenderUCAC5Stars(mapView, pPainter, region);  // Prop. mot.
     smRenderGSCStars(mapView, pPainter, region);
-    smRenderTychoStars(mapView, pPainter, region);  // Prop. mot.
+    smRenderTychoStars(mapView, pPainter, region);  // Prop. mot.    
   }
 }
 

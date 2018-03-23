@@ -11,6 +11,7 @@
 #include "Usno2A.h"
 #include "usnob1.h"
 #include "cucac4.h"
+#include "cucac5.h"
 #include "nomad.h"
 #include "urat1.h"
 #include "cplanetrenderer.h"
@@ -183,6 +184,7 @@ void CLoadingDlg::slotLoad()
   usno.setUsnoDir(set.value("usno2_path", "").toString());
   cPPMXL.setDir(set.value("ppmxl_path", "").toString());
   cUcac4.setUCAC4Dir(set.value("ucac4_path", "").toString());
+  cUcac5.setUCAC5Dir(set.value("ucac5_path", "").toString());
   urat1.setUratDir(set.value("urat1_path", "").toString());
   g_nomad.setNomadDir(set.value("nomad_path", "").toString());
 

@@ -7,6 +7,7 @@
 #include "dsoplug.h"
 #include "Usno2A.h"
 #include "cucac4.h"
+#include "cucac5.h"
 #include "csgp4.h"
 #include "usnob1.h"
 #include "urat1.h"
@@ -101,6 +102,10 @@ void CObjFillInfo::fillInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_
 
     case MO_UCAC4:
       fillUCAC4Info(view, obj, item);
+      break;
+
+    case MO_UCAC5:
+      fillUCAC5Info(view, obj, item);
       break;
 
     case MO_GSCSTAR:
@@ -1458,6 +1463,126 @@ void CObjFillInfo::fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofi
   addLabelItem(item, tr("Source"));
   addSeparator(item);
   addTextItem(item, "The UCAC4 Catalogue (Zacharias+ 2012)", "");
+  endExtInfo();
+}
+
+
+void CObjFillInfo::fillUCAC5Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item)
+{
+  double      yr = jdGetYearFromJD(view->mapEpoch) - 2000;
+  ucac5Star_t s;
+
+  cUcac5.getStar(s, obj->par1, obj->par2);
+
+  radec_t rdpm;
+  cUcac5.getStarPos(rdpm, s, yr);
+
+  item->radec.Ra = rdpm.Ra;
+  item->radec.Dec = rdpm.Dec;
+  item->zoomFov = getOptObjFov(0, 0, D2R(0.15));
+  item->title = QString("UCAC5 %1").arg(s.id);
+  item->simbad = item->title;
+  item->id = QString("UCAC5_%1").arg(s.id);
+
+  addDateTime(item, view);
+
+  addTextItem(item, txObjType, tr("Star (UCAC5 cat.)"), true);
+  addSeparator(item);
+
+  addLabelItem(item, txDesig);
+  addSeparator(item);
+
+  int con = constWhatConstel(s.rd.Ra, s.rd.Dec, JD2000);
+
+  addTextItem(item, item->title, "");
+  addSeparator(item);
+
+  double ra, dec;
+  double raAtDate, decAtDate;
+
+  ra = raAtDate = item->radec.Ra;
+  dec = decAtDate = item->radec.Dec;
+
+  QString jd2000;
+
+  if (view->epochJ2000 && view->coordType == SMCT_RA_DEC)
+  {
+    jd2000 = txJ2000;
+
+  }
+  else
+  {
+    precess(&ra, &dec, JD2000, view->jd);
+  }
+
+  precess(&raAtDate, &decAtDate, JD2000, view->jd);
+
+  addLabelItem(item, txLocInfo);
+  addSeparator(item);
+  addTextItem(item, txRA + jd2000, getStrRA(ra));
+  addTextItem(item, txDec + jd2000, getStrDeg(dec));
+  addSeparator(item);
+  double ha = cAstro.m_lst - raAtDate;
+  rangeDbl(&ha, R360);
+
+  beginExtInfo();
+  addTextItem(item, txHA, getStrRA(ha));
+  addSeparator(item);
+  endExtInfo();
+
+  addTextItem(item, tr("R magnitude"), getStrMag(U5MAG(s.rmag)));
+  addTextItem(item, tr("H magnitude"), getStrMag(U5MAG(s.hmag)));
+  addTextItem(item, tr("J magnitude"), getStrMag(U5MAG(s.jmag)));
+  addTextItem(item, tr("K magnitude"), getStrMag(U5MAG(s.kmag)));
+  addSeparator(item);
+  addTextItem(item, txConstel, constGetName(con, 1));
+
+  double azm, alt;
+  double nazm, nalt;
+
+  cAstro.convRD2AARef(raAtDate, decAtDate, &azm, &alt);
+  cAstro.convRD2AANoRef(raAtDate, decAtDate, &nazm, &nalt);
+
+  addSeparator(item);
+  addTextItem(item, tr("Azimuth"), getStrDeg2(azm));
+  addTextItem(item, tr("Altitude"), getStrDeg2(alt));
+  addSeparator(item);
+
+  beginExtInfo();
+  addTextItem(item, tr("Altitude without ref."), getStrDeg2(nalt));
+  addTextItem(item, tr("Atm. refraction"), getStrDeg2(cAstro.getAtmRef(nalt)));
+  addSeparator(item);
+  double airmass = CAstro::getAirmass(alt);
+  addTextItem(item, tr("Airmass"), alt > 0 ? QString("%1").arg(airmass, 0, 'f', 3) : tr("N/A"));
+  addSeparator(item);
+  endExtInfo();
+
+  CRts   cRts;
+  rts_t  rts;
+  cRts.calcFixed(&rts, raAtDate, decAtDate, view);
+  fillRTS(&rts, view, item);
+
+  addLabelItem(item, tr("Position at JD2000.0"));
+  addSeparator(item);
+  addTextItem(item, txRA, getStrRA(item->radec.Ra));
+  addTextItem(item, txDec, getStrDeg(item->radec.Dec));
+  addSeparator(item);
+
+  beginExtInfo();
+  addLabelItem(item, tr("Proper motion"));
+  addSeparator(item);
+  addTextItem(item, txRA, QString::number(s.pm[0] / 10.0) + " " + "mas/yr");
+  addTextItem(item, txDec, QString::number(s.pm[1] / 10.0) + " " + "mas/yr");
+  addSeparator(item);
+  endExtInfo();
+
+  fillAtlas(item->radec.Ra, item->radec.Dec, item);
+  fillZoneInfo(item->radec.Ra, item->radec.Dec, item);
+
+  beginExtInfo();
+  addLabelItem(item, tr("Source"));
+  addSeparator(item);
+  addTextItem(item, "The UCAC5 Catalogue (Zacharias+ 2017)", "");
   endExtInfo();
 }
 

@@ -42,7 +42,7 @@ typedef struct
 
 class CObjFillInfo : public QObject
 {
-  Q_OBJECT  
+  Q_OBJECT    
 
 public:
     CObjFillInfo();
@@ -55,6 +55,7 @@ protected:
     void fillPlnSatInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillUCAC4Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
+    void fillUCAC5Info(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillGSCInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillPPMXLInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);
     void fillUSNOInfo(const mapView_t *view, const mapObj_t *obj, ofiItem_t *item);

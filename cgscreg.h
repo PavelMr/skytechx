@@ -35,6 +35,7 @@ class CGSCReg
     bool isRegionVisible(int reg, SKPLANE *frustum);
     gscRegion_t *getRegion(int reg);
     void resetRegion();
+    void setRegion(int region);
     void addPoint(const radec_t &rd);
     void createRegion(int region);
     void createOcTree(void);

@@ -115,7 +115,7 @@ bool CTycho::load()
 
     f.read((char *)&reg, sizeof(reg));
 
-    cGSCReg.resetRegion();
+    cGSCReg.setRegion(i);
 
     m_region[i].region.numStars = reg.numStars;
     m_region[i].stars = (tychoStar_t *)malloc(reg.numStars * sizeof(tychoStar_t));
@@ -140,7 +140,6 @@ bool CTycho::load()
 
       cGSCReg.addPoint(rd1);
       cGSCReg.addPoint(rd2);
-
 
       if (m_region[i].stars[j].supIndex >= 0)
       {

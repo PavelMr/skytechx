@@ -14,6 +14,7 @@
 #include "usnob1.h"
 #include "urat1.h"
 #include "cucac4.h"
+#include "cucac5.h"
 #include "nomad.h"
 #include "ctextsel.h"
 #include "mainwindow.h"
@@ -285,6 +286,7 @@ CSetting::CSetting(QWidget *parent, int tab) :
   ui->listWidget_2->addItem(tr("USNO A2 Catalogue"));
   ui->listWidget_2->addItem(tr("USNO B1 Catalogue"));
   ui->listWidget_2->addItem(tr("UCAC4 Catalogue"));
+  ui->listWidget_2->addItem(tr("UCAC5 Catalogue"));
   ui->listWidget_2->addItem(tr("URAT1 Catalogue"));
   ui->listWidget_2->addItem(tr("NOMAD Catalogue"));
   ui->listWidget_2->addItem(tr("Other"));
@@ -688,6 +690,12 @@ void CSetting::setValues()
   ui->doubleSpinBox_37->setValue(R2D(set.map.ucac4.fromFOV));
   ui->doubleSpinBox_36->setValue(set.map.ucac4.fromMag);
 
+  //UCAC5
+  ui->showUCAC5CheckBox->setChecked(set.map.ucac5.show);
+  ui->lineEdit_9->setText(rset.value("ucac5_path", "").toString());
+  ui->doubleSpinBox_65->setValue(R2D(set.map.ucac5.fromFOV));
+  ui->doubleSpinBox_66->setValue(set.map.ucac5.fromMag);
+
   // GSC
   ui->showGSCCheckBox->setChecked(set.map.gsc.show);
   ui->doubleSpinBox_28->setValue(R2D(set.map.gsc.fromFOV));
@@ -1065,7 +1073,15 @@ void CSetting::apply()
 
   g_skSet.map.ucac4.show = ui->showUCAC4CheckBox->isChecked();
   g_skSet.map.ucac4.fromFOV = D2R(ui->doubleSpinBox_37->value());
-  g_skSet.map.ucac4.fromMag = ui->doubleSpinBox_36->value();
+  g_skSet.map.ucac4.fromMag = ui->doubleSpinBox_36->value();  
+
+  // UCAC5
+  cUcac5.setUCAC5Dir(ui->lineEdit_9->text());
+  rset.setValue("ucac5_path", ui->lineEdit_9->text());
+
+  g_skSet.map.ucac5.show = ui->showUCAC5CheckBox->isChecked();
+  g_skSet.map.ucac5.fromFOV = D2R(ui->doubleSpinBox_65->value());
+  g_skSet.map.ucac5.fromMag = ui->doubleSpinBox_66->value();
 
   // GSC
   g_skSet.map.gsc.show = ui->showGSCCheckBox->isChecked();
@@ -2648,4 +2664,11 @@ void CSetting::fillSelPos()
   }
 
   ui->label_pos_map->setText(str);
+}
+
+void CSetting::on_pushButton_78_clicked()
+{
+  QString folder = QFileDialog::getExistingDirectory(this, tr("Select a folder"), "", QFileDialog::ShowDirsOnly);
+
+  ui->lineEdit_9->setText(folder);
 }
