@@ -310,7 +310,7 @@ bool setSave(QString name, setting_t *set)
   writeVal("map.aster.color", set->map.aster.color, ds);
   writeVal("map.aster.radius", set->map.aster.radius, ds);
   writeVal("map.aster.plusMag", set->map.aster.plusMag, ds);
-  writeVal("map.aster.maxMag", set->map.aster.maxMag, ds);
+  writeVal("map.aster.maxMag", set->map.aster.maxMag, ds);  
 
   // milky way
   writeVal("map.milkyWay.bShow", set->map.milkyWay.bShow, ds);
@@ -658,7 +658,7 @@ bool setLoad(QString name, setting_t *set)
   set->map.aster.color = readVal("map.aster.color", MRGB(255, 255, 255), tMap).toUInt();
   set->map.aster.radius = readVal("map.aster.radius", 5, tMap).toInt();
   set->map.aster.plusMag = readVal("map.aster.plusMag", 5, tMap).toFloat();
-  set->map.aster.maxMag = readVal("map.aster.magMag", 16, tMap).toFloat();
+  set->map.aster.maxMag = readVal("map.aster.maxMag", 16, tMap).toFloat();
 
   // milky way
   set->map.milkyWay.bShow = readVal("map.milkyWay.bShow", true, tMap).toBool();

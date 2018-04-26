@@ -207,12 +207,15 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
 
     p->setPen(g_skSet.map.planet.lunarFeatures);
 
-    double opacity = CLAMP((qMax(r1, r2) / 20), 0, 1);
+    float opacity = FRAC(view->fov, D2R(10), D2R(2));
+    opacity = CLAMP(opacity, 0, 1);
 
     if (r1 == 0 && r2 == 0)
     {
+      p->setOpacity(opacity);
       p->drawRect(sx - 5, sy - 5, 10, 10);
       p->drawCross(sx, sy, 8);
+      p->setOpacity(1);
     }
     else
     {
@@ -242,6 +245,11 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
 
       setSetFontColor(FONT_LUNAR_FEATURES, p);
 
+      float op = FRAC(view->fov, D2R(3), D2R(0.5));
+      op = CLAMP(op, 0, 1);
+
+      p->setOpacity(op);
+
       if (tw + 10 < qMin(r1, r2) * 2)
       {   
         p->drawCText(sx, sy, str);
@@ -256,6 +264,8 @@ void CLunarFeatures::draw(CSkPainter *p, SKPOINT *pt, int rad, orbit_t *moon, ma
         }        
         p->drawCText(sx, sy + h + fm.height(), str);
       }
+
+      p->setOpacity(1);
     }
   }  
 }

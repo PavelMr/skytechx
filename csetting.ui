@@ -74,6 +74,9 @@
                <property name="editTriggers">
                 <set>QAbstractItemView::NoEditTriggers</set>
                </property>
+               <property name="alternatingRowColors">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -163,6 +166,9 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -174,7 +180,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>19</number>
+            <number>10</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2329,7 +2335,7 @@
              <item>
               <widget class="QTabWidget" name="tabWidget_3">
                <property name="currentIndex">
-                <number>1</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="tab_12">
                 <attribute name="title">
@@ -5011,6 +5017,9 @@
                      <property name="acceptDrops">
                       <bool>false</bool>
                      </property>
+                     <property name="alternatingRowColors">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -5087,6 +5096,9 @@
                      <property name="acceptDrops">
                       <bool>false</bool>
                      </property>
+                     <property name="alternatingRowColors">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -5144,7 +5156,11 @@
              </widget>
             </item>
             <item>
-             <widget class="CSimpleList" name="jplList"/>
+             <widget class="CSimpleList" name="jplList">
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_33">

@@ -287,16 +287,17 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>pushButton_4</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>pushButton</tabstop>
   <tabstop>pushButton_5</tabstop>
   <tabstop>pushButton_3</tabstop>
   <tabstop>doubleSpinBox</tabstop>
   <tabstop>doubleSpinBox_2</tabstop>
   <tabstop>doubleSpinBox_3</tabstop>
   <tabstop>barlow</tabstop>
-  <tabstop>comboBox</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_2</tabstop>
  </tabstops>
  <resources/>
  <connections/>
