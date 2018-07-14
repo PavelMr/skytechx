@@ -19,6 +19,7 @@ DEFINES += NOMINMAX
 #Release:DEFINES  += QT_NO_DEBUG_OUTPUT QT_FATAL_WARNINGS
 
 win32-msvc2013    : LIBS += winmm.lib
+win32-msvc        : LIBS += winmm.lib
 
 #-lssl -lcrypto
 

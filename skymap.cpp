@@ -1278,7 +1278,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     if (moons)
     {
       smRenderMoons(pImg, pPainter, &sats, &pt, &o[order[i]], true, mapView, order[i]);
-    }
+    }        
   }
 
   // draw earth shadow

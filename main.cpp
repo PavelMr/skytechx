@@ -124,14 +124,7 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationName("SkytechX_beta"); // NOTE: beta reg.
   QCoreApplication::setApplicationVersion(SK_VERSION);
 
-  QApplication a(argc, argv);
-
-  QSharedMemory sharedMemory("The SkytechX (PMR)");
-  if (!sharedMemory.create(1) && sharedMemory.error() == QSharedMemory::AlreadyExists)
-  {
-    msgBoxError(NULL, QObject::tr("SkytechX already running!"));
-    return 1;
-  }    
+  QApplication a(argc, argv);  
 
   qDebug() << "writable dir" << QStandardPaths::writableLocation(QStandardPaths::DataLocation);
   qDebug() << "current dir" << QDir::currentPath();
@@ -212,6 +205,15 @@ int main(int argc, char *argv[])
       g_log = true;
     }
   }  
+
+  /*
+  QSharedMemory sharedMemory("The SkytechX (PMR)");
+  if (!sharedMemory.create(1) && sharedMemory.error() == QSharedMemory::AlreadyExists)
+  {
+    msgBoxError(NULL, QObject::tr("SkytechX already running!"));
+    return 1;
+  }
+  */
 
   if (g_log)
   {

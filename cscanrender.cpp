@@ -296,12 +296,11 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
     quint32 *pDst = bits + (y * dw) + px1;
     for (int x = px1; x < px2; x++)
     {
-      QRgb rgbd = *pDst;     
-
+      QRgb rgbd = *pDst;           
       *pDst = qRgb(LERP(a, qRed(rgbd), rc),
                    LERP(a, qGreen(rgbd), gc),
                    LERP(a, qBlue(rgbd), bc)
-                  );     
+                  );
       pDst++;
     }
   }
@@ -614,7 +613,7 @@ void CScanRender::renderPolygonBI(QImage *dst, QImage *src)
         int green = (((a>>8)&0xff)*(qxy1) + ((b>>8)&0xff)*(qxy2) + ((c>>8)&0xff)*(qyx1)  + ((d>>8)&0xff)*(qxy)) >> 16;
 
         // red element
-        int red = (((a>>16)&0xff)*(qxy1) + ((b>>16)&0xff)*(qxy2) +((c>>16)&0xff)*(qyx1)  + ((d>>16)&0xff)*(qxy)) >> 16;
+        int red = (((a>>16)&0xff)*(qxy1) + ((b>>16)&0xff)*(qxy2) +((c>>16)&0xff)*(qyx1)  + ((d>>16)&0xff)*(qxy)) >> 16;        
 
         *pDst = 0xff000000 | (((red)<<16)&0xff0000) | (((green)<<8)&0xff00) | (blue);
 
