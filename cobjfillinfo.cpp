@@ -1196,6 +1196,10 @@ void CObjFillInfo::fillTYCInfo(const mapView_t *view, const mapObj_t *obj, ofiIt
       }
     }
     addTextItem(item, "HD " + QString::number(supp->hd), "");
+    if (cTYC.mSAO.contains(supp->hd))
+    {
+      addTextItem(item, "SAO " + QString::number(cTYC.mSAO[supp->hd]), "");
+    }
   }
 
   if (isVariable)

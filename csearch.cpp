@@ -78,6 +78,38 @@ bool CSearch::search(mapView_t *mapView, QString str, double &ra, double &dec, d
         obj.par2 = index;
 
         return true;
+      }            
+    }
+
+    if (str.startsWith("SAO", Qt::CaseInsensitive))
+    {
+      str = str.mid(3);
+
+      int sao = str.toInt();
+
+      int reg, index;
+      tychoStar_t *star;
+
+      int hd = cTYC.mSAO.key(sao, 0);
+
+      if (hd > 0 && cTYC.findStar(NULL, TS_HD, 0, hd, 0, 0, 0, 0, 0, 0, reg, index))
+      {
+        cTYC.getStar(&star, reg, index);
+
+        radec_t rdpm;
+        cTYC.getStarPos(rdpm, star, yr);
+
+        ra = rdpm.Ra;
+        dec = rdpm.Dec;
+
+        precess(&ra, &dec, JD2000, mapView->jd);
+        fov = DMS2RAD(10, 0, 0);
+
+        obj.type = MO_TYCSTAR;
+        obj.par1 = reg;
+        obj.par2 = index;
+
+        return true;
       }
     }
 

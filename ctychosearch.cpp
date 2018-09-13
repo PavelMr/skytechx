@@ -188,3 +188,19 @@ void CTychoSearch::on_pushButton_6_clicked()
 
   notFound(ui->lineEdit);
 }
+
+void CTychoSearch::on_pushButton_7_clicked()
+{
+  int sao = ui->spinBox_7->value();
+
+  int hd = cTYC.mSAO.key(sao, 0);
+
+  if (hd == 0 || !cTYC.findStar(this, TS_HD, 0, hd, 0, 0, 0, 0, 0, 0, m_reg, m_index))
+  {
+    notFound(ui->spinBox_2);
+    return;
+  }
+
+  getStar();
+  done(DL_OK);
+}

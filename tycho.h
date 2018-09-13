@@ -73,7 +73,7 @@ class CTycho : public QObject
 
   public:
     CTycho();
-    bool load();
+    bool load();    
 
     inline void getStarPos(radec_t &rd, tychoStar_t *s, double yr)
     {
@@ -102,6 +102,7 @@ class CTycho : public QObject
 
     tychoSupp_t             *pSupplement;
     QList   <tychoStar_t *>  tNames;         // list ptrs. to stars with proper name
+    QMap    <int, int>       mSAO;
 
     static QString getGreekChar(int i);
     static QString getGreekString(int i);
@@ -109,6 +110,9 @@ class CTycho : public QObject
     tychoHead_t       m_head;
     tychoRegion2_t   *m_region;
     QByteArray        m_names;    
+
+private:
+    void loadHD_SAO();
 
 signals:
 };

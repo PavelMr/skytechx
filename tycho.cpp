@@ -72,6 +72,37 @@ QString CTycho::getGreekString(int i)
   return(QString(greekStr[i]));
 }
 
+void CTycho::loadHD_SAO()
+{
+  SkFile f("../data/stars/sao/sao_hd.dat");
+
+  if (!f.open(SkFile::ReadOnly))
+  {
+    // fatal error
+    return;
+  }
+
+  QDataStream ds(&f);
+
+  int count;
+  QString id;
+
+  ds >> id;
+  ds >> count;
+
+  qDebug() << "HD SAO" << count << id;
+
+  for (int i = 0; i < count; i++)
+  {
+    quint32 hd, sao;
+
+    ds >> hd;
+    ds >> sao;
+
+    mSAO[hd] = sao;
+  }
+}
+
 ///////////////////
 bool CTycho::load()
 ///////////////////
@@ -163,6 +194,7 @@ bool CTycho::load()
   }
 
   cGSCReg.createOcTree();
+  loadHD_SAO();
 
   f.close();
 

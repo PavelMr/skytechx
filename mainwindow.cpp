@@ -926,7 +926,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->cb_axis_x_invert->setChecked(settings.value("tel_axis_x_invert", false).toBool());
   ui->cb_axis_y_invert->setChecked(settings.value("tel_axis_y_invert", false).toBool());  
 
-  updateHomeLocation();
+  updateHomeLocation();  
 }
 
 void MainWindow::fillHIPSSources()
@@ -4591,7 +4591,7 @@ void MainWindow::on_actionDay_event_triggered()
 void MainWindow::on_actionStars_triggered(bool checked)
 ///////////////////////////////////////////////////////
 {
-  g_showStars = checked;
+  g_showStars = checked;  
   ui->widget->repaintMap();
 }
 

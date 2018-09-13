@@ -160,6 +160,7 @@ void CAdvSearch::slotRadioChange()
     list << "USNO2";
     list << "GSC";
     list << "HD";
+    list << "SAO";
 
     list << (g_GCVS.nameList());
   }

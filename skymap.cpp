@@ -1278,7 +1278,26 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
     if (moons)
     {
       smRenderMoons(pImg, pPainter, &sats, &pt, &o[order[i]], true, mapView, order[i]);
-    }        
+    }
+
+    if (moons)
+    {
+/*
+      planSat.solve((mapView->jd - o[order[i]].light), order[i], &sats, &o[order[i]], &earth);
+      for (int k = 0; k < sats.sats.count(); k++)
+      {
+        for (double j = 0; j < 5; j += 0.1)
+        {
+          planSat.solve((mapView->jd - o[order[i]].light) + j, order[i], &sats, &o[order[i]], &earth);
+          trfRaDecToPointNoCorrect(&sats.sats[k].lRD, &pt);
+          if (trfProjectPoint(&pt))
+          {
+            pPainter->drawCircle(QPoint(pt.sx, pt.sy), 2);
+          }
+        }
+      }
+      */
+    }
   }
 
   // draw earth shadow
