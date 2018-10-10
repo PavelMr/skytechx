@@ -3986,6 +3986,7 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <addaction name="separator"/>
    <addaction name="actionHIPS"/>
+   <addaction name="actionHiPS_Adjustment"/>
    <addaction name="actionHEALPix_grid"/>
    <addaction name="actionHIPS_properties"/>
   </widget>
@@ -6062,6 +6063,21 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Show/Hide Asterisms</string>
+   </property>
+  </action>
+  <action name="actionHiPS_Adjustment">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/ico_process_all.png</normaloff>:/res/ico_process_all.png</iconset>
+   </property>
+   <property name="text">
+    <string>HiPS Adjustment</string>
+   </property>
+   <property name="toolTip">
+    <string>HiPS Adjustment</string>
    </property>
   </action>
  </widget>

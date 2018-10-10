@@ -130,9 +130,7 @@ static void smRenderURAT1Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
               SKPOINT p1;
               SKPOINT p2;
 
-              double yr = g_skSet.map.star.properMotionYearVec;
-              rd.Ra = rdpm.Ra + (D2R(star.pm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
-              rd.Dec = rdpm.Dec + D2R(star.pm[1] / 10000.0 / 3600.0) * yr;
+              calculateProperMotion(rdpm, rd, star.pm[0] / 10., star.pm[1] / 10., g_skSet.map.star.properMotionYearVec);
 
               trfRaDecToPointNoCorrect(&rdpm, &p1);
               trfRaDecToPointNoCorrect(&rd, &p2);
@@ -307,9 +305,7 @@ static void smRenderUCAC5Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
               SKPOINT p1;
               SKPOINT p2;
 
-              double yr = g_skSet.map.star.properMotionYearVec;
-              rd.Ra = rdpm.Ra + (D2R(star.pm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
-              rd.Dec = rdpm.Dec + D2R(star.pm[1] / 10000.0 / 3600.0) * yr;
+              calculateProperMotion(rdpm, rd, star.pm[0] / 10., star.pm[1] / 10., g_skSet.map.star.properMotionYearVec);
 
               trfRaDecToPointNoCorrect(&rdpm, &p1);
               trfRaDecToPointNoCorrect(&rd, &p2);
@@ -370,9 +366,7 @@ static void smRenderUCAC4Stars(mapView_t *mapView, CSkPainter *pPainter, int reg
               SKPOINT p1;
               SKPOINT p2;
 
-              double yr = g_skSet.map.star.properMotionYearVec;
-              rd.Ra = rdpm.Ra + (D2R(star.rdPm[0] / 10000.0 / 3600.0) * yr * cos(star.rd.Dec));
-              rd.Dec = rdpm.Dec + D2R(star.rdPm[1] / 10000.0 / 3600.0) * yr;
+              calculateProperMotion(rdpm, rd, star.rdPm[0] / 10., star.rdPm[1] / 10., g_skSet.map.star.properMotionYearVec);
 
               trfRaDecToPointNoCorrect(&rdpm, &p1);
               trfRaDecToPointNoCorrect(&rd, &p2);
@@ -583,17 +577,15 @@ static void smRenderTychoStars(mapView_t *mapView, CSkPainter *pPainter, int reg
       else
       {
         sp = 0;
-      }
+      }                                       
 
       if (g_skSet.map.star.showProperMotion)
       {
         radec_t rd;
         SKPOINT p1;
-        SKPOINT p2;
+        SKPOINT p2;        
 
-        double yr = g_skSet.map.star.properMotionYearVec;
-        rd.Ra = rdpm.Ra + (D2R(s->pmRa / 1000.0 / 3600.0) * yr * cos(rd.Dec));
-        rd.Dec = rdpm.Dec + D2R(s->pmDec / 1000.0 / 3600.0) * yr;
+        calculateProperMotion(rdpm, rd, s->pmRa, s->pmDec, g_skSet.map.star.properMotionYearVec);
 
         trfRaDecToPointNoCorrect(&rdpm, &p1);
         trfRaDecToPointNoCorrect(&rd, &p2);

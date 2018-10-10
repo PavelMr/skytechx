@@ -107,10 +107,10 @@ bool HiPSRenderer::renderPix(bool allsky, int level, int pix, CSkPainter *painte
       trfProjectPointNoCheck(&pts[i]);
     }    
 
-    QImage *image = m_manager.getPix(allsky, level, pix, freeImage);    
+    QImage *image = m_manager.getPix(allsky, level, pix, freeImage);
 
     if (image)      
-    {
+    {      
       m_rendered++;
       m_size += image->byteCount();
 

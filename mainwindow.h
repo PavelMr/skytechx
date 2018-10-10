@@ -12,6 +12,7 @@
 #include "ctimewidget.h"
 #include "ctimedialog.h"
 #include "cdsocatalogue.h"
+#include "chipsadjustment.h"
 
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
@@ -119,9 +120,12 @@ protected:
   CHorEditorWidget *m_horizonEditor;
 
   CHistogram     *m_histogram;
+  CHIPSAdjustment*m_hipsAdjustmentWidget;
+  QDockWidget    *m_dockHipsAdjustment;
   QDockWidget    *m_dockHistogram;
   CTimeWidget    *m_timeWidget;
   CTimeDialog    *m_timeDialog;
+
   bool            m_isNormal;
   bool            m_noRecalculateView;
   QString         m_dlgProfileName;
@@ -698,6 +702,8 @@ private slots:
 
   void on_actionAsterism_triggered(bool checked);
 
+  void on_actionHiPS_Adjustment_triggered(bool checked);
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
@@ -734,6 +740,7 @@ public slots:
   void slotTeleVis(bool vis);
   void slotTimeDialogVis(bool vis);
   void slotHistogramVis(bool vis);
+  void slotHIPSAdjustmentVis(bool vis);
   void slotSearchDone(void);
   void slotSearchChange(QString str);
   void slotGrid1(void);

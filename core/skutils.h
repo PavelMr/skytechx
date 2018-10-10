@@ -23,6 +23,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 #include "skcore.h"
 
 void calcAngularDistance(double ra, double dec, double angle, double distance, double &raOut, double &decOut);
+void calculateProperMotion(const radec_t &rd, radec_t &out, double pmRa, double pmDec, double yr);
 
 SKPOINT max4Y(const SKPOINT &p1, const SKPOINT &p2, const SKPOINT &p3, const SKPOINT &p4);
 

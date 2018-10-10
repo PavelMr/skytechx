@@ -280,7 +280,7 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->dockTime, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTimeVis(bool)));
   connect(ui->dockTele, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTeleVis(bool)));
   connect(ui->dockTimeDialog, SIGNAL(visibilityChanged(bool)), this, SLOT(slotTimeDialogVis(bool)));
-  connect(m_dockHistogram, SIGNAL(visibilityChanged(bool)), this, SLOT(slotHistogramVis(bool)));    
+  connect(m_dockHistogram, SIGNAL(visibilityChanged(bool)), this, SLOT(slotHistogramVis(bool)));      
 
   ui->dockWidget->setWindowTitle(tr("Sidebar"));
   ui->lv_quickInfo->init(ui->toolBox);
@@ -905,8 +905,7 @@ MainWindow::MainWindow(QWidget *parent) :
   button->setMenu(menu);
   button->setPopupMode(QToolButton::InstantPopup);
 
-  // HIPS source //////////////////////////////////
-
+  // HIPS //////////////////////////////////
   m_HIPSMenu = new QMenu();  
 
   m_hipsToolButton = dynamic_cast<QToolButton *>(ui->tb_HIPS->widgetForAction(ui->actionHIPS));
@@ -919,6 +918,15 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(m_hipsToolButton, SIGNAL(toggled(bool)), ui->actionHIPS_properties, SLOT(setEnabled(bool)));
 
   ui->actionHIPS_billinear->setChecked(settings.value("hips_bi", false).toBool());
+
+  m_dockHipsAdjustment = new QDockWidget(tr("HiPS Adjustment"), this);
+  m_dockHipsAdjustment->setAllowedAreas(Qt::NoDockWidgetArea);
+  m_dockHipsAdjustment->setFloating(true);
+  m_dockHipsAdjustment->hide();
+  m_hipsAdjustmentWidget = new CHIPSAdjustment(m_dockHipsAdjustment);
+  m_dockHipsAdjustment->setWidget(m_hipsAdjustmentWidget);
+  m_dockHipsAdjustment->installEventFilter(this);
+  connect(m_dockHipsAdjustment, SIGNAL(visibilityChanged(bool)), this, SLOT(slotHIPSAdjustmentVis(bool)));
 
   connect(g_hipsRenderer->manager(), SIGNAL(sigRepaint()), this, SLOT(repaintMap()), Qt::QueuedConnection);
 
@@ -1049,7 +1057,7 @@ void MainWindow::setToolbarIconSize()
 }
 
 void MainWindow::checkNewVersion(bool forced)
-{
+{  
   QUrl qurl(QString(SKYTECH_WEB) + "/version/lastversion.xml");
 
   QNetworkRequest request(qurl);
@@ -2335,7 +2343,7 @@ void MainWindow::slotVersionFinished(QNetworkReply *reply)
   else
   {
     qDebug() << "error" << reply->errorString();
-  }
+  }  
 
   XmlAttrParser parser;
   int buildID = 0;
@@ -2372,9 +2380,7 @@ void MainWindow::slotVersionFinished(QNetworkReply *reply)
         }
       }
     }
-  }
-
-  qDebug() << verName << buildID;
+  }  
 
   if (_BUILD_NO_ != buildID || m_checkVerForced)
   {
@@ -2822,6 +2828,13 @@ void MainWindow::slotHistogramVis(bool vis)
   if (isMinimized())
     return;
   ui->tb_histogram->setChecked(vis);
+}
+
+void MainWindow::slotHIPSAdjustmentVis(bool vis)
+{
+  if (isMinimized())
+    return;
+  ui->actionHiPS_Adjustment->setChecked(vis);
 }
 
 /////////////////////////////////
@@ -7073,4 +7086,9 @@ void MainWindow::on_actionAsterism_triggered(bool checked)
 {
   g_showAsterism = checked;
   ui->widget->repaintMap();
+}
+
+void MainWindow::on_actionHiPS_Adjustment_triggered(bool checked)
+{
+  m_dockHipsAdjustment->setVisible(checked);
 }

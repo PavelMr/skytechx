@@ -70,8 +70,7 @@ public:
   void setUratDir(const QString &name);
   void getStarPos(radec_t &rd, const urat1Star_t &s, double yr)
   {
-    rd.Ra = s.rd.Ra + (D2R(s.pm[0] / 10000.0 / 3600.0) * yr * cos(s.rd.Dec));
-    rd.Dec = s.rd.Dec + D2R(s.pm[1] / 10000.0 / 3600.0) * yr;
+    calculateProperMotion(s.rd, rd, s.pm[0] / 10., s.pm[1] / 10., yr);
   }
 
 

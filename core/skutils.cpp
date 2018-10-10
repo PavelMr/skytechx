@@ -13,6 +13,26 @@ void calcAngularDistance(double ra, double dec, double angle, double distance, d
   raOut = ra + atan2(sin(-angle) * sin(distance) * cos(dec), cos(distance) - sin(dec) * sin(decOut));
 }
 
+void calculateProperMotion(const radec_t &rd, radec_t &out, double pmRa, double pmDec, double yr) // pmRa/pmDec in mas/yr
+{
+  if ((pmRa == 0 && pmDec == 0) || IS_NEAR(yr, 0, 0.0001))
+  {
+    out = rd;
+    return;
+  }
+
+  double cosDec = cos(rd.Dec);
+  double pmMag = sqrt(cosDec * cosDec * pmRa * pmRa + pmDec * pmDec);
+  double pm = pmMag * yr / 1000.0; // Proper Motion in arcseconds
+  double dir0 = ((pm > 0) ? atan2(pmRa, pmDec) : atan2(-pmRa, -pmDec)); // Bearing, in radian
+
+  if (pm < 0) pm = -pm;
+
+  double dst = (pm * M_PI / (180.0 * 3600.0));
+
+  calcAngularDistance(rd.Ra, rd.Dec, -dir0, dst, out.Ra, out.Dec);
+}
+
 SKPOINT max4Y(const SKPOINT &p1, const SKPOINT &p2, const SKPOINT &p3, const SKPOINT &p4)
 {
   SKPOINT newPt;

@@ -31,6 +31,11 @@ PixCache::PixCache()
 {
 }
 
+void PixCache::clear()
+{
+  m_cache.clear();
+}
+
 void PixCache::add(pixCacheKey_t &key, pixCacheItem_t *item, int cost)
 {
   Q_ASSERT(cost < m_cache.maxCost());

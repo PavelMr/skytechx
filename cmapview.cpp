@@ -115,8 +115,9 @@ CMapView::CMapView(QWidget *parent) :
   m_demo = new CDemonstration();
   m_demo->setupPoints();
   connect(m_demo, SIGNAL(sigAnimChanged(curvePoint_t&)), this, SLOT(slotAnimChanged(curvePoint_t&)));
-  //m_demo->start();
+  m_demo->start();
   */
+
 
   m_zoom = new SkMapControl(this);
   connect(m_zoom, SIGNAL(sigChange(QVector2D,double,double)), this, SLOT(slotMapControl(QVector2D,double,double)));
@@ -217,7 +218,7 @@ CMapView::CMapView(QWidget *parent) :
   m_bCustomTeleType = 0;
 
   m_zoomLens = false;
-  m_bInit = false;
+  m_bInit = false;  
 }
 
 

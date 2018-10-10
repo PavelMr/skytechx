@@ -10,6 +10,7 @@ class PixCache
 public:
   PixCache();  
 
+  void clear();
   void add(pixCacheKey_t &key, pixCacheItem_t *item, int cost);
   pixCacheItem_t *get(pixCacheKey_t &key);
   void setMaxCost(int maxCost);

@@ -46,6 +46,7 @@ public:
   bool parseProperties(hipsParams_t *param, const QString &filename, const QString &url = "");
   void cancelAll();
   void clearDiscCache();
+  void resetImageParams();
 
   PixCache *getCache();
 

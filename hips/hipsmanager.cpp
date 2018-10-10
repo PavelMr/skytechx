@@ -1,10 +1,13 @@
 #include "hipsmanager.h"
 #include "skutils.h"
+#include "cimagemanip.h"
 
 #include <QTime>
 #include <QHash>
 #include <QNetworkDiskCache>
 #include <QPainter>
+
+imageParam_t hipsImageParam;
 
 static QNetworkDiskCache *g_discCache = nullptr;
 static UrlFileDownload *g_download = nullptr;
@@ -21,7 +24,8 @@ inline bool operator==(const pixCacheKey_t &k1, const pixCacheKey_t &k2)
 }
 
 HiPSManager::HiPSManager()
-{
+{    
+  resetImageParams();
 }
 
 void HiPSManager::init()
@@ -270,6 +274,16 @@ void HiPSManager::clearDiscCache()
   g_discCache->clear();
 }
 
+void HiPSManager::resetImageParams()
+{
+  hipsImageParam.autoAdjust = false;
+  hipsImageParam.brightness = 0;
+  hipsImageParam.contrast = 100;
+  hipsImageParam.gamma = 150;
+  hipsImageParam.invert = false;
+  hipsImageParam.useMatrix = false;
+}
+
 void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, pixCacheKey_t &key)
 {    
   if (error == QNetworkReply::NoError)
@@ -280,7 +294,12 @@ void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, 
 
     item->image = new QImage();
     if (item->image->loadFromData(data))
-    {      
+    {
+      CImageManip man;
+
+      QImage img = QImage(*item->image);
+      man.process(&img, item->image, &hipsImageParam);
+
       addToMemoryCache(key, item);
 
       emit sigRepaint();

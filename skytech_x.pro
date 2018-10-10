@@ -328,7 +328,9 @@ SOURCES += main.cpp\
     lunarphase.cpp \
     cdssopendialog.cpp \
     colongitude.cpp \
-    cucac5.cpp
+    cucac5.cpp \
+    hipsadjustment.cpp \
+    chipsadjustment.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -576,7 +578,9 @@ HEADERS  += mainwindow.h \
     lunarphase.h \
     cdssopendialog.h \
     colongitude.h \
-    cucac5.h
+    cucac5.h \
+    hipsadjustment.h \
+    chipsadjustment.h
 
 
 FORMS    += mainwindow.ui \
@@ -681,7 +685,9 @@ FORMS    += mainwindow.ui \
     skstopwatchctrl.ui \
     variablestarsdialog.ui \
     twilightdialog.ui \
-    lunarphase.ui
+    lunarphase.ui \
+    hipsadjustment.ui \
+    chipsadjustment.ui
 
 
 RESOURCES += \

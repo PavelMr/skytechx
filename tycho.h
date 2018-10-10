@@ -2,6 +2,7 @@
 #define TYCHO_H
 
 #include "skcore.h"
+#include "skutils.h"
 
 #include <QtCore>
 #include <QtGui>
@@ -77,8 +78,7 @@ class CTycho : public QObject
 
     inline void getStarPos(radec_t &rd, tychoStar_t *s, double yr)
     {
-      rd.Ra = s->rd.Ra + (D2R(s->pmRa / 1000.0 / 3600.0) * yr * cos(s->rd.Dec));
-      rd.Dec = s->rd.Dec + D2R(s->pmDec / 1000.0 / 3600.0) * yr;
+      calculateProperMotion(s->rd, rd, s->pmRa, s->pmDec, yr);
     }
 
     inline float getVisMag(tychoStar_t *s)
