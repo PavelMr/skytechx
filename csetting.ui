@@ -180,7 +180,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>16</number>
            </property>
            <widget class="QWidget" name="stackedWidget_2Page1">
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2335,7 +2335,7 @@
              <item>
               <widget class="QTabWidget" name="tabWidget_3">
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tab_12">
                 <attribute name="title">

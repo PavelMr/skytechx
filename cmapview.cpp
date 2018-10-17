@@ -872,7 +872,8 @@ void CMapView::keyEvent(int key, Qt::KeyboardModifiers)
       }
     }
 
-    if (key == Qt::Key_0) {
+    if (key == Qt::Key_0)
+    {
       m_mapView.fov = R180;
       repaintMap();
       return;

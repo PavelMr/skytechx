@@ -107,6 +107,7 @@
 #include "planetreport.h"
 #include "lunarphase.h"
 #include "cdssopendialog.h"
+#include "shortcutdialog.h"
 
 #include <QPrintPreviewDialog>
 #include <QPrinter>
@@ -183,6 +184,7 @@ QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
   return QItemDelegate::sizeHint(option, index);
 }
 
+
 ////////////////////////////////////////////
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -193,6 +195,8 @@ MainWindow::MainWindow(QWidget *parent) :
   qRegisterMetaTypeStreamOperators<lfParam_t>("lfParam_T");
 
   ui->setupUi(this);  
+
+  initShortcutMap(ui->menuBar);
 
   //QApplication::instance()->setAttribute(Qt::AA_DontShowIconsInMenus, true);
 
@@ -1521,6 +1525,7 @@ void MainWindow::saveAndExit()
   }
 
   statusBar->saveStatusBar();
+  saveShortcutMap(ui->menuBar);
 
   QSettings settings;
 
@@ -7091,4 +7096,11 @@ void MainWindow::on_actionAsterism_triggered(bool checked)
 void MainWindow::on_actionHiPS_Adjustment_triggered(bool checked)
 {
   m_dockHipsAdjustment->setVisible(checked);
+}
+
+void MainWindow::on_actionShortcut_settings_triggered()
+{
+  ShortcutDialog dlg(this, ui->menuBar);
+
+  dlg.exec();
 }

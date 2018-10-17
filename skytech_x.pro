@@ -330,7 +330,8 @@ SOURCES += main.cpp\
     colongitude.cpp \
     cucac5.cpp \
     hipsadjustment.cpp \
-    chipsadjustment.cpp
+    chipsadjustment.cpp \
+    shortcutdialog.cpp
 
 HEADERS  += mainwindow.h \
     core/vecmath.h \
@@ -580,7 +581,8 @@ HEADERS  += mainwindow.h \
     colongitude.h \
     cucac5.h \
     hipsadjustment.h \
-    chipsadjustment.h
+    chipsadjustment.h \
+    shortcutdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -687,7 +689,8 @@ FORMS    += mainwindow.ui \
     twilightdialog.ui \
     lunarphase.ui \
     hipsadjustment.ui \
-    chipsadjustment.ui
+    chipsadjustment.ui \
+    shortcutdialog.ui
 
 
 RESOURCES += \

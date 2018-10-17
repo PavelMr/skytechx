@@ -503,6 +503,7 @@
     <addaction name="actionNight_mode"/>
     <addaction name="actionChange_language"/>
     <addaction name="actionChnage_style"/>
+    <addaction name="actionShortcut_settings"/>
     <addaction name="actionSetting"/>
     <addaction name="separator"/>
     <addaction name="action_Exit_2"/>
@@ -4629,6 +4630,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Find telescope</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Y</string>
+   </property>
   </action>
   <action name="actionVery_fast_100ms">
    <property name="checkable">
@@ -5550,6 +5554,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Search a Moon</string>
    </property>
+   <property name="shortcut">
+    <string>M</string>
+   </property>
   </action>
   <action name="actionSatellite">
    <property name="text">
@@ -6078,6 +6085,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>HiPS Adjustment</string>
+   </property>
+  </action>
+  <action name="actionShortcut_settings">
+   <property name="text">
+    <string>Shortcut settings...</string>
    </property>
   </action>
  </widget>

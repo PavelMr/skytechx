@@ -704,6 +704,8 @@ private slots:
 
   void on_actionHiPS_Adjustment_triggered(bool checked);
 
+  void on_actionShortcut_settings_triggered();
+
 private:
   Ui::MainWindow *ui;
   CDSOCatalogue *m_DSOCatalogueDlg;
