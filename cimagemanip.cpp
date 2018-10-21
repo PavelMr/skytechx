@@ -58,6 +58,8 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
   QRgb rgb;
   int x, y;
 
+  float saturation = (par->saturation - 100) * 2.55;
+
   createContrastsTable(con, contrastTable);
   createGammasTable(gamma, gammaTable);
 
@@ -94,14 +96,18 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
 
     #pragma omp parallel for shared(s, d, src, con, gamma, par) private (x, y, valRGB, rgb)
     for (y = 0; y < src->height(); y++)
-    {
-      int index = src->width() * y;
-      for (x = 0; x < src->width(); x++)
+    {      
+      const QRgb *srcPtr = &s[src->width() * y];
+      QRgb *dstPtr = &d[src->width() * y];
+
+      for (x = 0; x < src->width(); x++, srcPtr++, dstPtr++)
       {
-        rgb = s[x + index];
+        rgb = *srcPtr;
         valRGB[0] = qRed(rgb);
         valRGB[1] = qGreen(rgb);
         valRGB[2] = qBlue(rgb);
+
+
 
         for (int i = 0; i < 3; i++)
         {
@@ -114,7 +120,23 @@ void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
           valRGB[i] = par->invert ? 255 - valRGB[i] : valRGB[i];
         }
 
-        d[x + index] = qRgb(valRGB[0], valRGB[1], valRGB[2]);
+        if (par->saturation != 100)
+        {
+          QColor col = QColor(valRGB[0], valRGB[1], valRGB[2]);
+
+          int ch, cs, cv;
+
+          col.getHsv(&ch, &cs, &cv);
+
+          cs += saturation;
+          cs = qBound(0, cs, 255);
+          col.setHsv(ch, cs, cv);
+          *dstPtr = col.rgb();
+        }
+        else
+        {
+          *dstPtr = qRgb(valRGB[0], valRGB[1], valRGB[2]);
+        }
       }
     }
   }

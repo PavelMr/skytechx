@@ -24,6 +24,7 @@ void CHIPSAdjustment::setParams()
   ui->horizontalSlider->setValue(hipsImageParam.brightness);
   ui->horizontalSlider_2->setValue(hipsImageParam.contrast);
   ui->horizontalSlider_3->setValue(hipsImageParam.gamma);
+  ui->horizontalSlider_4->setValue(hipsImageParam.saturation);
   ui->checkBox->setChecked(hipsImageParam.invert);
 }
 
@@ -32,6 +33,7 @@ void CHIPSAdjustment::on_pushButton_clicked()
   hipsImageParam.brightness = ui->horizontalSlider->value();
   hipsImageParam.contrast = ui->horizontalSlider_2->value();
   hipsImageParam.gamma = ui->horizontalSlider_3->value();
+  hipsImageParam.saturation = ui->horizontalSlider_4->value();
   hipsImageParam.invert = ui->checkBox->isChecked();
 
   g_hipsRenderer->manager()->getCache()->clear();

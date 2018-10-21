@@ -273,6 +273,7 @@ void CBkImages::loadOnScreen(QWidget *parent, double, double, double)
           i.param.brightness = 0;
           i.param.contrast = 100;
           i.param.gamma = 150;
+          i.param.saturation = 100;
           i.param.invert = false;
           i.param.autoAdjust = false;
           i.param.dlgSize = 0;

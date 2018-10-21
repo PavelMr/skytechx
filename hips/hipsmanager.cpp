@@ -280,6 +280,7 @@ void HiPSManager::resetImageParams()
   hipsImageParam.brightness = 0;
   hipsImageParam.contrast = 100;
   hipsImageParam.gamma = 150;
+  hipsImageParam.saturation = 100;
   hipsImageParam.invert = false;
   hipsImageParam.useMatrix = false;
 }

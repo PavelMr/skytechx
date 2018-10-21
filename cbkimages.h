@@ -39,6 +39,7 @@ typedef struct
   bool   autoAdjust;
   bool   invert;
   int    dlgSize;
+  int    saturation; // 0 .. 200  100 = default
 } imageParam_t;
 
 typedef struct
