@@ -124,9 +124,9 @@ void deleteTracking(int type)
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-static float drawLineTicks(SKPOINT *p1, SKPOINT *p2, CSkPainter *pPainter, int size, SKPOINT *where)
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static float drawLineTicks(SKPOINT *p1, SKPOINT *p2, CSkPainter *pPainter, int size, SKPOINT *where, bool draw = false)
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
   double x1, y1;
   double x2, y2;
@@ -145,8 +145,11 @@ static float drawLineTicks(SKPOINT *p1, SKPOINT *p2, CSkPainter *pPainter, int s
     dx *= i;
     dy *= i;
 
-    pPainter->drawLine(where->sx - (dy * size), where->sy + (dx * size),
-                       where->sx + (dy * size), where->sy - (dx * size));
+    if (draw)
+    {
+      pPainter->drawLine(where->sx - (dy * size), where->sy + (dx * size),
+                         where->sx + (dy * size), where->sy - (dx * size));
+    }
 
     return(R2D(ang));
   }
@@ -160,6 +163,7 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
 {
   SKPOINT p1;
   SKPOINT p2;
+  SKPOINT wh;
 
   int markSize = 2;
 
@@ -205,8 +209,17 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
           pPainter->drawCross(p1.sx, p1.sy, 7);
 
           setSetFontColor(FONT_TRACKING, pPainter);
-          setSetFont(FONT_TRACKING, pPainter);
-          pPainter->drawRotatedText(la + R2D(view->roll), p1.sx, p1.sy, "  "  + str);
+          setSetFont(FONT_TRACKING, pPainter);          
+          if (la > 999)
+          {
+            float a  = drawLineTicks(&p1, &p2, pPainter, 15, &wh, false);
+            pPainter->drawRotatedText(-a, p1.sx, p1.sy, "  "  + str);
+          }
+          else
+          {
+            pPainter->drawRotatedText(la, p1.sx, p1.sy, "  "  + str);
+          }
+
           pPainter->setPen(QColor(g_skSet.map.tracking.color));
         }
         else
@@ -232,7 +245,15 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
 
             setSetFontColor(FONT_TRACKING, pPainter);
             setSetFont(FONT_TRACKING, pPainter);
-            pPainter->drawRotatedText(la + R2D(view->roll), p2.sx, p2.sy, "  " + str);
+            if (la > 999)
+            {
+              float a  = drawLineTicks(&p1, &p2, pPainter, 15, &wh, false);
+              pPainter->drawRotatedText(-a, p2.sx, p2.sy, "  "  + str);
+            }
+            else
+            {
+              pPainter->drawRotatedText(la, p2.sx, p2.sy, "  "  + str);
+            }
             pPainter->setPen(QColor(g_skSet.map.tracking.color));
           }
           else
@@ -241,9 +262,7 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
               pPainter->drawCircle(QPoint(p2.sx, p2.sy), markSize);
           }
         }
-      }
-      //pos1 = pos2;
-      //p1 = p2;
+      }     
     }
   }
 }
@@ -272,7 +291,7 @@ CObjTracking::CObjTracking(QWidget *parent, ofiItem_t *item, mapView_t *view) :
   ui->comboBox->addItem(tr("Minute(s)"));
   ui->comboBox->addItem(tr("Hour(s)"));
   ui->comboBox->addItem(tr("Day(s)"));
-  ui->comboBox->setCurrentIndex(2);
+  ui->comboBox->setCurrentIndex(2);    
 
   m_item = item;
   m_view = *view;  
@@ -361,6 +380,11 @@ void CObjTracking::on_pushButton_2_clicked()
   track.jdTo = jdTo;
   track.type = m_item->type;
   track.markStep = ui->spinBox_4->value();
+
+  if (ui->checkBox_3->isChecked())
+  {
+    track.labelAngle = 1000;
+  }
 
   switch (m_item->type)
   {
@@ -472,4 +496,9 @@ void CObjTracking::on_pushButton_3_clicked()
   {
     tTracking.removeLast();
   }
+}
+
+void CObjTracking::on_checkBox_3_toggled(bool checked)
+{
+  ui->spinBox_3->setEnabled(!checked);
 }
