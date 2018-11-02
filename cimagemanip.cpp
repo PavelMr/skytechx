@@ -261,7 +261,11 @@ void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv, int comp)
   minv = 255;
   maxv = 0;
 
-  int histogram[256];
+  double high = 0.998;
+  double low = 0.1;
+  bool lowIsSet = false;
+
+  quint64 histogram[256];
 
   memset(&histogram, 0, sizeof(histogram));
 
@@ -270,13 +274,41 @@ void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv, int comp)
     const uchar *p = (uchar *)src->bits();
 
     for (int i = 0; i < src->width() * src->height(); i++, p++)
+    {      
+      histogram[*p]++;
+    }
+
+    double tsumm = 0;
+    for (int i = 0; i < 256; i++)
     {
-      int val = *p;
+      tsumm += histogram[i];
+    }
 
-      histogram[val]++;
+    if (tsumm == 0)
+    {
+      minv = 0;
+      maxv = 0;
+      return;
+    }
 
-      if (val < minv)
-        minv = val;
+    double summ = 0;
+    for (int i = 0; i < 256; i++)
+    {
+      summ += histogram[i];
+
+      double percentile = summ / tsumm;
+
+      if (percentile <= low || !lowIsSet)
+      {
+        lowIsSet = true;
+        minv = i;
+      }
+
+      if (percentile >= high)
+      {
+        maxv = i;
+        break;
+      }
     }
   }
   else
@@ -306,20 +338,11 @@ void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv, int comp)
 
       if (val < minv)
         minv = val;
-    }
-  }
 
-  // TODO: udelat to inteligentne (to minimum)
-  int counter = 0;
-  for (int i = 255; i >= 0; i--)
-  {
-    counter += histogram[i];
-    if (counter > 16)
-    {
-      maxv = i;
-      break;
+      if (val > maxv)
+        maxv = val;
     }
-  }
+  }  
 }
 
 /////////////////////////////////////////////////////////////////////////
