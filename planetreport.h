@@ -25,6 +25,7 @@ along with SkytechX.  If not, see <http://www.gnu.org/licenses/>.
 
 class PlanetReport : public QObject
 {
+  Q_OBJECT
 public:
   PlanetReport(const mapView_t *view);
   QString generate();

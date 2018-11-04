@@ -300,8 +300,7 @@ void CBackground::intersect(double y, radec_t &v1, radec_t &v2, radec_t *out)
 }
 
 int CBackground::splitY(int countIn, radec_t *in, double y, double side, radec_t *out)
-{
-  int countOut;
+{  
   int positive = 0;
   int negative = 0;
   int location[MAX_POLYGON_PTS];

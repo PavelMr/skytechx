@@ -43,7 +43,7 @@ CImageManip::CImageManip()
 void CImageManip::process(const QImage *src, QImage *dst, imageParam_t *par)
 //////////////////////////////////////////////////////////////////////
 {
-  bool bw = src->format() == (QImage::Format_Indexed8) || (src->format() == QImage::Format_Grayscale8);
+  bool bw = src->format() == (QImage::Format_Indexed8) || (src->format() == QImage::Format_Grayscale8);  
 
   if (par->autoAdjust)
   {
@@ -341,7 +341,7 @@ void CImageManip::getMinMax(const QImage *src, int &minv, int &maxv, int comp)
 
       if (val > maxv)
         maxv = val;
-    }
+    }    
   }  
 }
 
@@ -435,7 +435,7 @@ void CImageManip::autoAdjust(const QImage *src, QImage *dst, imageParam_t *par)
 
         d[x + index] = qRgb(valR, valG, valB);
       }
-    }
+    }    
   }
 
   SK_DEBUG_TIMER_STOP(0);

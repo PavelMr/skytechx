@@ -19,6 +19,7 @@ typedef struct
   int        labelStep;
   int        markStep;
   bool       bShowDateTime;
+  bool       bDateOnly;
   bool       bShowMag;
   float      labelAngle;
   double     jdFrom;

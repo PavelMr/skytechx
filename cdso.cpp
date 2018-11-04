@@ -722,7 +722,7 @@ int CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, map
 /////////////////////////////////////////////////////////////////////////////////////////////////
 {  
   int sz = m_minSize - 1;
-  pPainter->setPen(m_pen);  
+  pPainter->setPen(m_pen);    
 
   int sx = trfGetArcSecToPix(pDso->sx);
   int sy = trfGetArcSecToPix(pDso->sy);
@@ -752,7 +752,7 @@ int CDso::renderGalaxySymbol(SKPOINT *pt, dso_t *pDso, CSkPainter *pPainter, map
       ang = -(D2R(pDso->pa) - ang);
   }
 
-  pPainter->save();  
+  pPainter->save();    
   pPainter->translate(pt->sx, pt->sy);
   pPainter->rotate(R2D(ang));
   pPainter->drawEllipse(QPoint(0, 0), sy, sx);

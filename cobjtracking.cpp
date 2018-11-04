@@ -5,7 +5,7 @@
 #include "setting.h"
 #include "csgp4.h"
 
-#define TRACKING_VERSION        "TRK10"
+#define TRACKING_VERSION        "TRK11"
 
 QList <tracking_t> tTracking;
 extern CMapView    *pcMapView;
@@ -35,6 +35,7 @@ void loadTracking(void)
 
       s >> t.show;
       s >> t.bShowDateTime;
+      s >> t.bDateOnly;
       s >> t.bShowMag;
       s >> t.jdFrom;
       s >> t.jdTo;
@@ -81,6 +82,7 @@ void saveTracking(void)
     {
       s << tTracking.at(i).show;
       s << tTracking.at(i).bShowDateTime;
+      s << tTracking.at(i).bDateOnly;
       s << tTracking.at(i).bShowMag;
       s << tTracking.at(i).jdFrom;
       s << tTracking.at(i).jdTo;
@@ -180,6 +182,7 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
     const trackPos_t *pos2;
     int   ls = tTracking[i].labelStep;
     bool  bDT = tTracking[i].bShowDateTime;
+    bool  bDO = tTracking[i].bDateOnly;
     bool  bMag = tTracking[i].bShowMag;
     float la = tTracking[i].labelAngle;
     int   markStep = tTracking[i].markStep;
@@ -202,9 +205,17 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
           QString str;
 
           if (bDT)
-            str += getStrDate(pos1->jd, view->geo.tz) + " " + getStrTime(pos1->jd, view->geo.tz, true) + " ";
+          {
+            if (bDO)
+              str += getStrDate(pos1->jd, view->geo.tz) + " ";
+            else
+              str += getStrDate(pos1->jd, view->geo.tz) + " " + getStrTime(pos1->jd, view->geo.tz, true) + " ";
+          }
+
           if (bMag && pos1->mag != CM_UNDEF)
+          {
             str += getStrMag(pos1->mag);
+          }
 
           pPainter->drawCross(p1.sx, p1.sy, 7);
 
@@ -237,9 +248,17 @@ void trackRender(mapView_t *view, CSkPainter *pPainter)
             QString str;
 
             if (bDT)
-              str += getStrDate(pos2->jd, view->geo.tz) + " " + getStrTime(pos2->jd, view->geo.tz, true) + " ";
-            if (bMag)
+            {
+              if (bDO)
+                str += getStrDate(pos1->jd, view->geo.tz) + " ";
+              else
+                str += getStrDate(pos1->jd, view->geo.tz) + " " + getStrTime(pos1->jd, view->geo.tz, true) + " ";
+            }
+
+            if (bMag && pos2->mag != CM_UNDEF)
+            {
               str += getStrMag(pos2->mag);
+            }
 
             pPainter->drawCross(p2.sx, p2.sy, 7);
 
@@ -374,6 +393,7 @@ void CObjTracking::on_pushButton_2_clicked()
   track.show = true;
   track.labelStep = ls;
   track.bShowDateTime = ui->checkBox->isChecked();
+  track.bDateOnly = ui->checkBox_4->isChecked();
   track.bShowMag = ui->checkBox_2->isChecked();
   track.labelAngle = ui->spinBox_3->value();
   track.jdFrom = jdFrom;

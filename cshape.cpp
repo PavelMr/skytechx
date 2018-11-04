@@ -84,7 +84,7 @@ bool CShape::load(QString name)
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-int CShape::render(QPainter *p, QImage *img, mapView_t *, QColor *colList, QRect &rc, bool isMilkyWay)
+int CShape::render(QPainter *, QImage *img, mapView_t *, QColor *colList, QRect &rc, bool isMilkyWay)
 /////////////////////////////////////////////////////////////////////////////////////
 {
   QColor col;

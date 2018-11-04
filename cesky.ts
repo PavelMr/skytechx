@@ -11575,7 +11575,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="4557"/>
         <source>Moon &amp;&amp; Sun almanac...</source>
-        <translation>Měsíční a Sluneční kalendář</translation>
+        <translation>Měsíční a Sluneční kalendář...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4562"/>
@@ -11605,7 +11605,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="5602"/>
         <source>2</source>
-        <translation type="unfinished">180° {2?}</translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="5848"/>
@@ -11664,7 +11664,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="5976"/>
         <source>VO Catalogue...</source>
-        <translation>Katalog VO</translation>
+        <translation>Katalog VO...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="5988"/>
@@ -13381,22 +13381,22 @@ Nastavení barev může být zobrazeno špatně.</translation>
     <message>
         <location filename="planetreport.cpp" line="37"/>
         <source>Planet report on %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="planetreport.cpp" line="53"/>
         <source>%1 is in constellation %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="planetreport.cpp" line="55"/>
         <source>Magnitude is %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="planetreport.cpp" line="57"/>
         <source>Apparent diameter is %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -14728,7 +14728,7 @@ Nejsou rovníkové rouřadnice!</translation>
     <message>
         <location filename="variablestarsdialog.ui" line="144"/>
         <source>Date as JD</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum v JD</translation>
     </message>
     <message>
         <location filename="variablestarsdialog.ui" line="151"/>

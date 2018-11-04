@@ -295,11 +295,9 @@ void HiPSManager::slotDone(QNetworkReply::NetworkError error, QByteArray &data, 
 
     item->image = new QImage();
     if (item->image->loadFromData(data))
-    {
-      CImageManip man;
-
-      QImage img = QImage(*item->image);
-      man.process(&img, item->image, &hipsImageParam);
+    {       
+      QImage img = QImage(*item->image);    
+      CImageManip::process(&img, item->image, &hipsImageParam);
 
       addToMemoryCache(key, item);
 

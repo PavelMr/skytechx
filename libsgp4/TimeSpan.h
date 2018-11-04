@@ -82,7 +82,7 @@ public:
 
     TimeSpan Multiply(const double factor) const
     {
-        return TimeSpan(m_ticks * factor);
+        return TimeSpan((long long)(m_ticks * factor));
     }
 
     int Compare(const TimeSpan& ts) const

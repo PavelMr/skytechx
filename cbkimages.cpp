@@ -368,8 +368,7 @@ void CBkImages::renderDSSFits(QImage *pDst, CSkPainter *p, CFits *fit)
 void CBkImages::renderCustomFits(QImage *pDst, CSkPainter *p, CFits *fit)
 {
   SKPOINT pt;
-  double  r2;
-  int     r = 0;
+  double  r2;  
   SKPOINT pp[4];
   radec_t corner[4];
   radec_t center = radec_t(fit->m_ra, fit->m_dec);

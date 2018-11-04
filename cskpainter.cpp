@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+#define ALIGN_MAX_POS    100000
+
 ///////////////////////////////////////////////////////////////
 CSkPainter::CSkPainter(QPaintDevice *parent) : QPainter(parent)
 ///////////////////////////////////////////////////////////////
@@ -154,7 +156,7 @@ void CSkPainter::drawHalfCross(int x, int y, int size1, int size2)
 void CSkPainter::drawTextLR(int x, int y, QString text)
 ///////////////////////////////////////////////////////
 {
-  drawText(QRect(x, y, 100000, 100000), Qt::AlignTop | Qt::AlignLeft, text);
+  drawText(QRect(x, y, ALIGN_MAX_POS, ALIGN_MAX_POS), Qt::AlignTop | Qt::AlignLeft, text);
 }
 
 
@@ -163,7 +165,7 @@ void CSkPainter::drawTextLR(int x, int y, QString text)
 void CSkPainter::drawTextUR(int x, int y, QString text)
 ///////////////////////////////////////////////////////
 {
-  drawText(QRect(x, y - 100000, 100000, 100000), Qt::AlignLeft | Qt::AlignBottom, text);
+  drawText(QRect(x, y - ALIGN_MAX_POS, ALIGN_MAX_POS, ALIGN_MAX_POS), Qt::AlignLeft | Qt::AlignBottom, text);
 }
 
 ///////////////////////////////////////////////////////
@@ -171,7 +173,7 @@ void CSkPainter::drawTextUR(int x, int y, QString text)
 void CSkPainter::drawTextUL(int x, int y, QString text)
 ///////////////////////////////////////////////////////
 {
-  drawText(QRect(x - 100000, y - 100000, 100000, 100000), Qt::AlignBottom | Qt::AlignRight, text);
+  drawText(QRect(x - ALIGN_MAX_POS, y - ALIGN_MAX_POS, ALIGN_MAX_POS, ALIGN_MAX_POS), Qt::AlignBottom | Qt::AlignRight, text);
 }
 
 
@@ -180,14 +182,14 @@ void CSkPainter::drawTextUL(int x, int y, QString text)
 void CSkPainter::drawTextLL(int x, int y, QString text)
 ///////////////////////////////////////////////////////
 {
-  drawText(QRect(x - 100000, y, 100000, 100000), Qt::AlignTop | Qt::AlignRight, text);
+  drawText(QRect(x - ALIGN_MAX_POS, y, ALIGN_MAX_POS, ALIGN_MAX_POS), Qt::AlignTop | Qt::AlignRight, text);
 }
 
 /////////////////////////////////////////////////////
 void CSkPainter::drawCText(int x, int y, QString str)
 /////////////////////////////////////////////////////
 {
-  QRect rc(x - 100000, y - 100000, 200000, 200000);
+  QRect rc(x - ALIGN_MAX_POS, y - ALIGN_MAX_POS, 2 * ALIGN_MAX_POS, 2 * ALIGN_MAX_POS);
 
   drawText(rc, Qt::AlignCenter, str);
 }

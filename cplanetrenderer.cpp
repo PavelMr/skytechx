@@ -964,7 +964,7 @@ int CPlanetRenderer::renderPlanet(SKPOINT *pt, orbit_t *o, orbit_t *sun, mapView
   return sx;
 }
 
-void CPlanetRenderer::renderSphere(QPainter *pPainter, SKPOINT *pt, double r, double lon, double lat, QImage *texture, QImage *pImg, mapView_t *view, double ra, double dec, double PA)
+void CPlanetRenderer::renderSphere(QPainter *, SKPOINT *pt, double r, double lon, double lat, QImage *texture, QImage *pImg, mapView_t *view, double ra, double dec, double PA)
 {
   SKMATRIX matX;
   SKMATRIX matY;

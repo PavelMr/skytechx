@@ -4319,7 +4319,7 @@ void MainWindow::on_pushButton_dss_all_clicked()
 
 
 //////////////////////////////////////////////////////////////////////////
-void MainWindow::slotDSSChange(const QModelIndex &i1, const QModelIndex &i2)
+void MainWindow::slotDSSChange(const QModelIndex &i1, const QModelIndex &)
 //////////////////////////////////////////////////////////////////////////
 {
   if (!i1.isValid())
@@ -6112,7 +6112,7 @@ void MainWindow::on_pushButton_17_clicked()
       info->type != MO_ASTER &&
       info->type != MO_EARTH_SHD)
   {
-    msgBoxError(this, tr("You cannot track static object!!!"));
+    msgBoxError(this, tr("You can't track this object!!!"));
     return;
   }
 

@@ -461,10 +461,7 @@ void CRts::calcTwilight(daylight_t *rts, mapView_t *view)
 bool CRts::calcSunPosAtAlt(double start, double atAlt, double *jdTo, mapView_t *view, bool center, bool ascent)
 //////////////////////////////////////////////////////////////////////////////////////////////////
 {
-  double mul = ascent ? 1 : -1;
-
-  double tz = view->geo.tz;
-
+  double mul = ascent ? 1 : -1;  
   double  jd = start;
   double  add = RTS_IADD * mul;
   int     cnt;

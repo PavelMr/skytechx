@@ -105,7 +105,7 @@ CMapView::CMapView(QWidget *parent) :
   pcMapView = this;
   m_gamePad = NULL;
 
-  g_bMouseMoveMap = &m_bMouseMoveMap;
+  g_bMouseMoveMap = &m_bMouseMoveMap; 
 
   configureGamepad();
   m_lastTeleRaDec.Ra = 0;
@@ -1328,10 +1328,10 @@ void CMapView::updateLunarFeatures()
       QString desc;
       if (cLunarFeatures.getCoordinates(&m_mapView, QPointF(obj.x, obj.y), m_lastMousePos, lon, lat, desc))
       {
-        pcMainWnd->updateLunarInfo(desc, lon, lat, true);
+        pcMainWnd->updateLunarInfo(desc, lon, lat, true);                                
         return;
       }
-    }
+    }        
   }
   pcMainWnd->updateLunarInfo("", 0, 0, false);
 }

@@ -673,8 +673,8 @@ QString getStrDate(double jd, double tz)
 
   jd += tz;
 
-  jdConvertJDTo_DateTime(jd, &t);
-  str = t.date().toString(Qt::LocalDate);
+  jdConvertJDTo_DateTime(jd, &t);  
+  str = t.date().toString(Qt::SystemLocaleShortDate);
 
   return(str);
 }

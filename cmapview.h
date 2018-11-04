@@ -172,7 +172,7 @@ private:
 
   double m_lastFOV;
   double m_lastRA;
-  double m_lastDec;
+  double m_lastDec;  
 
 signals:
 

@@ -401,7 +401,7 @@ void CDayNight::on_pushButton_13_clicked()
   done(DL_OK);
 }
 
-void CDayNight::on_checkBox_toggled(bool checked)
+void CDayNight::on_checkBox_toggled(bool)
 {
   updateMap();
 }
