@@ -250,12 +250,12 @@ void CScanRender::renderPolygon(QColor col, QImage *dst)
       px2 = m_sx - 1;
     }
 
-    quint32 *pDst = bits + (y * dw) + px1;    
+    quint32 *pDst = bits + (y * dw) + px1;            
     for (int x = px1; x < px2; x++)
     {
       *pDst = c;
       pDst++;
-    }    
+    }
   }
 }
 
@@ -294,14 +294,12 @@ void CScanRender::renderPolygonAlpha(QColor col, QImage *dst)
     }
 
     quint32 *pDst = bits + (y * dw) + px1;
-    for (int x = px1; x < px2; x++)
-    {
-      QRgb rgbd = *pDst;           
-      *pDst = qRgb(LERP(a, qRed(rgbd), rc),
-                   LERP(a, qGreen(rgbd), gc),
-                   LERP(a, qBlue(rgbd), bc)
-                  );
-      pDst++;
+    for (int x = px1; x < px2; x++, pDst++)
+    {            
+      *pDst = qRgb(LERP(a, qRed(*pDst), rc),
+                   LERP(a, qGreen(*pDst), gc),
+                   LERP(a, qBlue(*pDst), bc)
+                  );      
     }
   }
 }
@@ -381,10 +379,12 @@ void CScanRender::renderPolygon(QPainter *p, int interpolation, SKPOINT *pts, QI
       scanLine(D1.x(), D1.y(), A1.x(), A1.y(), D1uv.x(), D1uv.y(), A1uv.x(), A1uv.y());
       renderPolygon(pDest, pSrc);
 
-      //p->drawLine(A1, B1);
-      //p->drawLine(B1, C1);
-      //p->drawLine(C1, D1);
-      //p->drawLine(D1, A1);
+      /*
+      p->drawLine(A1, B1);
+      p->drawLine(B1, C1);
+      p->drawLine(C1, D1);
+      p->drawLine(D1, A1);
+      */
     }
   }
 }

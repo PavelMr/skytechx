@@ -1179,7 +1179,7 @@ static void smRenderMoons(QImage *pImg, CSkPainter *p, planetSatellites_t *sat, 
       {
         trfProjectPointNoCheck(&pt);
 
-        int r = cPlanetRenderer.renderMoon(i, pImg, p, &pt, ptp, o, &sat->sats[i], bFront, view);
+        int r = cPlanetRenderer.renderMoon(i, pImg, p, &pt, ptp, o, &sat->sats[i], bFront, view);                
 
         if (g_showLabels && r > 0)
         {
@@ -1258,7 +1258,7 @@ static void smRenderPlanets(mapView_t *mapView, CSkPainter *pPainter, QImage *pI
       smRenderMoons(pImg, pPainter, &sats, NULL, &o[order[i]], false, mapView, order[i]);
     }
 
-    trfRaDecToPointCorrectFromTo(&o[order[i]].lRD, &pt, mapView->jd, JD2000);
+    trfRaDecToPointCorrectFromTo(&o[order[i]].lRD, &pt, mapView->jd, JD2000);    
 
     if (SKPLANECheckFrustumToSphere(trfGetFrustum(), &pt.w, 0.5 * D2R(o[order[i]].sx / 3600.0)))
     {

@@ -546,6 +546,28 @@ void CObjFillInfo::fillAsterInfo(const mapView_t *view, const mapObj_t *obj, ofi
 
   endExtInfo();
 
+  if ((a->orbitType > 0 && a->orbitType <= 10) || a->flags != 0)
+  {
+    QString data[] = {"Atira",
+                      "Aten",
+                      "Apollo",
+                      "Amor",
+                      "Object with q < 1.665 AU",
+                      "Hungaria",
+                      "Phocaea  [Not currently used]",
+                      "Hilda",
+                      "Jupiter Trojan",
+                      "Distant object"};
+
+    addSeparator(item);
+    addLabelItem(item, tr("Other information"));
+    addSeparator(item);
+    if (a->orbitType != 0) addTextItem(item, tr("Orbit type"), data[a->orbitType - 1]);
+    if (a->flags & AST_IS_NEO) addTextItem(item, tr("Object is NEO"), "");
+    if (a->flags & AST_IS_PHA) addTextItem(item, tr("Object is PHA"), "");
+    if (a->flags & AST_IS_KM1) addTextItem(item, tr("Object is NEO >1km"), "");
+    addSeparator(item);
+  }
 
   ra  = a->orbit.lRD.Ra;
   dec = a->orbit.lRD.Dec;

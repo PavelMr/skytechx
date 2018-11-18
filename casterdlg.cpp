@@ -348,7 +348,7 @@ bool astLoad(QString fileName)
 
       list = str.split('|');
 
-      if (list.count() != 12)
+      if (list.count() != 12 && list.count() != 14)
       {
         continue;
       }
@@ -372,6 +372,17 @@ bool astLoad(QString fileName)
 
       if (a.epoch < minJD) minJD = a.epoch;
       if (a.epoch > maxJD) maxJD = a.epoch;
+
+      if (list.count() == 14)
+      {
+        a.orbitType = list.at(12).toInt();
+        a.flags = list.at(13).toInt();        
+      }
+      else
+      {
+        a.orbitType = 0;
+        a.flags = 0;
+      }
 
       tAsteroids.append(a);
     }
@@ -425,6 +436,12 @@ QString astCreateLine(asteroid_t *a)
   line += " | ";
 
   line += a->name;
+  line += "|";
+
+  line += QString(" %1 ").arg(a->flags, 3);
+  line += "|";
+
+  line += QString(" %1 ").arg(a->orbitType, 3);
   line += "\n";
 
   return(line);
@@ -455,11 +472,11 @@ bool astSave(QString fileName, QWidget *parent)
 
   if (f.open(SkFile::WriteOnly | SkFile::Text))
   {
-    s << "##########################################################################################################################################\n";
-    s << "#  SKYTECH X - Asteroid file\n";
-    s << "##########################################################################################################################################\n";
-    s << "# Sel |   H   |   G   | Epoch |      M     |    Peri.   |    Node    |   Incl.    |   e        |     n        |     a        |  Name\n";
-    s << "##########################################################################################################################################\n";
+    s << "###################################################################################################################################################################\n";
+    s << "#  SKYTECH X - Asteroid file v1.1\n";
+    s << "###################################################################################################################################################################\n";
+    s << "# Sel |   H   |   G   | Epoch |      M     |    Peri.   |    Node    |   Incl.    |   e        |     n        |     a        |  Name        |  FLAGS  |  Orbit Type\n";
+    s << "###################################################################################################################################################################\n";
 
     for (int i = 0; i < tAsteroids.count(); i++)
       s << astCreateLine(&tAsteroids[i]);

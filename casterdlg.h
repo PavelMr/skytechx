@@ -31,6 +31,11 @@
 
 #define  AST_ZOOM     D2R(2)
 
+#define AST_IS_NEO        1
+#define AST_IS_KM1        2
+#define AST_IS_PHA        4
+
+
 typedef struct
 {
   QString name;
@@ -46,6 +51,8 @@ typedef struct
   double  a;
   bool    selected;
   double  lastJD;
+  qint8   flags;
+  qint8   orbitType;
   orbit_t orbit;
 } asteroid_t;
 

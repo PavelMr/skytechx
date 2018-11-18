@@ -131,7 +131,7 @@ void CDownloadMPC::readMPCLine(QString str)
     }
   }
 
-  bool ok;
+  bool ok;  
 
   a.selected = true;
   a.lastJD = CM_UNDEF;
@@ -147,6 +147,21 @@ void CDownloadMPC::readMPCLine(QString str)
   a.e = str.mid(70, 9).toDouble();
   a.n = DEG2RAD(str.mid(80, 11).toDouble());
   a.a = str.mid(92, 11).toDouble();
+
+  int v = str.mid(161, 4).toInt(0, 16);
+  bool neo = v & 2048;   // is near-Earth object
+  bool km1 = v & 4096;   // > 1km
+  bool pha = v & 32768;  // Potentially hazardous asteroid
+  int ot = v & 0x1f;    // orbit type
+
+  a.orbitType = ot;
+  a.flags = 0;
+
+  if (neo) a.flags |= AST_IS_NEO;
+  if (km1) a.flags |= AST_IS_KM1;
+  if (pha) a.flags |= AST_IS_PHA;
+
+  //qDebug() << a.name << q << neo << km1 << pha;
 
   m_tList->append(a);
   m_count++;
